@@ -5,7 +5,7 @@ function Uikits() {
   return (
     <div>
       <Nav />
-      <main>
+      <main id="main">
         <Header />
         <Footer />
         Ui - Kits!
