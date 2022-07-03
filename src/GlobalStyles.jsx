@@ -15,16 +15,22 @@ div, img, span, p, ul{box-sizing: border-box;}
     background-color: #eee;
     transition: all 500ms ease-in;
   }
-  // PC 버전
-@media screen and (min-width:992px) {
+// tablet version
+${({ theme }) => theme.media.tab}{
+
+}
+
+// PC version
+${({ theme }) => theme.media.pc}{
   #main {
     transition: all 500ms ease-in;
     margin-left: 270px;
-    .menu_open{
+    #nav_open_btn{
       display: none;
     }
   }
 }
+
 `;
 
 export default GlobalStyles;

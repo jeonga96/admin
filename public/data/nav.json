@@ -1,0 +1,266 @@
+[
+  {
+    "name": "Dashboard",
+    "icon": "https://demo.dashboardpack.com/sales-html/img/menu-icon/dashboard.svg",
+    "url": null,
+    "subNav": [
+      {
+        "subName": "Sales",
+        "url": "/"
+      },
+      {
+        "subName": "Default",
+        "url": "/default"
+      },
+      {
+        "subName": "Dark Menu",
+        "url": "/darkmenu"
+      }
+    ]
+  },
+  {
+    "name": "Apps",
+    "icon": "https://demo.dashboardpack.com/sales-html/img/menu-icon/2.svg",
+    "url": null,
+    "subNav": [
+      {
+        "subName": "editor",
+        "url": "/editor"
+      },
+      {
+        "subName": "Mail Box",
+        "url": "/mailbox"
+      },
+      {
+        "subName": "Chat",
+        "url": "/chat"
+      },
+      {
+        "subName": "FAQ",
+        "url": "/faq"
+      }
+    ]
+  },
+  {
+    "name": "UI Kits",
+    "icon": "https://demo.dashboardpack.com/sales-html/img/menu-icon/3.svg",
+    "url": null,
+    "subNav": [
+      {
+        "subName": "colors",
+        "url": "/colors"
+      },
+      {
+        "subName": "Alerts",
+        "url": "/alerts"
+      },
+      {
+        "subName": "Buttons",
+        "url": "/buttons"
+      },
+      {
+        "subName": "Modal",
+        "url": "/modal"
+      },
+      {
+        "subName": "Droopdown",
+        "url": "/droopdown"
+      },
+      {
+        "subName": "Badges",
+        "url": "/badges"
+      },
+      {
+        "subName": "Loading indicator",
+        "url": "/loadingindicator"
+      },
+      {
+        "subName": "State color",
+        "url": "/statecolor"
+      },
+      {
+        "subName": "Typography",
+        "url": "/typography"
+      },
+      {
+        "subName": "Date Picker",
+        "url": "/datepicker"
+      }
+    ]
+  },
+  {
+    "name": "forms",
+    "icon": "https://demo.dashboardpack.com/sales-html/img/menu-icon/4.svg",
+    "url": null,
+    "subNav": [
+      {
+        "subName": "Basic Elements",
+        "url": "/basicelements"
+      },
+      {
+        "subName": "Groups",
+        "url": "/groups"
+      },
+      {
+        "subName": "Max Length",
+        "url": "/maxlength"
+      },
+      {
+        "subName": "Layouts",
+        "url": "/layouts"
+      }
+    ]
+  },
+  {
+    "name": "Board",
+    "icon": "https://demo.dashboardpack.com/sales-html/img/menu-icon/5.svg",
+    "url": "/board",
+    "subNav": null
+  },
+  {
+    "name": "Invoice",
+    "icon": "https://demo.dashboardpack.com/sales-html/img/menu-icon/6.svg",
+    "url": "/invoice",
+    "subNav": null
+  },
+  {
+    "name": "Calander",
+    "icon": "https://demo.dashboardpack.com/sales-html/img/menu-icon/6.svg",
+    "url": "/calander",
+    "subNav": null
+  },
+  {
+    "name": "Products",
+    "icon": "https://demo.dashboardpack.com/sales-html/img/menu-icon/7.svg",
+    "url": "/products",
+    "subNav": [
+      {
+        "subName": "Products",
+        "url": "/products"
+      },
+      {
+        "subName": "product Details",
+        "url": "/productdetails"
+      },
+      {
+        "subName": "Cart",
+        "url": "/cart"
+      },
+      {
+        "subName": "Checkout",
+        "url": "/checkout"
+      }
+    ]
+  },
+  {
+    "name": "Icons",
+    "icon": "https://demo.dashboardpack.com/sales-html/img/menu-icon/8.svg",
+    "url": null,
+    "subNav": [
+      {
+        "subName": "Fontawesome Icon",
+        "url": "/fontawesomeicon"
+      },
+      {
+        "subName": "themefy icon",
+        "url": "/themefyicon"
+      }
+    ]
+  },
+  {
+    "name": "Animation",
+    "icon": "https://demo.dashboardpack.com/sales-html/img/menu-icon/9.svg",
+    "url": null,
+    "subNav": [
+      {
+        "subName": "Animation",
+        "url": "/animation"
+      },
+      {
+        "subName": "Scroll Reveal",
+        "url": "/scrollreveal"
+      },
+      {
+        "subName": "Tilt Animation",
+        "url": "/tiltanimation"
+      }
+    ]
+  },
+  {
+    "name": "Components",
+    "icon": "https://demo.dashboardpack.com/sales-html/img/menu-icon/10.svg",
+    "url": null,
+    "subNav": [
+      {
+        "subName": "Accordions",
+        "url": "/accor"
+      }
+    ]
+  },
+  {
+    "name": "Tabel",
+    "icon": "https://demo.dashboardpack.com/sales-html/img/menu-icon/11.svg",
+    "url": null,
+    "subNav": [
+      {
+        "subName": "Data Table",
+        "url": "/datatable"
+      }
+    ]
+  },
+  {
+    "name": "Cards",
+    "icon": "https://demo.dashboardpack.com/sales-html/img/menu-icon/12.svg",
+    "url": null,
+    "subNav": [
+      {
+        "subName": "Basic Card",
+        "url": "/basiccard"
+      }
+    ]
+  },
+  {
+    "name": "Charts",
+    "icon": "https://demo.dashboardpack.com/sales-html/img/menu-icon/13.svg",
+    "url": null,
+    "subNav": [
+      {
+        "subName": "chartJS",
+        "url": "/chartjs"
+      }
+    ]
+  },
+  {
+    "name": "Widgets",
+    "icon": "https://demo.dashboardpack.com/sales-html/img/menu-icon/13.svg",
+    "url": null,
+    "subNav": [
+      {
+        "subName": "Chart Boxes 1",
+        "url": "/chartboxes1"
+      }
+    ]
+  },
+  {
+    "name": "Maps",
+    "icon": "https://demo.dashboardpack.com/sales-html/img/menu-icon/14.svg",
+    "url": null,
+    "subNav": [
+      {
+        "subName": "Maps JS",
+        "url": "/mapsjs"
+      }
+    ]
+  },
+  {
+    "name": "Pages",
+    "icon": "https://demo.dashboardpack.com/sales-html/img/menu-icon/15.svg",
+    "url": null,
+    "subNav": [
+      {
+        "subName": "Login",
+        "url": "/login"
+      }
+    ]
+  }
+]

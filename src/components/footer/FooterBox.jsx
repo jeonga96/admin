@@ -2,12 +2,12 @@ import styled from "styled-components";
 const FooterWrap = styled.header`
   width: 100%;
   height: 78px;
-  background-color: #20c997;
+  background-color: ${({ theme }) => theme.colors.primary};
   span {
     display: inline-block;
     width: 100%;
     height: auto;
-    color: #fff;
+    color: ${({ theme }) => theme.colors.white};
     line-height: 78px;
     text-align: center;
   }

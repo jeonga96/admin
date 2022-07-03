@@ -1,4 +1,5 @@
-import { NavLink } from "react-router-dom";
+// import { NavLink } from "react-router-dom";
+import axios from "axios";
 import styled from "styled-components";
 
 const NavContentInner = styled.div`
@@ -10,7 +11,7 @@ function NavBox() {
   return (
     <NavContentInner>
       <ul>
-        <li>
+        {/* <li>
           <NavLink
             to="/"
             style={({ isActive }) => ({
@@ -19,17 +20,7 @@ function NavBox() {
           >
             Home
           </NavLink>
-        </li>
-        <li>
-          <NavLink
-            to="/uikits"
-            style={({ isActive }) => ({
-              color: isActive ? "red" : "black",
-            })}
-          >
-            uikits
-          </NavLink>
-        </li>
+        </li> */}
       </ul>
     </NavContentInner>
   );
