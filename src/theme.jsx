@@ -18,6 +18,8 @@ const media = {
     size.pc - 1
   }px)`,
   pc: `@media screen and (min-width: ${size.pc}px)`,
+  maxTab: `@media screen and (min-width: ${size.tab}px)`,
+  minTab: `@media screen and (max-width: ${size.pc}px)`,
 };
 
 // style 적용 시 반복적으로 사용하는 코드
@@ -35,11 +37,17 @@ const styles = {
   boxShadow: "0 12px 30px rgb(80 143 244 / 10%);",
 };
 
+// font
+const font = {
+  point: "'Comfortaa', cursive;",
+};
+
 // 색상 변수
 const colors = {
   black: "#101038",
   white: "#fff",
   gray: "#f1f5fa",
+  pointGray: "#a5adc6",
   bgGray: "#F3F4F3",
   primary: "#64C5B1",
 };
@@ -51,6 +59,7 @@ export const theme = {
   size,
   media,
   styles,
+  font,
 };
 
 export default theme;

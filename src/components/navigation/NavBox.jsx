@@ -1,16 +1,22 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import NavInner from "./NavInner";
+import { GrClose } from "react-icons/gr";
+
+import NavArea from "./NavArea";
 
 const NavBoxWrap = styled.nav`
   position: fixed;
   top: 0;
   left: 0;
-  width: 270px;
+  width: 280px;
   height: 100%;
   background-color: ${({ theme }) => theme.colors.white};
   transition: all 500ms ease-in;
   box-shadow: ${({ theme }) => theme.styles.boxShadow};
+  ${({ theme }) => theme.media.pc} {
+    width: ${({ theme }) => theme.vwLap(220)};
+    max-width: 280px;
+  }
   &.hide {
     left: -270px;
   }
@@ -19,7 +25,10 @@ const NavHeaderInner = styled.div`
   width: auto;
   height: auto;
   margin: 30px;
-  padding-bottom: 20px;
+  ${({ theme }) => theme.media.minTab} {
+    padding: 30px;
+  }
+
   h1 {
     ${({ theme }) => theme.styles.blind}
   }
@@ -29,8 +38,17 @@ const NavHeaderInner = styled.div`
   }
   button {
     position: absolute;
-    top: 0;
-    right: 0;
+    top: 30px;
+    right: 30px;
+    width: 40px;
+    height: 40px;
+    background-color: #ff0;
+    span {
+      ${({ theme }) => theme.styles.blind}
+    }
+    i {
+      font-size: 20px;
+    }
   }
 
   ${({ theme }) => theme.media.pc} {
@@ -54,11 +72,14 @@ function NavBox({ btn, fnBtn }) {
             alt="Salessa"
           />
         </Link>
-        <button type="button" onClick={onClickBtn}>
-          닫기
+        <button type="button" onClick={onClickBtn} id="nav_close_btn">
+          <span>닫기</span>
+          <i>
+            <GrClose />
+          </i>
         </button>
       </NavHeaderInner>
-      <NavInner />
+      <NavArea />
     </NavBoxWrap>
   );
 }

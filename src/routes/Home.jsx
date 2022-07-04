@@ -10,7 +10,7 @@ function Home() {
     setBtn(!btn);
   };
   return (
-    <div>
+    <div id="wrap">
       <Nav btn={btn} fnBtn={fnBtn} />
       <main id="main">
         <Header btn={btn} fnBtn={fnBtn} />

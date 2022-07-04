@@ -132,7 +132,7 @@
   {
     "name": "Products",
     "icon": "https://demo.dashboardpack.com/sales-html/img/menu-icon/7.svg",
-    "url": "/products",
+    "url": null,
     "subNav": [
       {
         "subName": "Products",
