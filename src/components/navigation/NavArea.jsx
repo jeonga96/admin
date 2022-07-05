@@ -19,6 +19,12 @@ const NavContentInner = styled.div`
     height: auto;
     min-height: 34px;
     margin-right: 20px;
+    ${({ theme }) => theme.media.wideTab} {
+      width: 100%;
+    }
+    /* ${({ theme }) => theme.media.widePc} {
+      width: 270px;
+    } */
   }
 `;
 
@@ -35,6 +41,7 @@ function NavBox() {
 
   return (
     <NavContentInner>
+      <h2>메뉴</h2>
       <ul>
         {data.map((item, key) => (
           <li key={key}>

@@ -5,6 +5,7 @@
 const size = {
   tab: 768,
   pc: 992,
+  pullPc: 1200,
 };
 
 // vw unit
@@ -17,9 +18,14 @@ const media = {
   tab: `@media screen and (min-width:${size.tab}px) and (max-width: ${
     size.pc - 1
   }px)`,
+  wideTab: `@media screen and (min-width:${size.pc}px) and (max-width: ${
+    size.pullPc - 1
+  }px)`,
   pc: `@media screen and (min-width: ${size.pc}px)`,
+  minPc: `@media screen and (max-width: ${size.pc - 1}px)`,
+  widePc: `@media screen and (min-width: ${size.pullPc}px)`,
   maxTab: `@media screen and (min-width: ${size.tab}px)`,
-  minTab: `@media screen and (max-width: ${size.pc}px)`,
+  minTab: `@media screen and (max-width: ${size.tab - 1}px)`,
 };
 
 // style 적용 시 반복적으로 사용하는 코드
@@ -35,6 +41,7 @@ const styles = {
   fontBasic:
     "font-size: 16px; font-weight: 500; line-height: 160%; word-break: keep-all;",
   boxShadow: "0 12px 30px rgb(80 143 244 / 10%);",
+  boxShadowDeep: "0 3px 11px rgb(0 0 0 / 17%)",
 };
 
 // font
@@ -50,6 +57,7 @@ const colors = {
   pointGray: "#a5adc6",
   bgGray: "#F3F4F3",
   primary: "#64C5B1",
+  primary2: "#0d6efd",
 };
 
 export const theme = {

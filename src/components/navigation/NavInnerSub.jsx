@@ -38,7 +38,7 @@ const NavInnerButton = styled.button`
       display: block;
       content: "";
       position: absolute;
-      right: 0;
+      right: 20px;
       top: 10px;
       width: 7px;
       height: 7px;

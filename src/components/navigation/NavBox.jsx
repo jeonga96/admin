@@ -6,16 +6,19 @@ import NavArea from "./NavArea";
 
 const NavBoxWrap = styled.nav`
   position: fixed;
+  z-index: 100;
   top: 0;
   left: 0;
-  width: 280px;
+  width: 270px;
   height: 100%;
   background-color: ${({ theme }) => theme.colors.white};
   transition: all 500ms ease-in;
   box-shadow: ${({ theme }) => theme.styles.boxShadow};
-  ${({ theme }) => theme.media.pc} {
-    width: ${({ theme }) => theme.vwLap(220)};
-    max-width: 280px;
+  ${({ theme }) => theme.media.wideTab} {
+    width: 20vw;
+  }
+  ${({ theme }) => theme.media.widePc} {
+    width: 270px;
   }
   &.hide {
     left: -270px;
@@ -28,7 +31,6 @@ const NavHeaderInner = styled.div`
   ${({ theme }) => theme.media.minTab} {
     padding: 30px;
   }
-
   h1 {
     ${({ theme }) => theme.styles.blind}
   }
@@ -42,7 +44,6 @@ const NavHeaderInner = styled.div`
     right: 30px;
     width: 40px;
     height: 40px;
-    background-color: #ff0;
     span {
       ${({ theme }) => theme.styles.blind}
     }
@@ -65,7 +66,7 @@ function NavBox({ btn, fnBtn }) {
   return (
     <NavBoxWrap className={btn ? "show" : "hide"}>
       <NavHeaderInner>
-        <h1>Salessa</h1>
+        <h1>Salessa 홈페이지</h1>
         <Link to="/">
           <img
             src="https://demo.dashboardpack.com/sales-html/img/logo.png"

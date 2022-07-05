@@ -1,5 +1,5 @@
 import styled from "styled-components";
-const FooterWrap = styled.header`
+const FooterWrap = styled.footer`
   width: 100%;
   height: 78px;
   background-color: ${({ theme }) => theme.colors.primary};
