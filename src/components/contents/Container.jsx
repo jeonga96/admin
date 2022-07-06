@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 import Title from "./ContainerAreaTitle";
-import Content from "./ContainerContentArea";
+import Content from "../../pages/Sale";
 import Button from "../form/WidthWhiteButton";
 
 const WrapContainer = styled.div`

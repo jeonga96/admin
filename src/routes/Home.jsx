@@ -8,7 +8,10 @@ function Home() {
   const [btn, setBtn] = useState(true);
   const fnBtn = (btn) => {
     setBtn(!btn);
+    // setBtn(false);
+    // setBtn(true);
   };
+
   return (
     <div id="wrap">
       <Nav btn={btn} fnBtn={fnBtn} />
