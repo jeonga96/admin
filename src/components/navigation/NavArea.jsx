@@ -1,32 +1,9 @@
 // import { NavLink } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import styled from "styled-components";
 
 import NavInnerSub from "./NavInnerSub";
 import NavInnerLink from "./NavInnerLink";
-
-const NavContentInner = styled.div`
-  width: 100%;
-  height: 100%;
-  overflow: scroll;
-  ul {
-    width: 100%;
-    height: auto;
-  }
-  li {
-    width: 250px;
-    height: auto;
-    min-height: 34px;
-    margin-right: 20px;
-    ${({ theme }) => theme.media.wideTab} {
-      width: 100%;
-    }
-    /* ${({ theme }) => theme.media.widePc} {
-      width: 270px;
-    } */
-  }
-`;
 
 function NavBox() {
   const subLinkData = "./data/nav.json";
@@ -40,8 +17,8 @@ function NavBox() {
   }, []);
 
   return (
-    <NavContentInner>
-      <h2>메뉴</h2>
+    <div className="navBottom">
+      <h2 className="blind">카테고리 보기</h2>
       <ul>
         {data.map((item, key) => (
           <li key={key}>
@@ -50,7 +27,7 @@ function NavBox() {
           </li>
         ))}
       </ul>
-    </NavContentInner>
+    </div>
   );
 }
 export default NavBox;

@@ -1,0 +1,94 @@
+.containerWrap {
+  position: relative;
+  width: 100%;
+  height: auto;
+  background-color: var(--color-bggray);
+}
+.containerWrap:before,
+.containerWrap::before {
+  position: absolute;
+  content: "";
+  display: block;
+  width: 100%;
+  height: 160px;
+  background-color: var(--color-primary);
+}
+
+.contentBox {
+  position: relative;
+  width: 100%;
+  height: auto;
+  padding: 15px;
+}
+@media screen and (min-width: 1200px) {
+  .contentBox {
+    padding: 30px;
+  }
+}
+
+/*title - content title wrap& title content*/
+.contentTitleWrap {
+  width: 100%;
+  height: 60px;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px;
+  padding: 0 12px;
+}
+.ContainertitleText {
+  width: auto;
+  height: auto;
+}
+.ContainertitleText h3 {
+  width: auto;
+  height: auto;
+  font-family: var(--font-point);
+  font-size: 26px;
+  line-height: 1.2;
+  margin-bottom: 8px;
+  font-weight: 700;
+  color: var(--color-white);
+}
+.ContainertitleText span {
+  color: var(--color-white);
+}
+
+/*title - title부분의 브래드크럼*/
+.ContainerTitlebreadcrumb {
+  width: 100%;
+  display: flex;
+}
+.ContainerTitlebreadcrumb li {
+  width: auto;
+  height: auto;
+}
+.ContainerTitlebreadcrumb span {
+  width: auto;
+  height: auto;
+  font-size: 14px;
+}
+.breadcrumbPrev:after,
+.breadcrumbPrev::after {
+  content: ">";
+  color: var(--color-white);
+  margin: 0 5px;
+  font-size: 14px;
+}
+
+/*title - title부분의 버튼*/
+.containerTitleBtn {
+  width: auto;
+  height: 44px;
+  padding: 14px 30px;
+  border-radius: 5px;
+  background-color: var(--color-white);
+  box-shadow: 0 3px 11px rgb(0 0 0 / 17%);
+  color: 13px;
+  line-height: 17px;
+  transition: 0.3s;
+  font-size: 14px;
+}
+.containerTitleBtn:hover {
+  background-color: var(--color-primary2);
+  color: var(--color-white);
+}

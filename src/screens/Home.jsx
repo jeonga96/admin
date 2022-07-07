@@ -3,13 +3,12 @@ import { useState } from "react";
 import Nav from "../components/navigation/NavBox";
 import Header from "../components/header/HeaderBox";
 import Footer from "../components/footer/FooterBox";
-import Container from "../components/contents/Container";
+import Container from "../components/common/Container";
+
 function Home() {
   const [btn, setBtn] = useState(true);
   const fnBtn = (btn) => {
     setBtn(!btn);
-    // setBtn(false);
-    // setBtn(true);
   };
 
   return (

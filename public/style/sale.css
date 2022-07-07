@@ -1,0 +1,139 @@
+#sale section div {
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-white);
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+@media screen and (min-width: 992px) {
+  #sale {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  #sale > div {
+    width: 66.6666%;
+    height: auto;
+  }
+}
+
+/* sale section pc와 mob&tab 영역의 사이즈가 동일한 컴포넌트*/
+.downloadReport {
+  width: 100%;
+  height: 131px;
+}
+.revenue {
+  width: 100%;
+  height: 367px;
+}
+
+/* sale section pc 컴포넌트*/
+@media screen and (min-width: 992px) {
+  .accountInfo {
+    width: 33.3333%;
+    height: 444px;
+  }
+  .dailySales {
+    width: 33.3333%;
+    height: 242px;
+  }
+  .kalender {
+    width: 33.3333%;
+    height: 526px;
+  }
+  .marketValus {
+    width: 66.6666%;
+    height: 524px;
+  }
+  .monthlyInvoice {
+    width: 50%;
+    height: 510px;
+  }
+  .newsAndUpdate {
+    width: 33.3333%;
+    height: 444px;
+  }
+  .popularProducts {
+    width: 33.3333%;
+    height: 524px;
+  }
+  .summary {
+    width: 33.3333%;
+    height: 242px;
+  }
+  .topGlobalSales {
+    width: 66.6666%;
+    height: 526px;
+  }
+  .topSellingProduct {
+    width: 50%;
+    height: 510px;
+  }
+  .totalOrder {
+    width: 33.3333%;
+    height: 242px;
+  }
+  .totalSalesUnit {
+    width: 33.3333%;
+    height: 516px;
+  }
+  .transaction {
+    width: 33.3333%;
+    height: 444px;
+  }
+}
+
+/* sale section mob&tab 컴포넌트*/
+@media screen and (max-width: 991px) {
+  .accountInfo {
+    width: 100%;
+    height: 432px;
+  }
+  .dailySales {
+    width: 100%;
+    height: 225px;
+  }
+  .kalender {
+    width: 100%;
+    height: 526px;
+  }
+  .marketValus {
+    width: 100%;
+    height: 524px;
+  }
+  .monthlyInvoice {
+    width: 100%;
+    height: 510px;
+  }
+  .newsAndUpdate {
+    width: 100%;
+    height: 424px;
+  }
+  .popularProducts {
+    width: 100%;
+    height: 480px;
+  }
+  .summary {
+    width: 100%;
+    height: 220px;
+  }
+  .topGlobalSales {
+    width: 100%;
+    height: 620px;
+  }
+  .topSellingProduct {
+    width: 100%;
+    height: 500px;
+  }
+  .totalOrder {
+    width: 100%;
+    height: 242px;
+  }
+  .totalSalesUnit {
+    width: 100%;
+    height: 516px;
+  }
+  .transaction {
+    width: 100%;
+    height: 444px;
+  }
+}

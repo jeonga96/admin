@@ -1,0 +1,102 @@
+:root {
+  --color-black: #101038;
+  --color-white: #fff;
+  --color-gray: #f1f5fa;
+  --color-pointgray: #a5adc6;
+  --color-bggray: #f3f4f3;
+  --color-primary: #64c5b1;
+  --color-primary2: #0d6efd;
+  --font-point: "Comfortaa", cursive;
+  --styles-boxShadow: 0 12px 30px rgb(80 143 244 / 10%);
+  --styles-boxShadowDeep: 0 3px 11px rgb(0 0 0 / 17%);
+}
+
+#wrap {
+  width: 100%;
+  height: auto;
+}
+
+@media screen and (min-width: 992px) and (max-width: 1199px) {
+  #wrap {
+    display: grid;
+    grid-template-columns: 20vw 1fr;
+  }
+  #wrap::before,
+  #wrap:before {
+    content: "";
+    height: 50px;
+    transition: all 500ms ease-in;
+  }
+}
+@media screen and (min-width: 1200px) {
+  #wrap {
+    display: grid;
+    grid-template-columns: 270px 1fr;
+  }
+  #wrap::before,
+  #wrap:before {
+    content: "";
+    height: 50px;
+    transition: all 500ms ease-in;
+  }
+}
+
+.blind_wrap a > span,
+.blind_wrap button > span,
+.blind {
+  display: block;
+  position: absolute;
+  z-index: -1;
+  clip: rect(0 0 0 0);
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+.blind_wrap a {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+}
+
+.none {
+  display: none;
+}
+
+.clearfix {
+  width: 100%;
+  height: auto;
+}
+
+.clearfix:after,
+.clearfix::after {
+  content: "";
+  display: block;
+  clear: both;
+  width: 100%;
+  height: 0;
+}
+
+#wrap {
+  height: auto;
+  margin: auto;
+}
+.link {
+  display: block;
+  width: auto;
+  height: 100%;
+}
+.link:hover {
+  text-decoration: none;
+}
+.mainWrap {
+  width: 100%;
+  height: auto;
+}
+.mainWrap section {
+  padding: 14px;
+  box-sizing: border-box;
+}
+/* ---------------------------------------------------------------------------------------- */

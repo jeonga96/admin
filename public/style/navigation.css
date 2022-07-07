@@ -1,0 +1,171 @@
+.navigationWrap {
+  position: fixed;
+  z-index: 100;
+  top: 0;
+  width: 270px;
+  height: 100%;
+  background-color: var(--color-white);
+  transition: all 500ms ease-in;
+  box-shadow: 0 12px 30px rgb(80 143 244 / 10%);
+}
+
+@media screen and (min-width: 992px) and (max-width: 1199px) {
+  .navigationWrap {
+    width: 20vw;
+  }
+}
+@media screen and (min-width: 1200px) {
+  .navigationWrap {
+    width: 270px;
+  }
+}
+
+.navigationWrap.hide {
+  left: -270px;
+}
+.navigationWrap.show {
+  left: 0;
+}
+
+/*title - navTop*/
+.navTop {
+  width: auto;
+  height: auto;
+  margin: 30px;
+}
+@media screen and (max-width: 767px) {
+  .navTop {
+    padding: 30px;
+  }
+}
+
+.navTop img {
+  width: 100px;
+  height: 19px;
+}
+
+.navTop button {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  width: 40px;
+  height: 40px;
+}
+
+.navTop i {
+  font-size: 20px;
+}
+
+@media screen and (min-width: 992px) {
+  #nav_close_btn {
+    display: none;
+  }
+}
+
+/*title - navBottom*/
+.navBottom {
+  width: 100%;
+  height: 100%;
+  overflow: scroll;
+}
+.navBottom ul {
+  width: 100%;
+  height: auto;
+}
+.navBottom li {
+  width: 250px;
+  height: auto;
+  min-height: 34px;
+  margin-right: 20px;
+}
+
+@media screen and (min-width: 992px) and (max-width: 1199px) {
+  .navBottom li {
+    width: 100%;
+  }
+}
+
+/*title - navInner : 링크로 연결되는 nav button*/
+.navInner {
+  padding-right: 25px;
+  margin-top: 25px;
+  margin-left: 30px;
+}
+
+/*title - navInner : 하위 메뉴가 열리는 nav button*/
+.navInnerSub {
+  width: 100%;
+  height: auto;
+  padding: 0;
+  padding-right: 25px;
+  margin-top: 25px;
+  margin-left: 30px;
+  text-align: left;
+}
+
+.navSubList ul {
+  width: 180px;
+  margin-left: 30px;
+  padding-bottom: 5px;
+}
+.navSubList li {
+  width: 100%;
+  height: auto;
+  line-height: 41px;
+}
+.navSubList > div {
+  position: relative;
+}
+
+.navSubList > div:first-child:after,
+.navSubList > div:first-child::after {
+  display: block;
+  content: "";
+  position: absolute;
+  right: 20px;
+  top: 10px;
+  width: 7px;
+  height: 7px;
+  border-top: 1px solid var(--color-pointgray);
+  border-left: 1px solid var(--color-pointgray);
+  transform: rotate(135deg);
+  transition: all 0.3s ease-in;
+}
+
+.sub_show_btn {
+  width: 100%;
+  height: auto;
+}
+.sub_show_btn > div:first-child:after,
+.sub_show_btn > div:first-child::after {
+  transform: rotate(225deg);
+}
+
+.subLink {
+  text-decoration: none;
+  font-family: var(--font-point);
+  font-size: 14px;
+}
+
+/*title - navPart - navInner를 이루는 조각*/
+.navPart {
+  width: 100%;
+  height: auto;
+}
+
+.navPart div {
+  display: inline-block;
+  width: 34px;
+  height: 34px;
+  padding-top: 10px;
+}
+.navPart img {
+  width: 14px;
+  height: 14px;
+}
+.navPart span {
+  font-family: var(--font-point);
+  color: var(--color-black);
+  font-size: 16px;
+  font-weight: 400;
+}

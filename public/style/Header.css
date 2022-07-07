@@ -1,0 +1,131 @@
+/*title - basic*/
+.headerWrap {
+  width: 100%;
+  background-color: var(--color-white);
+}
+@media screen and (min-width: 1200px) {
+  .headerWrap {
+    height: 100px;
+    padding: 30px;
+  }
+}
+@media screen and (max-width: 1199px) {
+  .headerWrap {
+    height: 80px;
+    padding: 20px;
+  }
+}
+.headerWrap button {
+  width: 100%;
+  height: 100%;
+}
+
+.headerBox {
+  width: 100%;
+  height: 100%;
+}
+
+/*title - menu open button*/
+.openBtn {
+  float: left;
+  width: 20px;
+  height: auto;
+  padding-top: 13px;
+  margin-right: 15px;
+}
+@media screen and (min-width: 992px) {
+  .openBtn {
+    display: none;
+  }
+}
+
+.openBtn i {
+  width: 100%;
+  height: 100%;
+  font-size: 20px;
+  color: var(--color-pointGray);
+}
+
+/*title - headerSearch*/
+.headerSearch {
+  float: left;
+  width: 310px;
+  height: 100%;
+}
+@media screen and (min-width: 768px) and (max-width: 991px) {
+  .headerSearch {
+    width: 200px;
+  }
+}
+@media screen and (max-width: 767px) {
+  .headerSearch {
+    display: none;
+  }
+}
+
+.headerSearch form {
+  width: 100%;
+  height: 100%;
+  border-radius: 50px;
+  border: 1px solid var(--color-primary);
+  box-sizing: border-box;
+}
+
+.headerSearch button {
+  width: 14px;
+  height: 100%;
+  padding: 1px 23px 1px 20px;
+}
+.headerSearch i {
+  color: var(--color-pointgray);
+}
+.headerSearch input {
+  width: 250px;
+  height: 100%;
+  border: none;
+  background-color: transparent;
+}
+@media screen and (min-width: 768px) and (max-width: 991px) {
+  .headerSearch input {
+    width: 132px;
+  }
+}
+
+/* title - info*/
+.infoWrap {
+  float: right;
+  display: flex;
+  justify-content: space-between;
+  width: 195px;
+  height: 100%;
+}
+
+.noticeWrap {
+  display: flex;
+  justify-content: center;
+  width: 145px;
+}
+.noticeWrap li {
+  width: 20px;
+  height: 100%;
+}
+.noticeWrap li:first-child {
+  margin-right: 20px;
+}
+.noticeWrap i {
+  width: 100%;
+  height: 100%;
+  font-size: 17px;
+  color: var(--color-pointGray);
+}
+
+.Headeruser {
+  width: 40px;
+  height: 40px;
+  border-radius: 25px;
+  background-color: var(--color-primary);
+}
+.Headeruser i {
+  font-size: 20px;
+  color: var(--color-white);
+}

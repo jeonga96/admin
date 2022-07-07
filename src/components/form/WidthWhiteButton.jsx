@@ -17,5 +17,9 @@ const Button = styled.button`
 `;
 
 export default function WidthWhiteButton() {
-  return <Button type="button">Create Report</Button>;
+  return (
+    <Button type="button" className="containerTitleBtn">
+      Create Report
+    </Button>
+  );
 }
