@@ -6,7 +6,7 @@
   height: 100%;
   background-color: var(--color-white);
   transition: all 500ms ease-in;
-  box-shadow: 0 12px 30px rgb(80 143 244 / 10%);
+  box-shadow: var(--styles-boxShadow);
 }
 
 @media screen and (min-width: 992px) and (max-width: 1199px) {

@@ -2,20 +2,20 @@ import Nav from "../components/navigation/NavBox";
 import Header from "../components/header/HeaderBox";
 import Footer from "../components/footer/FooterBox";
 import Container from "../components/common/Container";
-import SalePages from "../pages/SalesPages";
+import LoginPages from "../pages/LoginPages";
 
-function Home({ btn, fnBtn }) {
+function Login({ btn, fnBtn }) {
   return (
     <div id="wrap">
       <Nav btn={btn} fnBtn={fnBtn} />
       <div id="WrapBox">
         <Header btn={btn} fnBtn={fnBtn} />
         <Container
-          nowTitle="sales"
+          nowTitle="login"
           breadcrumb1="sales"
           breadcrumb2="Dashboard"
-          breadcrumb3="sales"
-          component={<SalePages />}
+          breadcrumb3="login"
+          component={<LoginPages />}
         />
         <Footer />
       </div>
@@ -23,4 +23,4 @@ function Home({ btn, fnBtn }) {
   );
 }
 
-export default Home;
+export default Login;

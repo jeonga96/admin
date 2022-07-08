@@ -34,7 +34,7 @@ function NavInnerSub({ item }) {
               <li key={key}>
                 <Link
                   to={item.url}
-                  className="subLink"
+                  className="subLink link"
                   style={{
                     color: pathname === item.url ? "#64C5B1" : "#101038",
                   }}
