@@ -9,7 +9,8 @@
   --font-point: Comfortaa, cursive;
   --font-size-small: 0.875rem;
   --font-size-basic: 1rem;
-  --font-size-: 1.125rem;
+  --font-size-em: 1.125rem;
+  --font-size-big: 1.25rem;
   --font-size-title: 1.625rem;
   --font-size-titleem: 2rem;
   --styles-boxShadow: 0 12px 30px rgb(80 143 244 / 10%);
@@ -95,6 +96,9 @@
 }
 .link:hover {
   text-decoration: none;
+}
+.link:focus {
+  outline: none;
 }
 .mainWrap {
   width: 100%;

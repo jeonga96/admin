@@ -137,3 +137,87 @@
     height: 444px;
   }
 }
+
+/*title - section : Revenue - table */
+/*Sale의 기본 틀 사이즈는 위에 작성되어있기 때문에 건들지 않는다.*/
+
+.revenueSaleBox {
+  position: relative;
+  width: 100%;
+  height: auto;
+  padding: 20px;
+}
+.revenueSaleBox table {
+  width: 100%;
+  height: auto;
+}
+.revenueSaleBox thead {
+  width: auto;
+  height: auto;
+  border-bottom: 2px solid var(--color-primary);
+  font-size: var(--font-size-basic);
+  line-height: var(--font-size-titleem);
+}
+.revenueSaleBox tr {
+  width: auto;
+  height: auto;
+}
+.revenueSaleTbody tr {
+  width: 100%;
+  height: 35px;
+}
+.revenueSaleTbody tr:nth-of-type(2n) {
+  background-color: var(--color-bggray);
+}
+.revenueSaleTbody td {
+  text-align: center;
+}
+@media screen and (min-width: 992px) and (max-width: 1199px) {
+  .revenueSaleBox th:nth-child(4),
+  .revenueSaleBox td:nth-child(4) {
+    display: none;
+  }
+}
+@media screen and (min-width: 520px) and (max-width: 767px) {
+  .revenueSaleBox th:nth-child(4),
+  .revenueSaleBox td:nth-child(4) {
+    display: none;
+  }
+}
+@media screen and (max-width: 520px) {
+  .revenueSaleBox th:nth-child(3),
+  .revenueSaleBox th:nth-child(4),
+  .revenueSaleBox td:nth-child(3),
+  .revenueSaleBox td:nth-child(4) {
+    display: none;
+  }
+}
+/*more view btn*/
+.tabelLink {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  width: 120px;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  border-radius: 5px;
+  transition: all 300ms ease-in;
+}
+.tabelLink::before {
+  position: absolute;
+  display: block;
+  content: "";
+  bottom: 0;
+  width: 0;
+  height: 2px;
+  background-color: var(--color-primary);
+  transition: all 300ms ease-in;
+}
+.tabelLink:hover.tabelLink::before,
+.tabelLink:focus.tabelLink::before {
+  width: 100%;
+}
+.tabelLink:focus {
+  font-weight: 400;
+}

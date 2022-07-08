@@ -95,7 +95,8 @@ th,
 thead,
 tbody,
 tfoot {
-  border: 0.0625rem solid #757575;
+  /* border: 0.0625rem solid #757575; */
+  border: none;
   border-spacing: 0;
   border-collapse: collapse;
 }
