@@ -19,6 +19,10 @@
       {
         "subName": "Login",
         "url": "/login"
+      },
+      {
+        "subName": "Table",
+        "url": "/table"
       }
     ]
   },

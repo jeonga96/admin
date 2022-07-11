@@ -15,7 +15,7 @@ function Revenue() {
     axiosData();
   }, []);
 
-  const filterData = data.filter((item) => item.id <= 10);
+  const filterData = data.filter((item) => item.id <= 6);
   return (
     <section className="revenue">
       <div className="revenueSaleBox commonBox">

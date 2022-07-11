@@ -154,6 +154,16 @@
   width: 100%;
   height: auto;
 }
+/* .tableScroll thead {
+  position: absolute;
+  background-color: #fff;
+  width: 100%;
+  top: 0;
+  left: 0;
+} */
+.tableScroll thead th {
+  width: auto;
+}
 .revenueSaleBox tbody {
   width: 100%;
   height: auto;
