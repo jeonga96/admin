@@ -1,7 +1,7 @@
 function TopSellingProduct() {
   return (
     <section className="topSellingProduct">
-      <div>TopSellingProduct</div>
+      <div className="commonBox">TopSellingProduct</div>
     </section>
   );
 }

@@ -1,7 +1,7 @@
 function DailySales() {
   return (
     <section className="dailySales">
-      <div>DailySales</div>
+      <div className="commonBox">DailySales</div>
     </section>
   );
 }

@@ -1,7 +1,7 @@
 function TotalOrder() {
   return (
     <section className="totalOrder">
-      <div>TotalOrder</div>
+      <div className="commonBox">TotalOrder</div>
     </section>
   );
 }

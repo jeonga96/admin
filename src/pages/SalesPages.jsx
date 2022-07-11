@@ -16,7 +16,7 @@ import Transaction from "../components/sale/Transaction";
 
 function Sale() {
   return (
-    <div className="mainWrap" id="sale">
+    <main className="mainWrap" id="sale">
       <div>
         <Revenue />
         <DownloadReport />
@@ -34,7 +34,7 @@ function Sale() {
       <TopSellingProduct />
       <PopularProducts />
       <MarketValus />
-    </div>
+    </main>
   );
 }
 

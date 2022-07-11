@@ -1,7 +1,7 @@
 function PopularProducts() {
   return (
     <section className="popularProducts">
-      <div>PopularProducts</div>
+      <div className="commonBox">PopularProducts</div>
     </section>
   );
 }

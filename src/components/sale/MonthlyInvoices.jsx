@@ -1,7 +1,7 @@
 function MonthlyInvoices() {
   return (
     <section className="monthlyInvoice">
-      <div>MonthlyInvoices</div>
+      <div className="commonBox">MonthlyInvoices</div>
     </section>
   );
 }

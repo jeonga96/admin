@@ -1,7 +1,7 @@
 function AccountInfo() {
   return (
     <section className="accountInfo">
-      <div>AccountInfo</div>
+      <div className="commonBox">AccountInfo</div>
     </section>
   );
 }

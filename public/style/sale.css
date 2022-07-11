@@ -1,8 +1,6 @@
-#sale section div {
+#sale section > div {
   width: 100%;
   height: 100%;
-  background-color: var(--color-white);
-  border-radius: 5px;
   box-sizing: border-box;
 }
 @media screen and (min-width: 992px) {
@@ -147,30 +145,18 @@
   height: auto;
   padding: 20px;
 }
-.revenueSaleBox table {
+.tableScroll {
+  overflow: scroll;
+  width: 100%;
+  height: 245px;
+}
+.tableScroll table {
   width: 100%;
   height: auto;
 }
-.revenueSaleBox thead {
-  width: auto;
-  height: auto;
-  border-bottom: 2px solid var(--color-primary);
-  font-size: var(--font-size-basic);
-  line-height: var(--font-size-titleem);
-}
-.revenueSaleBox tr {
-  width: auto;
-  height: auto;
-}
-.revenueSaleTbody tr {
+.revenueSaleBox tbody {
   width: 100%;
-  height: 35px;
-}
-.revenueSaleTbody tr:nth-of-type(2n) {
-  background-color: var(--color-bggray);
-}
-.revenueSaleTbody td {
-  text-align: center;
+  height: auto;
 }
 @media screen and (min-width: 992px) and (max-width: 1199px) {
   .revenueSaleBox th:nth-child(4),
@@ -179,7 +165,9 @@
   }
 }
 @media screen and (min-width: 520px) and (max-width: 767px) {
+  .revenueSaleBox th:nth-child(3),
   .revenueSaleBox th:nth-child(4),
+  .revenueSaleBox td:nth-child(3),
   .revenueSaleBox td:nth-child(4) {
     display: none;
   }

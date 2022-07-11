@@ -1,7 +1,7 @@
 function Summary() {
   return (
     <section className="summary">
-      <div>Summary</div>
+      <div className="commonBox">Summary</div>
     </section>
   );
 }

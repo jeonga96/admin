@@ -1,7 +1,7 @@
 function NewsAndUpdate() {
   return (
     <section className="newsAndUpdate">
-      <div>NewsAndUpdate</div>
+      <div className="commonBox">NewsAndUpdate</div>
     </section>
   );
 }

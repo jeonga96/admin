@@ -1,7 +1,7 @@
 function TotalSalesUnit() {
   return (
     <section className="totalSalesUnit">
-      <div>TotalSalesUnit</div>
+      <div className="commonBox">TotalSalesUnit</div>
     </section>
   );
 }

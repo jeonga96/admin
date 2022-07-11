@@ -1,7 +1,7 @@
 function Transaction() {
   return (
     <section className="transaction">
-      <div>Transaction</div>
+      <div className="commonBox">Transaction</div>
     </section>
   );
 }

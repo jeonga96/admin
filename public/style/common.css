@@ -108,4 +108,37 @@
   padding: 14px;
   box-sizing: border-box;
 }
+
+.commonBox {
+  background-color: var(--color-white);
+  border-radius: 5px;
+  box-shadow: var(--styles-boxShadow);
+}
 /* ---------------------------------------------------------------------------------------- */
+
+/*table*/
+.commonTable thead {
+  border-bottom: 2px solid var(--color-primary);
+  font-size: var(--font-size-basic);
+  line-height: var(--font-size-titleem);
+}
+
+.commonTable tbody tr:nth-of-type(2n) {
+  background-color: var(--color-bggray);
+}
+.commonTable thead {
+  width: auto;
+  height: auto;
+}
+.commonTable tr {
+  width: auto;
+  height: auto;
+}
+.commonTable tbody tr {
+  width: 100%;
+  height: 35px;
+}
+
+.commonTable td {
+  text-align: center;
+}

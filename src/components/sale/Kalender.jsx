@@ -1,7 +1,7 @@
 function Kalender() {
   return (
     <section className="kalender">
-      <div>Kalender</div>
+      <div className="commonBox">Kalender</div>
     </section>
   );
 }

@@ -1,7 +1,7 @@
 function DownloadReport() {
   return (
     <section className="downloadReport">
-      <div>DownloadReport</div>
+      <div className="commonBox">DownloadReport</div>
     </section>
   );
 }

@@ -1,7 +1,7 @@
 function TopGlobalSales() {
   return (
     <section className="topGlobalSales">
-      <div>TopGlobalSales</div>
+      <div className="commonBox">TopGlobalSales</div>
     </section>
   );
 }

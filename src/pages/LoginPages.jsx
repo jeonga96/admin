@@ -2,8 +2,9 @@ import { Link } from "react-router-dom";
 
 function LoginPages() {
   return (
-    <div className="mainWrap loginWrap">
-      <div className="loginBox">
+    <section className="mainWrap loginWrap">
+      <h3 className="blind">login</h3>
+      <div className="loginBox commonBox">
         <div className="loginImg">
           <span className="blind">로그인 설명 및 광고 이미지</span>
         </div>
@@ -42,7 +43,7 @@ function LoginPages() {
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }
 export default LoginPages;

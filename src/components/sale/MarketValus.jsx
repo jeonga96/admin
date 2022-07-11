@@ -1,7 +1,7 @@
 function MarketValus() {
   return (
     <section className="marketValus">
-      <div>MarketValus</div>
+      <div className="commonBox">MarketValus</div>
     </section>
   );
 }
