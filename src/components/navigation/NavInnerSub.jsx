@@ -28,6 +28,7 @@ function NavInnerSub({ item }) {
     >
       <div className={more ? "navSubList sub_show_btn" : "navSubList"}>
         <NavPartList item={item} />
+
         <AnimateHeight id="example-panel" duration={300} height={height}>
           <ul>
             {item.subNav.map((item, key) => (

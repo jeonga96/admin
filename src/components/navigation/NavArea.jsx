@@ -1,17 +1,16 @@
 // import { NavLink } from "react-router-dom";
+import { axiosGetData } from "../../service/axios";
+import { navUrl } from "../../service/url";
 import { useState, useEffect } from "react";
-import axios from "axios";
 
 import NavInnerSub from "./NavInnerSub";
 import NavInnerLink from "./NavInnerLink";
 
 function NavBox() {
-  const subLinkData = "./data/nav.json";
   const [data, setData] = useState([]);
-  const axiosData = async () => {
-    const jsonData = await axios.get(subLinkData);
-    setData(jsonData.data);
-  };
+  function axiosData() {
+    axiosGetData(navUrl).then((res) => setData(res));
+  }
   useEffect(() => {
     axiosData();
   }, []);

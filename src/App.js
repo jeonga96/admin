@@ -25,7 +25,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Home btn={btn} fnBtn={fnBtn} />} />
-          <Route path="/login" element={<Login btn={btn} fnBtn={fnBtn} />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/table" element={<Table btn={btn} fnBtn={fnBtn} />} />
         </Routes>
       </Router>

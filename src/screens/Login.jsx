@@ -1,24 +1,45 @@
-import Nav from "../components/navigation/NavBox";
-import Header from "../components/header/HeaderBox";
-import Footer from "../components/footer/FooterBox";
-import Container from "../components/common/Container";
-import LoginPages from "../pages/LoginPages";
+import { Link } from "react-router-dom";
 
-function Login({ btn, fnBtn }) {
+function Login() {
   return (
     <div id="wrap">
-      <Nav btn={btn} fnBtn={fnBtn} />
-      <div id="WrapBox">
-        <Header btn={btn} fnBtn={fnBtn} />
-        <Container
-          nowTitle="login"
-          breadcrumb1="sales"
-          breadcrumb2="Dashboard"
-          breadcrumb3="login"
-          component={<LoginPages />}
-        />
-        <Footer />
-      </div>
+      <section className="mainWrap loginWrap">
+        <h3 className="blind">login</h3>
+        <div className="loginBox commonBox">
+          <h3>login</h3>
+          <form className="loginForm">
+            <input
+              type="text"
+              name="user_id"
+              id="userid"
+              placeholder="아이디를 입력해 주세요."
+            />
+            <label htmlFor="userid" className="blind userIdLabel">
+              아이디를 입력해 주세요.
+            </label>
+            <input
+              type="password"
+              name="pass_wd"
+              id="passwd"
+              placeholder="비밀번호를 입력해 주세요."
+            />
+            <label htmlFor="passwd" className="blind userPwLabel">
+              비밀번호를 입력해 주세요.
+            </label>
+            <button type="submit" className="loginBtn">
+              Log In
+            </button>
+          </form>
+          <div className="LoginLinkWrap">
+            <Link to="/join" className="joinLink link">
+              <span>회원가입</span>
+            </Link>
+            <Link to="/forgetPw" className="forgerPwLink link">
+              <span>비밀번호 찾기</span>
+            </Link>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }

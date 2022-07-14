@@ -1,19 +1,18 @@
 // import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { axiosGetData } from "../service/axios";
+import { tableUrl } from "../service/url";
 import {
   HiOutlineChevronDoubleLeft,
   HiOutlineChevronDoubleRight,
 } from "react-icons/hi";
-import axios from "axios";
 import Tr from "../components/common/TabelTr";
 
 function LoginPages() {
   const [data, setData] = useState([]);
-  const urlData = "./data/table.json";
-  const axiosData = async () => {
-    const jsonData = await axios.get(urlData);
-    setData(jsonData.data);
-  };
+  function axiosData() {
+    axiosGetData(tableUrl).then((res) => setData(res));
+  }
   useEffect(() => {
     axiosData();
   }, []);
