@@ -1,5 +1,5 @@
 // import { NavLink } from "react-router-dom";
-import { axiosGetData } from "../../service/axios";
+import { axiosGetData } from "../../service/importData";
 import { navUrl } from "../../service/url";
 import { useState, useEffect } from "react";
 

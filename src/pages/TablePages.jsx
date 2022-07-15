@@ -1,6 +1,6 @@
 // import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { axiosGetData } from "../service/axios";
+import { axiosGetData } from "../service/importData";
 import { tableUrl } from "../service/url";
 import {
   HiOutlineChevronDoubleLeft,

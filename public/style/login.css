@@ -60,10 +60,10 @@
   border-bottom: 1px solid var(--color-primary);
   background-color: var(--color-gray);
 }
-#userId {
+#userid {
   margin-bottom: 20px;
 }
-#userPw {
+#passwd {
   margin-bottom: 40px;
 }
 .loginBtn {

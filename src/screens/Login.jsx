@@ -1,18 +1,33 @@
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { axiosLogin } from "../service/importData";
+import { loginUrl } from "../service/url";
 
 function Login() {
+  const [login, setlogin] = useState({ userid: "", passwd: "" });
+  function onChange(e) {
+    setlogin({ ...login, [e.target.id]: [e.target.value] });
+  }
+  const fnLogin = (e) => {
+    e.preventDefault();
+    if (login.userid === "" || login.passwd === "") {
+      return console.log("빈칸이다");
+    }
+    axiosLogin(loginUrl, login);
+  };
   return (
     <div id="wrap">
       <section className="mainWrap loginWrap">
         <h3 className="blind">login</h3>
         <div className="loginBox commonBox">
           <h3>login</h3>
-          <form className="loginForm">
+          <form className="loginForm" onSubmit={fnLogin}>
             <input
               type="text"
               name="user_id"
               id="userid"
               placeholder="아이디를 입력해 주세요."
+              onChange={onChange}
             />
             <label htmlFor="userid" className="blind userIdLabel">
               아이디를 입력해 주세요.
@@ -22,6 +37,7 @@ function Login() {
               name="pass_wd"
               id="passwd"
               placeholder="비밀번호를 입력해 주세요."
+              onChange={onChange}
             />
             <label htmlFor="passwd" className="blind userPwLabel">
               비밀번호를 입력해 주세요.
