@@ -5,14 +5,14 @@
 }
 @media screen and (min-width: 1200px) {
   .headerWrap {
-    height: 100px;
-    padding: 30px;
+    height: 6.25rem;
+    padding: 1.875rem;
   }
 }
 @media screen and (max-width: 1199px) {
   .headerWrap {
-    height: 80px;
-    padding: 20px;
+    height: 5rem;
+    padding: 1.25rem;
   }
 }
 .headerWrap button {
@@ -28,10 +28,10 @@
 /*title - menu open button*/
 .openBtn {
   float: left;
-  width: 20px;
+  width: 1.25rem;
   height: auto;
-  padding-top: 13px;
-  margin-right: 15px;
+  padding-top: 0.8125rem;
+  margin-right: 0.9375rem;
 }
 @media screen and (min-width: 992px) {
   .openBtn {
@@ -49,12 +49,12 @@
 /*title - headerSearch*/
 .headerSearch {
   float: left;
-  width: 310px;
+  width: 19.375rem;
   height: 100%;
 }
 @media screen and (min-width: 768px) and (max-width: 991px) {
   .headerSearch {
-    width: 200px;
+    width: 12.5rem;
   }
 }
 @media screen and (max-width: 767px) {
@@ -66,28 +66,28 @@
 .headerSearch form {
   width: 100%;
   height: 100%;
-  border-radius: 50px;
-  border: 1px solid var(--color-primary);
+  border-radius: 3.125rem;
+  border: 0.0625rem solid var(--color-primary);
   box-sizing: border-box;
 }
 
 .headerSearch button {
-  width: 14px;
+  width: 0.875rem;
   height: 100%;
-  padding: 1px 23px 1px 20px;
+  padding: 0.0625rem 1.4375rem 0.0625rem 1.25rem;
 }
 .headerSearch i {
   color: var(--color-pointgray);
 }
 .headerSearch input {
-  width: 250px;
+  width: 15.625rem;
   height: 100%;
   border: none;
   background-color: transparent;
 }
 @media screen and (min-width: 768px) and (max-width: 991px) {
   .headerSearch input {
-    width: 132px;
+    width: 8.25rem;
   }
 }
 
@@ -96,21 +96,21 @@
   float: right;
   display: flex;
   justify-content: space-between;
-  width: 195px;
+  width: 12.1875rem;
   height: 100%;
 }
 
 .noticeWrap {
   display: flex;
   justify-content: center;
-  width: 145px;
+  width: 9.0625rem;
 }
 .noticeWrap li {
-  width: 20px;
+  width: 1.25rem;
   height: 100%;
 }
 .noticeWrap li:first-child {
-  margin-right: 20px;
+  margin-right: 1.25rem;
 }
 .noticeWrap i {
   width: 100%;
@@ -120,9 +120,9 @@
 }
 
 .Headeruser {
-  width: 40px;
-  height: 40px;
-  border-radius: 25px;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 1.5625rem;
   background-color: var(--color-primary);
 }
 .Headeruser i {

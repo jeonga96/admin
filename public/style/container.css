@@ -10,7 +10,7 @@
   content: "";
   display: block;
   width: 100%;
-  height: 160px;
+  height: 10rem;
   background-color: var(--color-primary);
 }
 
@@ -18,22 +18,22 @@
   position: relative;
   width: 100%;
   height: auto;
-  padding: 15px;
+  padding: 0.9375rem;
 }
 @media screen and (min-width: 1200px) {
   .contentBox {
-    padding: 30px;
+    padding: 1.875rem;
   }
 }
 
 /*title - content title wrap& title content*/
 .contentTitleWrap {
   width: 100%;
-  height: 60px;
+  height: 3.75rem;
   display: flex;
   justify-content: space-between;
-  margin-bottom: 30px;
-  padding: 0 12px;
+  margin-bottom: 1.875rem;
+  padding: 0 0.75rem;
 }
 .ContainertitleText {
   width: auto;
@@ -45,7 +45,7 @@
   font-family: var(--font-point);
   font-size: var(--font-size-title);
   line-height: 1.2;
-  margin-bottom: 8px;
+  margin-bottom: 0.5rem;
   font-weight: 700;
   color: var(--color-white);
 }
@@ -71,20 +71,20 @@
 .breadcrumbPrev::after {
   content: ">";
   color: var(--color-white);
-  margin: 0 5px;
+  margin: 0 0.3125rem;
   font-size: var(--font-size-small);
 }
 
 /*title - title부분의 버튼*/
 .containerTitleBtn {
   width: auto;
-  height: 44px;
-  padding: 14px 30px;
-  border-radius: 5px;
+  height: 2.75rem;
+  padding: 0.875rem 1.875rem;
+  border-radius: 0.3125rem;
   background-color: var(--color-white);
-  box-shadow: 0 3px 11px rgb(0 0 0 / 17%);
-  color: 13px;
-  line-height: 17px;
+  box-shadow: var(--styles-boxShadowDeep);
+  color: 0.8125rem;
+  line-height: 1.0625rem;
   transition: 0.3s;
   font-size: var(--font-size-small);
 }

@@ -1,17 +1,17 @@
 .tableWrap {
   width: 100%;
   height: auto;
-  padding: 0 12px;
+  padding: 0 0.75rem;
 }
 .tableBox {
   width: 100%;
   height: auto;
-  padding: 10px 10px 40px;
+  padding: 0.625rem 0.625rem 2.5rem;
 }
 .tableBox table {
   width: 100%;
   height: auto;
-  margin-bottom: 40px;
+  margin-bottom: 2.5rem;
 }
 @media screen and (max-width: 520px) {
   .tableBox th:nth-child(4),
@@ -21,11 +21,11 @@
 }
 .tableBox thead {
   width: 100%;
-  height: 55px;
+  height: 3.4375rem;
 }
 .tableBox tbody tr {
   width: 100%;
-  height: 45px;
+  height: 2.8125rem;
 }
 
 /*btn 영역*/
@@ -35,15 +35,15 @@
   width: auto;
 }
 .tableBtn li {
-  width: 30px;
-  height: 30px;
-  margin: 0 2px;
+  width: 1.875rem;
+  height: 1.875rem;
+  margin: 0 0.125rem;
 }
 .tableBtn button {
   display: block;
   width: 100%;
   height: 100%;
-  border-radius: 5px;
+  border-radius: 0.3125rem;
   transition: all 300ms ease-in;
 }
 .tableBtn button.active {
@@ -56,5 +56,5 @@
   display: block;
   width: 100%;
   height: auto;
-  padding-top: 5px;
+  padding-top: 0.3125rem;
 }

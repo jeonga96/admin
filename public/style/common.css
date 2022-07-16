@@ -13,8 +13,8 @@
   --font-size-big: 1.25rem;
   --font-size-title: 1.625rem;
   --font-size-titleem: 2rem;
-  --styles-boxShadow: 0 12px 30px rgb(80 143 244 / 10%);
-  --styles-boxShadowDeep: 0 3px 11px rgb(0 0 0 / 17%);
+  --styles-boxShadow: 0 0.75rem 1.875rem rgb(80 143 244 / 10%);
+  --styles-boxShadowDeep: 0 0.1875rem 0.6875rem rgb(0 0 0 / 17%);
 }
 
 #wrap {
@@ -30,19 +30,19 @@
   #wrap::before,
   #wrap:before {
     content: "";
-    height: 50px;
+    height: 3.125rem;
     transition: all 300ms ease-in;
   }
 }
 @media screen and (min-width: 1200px) {
   #wrap {
     display: grid;
-    grid-template-columns: 270px 1fr;
+    grid-template-columns: 16.875rem 1fr;
   }
   #wrap::before,
   #wrap:before {
     content: "";
-    height: 50px;
+    height: 3.125rem;
     transition: all 300ms ease-in;
   }
 }
@@ -105,20 +105,20 @@
   height: auto;
 }
 .mainWrap section {
-  padding: 14px;
+  padding: 0.875rem;
   box-sizing: border-box;
 }
 
 .commonBox {
   background-color: var(--color-white);
-  border-radius: 5px;
+  border-radius: 0.3125rem;
   box-shadow: var(--styles-boxShadow);
 }
 /* ---------------------------------------------------------------------------------------- */
 
 /*table*/
 .commonTable thead {
-  border-bottom: 2px solid var(--color-primary);
+  border-bottom: 0.125rem solid var(--color-primary);
   font-size: var(--font-size-basic);
   line-height: var(--font-size-titleem);
 }
@@ -136,7 +136,7 @@
 }
 .commonTable tbody tr {
   width: 100%;
-  height: 35px;
+  height: 2.1875rem;
 }
 
 .commonTable td {

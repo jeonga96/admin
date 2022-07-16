@@ -23,17 +23,17 @@
   right: 0;
   bottom: 0;
   margin: auto;
-  padding: 30px;
-  width: 600px;
-  height: 400px;
+  padding: 1.875rem;
+  width: 37.5rem;
+  height: 25rem;
   transition: all 300ms ease-in;
 }
 @media screen and (max-width: 767px) {
   .loginBox {
-    padding: 10px;
-    padding-top: 80px;
-    width: 380px;
-    height: 500px;
+    padding: 0.625rem;
+    padding-top: 5rem;
+    width: 23.75rem;
+    height: 31.25rem;
   }
 }
 .loginForm {
@@ -42,38 +42,38 @@
 }
 .loginBox h3 {
   display: block;
-  font-size: 30px;
+  font-size: 1.875rem;
   font-family: var(--font-point);
   color: var(--color-primary);
-  padding: 20px 0 40px;
+  padding: 1.25rem 0 2.5rem;
   text-transform: uppercase;
 }
 .loginBox input {
   width: 100%;
-  height: 50px;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  border-bottom: 1px solid var(--color-gray);
+  height: 3.125rem;
+  border-top-left-radius: 0.625rem;
+  border-top-right-radius: 0.625rem;
+  border-bottom: 0.0625rem solid var(--color-gray);
 }
 .loginBox input:focus {
   transition: all 300ms ease-in;
-  border-bottom: 1px solid var(--color-primary);
+  border-bottom: 0.0625rem solid var(--color-primary);
   background-color: var(--color-gray);
 }
 #userid {
-  margin-bottom: 20px;
+  margin-bottom: 1.25rem;
 }
 #passwd {
-  margin-bottom: 40px;
+  margin-bottom: 2.5rem;
 }
 .loginBtn {
   width: 100%;
-  height: 40px;
+  height: 2.5rem;
   background-color: var(--color-gray);
-  border-radius: 5px;
+  border-radius: 0.3125rem;
   transition: all 300ms ease-in;
   color: var(--color-black);
-  margin-bottom: 20px;
+  margin-bottom: 1.25rem;
   outline: none;
 }
 .loginBtn:hover {
@@ -90,18 +90,18 @@
   justify-content: center;
 }
 .LoginLinkWrap .link {
-  padding: 4px 12px;
+  padding: 0.25rem 0.75rem;
   transition: all 300ms ease-in;
   outline: none;
   font-size: var(--font-size-small);
   font-weight: 300;
 }
 .LoginLinkWrap .link:hover {
-  border-radius: 5px;
+  border-radius: 0.3125rem;
   font-weight: 400;
 }
 .LoginLinkWrap .link:focus {
   background-color: var(--color-gray);
-  border-radius: 5px;
+  border-radius: 0.3125rem;
   font-weight: 400;
 }

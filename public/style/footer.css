@@ -1,6 +1,6 @@
 .footer {
   width: 100%;
-  height: 78px;
+  height: 4.875rem;
   background-color: var(--color-primary);
 }
 .footer span {
@@ -8,6 +8,6 @@
   width: 100%;
   height: auto;
   color: var(--color-white);
-  line-height: 78px;
+  line-height: 4.875rem;
   text-align: center;
 }

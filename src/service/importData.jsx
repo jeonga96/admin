@@ -1,12 +1,13 @@
 import axios from "axios";
+import { Navigate } from "react-router-dom";
 
 function setSession(name, data) {
-  localStorage.setItem(name, data);
-  // sessionStorage.setItem(name, data);
+  // localStorage.setItem(name, data);
+  sessionStorage.setItem(name, data);
 }
 function getSession(name) {
-  localStorage.getItem(name);
-  // sessionStorage.getItem(name);
+  // localStorage.getItem(name);
+  sessionStorage.getItem(name);
 }
 
 function axiosGetData(url, getData) {
@@ -50,11 +51,19 @@ function axiosLogin(loginUrl, userData) {
       if (res.data.status === "success") {
         const accessToken = res.data.data.jtoken;
         console.log(accessToken);
+        console.log("로그인이 됐다");
         setSession("is_login", `${accessToken}`);
-        document.location.href = "/";
+        <Navigate to="/" />;
       }
     })
     .catch((error) => console.log(error.response));
 }
+
+// function PrivateRoute(Component) {
+//   const isLogin = getSession("is_login");
+//   console.log("하고있나?");
+
+//   return !!isLogin ? <Component /> : <Navigate to="/login" />;
+// }
 
 export { axiosGetData, axiosSetData, axiosLogin, setSession, getSession };

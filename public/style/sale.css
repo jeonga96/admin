@@ -17,66 +17,66 @@
 /* sale section pc와 mob&tab 영역의 사이즈가 동일한 컴포넌트*/
 .downloadReport {
   width: 100%;
-  height: 131px;
+  height: 8.1875rem;
 }
 .revenue {
   width: 100%;
-  height: 367px;
+  height: 22.9375rem;
 }
 
 /* sale section pc 컴포넌트*/
 @media screen and (min-width: 992px) {
   .accountInfo {
     width: 33.3333%;
-    height: 444px;
+    height: 27.75rem;
   }
   .dailySales {
     width: 33.3333%;
-    height: 242px;
+    height: 15.125rem;
   }
   .kalender {
     width: 33.3333%;
-    height: 526px;
+    height: 32.875rem;
   }
   .marketValus {
     width: 66.6666%;
-    height: 524px;
+    height: 32.75rem;
   }
   .monthlyInvoice {
     width: 50%;
-    height: 510px;
+    height: 31.875rem;
   }
   .newsAndUpdate {
     width: 33.3333%;
-    height: 444px;
+    height: 27.75rem;
   }
   .popularProducts {
     width: 33.3333%;
-    height: 524px;
+    height: 32.75rem;
   }
   .summary {
     width: 33.3333%;
-    height: 242px;
+    height: 15.125rem;
   }
   .topGlobalSales {
     width: 66.6666%;
-    height: 526px;
+    height: 32.875rem;
   }
   .topSellingProduct {
     width: 50%;
-    height: 510px;
+    height: 31.875rem;
   }
   .totalOrder {
     width: 33.3333%;
-    height: 242px;
+    height: 15.125rem;
   }
   .totalSalesUnit {
     width: 33.3333%;
-    height: 516px;
+    height: 32.25rem;
   }
   .transaction {
     width: 33.3333%;
-    height: 444px;
+    height: 27.75rem;
   }
 }
 
@@ -84,55 +84,55 @@
 @media screen and (max-width: 991px) {
   .accountInfo {
     width: 100%;
-    height: 432px;
+    height: 27rem;
   }
   .dailySales {
     width: 100%;
-    height: 225px;
+    height: 14.0625rem;
   }
   .kalender {
     width: 100%;
-    height: 526px;
+    height: 32.875rem;
   }
   .marketValus {
     width: 100%;
-    height: 524px;
+    height: 32.75rem;
   }
   .monthlyInvoice {
     width: 100%;
-    height: 510px;
+    height: 31.875rem;
   }
   .newsAndUpdate {
     width: 100%;
-    height: 424px;
+    height: 26.5rem;
   }
   .popularProducts {
     width: 100%;
-    height: 480px;
+    height: 30rem;
   }
   .summary {
     width: 100%;
-    height: 220px;
+    height: 13.75rem;
   }
   .topGlobalSales {
     width: 100%;
-    height: 620px;
+    height: 38.75rem;
   }
   .topSellingProduct {
     width: 100%;
-    height: 500px;
+    height: 31.25rem;
   }
   .totalOrder {
     width: 100%;
-    height: 242px;
+    height: 15.125rem;
   }
   .totalSalesUnit {
     width: 100%;
-    height: 516px;
+    height: 32.25rem;
   }
   .transaction {
     width: 100%;
-    height: 444px;
+    height: 27.75rem;
   }
 }
 
@@ -143,12 +143,12 @@
   position: relative;
   width: 100%;
   height: auto;
-  padding: 20px;
+  padding: 1.25rem;
 }
 .tableScroll {
   overflow: scroll;
   width: 100%;
-  height: 245px;
+  height: 15.3125rem;
 }
 .tableScroll table {
   width: 100%;
@@ -193,13 +193,13 @@
 /*more view btn*/
 .tabelLink {
   position: absolute;
-  bottom: 20px;
-  right: 20px;
-  width: 120px;
-  height: 30px;
-  line-height: 30px;
+  bottom: 1.25rem;
+  right: 1.25rem;
+  width: 7.5rem;
+  height: 1.875rem;
+  line-height: 1.875rem;
   text-align: center;
-  border-radius: 5px;
+  border-radius: 0.3125rem;
   transition: all 300ms ease-in;
 }
 .tabelLink::before {
@@ -208,7 +208,7 @@
   content: "";
   bottom: 0;
   width: 0;
-  height: 2px;
+  height: 0.125rem;
   background-color: var(--color-primary);
   transition: all 300ms ease-in;
 }
