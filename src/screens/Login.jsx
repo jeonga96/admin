@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { axiosLogin } from "../service/importData";
+import { loginEvent } from "../service/importData";
 import { loginUrl } from "../service/url";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
+  const navigate = useNavigate();
   const [login, setlogin] = useState({ userid: "", passwd: "" });
   function onChange(e) {
     setlogin({ ...login, [e.target.id]: [e.target.value] });
@@ -13,7 +15,8 @@ function Login() {
     if (login.userid === "" || login.passwd === "") {
       return console.log("빈칸이다");
     }
-    axiosLogin(loginUrl, login);
+    loginEvent(loginUrl, login);
+    navigate("/");
   };
   return (
     <div id="wrap">

@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./screens/Home";
 import Login from "./screens/Login";
 import Table from "./screens/Table";
+import { userCheck, getSession } from "./service/importData";
 
 function App() {
   const [btn, setBtn] = useState(true);
@@ -19,6 +20,9 @@ function App() {
     mql.addEventListener("change", screenChange);
     return () => mql.removeEventListener("change", screenChange);
   }, []);
+  useEffect(() => {
+    // userCheck();
+  }, [getSession]);
   return (
     <div className="App">
       <Router>

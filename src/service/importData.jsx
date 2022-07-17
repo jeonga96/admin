@@ -1,13 +1,18 @@
 import axios from "axios";
-import { Navigate } from "react-router-dom";
+
+const ISLOGIN = "is_login";
 
 function setSession(name, data) {
   // localStorage.setItem(name, data);
-  sessionStorage.setItem(name, data);
+  return sessionStorage.setItem(name, data);
 }
 function getSession(name) {
   // localStorage.getItem(name);
-  sessionStorage.getItem(name);
+  return sessionStorage.getItem(name);
+}
+
+function logoutEvent() {
+  return sessionStorage.removeItem(ISLOGIN);
 }
 
 function axiosGetData(url, getData) {
@@ -31,7 +36,7 @@ function axiosSetData(url, postData) {
     .catch((error) => console.log(error));
 }
 
-function axiosLogin(loginUrl, userData) {
+function loginEvent(loginUrl, userData) {
   return axios({
     method: "POST",
     url: loginUrl,
@@ -51,19 +56,26 @@ function axiosLogin(loginUrl, userData) {
       if (res.data.status === "success") {
         const accessToken = res.data.data.jtoken;
         console.log(accessToken);
-        console.log("로그인이 됐다");
-        setSession("is_login", `${accessToken}`);
-        <Navigate to="/" />;
+        setSession(ISLOGIN, `${accessToken}`);
       }
     })
     .catch((error) => console.log(error.response));
 }
 
-// function PrivateRoute(Component) {
-//   const isLogin = getSession("is_login");
-//   console.log("하고있나?");
+function userCheck() {
+  const user = getSession(ISLOGIN);
+  if (!user) {
+    window.location.href = "/login";
+    return;
+  }
+}
 
-//   return !!isLogin ? <Component /> : <Navigate to="/login" />;
-// }
-
-export { axiosGetData, axiosSetData, axiosLogin, setSession, getSession };
+export {
+  axiosGetData,
+  axiosSetData,
+  loginEvent,
+  logoutEvent,
+  setSession,
+  getSession,
+  userCheck,
+};
