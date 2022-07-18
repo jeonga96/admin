@@ -4,26 +4,23 @@ import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import Home from "./screens/Home";
 import Login from "./screens/Login";
 import Table from "./screens/Table";
-import { getSession } from "./service/importData";
+import { getStorage } from "./service/importData";
 import { ISLOGIN } from "./service/string";
 
 function RouterComponent({ btn, fnBtn }) {
   const location = useLocation();
   const navigate = useNavigate();
-
-  const user = getSession(ISLOGIN);
-  console.log("userCheck확인중", !user);
+  const user = getStorage(ISLOGIN);
 
   const userCheck = () => {
-    const user = getSession(ISLOGIN);
     const locationCheck = location.pathname !== "/login";
     if (!user && locationCheck) {
       navigate("/login");
       return;
     }
   };
+  // const memoUserCheck = useCallback(userCheck, []);
   useEffect(() => {
-    console.log("바뀌었다!");
     userCheck();
   }, []);
 

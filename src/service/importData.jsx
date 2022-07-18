@@ -1,17 +1,17 @@
 import axios from "axios";
 import { ISLOGIN } from "./string";
 
-export function setSession(name, data) {
+export function setStorage(name, data) {
   // localStorage.setItem(name, data);
   return sessionStorage.setItem(name, data);
 }
-export function getSession(name) {
+export function getStorage(name) {
   // localStorage.getItem(name);
   return sessionStorage.getItem(name);
 }
 
-export function logoutEvent() {
-  return sessionStorage.removeItem(ISLOGIN);
+export function removeStorage(name) {
+  return sessionStorage.removeItem(name);
 }
 
 export function axiosGetData(url, getData) {
@@ -49,13 +49,14 @@ export function loginEvent(loginUrl, userData) {
   })
     .then((res) => {
       if (res.data.status === "fail") {
-        alert("회원가입을 먼저 진행해 주세요.");
+        alert("회원이 아닙니다. 회원가입을 먼저 진행해 주세요.");
         return;
       }
       if (res.data.status === "success") {
         const accessToken = res.data.data.jtoken;
-        console.log(accessToken);
-        setSession(ISLOGIN, `${accessToken}`);
+        setStorage(ISLOGIN, `${accessToken}`);
+        window.location.href = `${process.env.PUBLIC_URL}/`;
+        return console.log(accessToken);
       }
     })
     .catch((error) => console.log(error.response));

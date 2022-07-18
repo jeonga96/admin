@@ -1,11 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { loginEvent } from "../service/importData";
 import { loginUrl } from "../service/string";
-import { useNavigate } from "react-router-dom";
 
 function Login() {
-  const navigate = useNavigate();
   const [login, setlogin] = useState({ userid: "", passwd: "" });
   function onChange(e) {
     setlogin({ ...login, [e.target.id]: [e.target.value] });
@@ -13,10 +11,9 @@ function Login() {
   const fnLogin = (e) => {
     e.preventDefault();
     if (login.userid === "" || login.passwd === "") {
-      return alert("아이디와 비밀번호를 입력해 주세요!");
+      return alert("아이디와 비밀번호를 모두 입력해 주세요.");
     }
     loginEvent(loginUrl, login);
-    navigate("/");
   };
   return (
     <div id="wrap">
