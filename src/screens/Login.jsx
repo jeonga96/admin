@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { loginEvent } from "../service/importData";
-import { loginUrl } from "../service/url";
+import { loginUrl } from "../service/string";
 import { useNavigate } from "react-router-dom";
 
 function Login() {
@@ -13,7 +13,7 @@ function Login() {
   const fnLogin = (e) => {
     e.preventDefault();
     if (login.userid === "" || login.passwd === "") {
-      return console.log("빈칸이다");
+      return alert("아이디와 비밀번호를 입력해 주세요!");
     }
     loginEvent(loginUrl, login);
     navigate("/");

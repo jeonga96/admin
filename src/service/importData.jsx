@@ -1,21 +1,20 @@
 import axios from "axios";
+import { ISLOGIN } from "./string";
 
-const ISLOGIN = "is_login";
-
-function setSession(name, data) {
+export function setSession(name, data) {
   // localStorage.setItem(name, data);
   return sessionStorage.setItem(name, data);
 }
-function getSession(name) {
+export function getSession(name) {
   // localStorage.getItem(name);
   return sessionStorage.getItem(name);
 }
 
-function logoutEvent() {
+export function logoutEvent() {
   return sessionStorage.removeItem(ISLOGIN);
 }
 
-function axiosGetData(url, getData) {
+export function axiosGetData(url, getData) {
   return axios(url, {
     method: "GET",
     data: getData,
@@ -24,7 +23,7 @@ function axiosGetData(url, getData) {
     .catch((error) => console.log(error));
 }
 
-function axiosSetData(url, postData) {
+export function axiosSetData(url, postData) {
   return axios(url, {
     method: "POST",
     headers: {
@@ -36,7 +35,7 @@ function axiosSetData(url, postData) {
     .catch((error) => console.log(error));
 }
 
-function loginEvent(loginUrl, userData) {
+export function loginEvent(loginUrl, userData) {
   return axios({
     method: "POST",
     url: loginUrl,
@@ -61,21 +60,3 @@ function loginEvent(loginUrl, userData) {
     })
     .catch((error) => console.log(error.response));
 }
-
-function userCheck() {
-  const user = getSession(ISLOGIN);
-  if (!user) {
-    window.location.href = "/login";
-    return;
-  }
-}
-
-export {
-  axiosGetData,
-  axiosSetData,
-  loginEvent,
-  logoutEvent,
-  setSession,
-  getSession,
-  userCheck,
-};
