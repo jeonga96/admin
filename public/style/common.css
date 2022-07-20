@@ -4,9 +4,12 @@
   --color-gray: #f1f5fa;
   --color-pointgray: #a5adc6;
   --color-bggray: #f3f4f3;
-  --color-primary: #64c5b1;
-  --color-primary2: #0d6efd;
-  --font-point: Comfortaa, cursive;
+  --color-primary: #62bfad;
+  /* --color-primary2: #0d6efd; */
+  --color-primary2: #ff8d8d;
+  --font-point: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto,
+    "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR",
+    "Malgun Gothic", sans-serif;
   --font-size-small: 0.875rem;
   --font-size-basic: 1rem;
   --font-size-em: 1.125rem;

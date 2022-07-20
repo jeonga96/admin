@@ -36,24 +36,18 @@ export function axiosSetData(url, postData) {
 }
 
 export function loginEvent(loginUrl, userData) {
-  return axios({
-    method: "POST",
-    url: loginUrl,
-    data: {
-      userid: userData.userid[0],
-      passwd: userData.passwd[0],
-    },
-    headers: {
-      "Content-Type": "application/json",
-    },
-  })
+  const data = {
+    userid: userData.userid[0],
+    passwd: userData.passwd[0],
+  };
+  return axiosSetData(loginUrl, data)
     .then((res) => {
-      if (res.data.status === "fail") {
+      if (res.status === "fail") {
         alert("회원이 아닙니다. 회원가입을 먼저 진행해 주세요.");
         return;
       }
-      if (res.data.status === "success") {
-        const accessToken = res.data.data.jtoken;
+      if (res.status === "success") {
+        const accessToken = res.data.jtoken;
         setStorage(ISLOGIN, `${accessToken}`);
         window.location.href = `${process.env.PUBLIC_URL}/`;
         return console.log(accessToken);
