@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
-function Login() {
+function AddUser() {
   const user = useSelector((state) => state.userInfo);
   const dispatch = useDispatch();
 
@@ -22,11 +22,11 @@ function Login() {
   };
   return (
     <div id="wrap">
-      <section className="mainWrap loginWrap">
+      <section className="mainWrap">
         <h3 className="blind">login</h3>
-        <div className="loginBox commonBox">
-          <h3>login</h3>
-          <form className="loginForm" onSubmit={fnLogin}>
+        <div className=" commonBox">
+          <h3>사용자 추가</h3>
+          <form className="formLayout adduserBox" onSubmit={fnLogin}>
             <input
               type="text"
               name="user_id"
@@ -65,4 +65,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default AddUser;

@@ -1,18 +1,23 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 
 import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 
+import MainLayout from "./components/common/MainLayout";
 import Home from "./screens/Home";
 import Login from "./screens/Login";
 import Table from "./screens/Table";
+import AddUser from "./screens/AddUser";
 import { getStorage } from "./service/importData";
 import { ISLOGIN } from "./service/string";
 
 function App() {
-  const [btn, setBtn] = useState(true);
   const location = useLocation();
   const navigate = useNavigate();
+
   const user = getStorage(ISLOGIN);
+  const navChange = useSelector((state) => state.navState);
+  const dispatch = useDispatch();
 
   const userCheck = () => {
     const locationCheck = location.pathname !== "/login";
@@ -22,12 +27,15 @@ function App() {
     }
   };
 
-  const fnBtn = (btn) => {
-    setBtn(!btn);
+  const fnNavEvent = (matches = !navChange) => {
+    dispatch({
+      type: "navEvent",
+      payload: matches,
+    });
   };
   const screenChange = (event) => {
     const matches = event.matches;
-    setBtn(matches);
+    fnNavEvent(matches);
   };
 
   useEffect(() => {
@@ -44,12 +52,16 @@ function App() {
       <Routes>
         <Route
           path={`${process.env.PUBLIC_URL}/`}
-          element={<Home btn={btn} fnBtn={fnBtn} />}
+          element={<MainLayout nowTitle="DashBord" component={<Home />} />}
         />
         <Route path={`${process.env.PUBLIC_URL}/login`} element={<Login />} />
         <Route
           path={`${process.env.PUBLIC_URL}/table`}
-          element={<Table btn={btn} fnBtn={fnBtn} />}
+          element={<MainLayout nowTitle="DashBord" component={<Table />} />}
+        />
+        <Route
+          path={`${process.env.PUBLIC_URL}/adduser`}
+          element={<MainLayout nowTitle="AddUser" component={<AddUser />} />}
         />
       </Routes>
     </div>

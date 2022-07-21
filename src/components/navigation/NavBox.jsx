@@ -1,15 +1,22 @@
 import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+
 import { GrClose } from "react-icons/gr";
 
 import NavBottom from "./NavArea";
 
-function NavBox({ btn, fnBtn }) {
+function NavBox() {
+  const navChange = useSelector((state) => state.navState);
+  const dispatch = useDispatch();
   const onClickBtn = () => {
-    fnBtn(btn);
+    dispatch({
+      type: "navEvent",
+      payload: !navChange,
+    });
   };
 
   return (
-    <div className={btn ? "show navigationWrap" : "hide navigationWrap"}>
+    <div className={navChange ? "show navigationWrap" : "hide navigationWrap"}>
       <div className="navTop">
         <h1 className="blind">Salessa 홈페이지</h1>
         <Link to="/">

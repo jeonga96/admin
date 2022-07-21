@@ -1,25 +1,40 @@
-import Nav from "../components/navigation/NavBox";
-import Header from "../components/header/HeaderBox";
-import Footer from "../components/footer/FooterBox";
-import Container from "../components/common/Container";
-import SalePages from "../pages/SalesPages";
+import AccountInfo from "../components/sale/AccountInfo";
+import DailySales from "../components/sale/DailySales";
+import DownloadReport from "../components/sale/DownloadReport";
+import Kalender from "../components/sale/Kalender";
+import MarketValus from "../components/sale/MarketValus";
+import MonthlyInvoices from "../components/sale/MonthlyInvoices";
+import NewsAndUpdate from "../components/sale/NewsAndUpdate";
+import PopularProducts from "../components/sale/PopularProducts";
+import Revenue from "../components/sale/Revenue";
+import Summary from "../components/sale/Summary";
+import TopGlobalSales from "../components/sale/TopGlobalSales";
+import TopSellingProduct from "../components/sale/TopSellingProduct";
+import TotalOrder from "../components/sale/TotalOrder";
+import TotalSalesUnit from "../components/sale/TotalSalesUnit";
+import Transaction from "../components/sale/Transaction";
 
-function Home({ btn, fnBtn }) {
+function Home() {
   return (
-    <div id="wrap">
-      <Nav btn={btn} fnBtn={fnBtn} />
-      <div id="WrapBox">
-        <Header btn={btn} fnBtn={fnBtn} />
-        <Container
-          nowTitle="sales"
-          breadcrumb1="sales"
-          breadcrumb2="Dashboard"
-          breadcrumb3="sales"
-          component={<SalePages />}
-        />
-        <Footer />
+    <main className="mainWrap" id="sale">
+      <div>
+        <Revenue />
+        <DownloadReport />
       </div>
-    </div>
+      <TotalSalesUnit />
+      <DailySales />
+      <Summary />
+      <TotalOrder />
+      <Transaction />
+      <NewsAndUpdate />
+      <AccountInfo />
+      <Kalender />
+      <TopGlobalSales />
+      <MonthlyInvoices />
+      <TopSellingProduct />
+      <PopularProducts />
+      <MarketValus />
+    </main>
   );
 }
 

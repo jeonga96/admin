@@ -3,6 +3,7 @@ import { ISLOGIN, loginUrl } from "./service/string";
 
 const initialState = {
   userInfo: { userid: "", passwd: "" },
+  navState: true,
 };
 
 // 리듀서를 생성한다. state와 action을 가지는 함수를 parameter로 받는다.
@@ -30,9 +31,12 @@ const reducer = (state = initialState, action) => {
         .catch((error) => console.log(error.response));
       break;
     case "userInfoInputChange":
-      newState.userInfo = action.payload;
+      newState.navState = action.payload;
       break;
 
+    case "navEvent":
+      newState.navState = action.payload;
+      break;
     default:
       break;
   }

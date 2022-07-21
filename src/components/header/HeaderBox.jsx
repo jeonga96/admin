@@ -1,13 +1,19 @@
-// import styled from "styled-components";
 import { BsBell } from "react-icons/bs";
 import { IoMailOutline } from "react-icons/io5";
 import { BiUser } from "react-icons/bi";
 import { BsSearch } from "react-icons/bs";
 import { AiOutlineMenu } from "react-icons/ai";
 
-function HeaderBox({ btn, fnBtn }) {
+import { useSelector, useDispatch } from "react-redux";
+
+function HeaderBox() {
+  const navChange = useSelector((state) => state.navState);
+  const dispatch = useDispatch();
   const onClickBtn = () => {
-    fnBtn(btn);
+    dispatch({
+      type: "navEvent",
+      payload: !navChange,
+    });
   };
   return (
     <div className="headerWrap">

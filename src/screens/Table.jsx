@@ -1,25 +1,78 @@
-import Nav from "../components/navigation/NavBox";
-import Header from "../components/header/HeaderBox";
-import Footer from "../components/footer/FooterBox";
-import Container from "../components/common/Container";
-import TablePages from "../pages/TablePages";
+// import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { axiosGetData } from "../service/importData";
+import { tableUrl } from "../service/string";
+import {
+  HiOutlineChevronDoubleLeft,
+  HiOutlineChevronDoubleRight,
+} from "react-icons/hi";
+import Tr from "../components/common/TabelTr";
 
-function Table({ btn, fnBtn }) {
+function Table() {
+  const [data, setData] = useState([]);
+  function axiosData() {
+    axiosGetData(tableUrl).then((res) => setData(res));
+  }
+  useEffect(() => {
+    axiosData();
+  }, []);
+  const filterData = data.filter((item) => item.id <= 10);
+  const buttonArr = [];
+  const buttonIf =
+    data.length % 10 === 0 ? data.length / 10 : data.length / 10 + 1;
+  const buttonData = (index) => {
+    let i = 1;
+    for (i; i <= index; i++) {
+      buttonArr.push(i);
+    }
+  };
+  buttonData(buttonIf);
   return (
-    <div id="wrap">
-      <Nav btn={btn} fnBtn={fnBtn} />
-      <div id="WrapBox">
-        <Header btn={btn} fnBtn={fnBtn} />
-        <Container
-          nowTitle="table"
-          breadcrumb1="sales"
-          breadcrumb2="Dashboard"
-          breadcrumb3="table"
-          component={<TablePages />}
-        />
-        <Footer />
+    <section className="mainWrap tableWrap">
+      <h3 className="blind">table</h3>
+      <div className="tableBox commonBox">
+        <table className="commonTable">
+          <thead>
+            <tr>
+              <th>번호</th>
+              <th>제목</th>
+              <th>작성자</th>
+              <th>별도파일</th>
+              <th>작성날짜</th>
+            </tr>
+          </thead>
+          <tbody className="revenueSaleTbody">
+            {filterData.map((item) => (
+              <Tr key={item.id} item={item} />
+            ))}
+          </tbody>
+        </table>
+        <ul className="tableBtn">
+          <li>
+            <button type="button">
+              <i>
+                <HiOutlineChevronDoubleLeft />
+              </i>
+              <span className="blind">맨 앞으로 가기</span>
+            </button>
+          </li>
+          {buttonArr.map((item, key) => (
+            <li key={key}>
+              <button type="button">{item}</button>
+              <span className="blind">{item}페이지로 가기</span>
+            </li>
+          ))}
+          <li>
+            <button type="button">
+              <i>
+                <HiOutlineChevronDoubleRight />
+              </i>
+              <span className="blind">맨 뒤로 가기</span>
+            </button>
+          </li>
+        </ul>
       </div>
-    </div>
+    </section>
   );
 }
 export default Table;
