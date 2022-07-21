@@ -1,19 +1,29 @@
-import { useState } from "react";
+// import { useState } from "react";
 import { Link } from "react-router-dom";
-import { loginEvent } from "../service/importData";
-import { loginUrl } from "../service/string";
+import { useSelector, useDispatch } from "react-redux";
+
+// import { loginEvent } from "../service/importData";
+// import { loginUrl } from "../service/string";
 
 function Login() {
-  const [login, setlogin] = useState({ userid: "", passwd: "" });
+  const user = useSelector((state) => state.userInfo);
+  // const [login, setlogin] = useState({ userid: "", passwd: "" });
+  const dispatch = useDispatch();
+
   function onChange(e) {
-    setlogin({ ...login, [e.target.id]: [e.target.value] });
+    dispatch({
+      type: "userInfoInputChange",
+      payload: { ...user, [e.target.id]: [e.target.value] },
+    });
   }
   const fnLogin = (e) => {
     e.preventDefault();
-    if (login.userid === "" || login.passwd === "") {
+    if (user.userid === "" || user.passwd === "") {
       return alert("아이디와 비밀번호를 모두 입력해 주세요.");
     }
-    loginEvent(loginUrl, login);
+    dispatch({
+      type: "loginEvent",
+    });
   };
   return (
     <div id="wrap">

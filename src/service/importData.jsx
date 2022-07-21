@@ -31,7 +31,10 @@ export function axiosSetData(url, postData) {
     },
     data: postData,
   })
-    .then((res) => res.data)
+    .then((res) => {
+      console.log("axiosSetData", res);
+      return res.data;
+    })
     .catch((error) => console.log(error));
 }
 
