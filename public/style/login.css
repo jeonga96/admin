@@ -1,12 +1,15 @@
-.loginWrap {
+/*login ==========================================*/
+.loginWrap,
+.adduserWrap {
   width: 100%;
   height: 100%;
-  padding: 0 2rem;
+  padding: 0 1rem;
 }
 /*wide PC version*/
 @media screen and (min-width: 1200px) {
-  .loginWrap {
-    padding: 0 10rem;
+  .loginWrap,
+  .adduserWrap {
+    padding: 0 3rem;
   }
 }
 
@@ -36,11 +39,11 @@
     height: 31.25rem;
   }
 }
-.loginForm {
+.formLayout {
   width: 100%;
   height: auto;
 }
-.loginBox h3 {
+.commonBox h3 {
   display: block;
   font-size: 1.875rem;
   font-family: var(--font-point);
@@ -48,23 +51,18 @@
   padding: 1.25rem 0 2.5rem;
   text-transform: uppercase;
 }
-.loginBox input {
+.formLayout input {
   width: 100%;
   height: 3.125rem;
   border-top-left-radius: 0.625rem;
   border-top-right-radius: 0.625rem;
   border-bottom: 0.0625rem solid var(--color-gray);
+  margin-bottom: 1.25rem;
 }
-.loginBox input:focus {
+.formLayout input:focus {
   transition: all 300ms ease-in;
   border-bottom: 0.0625rem solid var(--color-primary);
   background-color: var(--color-gray);
-}
-#userid {
-  margin-bottom: 1.25rem;
-}
-#passwd {
-  margin-bottom: 2.5rem;
 }
 .loginBtn {
   width: 100%;
@@ -74,6 +72,7 @@
   transition: all 300ms ease-in;
   color: var(--color-black);
   margin-bottom: 1.25rem;
+  /* margin-top: 2.5rem; */
   outline: none;
 }
 .loginBtn:hover {
@@ -98,10 +97,32 @@
 }
 .LoginLinkWrap .link:hover {
   border-radius: 0.3125rem;
-  font-weight: 400;
+  background-color: var(--color-gray);
 }
 .LoginLinkWrap .link:focus {
   background-color: var(--color-gray);
   border-radius: 0.3125rem;
   font-weight: 400;
+}
+
+/*addUser ==========================================*/
+.formCommonWrap {
+  margin: 0 auto;
+  width: 80%;
+  min-width: 23.75rem;
+}
+.formBox {
+  padding: 3.25rem;
+  padding-top: 3rem;
+}
+
+@media screen and (min-width: 1200px) {
+  .formCommonWrap {
+    margin: 0 auto;
+    width: 50rem;
+  }
+  .formBox {
+    padding: 3.25rem;
+    padding-top: 3rem;
+  }
 }

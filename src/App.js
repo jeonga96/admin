@@ -8,6 +8,8 @@ import Home from "./screens/Home";
 import Login from "./screens/Login";
 import Table from "./screens/Table";
 import AddUser from "./screens/AddUser";
+import AddCompany from "./screens/AddCompany";
+
 import { getStorage } from "./service/importData";
 import { ISLOGIN } from "./service/string";
 
@@ -62,6 +64,11 @@ function App() {
         <Route
           path={`${process.env.PUBLIC_URL}/adduser`}
           element={<MainLayout nowTitle="AddUser" component={<AddUser />} />}
+          // element={<AddUser />}
+        />
+        <Route
+          path={`${process.env.PUBLIC_URL}/addcompany`}
+          element={<MainLayout nowTitle="AddUser" component={<AddCompany />} />}
         />
       </Routes>
     </div>

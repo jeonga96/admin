@@ -23,11 +23,12 @@ export function axiosGetData(url, getData) {
     .catch((error) => console.log(error));
 }
 
-export function axiosSetData(url, postData) {
+export function axiosPostData(url, postData, headerAdd) {
   return axios(url, {
     method: "POST",
     headers: {
       "content-type": "application/json",
+      headerAdd,
     },
     data: postData,
   })
@@ -39,11 +40,11 @@ export function axiosSetData(url, postData) {
 }
 
 export function loginEvent(loginUrl, userData) {
-  const data = {
+  console.log(userData.userid[0], userData.passwd[0]);
+  return axiosPostData(loginUrl, {
     userid: userData.userid[0],
     passwd: userData.passwd[0],
-  };
-  return axiosSetData(loginUrl, data)
+  })
     .then((res) => {
       if (res.status === "fail") {
         alert("회원이 아닙니다. 회원가입을 먼저 진행해 주세요.");
@@ -58,3 +59,9 @@ export function loginEvent(loginUrl, userData) {
     })
     .catch((error) => console.log(error.response));
 }
+
+// export function setAuthToken(token) {
+//   if (token) {
+//     axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+//   } else delete axios.defaults.headers.common["Authorization"];
+// }
