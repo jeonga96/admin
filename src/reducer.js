@@ -1,9 +1,15 @@
-import { axiosPostData, setStorage, getStorage } from "./service/importData";
-import { ISLOGIN, loginUrl, addUserUrl } from "./service/string";
+import {
+  axiosPostData,
+  setStorage,
+  axiosPostToken,
+  getStorage,
+} from "./service/importData";
+import * as string from "./service/string";
 
 const initialState = {
   userInfo: { userid: "", passwd: "" },
   userInfoAdd: { userid: "", passwd: "", passwdCk: "" },
+  companyAdd: { name: "" },
   navState: true,
   popupState: false,
 };
@@ -13,7 +19,7 @@ const reducer = (state = initialState, action) => {
 
   switch (action.type) {
     case "loginEvent":
-      axiosPostData(loginUrl, {
+      axiosPostData(string.loginUrl, {
         userid: newState.userInfo.userid[0],
         passwd: newState.userInfo.passwd[0],
       })
@@ -25,7 +31,8 @@ const reducer = (state = initialState, action) => {
           if (res.status === "success") {
             console.log("완료됐나용");
             const accessToken = res.data.jtoken;
-            setStorage(ISLOGIN, `${accessToken}`);
+            setStorage(string.ISLOGIN, `${accessToken}`);
+            console.log(res.data);
             window.location.href = `${process.env.PUBLIC_URL}/`;
             return;
           }
@@ -34,8 +41,7 @@ const reducer = (state = initialState, action) => {
       break;
 
     case "addUserEvent":
-      // Authorization: getStorage(ISLOGIN)
-      axiosPostData(addUserUrl, {
+      axiosPostData(string.addUserUrl, {
         userid: newState.userInfoAdd.userid[0],
         passwd: newState.userInfoAdd.passwd[0],
       })
@@ -61,6 +67,22 @@ const reducer = (state = initialState, action) => {
         .catch((error) => console.log("실패", error.response));
       break;
 
+    case "addCompanyEvent":
+      const accessToken = getStorage(string.ISLOGIN);
+
+      axiosPostToken(
+        string.addCompanyUrl,
+        {
+          name: newState.companyAdd.name[0],
+        },
+        accessToken
+      )
+        .then((res) => {
+          console.log("aixos후 값은?", res);
+        })
+        .catch((err) => console.log(err));
+      break;
+
     case "userInfoInputChange":
       newState.userInfo = action.payload;
       break;
@@ -69,12 +91,12 @@ const reducer = (state = initialState, action) => {
       newState.userInfoAdd = action.payload;
       break;
 
-    case "navEvent":
-      newState.navState = action.payload;
+    case "companyInfoAddInputChange":
+      newState.companyAdd = action.payload;
       break;
 
-    case "popupEvent":
-      newState.popupState = action.payload;
+    case "navEvent":
+      newState.navState = action.payload;
       break;
 
     default:
