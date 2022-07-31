@@ -77,7 +77,11 @@ const reducer = (state = initialState, action) => {
         accessToken
       )
         .then((res) => {
-          console.log("aixos후 값은?", res.data);
+          console.log("aixos후 값은?", res);
+          if (res.status === "success") {
+            alert("가입이 완료되었습니다!");
+            console.log(res.data);
+          }
         })
         .catch((err) => console.log(err));
       break;

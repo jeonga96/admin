@@ -26,9 +26,9 @@ function MainLayout({ nowTitle, component }) {
               </li>
             </ol> */}
               </div>
-              <button type="button" className="containerTitleBtn">
+              {/* <button type="button" className="containerTitleBtn">
                 Create Report
-              </button>
+              </button> */}
             </div>
             {component}
           </div>

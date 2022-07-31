@@ -109,10 +109,10 @@
 .formCommonWrap {
   margin: 0 auto;
   width: 80%;
-  min-width: 23.75rem;
+  min-width: 18.75rem;
 }
 .formBox {
-  padding: 3.25rem;
+  padding: 1.25rem;
   padding-top: 3rem;
 }
 
@@ -123,6 +123,5 @@
   }
   .formBox {
     padding: 3.25rem;
-    padding-top: 3rem;
   }
 }
