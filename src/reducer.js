@@ -69,7 +69,6 @@ const reducer = (state = initialState, action) => {
 
     case "addCompanyEvent":
       const accessToken = getStorage(string.ISLOGIN);
-
       axiosPostToken(
         string.addCompanyUrl,
         {
@@ -78,7 +77,7 @@ const reducer = (state = initialState, action) => {
         accessToken
       )
         .then((res) => {
-          console.log("aixos후 값은?", res);
+          console.log("aixos후 값은?", res.data);
         })
         .catch((err) => console.log(err));
       break;

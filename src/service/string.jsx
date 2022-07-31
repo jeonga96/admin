@@ -7,3 +7,4 @@ export const addCompanyUrl =
   "http://devback.gongsacok.com:8080/admin/addCompany";
 
 export const ISLOGIN = "is_login";
+export const ISCOMPANY = "is_company";

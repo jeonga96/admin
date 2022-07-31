@@ -18,11 +18,11 @@ function NavBox() {
   return (
     <div className={navChange ? "show navigationWrap" : "hide navigationWrap"}>
       <div className="navTop">
-        <h1 className="blind">Salessa 홈페이지</h1>
+        <h1 className="blind">wazzang admin</h1>
         <Link to="/">
           <img
             src="https://demo.dashboardpack.com/sales-html/img/logo.png"
-            alt="Salessa"
+            alt="wazzang admin"
           />
         </Link>
         <button type="button" onClick={onClickBtn} id="nav_close_btn">

@@ -35,7 +35,7 @@ function AddCompany() {
             사업체명을 입력해 주세요.
           </label>
           <button type="submit" className="loginBtn">
-            사업체 추가하기
+            사업자 추가하기
           </button>
         </form>
       </div>

@@ -34,9 +34,9 @@
 @media screen and (max-width: 767px) {
   .loginBox {
     padding: 0.625rem;
-    padding-top: 5rem;
-    width: 23.75rem;
-    height: 31.25rem;
+    padding-top: 4.5rem;
+    width: 18.75rem;
+    height: 30.25rem;
   }
 }
 .formLayout {

@@ -1,5 +1,4 @@
 import axios from "axios";
-import { ISLOGIN } from "./string";
 
 export function setStorage(name, data) {
   // localStorage.setItem(name, data);
@@ -46,7 +45,6 @@ export function axiosPostToken(url, postData, token) {
       Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
     },
-    withCredentials: false,
     data: postData,
   })
     .then((res) => {

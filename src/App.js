@@ -29,7 +29,7 @@ function App() {
     }
   };
 
-  const fnNavEvent = (matches = !navChange) => {
+  const fnNavEvent = (matches) => {
     dispatch({
       type: "navEvent",
       payload: matches,
@@ -42,6 +42,9 @@ function App() {
 
   useEffect(() => {
     let mql = window.matchMedia("screen and (min-width:992px)");
+    if (!mql.matches) {
+      fnNavEvent(!navChange);
+    }
     mql.addEventListener("change", screenChange);
     return () => mql.removeEventListener("change", screenChange);
   }, []);
