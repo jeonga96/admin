@@ -9,6 +9,8 @@ import Login from "./screens/Login";
 import Table from "./screens/Table";
 import AddUser from "./screens/AddUser";
 import AddCompany from "./screens/AddCompany";
+import User from "./screens/User";
+import Company from "./screens/Company";
 
 import { getStorage } from "./service/importData";
 import { ISLOGIN } from "./service/string";
@@ -65,13 +67,22 @@ function App() {
           element={<MainLayout nowTitle="DashBord" component={<Table />} />}
         />
         <Route
-          path={`${process.env.PUBLIC_URL}/adduser`}
-          element={<MainLayout nowTitle="AddUser" component={<AddUser />} />}
-          // element={<AddUser />}
+          path={`${process.env.PUBLIC_URL}/user`}
+          element={<MainLayout nowTitle="User" component={<User />} />}
         />
         <Route
-          path={`${process.env.PUBLIC_URL}/addcompany`}
-          element={<MainLayout nowTitle="AddUser" component={<AddCompany />} />}
+          path={`${process.env.PUBLIC_URL}/user/adduser`}
+          element={<MainLayout nowTitle="AddUser" component={<AddUser />} />}
+        />
+        <Route
+          path={`${process.env.PUBLIC_URL}/company`}
+          element={<MainLayout nowTitle="addcompany" component={<Company />} />}
+        />
+        <Route
+          path={`${process.env.PUBLIC_URL}/company/addcompany`}
+          element={
+            <MainLayout nowTitle="AddCompany" component={<AddCompany />} />
+          }
         />
       </Routes>
     </div>

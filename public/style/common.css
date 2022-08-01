@@ -145,3 +145,25 @@
 .commonTable td {
   text-align: center;
 }
+
+.addButton {
+  width: 6.25rem;
+  height: 2rem;
+}
+.addButtonLink {
+  display: block;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  line-height: 2rem;
+  font-weight: 400;
+  font-size: var(--font-size-basic);
+  background-color: var(--color-white);
+  border-radius: 0.3125rem;
+  transition: all 500ms ease-in;
+}
+.addButtonLink:hover {
+  text-decoration: none;
+  background-color: var(--color-bggray);
+  box-shadow: var(--styles-boxShadowDeep);
+}

@@ -60,7 +60,7 @@ const reducer = (state = initialState, action) => {
           }
           if (res.status === "success") {
             alert("가입이 완료되었습니다!");
-            window.location.reload();
+            window.location.href = `${process.env.PUBLIC_URL}/user`;
             return;
           }
         })

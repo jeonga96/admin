@@ -11,20 +11,8 @@
     "url": null,
     "subNav": [
       {
-        "subName": "사용자 추가",
-        "url": "/adduser"
-      },
-      {
-        "subName": "사용자 리스트 조회",
-        "url": "/listuser"
-      },
-      {
-        "subName": "사용자 상세정보 업데이트",
-        "url": "/setuserdetail"
-      },
-      {
-        "subName": "사용자 상세정보 가져오기",
-        "url": "/getuserdetail"
+        "subName": "사용자 관리",
+        "url": "/user"
       }
     ]
   },
@@ -34,20 +22,8 @@
     "url": null,
     "subNav": [
       {
-        "subName": "사업자 추가",
-        "url": "/addcompany"
-      },
-      {
-        "subName": "사업자 리스트 조회",
-        "url": "/listcompany"
-      },
-      {
-        "subName": "사업자 상세정보 업데이트",
-        "url": "/setcompanydetailinfo"
-      },
-      {
-        "subName": "사업자 정보 조회",
-        "url": "/getcompanydetailinfo"
+        "subName": "사업자 관리",
+        "url": "/company"
       }
     ]
   }
