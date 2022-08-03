@@ -12,8 +12,8 @@ import AddCompany from "./screens/AddCompany";
 import User from "./screens/User";
 import Company from "./screens/Company";
 
-import { getStorage } from "./service/importData";
-import { ISLOGIN } from "./service/string";
+import { getStorage } from "./Services/importData";
+import { ISLOGIN } from "./Services/string";
 
 function App() {
   const location = useLocation();
@@ -68,20 +68,24 @@ function App() {
         />
         <Route
           path={`${process.env.PUBLIC_URL}/user`}
-          element={<MainLayout nowTitle="User" component={<User />} />}
+          element={<MainLayout nowTitle="관리자 관리" component={<User />} />}
         />
         <Route
           path={`${process.env.PUBLIC_URL}/user/adduser`}
-          element={<MainLayout nowTitle="AddUser" component={<AddUser />} />}
+          element={
+            <MainLayout nowTitle="관리자 추가" component={<AddUser />} />
+          }
         />
         <Route
           path={`${process.env.PUBLIC_URL}/company`}
-          element={<MainLayout nowTitle="addcompany" component={<Company />} />}
+          element={
+            <MainLayout nowTitle="사업자 관리" component={<Company />} />
+          }
         />
         <Route
           path={`${process.env.PUBLIC_URL}/company/addcompany`}
           element={
-            <MainLayout nowTitle="AddCompany" component={<AddCompany />} />
+            <MainLayout nowTitle="사업자 추가" component={<AddCompany />} />
           }
         />
       </Routes>

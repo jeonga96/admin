@@ -32,7 +32,7 @@ function AddUser() {
   return (
     <section className="mainWrap formCommonWrap">
       <div className="commonBox formBox">
-        <h3>사용자 추가</h3>
+        <h3>관리자 추가</h3>
         <form className="formLayout" onSubmit={fnAddUser}>
           <input
             type="text"

@@ -3,15 +3,14 @@ import {
   setStorage,
   axiosPostToken,
   getStorage,
-} from "./service/importData";
-import * as string from "./service/string";
+} from "./Services/importData";
+import * as string from "./Services/string";
 
 const initialState = {
-  userInfo: { userid: "", passwd: "" },
+  login: { userid: "", passwd: "" },
   userInfoAdd: { userid: "", passwd: "", passwdCk: "" },
   companyAdd: { name: "" },
   navState: true,
-  popupState: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -19,9 +18,9 @@ const reducer = (state = initialState, action) => {
 
   switch (action.type) {
     case "loginEvent":
-      axiosPostData(string.loginUrl, {
-        userid: newState.userInfo.userid[0],
-        passwd: newState.userInfo.passwd[0],
+      axiosPostData(string.urlLogin, {
+        userid: newState.login.userid[0],
+        passwd: newState.login.passwd[0],
       })
         .then((res) => {
           if (res.status === "fail") {
@@ -41,7 +40,7 @@ const reducer = (state = initialState, action) => {
       break;
 
     case "addUserEvent":
-      axiosPostData(string.addUserUrl, {
+      axiosPostData(string.urlAdduser, {
         userid: newState.userInfoAdd.userid[0],
         passwd: newState.userInfoAdd.passwd[0],
       })
@@ -70,7 +69,7 @@ const reducer = (state = initialState, action) => {
     case "addCompanyEvent":
       const accessToken = getStorage(string.ISLOGIN);
       axiosPostToken(
-        string.addCompanyUrl,
+        string.urlAddcompany,
         {
           name: newState.companyAdd.name[0],
         },
@@ -87,7 +86,7 @@ const reducer = (state = initialState, action) => {
       break;
 
     case "userInfoInputChange":
-      newState.userInfo = action.payload;
+      newState.login = action.payload;
       break;
 
     case "userInfoAddInputChange":

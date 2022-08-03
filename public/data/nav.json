@@ -6,12 +6,12 @@
     "subNav": null
   },
   {
-    "name": "사용자",
+    "name": "관리자",
     "icon": "https://demo.dashboardpack.com/sales-html/img/menu-icon/dashboard.svg",
     "url": null,
     "subNav": [
       {
-        "subName": "사용자 관리",
+        "subName": "관리자 관리",
         "url": "/user"
       }
     ]

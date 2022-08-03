@@ -145,7 +145,13 @@
 .commonTable td {
   text-align: center;
 }
-
+.tableTopWrap {
+  display: flex;
+  justify-content: right;
+  width: 100%;
+  height: auto;
+  padding: 0 0.75rem;
+}
 .addButton {
   width: 6.25rem;
   height: 2rem;

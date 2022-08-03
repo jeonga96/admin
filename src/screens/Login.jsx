@@ -2,18 +2,18 @@ import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 function Login() {
-  const user = useSelector((state) => state.userInfo);
+  const login = useSelector((state) => state.login);
   const dispatch = useDispatch();
 
   function onChange(e) {
     dispatch({
       type: "userInfoInputChange",
-      payload: { ...user, [e.target.id]: [e.target.value] },
+      payload: { ...login, [e.target.id]: [e.target.value] },
     });
   }
   const fnLogin = (e) => {
     e.preventDefault();
-    if (user.userid[0] === "" || user.passwd[0] === "") {
+    if (login.userid[0] === "" || login.passwd[0] === "") {
       alert("아이디와 비밀번호를 모두 입력해 주세요.");
       return;
     }
@@ -21,19 +21,6 @@ function Login() {
       type: "loginEvent",
     });
   };
-
-  // useState로 작성한 코드
-  // const [login, setlogin] = useState({ userid: "", passwd: "" });
-  // function onChange(e) {
-  //   setlogin({ ...login, [e.target.id]: [e.target.value] });
-  // }
-  // const fnLogin = (e) => {
-  //   e.preventDefault();
-  //   if (login.userid[0] === "" || login.passwd[0] === "") {
-  //     return console.log("빈칸으로 두면 안 됩니당");
-  //   }
-  //   loginEvent(loginUrl, login);
-  // };
 
   return (
     <section className="mainWrap loginWrap">
