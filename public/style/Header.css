@@ -125,6 +125,10 @@
   border-radius: 1.5625rem;
   background-color: var(--color-primary);
 }
+.Headeruser .Link {
+  text-align: center;
+  line-height: 2.5rem;
+}
 .Headeruser i {
   font-size: var(--font-size-big);
   color: var(--color-white);

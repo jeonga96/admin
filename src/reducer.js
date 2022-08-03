@@ -10,6 +10,8 @@ const initialState = {
   login: { userid: "", passwd: "" },
   userInfoAdd: { userid: "", passwd: "", passwdCk: "" },
   companyAdd: { name: "" },
+  listUser: [],
+  listUserPage: {},
   navState: true,
 };
 
@@ -66,20 +68,21 @@ const reducer = (state = initialState, action) => {
         .catch((error) => console.log("실패", error.response));
       break;
 
-    case "addCompanyEvent":
+    case "listUserEvent":
       const accessToken = getStorage(string.ISLOGIN);
       axiosPostToken(
-        string.urlAddcompany,
+        string.urlUserlist,
         {
-          name: newState.companyAdd.name[0],
+          offset: 0,
+          size: 10,
         },
         accessToken
       )
         .then((res) => {
           console.log("aixos후 값은?", res);
           if (res.status === "success") {
-            alert("가입이 완료되었습니다!");
-            console.log(res.data);
+            newState.listUserPage = res.page;
+            newState.listUser = res.data;
           }
         })
         .catch((err) => console.log(err));

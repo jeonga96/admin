@@ -3,6 +3,7 @@ import { IoMailOutline } from "react-icons/io5";
 import { BiUser } from "react-icons/bi";
 import { BsSearch } from "react-icons/bs";
 import { AiOutlineMenu } from "react-icons/ai";
+import { Link } from "react-router-dom";
 
 import { useSelector, useDispatch } from "react-redux";
 
@@ -65,12 +66,12 @@ function HeaderBox() {
             </li>
           </ul>
           <div className="Headeruser">
-            <button>
+            <Link className="Link" to="/user/userdetail">
               <span className="blind">사용자 환경설정</span>
               <i>
                 <BiUser />
               </i>
-            </button>
+            </Link>
           </div>
         </div>
       </div>

@@ -11,6 +11,7 @@ import AddUser from "./screens/AddUser";
 import AddCompany from "./screens/AddCompany";
 import User from "./screens/User";
 import Company from "./screens/Company";
+import UserDeteil from "./screens/UserDeteil";
 
 import { getStorage } from "./Services/importData";
 import { ISLOGIN } from "./Services/string";
@@ -74,6 +75,12 @@ function App() {
           path={`${process.env.PUBLIC_URL}/user/adduser`}
           element={
             <MainLayout nowTitle="관리자 추가" component={<AddUser />} />
+          }
+        />
+        <Route
+          path={`${process.env.PUBLIC_URL}/user/userdetail`}
+          element={
+            <MainLayout nowTitle="관리자 상세정보" component={<UserDeteil />} />
           }
         />
         <Route

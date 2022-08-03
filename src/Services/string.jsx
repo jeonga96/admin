@@ -5,8 +5,11 @@ export const urlPrefix = "http://devback.gongsacok.com:8080";
 
 export const urlLogin = urlPrefix + "/pub/login";
 export const urlAdduser = urlPrefix + "/pub/addUser";
-export const urlAddcompany = urlPrefix + "/admin/addCompany";
 export const urlUserlist = urlPrefix + "/admin/listUser";
+export const urlUserDetail = urlPrefix + "svc/getUserDetail";
+
+export const urlAddcompany = urlPrefix + "/admin/addCompany";
+export const urlCompanylist = urlPrefix + "/admin/listCompany";
 
 export const ISLOGIN = "is_login";
 export const ISCOMPANY = "is_company";
