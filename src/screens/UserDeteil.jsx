@@ -22,7 +22,7 @@ function UserDeteil() {
               안녕하세요 {userData.name ?? "no name"} 님!
             </span>
           </div>
-          <div className="bigButton">
+          <div className="bigButton widthCenter">
             <Link className="Link" to="/setuserdetail">
               관리자 정보 수정
             </Link>

@@ -88,15 +88,7 @@
   height: 0;
 }
 .widthCenter {
-  position: relative;
-  width: 100%;
-  height: auto;
-}
-.widthCenter > div {
-  position: absolute;
-  width: auto;
-  margin-left: 50%;
-  transform: translateX(-50%);
+  margin: 0 auto;
 }
 
 .link {
@@ -221,6 +213,7 @@
   padding-top: 0.3125rem;
 }
 
+/*button & Link*/
 .smallButton {
   width: 6.25rem;
   height: 2rem;
@@ -233,17 +226,25 @@
   background-color: var(--color-white);
   border-radius: 0.3125rem;
 }
-.addButtonLink:hover {
-  text-decoration: none;
+.smallButtonLink:hover {
   background-color: var(--color-bggray);
   box-shadow: var(--styles-boxShadowDeep);
 }
 .bigButton {
-  width: auto;
-  height: auto;
+  width: 12rem;
+  height: 2rem;
+  text-align: center;
+  line-height: 2rem;
 }
-.bigButton.Link {
-  padding: 0.5rem;
+.bigButton .Link {
+  border-radius: 0.3125rem;
+  background-color: var(--color-primary);
+  color: var(--color-white);
+}
+.bigButton .Link:hover {
+  background-color: var(--color-gray);
+  color: var(--color-black);
+  box-shadow: var(--styles-boxShadowDeep);
 }
 .Link {
   display: block;
