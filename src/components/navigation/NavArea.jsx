@@ -10,6 +10,7 @@ function NavBox() {
   const [data, setData] = useState([]);
   function axiosData() {
     axiosGetData(navUrl).then((res) => setData(res));
+    // axiosGetData("../../data/nav.json").then((res) => setData(res));
   }
   useEffect(() => {
     axiosData();

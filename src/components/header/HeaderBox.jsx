@@ -66,7 +66,7 @@ function HeaderBox() {
             </li>
           </ul>
           <div className="Headeruser">
-            <Link className="Link" to="/user/userdetail">
+            <Link className="Link" to="/userdetail">
               <span className="blind">사용자 환경설정</span>
               <i>
                 <BiUser />

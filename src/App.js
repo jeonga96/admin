@@ -12,6 +12,7 @@ import AddCompany from "./screens/AddCompany";
 import User from "./screens/User";
 import Company from "./screens/Company";
 import UserDeteil from "./screens/UserDeteil";
+import SetUserDetail from "./screens/SetUserDetail";
 
 import { getStorage } from "./Services/importData";
 import { ISLOGIN } from "./Services/string";
@@ -72,27 +73,36 @@ function App() {
           element={<MainLayout nowTitle="관리자 관리" component={<User />} />}
         />
         <Route
-          path="/user/adduser"
+          path="/adduser"
           element={
             <MainLayout nowTitle="관리자 추가" component={<AddUser />} />
           }
         />
         <Route
-          path="/user/userdetail"
+          path="/addcompany"
+          element={
+            <MainLayout nowTitle="사업자 추가" component={<AddCompany />} />
+          }
+        />
+        <Route
+          path="/userdetail"
           element={
             <MainLayout nowTitle="관리자 상세정보" component={<UserDeteil />} />
+          }
+        />
+        <Route
+          path="/setuserdetail"
+          element={
+            <MainLayout
+              nowTitle="관리자 정보 업데이트"
+              component={<SetUserDetail />}
+            />
           }
         />
         <Route
           path="/company"
           element={
             <MainLayout nowTitle="사업자 관리" component={<Company />} />
-          }
-        />
-        <Route
-          path="/company/addcompany"
-          element={
-            <MainLayout nowTitle="사업자 추가" component={<AddCompany />} />
           }
         />
       </Routes>

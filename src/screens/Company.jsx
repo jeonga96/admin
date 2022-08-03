@@ -3,15 +3,15 @@ function Company() {
   return (
     <div className="mainWrap">
       <div className="tableTopWrap">
-        <div className="addButton">
-          <Link className="addButtonLink Link" to="/company/addcompany">
+        <div className="smallButton">
+          <Link className="smallButtonLink Link" to="/addcompany">
             사업자 추가
           </Link>
         </div>
       </div>
       <section className="tableWrap">
         <h3 className="blind">table</h3>
-        <div className="tableBox commonBox">
+        <div className="paddingBox commonBox">
           <table className="commonTable">
             <thead>
               <tr>

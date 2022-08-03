@@ -38,15 +38,15 @@ function User() {
   return (
     <div className="mainWrap">
       <div className="tableTopWrap">
-        <div className="addButton">
-          <Link className="addButtonLink Link" to="/user/adduser">
+        <div className="smallButton">
+          <Link className="smallButtonLink Link" to="/adduser">
             관리자 추가
           </Link>
         </div>
       </div>
       <section className="tableWrap">
         <h3 className="blind">table</h3>
-        <div className="tableBox commonBox">
+        <div className="paddingBox commonBox">
           <table className="commonTable">
             <thead>
               <tr>

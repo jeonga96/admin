@@ -92,15 +92,3 @@
   background-color: var(--color-primary2);
   color: var(--color-white);
 }
-
-.popupWrap {
-  display: block;
-  position: absolute;
-  width: 400px;
-  height: 300px;
-  background-color: #fff;
-}
-
-.popupWrapNone {
-  display: none;
-}
