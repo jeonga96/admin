@@ -37,26 +37,6 @@ const reducer = (state = initialState, action) => {
         .catch((error) => console.log(error.response));
       break;
 
-    case "listUserEvent":
-      const accessToken = getStorage(string.ISLOGIN);
-      axiosPostToken(
-        string.urlUserlist,
-        {
-          offset: 0,
-          size: 10,
-        },
-        accessToken
-      )
-        .then((res) => {
-          console.log("aixos후 값은?", res);
-          if (res.status === "success") {
-            newState.listUserPage = res.page;
-            newState.listUser = res.data;
-          }
-        })
-        .catch((err) => console.log(err));
-      break;
-
     case "userInfoInputChange":
       newState.login = action.payload;
       break;

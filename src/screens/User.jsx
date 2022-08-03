@@ -1,33 +1,39 @@
 import { Link } from "react-router-dom";
-import { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+import { axiosPostToken, getStorage } from "../Services/importData";
+import { urlUserlist, ISLOGIN } from "../Services/string";
 
 function User() {
-  // const listUser = useSelector((state) => state.listUser);
-  const listUser = useSelector((state) => state.listUser);
-  const listUserPage = useSelector((state) => state.listUserPage);
-  const dispatch = useDispatch();
+  const [userList, setUserList] = useState([]);
+  const [listPage, setListPage] = useState({});
 
-  // const buttonArr = [];
-  // const buttonIf = totalLeng % 10 === 0 ? totalLeng / 10 : totalLeng / 10 + 1;
-  // const buttonData = (index) => {
-  //   let i = 1;
-  //   for (i; i <= index; i++) {
-  //     buttonArr.push(i);
-  //   }
-  // };
-  // buttonData(buttonIf);
+  const buttonArr = [];
+  const buttonIf =
+    listPage.totalElements % 10 === 0
+      ? listPage.totalPages
+      : listPage.totalPages + 1;
+  const buttonData = (index) => {
+    let i = 1;
+    for (i; i <= index; i++) {
+      buttonArr.push(i);
+    }
+  };
+  buttonData(buttonIf);
 
   useEffect(() => {
-    dispatch({
-      type: "listUserEvent",
+    const token = getStorage(ISLOGIN);
+    axiosPostToken(
+      urlUserlist,
+      {
+        offset: 1,
+        size: 10,
+      },
+      token
+    ).then((res) => {
+      setUserList(res.data);
+      setListPage(res.page);
     });
-    console.log("useEffect", listUser, listUserPage);
-  }, [listUser, listUserPage]);
-
-  setTimeout(() => {
-    console.log("setTimeout", listUser, listUserPage);
-  }, 500);
+  }, []);
 
   return (
     <div className="mainWrap">
@@ -50,7 +56,7 @@ function User() {
               </tr>
             </thead>
             <tbody className="revenueSaleTbody">
-              {listUser.map((item) => (
+              {userList.map((item) => (
                 <tr key={item.uid}>
                   <td>{item.uid}</td>
                   <td>{item.userid}</td>
@@ -59,13 +65,13 @@ function User() {
               ))}
             </tbody>
           </table>
-          <ul>
-            {/* {buttonArr.map((item, key) => (
+          <ul className="tableBtn">
+            {buttonArr.map((item, key) => (
               <li key={key}>
                 <button type="button">{item}</button>
                 <span className="blind">{item}페이지로 가기</span>
               </li>
-            ))} */}
+            ))}
           </ul>
         </div>
       </section>
