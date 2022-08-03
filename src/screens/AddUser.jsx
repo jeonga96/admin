@@ -1,39 +1,66 @@
-import { useSelector, useDispatch } from "react-redux";
+import { useState } from "react";
+import { axiosPostData } from "../Services/importData";
+import { urlAdduser } from "../Services/string";
 
 function AddUser() {
-  const user = useSelector((state) => state.userInfoAdd);
-  const dispatch = useDispatch();
+  const [userData, setUserData] = useState({
+    userid: "",
+    passwd: "",
+    passwdCk: "",
+  });
 
   function onChange(e) {
-    dispatch({
-      type: "userInfoAddInputChange",
-      payload: { ...user, [e.target.id]: [e.target.value] },
-    });
+    setUserData({ ...userData, [e.target.id]: [e.target.value] });
   }
 
-  const fnAddUser = (e) => {
+  function addUserEvent() {
+    axiosPostData(urlAdduser, {
+      userid: userData.userid[0],
+      passwd: userData.passwd[0],
+    })
+      .then((res) => {
+        console.log("axios는 성공했는데 말이죠", res);
+        if (
+          res.status === "fail" &&
+          res.emsg === "Database update failure. check duplicate userid"
+        ) {
+          alert("이미 가입된 아이디입니다. 다른 아이디를 입력해 주세요,");
+          return;
+        }
+        if (res.status === "fail") {
+          alert("잘못된 값을 입력했습니다.");
+          return;
+        }
+        if (res.status === "success") {
+          alert("가입이 완료되었습니다!");
+          window.location.href = "/user";
+          return;
+        }
+      })
+      .catch((error) => console.log("실패", error.response));
+  }
+
+  const AddUserSubmit = (e) => {
     e.preventDefault();
     if (
-      user.userid[0] === "" ||
-      user.passwd[0] === "" ||
-      user.passwdCk[0] === ""
+      userData.userid[0] === "" ||
+      userData.passwd[0] === "" ||
+      userData.passwdCk[0] === ""
     ) {
       alert("아이디와 비밀번호를 모두 입력해 주세요.");
       return;
     }
-    if (user.passwd[0] !== user.passwdCk[0]) {
+    if (userData.passwd[0] !== userData.passwdCk[0]) {
       alert("비밀번호가 다릅니다. 비밀번호를 다시 입력해 주세요.");
       return;
     }
-    dispatch({
-      type: "addUserEvent",
-    });
+    addUserEvent();
   };
   return (
     <section className="mainWrap formCommonWrap">
       <div className="commonBox formBox">
         <h3>관리자 추가</h3>
-        <form className="formLayout" onSubmit={fnAddUser}>
+        <form className="formLayout" onSubmit={AddUserSubmit}>
           <input
             type="text"
             name="user_id"

@@ -1,29 +1,53 @@
-import { useSelector, useDispatch } from "react-redux";
+import { useState } from "react";
+import { axiosPostToken, getStorage } from "../Services/importData";
+import { urlAddcompany, ISLOGIN } from "../Services/string";
 
 function AddCompany() {
-  const company = useSelector((state) => state.companyAdd);
-  const dispatch = useDispatch();
+  const [CompanyData, setCompanyData] = useState({
+    name: "",
+  });
 
   function onChange(e) {
-    dispatch({
-      type: "companyInfoAddInputChange",
-      payload: { name: [e.target.value] },
-    });
+    setCompanyData({ [e.target.id]: [e.target.value] });
   }
-  const fnAdd = (e) => {
+
+  function addCompanyEvent() {
+    const token = getStorage(ISLOGIN);
+    axiosPostToken(
+      urlAddcompany,
+      {
+        name: CompanyData.name[0],
+      },
+      token
+    )
+      .then((res) => {
+        console.log("axios는 성공했는데 말이죠", res);
+        if (res.status === "fail") {
+          alert("잘못된 값을 입력했습니다.");
+          return;
+        }
+        if (res.status === "success") {
+          alert("가입이 완료되었습니다!");
+          window.location.href = "/company";
+          return;
+        }
+      })
+      .catch((error) => console.log("실패", error.response));
+  }
+
+  const AddCompanySubmit = (e) => {
     e.preventDefault();
-    if (company.name === "") {
+    if (CompanyData.name === "") {
       return alert("추가하실 업체명을 입력해 주세요.");
     }
-    dispatch({
-      type: "addCompanyEvent",
-    });
+    addCompanyEvent();
   };
+
   return (
     <section className="mainWrap formCommonWrap">
       <div className="commonBox formBox">
         <h3>사업자 추가</h3>
-        <form className="formLayout" onSubmit={fnAdd}>
+        <form className="formLayout" onSubmit={AddCompanySubmit}>
           <input
             type="text"
             name="name"

@@ -1,11 +1,9 @@
 import axios from "axios";
 
 export function setStorage(name, data) {
-  // localStorage.setItem(name, data);
   return sessionStorage.setItem(name, data);
 }
 export function getStorage(name) {
-  // localStorage.getItem(name);
   return sessionStorage.getItem(name);
 }
 

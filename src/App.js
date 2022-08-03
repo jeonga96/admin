@@ -59,38 +59,38 @@ function App() {
     <div className="App">
       <Routes>
         <Route
-          path={`${process.env.PUBLIC_URL}/`}
+          path="/"
           element={<MainLayout nowTitle="DashBord" component={<Home />} />}
         />
-        <Route path={`${process.env.PUBLIC_URL}/login`} element={<Login />} />
+        <Route path="/login" element={<Login />} />
         <Route
-          path={`${process.env.PUBLIC_URL}/table`}
+          path="/table"
           element={<MainLayout nowTitle="DashBord" component={<Table />} />}
         />
         <Route
-          path={`${process.env.PUBLIC_URL}/user`}
+          path="/user"
           element={<MainLayout nowTitle="관리자 관리" component={<User />} />}
         />
         <Route
-          path={`${process.env.PUBLIC_URL}/user/adduser`}
+          path="/user/adduser"
           element={
             <MainLayout nowTitle="관리자 추가" component={<AddUser />} />
           }
         />
         <Route
-          path={`${process.env.PUBLIC_URL}/user/userdetail`}
+          path="/user/userdetail"
           element={
             <MainLayout nowTitle="관리자 상세정보" component={<UserDeteil />} />
           }
         />
         <Route
-          path={`${process.env.PUBLIC_URL}/company`}
+          path="/company"
           element={
             <MainLayout nowTitle="사업자 관리" component={<Company />} />
           }
         />
         <Route
-          path={`${process.env.PUBLIC_URL}/company/addcompany`}
+          path="/company/addcompany"
           element={
             <MainLayout nowTitle="사업자 추가" component={<AddCompany />} />
           }
