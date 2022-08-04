@@ -1,5 +1,5 @@
-export const navUrl = "./data/nav.json";
-export const tableUrl = "./data/table.json";
+export const navUrl = "/data/nav.json";
+export const tableUrl = "/data/table.json";
 
 export const urlPrefix = "http://devback.gongsacok.com:8080";
 

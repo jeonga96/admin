@@ -13,6 +13,7 @@ import User from "./screens/User";
 import Company from "./screens/Company";
 import UserDeteil from "./screens/UserDeteil";
 import SetUserDetail from "./screens/SetUserDetail";
+import CompanyDetail from "./screens/CompanyDetail";
 
 import { getStorage } from "./Services/importData";
 import { ISLOGIN } from "./Services/string";
@@ -63,35 +64,35 @@ function App() {
           path="/"
           element={<MainLayout nowTitle="DashBord" component={<Home />} />}
         />
-        <Route path="/login" element={<Login />} />
+        <Route path="login" element={<Login />} />
         <Route
-          path="/table"
+          path="table"
           element={<MainLayout nowTitle="DashBord" component={<Table />} />}
         />
         <Route
-          path="/user"
+          path="user"
           element={<MainLayout nowTitle="관리자 관리" component={<User />} />}
         />
         <Route
-          path="/adduser"
+          path="adduser"
           element={
             <MainLayout nowTitle="관리자 추가" component={<AddUser />} />
           }
         />
         <Route
-          path="/addcompany"
+          path="addcompany"
           element={
             <MainLayout nowTitle="사업자 추가" component={<AddCompany />} />
           }
         />
         <Route
-          path="/userdetail"
+          path="userdetail"
           element={
             <MainLayout nowTitle="관리자 상세정보" component={<UserDeteil />} />
           }
         />
         <Route
-          path="/setuserdetail"
+          path="setuserdetail"
           element={
             <MainLayout
               nowTitle="관리자 정보 업데이트"
@@ -100,9 +101,18 @@ function App() {
           }
         />
         <Route
-          path="/company"
+          path="company"
           element={
             <MainLayout nowTitle="사업자 관리" component={<Company />} />
+          }
+        ></Route>
+        <Route
+          path="company/:id"
+          element={
+            <MainLayout
+              nowTitle="사업자 상세정보 관리"
+              component={<CompanyDetail />}
+            />
           }
         />
       </Routes>

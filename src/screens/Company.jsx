@@ -1,5 +1,28 @@
+// import { Link, Outlet } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { axiosPostToken, getStorage } from "../Services/importData";
+import { urlCompanylist, ISLOGIN } from "../Services/string";
+
 function Company() {
+  const [companyList, setCompanyList] = useState([]);
+  const [listPage, setListPage] = useState({});
+
+  useEffect(() => {
+    const token = getStorage(ISLOGIN);
+    axiosPostToken(
+      urlCompanylist,
+      {
+        offset: 1,
+        size: 10,
+      },
+      token
+    ).then((res) => {
+      setCompanyList(res.data);
+      setListPage(res.page);
+    });
+  }, []);
+
   return (
     <div className="mainWrap">
       <div className="tableTopWrap">
@@ -15,19 +38,19 @@ function Company() {
           <table className="commonTable">
             <thead>
               <tr>
-                <th>uid</th>
-                <th>userid</th>
-                <th>createTime</th>
+                {/* <th>cid</th> */}
+                <th>name</th>
               </tr>
             </thead>
             <tbody className="revenueSaleTbody">
-              {/* {listUser.map((item) => (
-                <tr key={item.uid}>
-                  <td>{item.uid}</td>
-                  <td>{item.userid}</td>
-                  <td>{item.createTime}</td>
+              {companyList.map((item) => (
+                <tr key={item.cid}>
+                  {/* <td>{item.cid}</td> */}
+                  <td>
+                    <Link to={`/company/${item.cid}`}>{item.name}</Link>
+                  </td>
                 </tr>
-              ))} */}
+              ))}
             </tbody>
           </table>
           <ul>
@@ -40,6 +63,7 @@ function Company() {
           </ul>
         </div>
       </section>
+      {/* <Outlet /> */}
     </div>
   );
 }
