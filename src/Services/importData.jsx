@@ -51,12 +51,27 @@ export function axiosPostData(url, postData) {
 }
 
 export function axiosPostToken(url, postData, token) {
-  return axios({
-    baseURL: url,
+  return axios(url, {
     method: "POST",
     headers: {
       Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
+    },
+    data: postData,
+  })
+    .then((res) => {
+      console.log("importData.axiosSetData", res);
+      return res.data;
+    })
+    .catch((error) => console.log(error));
+}
+
+export function axiosPostForm(url, postData, token) {
+  return axios(url, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "multipart/form-data",
     },
     data: postData,
   })

@@ -11,6 +11,9 @@ export const urlSetUserDetail = urlPrefix + "/svc/setUserDetail";
 
 export const urlAddcompany = urlPrefix + "/admin/addCompany";
 export const urlCompanylist = urlPrefix + "/admin/listCompany";
+export const urlGetCompanyDetail = urlPrefix + "/admin/getCompanyDetailInfo";
+export const urlSetCompanyDetail = urlPrefix + "/admin/setCompanyDetailInfo";
+
+export const urlUpImages = urlPrefix + "/svc/upImages";
 
 export const ISLOGIN = "is_login";
-export const ISCOMPANY = "is_company";

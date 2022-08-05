@@ -1,3 +1,4 @@
+/*common --------------------------------------------------------------*/
 :root {
   --color-black: #101038;
   --color-white: #fff;
@@ -5,7 +6,6 @@
   --color-pointgray: #a5adc6;
   --color-bggray: #f3f4f3;
   --color-primary: #62bfad;
-  /* --color-primary2: #0d6efd; */
   --color-primary2: #ff8d8d;
   --font-point: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto,
     "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR",
@@ -50,6 +50,7 @@
   }
 }
 
+/*common className --------------------------------------------------------------*/
 .blind_wrap a > span,
 .blind_wrap button > span,
 .blind {
@@ -116,9 +117,560 @@
   border-radius: 0.3125rem;
   box-shadow: var(--styles-boxShadow);
 }
-/* ---------------------------------------------------------------------------------------- */
 
-/*table*/
+/*container --------------------------------------------------------------*/
+.containerWrap {
+  position: relative;
+  width: 100%;
+  height: auto;
+  background-color: var(--color-bggray);
+}
+.containerWrap:before,
+.containerWrap::before {
+  position: absolute;
+  content: "";
+  display: block;
+  width: 100%;
+  height: 10rem;
+  background-color: var(--color-primary);
+}
+
+.contentBox {
+  position: relative;
+  width: 100%;
+  height: auto;
+  padding: 0.9375rem;
+}
+@media screen and (min-width: 1200px) {
+  .contentBox {
+    padding: 1.875rem;
+  }
+}
+
+/*title - content title wrap& title content*/
+.contentTitleWrap {
+  width: 100%;
+  height: 3.75rem;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1.875rem;
+  padding: 0 0.75rem;
+}
+.ContainertitleText {
+  width: auto;
+  height: auto;
+}
+.ContainertitleText h3 {
+  width: auto;
+  height: auto;
+  font-family: var(--font-point);
+  font-size: var(--font-size-title);
+  line-height: 1.2;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+  color: var(--color-white);
+}
+.ContainertitleText span {
+  color: var(--color-white);
+}
+
+/*title - title부분의 브래드크럼*/
+.ContainerTitlebreadcrumb {
+  width: 100%;
+  display: flex;
+}
+.ContainerTitlebreadcrumb li {
+  width: auto;
+  height: auto;
+}
+.ContainerTitlebreadcrumb span {
+  width: auto;
+  height: auto;
+  font-size: var(--font-size-small);
+}
+.breadcrumbPrev:after,
+.breadcrumbPrev::after {
+  content: ">";
+  color: var(--color-white);
+  margin: 0 0.3125rem;
+  font-size: var(--font-size-small);
+}
+
+/*title - title부분의 버튼*/
+.containerTitleBtn {
+  width: auto;
+  height: 2.75rem;
+  padding: 0.875rem 1.875rem;
+  border-radius: 0.3125rem;
+  background-color: var(--color-white);
+  box-shadow: var(--styles-boxShadowDeep);
+  color: 0.8125rem;
+  line-height: 1.0625rem;
+  transition: 0.3s;
+  font-size: var(--font-size-small);
+}
+.containerTitleBtn:hover {
+  background-color: var(--color-primary2);
+  color: var(--color-white);
+}
+
+/*footer --------------------------------------------------------------*/
+.footer {
+  width: 100%;
+  height: 4.875rem;
+  background-color: var(--color-primary);
+}
+.footer span {
+  display: inline-block;
+  width: 100%;
+  height: auto;
+  color: var(--color-white);
+  line-height: 4.875rem;
+  text-align: center;
+}
+
+/*header --------------------------------------------------------------*/
+/*title - basic*/
+.headerWrap {
+  width: 100%;
+  background-color: var(--color-white);
+}
+@media screen and (min-width: 1200px) {
+  .headerWrap {
+    height: 6.25rem;
+    padding: 1.875rem;
+  }
+}
+@media screen and (max-width: 1199px) {
+  .headerWrap {
+    height: 5rem;
+    padding: 1.25rem;
+  }
+}
+.headerWrap button {
+  width: 100%;
+  height: 100%;
+}
+
+.headerBox {
+  width: 100%;
+  height: 100%;
+}
+
+/*title - menu open button*/
+.openBtn {
+  float: left;
+  width: 1.25rem;
+  height: auto;
+  padding-top: 0.8125rem;
+  margin-right: 0.9375rem;
+}
+@media screen and (min-width: 992px) {
+  .openBtn {
+    display: none;
+  }
+}
+
+.openBtn i {
+  width: 100%;
+  height: 100%;
+  font-size: var(--font-size-big);
+  color: var(--color-pointGray);
+}
+
+/*title - headerSearch*/
+.headerSearch {
+  float: left;
+  width: 19.375rem;
+  height: 100%;
+}
+@media screen and (min-width: 768px) and (max-width: 991px) {
+  .headerSearch {
+    width: 12.5rem;
+  }
+}
+@media screen and (max-width: 767px) {
+  .headerSearch {
+    display: none;
+  }
+}
+
+.headerSearch form {
+  width: 100%;
+  height: 100%;
+  border-radius: 3.125rem;
+  border: 0.0625rem solid var(--color-primary);
+  box-sizing: border-box;
+}
+
+.headerSearch button {
+  width: 0.875rem;
+  height: 100%;
+  padding: 0.0625rem 1.4375rem 0.0625rem 1.25rem;
+}
+.headerSearch i {
+  color: var(--color-pointgray);
+}
+.headerSearch input {
+  width: 15.625rem;
+  height: 100%;
+  border: none;
+  background-color: transparent;
+}
+@media screen and (min-width: 768px) and (max-width: 991px) {
+  .headerSearch input {
+    width: 8.25rem;
+  }
+}
+
+/* title - info*/
+.infoWrap {
+  float: right;
+  display: flex;
+  justify-content: space-between;
+  width: 12.1875rem;
+  height: 100%;
+}
+
+.noticeWrap {
+  display: flex;
+  justify-content: center;
+  width: 9.0625rem;
+}
+.noticeWrap li {
+  width: 1.25rem;
+  height: 100%;
+}
+.noticeWrap li:first-child {
+  margin-right: 1.25rem;
+}
+.noticeWrap i {
+  width: 100%;
+  height: 100%;
+  font-size: var(--font-size-basic);
+  color: var(--color-pointGray);
+}
+
+.Headeruser {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 1.5625rem;
+  background-color: var(--color-primary);
+}
+.Headeruser .Link {
+  text-align: center;
+  line-height: 2.5rem;
+}
+.Headeruser i {
+  font-size: var(--font-size-big);
+  color: var(--color-white);
+}
+
+/*navigator --------------------------------------------------------------*/
+.navigationWrap {
+  position: fixed;
+  z-index: 100;
+  top: 0;
+  width: 16.875rem;
+  height: 100%;
+  background-color: var(--color-white);
+  transition: all 500ms ease-in;
+  box-shadow: var(--styles-boxShadow);
+}
+
+@media screen and (min-width: 992px) and (max-width: 1199px) {
+  .navigationWrap {
+    width: 20vw;
+  }
+}
+@media screen and (min-width: 1200px) {
+  .navigationWrap {
+    width: 16.875rem;
+  }
+}
+
+.navigationWrap.hide {
+  left: -16.875rem;
+}
+.navigationWrap.show {
+  left: 0;
+}
+
+/*title - navTop*/
+.navTop {
+  width: auto;
+  height: auto;
+  margin: 1.875rem;
+}
+@media screen and (max-width: 767px) {
+  .navTop {
+    padding: 1.875rem;
+  }
+}
+
+.navTop img {
+  width: 6.25rem;
+  height: 1.1875rem;
+}
+
+.navTop button {
+  position: absolute;
+  top: 1.875rem;
+  right: 1.875rem;
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.navTop i {
+  font-size: var(--font-size-big);
+}
+
+@media screen and (min-width: 992px) {
+  #nav_close_btn {
+    display: none;
+  }
+}
+
+/*title - navBottom*/
+.navBottom {
+  width: 100%;
+  height: 100%;
+  overflow: scroll;
+}
+.navBottom ul {
+  width: 100%;
+  height: auto;
+}
+.navBottom li {
+  width: 15.625rem;
+  height: auto;
+  min-height: 2.125rem;
+  margin-right: 1.25rem;
+}
+
+@media screen and (min-width: 992px) and (max-width: 1199px) {
+  .navBottom li {
+    width: 100%;
+  }
+}
+
+/*title - navInner : 링크로 연결되는 nav button*/
+.navInner {
+  padding-right: 1.5625rem;
+  margin-top: 1.5625rem;
+  margin-left: 1.875rem;
+}
+
+/*title - navInner : 하위 메뉴가 열리는 nav button*/
+.navInnerSub {
+  width: 100%;
+  height: auto;
+  padding: 0;
+  padding-right: 1.5625rem;
+  margin-top: 1.5625rem;
+  margin-left: 1.875rem;
+  text-align: left;
+}
+
+.navSubList ul {
+  width: 11.25rem;
+  margin-left: 1.875rem;
+  padding-bottom: 0.3125rem;
+}
+.navSubList li {
+  width: 100%;
+  height: auto;
+  line-height: 2.5625rem;
+}
+.navSubList > div {
+  position: relative;
+}
+
+.navSubList > div:first-child:after,
+.navSubList > div:first-child::after {
+  display: block;
+  content: "";
+  position: absolute;
+  right: 1.25rem;
+  top: 0.625rem;
+  width: 0.4375rem;
+  height: 0.4375rem;
+  border-top: 0.0625rem solid var(--color-pointgray);
+  border-left: 0.0625rem solid var(--color-pointgray);
+  transform: rotate(135deg);
+  transition: all 300ms ease-in;
+}
+
+.sub_show_btn {
+  width: 100%;
+  height: auto;
+}
+.sub_show_btn > div:first-child:after,
+.sub_show_btn > div:first-child::after {
+  transform: rotate(225deg);
+}
+
+.subLink {
+  text-decoration: none;
+  font-family: var(--font-point);
+  font-size: var(--font-size-small);
+}
+
+/*title - navPart - navInner를 이루는 조각*/
+.navPart {
+  width: 100%;
+  height: auto;
+}
+
+.navPart div {
+  display: inline-block;
+  width: 2.125rem;
+  height: 2.125rem;
+  padding-top: 0.625rem;
+}
+.navPart img {
+  width: 0.875rem;
+  height: 0.875rem;
+}
+.navPart span {
+  font-family: var(--font-point);
+  color: var(--color-black);
+  font-size: var(--font-size-basic);
+  font-weight: 400;
+}
+
+/*login --------------------------------------------------------------*/
+
+.loginWrap,
+.adduserWrap {
+  width: 100%;
+  height: 100%;
+  padding: 0 1rem;
+}
+/*wide PC version*/
+@media screen and (min-width: 1200px) {
+  .loginWrap,
+  .adduserWrap {
+    padding: 0 3rem;
+  }
+}
+
+.loginWrap {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-primary);
+}
+.loginBox {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  padding: 1.875rem;
+  width: 37.5rem;
+  height: 25rem;
+  transition: all 300ms ease-in;
+}
+@media screen and (max-width: 767px) {
+  .loginBox {
+    padding: 0.625rem;
+    padding-top: 4.5rem;
+    width: 18.75rem;
+    height: 30.25rem;
+  }
+}
+.formLayout {
+  width: 100%;
+  height: auto;
+}
+.commonBox h3 {
+  display: block;
+  font-size: 1.875rem;
+  font-family: var(--font-point);
+  color: var(--color-primary);
+  padding: 1.25rem 0 2.5rem;
+  text-transform: uppercase;
+}
+.formLayout input {
+  width: 100%;
+  height: 3.125rem;
+  border-top-left-radius: 0.625rem;
+  border-top-right-radius: 0.625rem;
+  border-bottom: 0.0625rem solid var(--color-gray);
+  margin-bottom: 1.25rem;
+}
+.formLayout input:focus {
+  transition: all 300ms ease-in;
+  border-bottom: 0.0625rem solid var(--color-primary);
+  background-color: var(--color-gray);
+}
+.loginBtn {
+  width: 100%;
+  height: 2.5rem;
+  background-color: var(--color-gray);
+  border-radius: 0.3125rem;
+  transition: all 300ms ease-in;
+  color: var(--color-black);
+  margin-bottom: 1.25rem;
+  /* margin-top: 2.5rem; */
+  outline: none;
+}
+.loginBtn:hover {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+}
+.loginBtn:focus {
+  background-color: var(--color-pointgray);
+  color: var(--color-white);
+  box-shadow: var(--styles-boxShadow);
+}
+.LoginLinkWrap {
+  display: flex;
+  justify-content: center;
+}
+.LoginLinkWrap .link {
+  padding: 0.25rem 0.75rem;
+  transition: all 300ms ease-in;
+  outline: none;
+  font-size: var(--font-size-small);
+  font-weight: 300;
+}
+.LoginLinkWrap .link:hover {
+  border-radius: 0.3125rem;
+  background-color: var(--color-gray);
+}
+.LoginLinkWrap .link:focus {
+  background-color: var(--color-gray);
+  border-radius: 0.3125rem;
+  font-weight: 400;
+}
+
+/*addUser ==========================================*/
+.formCommonWrap {
+  margin: 0 auto;
+  width: 80%;
+  min-width: 18.75rem;
+}
+.formBox {
+  padding: 1.25rem;
+  padding-top: 3rem;
+}
+
+@media screen and (min-width: 1200px) {
+  .formCommonWrap {
+    margin: 0 auto;
+    width: 50rem;
+  }
+  .formBox {
+    padding: 3.25rem;
+  }
+}
+
+/*page --------------------------------------------------------------*/
+
+/*table --------------------------------------------------------------*/
 .commonTable thead {
   border-bottom: 0.125rem solid var(--color-primary);
   font-size: var(--font-size-basic);
@@ -213,7 +765,7 @@
   padding-top: 0.3125rem;
 }
 
-/*button & Link*/
+/*button & Link--------------------------------------------------------------*/
 .smallButton {
   width: 6.25rem;
   height: 2rem;
@@ -246,6 +798,7 @@
   color: var(--color-black);
   box-shadow: var(--styles-boxShadowDeep);
 }
+/*Link ----------------------------*/
 .Link {
   display: block;
   width: 100%;
