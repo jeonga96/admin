@@ -7,7 +7,8 @@ import { urlGetCompanyDetail, urlGetImages, ISLOGIN } from "../Services/string";
 function Company() {
   let { cid } = useParams();
   const [companyDetail, setCompanyDetail] = useState([]);
-  const [image, setImage] = useState([]);
+  const [image, setImage] = useState();
+  const reqImgs = useRef(null);
 
   useEffect(() => {
     const token = getStorage(ISLOGIN);
@@ -20,11 +21,11 @@ function Company() {
     ).then((res) => {
       if (res.status === "success") {
         setCompanyDetail(res.data);
-        // setImage(res.data.titleImg);
+        reqImgs.current = res.data.titleImg + "," + res.data.imgs;
         axiosPostToken(
           urlGetImages,
           {
-            imgs: "1",
+            imgs: reqImgs.current,
           },
           token
         ).then((res) => {
@@ -38,8 +39,8 @@ function Company() {
         return;
       }
     });
-  }, [cid]);
-
+  }, []);
+  console.log(image[0].storagePath);
   return (
     <div className="mainWrap">
       <section>
@@ -47,13 +48,7 @@ function Company() {
         <div className="paddingBox commonBox">
           <ul>
             <li className="titleImg">
-              {image.map((item) => (
-                <img
-                  key={item.iid}
-                  src={item.storagePath}
-                  alt="사업자 대표 이미지"
-                />
-              ))}
+              <img src={image[0].storagePath} alt="사업자 대표 이미지" />
             </li>
             <li>{companyDetail.name}</li>
             <li>
@@ -82,7 +77,6 @@ function Company() {
                 />
               ))}
             </li>
-            {/* <li>{companyDetail.imgs}</li> */}
             <li>{companyDetail.keywords}</li>
             <li>{companyDetail.longitude}</li>
             <li>{companyDetail.latitude}</li>
