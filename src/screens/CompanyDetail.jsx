@@ -1,13 +1,14 @@
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { axiosPostToken, getStorage } from "../Services/importData";
-import { urlGetCompanyDetail, urlUpImages, ISLOGIN } from "../Services/string";
+import { urlGetCompanyDetail, urlGetImages, ISLOGIN } from "../Services/string";
 
 function Company() {
   let { cid } = useParams();
   const [companyDetail, setCompanyDetail] = useState([]);
   const [image, setImage] = useState([]);
+
   useEffect(() => {
     const token = getStorage(ISLOGIN);
     axiosPostToken(
@@ -19,17 +20,17 @@ function Company() {
     ).then((res) => {
       if (res.status === "success") {
         setCompanyDetail(res.data);
-        // axiosPostToken(
-        //   urlUpImages,
-        //   {
-        //     // imgs: res.data.imgs,
-        //     imgs: "5,9,990",
-        //   },
-        //   token
-        // ).then(
-        //   // setImage()
-        //   (res) => console.log(res)
-        // );
+        // setImage(res.data.titleImg);
+        axiosPostToken(
+          urlGetImages,
+          {
+            imgs: "1",
+          },
+          token
+        ).then((res) => {
+          console.log(res);
+          setImage(res.data);
+        });
         return;
       }
       if (res.status === "fail" && res.emsg === "process failed.") {
@@ -45,7 +46,15 @@ function Company() {
         <h3 className="blind">사업자 상세정보 관리</h3>
         <div className="paddingBox commonBox">
           <ul>
-            <li className="titleImg">{companyDetail.titleImg}</li>
+            <li className="titleImg">
+              {image.map((item) => (
+                <img
+                  key={item.iid}
+                  src={item.storagePath}
+                  alt="사업자 대표 이미지"
+                />
+              ))}
+            </li>
             <li>{companyDetail.name}</li>
             <li>
               <span>{companyDetail.createTime}</span>
@@ -63,7 +72,17 @@ function Company() {
             <li>{companyDetail.address}</li>
             <li>{companyDetail.offer}</li>
             <li>{companyDetail.registration}</li>
-            <li>{companyDetail.imgs}</li>
+
+            <li>
+              {image.map((item) => (
+                <img
+                  key={item.iid}
+                  src={item.storagePath}
+                  alt="사업자 상세 이미지"
+                />
+              ))}
+            </li>
+            {/* <li>{companyDetail.imgs}</li> */}
             <li>{companyDetail.keywords}</li>
             <li>{companyDetail.longitude}</li>
             <li>{companyDetail.latitude}</li>
