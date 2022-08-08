@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useEffect, useRef } from "react";
 
 export function setStorage(name, data) {
   return sessionStorage.setItem(name, data);
@@ -81,3 +82,12 @@ export function axiosPostForm(url, postData, token) {
     })
     .catch((error) => console.log(error));
 }
+
+export const useDidMountEffect = (func, deps) => {
+  const didMount = useRef(false);
+
+  useEffect(() => {
+    if (didMount.current) func();
+    else didMount.current = true;
+  }, deps);
+};

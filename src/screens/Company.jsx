@@ -45,7 +45,6 @@ function Company() {
             <tbody className="revenueSaleTbody">
               {companyList.map((item) => (
                 <tr key={item.cid}>
-                  {/* <td>{item.cid}</td> */}
                   <td>
                     <Link to={`/company/${item.cid}`}>{item.name}</Link>
                   </td>

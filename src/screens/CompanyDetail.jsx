@@ -1,7 +1,11 @@
 import { Link } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
-import { axiosPostToken, getStorage } from "../Services/importData";
+import {
+  axiosPostToken,
+  getStorage,
+  useDidMountEffect,
+} from "../Services/importData";
 import { urlGetCompanyDetail, urlGetImages, ISLOGIN } from "../Services/string";
 
 function Company() {
@@ -9,9 +13,9 @@ function Company() {
   const [companyDetail, setCompanyDetail] = useState([]);
   const [image, setImage] = useState();
   const reqImgs = useRef(null);
+  const token = getStorage(ISLOGIN);
 
   useEffect(() => {
-    const token = getStorage(ISLOGIN);
     axiosPostToken(
       urlGetCompanyDetail,
       {
@@ -22,16 +26,6 @@ function Company() {
       if (res.status === "success") {
         setCompanyDetail(res.data);
         reqImgs.current = res.data.titleImg + "," + res.data.imgs;
-        axiosPostToken(
-          urlGetImages,
-          {
-            imgs: reqImgs.current,
-          },
-          token
-        ).then((res) => {
-          console.log(res);
-          setImage(res.data);
-        });
         return;
       }
       if (res.status === "fail" && res.emsg === "process failed.") {
@@ -40,7 +34,21 @@ function Company() {
       }
     });
   }, []);
-  console.log(image[0].storagePath);
+
+  useDidMountEffect(() => {
+    axiosPostToken(
+      urlGetImages,
+      {
+        imgs: reqImgs.current,
+      },
+      token
+    ).then((res) => {
+      console.log(res);
+      setImage(res.data);
+    });
+  }, [companyDetail]);
+
+  // console.log(image[0].storagePath);
   return (
     <div className="mainWrap">
       <section>
@@ -48,7 +56,9 @@ function Company() {
         <div className="paddingBox commonBox">
           <ul>
             <li className="titleImg">
-              <img src={image[0].storagePath} alt="사업자 대표 이미지" />
+              {image && (
+                <img src={image[0].storagePath} alt="사업자 대표 이미지" />
+              )}
             </li>
             <li>{companyDetail.name}</li>
             <li>
@@ -69,13 +79,15 @@ function Company() {
             <li>{companyDetail.registration}</li>
 
             <li>
-              {image.map((item) => (
-                <img
-                  key={item.iid}
-                  src={item.storagePath}
-                  alt="사업자 상세 이미지"
-                />
-              ))}
+              {companyDetail.imgs}
+              {image &&
+                image.map((item) => (
+                  <img
+                    key={item.iid}
+                    src={item.storagePath}
+                    alt="사업자 상세 이미지"
+                  />
+                ))}
             </li>
             <li>{companyDetail.keywords}</li>
             <li>{companyDetail.longitude}</li>
