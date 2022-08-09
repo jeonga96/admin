@@ -3,29 +3,19 @@ import { useEffect, useState } from "react";
 import { axiosPostToken, getStorage } from "../Services/importData";
 import { urlUserlist, ISLOGIN } from "../Services/string";
 
+import PageButton from "../components/common/PageButton";
+
 function User() {
   const [userList, setUserList] = useState([]);
   const [listPage, setListPage] = useState({});
-
-  const buttonArr = [];
-  const buttonIf =
-    listPage.totalElements % 10 === 0
-      ? listPage.totalPages
-      : listPage.totalPages + 1;
-  const buttonData = (index) => {
-    let i = 1;
-    for (i; i <= index; i++) {
-      buttonArr.push(i);
-    }
-  };
-  buttonData(buttonIf);
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
     const token = getStorage(ISLOGIN);
     axiosPostToken(
       urlUserlist,
       {
-        offset: 1,
+        offset: page,
         size: 10,
       },
       token
@@ -33,7 +23,7 @@ function User() {
       setUserList(res.data);
       setListPage(res.page);
     });
-  }, []);
+  }, [page]);
 
   return (
     <div className="mainWrap">
@@ -65,14 +55,7 @@ function User() {
               ))}
             </tbody>
           </table>
-          <ul className="tableBtn">
-            {buttonArr.map((item, key) => (
-              <li key={key}>
-                <button type="button">{item}</button>
-                <span className="blind">{item}페이지로 가기</span>
-              </li>
-            ))}
-          </ul>
+          <PageButton listPage={listPage} page={page} setPage={setPage} />
         </div>
       </section>
     </div>

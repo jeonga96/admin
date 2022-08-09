@@ -1,4 +1,9 @@
-import { useEffect } from "react";
+import {
+  HiChevronDoubleLeft,
+  HiChevronDoubleRight,
+  HiChevronLeft,
+  HiChevronRight,
+} from "react-icons/hi";
 import Pagination from "react-js-pagination";
 
 function PageButton({ listPage, page, setPage }) {
@@ -20,8 +25,10 @@ function PageButton({ listPage, page, setPage }) {
         itemsCountPerPage={10}
         totalItemsCount={listPage.totalElements}
         pageRangeDisplayed={totalPage}
-        prevPageText={"‹"}
-        nextPageText={"›"}
+        firstPageText={<HiChevronDoubleLeft />}
+        lastPageText={<HiChevronDoubleRight />}
+        prevPageText={<HiChevronLeft />}
+        nextPageText={<HiChevronRight />}
         onChange={handlePageChange}
       />
     </div>
