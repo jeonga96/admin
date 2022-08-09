@@ -23,10 +23,6 @@ function Map({ companyDetail }) {
           map: map,
           position: coords,
         });
-        // var infowindow = new kakao.maps.InfoWindow({
-        //   content: `<div style="width:150px;text-align:center;padding:6px 0;">${companyDetail.name}</div>`,
-        // });
-        // infowindow.open(map, marker);
         map.setCenter(coords);
       }
     });

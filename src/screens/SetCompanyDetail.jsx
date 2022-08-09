@@ -10,6 +10,7 @@ import { urlSetCompanyDetail, urlUpImages, ISLOGIN } from "../Services/string";
 function Company() {
   const { cid } = useParams();
 
+  const [beforeData, setBeforeData] = useState({});
   const [titleImg, setTitleImg] = useState(null);
   const [imgs, setImgs] = useState(null);
   const imgsIid = useRef([]);
@@ -197,6 +198,11 @@ function Company() {
             accept="image/*"
             onChange={fileSelectEvent}
           />
+          {titleImg && (
+            <div className="imgsThumbnail">
+              <img src={titleImg[0].storagePath} alt="사업자 상세 이미지" />
+            </div>
+          )}
 
           <label htmlFor="imgs" className=" userIdLabel">
             회사 홍보 이미지
@@ -209,6 +215,19 @@ function Company() {
             multiple
             onChange={fileSelectEvent}
           />
+          {imgs && (
+            <ul className="imgsThumbnail">
+              {imgs.map((item, key) => (
+                <li>
+                  <img
+                    key={key}
+                    src={item.storagePath}
+                    alt="사업자 상세 이미지"
+                  />
+                </li>
+              ))}
+            </ul>
+          )}
 
           <label htmlFor="telnum" className=" userIdLabel">
             전화번호

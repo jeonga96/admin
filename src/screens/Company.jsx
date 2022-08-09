@@ -4,16 +4,19 @@ import { useEffect, useState } from "react";
 import { axiosPostToken, getStorage } from "../Services/importData";
 import { urlCompanylist, ISLOGIN } from "../Services/string";
 
+import PageButton from "../components/common/PageButton";
+
 function Company() {
   const [companyList, setCompanyList] = useState([]);
   const [listPage, setListPage] = useState({});
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
     const token = getStorage(ISLOGIN);
     axiosPostToken(
       urlCompanylist,
       {
-        offset: 1,
+        offset: page,
         size: 10,
       },
       token
@@ -21,7 +24,7 @@ function Company() {
       setCompanyList(res.data);
       setListPage(res.page);
     });
-  }, []);
+  }, [page]);
 
   return (
     <div className="mainWrap">
@@ -51,14 +54,18 @@ function Company() {
               ))}
             </tbody>
           </table>
-          <ul>
-            {/* {buttonArr.map((item, key) => (
+          {/* <ul className="tableBtn">
+            {btnArr.map((item, key) => (
               <li key={key}>
-                <button type="button">{item}</button>
+                <button type="button" onClick={btnClick}>
+                  {item}
+                </button>
                 <span className="blind">{item}페이지로 가기</span>
               </li>
-            ))} */}
-          </ul>
+            ))}
+          </ul> */}
+
+          <PageButton listPage={listPage} page={page} setPage={setPage} />
         </div>
       </section>
     </div>

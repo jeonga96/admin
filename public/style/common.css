@@ -675,6 +675,26 @@
   }
 }
 
+/*setPage --------------------------------------------------------------*/
+.imgsThumbnail {
+  display: flex;
+  width: 100%;
+  justify-content: left;
+}
+.imgsThumbnail li {
+  width: auto;
+  height: 4.125rem;
+  margin-right: 4px;
+}
+.imgsThumbnail img {
+  width: 100%;
+  height: 100%;
+}
+.imgsThumbnail > img {
+  width: auto;
+  height: 4.125rem;
+}
+
 /*page --------------------------------------------------------------*/
 .detailPageLayout {
   display: flex;
@@ -844,27 +864,32 @@
 }
 
 /*btn 영역*/
-.tableBtn {
+.tableBtn,
+.pagination {
   display: flex;
   justify-content: center;
   width: auto;
 }
-.tableBtn li {
+.tableBtn li,
+ul.pagination li {
   width: 1.875rem;
   height: 1.875rem;
   margin: 0 0.125rem;
 }
-.tableBtn button {
+.tableBtn button,
+ul.pagination li a {
   display: block;
   width: 100%;
   height: 100%;
   border-radius: 0.3125rem;
   transition: all 300ms ease-in;
 }
-.tableBtn button.active {
+.tableBtn button.active,
+ul.pagination li a.active {
   border: 1px solid var(--color-primary);
 }
-.tableBtn button:hover {
+.tableBtn button:hover,
+ul.pagination li a:hover {
   background-color: var(--color-gray);
 }
 .tableBtn i {
