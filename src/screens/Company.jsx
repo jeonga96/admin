@@ -38,15 +38,14 @@ function Company() {
           <table className="commonTable">
             <thead>
               <tr>
-                {/* <th>cid</th> */}
                 <th>name</th>
               </tr>
             </thead>
             <tbody className="revenueSaleTbody">
-              {companyList.map((item) => (
+              {companyList.map((item, key) => (
                 <tr key={item.cid}>
                   <td>
-                    <Link to={`/company/${item.cid}`}>{item.name}</Link>
+                    <Link to={`${item.cid}`}>{item.name}</Link>
                   </td>
                 </tr>
               ))}
@@ -62,7 +61,6 @@ function Company() {
           </ul>
         </div>
       </section>
-      {/* <Outlet /> */}
     </div>
   );
 }

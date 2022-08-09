@@ -68,7 +68,6 @@ function Company() {
     setCompanyData({ ...companyData, [e.target.id]: [e.target.value] });
   }
 
-  console.log(titleImg[0].iid, imgsIid.current.toString());
   function addUserEvent() {
     const token = getStorage(ISLOGIN);
     axiosPostToken(
@@ -100,7 +99,7 @@ function Company() {
         console.log("axios 성공!", res);
         if (res.status === "success") {
           alert("가입이 완료되었습니다!");
-          // window.location.href = "/user";
+          window.location.href = `/company/${cid}`;
           return;
         }
       })

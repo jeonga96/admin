@@ -7,6 +7,7 @@ import {
   useDidMountEffect,
 } from "../Services/importData";
 import { urlGetCompanyDetail, urlGetImages, ISLOGIN } from "../Services/string";
+import Map from "../components/common/Map";
 
 function Company() {
   let { cid } = useParams();
@@ -29,7 +30,8 @@ function Company() {
         return;
       }
       if (res.status === "fail" && res.emsg === "process failed.") {
-        alert("정보가 없습니다. ");
+        alert("정보가 없습니다. 사업자 정보를 입력해 주세요!");
+        window.location.href = `company/${cid}/setcompanydetailInfo`;
         return;
       }
     });
@@ -48,50 +50,102 @@ function Company() {
     });
   }, [companyDetail]);
 
-  // console.log(image[0].storagePath);
   return (
     <div className="mainWrap">
       <section>
         <h3 className="blind">사업자 상세정보 관리</h3>
         <div className="paddingBox commonBox">
-          <ul>
-            <li className="titleImg">
-              {image && (
-                <img src={image[0].storagePath} alt="사업자 대표 이미지" />
-              )}
+          <ul className="detailPageLayout">
+            <li className="detailImage">
+              <div className="titleImg">
+                {image && (
+                  <img src={image[0].storagePath} alt="사업자 대표 이미지" />
+                )}
+              </div>
+              <div className="imgsImg">
+                <h4>사업자 상세 이미지</h4>
+                <div>
+                  <ul>
+                    {image &&
+                      image.map((item) => (
+                        <li>
+                          <img
+                            key={item.iid}
+                            src={item.storagePath}
+                            alt="사업자 상세 이미지"
+                          />
+                        </li>
+                      ))}
+                  </ul>
+                </div>
+              </div>
             </li>
-            <li>{companyDetail.name}</li>
-            <li>
-              <span>{companyDetail.createTime}</span>
-              <span>{companyDetail.updateTime}</span>
-            </li>
-            <li>{companyDetail.comment}</li>
-            <li>{companyDetail.workTime}</li>
-            <li>
-              <span>{companyDetail.telnum}</span>
-              <span>{companyDetail.mobilenum}</span>
-              <span>{companyDetail.extnum}</span>
-            </li>
+            <li className="detailText">
+              <ul>
+                <li className="name">{companyDetail.name}</li>
+                <li className="detailSpan detailTime">
+                  <div>
+                    <em>작성 시간</em>
+                    <span>{companyDetail.createTime}</span>
+                  </div>
+                  <div>
+                    <em>수정 시간</em>
+                    <span>{companyDetail.updateTime}</span>
+                  </div>
+                </li>
+                <li className="detailHead">
+                  <h4>사업자 소개글</h4>
+                  <span>{companyDetail.comment}</span>
+                </li>
+                <li className="detailHead">
+                  <h4>영업 시간</h4>
+                  <span>{companyDetail.workTime}</span>
+                </li>
+                <li className="detailHead">
+                  <h4>연락처 정보</h4>
+                  <ul className="detailSpan">
+                    <li>
+                      <em>전화 번호</em>
+                      <span>{companyDetail.telnum}</span>
+                    </li>
+                    <li>
+                      <em>핸드폰 번호</em>
+                      <span>{companyDetail.mobilenum}</span>
+                    </li>
+                    <li>
+                      <em>추가 번호</em>
+                      <span>{companyDetail.extnum}</span>
+                    </li>
+                  </ul>
+                </li>
 
-            <li>{companyDetail.email}</li>
-            <li>{companyDetail.address}</li>
-            <li>{companyDetail.offer}</li>
-            <li>{companyDetail.registration}</li>
+                <li className="detailHead">
+                  <h4>이메일</h4>
+                  <span>{companyDetail.email}</span>
+                </li>
+                <li className="detailHead">
+                  <h4>주소</h4>
+                  <Map companyDetail={companyDetail} />
+                  <span>{companyDetail.address}</span>
+                </li>
+                <li className="detailHead">
+                  <h4>사업자 소개글</h4>
+                  <span>{companyDetail.offer}</span>
+                </li>
 
-            <li>
-              {companyDetail.imgs}
-              {image &&
-                image.map((item) => (
-                  <img
-                    key={item.iid}
-                    src={item.storagePath}
-                    alt="사업자 상세 이미지"
-                  />
-                ))}
+                <li className="detailHead">
+                  <h4>사업자 등록 번호</h4>
+                  <span>{companyDetail.registration}</span>
+                </li>
+
+                <li className="detailHead">
+                  <h4>키워드</h4>
+                  <span>{companyDetail.keywords}</span>
+                </li>
+                {/* <li>{companyDetail.longitude}</li>
+                <li>{companyDetail.latitude}</li> */}
+              </ul>
             </li>
-            <li>{companyDetail.keywords}</li>
-            <li>{companyDetail.longitude}</li>
-            <li>{companyDetail.latitude}</li>
           </ul>
           <div className="bigButton widthCenter">
             <Link className="Link" to="setcompanydetailInfo">

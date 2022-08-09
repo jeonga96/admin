@@ -1,11 +1,5 @@
 [
   {
-    "name": "대시보드",
-    "icon": "https://demo.dashboardpack.com/sales-html/img/menu-icon/dashboard.svg",
-    "url": "/",
-    "subNav": null
-  },
-  {
     "name": "관리자",
     "icon": "https://demo.dashboardpack.com/sales-html/img/menu-icon/dashboard.svg",
     "url": null,

@@ -18,3 +18,5 @@ export const urlUpImages = urlPrefix + "/svc/upImages";
 export const urlGetImages = urlPrefix + "/svc/getImages";
 
 export const ISLOGIN = "is_login";
+
+export const KAKAO_KEY = "0dc0b365e2e0ca17c6c8032ea93a8337";
