@@ -14,6 +14,7 @@ function Company() {
   const [titleImg, setTitleImg] = useState(null);
   const [imgs, setImgs] = useState(null);
   const imgsIid = useRef([]);
+  const mapcoor = useRef({ longitude: "", latitude: "" });
 
   const [companyData, setCompanyData] = useState({
     name: "",
@@ -25,8 +26,6 @@ function Company() {
     offer: "",
     titleImg: "",
     imgs: "",
-    longitude: "",
-    latitude: "",
     telnum: "",
     mobilenum: "",
     email: "",
@@ -69,9 +68,22 @@ function Company() {
     setCompanyData({ ...companyData, [e.target.id]: [e.target.value] });
   }
 
-  function addUserEvent() {
+  function callMapcoor() {
+    var geocoder = new window.kakao.maps.services.Geocoder();
+    var callback = function (result, status) {
+      if (status === window.kakao.maps.services.Status.OK) {
+        mapcoor.current.longitude = Math.floor(result[0].x * 100000);
+        mapcoor.current.latitude = Math.floor(result[0].y * 100000);
+        console.log("dd", mapcoor.current);
+      }
+    };
+    geocoder.addressSearch(companyData.address, callback);
+  }
+
+  const addUserEvent = async () => {
     const token = getStorage(ISLOGIN);
-    axiosPostToken(
+    await callMapcoor();
+    await axiosPostToken(
       urlSetCompanyDetail,
       {
         rcid: cid,
@@ -84,8 +96,8 @@ function Company() {
         offer: companyData.offer[0],
         titleImg: titleImg[0].iid,
         imgs: imgsIid.current.toString(),
-        longitude: companyData.longitude[0],
-        latitude: companyData.latitude[0],
+        longitude: mapcoor.current.longitude,
+        latitude: mapcoor.current.latitude,
         telnum: companyData.telnum[0],
         mobilenum: companyData.mobilenum[0],
         email: companyData.email[0],
@@ -105,7 +117,7 @@ function Company() {
         }
       })
       .catch((error) => console.log("axios 실패", error.response));
-  }
+  };
 
   const AddUserSubmit = (e) => {
     e.preventDefault();
@@ -216,12 +228,8 @@ function Company() {
           {imgs && (
             <ul className="imgsThumbnail">
               {imgs.map((item, key) => (
-                <li>
-                  <img
-                    key={key}
-                    src={item.storagePath}
-                    alt="사업자 상세 이미지"
-                  />
+                <li key={key}>
+                  <img src={item.storagePath} alt="사업자 상세 이미지" />
                 </li>
               ))}
             </ul>

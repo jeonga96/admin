@@ -8,9 +8,7 @@ import {
 } from "../Services/importData";
 import { urlGetCompanyDetail, urlGetImages, ISLOGIN } from "../Services/string";
 
-import Map from "../components/common/Map";
-
-function CompanyDetail() {
+function UserDetail() {
   let { cid } = useParams();
   const [companyDetail, setCompanyDetail] = useState([]);
   const [image, setImage] = useState();
@@ -43,7 +41,6 @@ function CompanyDetail() {
   useDidMountEffect(() => {
     reqImgs.current = companyDetail.titleImg + "," + companyDetail.imgs;
     mapLinkAdress.current = companyDetail.address.replace(/ /gi, "+");
-
     axiosPostToken(
       urlGetImages,
       {
@@ -152,8 +149,8 @@ function CompanyDetail() {
                   <h4>키워드</h4>
                   <span>{companyDetail.keywords}</span>
                 </li>
-                <li>{companyDetail.longitude}</li>
-                <li>{companyDetail.latitude}</li>
+                {/* <li>{companyDetail.longitude}</li>
+                <li>{companyDetail.latitude}</li> */}
               </ul>
             </li>
           </ul>
@@ -167,4 +164,4 @@ function CompanyDetail() {
     </div>
   );
 }
-export default CompanyDetail;
+export default UserDetail;

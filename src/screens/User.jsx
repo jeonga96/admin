@@ -30,7 +30,7 @@ function User() {
       <div className="tableTopWrap">
         <div className="smallButton">
           <Link className="smallButtonLink Link" to="/adduser">
-            관리자 추가
+            통합회원 추가
           </Link>
         </div>
       </div>

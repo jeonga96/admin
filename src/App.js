@@ -6,12 +6,16 @@ import { useSelector, useDispatch } from "react-redux";
 import MainLayout from "./components/common/MainLayout";
 import Home from "./screens/Home";
 import Login from "./screens/Login";
-import AddUser from "./screens/AddUser";
-import AddCompany from "./screens/AddCompany";
+
 import User from "./screens/User";
+import AddUser from "./screens/AddUser";
+import UserMyInfo from "./screens/UserMyInfo";
+import SetUserMyInfo from "./screens/SetUserMyInfo";
+import UserDetail from "./screens/UserDetail";
+// import SetUserDetail from "./screens/SetUserDetail";
+
 import Company from "./screens/Company";
-import UserDeteil from "./screens/UserDeteil";
-import SetUserDetail from "./screens/SetUserDetail";
+import AddCompany from "./screens/AddCompany";
 import CompanyDetail from "./screens/CompanyDetail";
 import SetCompanyDetail from "./screens/SetCompanyDetail";
 
@@ -74,6 +78,24 @@ function App() {
           path="user"
           element={<MainLayout nowTitle="통합회원 관리" component={<User />} />}
         />
+        {/* <Route
+          path="user/:cid"
+          element={
+            <MainLayout
+              nowTitle="통합회원 상세정보 관리"
+              component={<UserDetail />}
+            />
+          }
+        />
+        <Route
+          path="user/:cid/setuserdetailInfo"
+          element={
+            <MainLayout
+              nowTitle="통합회원 상세정보 수정"
+              component={<SetUserDetail />}
+            />
+          }
+        /> */}
         <Route
           path="adduser"
           element={
@@ -87,21 +109,15 @@ function App() {
           }
         />
         <Route
-          path="userdetail"
+          path="usermyinfo"
           element={
-            <MainLayout
-              nowTitle="통합회원 상세정보"
-              component={<UserDeteil />}
-            />
+            <MainLayout nowTitle="내 정보 확인" component={<UserMyInfo />} />
           }
         />
         <Route
           path="setuserdetail"
           element={
-            <MainLayout
-              nowTitle="통합회원 정보 업데이트"
-              component={<SetUserDetail />}
-            />
+            <MainLayout nowTitle="내 정보 수정" component={<SetUserMyInfo />} />
           }
         />
         <Route

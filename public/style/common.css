@@ -941,7 +941,7 @@ ul.pagination li a:hover {
   transition: all 500ms ease-in;
 }
 .smallButtonLink:hover {
-  background-color: var(--color-primary);
+  background-color: var(--color-primary2);
   color: var(--color-white);
   box-shadow: var(--styles-boxShadowDeep);
   text-decoration: none;
