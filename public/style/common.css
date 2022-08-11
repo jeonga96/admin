@@ -907,6 +907,25 @@ ul.pagination li a:hover {
 }
 
 /*button & Link--------------------------------------------------------------*/
+.linkAnchorBg {
+  width: auto;
+  height: auto;
+  padding: 0.125rem 0.25rem;
+  margin-left: 1.25rem;
+  font-size: var(--font-size-basic);
+  font-weight: 400;
+  color: var(--color-white);
+  background-color: var(--color-primary);
+  border-radius: 0.3125rem;
+  text-decoration: none;
+  transition: all 500ms ease-in;
+}
+.linkAnchorBg:hover,
+.linkAnchorBg:focus {
+  text-decoration: none;
+  background-color: var(--color-primary2);
+}
+
 .smallButton {
   width: 6.25rem;
   height: 2rem;
@@ -916,18 +935,23 @@ ul.pagination li a:hover {
   line-height: 2rem;
   font-weight: 400;
   font-size: var(--font-size-basic);
-  background-color: var(--color-white);
+  background-color: var(--color-bggray);
   border-radius: 0.3125rem;
+  text-decoration: none;
+  transition: all 500ms ease-in;
 }
 .smallButtonLink:hover {
-  background-color: var(--color-bggray);
+  background-color: var(--color-primary);
+  color: var(--color-white);
   box-shadow: var(--styles-boxShadowDeep);
+  text-decoration: none;
 }
 .bigButton {
   width: 12rem;
   height: 2rem;
   text-align: center;
   line-height: 2rem;
+  font-weight: 400;
 }
 .bigButton .Link {
   border-radius: 0.3125rem;

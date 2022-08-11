@@ -5,17 +5,18 @@ import {
   HiChevronRight,
 } from "react-icons/hi";
 import Pagination from "react-js-pagination";
+import { useRef, useEffect } from "react";
 
 function PageButton({ listPage, page, setPage }) {
-  console.log(listPage);
-
-  const totalPage =
+  const totalPage = useRef(
     listPage.totalElements % 10 != 0
       ? listPage.totalPages + 1
-      : listPage.totalPages;
+      : listPage.totalPages
+  );
 
   const handlePageChange = (page) => {
     setPage(page === 1 ? page : page * 10 - 9);
+    console.log("page", page);
   };
 
   return (
@@ -24,12 +25,13 @@ function PageButton({ listPage, page, setPage }) {
         activePage={page}
         itemsCountPerPage={10}
         totalItemsCount={listPage.totalElements}
-        pageRangeDisplayed={totalPage}
+        pageRangeDisplayed={totalPage.current}
         firstPageText={<HiChevronDoubleLeft />}
         lastPageText={<HiChevronDoubleRight />}
         prevPageText={<HiChevronLeft />}
         nextPageText={<HiChevronRight />}
         onChange={handlePageChange}
+        // hideFirstLastPages={true}
       />
     </div>
   );

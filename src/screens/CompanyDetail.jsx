@@ -7,13 +7,14 @@ import {
   useDidMountEffect,
 } from "../Services/importData";
 import { urlGetCompanyDetail, urlGetImages, ISLOGIN } from "../Services/string";
-import Map from "../components/common/Map";
 
 function Company() {
   let { cid } = useParams();
   const [companyDetail, setCompanyDetail] = useState([]);
   const [image, setImage] = useState();
   const reqImgs = useRef(null);
+  const mapLinkAdress = useRef("");
+
   const token = getStorage(ISLOGIN);
 
   useEffect(() => {
@@ -38,6 +39,8 @@ function Company() {
   }, []);
 
   useDidMountEffect(() => {
+    reqImgs.current = companyDetail.titleImg + "," + companyDetail.imgs;
+    mapLinkAdress.current = companyDetail.address.replace(/ /gi, "+");
     axiosPostToken(
       urlGetImages,
       {
@@ -45,7 +48,6 @@ function Company() {
       },
       token
     ).then((res) => {
-      console.log(res);
       setImage(res.data);
     });
   }, [companyDetail]);
@@ -67,10 +69,9 @@ function Company() {
                 <div>
                   <ul>
                     {image &&
-                      image.map((item) => (
-                        <li>
+                      image.map((item, i) => (
+                        <li key={item.iid}>
                           <img
-                            key={item.iid}
                             src={item.storagePath}
                             alt="사업자 상세 이미지"
                           />
@@ -125,8 +126,14 @@ function Company() {
                 </li>
                 <li className="detailHead">
                   <h4>주소</h4>
-                  <Map companyDetail={companyDetail} />
                   <span>{companyDetail.address}</span>
+                  <a
+                    className="linkAnchorBg"
+                    href={`https://map.kakao.com/?map_type=TYPE_MAP&q=${mapLinkAdress.current}&urlLevel=2&urlX=469847&urlY=1057028`}
+                    target="top"
+                  >
+                    지도 링크이동
+                  </a>
                 </li>
                 <li className="detailHead">
                   <h4>사업자 소개글</h4>
