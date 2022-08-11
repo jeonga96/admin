@@ -6,7 +6,6 @@ import { useSelector, useDispatch } from "react-redux";
 import MainLayout from "./components/common/MainLayout";
 import Home from "./screens/Home";
 import Login from "./screens/Login";
-import Table from "./screens/Table";
 import AddUser from "./screens/AddUser";
 import AddCompany from "./screens/AddCompany";
 import User from "./screens/User";
@@ -63,21 +62,22 @@ function App() {
       <Routes>
         <Route
           path="/"
-          element={<MainLayout nowTitle="DashBord" component={<Home />} />}
+          element={
+            <MainLayout
+              nowTitle="DashBord"
+              component={<Home nowTitle="DashBord" />}
+            />
+          }
         />
         <Route path="login" element={<Login />} />
         <Route
-          path="table"
-          element={<MainLayout nowTitle="DashBord" component={<Table />} />}
-        />
-        <Route
           path="user"
-          element={<MainLayout nowTitle="관리자 관리" component={<User />} />}
+          element={<MainLayout nowTitle="통합회원 관리" component={<User />} />}
         />
         <Route
           path="adduser"
           element={
-            <MainLayout nowTitle="관리자 추가" component={<AddUser />} />
+            <MainLayout nowTitle="통합회원 추가" component={<AddUser />} />
           }
         />
         <Route
@@ -89,14 +89,17 @@ function App() {
         <Route
           path="userdetail"
           element={
-            <MainLayout nowTitle="관리자 상세정보" component={<UserDeteil />} />
+            <MainLayout
+              nowTitle="통합회원 상세정보"
+              component={<UserDeteil />}
+            />
           }
         />
         <Route
           path="setuserdetail"
           element={
             <MainLayout
-              nowTitle="관리자 정보 업데이트"
+              nowTitle="통합회원 정보 업데이트"
               component={<SetUserDetail />}
             />
           }

@@ -54,8 +54,7 @@ function Company() {
 
   return (
     <div className="mainWrap">
-      <section>
-        <h3 className="blind">사업자 상세정보 관리</h3>
+      <div>
         <div className="paddingBox commonBox">
           <ul className="detailPageLayout">
             <li className="detailImage">
@@ -160,7 +159,7 @@ function Company() {
             </Link>
           </div>
         </div>
-      </section>
+      </div>
     </div>
   );
 }

@@ -44,9 +44,8 @@ function AddCompany() {
   };
 
   return (
-    <section className="mainWrap formCommonWrap">
+    <div className="mainWrap formCommonWrap">
       <div className="commonBox formBox">
-        <h3>사업자 추가</h3>
         <form className="formLayout" onSubmit={AddCompanySubmit}>
           <input
             type="text"
@@ -63,7 +62,7 @@ function AddCompany() {
           </button>
         </form>
       </div>
-    </section>
+    </div>
   );
 }
 

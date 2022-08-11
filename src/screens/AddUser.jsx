@@ -57,9 +57,8 @@ function AddUser() {
     addUserEvent();
   };
   return (
-    <section className="mainWrap formCommonWrap">
+    <div className="mainWrap formCommonWrap">
       <div className="commonBox formBox">
-        <h3>관리자 추가</h3>
         <form className="formLayout" onSubmit={AddUserSubmit}>
           <input
             type="text"
@@ -96,7 +95,7 @@ function AddUser() {
           </button>
         </form>
       </div>
-    </section>
+    </div>
   );
 }
 

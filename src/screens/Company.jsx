@@ -54,17 +54,6 @@ function Company() {
               ))}
             </tbody>
           </table>
-          {/* <ul className="tableBtn">
-            {btnArr.map((item, key) => (
-              <li key={key}>
-                <button type="button" onClick={btnClick}>
-                  {item}
-                </button>
-                <span className="blind">{item}페이지로 가기</span>
-              </li>
-            ))}
-          </ul> */}
-
           <PageButton listPage={listPage} page={page} setPage={setPage} />
         </div>
       </section>

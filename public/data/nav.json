@@ -1,11 +1,11 @@
 [
   {
-    "name": "관리자",
+    "name": "통합회원",
     "icon": "https://demo.dashboardpack.com/sales-html/img/menu-icon/dashboard.svg",
     "url": null,
     "subNav": [
       {
-        "subName": "관리자 관리",
+        "subName": "통합회원 관리",
         "url": "/user"
       }
     ]

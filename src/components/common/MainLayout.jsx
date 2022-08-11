@@ -8,8 +8,8 @@ function MainLayout({ nowTitle, component }) {
       <Nav />
       <div id="WrapBox">
         <Header />
-        <div className="containerWrap">
-          <h2 className="blind">현재 페이지 내용</h2>
+        <section className="containerWrap">
+          <h2 className="blind">{nowTitle}</h2>
           <div className="contentBox">
             <div className="contentTitleWrap">
               <div className="ContainertitleText">
@@ -26,13 +26,10 @@ function MainLayout({ nowTitle, component }) {
               </li>
             </ol> */}
               </div>
-              {/* <button type="button" className="containerTitleBtn">
-                Create Report
-              </button> */}
             </div>
             {component}
           </div>
-        </div>
+        </section>
         <Footer />
       </div>
     </div>

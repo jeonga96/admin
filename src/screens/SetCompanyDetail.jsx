@@ -113,10 +113,8 @@ function Company() {
   };
 
   return (
-    <section className="mainWrap formCommonWrap">
+    <div className="mainWrap formCommonWrap">
       <div className="commonBox formBox">
-        <h3>사업자 상세정보 수정</h3>
-
         <form className="formLayout detailFormLayout" onSubmit={AddUserSubmit}>
           <label htmlFor="name" className=" userIdLabel">
             사업자명
@@ -294,7 +292,7 @@ function Company() {
           </button>
         </form>
       </div>
-    </section>
+    </div>
   );
 }
 export default Company;

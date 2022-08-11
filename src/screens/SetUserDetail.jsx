@@ -40,9 +40,8 @@ function UserDeteil() {
     setUserEvent();
   };
   return (
-    <section className="mainWrap formCommonWrap">
+    <div className="mainWrap formCommonWrap">
       <div className="commonBox formBox">
-        <h3 className="blind">관리자 상세정보</h3>
         <form className="loginForm formLayout " onSubmit={setUserSubmit}>
           <input type="text" id="name" placeholder="name" onChange={onChange} />
           <label htmlFor="name" className="blind userIdLabel">
@@ -53,7 +52,7 @@ function UserDeteil() {
           </button>
         </form>
       </div>
-    </section>
+    </div>
   );
 }
 export default UserDeteil;

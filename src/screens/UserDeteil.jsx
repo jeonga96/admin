@@ -14,8 +14,7 @@ function UserDeteil() {
 
   return (
     <div className="mainWrap">
-      <section className="userDetailBox">
-        <h3 className="blind">관리자 상세정보</h3>
+      <div className="userDetailBox">
         <div className="commonBox paddingBox">
           <div className="userDetailWrap">
             <span className="boxTitle userDetailTitle">
@@ -24,11 +23,11 @@ function UserDeteil() {
           </div>
           <div className="bigButton widthCenter">
             <Link className="Link" to="/setuserdetail">
-              관리자 정보 수정
+              회원 정보 수정
             </Link>
           </div>
         </div>
-      </section>
+      </div>
     </div>
   );
 }
