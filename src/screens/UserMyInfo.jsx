@@ -22,7 +22,7 @@ function UserDeteil() {
             </span>
           </div>
           <div className="bigButton widthCenter">
-            <Link className="Link" to="/setuserdetail">
+            <Link className="Link" to="/setusermyinfo">
               회원 정보 수정
             </Link>
           </div>

@@ -5,17 +5,18 @@ import {
   axiosPostForm,
   getStorage,
 } from "../Services/importData";
-import { urlSetCompanyDetail, urlUpImages, ISLOGIN } from "../Services/string";
+import {
+  urlSetCompanyDetail,
+  urlGetCompanyDetail,
+  urlUpImages,
+  ISLOGIN,
+} from "../Services/string";
 
 function Company() {
   const { cid } = useParams();
 
-  const [beforeData, setBeforeData] = useState({});
   const [titleImg, setTitleImg] = useState(null);
   const [imgs, setImgs] = useState(null);
-  const imgsIid = useRef([]);
-  const mapcoor = useRef({ longitude: "", latitude: "" });
-
   const [companyData, setCompanyData] = useState({
     name: "",
     comment: "",
@@ -34,6 +35,25 @@ function Company() {
     tags: "",
     useFlag: "",
   });
+  const imgsIid = useRef([]);
+  const mapcoor = useRef({ longitude: "", latitude: "" });
+
+  const token = getStorage(ISLOGIN);
+
+  useEffect(() => {
+    axiosPostToken(
+      urlGetCompanyDetail,
+      {
+        rcid: cid,
+      },
+      token
+    ).then((res) => {
+      if (res.status === "success") {
+        setCompanyData(res.data);
+        return;
+      }
+    });
+  }, []);
 
   const fileSelectEvent = (event) => {
     event.preventDefault();
@@ -65,45 +85,45 @@ function Company() {
   };
 
   function onChange(e) {
-    setCompanyData({ ...companyData, [e.target.id]: [e.target.value] });
+    setCompanyData({ ...companyData, [e.target.id]: e.target.value });
   }
-
-  function callMapcoor() {
+  const callMapcoor = async () => {
     var geocoder = new window.kakao.maps.services.Geocoder();
     var callback = function (result, status) {
       if (status === window.kakao.maps.services.Status.OK) {
         mapcoor.current.longitude = Math.floor(result[0].x * 100000);
         mapcoor.current.latitude = Math.floor(result[0].y * 100000);
-        console.log("dd", mapcoor.current);
+        console.log("kako map API 이상없음!", mapcoor.current);
       }
     };
     geocoder.addressSearch(companyData.address, callback);
-  }
+  };
 
   const addUserEvent = async () => {
     const token = getStorage(ISLOGIN);
+
     await callMapcoor();
     await axiosPostToken(
       urlSetCompanyDetail,
       {
         rcid: cid,
-        name: companyData.name[0],
-        comment: companyData.comment[0],
-        location: companyData.location[0],
-        address: companyData.address[0],
-        registration: companyData.registration[0],
-        workTime: companyData.workTime[0],
-        offer: companyData.offer[0],
+        name: companyData.name,
+        comment: companyData.comment,
+        location: companyData.location,
+        address: companyData.address,
+        registration: companyData.registration,
+        workTime: companyData.workTime,
+        offer: companyData.offer,
         titleImg: titleImg[0].iid,
         imgs: imgsIid.current.toString(),
         longitude: mapcoor.current.longitude,
         latitude: mapcoor.current.latitude,
-        telnum: companyData.telnum[0],
-        mobilenum: companyData.mobilenum[0],
-        email: companyData.email[0],
-        extnum: companyData.extnum[0],
-        keywords: companyData.keywords[0],
-        tags: companyData.tags[0],
+        telnum: companyData.telnum,
+        mobilenum: companyData.mobilenum,
+        email: companyData.email,
+        extnum: companyData.extnum,
+        keywords: companyData.keywords,
+        tags: companyData.tags,
         useFlag: cid,
       },
       token
@@ -112,7 +132,12 @@ function Company() {
         console.log("axios 성공!", res);
         if (res.status === "success") {
           alert("가입이 완료되었습니다!");
-          window.location.href = `/company/${cid}`;
+          console.log(
+            res.data,
+            "mapcoor.current.longitude",
+            mapcoor.current.longitude
+          );
+          // window.location.href = `/company/${cid}`;
           return;
         }
       })
@@ -136,6 +161,7 @@ function Company() {
             id="name"
             placeholder="사업자명을 입력해 주세요."
             onChange={onChange}
+            value={companyData.name}
           />
 
           <label htmlFor="comment" className=" userIdLabel">
@@ -146,6 +172,7 @@ function Company() {
             id="comment"
             placeholder="사업자에 대한 짧은 소개글을 입력해 주세요."
             onChange={onChange}
+            value={companyData.comment}
           />
 
           <label htmlFor="location" className=" userIdLabel">
@@ -156,6 +183,7 @@ function Company() {
             id="location"
             placeholder="사업자의 위치를 입력해 주세요. ex.ㅇㅇ구, ㅇㅇ동"
             onChange={onChange}
+            value={companyData.location}
           />
 
           <label htmlFor="address" className=" userIdLabel">
@@ -166,6 +194,7 @@ function Company() {
             id="address"
             placeholder="주소를 입력해 주세요."
             onChange={onChange}
+            value={companyData.address}
           />
 
           <label htmlFor="registration" className=" userIdLabel">
@@ -176,6 +205,7 @@ function Company() {
             id="registration"
             placeholder="사업자 등록 번호를 입력해 주세요."
             onChange={onChange}
+            value={companyData.registration}
           />
 
           <label htmlFor="workTime" className=" userIdLabel">
@@ -186,6 +216,7 @@ function Company() {
             id="workTime"
             placeholder="근무 시간을 입력해 주세요."
             onChange={onChange}
+            value={companyData.workTime}
           />
 
           <label htmlFor="offer" className=" userIdLabel">
@@ -196,6 +227,7 @@ function Company() {
             id="offer"
             placeholder="사업자 소개글을 입력해 주세요."
             onChange={onChange}
+            value={companyData.offer}
           />
 
           <label htmlFor="titleImg" className=" userIdLabel">
@@ -207,6 +239,7 @@ function Company() {
             name="Imgs"
             accept="image/*"
             onChange={fileSelectEvent}
+            // value={companyData.titleImg}
           />
           {titleImg && (
             <div className="imgsThumbnail">
@@ -224,6 +257,7 @@ function Company() {
             accept="image/*"
             multiple
             onChange={fileSelectEvent}
+            // value={companyData.imgs}
           />
           {imgs && (
             <ul className="imgsThumbnail">
@@ -243,6 +277,7 @@ function Company() {
             id="telnum"
             placeholder="전화번호를 입력해 주세요."
             onChange={onChange}
+            value={companyData.telnum}
           />
 
           <label htmlFor="mobilenum" className=" userIdLabel">
@@ -253,6 +288,7 @@ function Company() {
             id="mobilenum"
             placeholder="핸드폰번호를 입력해 주세요."
             onChange={onChange}
+            value={companyData.mobilenum}
           />
 
           <label htmlFor="email" className=" userIdLabel">
@@ -263,6 +299,7 @@ function Company() {
             id="email"
             placeholder="이메일을 입력해 주세요."
             onChange={onChange}
+            value={companyData.email}
           />
 
           <label htmlFor="extnum" className=" userIdLabel">
@@ -273,6 +310,7 @@ function Company() {
             id="extnum"
             placeholder="추가 번호를 입력해 주세요."
             onChange={onChange}
+            value={companyData.extnum}
           />
 
           <label htmlFor="keywords" className=" userIdLabel">
@@ -283,6 +321,7 @@ function Company() {
             id="keywords"
             placeholder="키워드를 입력해 주세요."
             onChange={onChange}
+            value={companyData.keywords}
           />
 
           <label htmlFor="tags" className=" userIdLabel">
@@ -293,6 +332,7 @@ function Company() {
             id="tags"
             placeholder="태그를 입력해 주세요."
             onChange={onChange}
+            value={companyData.tags}
           />
 
           <button type="submit" className="loginBtn">

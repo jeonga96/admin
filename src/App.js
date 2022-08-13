@@ -115,7 +115,7 @@ function App() {
           }
         />
         <Route
-          path="setuserdetail"
+          path="setusermyinfo"
           element={
             <MainLayout nowTitle="내 정보 수정" component={<SetUserMyInfo />} />
           }
