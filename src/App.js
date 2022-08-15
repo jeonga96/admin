@@ -11,22 +11,20 @@ import User from "./screens/User";
 import AddUser from "./screens/AddUser";
 import UserMyInfo from "./screens/UserMyInfo";
 import SetUserMyInfo from "./screens/SetUserMyInfo";
-import UserDetail from "./screens/UserDetail";
-// import SetUserDetail from "./screens/SetUserDetail";
 
 import Company from "./screens/Company";
 import AddCompany from "./screens/AddCompany";
 import CompanyDetail from "./screens/CompanyDetail";
 import SetCompanyDetail from "./screens/SetCompanyDetail";
 
-import { getStorage } from "./Services/importData";
+import { servicesGetStorage } from "./Services/importData";
 import { ISLOGIN } from "./Services/string";
 
 function App() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const user = getStorage(ISLOGIN);
+  const user = servicesGetStorage(ISLOGIN);
   const navChange = useSelector((state) => state.navState);
   const dispatch = useDispatch();
 
@@ -61,6 +59,7 @@ function App() {
   useEffect(() => {
     userCheck();
   }, []);
+
   return (
     <div className="App">
       <Routes>

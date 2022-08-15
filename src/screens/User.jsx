@@ -1,6 +1,9 @@
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { axiosPostToken, getStorage } from "../Services/importData";
+import {
+  servicesPostDataToken,
+  servicesGetStorage,
+} from "../Services/importData";
 import { urlUserlist, ISLOGIN } from "../Services/string";
 
 import PageButton from "../components/common/PageButton";
@@ -11,8 +14,8 @@ function User() {
   const [page, setPage] = useState(1);
 
   useEffect(() => {
-    const token = getStorage(ISLOGIN);
-    axiosPostToken(
+    const token = servicesGetStorage(ISLOGIN);
+    servicesPostDataToken(
       urlUserlist,
       {
         offset: page,

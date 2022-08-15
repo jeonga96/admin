@@ -1,7 +1,10 @@
 // import { Link, Outlet } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { axiosPostToken, getStorage } from "../Services/importData";
+import {
+  servicesPostDataToken,
+  servicesGetStorage,
+} from "../Services/importData";
 import { urlCompanylist, ISLOGIN } from "../Services/string";
 
 import PageButton from "../components/common/PageButton";
@@ -12,8 +15,8 @@ function Company() {
   const [page, setPage] = useState(1);
 
   useEffect(() => {
-    const token = getStorage(ISLOGIN);
-    axiosPostToken(
+    const token = servicesGetStorage(ISLOGIN);
+    servicesPostDataToken(
       urlCompanylist,
       {
         offset: page,

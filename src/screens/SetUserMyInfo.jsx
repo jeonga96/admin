@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { urlSetUserDetail, ISLOGIN } from "../Services/string";
-import { axiosPostToken, getStorage } from "../Services/importData";
+import {
+  servicesPostDataToken,
+  servicesGetStorage,
+} from "../Services/importData";
 
 function UserDeteil() {
   const [userData, setUserData] = useState("");
@@ -8,8 +11,8 @@ function UserDeteil() {
     setUserData({ [e.target.id]: [e.target.value] });
   }
   function setUserEvent() {
-    const token = getStorage(ISLOGIN);
-    axiosPostToken(
+    const token = servicesGetStorage(ISLOGIN);
+    servicesPostDataToken(
       urlSetUserDetail,
       {
         name: userData.name[0],

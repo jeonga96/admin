@@ -1,5 +1,6 @@
-import { axiosPostData, setStorage } from "./Services/importData";
-import * as string from "./Services/string";
+import { servicesPostData, servicesSetStorage } from "./Services/importData";
+// import * as string from "./Services/string";
+import { urlLogin, ISLOGIN } from "./Services/string";
 
 const initialState = {
   login: { userid: "", passwd: "" },
@@ -11,7 +12,7 @@ const reducer = (state = initialState, action) => {
 
   switch (action.type) {
     case "loginEvent":
-      axiosPostData(string.urlLogin, {
+      servicesPostData(urlLogin, {
         userid: newState.login.userid[0],
         passwd: newState.login.passwd[0],
       })
@@ -21,15 +22,13 @@ const reducer = (state = initialState, action) => {
             return;
           }
           if (res.status === "success") {
-            console.log("완료됐나용");
             const accessToken = res.data.jtoken;
-            setStorage(string.ISLOGIN, `${accessToken}`);
-            console.log(res.data);
-            window.location.href = `${process.env.PUBLIC_URL}/`;
-            return;
+            console.log("로그인이 완료되었습니다!", accessToken);
+            servicesSetStorage(ISLOGIN, accessToken);
+            return (window.location.href = "/");
           }
         })
-        .catch((error) => console.log(error.response));
+        .catch((error) => console.log("login error", error.response));
       break;
 
     case "userInfoInputChange":

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { axiosPostData } from "../Services/importData";
+import { servicesPostData } from "../Services/importData";
 import { urlAdduser } from "../Services/string";
 
 function AddUser() {
@@ -14,7 +14,7 @@ function AddUser() {
   }
 
   function addUserEvent() {
-    axiosPostData(urlAdduser, {
+    servicesPostData(urlAdduser, {
       userid: userData.userid[0],
       passwd: userData.passwd[0],
     })

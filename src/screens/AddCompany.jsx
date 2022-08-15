@@ -1,5 +1,8 @@
 import { useState } from "react";
-import { axiosPostToken, getStorage } from "../Services/importData";
+import {
+  servicesPostDataToken,
+  servicesGetStorage,
+} from "../Services/importData";
 import { urlAddcompany, ISLOGIN } from "../Services/string";
 
 function AddCompany() {
@@ -12,8 +15,8 @@ function AddCompany() {
   }
 
   function addCompanyEvent() {
-    const token = getStorage(ISLOGIN);
-    axiosPostToken(
+    const token = servicesGetStorage(ISLOGIN);
+    servicesPostDataToken(
       urlAddcompany,
       {
         name: CompanyData.name[0],

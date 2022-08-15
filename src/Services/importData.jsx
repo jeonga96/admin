@@ -1,18 +1,18 @@
 import axios from "axios";
 import { useEffect, useRef } from "react";
 
-export function setStorage(name, data) {
+export function servicesSetStorage(name, data) {
   return sessionStorage.setItem(name, data);
 }
-export function getStorage(name) {
+export function servicesGetStorage(name) {
   return sessionStorage.getItem(name);
 }
 
-export function removeStorage(name) {
+export function servicesRemoveStorage(name) {
   return sessionStorage.removeItem(name);
 }
 
-export function axiosGetData(url, getData) {
+export function servicesGetData(url, getData) {
   return axios(url, {
     method: "GET",
     data: getData,
@@ -23,7 +23,8 @@ export function axiosGetData(url, getData) {
     .then((res) => res.data)
     .catch((error) => console.log(error));
 }
-export function axiosGetToken(url, getData, token) {
+
+export function servicesGetDataToken(url, getData, token) {
   return axios(url, {
     method: "GET",
     data: getData,
@@ -36,7 +37,7 @@ export function axiosGetToken(url, getData, token) {
     .catch((error) => console.log("에러가 났어욥", error));
 }
 
-export function axiosPostData(url, postData) {
+export function servicesPostData(url, postData) {
   return axios(url, {
     method: "POST",
     headers: {
@@ -51,7 +52,7 @@ export function axiosPostData(url, postData) {
     .catch((error) => console.log(error));
 }
 
-export function axiosPostToken(url, postData, token) {
+export function servicesPostDataToken(url, postData, token) {
   return axios(url, {
     method: "POST",
     headers: {
@@ -67,7 +68,7 @@ export function axiosPostToken(url, postData, token) {
     .catch((error) => console.log(error));
 }
 
-export function axiosPostForm(url, postData, token) {
+export function servicesPostDataForm(url, postData, token) {
   return axios(url, {
     method: "POST",
     headers: {

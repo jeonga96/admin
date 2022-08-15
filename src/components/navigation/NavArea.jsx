@@ -1,5 +1,5 @@
 // import { NavLink } from "react-router-dom";
-import { axiosGetData } from "../../Services/importData";
+import { servicesGetData } from "../../Services/importData";
 import { navUrl } from "../../Services/string";
 import { useState, useEffect } from "react";
 
@@ -9,7 +9,7 @@ import NavInnerLink from "./NavInnerLink";
 function NavBox() {
   const [data, setData] = useState([]);
   function axiosData() {
-    axiosGetData(navUrl).then((res) => setData(res));
+    servicesGetData(navUrl).then((res) => setData(res));
     // axiosGetData("../../data/nav.json").then((res) => setData(res));
   }
   useEffect(() => {

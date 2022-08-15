@@ -1,13 +1,16 @@
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { urlGetUserDetail, ISLOGIN } from "../Services/string";
-import { axiosPostToken, getStorage } from "../Services/importData";
+import {
+  servicesPostDataToken,
+  servicesGetStorage,
+} from "../Services/importData";
 
 function UserDeteil() {
   const [userData, setUserData] = useState({});
   useEffect(() => {
-    const token = getStorage(ISLOGIN);
-    axiosPostToken(urlGetUserDetail, {}, token).then((res) =>
+    const token = servicesGetStorage(ISLOGIN);
+    servicesPostDataToken(urlGetUserDetail, {}, token).then((res) =>
       setUserData(res.data)
     );
   }, []);

@@ -1,9 +1,9 @@
 import { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import {
-  axiosPostToken,
-  axiosPostForm,
-  getStorage,
+  servicesPostDataForm,
+  servicesPostDataToken,
+  servicesGetStorage,
 } from "../Services/importData";
 import {
   urlSetCompanyDetail,
@@ -38,10 +38,10 @@ function Company() {
   const imgsIid = useRef([]);
   const mapcoor = useRef({ longitude: "", latitude: "" });
 
-  const token = getStorage(ISLOGIN);
+  const token = servicesGetStorage(ISLOGIN);
 
   useEffect(() => {
-    axiosPostToken(
+    servicesPostDataToken(
       urlGetCompanyDetail,
       {
         rcid: cid,
@@ -70,8 +70,7 @@ function Company() {
       }
     }
 
-    const token = getStorage(ISLOGIN);
-    axiosPostForm(urlUpImages, formData, token).then((res) => {
+    servicesPostDataForm(urlUpImages, formData, token).then((res) => {
       console.log(res);
       if (res.data.length === 1) {
         setTitleImg(res.data);
@@ -100,10 +99,8 @@ function Company() {
   };
 
   const addUserEvent = async () => {
-    const token = getStorage(ISLOGIN);
-
     await callMapcoor();
-    await axiosPostToken(
+    await servicesPostDataToken(
       urlSetCompanyDetail,
       {
         rcid: cid,

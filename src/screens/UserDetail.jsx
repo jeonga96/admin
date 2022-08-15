@@ -2,8 +2,8 @@ import { Link } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import {
-  axiosPostToken,
-  getStorage,
+  servicesPostDataToken,
+  servicesGetStorage,
   useDidMountEffect,
 } from "../Services/importData";
 import { urlGetCompanyDetail, urlGetImages, ISLOGIN } from "../Services/string";
@@ -15,10 +15,10 @@ function UserDetail() {
   const reqImgs = useRef(null);
   const mapLinkAdress = useRef("");
 
-  const token = getStorage(ISLOGIN);
+  const token = servicesGetStorage(ISLOGIN);
 
   useEffect(() => {
-    axiosPostToken(
+    servicesPostDataToken(
       urlGetCompanyDetail,
       {
         rcid: cid,
@@ -41,7 +41,7 @@ function UserDetail() {
   useDidMountEffect(() => {
     reqImgs.current = companyDetail.titleImg + "," + companyDetail.imgs;
     mapLinkAdress.current = companyDetail.address.replace(/ /gi, "+");
-    axiosPostToken(
+    servicesPostDataToken(
       urlGetImages,
       {
         imgs: reqImgs.current,
