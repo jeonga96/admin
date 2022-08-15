@@ -43,7 +43,7 @@ function CompanyDetail() {
   useDidMountEffect(() => {
     reqImgs.current = companyDetail.titleImg + "," + companyDetail.imgs;
     mapLinkAdress.current = companyDetail.address.replace(/ /gi, "+");
-
+    console.log(reqImgs.current);
     servicesPostDataToken(
       urlGetImages,
       {

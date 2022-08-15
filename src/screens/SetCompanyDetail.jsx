@@ -4,10 +4,12 @@ import {
   servicesPostDataForm,
   servicesPostDataToken,
   servicesGetStorage,
+  useDidMountEffect,
 } from "../Services/importData";
 import {
   urlSetCompanyDetail,
   urlGetCompanyDetail,
+  urlGetImages,
   urlUpImages,
   ISLOGIN,
 } from "../Services/string";
@@ -36,9 +38,22 @@ function Company() {
     useFlag: "",
   });
   const imgsIid = useRef([]);
+  const getDataFinish = useRef(null);
   const mapcoor = useRef({ longitude: "", latitude: "" });
 
   const token = servicesGetStorage(ISLOGIN);
+
+  const callMapcoor = async () => {
+    var geocoder = new window.kakao.maps.services.Geocoder();
+    var callback = function (result, status) {
+      if (status === window.kakao.maps.services.Status.OK) {
+        mapcoor.current.longitude = Math.floor(result[0].x * 100000);
+        mapcoor.current.latitude = Math.floor(result[0].y * 100000);
+        console.log("kako map API 이상없음!", mapcoor.current);
+      }
+    };
+    geocoder.addressSearch(companyData.address, callback);
+  };
 
   useEffect(() => {
     servicesPostDataToken(
@@ -47,13 +62,41 @@ function Company() {
         rcid: cid,
       },
       token
-    ).then((res) => {
-      if (res.status === "success") {
+    )
+      .then((res) => {
         setCompanyData(res.data);
-        return;
-      }
-    });
+        getDataFinish.current = true;
+      })
+      .catch((res) => console.log(res));
   }, []);
+
+  useDidMountEffect(() => {
+    servicesPostDataToken(
+      urlGetImages,
+      {
+        imgs: companyData.titleImg,
+      },
+      token
+    ).then((res) => {
+      setTitleImg(res.data);
+      console.log("titleImg", res.data);
+    });
+
+    servicesPostDataToken(
+      urlGetImages,
+      {
+        imgs: companyData.imgs,
+      },
+      token
+    ).then((res) => {
+      setImgs(res.data);
+      console.log("imgs", res.data);
+    });
+  }, [getDataFinish.current]);
+
+  useDidMountEffect(() => {
+    callMapcoor();
+  }, [companyData.address]);
 
   const fileSelectEvent = (event) => {
     event.preventDefault();
@@ -71,7 +114,6 @@ function Company() {
     }
 
     servicesPostDataForm(urlUpImages, formData, token).then((res) => {
-      console.log(res);
       if (res.data.length === 1) {
         setTitleImg(res.data);
       } else {
@@ -86,17 +128,6 @@ function Company() {
   function onChange(e) {
     setCompanyData({ ...companyData, [e.target.id]: e.target.value });
   }
-  const callMapcoor = async () => {
-    var geocoder = new window.kakao.maps.services.Geocoder();
-    var callback = function (result, status) {
-      if (status === window.kakao.maps.services.Status.OK) {
-        mapcoor.current.longitude = Math.floor(result[0].x * 100000);
-        mapcoor.current.latitude = Math.floor(result[0].y * 100000);
-        console.log("kako map API 이상없음!", mapcoor.current);
-      }
-    };
-    geocoder.addressSearch(companyData.address, callback);
-  };
 
   const addUserEvent = async () => {
     await callMapcoor();
@@ -236,7 +267,6 @@ function Company() {
             name="Imgs"
             accept="image/*"
             onChange={fileSelectEvent}
-            // value={companyData.titleImg}
           />
           {titleImg && (
             <div className="imgsThumbnail">
@@ -254,7 +284,6 @@ function Company() {
             accept="image/*"
             multiple
             onChange={fileSelectEvent}
-            // value={companyData.imgs}
           />
           {imgs && (
             <ul className="imgsThumbnail">
