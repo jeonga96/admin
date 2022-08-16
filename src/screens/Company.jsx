@@ -1,6 +1,6 @@
 // import { Link, Outlet } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useLayoutEffect } from "react";
 import {
   servicesPostDataToken,
   servicesGetStorage,
@@ -12,14 +12,14 @@ import PageButton from "../components/common/PageButton";
 function Company() {
   const [companyList, setCompanyList] = useState([]);
   const [listPage, setListPage] = useState({});
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState({ getPage: 1, activePage: 1 });
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const token = servicesGetStorage(ISLOGIN);
     servicesPostDataToken(
       urlCompanylist,
       {
-        offset: page,
+        offset: page.getPage,
         size: 10,
       },
       token
@@ -27,7 +27,7 @@ function Company() {
       setCompanyList(res.data);
       setListPage(res.page);
     });
-  }, [page]);
+  }, [page.getPage]);
 
   return (
     <div className="mainWrap">
@@ -57,7 +57,6 @@ function Company() {
               ))}
             </tbody>
           </table>
-          <PageButton listPage={listPage} page={page} setPage={setPage} />
         </div>
       </section>
     </div>

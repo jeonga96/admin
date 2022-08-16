@@ -43,7 +43,7 @@ function Company() {
 
   const token = servicesGetStorage(ISLOGIN);
 
-  const callMapcoor = async () => {
+  const callMapcoor = () => {
     var geocoder = new window.kakao.maps.services.Geocoder();
     var callback = function (result, status) {
       if (status === window.kakao.maps.services.Status.OK) {
@@ -165,7 +165,7 @@ function Company() {
             "mapcoor.current.longitude",
             mapcoor.current.longitude
           );
-          // window.location.href = `/company/${cid}`;
+          window.location.href = `/company/${cid}`;
           return;
         }
       })
