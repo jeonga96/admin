@@ -26,20 +26,16 @@ function App() {
   const navigate = useNavigate();
 
   const user = servicesGetStorage(TOKEN);
-  const userLoading = useSelector((state) => state.loginLoading);
   const navChange = useSelector((state) => state.navState);
   const dispatch = useDispatch();
 
   const userCheck = () => {
     const locationCheck = location.pathname !== "/login";
-    // if (!!userLoading && locationCheck) {
     if (!user && locationCheck) {
       navigate("/login");
       return;
     }
   };
-  userLoading && console.log("userLa", userLoading);
-  console.log("userLa2", userLoading);
 
   const fnNavEvent = (matches) => {
     dispatch({

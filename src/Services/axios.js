@@ -1,18 +1,36 @@
 import axios from "axios";
-import { servicesGetStorage, servicesPostData } from "./importData";
+import {
+  servicesGetStorage,
+  servicesSetStorage,
+  servicesPostData,
+} from "./importData";
 import { TOKEN, RETOKEN, urlRefreshtoken } from "./string";
 
-const instance = axios.create({
-  timeout: 1000,
-});
+const axiosApiInstance = axios.create();
 
-axios.interceptors.request.use(
+axiosApiInstance.interceptors.request.use(
   (config) => {
-    console.log("step-1", config);
+    console.log("interceptors step-1", config);
     const token = servicesGetStorage(TOKEN);
-    if (!!token) {
+    if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
+    // const reToken = servicesGetStorage(RETOKEN);
+    //   console.log("no reToken");
+    // axios({
+    //   url: urlRefreshtoken,
+    //   method: "POST",
+    //   headers: {
+    //     Authorization: `Bearer ${token}`,
+    //     "Content-Type": "application/json",
+    //   },
+    //   data: {},
+    // })
+    //   .then((res) => {
+    //     console.log("ㅎㅎㅎㅎes.data.jtoken", res.data.data.jtoken);
+    //     servicesSetStorage(RETOKEN, res.data.data.jtoken);
+    //   })
+    //   .catch((err) => console.log("ㅠㅠerror", err));
     return config;
   },
   (error) => {
@@ -20,33 +38,34 @@ axios.interceptors.request.use(
   }
 );
 
-axios.interceptors.response.use(
+axiosApiInstance.interceptors.response.use(
   (response) => {
     return response;
   },
   async (error) => {
+    console.log("errorerror!!!", error);
     const {
       config,
       response: { status },
     } = error;
-    if (status === 401) {
-      if (error.response.data.message === "TokenExpiredError") {
-        const originalRequest = config;
-        const refreshToken = await servicesGetStorage(RETOKEN);
-        let newAccessToken;
-
-        // servicesPostData(urlRefreshtoken, {}, refreshToken).then(
-        //   (res) => (newAccessToken = res.data.jtoken)
-        // );
-        // console.log("newAccessToken", newAccessToken);
-        // axios.defaults.headers.common.Authorization = `Bearer ${newAccessToken}`;
-        config.headers.Authorization = `Bearer ${newAccessToken}`;
-        originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
-        return axios(originalRequest);
-      }
+    if (error.response && error.response.status === 401) {
+      const originalRequest = config;
+      console.log("eee~");
+      const refreshToken = await servicesGetStorage(RETOKEN);
+      let newAccessToken;
+      console.log("newAccessToken", newAccessToken);
+      axios.defaults.headers.common.Authorization = `Bearer ${newAccessToken}`;
+      config.headers.Authorization = `Bearer ${newAccessToken}`;
+      originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+      return axios(originalRequest);
     }
+    // else if (!validateTimeRefreshtoken()){
+    // 	localStorage.clear();
+    // 	window.location.href = "/login";
+    // 	alert("세션 만료 다시 로그인 해주세요.");
+    // }
     return Promise.reject(error);
   }
 );
 
-export default instance;
+export default axiosApiInstance;

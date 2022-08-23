@@ -1,20 +1,20 @@
 import axios from "axios";
 import { useEffect, useRef } from "react";
-import { urlRefreshtoken } from "./string";
+import axiosApiInstance from "./axios";
 
 export function servicesSetStorage(name, data) {
-  return sessionStorage.setItem(name, data);
+  return localStorage.setItem(name, data);
 }
 export function servicesGetStorage(name) {
-  return sessionStorage.getItem(name);
+  return localStorage.getItem(name);
 }
 
 export function servicesRemoveStorage(name) {
-  return sessionStorage.removeItem(name);
+  return localStorage.removeItem(name);
 }
 
 export function servicesGetData(url, getData) {
-  return axios(url, {
+  return axiosApiInstance(url, {
     method: "GET",
     data: getData,
     headers: {
@@ -26,22 +26,19 @@ export function servicesGetData(url, getData) {
 }
 
 export function servicesPostData(url, postData) {
-  return axios(url, {
+  return axiosApiInstance(url, {
     method: "POST",
-    headers: {
-      "content-type": "application/json",
-    },
     data: postData,
   })
     .then((res) => {
       console.log("importData.axiosSetData", res);
       return res.data;
     })
-    .catch((error) => console.log(error));
+    .catch((error) => console.log("importData.axiosSetData", error));
 }
 
 export function servicesPostDataForm(url, postData) {
-  return axios(url, {
+  return axiosApiInstance(url, {
     method: "POST",
     headers: {
       "Content-Type": "multipart/form-data",
