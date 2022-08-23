@@ -3,10 +3,9 @@ import { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import {
   servicesPostDataToken,
-  servicesGetStorage,
   useDidMountEffect,
 } from "../Services/importData";
-import { urlGetCompanyDetail, urlGetImages, ISLOGIN } from "../Services/string";
+import { urlGetCompanyDetail, urlGetImages } from "../Services/string";
 
 function UserDetail() {
   let { cid } = useParams();
@@ -15,16 +14,10 @@ function UserDetail() {
   const reqImgs = useRef(null);
   const mapLinkAdress = useRef("");
 
-  const token = servicesGetStorage(ISLOGIN);
-
   useEffect(() => {
-    servicesPostDataToken(
-      urlGetCompanyDetail,
-      {
-        rcid: cid,
-      },
-      token
-    ).then((res) => {
+    servicesPostDataToken(urlGetCompanyDetail, {
+      rcid: cid,
+    }).then((res) => {
       if (res.status === "success") {
         setCompanyDetail(res.data);
         reqImgs.current = res.data.titleImg + "," + res.data.imgs;
@@ -41,13 +34,9 @@ function UserDetail() {
   useDidMountEffect(() => {
     reqImgs.current = companyDetail.titleImg + "," + companyDetail.imgs;
     mapLinkAdress.current = companyDetail.address.replace(/ /gi, "+");
-    servicesPostDataToken(
-      urlGetImages,
-      {
-        imgs: reqImgs.current,
-      },
-      token
-    ).then((res) => {
+    servicesPostDataToken(urlGetImages, {
+      imgs: reqImgs.current,
+    }).then((res) => {
       setImage(res.data);
     });
   }, [companyDetail]);

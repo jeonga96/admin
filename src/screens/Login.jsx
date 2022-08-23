@@ -17,6 +17,7 @@ function Login() {
       alert("아이디와 비밀번호를 모두 입력해 주세요.");
       return;
     }
+
     dispatch({
       type: "loginEvent",
     });
@@ -34,7 +35,7 @@ function Login() {
             placeholder="아이디를 입력해 주세요."
             onChange={onChange}
           />
-          <label htmlFor="userid" className="blind userIdLabel">
+          <label htmlFor="userid" className="blind">
             아이디를 입력해 주세요.
           </label>
           <input
@@ -44,7 +45,7 @@ function Login() {
             placeholder="비밀번호를 입력해 주세요."
             onChange={onChange}
           />
-          <label htmlFor="passwd" className="blind userPwLabel">
+          <label htmlFor="passwd" className="blind">
             비밀번호를 입력해 주세요.
           </label>
           <button type="submit" className="loginBtn">

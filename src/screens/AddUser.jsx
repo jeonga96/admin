@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { servicesPostData } from "../Services/importData";
+import { useNavigate } from "react-router-dom";
 import { urlAdduser } from "../Services/string";
 
 function AddUser() {
+  let navigate = useNavigate();
   const [userData, setUserData] = useState({
     userid: "",
     passwd: "",
@@ -33,11 +35,14 @@ function AddUser() {
         }
         if (res.status === "success") {
           alert("가입이 완료되었습니다!");
-          window.location.href = "/user";
+          console.log(res);
+          // navigate(`/user/${res.data.uid}/setuserdetail`, {
+          //   replace: true,
+          // });
           return;
         }
       })
-      .catch((error) => console.log("실패", error.response));
+      .catch((error) => console.log("실패", error));
   }
 
   const AddUserSubmit = (e) => {

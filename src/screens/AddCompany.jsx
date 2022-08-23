@@ -1,11 +1,13 @@
 import { useState } from "react";
-import {
-  servicesPostDataToken,
-  servicesGetStorage,
-} from "../Services/importData";
-import { urlAddcompany, ISLOGIN } from "../Services/string";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { servicesPostData } from "../Services/importData";
+import { urlAddcompany } from "../Services/string";
 
 function AddCompany() {
+  let navigate = useNavigate();
+  const user = useSelector((state) => state.loginRes);
+  const userLogin = useSelector((state) => state.login);
   const [CompanyData, setCompanyData] = useState({
     name: "",
   });
@@ -14,15 +16,12 @@ function AddCompany() {
     setCompanyData({ [e.target.id]: [e.target.value] });
   }
 
+  console.log("ssss", user, userLogin);
+
   function addCompanyEvent() {
-    const token = servicesGetStorage(ISLOGIN);
-    servicesPostDataToken(
-      urlAddcompany,
-      {
-        name: CompanyData.name[0],
-      },
-      token
-    )
+    servicesPostData(urlAddcompany, {
+      name: CompanyData.name[0],
+    })
       .then((res) => {
         console.log("axios는 성공했는데 말이죠", res);
         if (res.status === "fail") {
@@ -31,7 +30,9 @@ function AddCompany() {
         }
         if (res.status === "success") {
           alert("가입이 완료되었습니다!");
-          window.location.href = "/company";
+          navigate(`/company/${res.data.cid}/setcompanydetail`, {
+            replace: true,
+          });
           return;
         }
       })

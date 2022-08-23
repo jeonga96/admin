@@ -1,11 +1,26 @@
-import { servicesPostData, servicesSetStorage } from "./Services/importData";
+import {
+  servicesGetStorage,
+  servicesPostData,
+  servicesPostDataToken,
+  servicesSetStorage,
+} from "./Services/importData";
 // import * as string from "./Services/string";
-import { urlLogin, ISLOGIN } from "./Services/string";
+import { urlLogin, urlRefreshtoken, TOKEN, RETOKEN } from "./Services/string";
+import instance from "./Services/axios";
 
 const initialState = {
   login: { userid: "", passwd: "" },
   navState: true,
 };
+
+// const LOGINEVENT = "LOGINEVENT";
+
+// const loginEvent = (payload) => {
+//   return {
+//     type: LOGINEVENT,
+//     payload,
+//   };
+// };
 
 const reducer = (state = initialState, action) => {
   const newState = { ...state };
@@ -24,11 +39,12 @@ const reducer = (state = initialState, action) => {
           if (res.status === "success") {
             const accessToken = res.data.jtoken;
             console.log("로그인이 완료되었습니다!", accessToken);
-            servicesSetStorage(ISLOGIN, accessToken);
-            return (window.location.href = "/");
+            servicesSetStorage(TOKEN, accessToken);
+            window.location.href = "/";
+            return;
           }
         })
-        .catch((error) => console.log("login error", error.response));
+        .catch((error) => console.log("reducer login error", error));
       break;
 
     case "userInfoInputChange":
@@ -40,9 +56,8 @@ const reducer = (state = initialState, action) => {
       break;
 
     default:
-      break;
+      return newState;
   }
   return newState;
 };
-
 export default reducer;

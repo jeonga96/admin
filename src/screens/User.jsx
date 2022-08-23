@@ -1,38 +1,30 @@
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import {
-  servicesPostDataToken,
-  servicesGetStorage,
-} from "../Services/importData";
-import { urlUserlist, ISLOGIN } from "../Services/string";
+import { servicesPostData } from "../Services/importData";
+import { urlUserlist } from "../Services/string";
 
 import PageButton from "../components/common/PageButton";
 
 function User() {
   const [userList, setUserList] = useState([]);
   const [listPage, setListPage] = useState({});
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState({ getPage: 0, activePage: 1 });
 
   useEffect(() => {
-    const token = servicesGetStorage(ISLOGIN);
-    servicesPostDataToken(
-      urlUserlist,
-      {
-        offset: page,
-        size: 10,
-      },
-      token
-    ).then((res) => {
+    servicesPostData(urlUserlist, {
+      offset: page.getPage,
+      size: 10,
+    }).then((res) => {
       setUserList(res.data);
       setListPage(res.page);
     });
-  }, [page]);
+  }, [page.getPage]);
 
   return (
     <div className="mainWrap">
       <div className="tableTopWrap">
         <div className="smallButton">
-          <Link className="smallButtonLink Link" to="/adduser">
+          <Link className="buttonLink Link" to="/adduser">
             통합회원 추가
           </Link>
         </div>
@@ -54,6 +46,11 @@ function User() {
                   <td>{item.uid}</td>
                   <td>{item.userid}</td>
                   <td>{item.createTime}</td>
+                  <td className="tableButton">
+                    <Link to={`${item.uid}`} className="buttonLink Link">
+                      관리
+                    </Link>
+                  </td>
                 </tr>
               ))}
             </tbody>

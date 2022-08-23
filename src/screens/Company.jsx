@@ -1,29 +1,23 @@
-// import { Link, Outlet } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { useEffect, useState, useLayoutEffect } from "react";
+import { useState, useLayoutEffect } from "react";
 import {
-  servicesPostDataToken,
-  servicesGetStorage,
+  // servicesPostDataToken,
+  servicesPostData,
 } from "../Services/importData";
-import { urlCompanylist, ISLOGIN } from "../Services/string";
-
+import { urlCompanylist } from "../Services/string";
+import { useSelector } from "react-redux";
 import PageButton from "../components/common/PageButton";
 
 function Company() {
   const [companyList, setCompanyList] = useState([]);
   const [listPage, setListPage] = useState({});
-  const [page, setPage] = useState({ getPage: 1, activePage: 1 });
+  const [page, setPage] = useState({ getPage: 0, activePage: 1 });
 
   useLayoutEffect(() => {
-    const token = servicesGetStorage(ISLOGIN);
-    servicesPostDataToken(
-      urlCompanylist,
-      {
-        offset: page.getPage,
-        size: 10,
-      },
-      token
-    ).then((res) => {
+    servicesPostData(urlCompanylist, {
+      offset: page.getPage,
+      size: 10,
+    }).then((res) => {
       setCompanyList(res.data);
       setListPage(res.page);
     });
@@ -33,7 +27,7 @@ function Company() {
     <div className="mainWrap">
       <div className="tableTopWrap">
         <div className="smallButton">
-          <Link className="smallButtonLink Link" to="/addcompany">
+          <Link className="buttonLink Link" to="/addcompany">
             사업자 추가
           </Link>
         </div>
@@ -50,13 +44,17 @@ function Company() {
             <tbody className="revenueSaleTbody">
               {companyList.map((item, key) => (
                 <tr key={item.cid}>
-                  <td>
-                    <Link to={`${item.cid}`}>{item.name}</Link>
+                  <td>{item.name}</td>
+                  <td className="tableButton">
+                    <Link to={`${item.cid}`} className="buttonLink Link">
+                      관리
+                    </Link>
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
+          <PageButton listPage={listPage} page={page} setPage={setPage} />
         </div>
       </section>
     </div>

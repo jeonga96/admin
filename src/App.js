@@ -2,6 +2,7 @@ import { useEffect } from "react";
 
 import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import { axios } from "axios";
 
 import MainLayout from "./components/common/MainLayout";
 import Home from "./screens/Home";
@@ -18,23 +19,27 @@ import CompanyDetail from "./screens/CompanyDetail";
 import SetCompanyDetail from "./screens/SetCompanyDetail";
 
 import { servicesGetStorage } from "./Services/importData";
-import { ISLOGIN } from "./Services/string";
+import { TOKEN } from "./Services/string";
 
 function App() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const user = servicesGetStorage(ISLOGIN);
+  const user = servicesGetStorage(TOKEN);
+  const userLoading = useSelector((state) => state.loginLoading);
   const navChange = useSelector((state) => state.navState);
   const dispatch = useDispatch();
 
   const userCheck = () => {
     const locationCheck = location.pathname !== "/login";
+    // if (!!userLoading && locationCheck) {
     if (!user && locationCheck) {
       navigate("/login");
       return;
     }
   };
+  userLoading && console.log("userLa", userLoading);
+  console.log("userLa2", userLoading);
 
   const fnNavEvent = (matches) => {
     dispatch({
@@ -86,15 +91,16 @@ function App() {
             />
           }
         />
+        */}
         <Route
-          path="user/:cid/setuserdetailInfo"
+          path="user/:cid/setuserdetail"
           element={
             <MainLayout
               nowTitle="통합회원 상세정보 수정"
-              component={<SetUserDetail />}
+              // component={<SetUserDetail />}
             />
           }
-        /> */}
+        />
         <Route
           path="adduser"
           element={
@@ -135,7 +141,7 @@ function App() {
           }
         />
         <Route
-          path="company/:cid/setcompanydetailInfo"
+          path="company/:cid/setcompanydetail"
           element={
             <MainLayout
               nowTitle="사업자 상세정보 수정"

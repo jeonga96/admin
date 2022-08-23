@@ -1,58 +1,56 @@
 import { Link } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
-import {
-  servicesPostDataToken,
-  servicesGetStorage,
-  useDidMountEffect,
-} from "../Services/importData";
-import { urlGetCompanyDetail, urlGetImages, ISLOGIN } from "../Services/string";
-
-import Map from "../components/common/Map";
+import { servicesPostData, useDidMountEffect } from "../Services/importData";
+import { urlGetCompanyDetail, urlGetImages } from "../Services/string";
 
 function CompanyDetail() {
   let { cid } = useParams();
   const [companyDetail, setCompanyDetail] = useState([]);
   const [image, setImage] = useState();
-  const reqImgs = useRef(null);
+  const reqImgs = useRef({ titleImg: "", imgsImg: "", totalImg: "" });
   const mapLinkAdress = useRef("");
 
-  const token = servicesGetStorage(ISLOGIN);
-
   useEffect(() => {
-    servicesPostDataToken(
-      urlGetCompanyDetail,
-      {
-        rcid: cid,
-      },
-      token
-    ).then((res) => {
+    servicesPostData(urlGetCompanyDetail, {
+      rcid: cid,
+    }).then((res) => {
       if (res.status === "success") {
         setCompanyDetail(res.data);
-        reqImgs.current = res.data.titleImg + "," + res.data.imgs;
         return;
       }
       if (res.status === "fail" && res.emsg === "process failed.") {
         alert("정보가 없습니다. 사업자 정보를 입력해 주세요!");
-        window.location.href = `company/${cid}/setcompanydetailInfo`;
+        window.location.href = `company/${cid}/setcompanydetail`;
         return;
       }
     });
   }, []);
 
   useDidMountEffect(() => {
-    reqImgs.current = companyDetail.titleImg + "," + companyDetail.imgs;
-    mapLinkAdress.current = companyDetail.address.replace(/ /gi, "+");
-    console.log(reqImgs.current);
-    servicesPostDataToken(
-      urlGetImages,
-      {
-        imgs: reqImgs.current,
-      },
-      token
-    ).then((res) => {
-      setImage(res.data);
-    });
+    if (!!companyDetail.address) {
+      mapLinkAdress.current = companyDetail.address.replace(/ /gi, "+");
+    }
+    if (companyDetail.titleImg && companyDetail.imgs) {
+      reqImgs.current.totalImg =
+        companyDetail.titleImg + "," + companyDetail.imgs;
+      servicesPostData(urlGetImages, {
+        imgs: reqImgs.current.totalImg,
+      }).then((res) => {
+        setImage(res.data);
+      });
+    } else if (companyDetail.titleImg || companyDetail.imgs) {
+      reqImgs.current.titleImg = companyDetail.titleImg;
+      reqImgs.current.imgsImg = companyDetail.imgs;
+
+      servicesPostData(urlGetImages, {
+        imgs: companyDetail.titleImg
+          ? reqImgs.current.titleImg
+          : reqImgs.current.imgsImg,
+      }).then((res) => {
+        setImage(res.data);
+      });
+    }
   }, [companyDetail]);
 
   return (
@@ -129,14 +127,16 @@ function CompanyDetail() {
                 <li className="detailHead">
                   <h4>주소</h4>
                   <span>{companyDetail.address}</span>
-                  <a
-                    className="linkAnchorBg"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    href={`https://map.kakao.com/?map_type=TYPE_MAP&q=${mapLinkAdress.current}&urlLevel=2&urlX=469847&urlY=1057028`}
-                  >
-                    지도 링크이동
-                  </a>
+                  {!!companyDetail.address && (
+                    <a
+                      className="linkAnchorBg"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      href={`https://map.kakao.com/?map_type=TYPE_MAP&q=${mapLinkAdress.current}&urlLevel=2&urlX=469847&urlY=1057028`}
+                    >
+                      지도 링크이동
+                    </a>
+                  )}
                 </li>
                 <li className="detailHead">
                   <h4>사업자 소개글</h4>
@@ -158,7 +158,7 @@ function CompanyDetail() {
             </li>
           </ul>
           <div className="bigButton widthCenter">
-            <Link className="Link" to="setcompanydetailInfo">
+            <Link className="Link" to="setcompanydetail">
               사업자 정보 수정
             </Link>
           </div>

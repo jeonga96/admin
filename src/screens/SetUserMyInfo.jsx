@@ -1,9 +1,6 @@
 import { useState } from "react";
-import { urlSetUserDetail, ISLOGIN } from "../Services/string";
-import {
-  servicesPostDataToken,
-  servicesGetStorage,
-} from "../Services/importData";
+import { urlSetUserDetail } from "../Services/string";
+import { servicesPostData } from "../Services/importData";
 
 function UserDeteil() {
   const [userData, setUserData] = useState("");
@@ -11,14 +8,9 @@ function UserDeteil() {
     setUserData({ [e.target.id]: [e.target.value] });
   }
   function setUserEvent() {
-    const token = servicesGetStorage(ISLOGIN);
-    servicesPostDataToken(
-      urlSetUserDetail,
-      {
-        name: userData.name[0],
-      },
-      token
-    )
+    servicesPostData(urlSetUserDetail, {
+      name: userData.name[0],
+    })
       .then((res) => {
         console.log("axios는 성공했는데 말이죠", res);
         if (res.status === "fail") {
@@ -47,7 +39,7 @@ function UserDeteil() {
       <div className="commonBox formBox">
         <form className="loginForm formLayout " onSubmit={setUserSubmit}>
           <input type="text" id="name" placeholder="name" onChange={onChange} />
-          <label htmlFor="name" className="blind userIdLabel">
+          <label htmlFor="name" className="blind">
             수정할 이름을 입력해 주세요.
           </label>
           <button type="submit" className="loginBtn">

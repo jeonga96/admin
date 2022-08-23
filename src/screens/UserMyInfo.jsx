@@ -1,18 +1,12 @@
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { urlGetUserDetail, ISLOGIN } from "../Services/string";
-import {
-  servicesPostDataToken,
-  servicesGetStorage,
-} from "../Services/importData";
+import { urlGetUserDetail } from "../Services/string";
+import { servicesPostData } from "../Services/importData";
 
 function UserDeteil() {
   const [userData, setUserData] = useState({});
   useEffect(() => {
-    const token = servicesGetStorage(ISLOGIN);
-    servicesPostDataToken(urlGetUserDetail, {}, token).then((res) =>
-      setUserData(res.data)
-    );
+    servicesPostData(urlGetUserDetail, {}).then((res) => setUserData(res.data));
   }, []);
 
   return (
