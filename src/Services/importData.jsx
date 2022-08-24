@@ -16,10 +16,10 @@ export function servicesRemoveStorage(name) {
 export function servicesGetData(url, getData) {
   return axiosApiInstance(url, {
     method: "GET",
-    data: getData,
     headers: {
       "Content-Type": "application/json",
     },
+    data: getData,
   })
     .then((res) => res.data)
     .catch((error) => console.log(error));
@@ -28,6 +28,9 @@ export function servicesGetData(url, getData) {
 export function servicesPostData(url, postData) {
   return axiosApiInstance(url, {
     method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
     data: postData,
   })
     .then((res) => {

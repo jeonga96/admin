@@ -18,8 +18,12 @@ import AddCompany from "./screens/AddCompany";
 import CompanyDetail from "./screens/CompanyDetail";
 import SetCompanyDetail from "./screens/SetCompanyDetail";
 
-import { servicesGetStorage } from "./Services/importData";
-import { TOKEN } from "./Services/string";
+import {
+  servicesGetStorage,
+  servicesPostData,
+  servicesSetStorage,
+} from "./Services/importData";
+import { TOKEN, urlRefreshtoken } from "./Services/string";
 
 function App() {
   const location = useLocation();
@@ -35,6 +39,14 @@ function App() {
       navigate("/login");
       return;
     }
+  };
+  const tokenCheckTime = 3600000 * 10;
+  const tokenCheck = () => {
+    servicesPostData(urlRefreshtoken, {})
+      .then((res) => {
+        servicesSetStorage(TOKEN, res.data.jtoken);
+      })
+      .catch((err) => console.log("ㅠㅠerr", err));
   };
 
   const fnNavEvent = (matches) => {
@@ -59,6 +71,7 @@ function App() {
 
   useEffect(() => {
     userCheck();
+    setTimeout(tokenCheck, tokenCheckTime);
   }, []);
 
   return (

@@ -1,10 +1,19 @@
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { urlGetUserDetail } from "../Services/string";
-import { servicesPostData } from "../Services/importData";
+import { urlGetUserDetail, TOKEN } from "../Services/string";
+import {
+  servicesPostData,
+  servicesRemoveStorage,
+} from "../Services/importData";
 
 function UserDeteil() {
   const [userData, setUserData] = useState({});
+
+  const logoutEvent = () => {
+    servicesRemoveStorage(TOKEN);
+    window.location.href = "/login";
+  };
+
   useEffect(() => {
     servicesPostData(urlGetUserDetail, {}).then((res) => setUserData(res.data));
   }, []);
@@ -22,6 +31,9 @@ function UserDeteil() {
             <Link className="Link" to="/setusermyinfo">
               회원 정보 수정
             </Link>
+            <button className="Link" onClick={logoutEvent}>
+              로그아웃
+            </button>
           </div>
         </div>
       </div>
