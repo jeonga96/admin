@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useRef } from "react";
 import axiosApiInstance from "./axios";
+import { TOKEN, urlRefreshtoken } from "./string";
 
 export function servicesSetStorage(name, data) {
   return localStorage.setItem(name, data);
@@ -63,3 +64,12 @@ export const useDidMountEffect = (func, deps) => {
     else didMount.current = true;
   }, deps);
 };
+
+export function servicesGetRefreshToken() {
+  servicesPostData(urlRefreshtoken, {})
+    .then((res) => {
+      servicesSetStorage(TOKEN, res.data.jtoken);
+      console.log("refresh~~~~!!!!!!");
+    })
+    .catch((err) => console.log("ㅠㅠerr", err));
+}

@@ -1,5 +1,4 @@
 import { servicesPostData, servicesSetStorage } from "./Services/importData";
-// import * as string from "./Services/string";
 import { urlLogin, TOKEN } from "./Services/string";
 
 const initialState = {
@@ -25,7 +24,6 @@ const reducer = (state = initialState, action) => {
             const accessToken = res.data.jtoken;
             console.log("로그인이 완료되었습니다!", accessToken);
             servicesSetStorage(TOKEN, accessToken);
-
             window.location.href = "/";
             return;
           }

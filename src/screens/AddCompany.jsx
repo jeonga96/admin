@@ -1,13 +1,10 @@
 import { useState } from "react";
-import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { servicesPostData } from "../Services/importData";
 import { urlAddcompany } from "../Services/string";
 
 function AddCompany() {
   let navigate = useNavigate();
-  const user = useSelector((state) => state.loginRes);
-  const userLogin = useSelector((state) => state.login);
   const [CompanyData, setCompanyData] = useState({
     name: "",
   });
@@ -15,8 +12,6 @@ function AddCompany() {
   function onChange(e) {
     setCompanyData({ [e.target.id]: [e.target.value] });
   }
-
-  console.log("ssss", user, userLogin);
 
   function addCompanyEvent() {
     servicesPostData(urlAddcompany, {

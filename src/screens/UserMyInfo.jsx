@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { urlGetUserDetail, TOKEN } from "../Services/string";
 import {
@@ -7,11 +7,12 @@ import {
 } from "../Services/importData";
 
 function UserDeteil() {
+  const navigate = useNavigate();
   const [userData, setUserData] = useState({});
 
   const logoutEvent = () => {
     servicesRemoveStorage(TOKEN);
-    window.location.href = "/login";
+    navigate("/login");
   };
 
   useEffect(() => {

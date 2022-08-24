@@ -2,7 +2,6 @@ import { useEffect } from "react";
 
 import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { axios } from "axios";
 
 import MainLayout from "./components/common/MainLayout";
 import Home from "./screens/Home";
@@ -20,8 +19,7 @@ import SetCompanyDetail from "./screens/SetCompanyDetail";
 
 import {
   servicesGetStorage,
-  servicesPostData,
-  servicesSetStorage,
+  servicesGetRefreshToken,
 } from "./Services/importData";
 import { TOKEN, urlRefreshtoken } from "./Services/string";
 
@@ -33,20 +31,12 @@ function App() {
   const navChange = useSelector((state) => state.navState);
   const dispatch = useDispatch();
 
+  const notLoginScreens = location.pathname !== "/login";
   const userCheck = () => {
-    const locationCheck = location.pathname !== "/login";
-    if (!user && locationCheck) {
+    if (!user && notLoginScreens) {
       navigate("/login");
       return;
     }
-  };
-  const tokenCheckTime = 3600000 * 10;
-  const tokenCheck = () => {
-    servicesPostData(urlRefreshtoken, {})
-      .then((res) => {
-        servicesSetStorage(TOKEN, res.data.jtoken);
-      })
-      .catch((err) => console.log("ㅠㅠerr", err));
   };
 
   const fnNavEvent = (matches) => {
@@ -71,7 +61,12 @@ function App() {
 
   useEffect(() => {
     userCheck();
-    setTimeout(tokenCheck, tokenCheckTime);
+
+    //refresh token
+    if (notLoginScreens) {
+      const tokenCheckTime = 3600000 * 10;
+      setTimeout(servicesGetRefreshToken, tokenCheckTime);
+    }
   }, []);
 
   return (
