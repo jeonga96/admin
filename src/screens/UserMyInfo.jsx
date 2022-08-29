@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { urlGetUserDetail, TOKEN } from "../Services/string";
+import { urlGetMyDetail, TOKEN } from "../Services/string";
 import {
   servicesPostData,
   servicesRemoveStorage,
@@ -16,9 +16,9 @@ function UserDeteil() {
   };
 
   useEffect(() => {
-    servicesPostData(urlGetUserDetail, {}).then((res) => setUserData(res.data));
+    servicesPostData(urlGetMyDetail, {}).then((res) => setUserData(res.data));
   }, []);
-
+  console.log(userData);
   return (
     <div className="mainWrap">
       <div className="userDetailBox">
@@ -27,6 +27,10 @@ function UserDeteil() {
             <span className="boxTitle userDetailTitle">
               안녕하세요 {userData.name ?? "no name"} 님!
             </span>
+            <span>{userData.mobile}</span>
+            <span>{userData.address}</span>
+            <span>{userData.location}</span>
+            <span>{userData.mail}</span>
           </div>
           <div className="bigButton widthCenter">
             <Link className="Link" to="/setusermyinfo">

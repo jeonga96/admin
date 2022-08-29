@@ -13,7 +13,7 @@ import {
   urlUpImages,
 } from "../Services/string";
 
-function Company() {
+function SetCompanyDetail() {
   const { cid } = useParams();
 
   const [titleImg, setTitleImg] = useState(null);
@@ -389,4 +389,4 @@ function Company() {
     </div>
   );
 }
-export default Company;
+export default SetCompanyDetail;

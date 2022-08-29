@@ -37,6 +37,7 @@ function User() {
               <tr>
                 <th>uid</th>
                 <th>userid</th>
+                <th>role</th>
                 <th>createTime</th>
               </tr>
             </thead>
@@ -45,6 +46,7 @@ function User() {
                 <tr key={item.uid}>
                   <td>{item.uid}</td>
                   <td>{item.userid}</td>
+                  <td>{item.userrole}</td>
                   <td>{item.createTime}</td>
                   <td className="tableButton">
                     <Link to={`${item.uid}`} className="buttonLink Link">

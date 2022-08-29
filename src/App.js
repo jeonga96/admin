@@ -10,7 +10,9 @@ import Login from "./screens/Login";
 import User from "./screens/User";
 import AddUser from "./screens/AddUser";
 import UserMyInfo from "./screens/UserMyInfo";
+import UserDetail from "./screens/UserDetail";
 import SetUserMyInfo from "./screens/SetUserMyInfo";
+import SetUserDetail from "./screens/SetUserDetail";
 
 import Company from "./screens/Company";
 import AddCompany from "./screens/AddCompany";
@@ -86,8 +88,8 @@ function App() {
           path="user"
           element={<MainLayout nowTitle="통합회원 관리" component={<User />} />}
         />
-        {/* <Route
-          path="user/:cid"
+        <Route
+          path="user/:uid"
           element={
             <MainLayout
               nowTitle="통합회원 상세정보 관리"
@@ -95,13 +97,13 @@ function App() {
             />
           }
         />
-        */}
+
         <Route
-          path="user/:cid/setuserdetail"
+          path="user/:uid/setuserdetail"
           element={
             <MainLayout
               nowTitle="통합회원 상세정보 수정"
-              // component={<SetUserDetail />}
+              component={<SetUserDetail />}
             />
           }
         />
