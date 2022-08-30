@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
-import { servicesPostData, useDidMountEffect } from "../Services/importData";
+import { servicesPostData } from "../Services/importData";
 import { urlSetUserDetail, urlGetUserDetail } from "../Services/string";
 
 function SetUserDetail() {

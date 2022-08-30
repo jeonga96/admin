@@ -3,13 +3,16 @@ import { IoMailOutline } from "react-icons/io5";
 import { BiUser } from "react-icons/bi";
 import { BsSearch } from "react-icons/bs";
 import { AiOutlineMenu } from "react-icons/ai";
-import { Link } from "react-router-dom";
 
+import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import MyInfoPopup from "../common/MyInfoPopup";
 
 function HeaderBox() {
   const navChange = useSelector((state) => state.navState);
   const dispatch = useDispatch();
+  const [popup, setPopup] = useState(false);
+
   const onClickBtn = () => {
     dispatch({
       type: "navEvent",
@@ -65,13 +68,19 @@ function HeaderBox() {
               </button>
             </li>
           </ul>
-          <div className="Headeruser">
-            <Link className="Link" to="/userMyinfo">
-              <span className="blind">사용자 환경설정</span>
+          <div
+            className="Headeruser"
+            onClick={() => {
+              setPopup(!popup);
+            }}
+          >
+            <div>
+              <span className="blind">마이페이지</span>
               <i>
                 <BiUser />
               </i>
-            </Link>
+              {popup ? <MyInfoPopup /> : null}
+            </div>
           </div>
         </div>
       </div>

@@ -42,12 +42,20 @@ function Company() {
               </tr>
             </thead>
             <tbody className="revenueSaleTbody">
-              {companyList.map((item, key) => (
+              {companyList.map((item) => (
                 <tr key={item.cid}>
                   <td>{item.name}</td>
                   <td className="tableButton">
                     <Link to={`${item.cid}`} className="buttonLink Link">
-                      관리
+                      보기
+                    </Link>
+                  </td>
+                  <td className="tableButton">
+                    <Link
+                      to={`${item.cid}/setcompanydetail`}
+                      className="buttonLink Link"
+                    >
+                      수정
                     </Link>
                   </td>
                 </tr>

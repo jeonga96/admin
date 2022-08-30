@@ -1,12 +1,26 @@
-import { useState } from "react";
-import { urlSetMyDetail } from "../Services/string";
+import { useState, useEffect, useRef } from "react";
+import { urlSetMyDetail, urlGetMyDetail } from "../Services/string";
 import { servicesPostData } from "../Services/importData";
 
 function UserDeteil() {
   const [userData, setUserData] = useState("");
+  const getDataFinish = useRef(null);
+
+  useEffect(() => {
+    servicesPostData(urlGetMyDetail, {})
+      .then((res) => {
+        if (res.status === "success") {
+          setUserData(res.data);
+          getDataFinish.current = true;
+        }
+      })
+      .catch((res) => console.log(res));
+  }, []);
+
   function onChange(e) {
     setUserData({ ...userData, [e.target.id]: [e.target.value] });
   }
+
   function setUserEvent() {
     servicesPostData(urlSetMyDetail, {
       name: userData.name[0],
@@ -44,7 +58,13 @@ function UserDeteil() {
     <div className="mainWrap formCommonWrap">
       <div className="commonBox formBox">
         <form className="loginForm formLayout " onSubmit={setUserSubmit}>
-          <input type="text" id="name" placeholder="name" onChange={onChange} />
+          <input
+            type="text"
+            id="name"
+            placeholder="name"
+            onChange={onChange}
+            value={getDataFinish.current ? userData.name : userData.name || ""}
+          />
           <label htmlFor="name" className="blind">
             수정할 이름을 입력해 주세요.
           </label>
@@ -54,6 +74,9 @@ function UserDeteil() {
             id="address"
             placeholder="상세 주소를 입력해 주세요."
             onChange={onChange}
+            value={
+              getDataFinish.current ? userData.address : userData.address || ""
+            }
           />
           <label htmlFor="address" className="blind">
             상세 주소를 입력해 주세요.
@@ -64,6 +87,9 @@ function UserDeteil() {
             id="mobile"
             placeholder="핸드폰번호를 입력해 주세요."
             onChange={onChange}
+            value={
+              getDataFinish.current ? userData.mobile : userData.mobile || ""
+            }
           />
           <label htmlFor="mobile" className="blind">
             핸드폰번호를 입력해 주세요.
@@ -74,6 +100,11 @@ function UserDeteil() {
             id="location"
             placeholder="주소를 입력해 주세요. (ㅇㅇ동, ㅇㅇ구)"
             onChange={onChange}
+            value={
+              getDataFinish.current
+                ? userData.location
+                : userData.location || ""
+            }
           />
           <label htmlFor="location" className="blind">
             주소를 입력해 주세요. (ㅇㅇ동, ㅇㅇ구)
@@ -84,6 +115,7 @@ function UserDeteil() {
             id="mail"
             placeholder="메일을 입력해 주세요."
             onChange={onChange}
+            value={getDataFinish.current ? userData.mail : userData.mail || ""}
           />
           <label htmlFor="mail" className="blind">
             메일을 입력해 주세요.

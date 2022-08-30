@@ -50,7 +50,15 @@ function User() {
                   <td>{item.createTime}</td>
                   <td className="tableButton">
                     <Link to={`${item.uid}`} className="buttonLink Link">
-                      관리
+                      보기
+                    </Link>
+                  </td>
+                  <td className="tableButton">
+                    <Link
+                      to={`${item.uid}/setuserdetail`}
+                      className="buttonLink Link"
+                    >
+                      수정
                     </Link>
                   </td>
                 </tr>
