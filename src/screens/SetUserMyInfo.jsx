@@ -57,7 +57,7 @@ function UserDeteil() {
   return (
     <div className="mainWrap formCommonWrap">
       <div className="commonBox formBox">
-        <form className="loginForm formLayout " onSubmit={setUserSubmit}>
+        <form className="inputFormLayout" onSubmit={setUserSubmit}>
           <input
             type="text"
             id="name"

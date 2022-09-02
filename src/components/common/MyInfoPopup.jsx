@@ -14,8 +14,8 @@ export default function MyInfoPopup() {
       <Link className="Link" to="/usermyinfo">
         회원 정보 보기
       </Link>
-      <Link className="Link" to="/setusermyinfo">
-        회원 정보 수정
+      <Link className="Link" to="/companymydetail">
+        우리 회사 정보 확인
       </Link>
       <button className="Link" onClick={logoutEvent}>
         로그아웃

@@ -160,7 +160,10 @@ function SetCompanyDetail() {
   return (
     <div className="mainWrap formCommonWrap">
       <div className="commonBox formBox">
-        <form className="formLayout detailFormLayout" onSubmit={AddUserSubmit}>
+        <form
+          className="inputFormLayout detailFormLayout"
+          onSubmit={AddUserSubmit}
+        >
           <label htmlFor="name" className=" blockLabel">
             사업자명
           </label>

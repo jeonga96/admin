@@ -27,7 +27,7 @@ function Login() {
     <section className="mainWrap loginWrap">
       <div className="commonBox loginBox">
         <h3>login</h3>
-        <form className="loginForm formLayout " onSubmit={fnLogin}>
+        <form className="inputFormLayout" onSubmit={fnLogin}>
           <input
             type="text"
             name="user_id"
@@ -52,14 +52,11 @@ function Login() {
             Log In
           </button>
         </form>
-        <div className="LoginLinkWrap">
-          {/* <Link to="/adduser" className="joinLink link">
-            <span>회원가입</span>
-          </Link> */}
+        {/* <div className="LoginLinkWrap">
           <Link to="/forgetPw" className="forgerPwLink link">
             <span>비밀번호 찾기</span>
           </Link>
-        </div>
+        </div> */}
       </div>
     </section>
   );

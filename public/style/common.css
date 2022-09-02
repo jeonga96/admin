@@ -49,6 +49,9 @@
     transition: all 300ms ease-in;
   }
 }
+i {
+  color: var(--color-pointGray);
+}
 
 /*common className --------------------------------------------------------------*/
 .blind_wrap a > span,
@@ -88,11 +91,9 @@
   width: 100%;
   height: 0;
 }
-.widthCenter {
-  margin: 0 auto;
-}
 
-.link {
+.link,
+button {
   display: block;
   width: auto;
   height: 100%;
@@ -246,10 +247,6 @@
     padding: 1.25rem;
   }
 }
-.headerWrap button {
-  width: 100%;
-  height: 100%;
-}
 
 .headerBox {
   width: 100%;
@@ -274,7 +271,6 @@
   width: 100%;
   height: 100%;
   font-size: var(--font-size-big);
-  color: var(--color-pointGray);
 }
 
 /*title - headerSearch*/
@@ -295,6 +291,7 @@
 }
 
 .headerSearch form {
+  display: flex;
   width: 100%;
   height: 100%;
   border-radius: 3.125rem;
@@ -307,11 +304,9 @@
   height: 100%;
   padding: 0.0625rem 1.4375rem 0.0625rem 1.25rem;
 }
-.headerSearch i {
-  color: var(--color-pointgray);
-}
+
 .headerSearch input {
-  width: 15.625rem;
+  width: 15.225rem;
   height: 100%;
   border: none;
   background-color: transparent;
@@ -347,7 +342,6 @@
   width: 100%;
   height: 100%;
   font-size: var(--font-size-basic);
-  color: var(--color-pointGray);
 }
 
 .Headeruser {
@@ -366,6 +360,7 @@
   font-size: var(--font-size-big);
   color: var(--color-white);
 }
+
 .myinfopopupBox {
   position: absolute;
   z-index: 10;
@@ -386,6 +381,7 @@
 .myinfopopupBox .Link:hover {
   background-color: var(--color-bggray);
 }
+
 /*navigator --------------------------------------------------------------*/
 .navigationWrap {
   position: fixed;
@@ -443,6 +439,7 @@
 
 .navTop i {
   font-size: var(--font-size-big);
+  color: var(--color-black);
 }
 
 @media screen and (min-width: 992px) {
@@ -601,10 +598,6 @@
     height: 30.25rem;
   }
 }
-.formLayout {
-  width: 100%;
-  height: auto;
-}
 .commonBox h3 {
   display: block;
   font-size: 1.875rem;
@@ -613,7 +606,11 @@
   padding: 1.25rem 0 2.5rem;
   text-transform: uppercase;
 }
-.formLayout input {
+.inputFormLayout {
+  width: 100%;
+  height: auto;
+}
+.inputFormLayout input {
   width: 100%;
   height: 3.125rem;
   border-top-left-radius: 0.625rem;
@@ -621,7 +618,7 @@
   border-bottom: 0.0625rem solid var(--color-gray);
   margin-bottom: 1.25rem;
 }
-.formLayout input:focus {
+.inputFormLayout input:focus {
   transition: all 300ms ease-in;
   border-bottom: 0.0625rem solid var(--color-primary);
   background-color: var(--color-gray);
@@ -848,29 +845,34 @@
 .detailTime span {
   color: var(--color-pointgray);
 }
+.detailHead {
+  margin-bottom: 1.625rem;
+}
 .detailHead h4,
 .imgsImg h4 {
   width: 100%;
   height: auto;
   font-weight: 500;
   color: var(--color-primary);
-  margin-bottom: 5px;
+  margin-bottom: 0.3125rem;
 }
 .detailHead span,
 .detailHead li {
   width: 100%;
   height: auto;
-  padding-left: 10px;
+  padding-left: 0.625rem;
 }
 .detailSpan div {
   width: 100%;
   height: auto;
+  margin-bottom: 1.25rem;
 }
 
 .detailSpan em {
   width: auto;
   height: auto;
-  margin-right: 5px;
+  margin-right: 0.3125rem;
+  margin-left: 0.3125rem;
 }
 
 /*table --------------------------------------------------------------*/
@@ -1057,9 +1059,6 @@ ul.pagination li a:hover {
   font-weight: 500;
   margin-bottom: 2.5rem;
 }
-.userDetailTitle {
-  display: block;
-  width: 100%;
-  height: auto;
-  text-align: center;
+.userDetailWrap .detailHead {
+  margin-bottom: 20px;
 }

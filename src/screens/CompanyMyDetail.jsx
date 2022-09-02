@@ -1,18 +1,16 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { useParams } from "react-router-dom";
 import { servicesPostData } from "../Services/importData";
-import { urlGetCompanyDetail } from "../Services/string";
+import { urlGetCompanyMyDetail } from "../Services/string";
 
 import GetCompany from "../components/common/GetCompany";
 
-function CompanyDetail() {
-  let { cid } = useParams();
+function CompanyMyDetail() {
   const [companyDetail, setCompanyDetail] = useState([]);
 
   useEffect(() => {
-    servicesPostData(urlGetCompanyDetail, {
-      rcid: cid,
+    servicesPostData(urlGetCompanyMyDetail, {
+      rcid: 44,
     }).then((res) => {
       if (res.status === "success") {
         setCompanyDetail(res.data);
@@ -21,7 +19,7 @@ function CompanyDetail() {
       }
       if (res.status === "fail" && res.emsg === "process failed.") {
         alert("정보가 없습니다. 사업자 정보를 입력해 주세요!");
-        window.location.href = `company/${cid}/setcompanydetail`;
+        // window.location.href = `company/${cid}/setcompanydetail`;
         return;
       }
     });
@@ -34,7 +32,7 @@ function CompanyDetail() {
           <GetCompany companyDetail={companyDetail} />
           <div className="bigButton" style={{ margin: "0 auto" }}>
             <Link className="Link" to="setcompanydetail">
-              사업자 정보 수정
+              정보 수정
             </Link>
           </div>
         </div>
@@ -42,4 +40,4 @@ function CompanyDetail() {
     </div>
   );
 }
-export default CompanyDetail;
+export default CompanyMyDetail;

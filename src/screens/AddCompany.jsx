@@ -45,7 +45,7 @@ function AddCompany() {
   return (
     <div className="mainWrap formCommonWrap">
       <div className="commonBox formBox">
-        <form className="formLayout" onSubmit={AddCompanySubmit}>
+        <form className="inputFormLayout" onSubmit={AddCompanySubmit}>
           <input
             type="text"
             name="name"

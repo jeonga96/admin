@@ -14,6 +14,9 @@ export const urlSetUserDetail = urlPrefix + "/admin/setUserDetail";
 export const urlGetMyDetail = urlPrefix + "/svc/getUserDetail";
 export const urlSetMyDetail = urlPrefix + "/svc/setUserDetail";
 
+export const urlGetCompanyMyDetail = urlPrefix + "/svc/getCompanyDetailInfo";
+export const urlSetCompanyMyDetail = urlPrefix + "/svc/setCompanyDetailInfo";
+
 export const urlAddcompany = urlPrefix + "/admin/addCompany";
 export const urlCompanylist = urlPrefix + "/admin/listCompany";
 export const urlGetCompanyDetail = urlPrefix + "/admin/getCompanyDetailInfo";

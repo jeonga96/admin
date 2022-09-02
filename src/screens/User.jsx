@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { FaUserEdit, FaUserCheck } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import { servicesPostData } from "../Services/importData";
 import { urlUserlist } from "../Services/string";
@@ -39,6 +40,8 @@ function User() {
                 <th>userid</th>
                 <th>role</th>
                 <th>createTime</th>
+                <th>상세정보</th>
+                <th>인증</th>
               </tr>
             </thead>
             <tbody className="revenueSaleTbody">
@@ -46,8 +49,28 @@ function User() {
                 <tr key={item.uid}>
                   <td>{item.uid}</td>
                   <td>{item.userid}</td>
-                  <td>{item.userrole}</td>
-                  <td>{item.createTime}</td>
+                  <td>
+                    {item.userrole.includes("ROLE_ADMIN")
+                      ? "관리자"
+                      : item.userrole.includes("ROLE_COMPANY")
+                      ? "사업자"
+                      : "일반"}
+                  </td>
+                  <td>{item.createTime.slice(0, 10)}</td>
+                  <td>
+                    {item.name ? (
+                      <i>
+                        <FaUserEdit />
+                      </i>
+                    ) : null}
+                  </td>
+                  <td>
+                    {item.useFlag ? (
+                      <i>
+                        <FaUserCheck />
+                      </i>
+                    ) : null}
+                  </td>
                   <td className="tableButton">
                     <Link to={`${item.uid}`} className="buttonLink Link">
                       보기

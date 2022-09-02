@@ -11,6 +11,8 @@ import User from "./screens/User";
 import AddUser from "./screens/AddUser";
 import UserMyInfo from "./screens/UserMyInfo";
 import UserDetail from "./screens/UserDetail";
+import CompanyMyDetail from "./screens/CompanyMyDetail";
+import SetCompanyMyDetail from "./screens/SetCompanyMyDetail";
 import SetUserMyInfo from "./screens/SetUserMyInfo";
 import SetUserDetail from "./screens/SetUserDetail";
 
@@ -129,6 +131,24 @@ function App() {
           path="setusermyinfo"
           element={
             <MainLayout nowTitle="내 정보 수정" component={<SetUserMyInfo />} />
+          }
+        />
+        <Route
+          path="companymydetail"
+          element={
+            <MainLayout
+              nowTitle="우리 회사 정보 확인"
+              component={<CompanyMyDetail />}
+            />
+          }
+        />
+        <Route
+          path="setcompanymydetail"
+          element={
+            <MainLayout
+              nowTitle="우리 회사 정보 수정"
+              component={<SetCompanyMyDetail />}
+            />
           }
         />
         <Route

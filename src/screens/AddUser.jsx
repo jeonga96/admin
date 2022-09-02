@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import { urlAdduser } from "../Services/string";
 
 function AddUser() {
-  let navigate = useNavigate();
   const [userData, setUserData] = useState({
     userid: "",
     passwd: "",
@@ -64,7 +63,7 @@ function AddUser() {
   return (
     <div className="mainWrap formCommonWrap">
       <div className="commonBox formBox">
-        <form className="formLayout" onSubmit={AddUserSubmit}>
+        <form className="inputFormLayout" onSubmit={AddUserSubmit}>
           <input
             type="text"
             name="user_id"

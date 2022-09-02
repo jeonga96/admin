@@ -62,7 +62,10 @@ function SetUserDetail() {
   return (
     <div className="mainWrap formCommonWrap">
       <div className="commonBox formBox">
-        <form className="formLayout detailFormLayout" onSubmit={AddUserSubmit}>
+        <form
+          className="detailFormLayout inputFormLayout"
+          onSubmit={AddUserSubmit}
+        >
           <label htmlFor="name" className=" blockLabel">
             이름
           </label>

@@ -23,22 +23,33 @@ function UserDeteil() {
     <div className="mainWrap">
       <div className="userDetailBox">
         <div className="commonBox paddingBox">
-          <div className="userDetailWrap">
-            <span className="boxTitle userDetailTitle">
+          <ul className="userDetailWrap">
+            <li className="boxTitle">
               안녕하세요 {userData.name ?? "no name"} 님!
-            </span>
-            <span>{userData.mobile}</span>
-            <span>{userData.address}</span>
-            <span>{userData.location}</span>
-            <span>{userData.mail}</span>
-          </div>
-          <div className="bigButton widthCenter">
-            <Link className="Link" to="/setusermyinfo">
-              회원 정보 수정
-            </Link>
-            <button className="Link" onClick={logoutEvent}>
-              로그아웃
-            </button>
+            </li>
+            <li className="detailHead">
+              <h4>핸드폰 번호</h4>
+              <span>{userData.mobile}</span>
+            </li>
+            <li className="detailHead">
+              <h4>상세주소</h4>
+              <span>{userData.address}</span>
+            </li>
+            <li className="detailHead">
+              <h4>주소 (ㅇㅇ구, ㅇㅇ동)</h4>
+              <span>{userData.location}</span>
+            </li>
+            <li className="detailHead">
+              <h4>E-mail</h4>
+              <span>{userData.mail}</span>
+            </li>
+          </ul>
+          <div>
+            <div className="bigButton">
+              <Link className="Link" to="/setusermyinfo">
+                회원 정보 수정
+              </Link>
+            </div>
           </div>
         </div>
       </div>

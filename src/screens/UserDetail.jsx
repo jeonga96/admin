@@ -37,12 +37,15 @@ function UserDetail() {
         <div className="paddingBox commonBox">
           <div className="detailPageLayout">
             <ul>
-              <li className="name">{userDetail.name}</li>
               <li className="detailSpan detailTime">
                 <div>
                   <em>수정 시간</em>
                   <span>{userDetail.updateTime}</span>
                 </div>
+              </li>
+              <li className="detailHead">
+                <h4>이름</h4>
+                <span>{userDetail.name}</span>
               </li>
               <li className="detailHead">
                 <h4>핸드폰 번호</h4>
