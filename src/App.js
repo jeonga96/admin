@@ -20,12 +20,14 @@ import Company from "./screens/Company";
 import AddCompany from "./screens/AddCompany";
 import CompanyDetail from "./screens/CompanyDetail";
 import SetCompanyDetail from "./screens/SetCompanyDetail";
+import CompanyNotice from "./screens/CompanyNotice";
+import AddCompanyNotice from "./screens/AddCompanyNotice";
 
 import {
   servicesGetStorage,
   servicesGetRefreshToken,
 } from "./Services/importData";
-import { TOKEN, urlRefreshtoken } from "./Services/string";
+import { TOKEN } from "./Services/string";
 
 function App() {
   const location = useLocation();
@@ -172,6 +174,24 @@ function App() {
             <MainLayout
               nowTitle="사업자 상세정보 수정"
               component={<SetCompanyDetail />}
+            />
+          }
+        />
+        <Route
+          path="company/:cid/notice"
+          element={
+            <MainLayout
+              nowTitle="사업자 공지사항"
+              component={<CompanyNotice />}
+            />
+          }
+        />
+        <Route
+          path="company/:cid/addnotice"
+          element={
+            <MainLayout
+              nowTitle="사업자 공지사항 작성"
+              component={<AddCompanyNotice />}
             />
           }
         />

@@ -16,8 +16,21 @@ function UserDeteil() {
   };
 
   useEffect(() => {
-    servicesPostData(urlGetMyDetail, {}).then((res) => setUserData(res.data));
+    servicesPostData(urlGetMyDetail, {})
+      .then((res) => {
+        if (res.status === "success") {
+          setUserData(res.data);
+          return;
+        }
+        if (res.status === "fail" && res.emsg === "process failed.") {
+          alert("정보가 없습니다. 사업자 정보를 입력해 주세요!");
+          window.location.href = `/setusermyinfo`;
+          return;
+        }
+      })
+      .catch();
   }, []);
+
   console.log(userData);
   return (
     <div className="mainWrap">
@@ -25,7 +38,7 @@ function UserDeteil() {
         <div className="commonBox paddingBox">
           <ul className="userDetailWrap">
             <li className="boxTitle">
-              안녕하세요 {userData.name ?? "no name"} 님!
+              안녕하세요 {userData ? userData.name : "no name"} 님!
             </li>
             <li className="detailHead">
               <h4>핸드폰 번호</h4>

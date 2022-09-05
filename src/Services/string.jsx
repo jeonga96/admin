@@ -25,6 +25,9 @@ export const urlSetCompanyDetail = urlPrefix + "/admin/setCompanyDetailInfo";
 export const urlUpImages = urlPrefix + "/svc/upImages";
 export const urlGetImages = urlPrefix + "/svc/getImages";
 
+export const urlNoticeList = urlPrefix + "/pub/listCompanyNotice";
+export const urlSetNotice = urlPrefix + "/svc/setCompanyNotice";
+
 export const TOKEN = "token";
 export const RETOKEN = "re_token";
 

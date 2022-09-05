@@ -22,7 +22,7 @@ const reducer = (state = initialState, action) => {
           }
           if (res.status === "success") {
             const accessToken = res.data.jtoken;
-            console.log("로그인이 완료되었습니다!", accessToken);
+            console.log("로그인이 완료되었습니다!", res);
             servicesSetStorage(TOKEN, accessToken);
             window.location.href = "/";
             return;
