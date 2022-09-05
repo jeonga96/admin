@@ -976,6 +976,47 @@ button {
   height: 2.8125rem;
 }
 
+/*contentTbody - comapabyNotice & */
+.contentTbody tr {
+  width: 100%;
+}
+.contentTbody td {
+  height: 120px;
+}
+.contentTbody td:last-child {
+  width: 90%;
+  padding: 20px;
+}
+.contentTbody .titleWrap {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  height: auto;
+  margin-bottom: 10px;
+}
+.titleWrap span:first-child {
+  text-align: left;
+  font-size: var(--font-size-big);
+  font-weight: 500;
+}
+.titleWrap i {
+  display: inline-block;
+  color: var(--color-pointgray);
+  margin-left: 10px;
+}
+.titleWrap span:last-child {
+  color: var(--color-pointgray);
+}
+.contentTbody .content {
+  display: block;
+  text-align: left;
+  font-size: var(--font-size-basic);
+  font-weight: 400;
+  margin-bottom: 10px;
+}
+.contentTbody .tableButton {
+  float: left;
+}
 /*btn 영역*/
 .pagination {
   display: flex;

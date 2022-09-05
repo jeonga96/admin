@@ -2,6 +2,7 @@ import { Link, useParams } from "react-router-dom";
 import { useState, useLayoutEffect } from "react";
 import { servicesPostData } from "../Services/importData";
 import { urlNoticeList } from "../Services/string";
+import { MdOutlineImage } from "react-icons/md";
 // import PageButton from "../components/common/PageButton";
 
 function CompanyNotice() {
@@ -34,28 +35,38 @@ function CompanyNotice() {
           <table className="commonTable">
             <thead>
               <tr>
-                <th>제목</th>
+                <th>번호</th>
+                <th>내용</th>
               </tr>
             </thead>
-            <tbody className="revenueSaleTbody">
-              {/* {companyList.map((item) => (
-                <tr key={item.cid}>
-                  <td>{item.name}</td>
-                  <td className="tableButton">
-                    <Link to={`${item.cid}`} className="buttonLink Link">
-                      보기
-                    </Link>
-                  </td>
-                  <td className="tableButton">
-                    <Link
-                      to={`${item.cid}/setcompanydetail`}
-                      className="buttonLink Link"
-                    >
-                      수정
-                    </Link>
+            <tbody className="contentTbody">
+              {notice.map((item) => (
+                <tr key={item.comnid}>
+                  <td>{item.comnid}</td>
+                  <td>
+                    <div className="titleWrap">
+                      <div>
+                        <span>{item.title}</span>
+                        <i>{item.imgs ? <MdOutlineImage /> : null}</i>
+                      </div>
+                      <span>{item.createTime.slice(0, 10)}</span>
+                    </div>
+                    <span className="content">
+                      {item.content.length > 100
+                        ? item.content.slice(0, 99) + "..."
+                        : item.content}
+                    </span>
+                    <div className="tableButton">
+                      <Link
+                        to={`/company/${item.rcid}/${item.comnid}`}
+                        className="buttonLink Link"
+                      >
+                        보기
+                      </Link>
+                    </div>
                   </td>
                 </tr>
-              ))} */}
+              ))}
             </tbody>
           </table>
           {/* <PageButton listPage={listPage} page={page} setPage={setPage} /> */}

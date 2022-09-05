@@ -7,21 +7,22 @@ import MainLayout from "./components/common/MainLayout";
 import Home from "./screens/Home";
 import Login from "./screens/Login";
 
-import User from "./screens/User";
+import User from "./screens/ListUser";
 import AddUser from "./screens/AddUser";
-import UserMyInfo from "./screens/UserMyInfo";
-import UserDetail from "./screens/UserDetail";
-import CompanyMyDetail from "./screens/CompanyMyDetail";
-import SetCompanyMyDetail from "./screens/SetCompanyMyDetail";
-import SetUserMyInfo from "./screens/SetUserMyInfo";
-import SetUserDetail from "./screens/SetUserDetail";
+import DetailUserMyInfo from "./screens/DetailUserMyInfo";
+import UserDetail from "./screens/DetailUser";
+import CompanyMyDetail from "./screens/DetailCompanyMyInfo";
+import SetCompanyMyDetail from "./screens/SetDetailCompanyMyInfo";
+import SetUserMyInfo from "./screens/SetDetailUserMyInfo";
+import SetUserDetail from "./screens/SetDetailUser";
 
-import Company from "./screens/Company";
+import Company from "./screens/ListCompany";
 import AddCompany from "./screens/AddCompany";
-import CompanyDetail from "./screens/CompanyDetail";
-import SetCompanyDetail from "./screens/SetCompanyDetail";
-import CompanyNotice from "./screens/CompanyNotice";
+import CompanyDetail from "./screens/DetailCompany";
+import SetCompanyDetail from "./screens/SetDetailCompany";
+import CompanyNotice from "./screens/ListCompanyNotice";
 import AddCompanyNotice from "./screens/AddCompanyNotice";
+import CompanyNoticeDetail from "./screens/DetailCompanyNotice";
 
 import {
   servicesGetStorage,
@@ -126,7 +127,10 @@ function App() {
         <Route
           path="usermyinfo"
           element={
-            <MainLayout nowTitle="내 정보 확인" component={<UserMyInfo />} />
+            <MainLayout
+              nowTitle="내 정보 확인"
+              component={<DetailUserMyInfo />}
+            />
           }
         />
         <Route
@@ -192,6 +196,15 @@ function App() {
             <MainLayout
               nowTitle="사업자 공지사항 작성"
               component={<AddCompanyNotice />}
+            />
+          }
+        />
+        <Route
+          path="company/:cid/:comnid"
+          element={
+            <MainLayout
+              nowTitle="사업자 공지사항 상세정보"
+              component={<CompanyNoticeDetail />}
             />
           }
         />
