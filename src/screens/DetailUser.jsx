@@ -2,11 +2,13 @@ import { Link } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { servicesPostData, useDidMountEffect } from "../Services/importData";
-import { urlGetUserDetail } from "../Services/string";
+import { urlGetUserDetail, urlSetUserRole } from "../Services/string";
+import SelctUserRole from "../components/common/SelectUserRole";
 
 function UserDetail() {
   let { uid } = useParams();
   const [userDetail, setUserDetail] = useState([]);
+
   const [mapLinkAddress, setMapLinkAddress] = useState("");
 
   useEffect(() => {
@@ -73,6 +75,10 @@ function UserDetail() {
                     지도 링크이동
                   </a>
                 )}
+              </li>
+              <li className="detailHead">
+                <h4>유저 권한 설정</h4>
+                <SelctUserRole uid={uid} />
               </li>
             </ul>
           </div>

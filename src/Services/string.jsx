@@ -10,6 +10,7 @@ export const urlAdduser = urlPrefix + "/pub/addUser";
 export const urlUserlist = urlPrefix + "/admin/listUser";
 export const urlGetUserDetail = urlPrefix + "/admin/getUserDetail";
 export const urlSetUserDetail = urlPrefix + "/admin/setUserDetail";
+export const urlSetUserRole = urlPrefix + "/admin/setUserRole";
 
 export const urlGetMyDetail = urlPrefix + "/svc/getUserDetail";
 export const urlSetMyDetail = urlPrefix + "/svc/setUserDetail";

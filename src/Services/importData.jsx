@@ -69,7 +69,6 @@ export function servicesGetRefreshToken() {
   servicesPostData(urlRefreshtoken, {})
     .then((res) => {
       servicesSetStorage(TOKEN, res.data.jtoken);
-      console.log("refresh~~~~!!!!!!");
     })
     .catch((err) => console.log("ㅠㅠerr", err));
 }

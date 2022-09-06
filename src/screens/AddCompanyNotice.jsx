@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef } from "react";
 import { urlSetNotice, urlUpImages } from "../Services/string";
 import { servicesPostData, servicesPostDataForm } from "../Services/importData";
 import { useNavigate } from "react-router-dom";
@@ -37,7 +37,7 @@ function AddCompanyNotice() {
     servicesPostData(urlSetNotice, {
       title: userDetail.title,
       content: userDetail.content,
-      imgs: imgsIid.current.toString(),
+      imgs: imgsIid ? imgsIid.current.toString() : "",
     })
       .then((res) => {
         console.log("axios 성공!", res);

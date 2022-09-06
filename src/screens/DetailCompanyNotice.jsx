@@ -33,51 +33,38 @@ function CompanyNoticeDetail() {
       <div className="commonBox paddingBox">
         {/* <ul className="detailPageLayout"> */}
         <ul>
-          <li className="detailTitle">
+          <li className="detailContentTitle">
             <h4 className="blind">제목</h4>
             <span>{companyDetail.title}</span>
           </li>
           {companyDetail.createTime && (
             <li className="detailSpan detailTime">
-              <div>
-                <em>작성 시간</em>
-                <span>{`${companyDetail.createTime.slice(
-                  0,
-                  10
-                )}, ${companyDetail.createTime.slice(11, 19)}`}</span>
-              </div>
-              <div>
-                <em>수정 시간</em>
-                <span>{`${companyDetail.updateTime.slice(
-                  0,
-                  10
-                )}, ${companyDetail.updateTime.slice(11, 19)}`}</span>
-              </div>
+              <div>{`${companyDetail.createTime.slice(
+                0,
+                10
+              )} ${companyDetail.createTime.slice(11, 19)}`}</div>
             </li>
           )}
-          <li className="detailContent">
-            <h4>공지사항 내용</h4>
+
+          <li className="detailContentText">
+            <li className="detailContentImage">
+              <h4 className="blind">상세 이미지</h4>
+              <ul>
+                {image &&
+                  image.map((item, i) => (
+                    <li key={item.iid}>
+                      <span>{`공지사항 첨부 이미지 ${i + 1}`}</span>
+                      <img src={item.storagePath} alt="공지사항 첨부 이미지" />
+                    </li>
+                  ))}
+              </ul>
+            </li>
+
+            <h4 className="blind">공지사항 내용</h4>
             <span>{companyDetail.content}</span>
           </li>
 
-          <li className="detailImage">
-            <div className="imgsImg">
-              <h4>상세 이미지</h4>
-              <div>
-                <ul>
-                  {image &&
-                    image.map((item, i) => (
-                      <li key={item.iid}>
-                        <img
-                          src={item.storagePath}
-                          alt="공지사항 첨부 이미지"
-                        />
-                      </li>
-                    ))}
-                </ul>
-              </div>
-            </div>
-          </li>
+          <Link to="modify">수정</Link>
         </ul>
       </div>
     </div>

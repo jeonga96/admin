@@ -76,14 +76,6 @@ function User() {
                       보기
                     </Link>
                   </td>
-                  <td className="tableButton">
-                    <Link
-                      to={`${item.uid}/setuserdetail`}
-                      className="buttonLink Link"
-                    >
-                      수정
-                    </Link>
-                  </td>
                 </tr>
               ))}
             </tbody>

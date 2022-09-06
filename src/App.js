@@ -23,6 +23,7 @@ import SetDetailCompany from "./screens/SetDetailCompany";
 import ListCompanyNotice from "./screens/ListCompanyNotice";
 import AddCompanyNotice from "./screens/AddCompanyNotice";
 import DetailCompanyNotice from "./screens/DetailCompanyNotice";
+import SetDetailCompanyNotice from "./screens/SetDetailCompanyNotice";
 
 import {
   servicesGetStorage,
@@ -210,6 +211,15 @@ function App() {
             <MainLayout
               nowTitle="사업자 공지사항 상세정보"
               component={<DetailCompanyNotice />}
+            />
+          }
+        />
+        <Route
+          path="company/:cid/:comnid/modify"
+          element={
+            <MainLayout
+              nowTitle="사업자 공지사항 수정"
+              component={<SetDetailCompanyNotice />}
             />
           }
         />
