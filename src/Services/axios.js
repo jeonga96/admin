@@ -33,7 +33,9 @@ axiosApiInstance.interceptors.response.use(
         "Request failed with status code 403" && error.response.status === 403)
     ) {
       const originalRequest = config;
-      alert("회원정보 저장이 만료되었습니다. 다시 로그인 해주세요!");
+      alert(
+        "회원정보 저장이 만료되었습니다. 다시 로그인 해주세요! & 권한이 없습니다."
+      );
       servicesRemoveStorage(TOKEN);
       window.location.href = "/login";
       return axios(originalRequest);

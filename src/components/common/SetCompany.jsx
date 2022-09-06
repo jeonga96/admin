@@ -5,12 +5,7 @@ import {
   servicesPostData,
   useDidMountEffect,
 } from "../../Services/importData";
-import {
-  urlSetCompanyDetail,
-  urlGetCompanyDetail,
-  urlGetImages,
-  urlUpImages,
-} from "../../Services/string";
+import { urlGetImages, urlUpImages } from "../../Services/string";
 
 function SetCompany({ cid, getAPI, setAPI }) {
   const [companyData, setCompanyData] = useState({
@@ -156,120 +151,155 @@ function SetCompany({ cid, getAPI, setAPI }) {
 
   return (
     <form className="inputFormLayout detailFormLayout" onSubmit={AddUserSubmit}>
-      <label htmlFor="name" className=" blockLabel">
-        사업자명
-      </label>
-      <input
-        type="text"
-        id="name"
-        placeholder="사업자명을 입력해 주세요."
-        onChange={onChange}
-        value={
-          getDataFinish.current ? companyData.name : companyData.name || ""
-        }
-      />
-      <label htmlFor="comment" className=" blockLabel">
-        소개글
-      </label>
-      <input
-        type="text"
-        id="comment"
-        placeholder="사업자에 대한 짧은 소개글을 입력해 주세요."
-        onChange={onChange}
-        value={
-          getDataFinish.current
-            ? companyData.comment
-            : companyData.comment || ""
-        }
-      />
-      <label htmlFor="location" className=" blockLabel">
-        위치
-      </label>
-      <input
-        type="text"
-        id="location"
-        placeholder="사업자의 위치를 입력해 주세요. ex.ㅇㅇ구, ㅇㅇ동"
-        onChange={onChange}
-        value={
-          getDataFinish.current
-            ? companyData.location
-            : companyData.location || ""
-        }
-      />
-      <label htmlFor="address" className=" blockLabel">
-        주소
-      </label>
-      <input
-        type="text"
-        id="address"
-        placeholder="주소를 입력해 주세요."
-        onChange={onChange}
-        value={
-          getDataFinish.current
-            ? companyData.address
-            : companyData.address || ""
-        }
-      />
-      <label htmlFor="registration" className=" blockLabel">
-        사업자 등록 번호
-      </label>
-      <input
-        type="text"
-        id="registration"
-        placeholder="사업자 등록 번호를 입력해 주세요."
-        onChange={onChange}
-        value={
-          getDataFinish.current
-            ? companyData.registration
-            : companyData.registration || ""
-        }
-      />
-      <label htmlFor="workTime" className=" blockLabel">
-        근무 시간
-      </label>
-      <input
-        type="text"
-        id="workTime"
-        placeholder="근무 시간을 입력해 주세요."
-        onChange={onChange}
-        value={
-          getDataFinish.current
-            ? companyData.workTime
-            : companyData.workTime || ""
-        }
-      />
-      <label htmlFor="offer" className="blockLabel">
-        사업자 소개글
-      </label>
-      <input
-        type="text"
-        id="offer"
-        placeholder="사업자 소개글을 입력해 주세요."
-        onChange={onChange}
-        value={
-          getDataFinish.current ? companyData.offer : companyData.offer || ""
-        }
-      />
+      <div className="formContentWrap">
+        <label htmlFor="name" className=" blockLabel">
+          사업자명
+        </label>
+        <input
+          type="text"
+          id="name"
+          placeholder="사업자명을 입력해 주세요."
+          onChange={onChange}
+          value={
+            getDataFinish.current ? companyData.name : companyData.name || ""
+          }
+        />
+      </div>
+      <div className="formContentWrap">
+        <label htmlFor="comment" className=" blockLabel">
+          소개글
+        </label>
+        <input
+          type="text"
+          id="comment"
+          placeholder="사업자에 대한 짧은 소개글을 입력해 주세요."
+          onChange={onChange}
+          value={
+            getDataFinish.current
+              ? companyData.comment
+              : companyData.comment || ""
+          }
+        />
+      </div>
 
-      <div className="blockLabel">대표 이미지</div>
+      <div className="formContentWrap">
+        <label htmlFor="location" className=" blockLabel">
+          위치
+        </label>
+        <input
+          type="text"
+          id="location"
+          placeholder="사업자의 위치를 입력해 주세요. ex.ㅇㅇ구, ㅇㅇ동"
+          onChange={onChange}
+          value={
+            getDataFinish.current
+              ? companyData.location
+              : companyData.location || ""
+          }
+        />
+      </div>
+
+      <div className="formContentWrap">
+        <label htmlFor="address" className=" blockLabel">
+          주소
+        </label>
+        <input
+          type="text"
+          id="address"
+          placeholder="주소를 입력해 주세요."
+          onChange={onChange}
+          value={
+            getDataFinish.current
+              ? companyData.address
+              : companyData.address || ""
+          }
+        />
+      </div>
+
+      <div className="formContentWrap">
+        <label htmlFor="registration" className=" blockLabel">
+          사업자 등록 번호
+        </label>
+        <input
+          type="text"
+          id="registration"
+          placeholder="사업자 등록 번호를 입력해 주세요."
+          onChange={onChange}
+          value={
+            getDataFinish.current
+              ? companyData.registration
+              : companyData.registration || ""
+          }
+        />
+      </div>
+
+      <div className="formContentWrap">
+        <label htmlFor="workTime" className=" blockLabel">
+          근무 시간
+        </label>
+        <input
+          type="text"
+          id="workTime"
+          placeholder="근무 시간을 입력해 주세요."
+          onChange={onChange}
+          value={
+            getDataFinish.current
+              ? companyData.workTime
+              : companyData.workTime || ""
+          }
+        />
+      </div>
+
+      <div className="formContentWrap">
+        <label htmlFor="offer" className="blockLabel">
+          사업자 소개글
+        </label>
+        <input
+          type="text"
+          id="offer"
+          placeholder="사업자 소개글을 입력해 주세요."
+          onChange={onChange}
+          value={
+            getDataFinish.current ? companyData.offer : companyData.offer || ""
+          }
+        />
+      </div>
+
+      <div>
+        <div className="blockLabel">대표 이미지</div>
+        <label htmlFor="imgs" className="blockLabel fileboxLabel">
+          <BiUpload /> 사진 업로드
+        </label>
+        <input
+          type="file"
+          id="titleImg"
+          name="Imgs"
+          accept="image/*"
+          className="blind"
+          onChange={fileSelectEvent}
+        />
+      </div>
       {titleImg && (
         <div className="imgsThumbnail">
           <img src={titleImg[0].storagePath} alt="사업자 상세 이미지" />
         </div>
       )}
-      <label htmlFor="imgs" className="blockLabel fileboxLabel">
-        <BiUpload /> 사진 업로드
-      </label>
-      <input
-        type="file"
-        id="titleImg"
-        name="Imgs"
-        accept="image/*"
-        className="blind"
-        onChange={fileSelectEvent}
-      />
 
-      <div className="blockLabel">업체 상세 이미지</div>
+      <div>
+        <div className="blockLabel">업체 상세 이미지</div>
+        <label htmlFor="imgs" className="blockLabel fileboxLabel">
+          <BiUpload /> 사진 업로드
+        </label>
+        <input
+          type="file"
+          id="imgs"
+          name="Imgs"
+          accept="image/*"
+          multiple
+          className="blind"
+          onChange={fileSelectEvent}
+        />
+      </div>
       {imgs && (
         <ul className="imgsThumbnail">
           {imgs.map((item, key) => (
@@ -279,95 +309,105 @@ function SetCompany({ cid, getAPI, setAPI }) {
           ))}
         </ul>
       )}
-      <label htmlFor="imgs" className="blockLabel fileboxLabel">
-        <BiUpload /> 사진 업로드
-      </label>
-      <input
-        type="file"
-        id="imgs"
-        name="Imgs"
-        accept="image/*"
-        multiple
-        className="blind"
-        onChange={fileSelectEvent}
-      />
 
-      <label htmlFor="telnum" className=" blockLabel">
-        전화번호
-      </label>
-      <input
-        type="text"
-        id="telnum"
-        placeholder="전화번호를 입력해 주세요."
-        onChange={onChange}
-        value={
-          getDataFinish.current ? companyData.telnum : companyData.telnum || ""
-        }
-      />
-      <label htmlFor="mobilenum" className=" blockLabel">
-        핸드폰번호
-      </label>
-      <input
-        type="text"
-        id="mobilenum"
-        placeholder="핸드폰번호를 입력해 주세요."
-        onChange={onChange}
-        value={
-          getDataFinish.current
-            ? companyData.mobilenum
-            : companyData.mobilenum || ""
-        }
-      />
-      <label htmlFor="email" className=" blockLabel">
-        이메일
-      </label>
-      <input
-        type="text"
-        id="email"
-        placeholder="이메일을 입력해 주세요."
-        onChange={onChange}
-        value={
-          getDataFinish.current ? companyData.email : companyData.email || ""
-        }
-      />
-      <label htmlFor="extnum" className=" blockLabel">
-        추가 번호
-      </label>
-      <input
-        type="text"
-        id="extnum"
-        placeholder="추가 번호를 입력해 주세요."
-        onChange={onChange}
-        value={
-          getDataFinish.current ? companyData.extnum : companyData.extnum || ""
-        }
-      />
-      <label htmlFor="keywords" className=" blockLabel">
-        키워드
-      </label>
-      <input
-        type="text"
-        id="keywords"
-        placeholder="키워드를 입력해 주세요."
-        onChange={onChange}
-        value={
-          getDataFinish.current
-            ? companyData.keywords
-            : companyData.keywords || ""
-        }
-      />
-      <label htmlFor="tags" className=" blockLabel">
-        태그
-      </label>
-      <input
-        type="text"
-        id="tags"
-        placeholder="태그를 입력해 주세요."
-        onChange={onChange}
-        value={
-          getDataFinish.current ? companyData.tags : companyData.tags || ""
-        }
-      />
+      <div className="formContentWrap">
+        <label htmlFor="telnum" className=" blockLabel">
+          전화번호
+        </label>
+        <input
+          type="text"
+          id="telnum"
+          placeholder="전화번호를 입력해 주세요."
+          onChange={onChange}
+          value={
+            getDataFinish.current
+              ? companyData.telnum
+              : companyData.telnum || ""
+          }
+        />
+      </div>
+
+      <div className="formContentWrap">
+        <label htmlFor="mobilenum" className=" blockLabel">
+          핸드폰번호
+        </label>
+        <input
+          type="text"
+          id="mobilenum"
+          placeholder="핸드폰번호를 입력해 주세요."
+          onChange={onChange}
+          value={
+            getDataFinish.current
+              ? companyData.mobilenum
+              : companyData.mobilenum || ""
+          }
+        />
+      </div>
+
+      <div className="formContentWrap">
+        <label htmlFor="email" className=" blockLabel">
+          이메일
+        </label>
+        <input
+          type="text"
+          id="email"
+          placeholder="이메일을 입력해 주세요."
+          onChange={onChange}
+          value={
+            getDataFinish.current ? companyData.email : companyData.email || ""
+          }
+        />
+      </div>
+
+      <div className="formContentWrap">
+        <label htmlFor="extnum" className=" blockLabel">
+          추가 번호
+        </label>
+        <input
+          type="text"
+          id="extnum"
+          placeholder="추가 번호를 입력해 주세요."
+          onChange={onChange}
+          value={
+            getDataFinish.current
+              ? companyData.extnum
+              : companyData.extnum || ""
+          }
+        />
+      </div>
+
+      <div className="formContentWrap">
+        <label htmlFor="keywords" className=" blockLabel">
+          키워드
+        </label>
+        <input
+          type="text"
+          id="keywords"
+          placeholder="키워드를 입력해 주세요."
+          onChange={onChange}
+          value={
+            getDataFinish.current
+              ? companyData.keywords
+              : companyData.keywords || ""
+          }
+        />
+      </div>
+
+      <div className="formContentWrap">
+        <label htmlFor="tags" className=" blockLabel">
+          태그
+        </label>
+        <input
+          type="text"
+          id="tags"
+          placeholder="태그를 입력해 주세요."
+          onChange={onChange}
+          value={
+            getDataFinish.current ? companyData.tags : companyData.tags || ""
+          }
+        />
+      </div>
+
       <button type="submit" className="loginBtn">
         사용자 추가하기
       </button>

@@ -52,11 +52,6 @@ function Login() {
             Log In
           </button>
         </form>
-        {/* <div className="LoginLinkWrap">
-          <Link to="/forgetPw" className="forgerPwLink link">
-            <span>비밀번호 찾기</span>
-          </Link>
-        </div> */}
       </div>
     </section>
   );

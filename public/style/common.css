@@ -556,8 +556,6 @@ button {
   font-weight: 400;
 }
 
-/*login --------------------------------------------------------------*/
-
 .loginWrap,
 .adduserWrap {
   width: 100%;
@@ -598,6 +596,7 @@ button {
     height: 30.25rem;
   }
 }
+
 .commonBox h3 {
   display: block;
   font-size: 1.875rem;
@@ -677,13 +676,30 @@ button {
   border-radius: 0.3125rem;
   font-weight: 400;
 }
-
+.formContentWrap {
+  width: 100%;
+  height: auto;
+}
 .detailFormLayout .blockLabel {
   display: block;
   margin-top: 20px;
   margin-bottom: 10px;
   font-weight: 500;
   color: var(--color-primary);
+}
+
+@media screen and (min-width: 768px) {
+  .formContentWrap {
+    display: flex;
+    justify-content: left;
+  }
+  .formContentWrap label {
+    width: 25%;
+  }
+  .formContentWrap input {
+    display: inline;
+    width: 75%;
+  }
 }
 
 .detailFormLayout .fileboxLabel {
@@ -736,6 +752,7 @@ button {
   background-color: var(--color-bggray);
   padding: 5px;
   flex-wrap: wrap;
+  margin-bottom: 30px;
 }
 .imgsThumbnail li {
   width: auto;
@@ -912,6 +929,21 @@ button {
   box-shadow: var(--styles-boxShadow);
   padding: 0.3125rem;
 }
+
+.detailTitle {
+  font-size: var(--font-size-titleem);
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+.detailContent {
+  width: 100%;
+  height: auto;
+  padding: 40px 20px;
+  background-color: var(--color-bggray);
+}
+.detailContent h4 {
+  margin-bottom: 20px;
+}
 /*table --------------------------------------------------------------*/
 .commonTable thead {
   border-bottom: 0.125rem solid var(--color-primary);
@@ -994,7 +1026,7 @@ button {
   height: auto;
   margin-bottom: 10px;
 }
-.titleWrap span:first-child {
+.titleWrap > div {
   text-align: left;
   font-size: var(--font-size-big);
   font-weight: 500;
@@ -1004,8 +1036,23 @@ button {
   color: var(--color-pointgray);
   margin-left: 10px;
 }
-.titleWrap span:last-child {
+.titleWrap > span {
   color: var(--color-pointgray);
+}
+@media screen and (max-width: 520px) {
+  .contentTbody td {
+    height: 140px;
+  }
+  .contentTbody .titleWrap {
+    display: block;
+  }
+  .titleWrap > div {
+    display: block;
+  }
+  .titleWrap > span {
+    display: block;
+    text-align: left;
+  }
 }
 .contentTbody .content {
   display: block;

@@ -63,37 +63,49 @@ function AddUser() {
   return (
     <div className="mainWrap formCommonWrap">
       <div className="commonBox formBox">
-        <form className="inputFormLayout" onSubmit={AddUserSubmit}>
-          <input
-            type="text"
-            name="user_id"
-            id="userid"
-            placeholder="아이디를 입력해 주세요."
-            onChange={onChange}
-          />
-          <label htmlFor="userid" className="blind userIdLabel">
-            아이디를 입력해 주세요.
-          </label>
-          <input
-            type="password"
-            name="pass_wd"
-            id="passwd"
-            placeholder="비밀번호를 입력해 주세요."
-            onChange={onChange}
-          />
-          <label htmlFor="passwd" className="blind userPwLabel">
-            비밀번호를 입력해 주세요.
-          </label>
-          <input
-            type="password"
-            name="pass_wdCk"
-            id="passwdCk"
-            placeholder="비밀번호를 한 번 더 입력해 주세요."
-            onChange={onChange}
-          />
-          <label htmlFor="passwdCk" className="blind userPwLabel">
-            비밀번호를 한 번 더 입력해 주세요.
-          </label>
+        <form
+          className="inputFormLayout detailFormLayout"
+          onSubmit={AddUserSubmit}
+        >
+          <div className="formContentWrap">
+            <label htmlFor="userid" className="blockLabel">
+              아이디
+            </label>
+            <input
+              type="text"
+              name="user_id"
+              id="userid"
+              placeholder="아이디를 입력해 주세요."
+              onChange={onChange}
+            />
+          </div>
+
+          <div className="formContentWrap">
+            <label htmlFor="passwd" className="blockLabel">
+              비밀번호
+            </label>
+            <input
+              type="password"
+              name="pass_wd"
+              id="passwd"
+              placeholder="비밀번호를 입력해 주세요."
+              onChange={onChange}
+            />
+          </div>
+
+          <div className="formContentWrap">
+            <label htmlFor="passwdCk" className="blockLabel">
+              비밀번호 확인
+            </label>
+            <input
+              type="password"
+              name="pass_wdCk"
+              id="passwdCk"
+              placeholder="비밀번호를 한 번 더 입력해 주세요."
+              onChange={onChange}
+            />
+          </div>
+
           <button type="submit" className="loginBtn">
             사용자 추가하기
           </button>

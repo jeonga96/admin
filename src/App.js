@@ -7,22 +7,22 @@ import MainLayout from "./components/common/MainLayout";
 import Home from "./screens/Home";
 import Login from "./screens/Login";
 
-import User from "./screens/ListUser";
+import ListUser from "./screens/ListUser";
 import AddUser from "./screens/AddUser";
 import DetailUserMyInfo from "./screens/DetailUserMyInfo";
 import UserDetail from "./screens/DetailUser";
-import CompanyMyDetail from "./screens/DetailCompanyMyInfo";
-import SetCompanyMyDetail from "./screens/SetDetailCompanyMyInfo";
-import SetUserMyInfo from "./screens/SetDetailUserMyInfo";
-import SetUserDetail from "./screens/SetDetailUser";
+import DetailCompanyMyInfo from "./screens/DetailCompanyMyInfo";
+import SetDetailCompanyMyInfo from "./screens/SetDetailCompanyMyInfo";
+import SetDetailUserMyInfo from "./screens/SetDetailUserMyInfo";
+import SetDetailUser from "./screens/SetDetailUser";
 
-import Company from "./screens/ListCompany";
+import ListCompany from "./screens/ListCompany";
 import AddCompany from "./screens/AddCompany";
-import CompanyDetail from "./screens/DetailCompany";
-import SetCompanyDetail from "./screens/SetDetailCompany";
-import CompanyNotice from "./screens/ListCompanyNotice";
+import DetailCompany from "./screens/DetailCompany";
+import SetDetailCompany from "./screens/SetDetailCompany";
+import ListCompanyNotice from "./screens/ListCompanyNotice";
 import AddCompanyNotice from "./screens/AddCompanyNotice";
-import CompanyNoticeDetail from "./screens/DetailCompanyNotice";
+import DetailCompanyNotice from "./screens/DetailCompanyNotice";
 
 import {
   servicesGetStorage,
@@ -91,7 +91,9 @@ function App() {
         <Route path="login" element={<Login />} />
         <Route
           path="user"
-          element={<MainLayout nowTitle="통합회원 관리" component={<User />} />}
+          element={
+            <MainLayout nowTitle="통합회원 관리" component={<ListUser />} />
+          }
         />
         <Route
           path="user/:uid"
@@ -108,7 +110,7 @@ function App() {
           element={
             <MainLayout
               nowTitle="통합회원 상세정보 수정"
-              component={<SetUserDetail />}
+              component={<SetDetailUser />}
             />
           }
         />
@@ -136,7 +138,10 @@ function App() {
         <Route
           path="setusermyinfo"
           element={
-            <MainLayout nowTitle="내 정보 수정" component={<SetUserMyInfo />} />
+            <MainLayout
+              nowTitle="내 정보 수정"
+              component={<SetDetailUserMyInfo />}
+            />
           }
         />
         <Route
@@ -144,7 +149,7 @@ function App() {
           element={
             <MainLayout
               nowTitle="우리 회사 정보 확인"
-              component={<CompanyMyDetail />}
+              component={<DetailCompanyMyInfo />}
             />
           }
         />
@@ -153,14 +158,14 @@ function App() {
           element={
             <MainLayout
               nowTitle="우리 회사 정보 수정"
-              component={<SetCompanyMyDetail />}
+              component={<SetDetailCompanyMyInfo />}
             />
           }
         />
         <Route
           path="company"
           element={
-            <MainLayout nowTitle="사업자 관리" component={<Company />} />
+            <MainLayout nowTitle="사업자 관리" component={<ListCompany />} />
           }
         ></Route>
         <Route
@@ -168,7 +173,7 @@ function App() {
           element={
             <MainLayout
               nowTitle="사업자 상세정보 관리"
-              component={<CompanyDetail />}
+              component={<DetailCompany />}
             />
           }
         />
@@ -177,7 +182,7 @@ function App() {
           element={
             <MainLayout
               nowTitle="사업자 상세정보 수정"
-              component={<SetCompanyDetail />}
+              component={<SetDetailCompany />}
             />
           }
         />
@@ -186,7 +191,7 @@ function App() {
           element={
             <MainLayout
               nowTitle="사업자 공지사항"
-              component={<CompanyNotice />}
+              component={<ListCompanyNotice />}
             />
           }
         />
@@ -204,7 +209,7 @@ function App() {
           element={
             <MainLayout
               nowTitle="사업자 공지사항 상세정보"
-              component={<CompanyNoticeDetail />}
+              component={<DetailCompanyNotice />}
             />
           }
         />

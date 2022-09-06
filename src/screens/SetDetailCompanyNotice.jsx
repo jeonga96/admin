@@ -65,47 +65,53 @@ function SetCompanyNotice() {
           className="detailFormLayout inputFormLayout"
           onSubmit={AddUserSubmit}
         >
-          <label htmlFor="title" className="blockLabel">
-            제목
-          </label>
-          <input
-            type="text"
-            id="title"
-            placeholder="제목을 입력해 주세요."
-            onChange={onChange}
-          />
+          <div>
+            <label htmlFor="title" className="blockLabel">
+              제목
+            </label>
+            <input
+              type="text"
+              id="title"
+              placeholder="제목을 입력해 주세요."
+              onChange={onChange}
+            />
+          </div>
 
-          <div className="blockLabel">이미지 추가</div>
-          {imgs && (
-            <ul className="imgsThumbnail">
-              {imgs.map((item, key) => (
-                <li key={key}>
-                  <img src={item.storagePath} alt="사업자 상세 이미지" />
-                </li>
-              ))}
-            </ul>
-          )}
-          <label htmlFor="imgs" className="blockLabel fileboxLabel">
-            <BiUpload /> 사진 업로드
-          </label>
-          <input
-            type="file"
-            id="imgs"
-            name="Imgs"
-            accept="image/*"
-            multiple
-            className="blind"
-            onChange={fileSelectEvent}
-          />
+          <div>
+            <div className="blockLabel">이미지 추가</div>
+            <label htmlFor="imgs" className="blockLabel fileboxLabel">
+              <BiUpload /> 사진 업로드
+            </label>
+            <input
+              type="file"
+              id="imgs"
+              name="Imgs"
+              accept="image/*"
+              multiple
+              className="blind"
+              onChange={fileSelectEvent}
+            />
+            {imgs && (
+              <ul className="imgsThumbnail">
+                {imgs.map((item, key) => (
+                  <li key={key}>
+                    <img src={item.storagePath} alt="사업자 상세 이미지" />
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
 
-          <label htmlFor="title" className="blockLabel">
-            내용
-          </label>
-          <textarea
-            id="content"
-            placeholder="내용을 입력해 주세요."
-            onChange={onChange}
-          />
+          <div>
+            <label htmlFor="title" className="blockLabel">
+              내용
+            </label>
+            <textarea
+              id="content"
+              placeholder="내용을 입력해 주세요."
+              onChange={onChange}
+            />
+          </div>
 
           <button type="submit" className="loginBtn">
             확인

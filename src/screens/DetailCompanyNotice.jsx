@@ -27,28 +27,36 @@ function CompanyNoticeDetail() {
       setImage(res.data);
     });
   }, [companyDetail]);
-
+  console.log(image);
   return (
     <div className="mainWrap">
-      <div className="commonBox">
+      <div className="commonBox paddingBox">
         {/* <ul className="detailPageLayout"> */}
         <ul>
-          <li className="detailHead">
-            <h4>제목</h4>
+          <li className="detailTitle">
+            <h4 className="blind">제목</h4>
             <span>{companyDetail.title}</span>
           </li>
-          <li className="detailSpan detailTime">
-            <div>
-              <em>작성 시간</em>
-              <span>{companyDetail.createTime}</span>
-            </div>
-            <div>
-              <em>수정 시간</em>
-              <span>{companyDetail.updateTime}</span>
-            </div>
-          </li>
-          <li className="detailHead">
-            <h4>내용</h4>
+          {companyDetail.createTime && (
+            <li className="detailSpan detailTime">
+              <div>
+                <em>작성 시간</em>
+                <span>{`${companyDetail.createTime.slice(
+                  0,
+                  10
+                )}, ${companyDetail.createTime.slice(11, 19)}`}</span>
+              </div>
+              <div>
+                <em>수정 시간</em>
+                <span>{`${companyDetail.updateTime.slice(
+                  0,
+                  10
+                )}, ${companyDetail.updateTime.slice(11, 19)}`}</span>
+              </div>
+            </li>
+          )}
+          <li className="detailContent">
+            <h4>공지사항 내용</h4>
             <span>{companyDetail.content}</span>
           </li>
 
@@ -60,7 +68,10 @@ function CompanyNoticeDetail() {
                   {image &&
                     image.map((item, i) => (
                       <li key={item.iid}>
-                        <img src={item.storagePath} alt="사업자 상세 이미지" />
+                        <img
+                          src={item.storagePath}
+                          alt="공지사항 첨부 이미지"
+                        />
                       </li>
                     ))}
                 </ul>

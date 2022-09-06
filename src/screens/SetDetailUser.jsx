@@ -66,73 +66,87 @@ function SetUserDetail() {
           className="detailFormLayout inputFormLayout"
           onSubmit={AddUserSubmit}
         >
-          <label htmlFor="name" className=" blockLabel">
-            이름
-          </label>
-          <input
-            type="text"
-            id="name"
-            placeholder="이름을 입력해 주세요."
-            onChange={onChange}
-            value={
-              getDataFinish.current ? userDetail.name : userDetail.name || ""
-            }
-          />
-          <label htmlFor="location" className=" blockLabel">
-            주소 (ㅇㅇ구, ㅇㅇ동)
-          </label>
-          <input
-            type="text"
-            id="location"
-            placeholder="주소를 입력해 주세요."
-            onChange={onChange}
-            value={
-              getDataFinish.current
-                ? userDetail.location
-                : userDetail.location || ""
-            }
-          />
-          <label htmlFor="comment" className=" blockLabel">
-            상세 주소
-          </label>
-          <input
-            type="text"
-            id="address"
-            placeholder="상세주소를 입력해 주세요."
-            onChange={onChange}
-            value={
-              getDataFinish.current
-                ? userDetail.address
-                : userDetail.address || ""
-            }
-          />
-          <label htmlFor="mobile" className="blockLabel">
-            핸드폰 번호
-          </label>
-          <input
-            type="text"
-            id="mobile"
-            placeholder="모바일 번호"
-            onChange={onChange}
-            value={
-              getDataFinish.current
-                ? userDetail.mobile
-                : userDetail.mobile || ""
-            }
-          />
+          <div className="formContentWrap">
+            <label htmlFor="name" className=" blockLabel">
+              이름
+            </label>
+            <input
+              type="text"
+              id="name"
+              placeholder="이름을 입력해 주세요."
+              onChange={onChange}
+              value={
+                getDataFinish.current ? userDetail.name : userDetail.name || ""
+              }
+            />
+          </div>
 
-          <label htmlFor="mail" className=" blockLabel">
-            이메일
-          </label>
-          <input
-            type="text"
-            id="mail"
-            placeholder="이메일을 입력해 주세요."
-            onChange={onChange}
-            value={
-              getDataFinish.current ? userDetail.mail : userDetail.mail || ""
-            }
-          />
+          <div className="formContentWrap">
+            <label htmlFor="location" className=" blockLabel">
+              주소 (ㅇㅇ구, ㅇㅇ동)
+            </label>
+            <input
+              type="text"
+              id="location"
+              placeholder="주소를 입력해 주세요."
+              onChange={onChange}
+              value={
+                getDataFinish.current
+                  ? userDetail.location
+                  : userDetail.location || ""
+              }
+            />
+          </div>
+
+          <div className="formContentWrap">
+            <label htmlFor="comment" className=" blockLabel">
+              상세 주소
+            </label>
+            <input
+              type="text"
+              id="address"
+              placeholder="상세주소를 입력해 주세요."
+              onChange={onChange}
+              value={
+                getDataFinish.current
+                  ? userDetail.address
+                  : userDetail.address || ""
+              }
+            />
+          </div>
+
+          <div className="formContentWrap">
+            <label htmlFor="mobile" className="blockLabel">
+              핸드폰 번호
+            </label>
+            <input
+              type="text"
+              id="mobile"
+              placeholder="모바일 번호"
+              onChange={onChange}
+              value={
+                getDataFinish.current
+                  ? userDetail.mobile
+                  : userDetail.mobile || ""
+              }
+            />
+          </div>
+
+          <div className="formContentWrap">
+            <label htmlFor="mail" className=" blockLabel">
+              이메일
+            </label>
+            <input
+              type="text"
+              id="mail"
+              placeholder="이메일을 입력해 주세요."
+              onChange={onChange}
+              value={
+                getDataFinish.current ? userDetail.mail : userDetail.mail || ""
+              }
+            />
+          </div>
+
           <button type="submit" className="loginBtn">
             사용자 상세정보 수정하기
           </button>
