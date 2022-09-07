@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 
-function Map({ companyDetail }) {
+export default function Map({ companyDetail }) {
   useEffect(() => {
     var geocoder = new kakao.maps.services.Geocoder();
     var callback = function (result, status) {
@@ -15,4 +15,3 @@ function Map({ companyDetail }) {
   }, []);
   return <div id="map"></div>;
 }
-export default Map;

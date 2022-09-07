@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import SetCompany from "../components/common/SetCompany";
 import { urlSetCompanyDetail, urlGetCompanyDetail } from "../Services/string";
 
-function SetCompanyDetail() {
+export default function SetCompanyDetail() {
   const { cid } = useParams();
 
   return (
@@ -17,4 +17,3 @@ function SetCompanyDetail() {
     </div>
   );
 }
-export default SetCompanyDetail;

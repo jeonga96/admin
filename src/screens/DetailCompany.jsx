@@ -7,7 +7,7 @@ import { urlGetCompanyDetail, urlNoticeList } from "../Services/string";
 
 import GetCompany from "../components/common/GetCompany";
 
-function CompanyDetail() {
+export default function DetailCompany() {
   let { cid } = useParams();
   const [companyDetail, setCompanyDetail] = useState([]);
 
@@ -75,4 +75,3 @@ function CompanyDetail() {
     </div>
   );
 }
-export default CompanyDetail;

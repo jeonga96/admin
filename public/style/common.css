@@ -721,9 +721,6 @@ button {
   color: var(--color-primary);
 }
 
-.selectForm {
-  /* background-color: #a0a; */
-}
 .selectForm select {
   display: inline-block;
   width: 130px;
@@ -964,11 +961,28 @@ button {
   height: auto;
   padding: 40px 20px;
   border-top: 1px solid var(--color-gray);
+  margin-top: 20px;
 }
 .detailContentText h4 {
   margin-bottom: 20px;
 }
-
+.detailContentLink {
+  width: 100%;
+  height: auto;
+}
+.detailContentLink a {
+  display: inline-block;
+  width: auto;
+  font-size: var(--font-size-small);
+  color: var(--color-pointgray);
+  font-weight: 500;
+  transition: color 300ms ease-in;
+  padding: 4px 10px;
+}
+.detailContentLink a:hover {
+  color: var(--color-black);
+  text-decoration: none;
+}
 .detailContentImage {
   width: 100%;
   height: auto;

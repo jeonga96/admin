@@ -1,4 +1,4 @@
-function NavPartList({ item }) {
+export default function NavPartList({ item }) {
   return (
     <div className="navPart">
       <div>
@@ -8,4 +8,3 @@ function NavPartList({ item }) {
     </div>
   );
 }
-export default NavPartList;

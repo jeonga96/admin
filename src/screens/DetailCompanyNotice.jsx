@@ -28,10 +28,10 @@ function CompanyNoticeDetail() {
     });
   }, [companyDetail]);
   console.log(image);
+
   return (
     <div className="mainWrap">
       <div className="commonBox paddingBox">
-        {/* <ul className="detailPageLayout"> */}
         <ul>
           <li className="detailContentTitle">
             <h4 className="blind">제목</h4>
@@ -45,9 +45,11 @@ function CompanyNoticeDetail() {
               )} ${companyDetail.createTime.slice(11, 19)}`}</div>
             </li>
           )}
-
+          <li className="detailContentLink">
+            <Link to="modify">수정</Link>
+          </li>
           <li className="detailContentText">
-            <li className="detailContentImage">
+            <div className="detailContentImage">
               <h4 className="blind">상세 이미지</h4>
               <ul>
                 {image &&
@@ -58,13 +60,10 @@ function CompanyNoticeDetail() {
                     </li>
                   ))}
               </ul>
-            </li>
-
+            </div>
             <h4 className="blind">공지사항 내용</h4>
             <span>{companyDetail.content}</span>
           </li>
-
-          <Link to="modify">수정</Link>
         </ul>
       </div>
     </div>

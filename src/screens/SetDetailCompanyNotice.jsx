@@ -13,7 +13,7 @@ import {
 import { useNavigate, useParams } from "react-router-dom";
 import { BiUpload } from "react-icons/bi";
 
-function SetDetailCompanyNotice() {
+export default function SetDetailCompanyNotice() {
   const id = useParams();
 
   const [imgs, setImgs] = useState(null);
@@ -73,8 +73,6 @@ function SetDetailCompanyNotice() {
   function onChange(e) {
     setNoticeDetail({ ...noticeDetail, [e.target.id]: e.target.value });
   }
-
-  console.log();
 
   const addUserEvent = () => {
     servicesPostData(urlSetNotice, {
@@ -170,4 +168,3 @@ function SetDetailCompanyNotice() {
     </div>
   );
 }
-export default SetDetailCompanyNotice;

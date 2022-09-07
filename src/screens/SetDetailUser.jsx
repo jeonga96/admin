@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { servicesPostData } from "../Services/importData";
 import { urlSetUserDetail, urlGetUserDetail } from "../Services/string";
 
-function SetUserDetail() {
+export default function SetDetailUser() {
   const { uid } = useParams();
 
   const [userDetail, setUserDetail] = useState({
@@ -155,4 +155,3 @@ function SetUserDetail() {
     </div>
   );
 }
-export default SetUserDetail;

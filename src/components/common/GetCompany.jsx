@@ -2,7 +2,7 @@ import { useState, useRef } from "react";
 import { servicesPostData, useDidMountEffect } from "../../Services/importData";
 import { urlGetImages } from "../../Services/string";
 
-function GetCompany({ companyDetail }) {
+export default function GetCompany({ companyDetail }) {
   const [image, setImage] = useState();
   const reqImgs = useRef({ titleImg: "", imgsImg: "", totalImg: "" });
   const mapLinkAdress = useRef("");
@@ -131,4 +131,3 @@ function GetCompany({ companyDetail }) {
     </ul>
   );
 }
-export default GetCompany;

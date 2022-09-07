@@ -4,7 +4,7 @@ import {
   urlSetCompanyMyDetail,
 } from "../Services/string";
 
-function SetCompanyMyDetail() {
+export default function SetDetailCompanyMyInfo() {
   const cid = 44;
   return (
     <div className="mainWrap formCommonWrap">
@@ -18,4 +18,3 @@ function SetCompanyMyDetail() {
     </div>
   );
 }
-export default SetCompanyMyDetail;

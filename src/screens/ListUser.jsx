@@ -6,7 +6,7 @@ import { urlUserlist } from "../Services/string";
 
 import PageButton from "../components/common/PageButton";
 
-function User() {
+export default function ListUser() {
   const [userList, setUserList] = useState([]);
   const [listPage, setListPage] = useState({});
   const [page, setPage] = useState({ getPage: 0, activePage: 1 });
@@ -36,10 +36,10 @@ function User() {
           <table className="commonTable">
             <thead>
               <tr>
-                <th>uid</th>
-                <th>userid</th>
-                <th>role</th>
-                <th>createTime</th>
+                <th>회원정보</th>
+                <th>아이디</th>
+                <th>회원 권한</th>
+                <th>생성시간</th>
                 <th>상세정보</th>
                 <th>인증</th>
               </tr>
@@ -86,4 +86,3 @@ function User() {
     </div>
   );
 }
-export default User;

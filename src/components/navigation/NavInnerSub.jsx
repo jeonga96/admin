@@ -8,7 +8,7 @@ const Link = ({ children, isActive, ...props }) => {
   return <RRDLink {...props}>{children}</RRDLink>;
 };
 
-function NavInnerSub({ item }) {
+export default function NavInnerSub({ item }) {
   const { pathname } = useLocation();
   const [height, setHeight] = useState(0);
   const [more, setMore] = useState(false);
@@ -50,4 +50,3 @@ function NavInnerSub({ item }) {
     </button>
   );
 }
-export default NavInnerSub;

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { servicesPostData } from "../Services/importData";
 import { urlAddcompany } from "../Services/string";
 
-function AddCompany() {
+export default function AddCompany() {
   let navigate = useNavigate();
   const [CompanyData, setCompanyData] = useState({
     name: "",
@@ -64,5 +64,3 @@ function AddCompany() {
     </div>
   );
 }
-
-export default AddCompany;

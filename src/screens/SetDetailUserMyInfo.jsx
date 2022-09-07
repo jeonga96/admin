@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { urlSetMyDetail, urlGetMyDetail } from "../Services/string";
 import { servicesPostData } from "../Services/importData";
 
-function UserDeteil() {
+export default function SetDetailUserMyInfo() {
   const [userData, setUserData] = useState("");
   const getDataFinish = useRef(null);
 
@@ -145,4 +145,3 @@ function UserDeteil() {
     </div>
   );
 }
-export default UserDeteil;

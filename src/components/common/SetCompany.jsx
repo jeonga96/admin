@@ -7,7 +7,7 @@ import {
 } from "../../Services/importData";
 import { urlGetImages, urlUpImages } from "../../Services/string";
 
-function SetCompany({ cid, getAPI, setAPI }) {
+export default function SetCompany({ cid, getAPI, setAPI }) {
   const [companyData, setCompanyData] = useState({
     name: "",
     comment: "",
@@ -414,4 +414,3 @@ function SetCompany({ cid, getAPI, setAPI }) {
     </form>
   );
 }
-export default SetCompany;

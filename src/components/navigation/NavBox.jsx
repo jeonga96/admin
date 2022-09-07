@@ -5,7 +5,7 @@ import { GrClose } from "react-icons/gr";
 
 import NavBottom from "./NavArea";
 
-function NavBox() {
+export default function NavBox() {
   const navChange = useSelector((state) => state.navState);
   const dispatch = useDispatch();
   const onClickBtn = () => {
@@ -36,4 +36,3 @@ function NavBox() {
     </div>
   );
 }
-export default NavBox;

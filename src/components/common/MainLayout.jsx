@@ -2,7 +2,7 @@ import Nav from "../navigation/NavBox";
 import Header from "../header/HeaderBox";
 import Footer from "../footer/FooterBox";
 
-function MainLayout({ nowTitle, component }) {
+export default function MainLayout({ nowTitle, component }) {
   return (
     <div id="wrap">
       <Nav />
@@ -35,5 +35,3 @@ function MainLayout({ nowTitle, component }) {
     </div>
   );
 }
-
-export default MainLayout;

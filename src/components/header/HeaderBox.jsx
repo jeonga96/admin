@@ -8,7 +8,7 @@ import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import MyInfoPopup from "../common/MyInfoPopup";
 
-function HeaderBox() {
+export default function HeaderBox() {
   const navChange = useSelector((state) => state.navState);
   const dispatch = useDispatch();
   const [popup, setPopup] = useState(false);
@@ -87,4 +87,3 @@ function HeaderBox() {
     </div>
   );
 }
-export default HeaderBox;

@@ -6,7 +6,7 @@ import {
 } from "react-icons/hi";
 import Pagination from "react-js-pagination";
 
-function PageButton({ listPage, page, setPage }) {
+export default function PageButton({ listPage, page, setPage }) {
   const pageDataGet = listPage.totalElements && page;
   const handlePageChange = (page) => {
     page === 1
@@ -31,4 +31,3 @@ function PageButton({ listPage, page, setPage }) {
     </div>
   );
 }
-export default PageButton;

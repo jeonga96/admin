@@ -5,7 +5,7 @@ import { urlNoticeList } from "../Services/string";
 import { MdOutlineImage } from "react-icons/md";
 // import PageButton from "../components/common/PageButton";
 
-function CompanyNotice() {
+export default function ListCompanyNotice() {
   let { cid } = useParams();
   const [notice, setNotice] = useState([]);
   // const [listPage, setListPage] = useState({});
@@ -75,4 +75,3 @@ function CompanyNotice() {
     </div>
   );
 }
-export default CompanyNotice;

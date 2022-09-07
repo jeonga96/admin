@@ -1,7 +1,6 @@
-import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
-function Login() {
+export default function Login() {
   const login = useSelector((state) => state.login);
   const dispatch = useDispatch();
 
@@ -56,5 +55,3 @@ function Login() {
     </section>
   );
 }
-
-export default Login;

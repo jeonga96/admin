@@ -5,10 +5,9 @@ import {
   servicesPostData,
 } from "../Services/importData";
 import { urlCompanylist } from "../Services/string";
-import { useSelector } from "react-redux";
 import PageButton from "../components/common/PageButton";
 
-function Company() {
+export default function ListCompany() {
   const [companyList, setCompanyList] = useState([]);
   const [listPage, setListPage] = useState({});
   const [page, setPage] = useState({ getPage: 0, activePage: 1 });
@@ -68,4 +67,3 @@ function Company() {
     </div>
   );
 }
-export default Company;

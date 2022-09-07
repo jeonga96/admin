@@ -6,7 +6,7 @@ import { urlGetCompanyMyDetail } from "../Services/string";
 
 import GetCompany from "../components/common/GetCompany";
 
-function CompanyMyDetail() {
+export default function CompanyMyDetailMyInfo() {
   const [companyDetail, setCompanyDetail] = useState([]);
 
   useEffect(() => {
@@ -56,4 +56,3 @@ function CompanyMyDetail() {
     </div>
   );
 }
-export default CompanyMyDetail;

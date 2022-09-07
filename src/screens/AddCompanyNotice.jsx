@@ -4,7 +4,7 @@ import { servicesPostData, servicesPostDataForm } from "../Services/importData";
 import { useNavigate } from "react-router-dom";
 import { BiUpload } from "react-icons/bi";
 
-function AddCompanyNotice() {
+export default function AddCompanyNotice() {
   const [imgs, setImgs] = useState(null);
   const imgsIid = useRef([]);
   const [userDetail, setUserDetail] = useState({
@@ -115,4 +115,3 @@ function AddCompanyNotice() {
     </div>
   );
 }
-export default AddCompanyNotice;

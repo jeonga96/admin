@@ -3,7 +3,7 @@ import { servicesPostData } from "../Services/importData";
 import { useNavigate } from "react-router-dom";
 import { urlAdduser } from "../Services/string";
 
-function AddUser() {
+export default function AddUser() {
   const [userData, setUserData] = useState({
     userid: "",
     passwd: "",
@@ -114,5 +114,3 @@ function AddUser() {
     </div>
   );
 }
-
-export default AddUser;

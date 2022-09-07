@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 import NavInnerSub from "./NavInnerSub";
 import NavInnerLink from "./NavInnerLink";
 
-function NavBox() {
+export default function NavBox() {
   const [data, setData] = useState([]);
   function axiosData() {
     servicesGetData(navUrl).then((res) => setData(res));
@@ -30,4 +30,3 @@ function NavBox() {
     </div>
   );
 }
-export default NavBox;
