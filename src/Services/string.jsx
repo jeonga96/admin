@@ -27,10 +27,11 @@ export const urlUpImages = urlPrefix + "/svc/upImages";
 export const urlGetImages = urlPrefix + "/svc/getImages";
 
 export const urlNoticeList = urlPrefix + "/pub/listCompanyNotice";
-export const urlSetNotice = urlPrefix + "/svc/setCompanyNotice";
 export const urlGetNotice = urlPrefix + "/pub/getCompanyNotice";
+export const urlSetNotice = urlPrefix + "/svc/setCompanyNotice";
 
 export const TOKEN = "token";
 export const RETOKEN = "re_token";
+export const UID = "uid";
 
 export const KAKAO_KEY = "0dc0b365e2e0ca17c6c8032ea93a8337";

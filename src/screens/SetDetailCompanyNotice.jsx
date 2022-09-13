@@ -10,7 +10,7 @@ import {
   servicesPostDataForm,
   useDidMountEffect,
 } from "../Services/importData";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { BiUpload } from "react-icons/bi";
 
 export default function SetDetailCompanyNotice() {
@@ -75,6 +75,8 @@ export default function SetDetailCompanyNotice() {
   }
 
   const addUserEvent = () => {
+    console.log(id.comnid);
+
     servicesPostData(urlSetNotice, {
       comnid: id.comnid,
       useFlag: 1,

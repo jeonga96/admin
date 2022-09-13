@@ -1,5 +1,5 @@
 import { servicesPostData, servicesSetStorage } from "./Services/importData";
-import { urlLogin, TOKEN } from "./Services/string";
+import { urlLogin, TOKEN, UID } from "./Services/string";
 
 const initialState = {
   login: { userid: "", passwd: "" },
@@ -22,8 +22,10 @@ const reducer = (state = initialState, action) => {
           }
           if (res.status === "success") {
             const accessToken = res.data.jtoken;
+            const uid = res.data.uid;
             console.log("로그인이 완료되었습니다!", res);
             servicesSetStorage(TOKEN, accessToken);
+            servicesSetStorage(UID, uid);
             window.location.href = "/";
             return;
           }

@@ -2,12 +2,13 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { BsArrowRightShort } from "react-icons/bs";
 import { servicesPostData } from "../Services/importData";
-import { urlGetCompanyMyDetail } from "../Services/string";
+import { urlGetCompanyMyDetail, urlNoticeList } from "../Services/string";
 
 import GetCompany from "../components/common/GetCompany";
 
 export default function CompanyMyDetailMyInfo() {
   const [companyDetail, setCompanyDetail] = useState([]);
+  const [noticeList, setNoticeList] = useState([]);
 
   useEffect(() => {
     servicesPostData(urlGetCompanyMyDetail, {
@@ -26,6 +27,13 @@ export default function CompanyMyDetailMyInfo() {
     });
   }, []);
 
+  useEffect(() => {
+    console.log(companyDetail.rcid);
+    servicesPostData(urlNoticeList, { rcid: companyDetail.rcid }).then((res) =>
+      setNoticeList(res.data)
+    );
+  }, [companyDetail]);
+
   return (
     <div className="mainWrap">
       <div>
@@ -33,16 +41,22 @@ export default function CompanyMyDetailMyInfo() {
           <GetCompany companyDetail={companyDetail} />
           <ul className="detailContentsList">
             <li>
-              <h4>공지사항</h4>
-              <span>
-                {/* 공지사항은 총 {notice > 0 ? notice.length : "0"}개 입니다.{" "} */}
-              </span>
-              <div>
-                <Link to={`/company/44/notice`}>
+              <Link
+                to={companyDetail && `/company/${companyDetail.rcid}/notice`}
+              >
+                <h4 className="title">공지사항</h4>
+                <span className="content">
+                  공지사항은 총
+                  {noticeList && noticeList.length > 0
+                    ? noticeList.length
+                    : "0"}
+                  개 입니다.
+                </span>
+                <div className="link">
                   바로가기
                   <BsArrowRightShort />
-                </Link>
-              </div>
+                </div>
+              </Link>
             </li>
           </ul>
 

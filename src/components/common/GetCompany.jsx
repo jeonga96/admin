@@ -1,37 +1,19 @@
 import { useState, useRef } from "react";
-import { servicesPostData, useDidMountEffect } from "../../Services/importData";
-import { urlGetImages } from "../../Services/string";
+import { useDidMountEffect, useGetImage } from "../../Services/importData";
 
 export default function GetCompany({ companyDetail }) {
   const [image, setImage] = useState();
-  const reqImgs = useRef({ titleImg: "", imgsImg: "", totalImg: "" });
   const mapLinkAdress = useRef("");
 
   useDidMountEffect(() => {
     if (!!companyDetail.address) {
       mapLinkAdress.current = companyDetail.address.replace(/ /gi, "+");
     }
-    if (companyDetail.titleImg && companyDetail.imgs) {
-      reqImgs.current.totalImg =
-        companyDetail.titleImg + "," + companyDetail.imgs;
-      servicesPostData(urlGetImages, {
-        imgs: reqImgs.current.totalImg,
-      }).then((res) => {
-        setImage(res.data);
-      });
-    } else if (companyDetail.titleImg || companyDetail.imgs) {
-      reqImgs.current.titleImg = companyDetail.titleImg;
-      reqImgs.current.imgsImg = companyDetail.imgs;
-
-      servicesPostData(urlGetImages, {
-        imgs: companyDetail.titleImg
-          ? reqImgs.current.titleImg
-          : reqImgs.current.imgsImg,
-      }).then((res) => {
-        setImage(res.data);
-      });
-    }
   }, [companyDetail]);
+
+  // const reqImgs = useRef({ titleImg: "", imgsImg: "", totalImg: "" });
+  useGetImage(setImage, companyDetail);
+
   console.log("companyDetail", companyDetail);
   return (
     <ul className="detailPageLayout">

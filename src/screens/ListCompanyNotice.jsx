@@ -40,33 +40,34 @@ export default function ListCompanyNotice() {
               </tr>
             </thead>
             <tbody className="contentTbody">
-              {notice.map((item) => (
-                <tr key={item.comnid}>
-                  <td>{item.comnid}</td>
-                  <td>
-                    <div className="titleWrap">
-                      <div>
-                        <span>{item.title}</span>
-                        <i>{item.imgs ? <MdOutlineImage /> : null}</i>
+              {notice &&
+                notice.map((item) => (
+                  <tr key={item.comnid}>
+                    <td>{item.comnid}</td>
+                    <td>
+                      <div className="titleWrap">
+                        <div>
+                          <span>{item.title}</span>
+                          <i>{item.imgs ? <MdOutlineImage /> : null}</i>
+                        </div>
+                        <span>{item.createTime.slice(0, 10)}</span>
                       </div>
-                      <span>{item.createTime.slice(0, 10)}</span>
-                    </div>
-                    <span className="content">
-                      {item.content.length > 100
-                        ? item.content.slice(0, 99) + "..."
-                        : item.content}
-                    </span>
-                    <div className="tableButton">
-                      <Link
-                        to={`/company/${item.rcid}/${item.comnid}`}
-                        className="buttonLink Link"
-                      >
-                        보기
-                      </Link>
-                    </div>
-                  </td>
-                </tr>
-              ))}
+                      <span className="content">
+                        {item.content.length > 100
+                          ? item.content.slice(0, 99) + "..."
+                          : item.content}
+                      </span>
+                      <div className="tableButton">
+                        <Link
+                          to={`/company/${item.rcid}/${item.comnid}`}
+                          className="buttonLink Link"
+                        >
+                          보기
+                        </Link>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
             </tbody>
           </table>
           {/* <PageButton listPage={listPage} page={page} setPage={setPage} /> */}

@@ -1,9 +1,7 @@
 import { Link } from "react-router-dom";
 import { useState, useLayoutEffect } from "react";
-import {
-  // servicesPostDataToken,
-  servicesPostData,
-} from "../Services/importData";
+import { FaUserCheck } from "react-icons/fa";
+import { servicesPostData } from "../Services/importData";
 import { urlCompanylist } from "../Services/string";
 import PageButton from "../components/common/PageButton";
 
@@ -37,13 +35,25 @@ export default function ListCompany() {
           <table className="commonTable">
             <thead>
               <tr>
-                <th>name</th>
+                <th className="widthM">회원번호</th>
+                <th className="widthB">계약자명</th>
+                <th className="widthM">생성시간</th>
+                <th className="widthS">인증</th>
               </tr>
             </thead>
             <tbody className="revenueSaleTbody">
               {companyList.map((item) => (
                 <tr key={item.cid}>
+                  <td>{item.cid}</td>
                   <td>{item.name}</td>
+                  <td>{item.createTime.slice(0, 10)}</td>
+                  <td>
+                    {item.useFlag ? (
+                      <i>
+                        <FaUserCheck />
+                      </i>
+                    ) : null}
+                  </td>
                   <td className="tableButton">
                     <Link to={`${item.cid}`} className="buttonLink Link">
                       보기

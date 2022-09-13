@@ -67,7 +67,7 @@ export default function DetailCompany() {
           </ul>
           <div className="bigButton" style={{ margin: "3.125rem auto 0" }}>
             <Link className="Link" to="setcompanydetail">
-              사업자 정보 수정
+              상세정보 수정
             </Link>
           </div>
         </div>

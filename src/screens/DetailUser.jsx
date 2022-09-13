@@ -38,7 +38,7 @@ export default function DetailUser() {
           </div>
           <div className="bigButton widthCenter">
             <Link className="Link" to="setUserDetail">
-              사업자 정보 수정
+              상세정보 수정
             </Link>
           </div>
         </div>

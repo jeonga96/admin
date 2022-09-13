@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { servicesPostData, useDidMountEffect } from "../Services/importData";
-import { urlGetNotice, urlGetImages } from "../Services/string";
+import { servicesPostData, useGetImage } from "../Services/importData";
+import { urlGetNotice } from "../Services/string";
 
 function CompanyNoticeDetail() {
   const [companyDetail, setCompanyDetail] = useState([]);
@@ -19,15 +19,7 @@ function CompanyNoticeDetail() {
       }
     });
   }, []);
-
-  useDidMountEffect(() => {
-    servicesPostData(urlGetImages, {
-      imgs: companyDetail.imgs,
-    }).then((res) => {
-      setImage(res.data);
-    });
-  }, [companyDetail]);
-  console.log(image);
+  useGetImage(setImage, companyDetail);
 
   return (
     <div className="mainWrap">
