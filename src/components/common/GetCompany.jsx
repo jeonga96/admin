@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import { useDidMountEffect, useGetImage } from "../../Services/importData";
+import { useDidMountEffect, useGetImage } from "../../Services/customHook";
 
 export default function GetCompany({ companyDetail }) {
   const [image, setImage] = useState();
@@ -11,7 +11,6 @@ export default function GetCompany({ companyDetail }) {
     }
   }, [companyDetail]);
 
-  // const reqImgs = useRef({ titleImg: "", imgsImg: "", totalImg: "" });
   useGetImage(setImage, companyDetail);
 
   console.log("companyDetail", companyDetail);

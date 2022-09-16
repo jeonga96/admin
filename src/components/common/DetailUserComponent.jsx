@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useDidMountEffect } from "../../Services/importData";
+import { useDidMountEffect } from "../../Services/customHook";
 
 export default function DetailUserComponent({ userDetail }) {
   const [mapLinkAddress, setMapLinkAddress] = useState("");

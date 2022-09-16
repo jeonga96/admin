@@ -4,6 +4,7 @@ export const tableUrl = "/data/table.json";
 export const urlPrefix = "http://devback.gongsacok.com:8080";
 
 export const urlLogin = urlPrefix + "/pub/login";
+export const urlRelateCheck = urlPrefix + "/svc/getRelateId";
 export const urlRefreshtoken = urlPrefix + "/svc/refreshToken";
 
 export const urlAdduser = urlPrefix + "/pub/addUser";

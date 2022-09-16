@@ -9,11 +9,7 @@ import Login from "./screens/Login";
 
 import ListUser from "./screens/ListUser";
 import AddUser from "./screens/AddUser";
-import DetailUserMyInfo from "./screens/DetailUserMyInfo";
 import UserDetail from "./screens/DetailUser";
-import DetailCompanyMyInfo from "./screens/DetailCompanyMyInfo";
-import SetDetailCompanyMyInfo from "./screens/SetDetailCompanyMyInfo";
-import SetDetailUserMyInfo from "./screens/SetDetailUserMyInfo";
 import SetDetailUser from "./screens/SetDetailUser";
 
 import ListCompany from "./screens/ListCompany";
@@ -127,42 +123,7 @@ function App() {
             <MainLayout nowTitle="사업자 추가" component={<AddCompany />} />
           }
         />
-        <Route
-          path="usermyinfo"
-          element={
-            <MainLayout
-              nowTitle="내 정보 확인"
-              component={<DetailUserMyInfo />}
-            />
-          }
-        />
-        <Route
-          path="setusermyinfo"
-          element={
-            <MainLayout
-              nowTitle="내 정보 수정"
-              component={<SetDetailUserMyInfo />}
-            />
-          }
-        />
-        <Route
-          path="companymydetail"
-          element={
-            <MainLayout
-              nowTitle="우리 회사 정보 확인"
-              component={<DetailCompanyMyInfo />}
-            />
-          }
-        />
-        <Route
-          path="setcompanymydetail"
-          element={
-            <MainLayout
-              nowTitle="우리 회사 정보 수정"
-              component={<SetDetailCompanyMyInfo />}
-            />
-          }
-        />
+
         <Route
           path="company"
           element={

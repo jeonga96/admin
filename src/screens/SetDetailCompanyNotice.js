@@ -5,11 +5,8 @@ import {
   urlUpImages,
   urlGetImages,
 } from "../Services/string";
-import {
-  servicesPostData,
-  servicesPostDataForm,
-  useDidMountEffect,
-} from "../Services/importData";
+import { servicesPostData, servicesPostDataForm } from "../Services/importData";
+import { useDidMountEffect } from "../Services/customHook";
 import { useParams } from "react-router-dom";
 import { BiUpload } from "react-icons/bi";
 

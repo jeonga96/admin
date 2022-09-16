@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { servicesPostData, useGetImage } from "../Services/importData";
+import { servicesPostData } from "../Services/importData";
 import { urlGetNotice } from "../Services/string";
+import { useGetImage } from "../Services/customHook";
 
 function CompanyNoticeDetail() {
   const [companyDetail, setCompanyDetail] = useState([]);
@@ -54,7 +55,9 @@ function CompanyNoticeDetail() {
               </ul>
             </div>
             <h4 className="blind">공지사항 내용</h4>
-            <span>{companyDetail.content}</span>
+            <span className="detailContentTextArea">
+              {companyDetail.content}
+            </span>
           </li>
         </ul>
       </div>

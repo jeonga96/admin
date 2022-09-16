@@ -125,6 +125,11 @@ button {
   height: auto;
   background-color: var(--color-bggray);
 }
+@media screen and (max-width: 992px) {
+  .containerWrap {
+    padding-top: 3rem;
+  }
+}
 .containerWrap:before,
 .containerWrap::before {
   position: absolute;
@@ -233,24 +238,41 @@ button {
 /*title - basic*/
 .headerWrap {
   width: 100%;
-  background-color: var(--color-white);
+  height: 3rem;
+}
+@media screen and (max-width: 992px) {
+  .headerWrap {
+    position: fixed;
+    z-index: 1;
+  }
+  .headerWrap::before {
+    position: absolute;
+    display: block;
+    z-index: -1;
+    content: "";
+    width: 100%;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background-color: var(--color-white);
+    opacity: 0.8;
+    box-shadow: var(--styles-boxShadow);
+  }
 }
 @media screen and (min-width: 1200px) {
   .headerWrap {
-    height: 6.25rem;
-    padding: 1.875rem;
+    padding: 0 1.875rem;
   }
 }
 @media screen and (max-width: 1199px) {
   .headerWrap {
-    height: 5rem;
-    padding: 1.25rem;
+    padding: 0 1.25rem;
   }
 }
 
 .headerBox {
   width: 100%;
-  height: 100%;
+  height: 3rem;
 }
 
 /*title - menu open button*/
@@ -322,64 +344,15 @@ button {
   float: right;
   display: flex;
   justify-content: space-between;
-  width: 12.1875rem;
+  width: auto;
   height: 100%;
+  padding: 0 0.75rem;
 }
-
-.noticeWrap {
-  display: flex;
-  justify-content: center;
-  width: 9.0625rem;
-}
-.noticeWrap li {
-  width: 1.25rem;
-  height: 100%;
-}
-.noticeWrap li:first-child {
-  margin-right: 1.25rem;
-}
-.noticeWrap i {
-  width: 100%;
-  height: 100%;
-  font-size: var(--font-size-basic);
-}
-
-.Headeruser {
-  width: 2.5rem;
-  height: 2.5rem;
-  border-radius: 1.5625rem;
-  background-color: var(--color-primary);
-  cursor: pointer;
-}
-.Headeruser div {
-  position: relative;
-  text-align: center;
-  line-height: 2.5rem;
-}
-.Headeruser i {
-  font-size: var(--font-size-big);
-  color: var(--color-white);
-}
-
-.myinfopopupBox {
-  position: absolute;
-  z-index: 10;
-  right: 10rem;
-  top: 5px;
-  width: 200px;
-  height: auto;
-  background-color: var(--color-white);
-  box-shadow: var(--styles-boxShadowDeep);
-  border-radius: 5px;
-}
-.myinfopopupBox .Link {
-  width: 100%;
-  height: 40px;
-  font-size: var(--font-point);
-  font-weight: 400;
-}
-.myinfopopupBox .Link:hover {
-  background-color: var(--color-bggray);
+.infoWrap .Link {
+  width: auto;
+  padding: 0 0.75rem;
+  color: var(--color-black);
+  font-size: var(--font-size-small);
 }
 
 /*navigator --------------------------------------------------------------*/
@@ -685,6 +658,7 @@ button {
   margin-top: 20px;
   margin-bottom: 10px;
   font-weight: 500;
+  height: auto;
   color: var(--color-primary);
 }
 
@@ -1006,6 +980,10 @@ button {
 .detailContentText h4 {
   margin-bottom: 20px;
 }
+.detailContentTextArea {
+  white-space: pre-wrap;
+}
+
 .detailContentLink {
   width: 100%;
   height: auto;

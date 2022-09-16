@@ -11,10 +11,7 @@ export default function DetailCompany() {
   let { cid } = useParams();
   const [companyDetail, setCompanyDetail] = useState([]);
 
-  const [notice, setNotice] = useState(null);
-  const fnNotice = (notice) => {
-    setNotice(notice);
-  };
+  const [noticeList, setNoticeList] = useState(null);
 
   useEffect(() => {
     servicesPostData(urlGetCompanyDetail, {
@@ -34,13 +31,13 @@ export default function DetailCompany() {
 
     servicesPostData(urlNoticeList, { rcid: cid }).then((res) => {
       if (res.status === "success") {
-        setNotice(res.data);
+        setNoticeList(res.data);
         console.log("urlNoticeList.data!!!", res.data);
         return;
       }
       if (res.status === "fail" && res.emsg === "process failed.") {
         console.log("엥 공지사항이 하나도 없어용", res);
-        setNotice(null);
+        setNoticeList(null);
         return;
       }
     });
@@ -53,16 +50,22 @@ export default function DetailCompany() {
           <GetCompany companyDetail={companyDetail} />
           <ul className="detailContentsList">
             <li>
-              <h4>공지사항</h4>
-              <span>
-                공지사항은 총 {notice > 0 ? notice.length : "0"}개 입니다.{" "}
-              </span>
-              <div>
-                <Link to="notice">
+              <Link
+                to={companyDetail && `/company/${companyDetail.rcid}/notice`}
+              >
+                <h4 className="title">공지사항</h4>
+                <span className="content">
+                  공지사항은 총
+                  {noticeList && noticeList.length > 0
+                    ? noticeList.length
+                    : "0"}
+                  개 입니다.
+                </span>
+                <div className="link">
                   바로가기
                   <BsArrowRightShort />
-                </Link>
-              </div>
+                </div>
+              </Link>
             </li>
           </ul>
           <div className="bigButton" style={{ margin: "3.125rem auto 0" }}>
