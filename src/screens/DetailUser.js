@@ -34,7 +34,7 @@ export default function DetailUser() {
           <DetailUserComponent userDetail={userDetail} />
           <div className="detailHead">
             <h4>회원 권한 설정</h4>
-            <SelctUserRole userDetail={userDetail} />
+            <SelctUserRole uid={uid} />
           </div>
           <div className="bigButton widthCenter">
             <Link className="Link" to="setUserDetail">

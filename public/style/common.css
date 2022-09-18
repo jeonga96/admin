@@ -688,6 +688,7 @@ button {
   border-radius: 0.25em;
   transition: all 500ms ease-in;
 }
+
 .fileboxLabel:hover,
 .fileboxLabel:active {
   background-color: var(--color-gray);

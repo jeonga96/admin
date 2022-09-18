@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { urlAdduser } from "../Services/string";
 
 export default function AddUser() {
+  const navigate = useNavigate();
   const [userData, setUserData] = useState({
     userid: "",
     passwd: "",
@@ -34,10 +35,9 @@ export default function AddUser() {
         }
         if (res.status === "success") {
           alert("가입이 완료되었습니다!");
-          console.log(res);
-          // navigate(`/user/${res.data.uid}/setuserdetail`, {
-          //   replace: true,
-          // });
+          navigate(`/user`, {
+            replace: true,
+          });
           return;
         }
       })

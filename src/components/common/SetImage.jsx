@@ -1,61 +1,59 @@
-import { useEffect, useState, useRef } from "react";
 import { BiUpload } from "react-icons/bi";
-import {
-  servicesPostDataForm,
-  servicesPostData,
-  useDidMountEffect,
-} from "../../Services/importData";
-import { urlGetImages, urlUpImages } from "../../Services/string";
+import { servicesPostDataForm } from "../../Services/importData";
+import { urlUpImages } from "../../Services/string";
 
-export default function SetImage({ title, img, setImg }) {
+export default function SetImage({ img, setImg, imgsIid, title, id }) {
   function setImage(img) {
     return setImg(img);
   }
-  const imgsIid = useRef([]);
+  function setImgsIid(img) {
+    return imgsIid.push(img);
+  }
 
   function handleSetImage(event) {
     event.preventDefault();
     const files = event.target.files;
     console.log("이미지 클릭", files);
-    console.log("이미지 클릭2", event);
     const formData = new FormData();
-    // if (event.target.id === "titleImg") {
-    //   console.log("titleUpload click-->", files[0]);
-    //   formData.append("Imgs", files[0]);
-    // } else {
-    //   for (let i = 0; i < files.length; i++) {
-    //     console.log(i, "titleUpload click-->", files[i]);
-    //     formData.append("Imgs", files[i]);
-    //   }
-    // }
+    if (event.target.id === "titleImg") {
+      console.log("titleUpload click-->", files[0]);
+      formData.append("Imgs", files[0]);
+    } else {
+      for (let i = 0; i < files.length; i++) {
+        console.log(i, "titleUpload click-->", files[i]);
+        formData.append("Imgs", files[i]);
+      }
+    }
 
-    // servicesPostDataForm(urlUpImages, formData).then((res) => {
-    //   setImage(res.data);
-    //   if (res.data.length > 1) {
-    //     for (let i = 0; i < res.data.length; i++) {
-    //       imgsIid.current.push(res.data[i].iid);
-    //     }
-    //   }
-    // });
+    servicesPostDataForm(urlUpImages, formData).then((res) => {
+      setImage(res.data);
+      if (res.data.length > 1) {
+        for (let i = 0; i < res.data.length; i++) {
+          // imgsIid.push(res.data[i].iid);
+          setImgsIid(res.data[i].iid);
+          console.log(imgsIid);
+        }
+      }
+    });
   }
-
   return (
     <div>
       <div className="blockLabel">{title}</div>
-      <label htmlFor="imgs" className="blockLabel fileboxLabel ">
+      <label htmlFor={id} className="blockLabel fileboxLabel">
         <BiUpload /> 사진 업로드
       </label>
       <input
         type="file"
-        id="titleImg"
-        name="Imgs"
+        id={id}
+        name={"__" + id}
         accept="image/*"
         className="blind"
-        onClick={handleSetImage}
+        onChange={handleSetImage}
+        multiple={imgsIid ? "multiple" : null}
       />
       {img && img.length === 1 ? (
         <div className="imgsThumbnail">
-          <img src={img[0].storagePath} alt="사업자 상세 이미지" />
+          <img src={img[0].storagePath} alt="사업자 대표 이미지" />
         </div>
       ) : null}
       {img && img.length > 1 ? (
