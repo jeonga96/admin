@@ -62,7 +62,7 @@ export default function AddUser() {
   };
   return (
     <>
-      <div className="commonBox formBox">
+      <div className="commonBox">
         <form
           className="inputFormLayout detailFormLayout"
           onSubmit={AddUserSubmit}

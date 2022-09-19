@@ -6,6 +6,7 @@ import { servicesPostData } from "../Services/importData";
 import { urlGetCompanyDetail, urlNoticeList } from "../Services/string";
 
 import GetCompany from "../components/common/GetCompany";
+import LayoutTopButton from "../components/common/LayoutTopButton";
 
 export default function DetailCompany() {
   let { cid } = useParams();
@@ -46,6 +47,9 @@ export default function DetailCompany() {
   return (
     <>
       <div>
+        <ul className="tableTopWrap">
+          <LayoutTopButton url="setcompanydetail" text="상세정보 수정" />
+        </ul>
         <div className="paddingBox commonBox">
           <GetCompany companyDetail={companyDetail} />
           <ul className="detailContentsList">
@@ -68,11 +72,6 @@ export default function DetailCompany() {
               </Link>
             </li>
           </ul>
-          <div className="bigButton" style={{ margin: "3.125rem auto 0" }}>
-            <Link className="Link" to="setcompanydetail">
-              상세정보 수정
-            </Link>
-          </div>
         </div>
       </div>
     </>

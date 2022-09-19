@@ -102,7 +102,7 @@ export default function SetDetailCompanyNotice() {
 
   return (
     <>
-      <div className="commonBox formBox">
+      <div className="commonBox">
         <form
           className="detailFormLayout inputFormLayout"
           onSubmit={AddUserSubmit}

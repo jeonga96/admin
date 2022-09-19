@@ -6,6 +6,7 @@ import { urlGetUserDetail } from "../Services/string";
 import SelctUserRole from "../components/common/SelectUserRole";
 
 import DetailUserComponent from "../components/common/DetailUserComponent";
+import LayoutTopButton from "../components/common/LayoutTopButton";
 
 export default function DetailUser() {
   let { uid } = useParams();
@@ -30,16 +31,14 @@ export default function DetailUser() {
   return (
     <>
       <div>
+        <ul className="tableTopWrap">
+          <LayoutTopButton url="setUserDetail" text="수정" />
+        </ul>
         <div className="paddingBox commonBox">
           <DetailUserComponent userDetail={userDetail} />
           <div className="detailHead">
             <h4>회원 권한 설정</h4>
             <SelctUserRole uid={uid} />
-          </div>
-          <div className="bigButton widthCenter">
-            <Link className="Link" to="setUserDetail">
-              상세정보 수정
-            </Link>
           </div>
         </div>
       </div>

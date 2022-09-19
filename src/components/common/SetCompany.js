@@ -8,6 +8,7 @@ import {
 import { urlGetImages, urlUpImages } from "../../Services/string";
 import SetImage from "./SetImage";
 import { useDidMountEffect } from "../../Services/customHook";
+import LayoutTopButton from "../common/LayoutTopButton";
 
 export default function SetCompany({ cid, getAPI, setAPI }) {
   const [companyData, setCompanyData] = useState({
@@ -129,6 +130,9 @@ export default function SetCompany({ cid, getAPI, setAPI }) {
 
   return (
     <form className="inputFormLayout detailFormLayout" onSubmit={AddUserSubmit}>
+      <ul className="tableTopWrap">
+        <LayoutTopButton text="완료" />
+      </ul>
       <div className="formContentWrap">
         <label htmlFor="name" className=" blockLabel">
           사업자명
@@ -354,10 +358,6 @@ export default function SetCompany({ cid, getAPI, setAPI }) {
           }
         />
       </div>
-
-      <button type="submit" className="loginBtn">
-        완료
-      </button>
     </form>
   );
 }

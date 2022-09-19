@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { servicesPostData } from "../Services/importData";
 import { urlAddcompany } from "../Services/string";
+import LayoutTopButton from "../components/common/LayoutTopButton";
 
 export default function AddCompany() {
   let navigate = useNavigate();
@@ -44,7 +45,7 @@ export default function AddCompany() {
 
   return (
     <>
-      <div className="commonBox formBox">
+      <div className="commonBox">
         <form className="inputFormLayout" onSubmit={AddCompanySubmit}>
           <label htmlFor="name" className="blockLabel">
             사업자명

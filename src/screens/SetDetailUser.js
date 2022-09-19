@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 import { servicesPostData } from "../Services/importData";
 import { urlSetUserDetail, urlGetUserDetail } from "../Services/string";
 
+import LayoutTopButton from "../components/common/LayoutTopButton";
+
 export default function SetDetailUser() {
   const { uid } = useParams();
 
@@ -61,11 +63,14 @@ export default function SetDetailUser() {
 
   return (
     <>
-      <div className="commonBox formBox">
+      <div className="commonBox">
         <form
           className="detailFormLayout inputFormLayout"
           onSubmit={AddUserSubmit}
         >
+          <ul className="tableTopWrap">
+            <LayoutTopButton text="완료" />
+          </ul>
           <div className="formContentWrap">
             <label htmlFor="name" className=" blockLabel">
               이름
@@ -146,10 +151,6 @@ export default function SetDetailUser() {
               }
             />
           </div>
-
-          <button type="submit" className="widthFullButton ">
-            사용자 상세정보 수정하기
-          </button>
         </form>
       </div>
     </>

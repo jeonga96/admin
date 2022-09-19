@@ -24,11 +24,9 @@ export default function ListUser() {
 
   return (
     <>
-      <div className="tableTopWrap">
-        <ul className="tableTopWrap">
-          <LayoutTopButton url="/adduser" text="회원 추가" />
-        </ul>
-      </div>
+      <ul className="tableTopWrap">
+        <LayoutTopButton url="/adduser" text="회원 추가" />
+      </ul>
       <section className="tableWrap">
         <h3 className="blind">table</h3>
         <div className="paddingBox commonBox">

@@ -106,7 +106,6 @@ button {
 }
 .commonBox {
   background-color: var(--color-white);
-  border-radius: 0.3125rem;
   box-shadow: var(--styles-boxShadow);
 }
 
@@ -584,7 +583,7 @@ button {
   width: 100%;
   height: auto;
 }
-.formBox .blockLabel {
+.inputFormLayout .blockLabel {
   display: block;
   margin-top: 20px;
   margin-bottom: 10px;
@@ -645,18 +644,6 @@ button {
   background-color: var(--color-gray);
   border: 1px solid var(--color-gray);
   border-radius: 5px;
-}
-
-/*addUser ==========================================*/
-.formBox {
-  padding: 10.25rem;
-  padding-top: 3rem;
-}
-
-@media screen and (min-width: 1200px) {
-  .formBox {
-    padding: 3.25rem 16rem;
-  }
 }
 
 /*setPage --------------------------------------------------------------*/
@@ -938,15 +925,19 @@ button {
 }
 
 /*table --------------------------------------------------------------*/
+.commonTable {
+  width: 100%;
+  height: auto;
+}
 .commonTable thead {
-  border-bottom: 0.125rem solid var(--color-primary);
+  border-bottom: 0.125rem solid var(--color-pointgray);
   font-size: var(--font-size-basic);
   line-height: var(--font-size-titleem);
 }
 
-.commonTable tbody tr:nth-of-type(2n) {
+/* .commonTable tbody tr:nth-of-type(2n) {
   background-color: var(--color-bggray);
-}
+} */
 .commonTable thead {
   width: auto;
   height: auto;
@@ -957,7 +948,8 @@ button {
 }
 .commonTable tbody tr {
   width: 100%;
-  height: 2.1875rem;
+  height: 3.1875rem;
+  border-bottom: 0.0625rem solid var(--color-bggray);
 }
 
 .commonTable td {
@@ -1059,6 +1051,7 @@ button {
   display: flex;
   justify-content: center;
   width: auto;
+  padding: 2.5rem 0 1.25rem;
 }
 ul.pagination li {
   justify-content: center;
@@ -1099,11 +1092,21 @@ ul.pagination li a:hover {
 
 /*button & Link--------------------------------------------------------------*/
 .tableTopWrap {
+  position: sticky;
+  top: 0px;
   display: flex;
   justify-content: right;
   width: 100%;
-  height: auto;
-  margin-bottom: 1rem;
+  height: 3.825rem;
+  padding: 1rem 0;
+  background-color: var(--color-white);
+  margin-top: 1.5rem;
+}
+
+@media screen and (max-width: 990px) {
+  .tableTopWrap {
+    position: static;
+  }
 }
 
 .linkAnchorBg {
@@ -1132,17 +1135,21 @@ ul.pagination li a:hover {
 }
 .smallButton {
   width: 6.25rem;
-  height: 2rem;
-  margin: 0 0.25rem;
+  height: 1.825rem;
+  margin: 0 0.325rem;
 }
-.smallButton:last-child {
-  margin-right: 0;
+.smallSubmitButton {
+  position: absolute;
+  top: 1.5rem;
+  right: 10px;
+  width: 6.25rem;
+  height: 1.825rem;
 }
 .buttonLink {
   text-align: center;
-  line-height: 2rem;
+  line-height: 1.825rem;
   font-weight: 400;
-  background-color: var(--color-white);
+  background-color: var(--color-bggray);
   border-radius: 0.3125rem;
 }
 .buttonLink:hover {

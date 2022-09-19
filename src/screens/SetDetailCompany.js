@@ -7,7 +7,7 @@ export default function SetCompanyDetail() {
 
   return (
     <>
-      <div className="commonBox formBox">
+      <div className="commonBox">
         <SetCompany
           cid={cid}
           getAPI={urlGetCompanyDetail}
