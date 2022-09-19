@@ -4,7 +4,8 @@ import { useEffect, useState } from "react";
 import { servicesPostData } from "../Services/importData";
 import { urlUserlist } from "../Services/string";
 
-import PageButton from "../components/common/PageButton";
+import PageButton from "../components/common/PaginationButton";
+import LayoutTopButton from "../components/common/LayoutTopButton";
 
 export default function ListUser() {
   const [userList, setUserList] = useState([]);
@@ -24,11 +25,9 @@ export default function ListUser() {
   return (
     <div className="mainWrap">
       <div className="tableTopWrap">
-        <div className="smallButton">
-          <Link className="buttonLink Link" to="/adduser">
-            통합회원 추가
-          </Link>
-        </div>
+        <ul className="tableTopWrap">
+          <LayoutTopButton url="/adduser" text="회원 추가" />
+        </ul>
       </div>
       <section className="tableWrap">
         <h3 className="blind">table</h3>

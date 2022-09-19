@@ -56,8 +56,8 @@ export default function AddCompany() {
           <label htmlFor="name" className="blind userIdLabel">
             사업체명을 입력해 주세요.
           </label>
-          <button type="submit" className="loginBtn">
-            사업자 추가하기
+          <button type="submit" className="widthFullButton">
+            작성 완료
           </button>
         </form>
       </div>

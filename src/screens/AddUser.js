@@ -106,7 +106,7 @@ export default function AddUser() {
             />
           </div>
 
-          <button type="submit" className="loginBtn">
+          <button type="submit" className="widthFullButton">
             사용자 추가하기
           </button>
         </form>

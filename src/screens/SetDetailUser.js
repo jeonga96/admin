@@ -147,7 +147,7 @@ export default function SetDetailUser() {
             />
           </div>
 
-          <button type="submit" className="loginBtn">
+          <button type="submit" className="widthFullButton ">
             사용자 상세정보 수정하기
           </button>
         </form>

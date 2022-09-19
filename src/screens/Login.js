@@ -47,7 +47,7 @@ export default function Login() {
           <label htmlFor="passwd" className="blind">
             비밀번호를 입력해 주세요.
           </label>
-          <button type="submit" className="loginBtn">
+          <button type="submit" className="widthFullButton">
             Log In
           </button>
         </form>

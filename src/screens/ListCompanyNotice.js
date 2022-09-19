@@ -3,6 +3,8 @@ import { useState, useLayoutEffect } from "react";
 import { servicesPostData } from "../Services/importData";
 import { urlNoticeList } from "../Services/string";
 import { MdOutlineImage } from "react-icons/md";
+
+import LayoutTopButton from "../components/common/LayoutTopButton";
 // import PageButton from "../components/common/PageButton";
 
 export default function ListCompanyNotice() {
@@ -22,13 +24,9 @@ export default function ListCompanyNotice() {
 
   return (
     <div className="mainWrap">
-      <div className="tableTopWrap">
-        <div className="smallButton">
-          <Link className="buttonLink Link" to={`/company/${cid}/addnotice`}>
-            작성
-          </Link>
-        </div>
-      </div>
+      <ul className="tableTopWrap">
+        <LayoutTopButton url={`/company/${cid}/addnotice`} text="작성" />
+      </ul>
       <section className="tableWrap">
         <h3 className="blind">table</h3>
         <div className="paddingBox commonBox">

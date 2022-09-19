@@ -107,8 +107,8 @@ export default function AddCompanyNotice() {
             onChange={onChange}
           />
 
-          <button type="submit" className="loginBtn">
-            확인
+          <button type="submit" className="widthFullButton">
+            작성 완료
           </button>
         </form>
       </div>

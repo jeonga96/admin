@@ -3,7 +3,8 @@ import { useState, useLayoutEffect } from "react";
 import { FaUserCheck } from "react-icons/fa";
 import { servicesPostData } from "../Services/importData";
 import { urlCompanylist } from "../Services/string";
-import PageButton from "../components/common/PageButton";
+import PageButton from "../components/common/PaginationButton";
+import LayoutTopButton from "../components/common/LayoutTopButton";
 
 export default function ListCompany() {
   const [companyList, setCompanyList] = useState([]);
@@ -22,13 +23,9 @@ export default function ListCompany() {
 
   return (
     <div className="mainWrap">
-      <div className="tableTopWrap">
-        <div className="smallButton">
-          <Link className="buttonLink Link" to="/addcompany">
-            사업자 추가
-          </Link>
-        </div>
-      </div>
+      <ul className="tableTopWrap">
+        <LayoutTopButton url="/addcompany" text="사업자 추가" />
+      </ul>
       <section className="tableWrap">
         <h3 className="blind">table</h3>
         <div className="paddingBox commonBox">

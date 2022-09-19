@@ -159,7 +159,7 @@ export default function SetDetailCompanyNotice() {
             }
           />
 
-          <button type="submit" className="loginBtn">
+          <button type="submit" className="widthFullButton">
             확인
           </button>
         </form>
