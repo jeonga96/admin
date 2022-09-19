@@ -10,7 +10,6 @@ export default function NavBox() {
   const [data, setData] = useState([]);
   function axiosData() {
     servicesGetData(navUrl).then((res) => setData(res));
-    // axiosGetData("../../data/nav.json").then((res) => setData(res));
   }
   useEffect(() => {
     axiosData();

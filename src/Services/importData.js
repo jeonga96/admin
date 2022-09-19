@@ -1,7 +1,6 @@
 import axios from "axios";
-import { useEffect, useRef } from "react";
 import axiosApiInstance from "./axios";
-import { TOKEN, urlRefreshtoken, urlGetImages, urlUpImages } from "./string";
+import { TOKEN, urlRefreshtoken } from "./string";
 
 export function servicesSetStorage(name, data) {
   return localStorage.setItem(name, data);
@@ -23,7 +22,7 @@ export function servicesGetData(url, getData) {
     data: getData,
   })
     .then((res) => res.data)
-    .catch((error) => console.log(error));
+    .catch((error) => console.log("importData.servicesGetData", error));
 }
 
 export function servicesPostData(url, postData) {
@@ -38,7 +37,7 @@ export function servicesPostData(url, postData) {
       console.log("importData.axiosSetData", res);
       return res.data;
     })
-    .catch((error) => console.log("importData.axiosSetData error", error));
+    .catch((error) => console.log("importData.axiosSetData", error));
 }
 
 export function servicesPostDataForm(url, postData) {
@@ -53,7 +52,7 @@ export function servicesPostDataForm(url, postData) {
       console.log("importData.axiosSetData", res);
       return res.data;
     })
-    .catch((error) => console.log(error));
+    .catch((error) => console.log("importData.servicesPostDataForm ", error));
 }
 
 export function servicesGetRefreshToken() {
@@ -61,5 +60,5 @@ export function servicesGetRefreshToken() {
     .then((res) => {
       servicesSetStorage(TOKEN, res.data.jtoken);
     })
-    .catch((err) => console.log("ㅠㅠerr", err));
+    .catch((err) => console.log("리프래시 토큰 오류", err));
 }
