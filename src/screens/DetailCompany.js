@@ -44,7 +44,7 @@ export default function DetailCompany() {
   }, []);
 
   return (
-    <div className="mainWrap">
+    <>
       <div>
         <div className="paddingBox commonBox">
           <GetCompany companyDetail={companyDetail} />
@@ -75,6 +75,6 @@ export default function DetailCompany() {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

@@ -23,7 +23,7 @@ export default function ListUser() {
   }, [page.getPage]);
 
   return (
-    <div className="mainWrap">
+    <>
       <div className="tableTopWrap">
         <ul className="tableTopWrap">
           <LayoutTopButton url="/adduser" text="회원 추가" />
@@ -82,6 +82,6 @@ export default function ListUser() {
           <PageButton listPage={listPage} page={page} setPage={setPage} />
         </div>
       </section>
-    </div>
+    </>
   );
 }

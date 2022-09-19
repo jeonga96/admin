@@ -23,7 +23,7 @@ export default function ListCompanyNotice() {
   }, []);
 
   return (
-    <div className="mainWrap">
+    <>
       <ul className="tableTopWrap">
         <LayoutTopButton url={`/company/${cid}/addnotice`} text="작성" />
       </ul>
@@ -71,6 +71,6 @@ export default function ListCompanyNotice() {
           {/* <PageButton listPage={listPage} page={page} setPage={setPage} /> */}
         </div>
       </section>
-    </div>
+    </>
   );
 }

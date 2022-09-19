@@ -23,7 +23,7 @@ export default function Login() {
   };
 
   return (
-    <section className="mainWrap loginWrap">
+    <section className="loginWrap">
       <div className="commonBox loginBox">
         <h3>login</h3>
         <form className="inputFormLayout" onSubmit={fnLogin}>

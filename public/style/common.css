@@ -104,14 +104,6 @@ button {
 .link:focus {
   outline: none;
 }
-.mainWrap {
-  width: 100%;
-  height: auto;
-}
-.mainWrap section {
-  padding: 0.875rem;
-  box-sizing: border-box;
-}
 .commonBox {
   background-color: var(--color-white);
   border-radius: 0.3125rem;
@@ -124,48 +116,26 @@ button {
   width: 100%;
   height: auto;
   background-color: var(--color-bggray);
+  padding: 1.25rem;
 }
 @media screen and (max-width: 992px) {
   .containerWrap {
-    padding-top: 3rem;
+    padding-top: 5rem;
   }
 }
-.containerWrap:before,
-.containerWrap::before {
-  position: absolute;
-  content: "";
-  display: block;
-  width: 100%;
-  height: 10rem;
-  background-color: var(--color-primary);
-}
-
 .contentBox {
   position: relative;
   width: 100%;
   height: auto;
-  padding: 0.9375rem;
 }
 @media screen and (min-width: 1200px) {
   .contentBox {
-    padding: 1.875rem;
+    padding: 1rem;
   }
 }
 
 /*title - content title wrap& title content*/
-.contentTitleWrap {
-  width: 100%;
-  height: 3.75rem;
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 1.875rem;
-  padding: 0 0.75rem;
-}
-.ContainertitleText {
-  width: auto;
-  height: auto;
-}
-.ContainertitleText h3 {
+.containerWrap h2 {
   width: auto;
   height: auto;
   font-family: var(--font-point);
@@ -173,50 +143,11 @@ button {
   line-height: 1.2;
   margin-bottom: 0.5rem;
   font-weight: 700;
-  color: var(--color-white);
+  color: var(--color-black);
 }
-.ContainertitleText span {
-  color: var(--color-white);
-}
-
-/*title - title부분의 브래드크럼*/
-.ContainerTitlebreadcrumb {
-  width: 100%;
-  display: flex;
-}
-.ContainerTitlebreadcrumb li {
+.ContainertitleText {
   width: auto;
   height: auto;
-}
-.ContainerTitlebreadcrumb span {
-  width: auto;
-  height: auto;
-  font-size: var(--font-size-small);
-}
-.breadcrumbPrev:after,
-.breadcrumbPrev::after {
-  content: ">";
-  color: var(--color-white);
-  margin: 0 0.3125rem;
-  font-size: var(--font-size-small);
-}
-
-/*title - title부분의 버튼*/
-.containerTitleBtn {
-  width: auto;
-  height: 2.75rem;
-  padding: 0.875rem 1.875rem;
-  border-radius: 0.3125rem;
-  background-color: var(--color-white);
-  box-shadow: var(--styles-boxShadowDeep);
-  color: 0.8125rem;
-  line-height: 1.0625rem;
-  transition: 0.3s;
-  font-size: var(--font-size-small);
-}
-.containerTitleBtn:hover {
-  background-color: var(--color-primary2);
-  color: var(--color-white);
 }
 
 /*footer --------------------------------------------------------------*/
@@ -653,7 +584,7 @@ button {
   width: 100%;
   height: auto;
 }
-.detailFormLayout .blockLabel {
+.formBox .blockLabel {
   display: block;
   margin-top: 20px;
   margin-bottom: 10px;
@@ -714,27 +645,17 @@ button {
   background-color: var(--color-gray);
   border: 1px solid var(--color-gray);
   border-radius: 5px;
-  transition: all 300ms ease-in;
 }
 
 /*addUser ==========================================*/
-.formCommonWrap {
-  margin: 0 auto;
-  width: 80%;
-  min-width: 18.75rem;
-}
 .formBox {
-  padding: 1.25rem;
+  padding: 10.25rem;
   padding-top: 3rem;
 }
 
 @media screen and (min-width: 1200px) {
-  .formCommonWrap {
-    margin: 0 auto;
-    width: 50rem;
-  }
   .formBox {
-    padding: 3.25rem;
+    padding: 3.25rem 16rem;
   }
 }
 
@@ -952,7 +873,6 @@ button {
 .detailContentsList .link::before {
   position: absolute;
   bottom: 5px;
-  /* right: 0; */
   left: 60%;
   display: block;
   content: "";
@@ -1053,28 +973,15 @@ button {
   width: 20%;
 }
 
-.tableTopWrap {
-  display: flex;
-  justify-content: right;
-  width: 100%;
-  height: auto;
-  padding: 0 0.75rem;
-}
-
 .tableWrap {
   width: 100%;
   height: auto;
-  padding: 0 0.75rem;
+  margin-bottom: 2.5rem;
 }
-.paddingBox {
-  width: 100%;
-  height: auto;
-  padding: 0.625rem 0.625rem 2.5rem;
-}
+
 .tableWrap table {
   width: 100%;
   height: auto;
-  margin-bottom: 2.5rem;
 }
 @media screen and (max-width: 520px) {
   .tableWrap th:nth-child(4),
@@ -1191,6 +1098,14 @@ ul.pagination li a:hover {
 }
 
 /*button & Link--------------------------------------------------------------*/
+.tableTopWrap {
+  display: flex;
+  justify-content: right;
+  width: 100%;
+  height: auto;
+  margin-bottom: 1rem;
+}
+
 .linkAnchorBg {
   width: auto;
   height: auto;
@@ -1227,17 +1142,13 @@ ul.pagination li a:hover {
   text-align: center;
   line-height: 2rem;
   font-weight: 400;
-  font-size: var(--font-size-small);
-  background-color: var(--color-bggray);
+  background-color: var(--color-white);
   border-radius: 0.3125rem;
-  text-decoration: none;
-  transition: all 500ms ease-in;
 }
 .buttonLink:hover {
-  background-color: var(--color-primary2);
+  background-color: var(--color-pointgray);
   color: var(--color-white);
   box-shadow: var(--styles-boxShadowDeep);
-  text-decoration: none;
 }
 .bigButton {
   width: 12rem;
@@ -1261,7 +1172,8 @@ ul.pagination li a:hover {
   display: block;
   width: 100%;
   height: 100%;
-  transition: all 500ms ease-in;
+  font-size: var(--font-size-small);
+  transition: all 200ms ease-in;
 }
 .Link:hover {
   text-decoration: none;

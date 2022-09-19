@@ -60,7 +60,7 @@ export default function SetDetailUser() {
   }
 
   return (
-    <div className="mainWrap formCommonWrap">
+    <>
       <div className="commonBox formBox">
         <form
           className="detailFormLayout inputFormLayout"
@@ -152,6 +152,6 @@ export default function SetDetailUser() {
           </button>
         </form>
       </div>
-    </div>
+    </>
   );
 }

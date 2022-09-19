@@ -23,7 +23,7 @@ function CompanyNoticeDetail() {
   useGetImage(setImage, companyDetail);
 
   return (
-    <div className="mainWrap">
+    <>
       <div className="commonBox paddingBox">
         <ul>
           <li className="detailContentTitle">
@@ -61,7 +61,7 @@ function CompanyNoticeDetail() {
           </li>
         </ul>
       </div>
-    </div>
+    </>
   );
 }
 export default CompanyNoticeDetail;

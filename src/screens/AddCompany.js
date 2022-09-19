@@ -43,24 +43,24 @@ export default function AddCompany() {
   };
 
   return (
-    <div className="mainWrap formCommonWrap">
+    <>
       <div className="commonBox formBox">
         <form className="inputFormLayout" onSubmit={AddCompanySubmit}>
+          <label htmlFor="name" className="blockLabel">
+            사업자명
+          </label>
           <input
             type="text"
             name="name"
             id="name"
-            placeholder="사업체명을 입력해 주세요."
+            placeholder="사업자명을 입력해 주세요."
             onChange={onChange}
           />
-          <label htmlFor="name" className="blind userIdLabel">
-            사업체명을 입력해 주세요.
-          </label>
           <button type="submit" className="widthFullButton">
             작성 완료
           </button>
         </form>
       </div>
-    </div>
+    </>
   );
 }

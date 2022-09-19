@@ -101,7 +101,7 @@ export default function SetDetailCompanyNotice() {
   }
 
   return (
-    <div className="mainWrap formCommonWrap">
+    <>
       <div className="commonBox formBox">
         <form
           className="detailFormLayout inputFormLayout"
@@ -164,6 +164,6 @@ export default function SetDetailCompanyNotice() {
           </button>
         </form>
       </div>
-    </div>
+    </>
   );
 }

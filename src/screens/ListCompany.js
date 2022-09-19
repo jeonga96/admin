@@ -22,13 +22,13 @@ export default function ListCompany() {
   }, [page.getPage]);
 
   return (
-    <div className="mainWrap">
+    <>
       <ul className="tableTopWrap">
         <LayoutTopButton url="/addcompany" text="사업자 추가" />
       </ul>
       <section className="tableWrap">
         <h3 className="blind">table</h3>
-        <div className="paddingBox commonBox">
+        <div className="commonBox">
           <table className="commonTable">
             <thead>
               <tr>
@@ -71,6 +71,6 @@ export default function ListCompany() {
           <PageButton listPage={listPage} page={page} setPage={setPage} />
         </div>
       </section>
-    </div>
+    </>
   );
 }

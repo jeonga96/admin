@@ -61,7 +61,7 @@ export default function AddUser() {
     addUserEvent();
   };
   return (
-    <div className="mainWrap formCommonWrap">
+    <>
       <div className="commonBox formBox">
         <form
           className="inputFormLayout detailFormLayout"
@@ -111,6 +111,6 @@ export default function AddUser() {
           </button>
         </form>
       </div>
-    </div>
+    </>
   );
 }

@@ -59,7 +59,7 @@ export default function AddCompanyNotice() {
   }
 
   return (
-    <div className="mainWrap formCommonWrap">
+    <>
       <div className="commonBox formBox">
         <form
           className="detailFormLayout inputFormLayout"
@@ -112,6 +112,6 @@ export default function AddCompanyNotice() {
           </button>
         </form>
       </div>
-    </div>
+    </>
   );
 }

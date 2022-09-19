@@ -28,7 +28,7 @@ export default function DetailUser() {
   }, []);
 
   return (
-    <div className="mainWrap">
+    <>
       <div>
         <div className="paddingBox commonBox">
           <DetailUserComponent userDetail={userDetail} />
@@ -43,6 +43,6 @@ export default function DetailUser() {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

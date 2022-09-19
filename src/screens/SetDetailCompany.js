@@ -6,7 +6,7 @@ export default function SetCompanyDetail() {
   const { cid } = useParams();
 
   return (
-    <div className="mainWrap formCommonWrap">
+    <>
       <div className="commonBox formBox">
         <SetCompany
           cid={cid}
@@ -14,6 +14,6 @@ export default function SetCompanyDetail() {
           setAPI={urlSetCompanyDetail}
         />
       </div>
-    </div>
+    </>
   );
 }

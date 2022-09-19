@@ -25,7 +25,7 @@ export default function DetailUserMyInfo() {
   }, []);
 
   return (
-    <div className="mainWrap">
+    <>
       <div className="userDetailBox">
         <div className="commonBox paddingBox">
           {/* <ul className="userDetailWrap"> */}
@@ -42,6 +42,6 @@ export default function DetailUserMyInfo() {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
