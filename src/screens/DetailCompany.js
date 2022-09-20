@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
-import { BsArrowRightShort } from "react-icons/bs";
-import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { servicesPostData } from "../Services/importData";
 import { urlGetCompanyDetail, urlNoticeList } from "../Services/string";
 
+import DetailContentList from "../components/common/DetailContentList";
 import GetCompany from "../components/common/GetCompany";
 import LayoutTopButton from "../components/common/LayoutTopButton";
 
@@ -46,33 +45,22 @@ export default function DetailCompany() {
 
   return (
     <>
-      <div>
-        <ul className="tableTopWrap">
-          <LayoutTopButton url="setcompanydetail" text="상세정보 수정" />
+      <ul className="tableTopWrap">
+        <LayoutTopButton url="setcompanydetail" text="상세정보 수정" />
+      </ul>
+      <div className="paddingBox commonBox">
+        <GetCompany companyDetail={companyDetail} />
+      </div>
+      <div className="paddingBox commonBox">
+        <ul className="detailContentsList">
+          {companyDetail && (
+            <DetailContentList
+              getData={noticeList}
+              url={`/company/${companyDetail.rcid}/notice`}
+              title="공지사항"
+            />
+          )}
         </ul>
-        <div className="paddingBox commonBox">
-          <GetCompany companyDetail={companyDetail} />
-          <ul className="detailContentsList">
-            <li>
-              <Link
-                to={companyDetail && `/company/${companyDetail.rcid}/notice`}
-              >
-                <h4 className="title">공지사항</h4>
-                <span className="content">
-                  공지사항은 총
-                  {noticeList && noticeList.length > 0
-                    ? noticeList.length
-                    : "0"}
-                  개 입니다.
-                </span>
-                <div className="link">
-                  바로가기
-                  <BsArrowRightShort />
-                </div>
-              </Link>
-            </li>
-          </ul>
-        </div>
       </div>
     </>
   );
