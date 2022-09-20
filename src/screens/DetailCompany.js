@@ -53,6 +53,13 @@ export default function DetailCompany() {
       </div>
       <div className="paddingBox commonBox">
         <ul className="detailContentsList detailContentCenter">
+          {noticeList && (
+            <DetailContentList
+              getData={noticeList}
+              url={`/company/${companyDetail.rcid}/notice`}
+              title="공지사항"
+            />
+          )}
           {companyDetail && (
             <DetailContentList
               getData={noticeList}

@@ -2,8 +2,6 @@ import { useState } from "react";
 import { Link as RRDLink, useLocation } from "react-router-dom";
 import AnimateHeight from "react-animate-height";
 
-import NavPartList from "./NavPartList";
-
 const Link = ({ children, isActive, ...props }) => {
   return <RRDLink {...props}>{children}</RRDLink>;
 };
@@ -27,8 +25,12 @@ export default function NavInnerSub({ item }) {
       className="navInnerSub"
     >
       <div className={more ? "navSubList sub_show_btn" : "navSubList"}>
-        <NavPartList item={item} />
-
+        <div className="navPart">
+          <div>
+            <img src={item.icon} alt={item.name} />
+          </div>
+          <span>{item.name}</span>
+        </div>
         <AnimateHeight id="example-panel" duration={300} height={height}>
           <ul>
             {item.subNav.map((item, key) => (
