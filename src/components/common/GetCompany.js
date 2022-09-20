@@ -73,25 +73,6 @@ export default function GetCompany({ companyDetail }) {
         </ul>
       </div>
 
-      {/* <li className="detailImage">
-        <div className="titleImg">
-          {image && <img src={image[0].storagePath} alt="사업자 대표 이미지" />}
-        </div>
-        <div className="imgsImg">
-          <h4>사업자 상세 이미지</h4>
-          <div>
-            <ul>
-              {image &&
-                image.map((item, i) => (
-                  <li key={item.iid}>
-                    <img src={item.storagePath} alt="사업자 상세 이미지" />
-                  </li>
-                ))}
-            </ul>
-          </div>
-        </div>
-      </li> */}
-
       <div className="formContentWrap">
         <h4>대표 이미지</h4>
         <div className="detailWidthContent">
@@ -130,6 +111,7 @@ export default function GetCompany({ companyDetail }) {
         <h4>이메일</h4>
         <span>{companyDetail.email}</span>
       </div>
+
       <div className="formContentWrap">
         <h4>주소</h4>
         <span>

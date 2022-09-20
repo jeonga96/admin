@@ -30,36 +30,57 @@ function CompanyNoticeDetail() {
         <ul className="tableTopWrap">
           <LayoutTopButton url="modify" text="수정" />
         </ul>
-        <ul>
-          <li className="detailContentTitle">
-            <h4 className="blind">제목</h4>
+        <ul className="detailPageLayout">
+          <li className="detailTime">
+            <div>
+              <em>작성 시간</em>
+              <span>
+                {companyDetail.createTime &&
+                  companyDetail.createTime.slice(0, 10) +
+                    " " +
+                    companyDetail.createTime.slice(11, 19)}
+              </span>
+            </div>
+            <div>
+              <em>수정 시간</em>
+              <span>
+                {companyDetail.updateTime &&
+                  companyDetail.updateTime.slice(0, 10) +
+                    " " +
+                    companyDetail.updateTime.slice(11, 19)}
+              </span>
+            </div>
+          </li>
+
+          <li className="formContentWrap">
+            <h4>제목</h4>
             <span>{companyDetail.title}</span>
           </li>
-          {companyDetail.createTime && (
-            <li className="detailSpan detailTime">
-              <div>{`${companyDetail.createTime.slice(
-                0,
-                10
-              )} ${companyDetail.createTime.slice(11, 19)}`}</div>
-            </li>
-          )}
-          <li className="detailContentText">
-            <div className="detailContentImage">
-              <h4 className="blind">상세 이미지</h4>
-              <ul>
-                {image &&
-                  image.map((item, i) => (
-                    <li key={item.iid}>
-                      <span>{`공지사항 첨부 이미지 ${i + 1}`}</span>
-                      <img src={item.storagePath} alt="공지사항 첨부 이미지" />
-                    </li>
-                  ))}
-              </ul>
-            </div>
-            <h4 className="blind">공지사항 내용</h4>
-            <span className="detailContentTextArea">
-              {companyDetail.content}
-            </span>
+
+          <li className="formContentWrap">
+            <h4>상세 이미지</h4>
+            <ul
+              className="detailWidthContent"
+              style={{ justifyContent: "left" }}
+            >
+              {image &&
+                image.map((item) => (
+                  <li
+                    key={item.iid}
+                    className="img"
+                    style={{
+                      backgroundImage: `url("${image && item.storagePath}")`,
+                    }}
+                  >
+                    <span className="blind">공지사항 이미지 </span>
+                  </li>
+                ))}
+            </ul>
+          </li>
+
+          <li className="formContentWrap">
+            <h4>공지사항 내용</h4>
+            <p>{companyDetail.content}</p>
           </li>
         </ul>
       </div>

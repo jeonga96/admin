@@ -115,7 +115,7 @@ export default function SetCompanyDetail() {
             <LayoutTopButton text="완료" />
           </ul>
           <div className="formContentWrap">
-            <label htmlFor="name" className=" blockLabel">
+            <label htmlFor="name" className="blockLabel">
               사업자명
             </label>
             <input
@@ -130,6 +130,7 @@ export default function SetCompanyDetail() {
               }
             />
           </div>
+
           <div className="formContentWrap">
             <label htmlFor="comment" className=" blockLabel">
               소개글

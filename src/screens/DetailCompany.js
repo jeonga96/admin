@@ -52,7 +52,7 @@ export default function DetailCompany() {
         <GetCompany companyDetail={companyDetail} />
       </div>
       <div className="paddingBox commonBox">
-        <ul className="detailContentsList">
+        <ul className="detailContentsList detailContentCenter">
           {companyDetail && (
             <DetailContentList
               getData={noticeList}

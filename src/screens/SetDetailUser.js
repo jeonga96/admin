@@ -65,10 +65,11 @@ export default function SetDetailUser() {
   return (
     <>
       <div className="commonBox">
-        <form className="inputFormLayout" onSubmit={AddUserSubmit}>
+        <form className="formLayout" onSubmit={AddUserSubmit}>
           <ul className="tableTopWrap">
             <LayoutTopButton text="완료" />
           </ul>
+
           <div className="formContentWrap">
             <label htmlFor="name" className=" blockLabel">
               이름
@@ -152,10 +153,12 @@ export default function SetDetailUser() {
         </form>
       </div>
       <div className="commonBox">
-        <div className="detailHead">
-          <h4>회원 권한 설정</h4>
-          <SelctUserRole uid={uid} />
-        </div>
+        <ul className="detailContentCenter">
+          <li className="detailHead">
+            <h4>회원 권한 설정</h4>
+            <SelctUserRole uid={uid} />
+          </li>
+        </ul>
       </div>
     </>
   );
