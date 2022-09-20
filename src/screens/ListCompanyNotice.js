@@ -33,28 +33,27 @@ export default function ListCompanyNotice() {
           <table className="commonTable">
             <thead>
               <tr>
-                <th>번호</th>
-                <th>내용</th>
+                <th className="widthM">회원번호</th>
+                <th className="widthBB">내용</th>
+                <th className="widthM">날짜</th>
               </tr>
             </thead>
-            <tbody className="contentTbody">
+            <tbody className="commonTable">
               {notice &&
                 notice.map((item) => (
-                  <tr key={item.comnid}>
+                  <tr key={item.comnid} style={{ height: "5.25rem" }}>
                     <td>{item.comnid}</td>
-                    <td>
-                      <div className="titleWrap">
-                        <div>
-                          <span>{item.title}</span>
-                          <i>{item.imgs ? <MdOutlineImage /> : null}</i>
-                        </div>
-                        <span>{item.createTime.slice(0, 10)}</span>
-                      </div>
-                      <span className="content">
-                        {item.content.length > 100
-                          ? item.content.slice(0, 99) + "..."
+                    <td className="tableContentWrap">
+                      <em>{item.title}</em>
+                      <i>{item.imgs ? <MdOutlineImage /> : null}</i>
+                      <p>
+                        {item.content.length > 55
+                          ? item.content.slice(0, 54) + "..."
                           : item.content}
-                      </span>
+                      </p>
+                    </td>
+                    <td>{item.createTime.slice(0, 10)}</td>
+                    <td>
                       <div className="tableButton">
                         <Link
                           to={`/company/${item.rcid}/${item.comnid}`}

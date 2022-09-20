@@ -4,6 +4,8 @@ import { servicesPostData } from "../Services/importData";
 import { urlGetNotice } from "../Services/string";
 import { useGetImage } from "../Services/customHook";
 
+import LayoutTopButton from "../components/common/LayoutTopButton";
+
 function CompanyNoticeDetail() {
   const [companyDetail, setCompanyDetail] = useState([]);
   const [image, setImage] = useState([]);
@@ -25,6 +27,9 @@ function CompanyNoticeDetail() {
   return (
     <>
       <div className="commonBox paddingBox">
+        <ul className="tableTopWrap">
+          <LayoutTopButton url="modify" text="수정" />
+        </ul>
         <ul>
           <li className="detailContentTitle">
             <h4 className="blind">제목</h4>
@@ -38,9 +43,6 @@ function CompanyNoticeDetail() {
               )} ${companyDetail.createTime.slice(11, 19)}`}</div>
             </li>
           )}
-          <li className="detailContentLink">
-            <Link to="modify">수정</Link>
-          </li>
           <li className="detailContentText">
             <div className="detailContentImage">
               <h4 className="blind">상세 이미지</h4>

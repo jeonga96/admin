@@ -38,7 +38,7 @@ export default function ListCompany() {
                 <th className="widthS">인증</th>
               </tr>
             </thead>
-            <tbody className="revenueSaleTbody">
+            <tbody>
               {companyList.map((item) => (
                 <tr key={item.cid}>
                   <td>{item.cid}</td>
@@ -53,7 +53,7 @@ export default function ListCompany() {
                   </td>
                   <td className="tableButton">
                     <Link to={`${item.cid}`} className="buttonLink Link">
-                      보기
+                      상세
                     </Link>
                   </td>
                   <td className="tableButton">

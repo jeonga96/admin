@@ -4,6 +4,7 @@ import { servicesPostData } from "../Services/importData";
 import { urlSetUserDetail, urlGetUserDetail } from "../Services/string";
 
 import LayoutTopButton from "../components/common/LayoutTopButton";
+import SelctUserRole from "../components/common/SelectUserRole";
 
 export default function SetDetailUser() {
   const { uid } = useParams();
@@ -152,6 +153,10 @@ export default function SetDetailUser() {
             />
           </div>
         </form>
+        <div className="detailHead">
+          <h4>회원 권한 설정</h4>
+          <SelctUserRole uid={uid} />
+        </div>
       </div>
     </>
   );

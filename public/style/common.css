@@ -637,12 +637,10 @@ button {
 .selectForm select:focus {
   outline: none;
 }
-.selectForm .smallButton {
+.smallButton {
   display: inline-block;
   width: 50px;
   height: 40px;
-  background-color: var(--color-gray);
-  border: 1px solid var(--color-gray);
   border-radius: 5px;
 }
 
@@ -948,11 +946,6 @@ button {
   line-height: var(--font-size-titleem);
   height: 3.4375rem;
 }
-
-/* .commonTable tbody tr:nth-of-type(2n) {
-  background-color: var(--color-bggray);
-} */
-
 .commonTable tr {
   width: auto;
   height: auto;
@@ -962,7 +955,6 @@ button {
   height: 3.25rem;
   border-bottom: 0.0625rem solid var(--color-bggray);
 }
-
 .commonTable td {
   text-align: center;
 }
@@ -972,66 +964,29 @@ button {
 .commonTable .widthB {
   width: 30%;
 }
+.commonTable .widthBB {
+  width: 40%;
+}
 .commonTable .widthM {
   width: 20%;
 }
-
-/*contentTbody - comapabyNotice */
-.contentTbody tr {
-  width: 100%;
-}
-.contentTbody td {
-  height: 120px;
-}
-.contentTbody td:last-child {
-  width: 90%;
-  padding: 20px;
-}
-.contentTbody .titleWrap {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  height: auto;
-  margin-bottom: 10px;
-}
-.titleWrap > div {
+.commonTable .left {
   text-align: left;
-  font-size: var(--font-size-big);
-  font-weight: 500;
 }
-.titleWrap i {
+/*테이블 내 세부 콘텐츠*/
+.commonTable i {
   display: inline-block;
   color: var(--color-pointgray);
   margin-left: 10px;
 }
-.titleWrap > span {
-  color: var(--color-pointgray);
-}
-@media screen and (max-width: 520px) {
-  .contentTbody td {
-    height: 140px;
-  }
-  .contentTbody .titleWrap {
-    display: block;
-  }
-  .titleWrap > div {
-    display: block;
-  }
-  .titleWrap > span {
-    display: block;
-    text-align: left;
-  }
-}
-.contentTbody .content {
-  display: block;
+.commonTable .tableContentWrap {
   text-align: left;
-  font-size: var(--font-size-basic);
-  font-weight: 400;
-  margin-bottom: 10px;
 }
-.contentTbody .tableButton {
-  float: left;
+.tableContentWrap em {
+  font-weight: 500;
+  margin-bottom: 6px;
 }
+
 /*btn 영역*/
 .pagination {
   display: flex;
@@ -1117,6 +1072,7 @@ ul.pagination li a:hover {
 .tableButton {
   float: right;
   transform: translateY(10%);
+  margin-right: 0.325rem;
   width: 4rem;
   height: 2rem;
 }
@@ -1124,6 +1080,7 @@ ul.pagination li a:hover {
   width: 6.25rem;
   height: 1.825rem;
   margin: 0 0.325rem;
+  background-color: var(--color-bggray);
 }
 .smallSubmitButton {
   position: absolute;

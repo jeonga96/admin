@@ -7,9 +7,9 @@ export default function SelectUserRole({ uid }) {
   function onChange(e) {
     setSelected(e.target.value);
   }
-  console.log(uid, selected);
   function onSubmitUserRole(e) {
     e.preventDefault();
+    console.log(uid, selected);
     servicesPostData(urlSetUserRole, {
       uid: uid,
       userrole: selected,

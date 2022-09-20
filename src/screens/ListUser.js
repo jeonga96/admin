@@ -40,7 +40,7 @@ export default function ListUser() {
                 <th className="widthS">인증</th>
               </tr>
             </thead>
-            <tbody className="revenueSaleTbody">
+            <tbody>
               {userList.map((item) => (
                 <tr key={item.uid}>
                   <td>{item.uid}</td>
@@ -62,7 +62,7 @@ export default function ListUser() {
                   </td>
                   <td className="tableButton">
                     <Link to={`${item.uid}`} className="buttonLink Link">
-                      보기
+                      상세
                     </Link>
                   </td>
                 </tr>
