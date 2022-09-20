@@ -3,7 +3,6 @@ import { useEffect, useState, useRef } from "react";
 import { servicesPostData } from "../Services/importData";
 import { urlGetCompanyDetail, urlSetCompanyDetail } from "../Services/string";
 import SetImage from "../components/common/SetImage";
-import { useDidMountEffect } from "../Services/customHook";
 import LayoutTopButton from "../components/common/LayoutTopButton";
 
 export default function SetCompanyDetail() {
@@ -111,7 +110,7 @@ export default function SetCompanyDetail() {
   return (
     <>
       <div className="commonBox">
-        <form className="inputFormLayout" onSubmit={AddUserSubmit}>
+        <form className="formLayout" onSubmit={AddUserSubmit}>
           <ul className="tableTopWrap">
             <LayoutTopButton text="완료" />
           </ul>
@@ -220,7 +219,7 @@ export default function SetCompanyDetail() {
             <label htmlFor="offer" className="blockLabel">
               사업자 소개글
             </label>
-            <input
+            <textarea
               type="text"
               id="offer"
               placeholder="사업자 소개글을 입력해 주세요."
@@ -241,13 +240,14 @@ export default function SetCompanyDetail() {
             title="대표 이미지"
             getDataFinish={getDataFinish.current}
           />
+
           <SetImage
             img={imgs}
             setImg={setImgs}
             getData={companyData}
             id="imgs"
             title="상세설명 이미지"
-            imgsIid={imgsIid}
+            imgsIid={true}
             getDataFinish={getDataFinish.current}
           />
 

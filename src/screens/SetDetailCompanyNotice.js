@@ -1,14 +1,10 @@
 import { useState, useEffect, useRef } from "react";
-import {
-  urlSetNotice,
-  urlGetNotice,
-  urlUpImages,
-  urlGetImages,
-} from "../Services/string";
-import { servicesPostData, servicesPostDataForm } from "../Services/importData";
-import { useDidMountEffect } from "../Services/customHook";
+import { urlSetNotice, urlGetNotice } from "../Services/string";
+import { servicesPostData } from "../Services/importData";
 import { useParams } from "react-router-dom";
-import { BiUpload } from "react-icons/bi";
+
+import SetImage from "../components/common/SetImage";
+import LayoutTopButton from "../components/common/LayoutTopButton";
 
 export default function SetDetailCompanyNotice() {
   const id = useParams();
@@ -38,34 +34,6 @@ export default function SetDetailCompanyNotice() {
       })
       .catch((res) => console.log(res));
   }, []);
-
-  useDidMountEffect(() => {
-    noticeDetail.imgs &&
-      servicesPostData(urlGetImages, {
-        imgs: noticeDetail.imgs,
-      }).then((res) => {
-        setImgs(res.data);
-        for (let i = 0; i < res.data.length; i++) {
-          imgsIid.current.push(res.data[i].iid);
-        }
-      });
-  }, [getDataFinish.current]);
-
-  const fileSelectEvent = (event) => {
-    event.preventDefault();
-    const files = event.target.files;
-    const formData = new FormData();
-    for (let i = 0; i < files.length; i++) {
-      console.log(i, "titleUpload click-->", files[i]);
-      formData.append("Imgs", files[i]);
-    }
-    servicesPostDataForm(urlUpImages, formData).then((res) => {
-      setImgs(res.data);
-      for (let i = 0; i < res.data.length; i++) {
-        imgsIid.current.push(res.data[i].iid);
-      }
-    });
-  };
 
   function onChange(e) {
     setNoticeDetail({ ...noticeDetail, [e.target.id]: e.target.value });
@@ -103,65 +71,52 @@ export default function SetDetailCompanyNotice() {
   return (
     <>
       <div className="commonBox">
-        <form
-          className="detailFormLayout inputFormLayout"
-          onSubmit={AddUserSubmit}
-        >
-          <label htmlFor="title" className="blockLabel">
-            제목
-          </label>
-          <input
-            type="text"
-            id="title"
-            placeholder="제목을 입력해 주세요."
-            onChange={onChange}
-            value={
-              getDataFinish.current
-                ? noticeDetail.title
-                : noticeDetail.title || ""
-            }
-          />
+        <form className="formLayout" onSubmit={AddUserSubmit}>
+          <ul className="tableTopWrap">
+            <LayoutTopButton text="완료" />
+          </ul>
+          <div className="formContentWrap">
+            <label htmlFor="title" className="blockLabel">
+              제목
+            </label>
+            <input
+              type="text"
+              id="title"
+              placeholder="제목을 입력해 주세요."
+              onChange={onChange}
+              value={
+                getDataFinish.current
+                  ? noticeDetail.title
+                  : noticeDetail.title || ""
+              }
+            />
+          </div>
 
-          <div className="blockLabel">이미지 추가</div>
-          {imgs && (
-            <ul className="imgsThumbnail">
-              {imgs.map((item, key) => (
-                <li key={key}>
-                  <img src={item.storagePath} alt="사업자 상세 이미지" />
-                </li>
-              ))}
-            </ul>
-          )}
-          <label htmlFor="imgs" className="blockLabel fileboxLabel">
-            <BiUpload /> 사진 업로드
-          </label>
-          <input
-            type="file"
+          <SetImage
+            img={imgs}
+            setImg={setImgs}
             id="imgs"
-            name="Imgs"
-            accept="image/*"
-            multiple
-            className="blind"
-            onChange={fileSelectEvent}
+            title="이미지 추가"
+            imgsIid={true}
+            getData={noticeDetail}
+            getDataFinish={getDataFinish.current}
           />
 
-          <label htmlFor="title" className="blockLabel">
-            내용
-          </label>
-          <textarea
-            id="content"
-            placeholder="내용을 입력해 주세요."
-            onChange={onChange}
-            value={
-              getDataFinish.current
-                ? noticeDetail.content
-                : noticeDetail.content || ""
-            }
-          />
-
-          <button type="submit" className="widthFullButton">
-            확인
-          </button>
+          <div className="formContentWrap">
+            <label htmlFor="title" className="blockLabel">
+              내용
+            </label>
+            <textarea
+              id="content"
+              placeholder="내용을 입력해 주세요."
+              onChange={onChange}
+              value={
+                getDataFinish.current
+                  ? noticeDetail.content
+                  : noticeDetail.content || ""
+              }
+            />
+          </div>
         </form>
       </div>
     </>

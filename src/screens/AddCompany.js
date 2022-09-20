@@ -46,20 +46,22 @@ export default function AddCompany() {
   return (
     <>
       <div className="commonBox">
-        <form className="inputFormLayout" onSubmit={AddCompanySubmit}>
-          <label htmlFor="name" className="blockLabel">
-            사업자명
-          </label>
-          <input
-            type="text"
-            name="name"
-            id="name"
-            placeholder="사업자명을 입력해 주세요."
-            onChange={onChange}
-          />
-          <button type="submit" className="widthFullButton">
-            작성 완료
-          </button>
+        <form className="formLayout" onSubmit={AddCompanySubmit}>
+          <ul className="tableTopWrap">
+            <LayoutTopButton text="완료" />
+          </ul>
+          <div className="formContentWrap">
+            <label htmlFor="name" className="blockLabel">
+              사업자명
+            </label>
+            <input
+              type="text"
+              name="name"
+              id="name"
+              placeholder="사업자명을 입력해 주세요."
+              onChange={onChange}
+            />
+          </div>
         </form>
       </div>
     </>

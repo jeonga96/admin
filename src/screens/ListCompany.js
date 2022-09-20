@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useState, useLayoutEffect } from "react";
-import { FaUserCheck } from "react-icons/fa";
+import { BsCheck2 } from "react-icons/bs";
 import { servicesPostData } from "../Services/importData";
 import { urlCompanylist } from "../Services/string";
 import PageButton from "../components/common/PaginationButton";
@@ -47,7 +47,7 @@ export default function ListCompany() {
                   <td>
                     {item.useFlag ? (
                       <i>
-                        <FaUserCheck />
+                        <BsCheck2 />
                       </i>
                     ) : null}
                   </td>

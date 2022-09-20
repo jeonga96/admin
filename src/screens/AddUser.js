@@ -3,6 +3,8 @@ import { servicesPostData } from "../Services/importData";
 import { useNavigate } from "react-router-dom";
 import { urlAdduser } from "../Services/string";
 
+import LayoutTopButton from "../components/common/LayoutTopButton";
+
 export default function AddUser() {
   const navigate = useNavigate();
   const [userData, setUserData] = useState({
@@ -63,10 +65,10 @@ export default function AddUser() {
   return (
     <>
       <div className="commonBox">
-        <form
-          className="inputFormLayout detailFormLayout"
-          onSubmit={AddUserSubmit}
-        >
+        <form className="formLayout " onSubmit={AddUserSubmit}>
+          <ul className="tableTopWrap">
+            <LayoutTopButton text="완료" />
+          </ul>
           <div className="formContentWrap">
             <label htmlFor="userid" className="blockLabel">
               아이디
@@ -105,10 +107,6 @@ export default function AddUser() {
               onChange={onChange}
             />
           </div>
-
-          <button type="submit" className="widthFullButton">
-            사용자 추가하기
-          </button>
         </form>
       </div>
     </>

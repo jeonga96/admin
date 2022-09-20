@@ -26,27 +26,31 @@ export default function Login() {
     <section className="loginWrap">
       <div className="commonBox loginBox">
         <h3>login</h3>
-        <form className="inputFormLayout" onSubmit={fnLogin}>
-          <input
-            type="text"
-            name="user_id"
-            id="userid"
-            placeholder="아이디를 입력해 주세요."
-            onChange={onChange}
-          />
-          <label htmlFor="userid" className="blind">
-            아이디를 입력해 주세요.
-          </label>
-          <input
-            type="password"
-            name="pass_wd"
-            id="passwd"
-            placeholder="비밀번호를 입력해 주세요."
-            onChange={onChange}
-          />
-          <label htmlFor="passwd" className="blind">
-            비밀번호를 입력해 주세요.
-          </label>
+        <form className="formLayout " onSubmit={fnLogin}>
+          <div className="formContentWrap">
+            <label htmlFor="userid" className="blockLabel">
+              ID
+            </label>
+            <input
+              type="text"
+              name="user_id"
+              id="userid"
+              placeholder="아이디를 입력해 주세요."
+              onChange={onChange}
+            />
+          </div>
+          <div className="formContentWrap">
+            <label htmlFor="passwd" className="blockLabel">
+              Password
+            </label>
+            <input
+              type="password"
+              name="pass_wd"
+              id="passwd"
+              placeholder="비밀번호를 입력해 주세요."
+              onChange={onChange}
+            />
+          </div>
           <button type="submit" className="widthFullButton">
             Log In
           </button>

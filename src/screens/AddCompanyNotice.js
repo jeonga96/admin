@@ -4,30 +4,17 @@ import { servicesPostData, servicesPostDataForm } from "../Services/importData";
 import { useNavigate } from "react-router-dom";
 import { BiUpload } from "react-icons/bi";
 
+import LayoutTopButton from "../components/common/LayoutTopButton";
+import SetImage from "../components/common/SetImage";
+
 export default function AddCompanyNotice() {
-  const [imgs, setImgs] = useState(null);
+  const [imgs, setImgs] = useState([]);
   const imgsIid = useRef([]);
   const [userDetail, setUserDetail] = useState({
     title: "",
     content: "",
     imgs: "",
   });
-
-  const fileSelectEvent = (event) => {
-    event.preventDefault();
-    const files = event.target.files;
-    const formData = new FormData();
-    for (let i = 0; i < files.length; i++) {
-      console.log(i, "titleUpload click-->", files[i]);
-      formData.append("Imgs", files[i]);
-    }
-    servicesPostDataForm(urlUpImages, formData).then((res) => {
-      setImgs(res.data);
-      for (let i = 0; i < res.data.length; i++) {
-        imgsIid.current.push(res.data[i].iid);
-      }
-    });
-  };
 
   function onChange(e) {
     setUserDetail({ ...userDetail, [e.target.id]: e.target.value });
@@ -61,55 +48,40 @@ export default function AddCompanyNotice() {
   return (
     <>
       <div className="commonBox">
-        <form
-          className="detailFormLayout inputFormLayout"
-          onSubmit={AddUserSubmit}
-        >
-          <label htmlFor="title" className="blockLabel">
-            제목
-          </label>
-          <input
-            type="text"
-            id="title"
-            placeholder="제목을 입력해 주세요."
-            onChange={onChange}
-          />
+        <form className="formLayout" onSubmit={AddUserSubmit}>
+          <ul className="tableTopWrap">
+            <LayoutTopButton text="완료" />
+          </ul>
+          <div className="formContentWrap">
+            <label htmlFor="title" className="blockLabel">
+              제목
+            </label>
+            <input
+              type="text"
+              id="title"
+              placeholder="제목을 입력해 주세요."
+              onChange={onChange}
+            />
+          </div>
 
-          <div className="blockLabel">이미지 추가</div>
-          {imgs && (
-            <ul className="imgsThumbnail">
-              {imgs.map((item, key) => (
-                <li key={key}>
-                  <img src={item.storagePath} alt="사업자 상세 이미지" />
-                </li>
-              ))}
-            </ul>
-          )}
-          <label htmlFor="imgs" className="blockLabel fileboxLabel">
-            <BiUpload /> 사진 업로드
-          </label>
-          <input
-            type="file"
+          <SetImage
+            img={imgs}
+            setImg={setImgs}
             id="imgs"
-            name="Imgs"
-            accept="image/*"
-            multiple
-            className="blind"
-            onChange={fileSelectEvent}
+            title="이미지 추가"
+            imgsIid={true}
           />
 
-          <label htmlFor="title" className="blockLabel">
-            내용
-          </label>
-          <textarea
-            id="content"
-            placeholder="내용을 입력해 주세요."
-            onChange={onChange}
-          />
-
-          <button type="submit" className="widthFullButton">
-            작성 완료
-          </button>
+          <div className="formContentWrap">
+            <label htmlFor="title" className="blockLabel">
+              내용
+            </label>
+            <textarea
+              id="content"
+              placeholder="내용을 입력해 주세요."
+              onChange={onChange}
+            />
+          </div>
         </form>
       </div>
     </>
