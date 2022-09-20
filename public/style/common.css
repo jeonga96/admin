@@ -107,6 +107,14 @@ button {
 .commonBox {
   background-color: var(--color-white);
   box-shadow: var(--styles-boxShadow);
+  margin-bottom: 0.625rem;
+  padding: 1.25rem 0;
+}
+.commonBox:first-child {
+  padding-top: 0;
+}
+.commonBox:last-child {
+  margin-bottom: 0;
 }
 
 /*container --------------------------------------------------------------*/
@@ -606,7 +614,7 @@ button {
   }
 }
 
-.detailFormLayout .fileboxLabel {
+.commonBox .fileboxLabel {
   width: 6.25rem;
   padding: 0.3em 0.5em;
   color: var(--color-pointgray);
@@ -786,9 +794,7 @@ button {
 .detailTime span {
   color: var(--color-pointgray);
 }
-.detailHead {
-  margin-bottom: 1.625rem;
-}
+
 .detailHead h4,
 .imgsImg h4 {
   width: 100%;

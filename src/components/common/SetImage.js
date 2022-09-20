@@ -1,8 +1,37 @@
 import { BiUpload } from "react-icons/bi";
-import { servicesPostDataForm } from "../../Services/importData";
-import { urlUpImages } from "../../Services/string";
+import {
+  servicesPostDataForm,
+  servicesPostData,
+} from "../../Services/importData";
+import { useDidMountEffect } from "../../Services/customHook";
+import { urlUpImages, urlGetImages } from "../../Services/string";
 
-export default function SetImage({ img, setImg, imgsIid, title, id }) {
+export default function SetImage({
+  img,
+  setImg,
+  getData,
+  imgsIid,
+  id,
+  title,
+  getDataFinish,
+}) {
+  useDidMountEffect(() => {
+    if (!!getData.titleImg) {
+      servicesPostData(urlGetImages, {
+        imgs: getData.titleImg,
+      }).then((res) => {
+        setImg(res.data);
+      });
+    }
+    if (getData.imgs) {
+      servicesPostData(urlGetImages, {
+        imgs: getData.imgs,
+      }).then((res) => {
+        setImg(res.data);
+        console.log("imgs", res.data);
+      });
+    }
+  }, [getDataFinish]);
   function setImage(img) {
     return setImg(img);
   }

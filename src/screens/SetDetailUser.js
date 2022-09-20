@@ -65,10 +65,7 @@ export default function SetDetailUser() {
   return (
     <>
       <div className="commonBox">
-        <form
-          className="detailFormLayout inputFormLayout"
-          onSubmit={AddUserSubmit}
-        >
+        <form className="inputFormLayout" onSubmit={AddUserSubmit}>
           <ul className="tableTopWrap">
             <LayoutTopButton text="완료" />
           </ul>
@@ -153,6 +150,8 @@ export default function SetDetailUser() {
             />
           </div>
         </form>
+      </div>
+      <div className="commonBox">
         <div className="detailHead">
           <h4>회원 권한 설정</h4>
           <SelctUserRole uid={uid} />
