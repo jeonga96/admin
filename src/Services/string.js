@@ -30,6 +30,11 @@ export const urlNoticeList = urlPrefix + "/pub/listCompanyNotice";
 export const urlGetNotice = urlPrefix + "/pub/getCompanyNotice";
 export const urlSetNotice = urlPrefix + "/svc/setCompanyNotice";
 
+/* 리쥬 */
+export const urlReviewList = urlPrefix + "/pub/listCompanyReview";
+// export const urlGetNotice = urlPrefix + "/pub/getCompanyNotice";
+// export const urlSetNotice = urlPrefix + "/svc/setCompanyNotice";
+
 /* string 선언 - reducer */
 export const TOKEN = "token";
 export const RETOKEN = "re_token";

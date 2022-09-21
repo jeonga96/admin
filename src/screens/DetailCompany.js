@@ -1,7 +1,14 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { servicesPostData } from "../Services/importData";
-import { urlGetCompanyDetail, urlNoticeList } from "../Services/string";
+import {
+  servicesPostData,
+  serviesPostDataCompany,
+} from "../Services/importData";
+import {
+  urlGetCompanyDetail,
+  urlNoticeList,
+  urlReviewList,
+} from "../Services/string";
 
 import DetailContentList from "../components/common/DetailContentList";
 import GetCompany from "../components/common/GetCompany";
@@ -10,8 +17,8 @@ import LayoutTopButton from "../components/common/LayoutTopButton";
 export default function DetailCompany() {
   let { cid } = useParams();
   const [companyDetail, setCompanyDetail] = useState([]);
-
-  const [noticeList, setNoticeList] = useState(null);
+  const [noticeList, setNoticeList] = useState([]);
+  const [reviewList, setReviewList] = useState([]);
 
   useEffect(() => {
     servicesPostData(urlGetCompanyDetail, {
@@ -28,19 +35,20 @@ export default function DetailCompany() {
         return;
       }
     });
-
-    servicesPostData(urlNoticeList, { rcid: cid }).then((res) => {
-      if (res.status === "success") {
-        setNoticeList(res.data);
-        console.log("urlNoticeList.data!!!", res.data);
-        return;
-      }
-      if (res.status === "fail" && res.emsg === "process failed.") {
-        console.log("엥 공지사항이 하나도 없어용", res);
-        setNoticeList(null);
-        return;
-      }
-    });
+    serviesPostDataCompany(urlNoticeList, cid, setNoticeList);
+    serviesPostDataCompany(urlReviewList, cid, setReviewList);
+    // servicesPostData(urlNoticeList, { rcid: cid }).then((res) => {
+    //   if (res.status === "success") {
+    //     setNoticeList(res.data);
+    //     console.log("urlNoticeList.data!!!", res.data);
+    //     return;
+    //   }
+    //   if (res.status === "fail" && res.emsg === "process failed.") {
+    //     console.log("엥 공지사항이 하나도 없어용", res);
+    //     setNoticeList(null);
+    //     return;
+    //   }
+    // });
   }, []);
 
   return (
@@ -56,15 +64,15 @@ export default function DetailCompany() {
           {noticeList && (
             <DetailContentList
               getData={noticeList}
-              url={`/company/${companyDetail.rcid}/notice`}
+              url={`/company/${companyDetail.rcid}/noticelist`}
               title="공지사항"
             />
           )}
           {companyDetail && (
             <DetailContentList
-              getData={noticeList}
-              url={`/company/${companyDetail.rcid}/notice`}
-              title="공지사항"
+              getData={reviewList}
+              url={`/company/${companyDetail.rcid}/reviewlist`}
+              title="리뷰"
             />
           )}
         </ul>

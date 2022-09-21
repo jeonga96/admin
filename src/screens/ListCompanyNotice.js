@@ -56,7 +56,7 @@ export default function ListCompanyNotice() {
                     <td>
                       <div className="tableButton">
                         <Link
-                          to={`/company/${item.rcid}/${item.comnid}`}
+                          to={`/company/${item.rcid}/notice/${item.comnid}`}
                           className="buttonLink Link"
                         >
                           보기
@@ -67,7 +67,6 @@ export default function ListCompanyNotice() {
                 ))}
             </tbody>
           </table>
-          {/* <PageButton listPage={listPage} page={page} setPage={setPage} /> */}
         </div>
       </section>
     </>

@@ -62,3 +62,18 @@ export function servicesGetRefreshToken() {
     })
     .catch((err) => console.log("리프래시 토큰 오류", err));
 }
+
+export function serviesPostDataCompany(url, cid, setData) {
+  servicesPostData(url, { rcid: cid }).then((res) => {
+    if (res.status === "success") {
+      setData(res.data);
+      console.log("serviesPostDataCompany 데이터를 저장합니다.", res.data);
+      return;
+    }
+    if (res.status === "fail" && res.emsg === "process failed.") {
+      setData([]);
+      console.log("작성된 내용이 없습니다.", res);
+      return;
+    }
+  });
+}

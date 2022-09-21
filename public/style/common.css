@@ -756,11 +756,14 @@ button {
   height: auto;
 }
 .detailContentsList li {
-  width: 25%;
+  width: calc(25% - 15px);
   height: 9.375rem;
   background-color: var(--color-bggray);
-  box-shadow: var(--styles-boxShadow);
   padding: 0.3125rem;
+  margin-right: 5px;
+}
+.detailContentsList li:last-child {
+  margin-right: 0;
 }
 .detailContentsList a {
   display: block;
@@ -934,6 +937,7 @@ ul.pagination li a:hover {
 
 /*button & Link--------------------------------------------------------------*/
 .tableTopWrap {
+  position: -webkit-sticky;
   position: sticky;
   z-index: 1;
   top: 0;

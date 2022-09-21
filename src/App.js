@@ -92,6 +92,7 @@ function App() {
             <MainLayout nowTitle="통합회원 관리" component={<ListUser />} />
           }
         />
+        {/* ------- 회원 관리 ------- */}
         <Route
           path="user/:uid"
           element={
@@ -117,6 +118,7 @@ function App() {
             <MainLayout nowTitle="통합회원 추가" component={<AddUser />} />
           }
         />
+        {/* ------- 사업자 관리 ------- */}
         <Route
           path="addcompany"
           element={
@@ -148,8 +150,9 @@ function App() {
             />
           }
         />
+        {/* ------- 공지사항 ------- */}
         <Route
-          path="company/:cid/notice"
+          path="company/:cid/noticelist"
           element={
             <MainLayout
               nowTitle="사업자 공지사항"
@@ -167,7 +170,7 @@ function App() {
           }
         />
         <Route
-          path="company/:cid/:comnid"
+          path="company/:cid/notice/:comnid"
           element={
             <MainLayout
               nowTitle="사업자 공지사항 상세정보"
@@ -176,11 +179,21 @@ function App() {
           }
         />
         <Route
-          path="company/:cid/:comnid/modify"
+          path="company/:cid/notice/:comnid/modify"
           element={
             <MainLayout
               nowTitle="사업자 공지사항 수정"
               component={<SetDetailCompanyNotice />}
+            />
+          }
+        />
+        {/* ------- 리뷰 ------- */}
+        <Route
+          path="company/:cid/reviewlist"
+          element={
+            <MainLayout
+              nowTitle="사업자 리뷰"
+              component={<ListCompanyNotice />}
             />
           }
         />
