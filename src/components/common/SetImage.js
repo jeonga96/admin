@@ -1,4 +1,5 @@
 import { BiUpload } from "react-icons/bi";
+import { useRef } from "react";
 import {
   servicesPostDataForm,
   servicesPostData,
@@ -10,32 +11,40 @@ export default function SetImage({
   img,
   setImg,
   getData,
-  imgsIid,
+  imgs,
+  setImgs,
   id,
   title,
   getDataFinish,
 }) {
+  const fnSetImg = (res) => {
+    if (img) {
+      setImg(res);
+    }
+  };
+  const fnSetImgs = (res) => {
+    if (imgs) {
+      setImgs(res);
+    }
+  };
+
   useDidMountEffect(() => {
-    if (!!getData.titleImg) {
+    if (getData.titleImg) {
       servicesPostData(urlGetImages, {
         imgs: getData.titleImg,
       }).then((res) => {
-        setImg(res.data);
+        fnSetImg(res.data);
       });
     }
+
     if (getData.imgs) {
       servicesPostData(urlGetImages, {
         imgs: getData.imgs,
       }).then((res) => {
-        setImg(res.data);
-        console.log("imgs", res.data);
+        fnSetImgs(res.data);
       });
     }
   }, [getDataFinish]);
-
-  function setImage(img) {
-    return setImg(img);
-  }
 
   function handleSetImage(event) {
     event.preventDefault();
@@ -46,21 +55,22 @@ export default function SetImage({
       formData.append("Imgs", files[0]);
     } else {
       for (let i = 0; i < files.length; i++) {
-        console.log(i, "titleUpload click-->", files[i]);
         formData.append("Imgs", files[i]);
+        console.log(i, "titleUpload click-->", files[i]);
       }
     }
 
     servicesPostDataForm(urlUpImages, formData).then((res) => {
-      setImage(res.data);
       if (res.data.length > 1) {
         for (let i = 0; i < res.data.length; i++) {
-          // imgsIid.current.push(res.data[i].iid);
-          console.log(imgsIid);
+          fnSetImgs((prev) => [res.data[i], ...prev]);
         }
+      } else {
+        fnSetImg(res.data);
       }
     });
   }
+
   return (
     <div className="setImageWrap">
       <div className="imgsTitle">
@@ -76,14 +86,12 @@ export default function SetImage({
           accept="image/*"
           className="blind"
           onChange={handleSetImage}
-          multiple={imgsIid ? "multiple" : null}
+          multiple={imgs ? "multiple" : null}
         />
       </div>
       <div className="imgsThumbnail">
-        {imgsIid && !img ? (
-          <span>이미지를 두개 이상 업로드해주세요.</span>
-        ) : null}
-        {(img && img.length === 1) || (img && !imgsIid) ? (
+        {imgs === null ? <span>이미지를 두개 이상 업로드해주세요.</span> : null}
+        {!!img && (img.length === 1 || !imgs) ? (
           <div
             style={{
               backgroundImage: `url("${img[0].storagePath}")`,
@@ -92,10 +100,10 @@ export default function SetImage({
             <span className="blind">사업자 대표 이미지</span>
           </div>
         ) : (
-          img &&
-          img.map((item, key) => (
+          imgs &&
+          imgs.map((item) => (
             <div
-              key={key}
+              key={item.iid}
               style={{
                 backgroundImage: `url("${item.storagePath}")`,
               }}

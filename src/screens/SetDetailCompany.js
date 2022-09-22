@@ -28,10 +28,9 @@ export default function SetCompanyDetail() {
   });
   const [titleImg, setTitleImg] = useState(null);
   const [imgs, setImgs] = useState(null);
-  const imgsIid = useRef([]);
-  // const imgsIid = [];
   const getDataFinish = useRef(null);
   const mapcoor = useRef({ longitude: "", latitude: "" });
+  const arrImgs = [];
 
   const callMapcoor = () => {
     console.debug("callMapcoor");
@@ -66,7 +65,15 @@ export default function SetCompanyDetail() {
     setCompanyData({ ...companyData, [e.target.id]: e.target.value });
   }
 
-  titleImg && console.log(titleImg[0].iid, imgsIid);
+  // if (imgs) {
+  //   function fnImgsGetiid() {
+  //     for (let i = 0; i < imgs.length; i++) {
+  //       arrImgs.push(imgs[i].iid);
+  //     }
+  //     return arrImgs;
+  //   }
+  // }
+  // fnImgsGetiid();
 
   const addUserEvent = () => {
     servicesPostData(urlSetCompanyDetail, {
@@ -79,7 +86,7 @@ export default function SetCompanyDetail() {
       workTime: companyData.workTime,
       offer: companyData.offer,
       titleImg: titleImg ? titleImg[0].iid : "",
-      imgs: imgsIid ? imgsIid.current.toString() : "",
+      imgs: setImgs ? arrImgs.toString() : "",
       longitude: mapcoor.current.longitude,
       latitude: mapcoor.current.latitude,
       telnum: companyData.telnum,
@@ -243,12 +250,11 @@ export default function SetCompanyDetail() {
           />
 
           <SetImage
-            img={imgs}
-            setImg={setImgs}
-            getData={companyData}
+            imgs={imgs}
+            setImgs={setImgs}
             id="imgs"
             title="상세설명 이미지"
-            imgsIid={true}
+            getData={companyData}
             getDataFinish={getDataFinish.current}
           />
 
