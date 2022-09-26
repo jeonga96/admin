@@ -5,19 +5,25 @@ export default function ImageOnEvent({ getData, url, text }) {
   const onPopup = () => {
     setZoomPopup(!zoomPopup);
   };
+  const onRemove = () => {
+    console.log("삭제하자아아");
+  };
 
   return (
     <div
-      onClick={onPopup}
       style={
         getData && {
           backgroundImage: `url("${url}")`,
         }
       }
     >
+      <button type="button" className="imgRemoveBtn" onClick={onRemove}>
+        X
+      </button>
+      <div className="Link" onClick={onPopup} />
       <span className="blind">{text}</span>
       {zoomPopup ? (
-        <div className="imageZoomPopupBox">
+        <div className="imageZoomPopupBox" onClick={onPopup}>
           <div
             className="imageZoom"
             style={{

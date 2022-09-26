@@ -23,6 +23,7 @@ export default function SetImage({
   const fnSetImgs = (res) => {
     setImgs && setImgs(res);
   };
+
   useDidMountEffect(() => {
     if (getData.titleImg) {
       servicesPostData(urlGetImages, {
