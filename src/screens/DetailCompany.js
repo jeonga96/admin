@@ -36,7 +36,6 @@ export default function DetailCompany() {
     serviesPostDataSettingRcid(urlNoticeList, cid, setNoticeList);
     serviesPostDataSettingRcid(urlReviewList, cid, setReviewList);
   }, []);
-
   return (
     <>
       <ul className="tableTopWrap">

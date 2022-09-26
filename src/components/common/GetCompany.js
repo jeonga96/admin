@@ -1,9 +1,10 @@
 import { useState, useRef } from "react";
 import { useDidMountEffect, useGetImage } from "../../Services/customHook";
+import ImageOnClick from "../common/ImageOnClick";
 
 export default function GetCompany({ companyDetail }) {
-  const [image, setImage] = useState();
-  const [images, setImages] = useState();
+  const [image, setImage] = useState([]);
+  const [images, setImages] = useState(null);
   const mapLinkAdress = useRef("");
   const keyword = useRef("");
 
@@ -14,10 +15,14 @@ export default function GetCompany({ companyDetail }) {
     if (companyDetail.keywords) {
       keyword.current = companyDetail.keywords.split(",");
     }
-    if (companyDetail.imgs) {
-      setImages(companyDetail.imgs);
-    }
   }, [companyDetail]);
+
+  useDidMountEffect(() => {
+    if (companyDetail.imgs) {
+      image && setImages(image.filter((_, index) => index !== 0));
+    }
+  }, [image]);
+
   useGetImage(setImage, companyDetail);
 
   return (
@@ -79,35 +84,29 @@ export default function GetCompany({ companyDetail }) {
       <div className="formContentWrap">
         <h4>대표 이미지</h4>
         <div className="detailWidthContent">
-          {image && (
-            <div
-              className="img"
-              style={{
-                backgroundImage: `url("${image && image[0].storagePath}")`,
-              }}
-            >
-              <span className="blind">사업자 대표 이미지</span>
-            </div>
+          {!!image[0] && (
+            <ImageOnClick
+              getData={image}
+              url={image[0].storagePath}
+              text="사업자 대표 이미지"
+            />
           )}
         </div>
       </div>
 
       <div className="formContentWrap">
         <h4>사업자 상세 이미지</h4>
-        <ul className="detailWidthContent" style={{ justifyContent: "left" }}>
+        <div className="detailWidthContent detailWidthContents">
           {images &&
             images.map((item) => (
-              <li
+              <ImageOnClick
                 key={item.iid}
-                className="img"
-                style={{
-                  backgroundImage: `url("${image && item.storagePath}")`,
-                }}
-              >
-                <span className="blind">사업자 상세 이미지 </span>
-              </li>
+                getData={images}
+                url={item.storagePath}
+                text="사업자 상세 이미지"
+              />
             ))}
-        </ul>
+        </div>
       </div>
 
       <div className="formContentWrap">

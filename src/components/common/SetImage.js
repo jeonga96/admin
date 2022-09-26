@@ -1,14 +1,11 @@
 import { BiUpload } from "react-icons/bi";
-// import { useState } from "react";
-
 import {
   servicesPostDataForm,
   servicesPostData,
 } from "../../Services/importData";
 import { useDidMountEffect } from "../../Services/customHook";
 import { urlUpImages, urlGetImages } from "../../Services/string";
-// import ImageZoomPopup from "../common/ImageZoomPopup";
-import ImageOnEvent from "./ImageOnClick";
+import ImageOnClick from "./ImageOnClick";
 
 export default function SetImage({
   img,
@@ -20,16 +17,12 @@ export default function SetImage({
   title,
   getDataFinish,
 }) {
-  // const [zoomPopup, setZoomPopup] = useState(false);
   const fnSetImg = (res) => {
     setImg && setImg(res);
   };
   const fnSetImgs = (res) => {
     setImgs && setImgs(res);
   };
-  // const onPopup = () => {
-  //   setZoomPopup(!zoomPopup);
-  // };
   useDidMountEffect(() => {
     if (getData.titleImg) {
       servicesPostData(urlGetImages, {
@@ -95,7 +88,7 @@ export default function SetImage({
       <div className="imgsThumbnail">
         {imgs === null ? <span>이미지를 두개 이상 업로드해주세요.</span> : null}
         {img !== null && id === "titleImg" ? (
-          <ImageOnEvent
+          <ImageOnClick
             getData={img}
             url={img[0].storagePath}
             text="사업자 대표 이미지"
@@ -104,7 +97,7 @@ export default function SetImage({
         {imgs !== null && id === "imgs"
           ? !!imgs &&
             imgs.map((item) => (
-              <ImageOnEvent
+              <ImageOnClick
                 key={item.iid}
                 getData={imgs}
                 url={item.storagePath}
