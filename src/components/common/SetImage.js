@@ -56,17 +56,17 @@ export default function SetImage({
     }
 
     servicesPostDataForm(urlUpImages, formData).then((res) => {
-      if (res.data.length > 1) {
-        fnSetImgs([]);
+      if (event.target.id === "titleImg") {
+        fnSetImg(res.data);
+      } else {
+        fnSetImgs([...imgs]);
         for (let i = 0; i < res.data.length; i++) {
           fnSetImgs((prev) => [res.data[i], ...prev]);
         }
-      } else {
-        fnSetImg(res.data);
       }
     });
   }
-  // console.log(zoomPopup);
+
   return (
     <div className="setImageWrap">
       <div className="imgsTitle">
