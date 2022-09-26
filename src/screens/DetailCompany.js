@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import {
-  servicesPostData,
-  serviesPostDataCompany,
-} from "../Services/importData";
+import { servicesPostData } from "../Services/importData";
+import { serviesPostDataSettingRcid } from "../Services/useData";
 import {
   urlGetCompanyDetail,
   urlNoticeList,
@@ -35,20 +33,8 @@ export default function DetailCompany() {
         return;
       }
     });
-    serviesPostDataCompany(urlNoticeList, cid, setNoticeList);
-    serviesPostDataCompany(urlReviewList, cid, setReviewList);
-    // servicesPostData(urlNoticeList, { rcid: cid }).then((res) => {
-    //   if (res.status === "success") {
-    //     setNoticeList(res.data);
-    //     console.log("urlNoticeList.data!!!", res.data);
-    //     return;
-    //   }
-    //   if (res.status === "fail" && res.emsg === "process failed.") {
-    //     console.log("엥 공지사항이 하나도 없어용", res);
-    //     setNoticeList(null);
-    //     return;
-    //   }
-    // });
+    serviesPostDataSettingRcid(urlNoticeList, cid, setNoticeList);
+    serviesPostDataSettingRcid(urlReviewList, cid, setReviewList);
   }, []);
 
   return (

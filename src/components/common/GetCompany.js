@@ -3,6 +3,7 @@ import { useDidMountEffect, useGetImage } from "../../Services/customHook";
 
 export default function GetCompany({ companyDetail }) {
   const [image, setImage] = useState();
+  const [images, setImages] = useState();
   const mapLinkAdress = useRef("");
   const keyword = useRef("");
 
@@ -13,8 +14,10 @@ export default function GetCompany({ companyDetail }) {
     if (companyDetail.keywords) {
       keyword.current = companyDetail.keywords.split(",");
     }
+    if (companyDetail.imgs) {
+      setImages(companyDetail.imgs);
+    }
   }, [companyDetail]);
-
   useGetImage(setImage, companyDetail);
 
   return (
@@ -92,8 +95,8 @@ export default function GetCompany({ companyDetail }) {
       <div className="formContentWrap">
         <h4>사업자 상세 이미지</h4>
         <ul className="detailWidthContent" style={{ justifyContent: "left" }}>
-          {image &&
-            image.map((item) => (
+          {images &&
+            images.map((item) => (
               <li
                 key={item.iid}
                 className="img"

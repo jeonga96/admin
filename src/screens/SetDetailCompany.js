@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
 import { servicesPostData } from "../Services/importData";
+import { servicesGetImgsIid } from "../Services/useData";
 import { urlGetCompanyDetail, urlSetCompanyDetail } from "../Services/string";
 import SetImage from "../components/common/SetImage";
 import LayoutTopButton from "../components/common/LayoutTopButton";
@@ -65,17 +66,11 @@ export default function SetCompanyDetail() {
     setCompanyData({ ...companyData, [e.target.id]: e.target.value });
   }
 
-  // if (imgs) {
-  //   function fnImgsGetiid() {
-  //     for (let i = 0; i < imgs.length; i++) {
-  //       arrImgs.push(imgs[i].iid);
-  //     }
-  //     return arrImgs;
-  //   }
-  // }
-  // fnImgsGetiid();
+  console.log("ddd", titleImg, imgs);
 
   const addUserEvent = () => {
+    servicesGetImgsIid(arrImgs, imgs);
+
     servicesPostData(urlSetCompanyDetail, {
       rcid: cid,
       name: companyData.name,
@@ -95,10 +90,9 @@ export default function SetCompanyDetail() {
       extnum: companyData.extnum,
       keywords: companyData.keywords,
       tags: companyData.tags,
-      useFlag: cid,
+      useFlag: 1,
     })
       .then((res) => {
-        console.log("axios 성공!", res);
         if (res.status === "success") {
           alert("작업이 완료되었습니다.");
           console.log("mapcoor.current.longitude", mapcoor.current.longitude);

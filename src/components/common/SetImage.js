@@ -1,11 +1,14 @@
 import { BiUpload } from "react-icons/bi";
-import { useRef } from "react";
+// import { useState } from "react";
+
 import {
   servicesPostDataForm,
   servicesPostData,
 } from "../../Services/importData";
 import { useDidMountEffect } from "../../Services/customHook";
 import { urlUpImages, urlGetImages } from "../../Services/string";
+// import ImageZoomPopup from "../common/ImageZoomPopup";
+import ImageOnEvent from "./ImageOnClick";
 
 export default function SetImage({
   img,
@@ -17,17 +20,16 @@ export default function SetImage({
   title,
   getDataFinish,
 }) {
+  // const [zoomPopup, setZoomPopup] = useState(false);
   const fnSetImg = (res) => {
-    if (img) {
-      setImg(res);
-    }
+    setImg && setImg(res);
   };
   const fnSetImgs = (res) => {
-    if (imgs) {
-      setImgs(res);
-    }
+    setImgs && setImgs(res);
   };
-
+  // const onPopup = () => {
+  //   setZoomPopup(!zoomPopup);
+  // };
   useDidMountEffect(() => {
     if (getData.titleImg) {
       servicesPostData(urlGetImages, {
@@ -62,6 +64,7 @@ export default function SetImage({
 
     servicesPostDataForm(urlUpImages, formData).then((res) => {
       if (res.data.length > 1) {
+        fnSetImgs([]);
         for (let i = 0; i < res.data.length; i++) {
           fnSetImgs((prev) => [res.data[i], ...prev]);
         }
@@ -70,7 +73,7 @@ export default function SetImage({
       }
     });
   }
-
+  // console.log(zoomPopup);
   return (
     <div className="setImageWrap">
       <div className="imgsTitle">
@@ -86,32 +89,29 @@ export default function SetImage({
           accept="image/*"
           className="blind"
           onChange={handleSetImage}
-          multiple={imgs ? "multiple" : null}
+          multiple={id === "imgs" ? "multiple" : null}
         />
       </div>
       <div className="imgsThumbnail">
         {imgs === null ? <span>이미지를 두개 이상 업로드해주세요.</span> : null}
-        {!!img && (img.length === 1 || !imgs) ? (
-          <div
-            style={{
-              backgroundImage: `url("${img[0].storagePath}")`,
-            }}
-          >
-            <span className="blind">사업자 대표 이미지</span>
-          </div>
-        ) : (
-          imgs &&
-          imgs.map((item) => (
-            <div
-              key={item.iid}
-              style={{
-                backgroundImage: `url("${item.storagePath}")`,
-              }}
-            >
-              <span className="blind">사업자 상세 정보 이미지</span>
-            </div>
-          ))
-        )}
+        {img !== null && id === "titleImg" ? (
+          <ImageOnEvent
+            getData={img}
+            url={img[0].storagePath}
+            text="사업자 대표 이미지"
+          />
+        ) : null}
+        {imgs !== null && id === "imgs"
+          ? !!imgs &&
+            imgs.map((item) => (
+              <ImageOnEvent
+                key={item.iid}
+                getData={imgs}
+                url={item.storagePath}
+                text="사업자 상세 정보 이미지"
+              />
+            ))
+          : null}
       </div>
     </div>
   );
