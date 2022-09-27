@@ -1,12 +1,10 @@
 import { useState } from "react";
+import { IoMdRemoveCircleOutline } from "react-icons/io";
 
-export default function ImageOnEvent({ getData, url, text }) {
+export default function ImageOnEvent({ onRemove, getData, url, iid, text }) {
   const [zoomPopup, setZoomPopup] = useState(false);
   const onPopup = () => {
     setZoomPopup(!zoomPopup);
-  };
-  const onRemove = () => {
-    console.log("삭제하자아아");
   };
 
   return (
@@ -17,9 +15,17 @@ export default function ImageOnEvent({ getData, url, text }) {
         }
       }
     >
-      <button type="button" className="imgRemoveBtn" onClick={onRemove}>
-        X
-      </button>
+      {iid && (
+        <button
+          type="button"
+          className="imgRemoveBtn"
+          onClick={() => {
+            onRemove(iid);
+          }}
+        >
+          <IoMdRemoveCircleOutline />
+        </button>
+      )}
       <div className="Link" onClick={onPopup} />
       <span className="blind">{text}</span>
       {zoomPopup ? (

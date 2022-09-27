@@ -15,24 +15,24 @@ const Chart = ({ negativeCount, positiveCount }) => {
 
   const options = {
     maintainAspectRatio: false,
-    indexAxis: "y",
+    indexAxis: "y", //가로형 막대 그래프 설정
     plugins: {
       legend: {
-        display: false,
+        display: false, // 범례 삭제
       },
     },
     scales: {
       x: {
         grid: {
-          display: false,
+          display: false, // x축 그리드 삭제
         },
         ticks: {
-          display: false,
+          display: false, // x축 데이터 수치 삭제
         },
       },
       y: {
         grid: {
-          display: false,
+          display: false, // y축 그리드 삭제
         },
       },
     },

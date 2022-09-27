@@ -1,4 +1,5 @@
 import { BiUpload } from "react-icons/bi";
+import { IoMdRemoveCircleOutline } from "react-icons/io";
 import {
   servicesPostDataForm,
   servicesPostData,
@@ -68,6 +69,16 @@ export default function SetImage({
     });
   }
 
+  function onRemove(iid) {
+    if (id === "titleImg") {
+      const newDiaryList = img.filter((it) => it.iid !== iid);
+      fnSetImg(newDiaryList);
+    } else {
+      const newDiaryList = imgs.filter((it) => it.iid !== iid);
+      fnSetImgs(newDiaryList);
+    }
+  }
+
   return (
     <div className="setImageWrap">
       <div className="imgsTitle">
@@ -91,8 +102,10 @@ export default function SetImage({
         {img !== null && id === "titleImg" ? (
           <ImageOnClick
             getData={img}
-            url={img[0].storagePath}
+            url={img[0] && img[0].storagePath}
             text="사업자 대표 이미지"
+            iid={img[0] && img[0].iid}
+            onRemove={onRemove}
           />
         ) : null}
         {imgs !== null && id === "imgs"
@@ -101,8 +114,10 @@ export default function SetImage({
               <ImageOnClick
                 key={item.iid}
                 getData={imgs}
-                url={item.storagePath}
+                url={item.storagePath && item.storagePath}
                 text="사업자 상세 정보 이미지"
+                iid={item.iid && item.iid}
+                onRemove={onRemove}
               />
             ))
           : null}

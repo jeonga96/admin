@@ -1,4 +1,5 @@
-import { servicesPostData } from "./importData";
+import { urlUpImages } from "./string";
+import { servicesPostData, servicesPostDataForm } from "./importData";
 
 export function servicesGetImgsIid(variable, data) {
   for (let i = 0; i < data.length; i++) {
@@ -20,3 +21,13 @@ export function serviesPostDataSettingRcid(url, valueName, setData) {
     }
   });
 }
+
+// export function serviesPostDataSettingUseState( data, data, setData) {
+//   servicesPostDataForm(urlUpImages, data).then((res) => {
+
+//       for (let i = 0; i < res.data.length; i++) {
+//         fnSetImgs((prev) => [res.data[i], ...prev]);
+//       }
+//     }
+//   });
+// }

@@ -66,8 +66,6 @@ export default function SetCompanyDetail() {
     setCompanyData({ ...companyData, [e.target.id]: e.target.value });
   }
 
-  console.log("ddd", titleImg, imgs);
-
   const addUserEvent = () => {
     servicesGetImgsIid(arrImgs, imgs);
 
