@@ -51,7 +51,19 @@ select {
   font-size: 100%;
   box-sizing: border-box;
 }
-
+p,
+span,
+div,
+li,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-point);
+  font-weight: 400;
+}
 ul,
 li,
 ol {
