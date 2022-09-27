@@ -1,17 +1,17 @@
 [
   {
-    "name": "통합회원",
+    "name": "회원 관리",
     "icon": "https://demo.dashboardpack.com/sales-html/img/menu-icon/dashboard.svg",
     "url": null,
     "subNav": [
       {
-        "subName": "통합회원 관리",
+        "subName": "회원 관리",
         "url": "/user"
       }
     ]
   },
   {
-    "name": "사업자",
+    "name": "사업자 관리",
     "icon": "https://demo.dashboardpack.com/sales-html/img/menu-icon/dashboard.svg",
     "url": null,
     "subNav": [

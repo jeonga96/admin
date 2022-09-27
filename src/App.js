@@ -1,25 +1,33 @@
 import { useEffect } from "react";
-
 import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
+/* 기본 레이아웃 & 기능 */
 import MainLayout from "./components/common/MainLayout";
 import Home from "./screens/Home";
 import Login from "./screens/Login";
 
+/* 회원관리 */
 import ListUser from "./screens/ListUser";
 import AddUser from "./screens/AddUser";
 import UserDetail from "./screens/DetailUser";
 import SetDetailUser from "./screens/SetDetailUser";
 
+/* 사업자 관리 */
 import ListCompany from "./screens/ListCompany";
 import AddCompany from "./screens/AddCompany";
 import DetailCompany from "./screens/DetailCompany";
 import SetDetailCompany from "./screens/SetDetailCompany";
+
+/* 공지사항 */
 import ListCompanyNotice from "./screens/ListCompanyNotice";
 import AddCompanyNotice from "./screens/AddCompanyNotice";
 import DetailCompanyNotice from "./screens/DetailCompanyNotice";
 import SetDetailCompanyNotice from "./screens/SetDetailCompanyNotice";
+
+/* 리뷰 */
+import ListCompanyReview from "./screens/ListCompanyReview";
+import DetailCompanyReview from "./screens/DetailCompanyReview";
 
 import {
   servicesGetStorage,
@@ -193,7 +201,16 @@ function App() {
           element={
             <MainLayout
               nowTitle="사업자 리뷰"
-              component={<ListCompanyNotice />}
+              component={<ListCompanyReview />}
+            />
+          }
+        />
+        <Route
+          path="company/:cid/review/:comrid"
+          element={
+            <MainLayout
+              nowTitle="사업자 리뷰 보기"
+              component={<DetailCompanyReview />}
             />
           }
         />

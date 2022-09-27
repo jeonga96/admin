@@ -32,8 +32,7 @@ export const urlSetNotice = urlPrefix + "/svc/setCompanyNotice";
 
 /* 리쥬 */
 export const urlReviewList = urlPrefix + "/pub/listCompanyReview";
-// export const urlGetNotice = urlPrefix + "/pub/getCompanyNotice";
-// export const urlSetNotice = urlPrefix + "/svc/setCompanyNotice";
+export const urlGetReview = urlPrefix + "/pub/getCompanyReview";
 
 /* string 선언 - reducer */
 export const TOKEN = "token";
