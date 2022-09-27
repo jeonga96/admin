@@ -798,6 +798,7 @@ button {
   width: 43.75rem;
   height: auto;
 }
+
 .detailContentsList li {
   width: calc(25% - 15px);
   height: 9.375rem;
@@ -816,6 +817,7 @@ button {
 }
 
 .detailContentsList h4 {
+  font-weight: 700;
   height: 3.125rem;
   line-height: 3.125rem;
 }
@@ -823,6 +825,7 @@ button {
   display: inline-block;
   height: 3.75rem;
   font-weight: 400;
+  padding-left: 4px;
 }
 .detailContentsList .link {
   position: relative;

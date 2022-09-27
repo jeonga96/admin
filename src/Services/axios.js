@@ -6,7 +6,6 @@ const axiosApiInstance = axios.create();
 
 axiosApiInstance.interceptors.request.use(
   (config) => {
-    console.log("interceptors.request.use", config);
     const token = servicesGetStorage(TOKEN);
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;

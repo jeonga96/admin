@@ -68,7 +68,7 @@ export default function DetailCompanyReview() {
           </li>
 
           <li className="formContentWrap">
-            <h4>리뷰 점수</h4>
+            <h4>업체 만족도</h4>
             <p>
               {companyDetail.negativeCount && (
                 <BarChart

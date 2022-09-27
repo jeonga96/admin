@@ -25,6 +25,7 @@ export default function ListCompanyReview() {
             <thead>
               <tr>
                 <th className="widthM">번호</th>
+                <th className="widthM">별명</th>
                 <th className="widthBB">내용</th>
                 <th className="widthM">날짜</th>
               </tr>
@@ -34,6 +35,7 @@ export default function ListCompanyReview() {
                 review.map((item) => (
                   <tr key={item.comrid} style={{ height: "5.25rem" }}>
                     <td>{item.comrid}</td>
+                    <td>{item.ruidNick}</td>
                     <td className="tableContentWrap">
                       <em>{item.title}</em>
                       <i>{item.imgs ? <MdOutlineImage /> : null}</i>
