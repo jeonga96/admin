@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { BiUpload } from "react-icons/bi";
 
 import LayoutTopButton from "../components/common/LayoutTopButton";
-import SetImage from "../components/common/SetImage";
+import SetImage from "../components/common/ImageSet";
 
 export default function AddCompanyNotice() {
   const [imgs, setImgs] = useState([]);

@@ -588,7 +588,7 @@ button {
   width: 100%;
 }
 
-/*이미지 설정*/
+/*이미지 설정 - 썸네일*/
 .imgsThumbnail {
   display: flex;
   justify-content: left;
@@ -616,11 +616,8 @@ button {
   color: var(--color-pointgray);
   margin-top: 0.125rem;
 }
-.imgsThumbnail > div:hover .imgRemoveBtn,
-.imgsThumbnail > li:hover .imgRemoveBtn {
-  display: block;
-}
-/*popup*/
+
+/*썸네일 클릭 시 확대*/
 .imageZoomPopupBox {
   position: fixed;
   z-index: 100;
@@ -644,6 +641,8 @@ button {
   background-size: contain;
   background-repeat: no-repeat;
 }
+
+/* 썸네일 삭제 */
 .imgRemoveBtn {
   display: none;
   position: absolute;
@@ -652,6 +651,10 @@ button {
   border-radius: 10px;
   background-color: rgba(0, 0, 0, 0.5);
   box-shadow: var(--styles-boxShadow);
+}
+.imgsThumbnail > div:hover .imgRemoveBtn,
+.imgsThumbnail > li:hover .imgRemoveBtn {
+  display: block;
 }
 .imgRemoveBtn svg {
   width: 100%;

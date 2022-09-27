@@ -3,7 +3,7 @@ import { useEffect, useState, useRef } from "react";
 import { servicesPostData } from "../Services/importData";
 import { servicesGetImgsIid } from "../Services/useData";
 import { urlGetCompanyDetail, urlSetCompanyDetail } from "../Services/string";
-import SetImage from "../components/common/SetImage";
+import SetImage from "../components/common/ImageSet";
 import LayoutTopButton from "../components/common/LayoutTopButton";
 
 export default function SetCompanyDetail() {
@@ -27,14 +27,17 @@ export default function SetCompanyDetail() {
     tags: "",
     useFlag: "",
   });
+  // titleImg:대표 이미지저장 및 표시, imgs:상세 이미지저장 및 표시, imgsIid:서버에 이미지를 보낼 때는, iid값만 필요
+  // getDataFinish:기존에 입력된 값이 있어 값을 불러왔다면 true로 변경,
+  // mapcoor:위도 경도 저장,
   const [titleImg, setTitleImg] = useState(null);
   const [imgs, setImgs] = useState(null);
-  const getDataFinish = useRef(null);
+  const getDataFinish = useRef(false);
   const mapcoor = useRef({ longitude: "", latitude: "" });
-  const arrImgs = [];
+  const imgsIid = [];
 
+  // 카카오 API, 주소를 위도 경도로 변환
   const callMapcoor = () => {
-    console.debug("callMapcoor");
     var geocoder = new window.kakao.maps.services.Geocoder();
     var callback = function (result, status) {
       if (status === window.kakao.maps.services.Status.OK) {
@@ -47,28 +50,38 @@ export default function SetCompanyDetail() {
     geocoder.addressSearch(companyData.address, callback);
   };
 
+  // 현재 페이지가 렌더링되자마자 기존에 입력된 값의 여부를 확인한다.
   useEffect(() => {
     servicesPostData(urlGetCompanyDetail, {
       rcid: cid,
     })
       .then((res) => {
         if (res.status === "success") {
+          // 값이 있다면 comapnyData에 저장한 후 getDataFinish 값을 변경
           setCompanyData(res.data);
           getDataFinish.current = true;
         } else if (res.data === "fail") {
-          console.log("기존에 입력된 데이터가 없습니다.");
+          console.log("새로운 사업자 회원입니다.");
         }
       })
       .catch((res) => console.log(res));
   }, []);
 
+  // input onChange 이벤트
   function onChange(e) {
     setCompanyData({ ...companyData, [e.target.id]: e.target.value });
   }
 
-  const addUserEvent = () => {
-    servicesGetImgsIid(arrImgs, imgs);
+  //서버에 imgs의 iid값만을 보내기 위해 실행하는 반복문 함수
+  function getImgsIid(variable, data) {
+    for (let i = 0; i < data.length; i++) {
+      variable.push(data[i].iid);
+    }
+  }
 
+  // 실행되는 form submit 이벤트
+  const addUserEvent = () => {
+    getImgsIid(imgsIid, imgs);
     servicesPostData(urlSetCompanyDetail, {
       rcid: cid,
       name: companyData.name,
@@ -79,7 +92,7 @@ export default function SetCompanyDetail() {
       workTime: companyData.workTime,
       offer: companyData.offer,
       titleImg: titleImg ? titleImg[0].iid : "",
-      imgs: setImgs ? arrImgs.toString() : "",
+      imgs: setImgs ? imgsIid.toString() : "",
       longitude: mapcoor.current.longitude,
       latitude: mapcoor.current.latitude,
       telnum: companyData.telnum,
@@ -92,17 +105,18 @@ export default function SetCompanyDetail() {
     })
       .then((res) => {
         if (res.status === "success") {
-          alert("작업이 완료되었습니다.");
-          console.log("mapcoor.current.longitude", mapcoor.current.longitude);
+          alert("완료되었습니다.");
           window.location.href = cid ? `/company/${cid}` : "CompanyMyDetail";
           return;
         }
       })
-      .catch((error) => console.log("axios 실패", error.response));
+      .catch((error) => console.log("실패", error.response));
   };
 
   function AddUserSubmit(e) {
     e.preventDefault();
+
+    // companyData.address가 입력되어 있으면 위도경도 구하는 함수 실행(내부에 addUserEvent이벤트 실행 코드 있음)
     companyData.address ? callMapcoor() : addUserEvent();
   }
 

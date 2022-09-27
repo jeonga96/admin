@@ -1,13 +1,15 @@
 import { useState, useRef } from "react";
 import { useDidMountEffect, useGetImage } from "../../Services/customHook";
-import ImageOnClick from "../common/ImageOnClick";
+import ImageOnClick from "./ImageOnClick";
 
 export default function GetCompany({ companyDetail }) {
+  // image:대표이미지, images:상세이미지 mapLinkAdress는 클릭 시 네이버 지도로 가기 위한 변수
   const [image, setImage] = useState([]);
   const [images, setImages] = useState(null);
   const mapLinkAdress = useRef("");
   const keyword = useRef("");
 
+  // 첫 렌더링을 방지하고, 해당 회원의 데이터가 companyDetail에 저장되면 아래 기능 수행
   useDidMountEffect(() => {
     if (!!companyDetail.address) {
       mapLinkAdress.current = companyDetail.address.replace(/ /gi, "+");
@@ -17,12 +19,17 @@ export default function GetCompany({ companyDetail }) {
     }
   }, [companyDetail]);
 
+  // 서버에서 이미지를 한 번에 가져오기 위해 image에 대표이미지와 상세이미지를 담았음.
+  // images에 상세이미지를 저장하기 위해 첫번째 이미지 제거
   useDidMountEffect(() => {
-    if (companyDetail.imgs) {
+    if (companyDetail.titleImg) {
       image && setImages(image.filter((_, index) => index !== 0));
+    } else {
+      setImages(image);
     }
   }, [image]);
 
+  // 서버에서 image를 가져오는 customHook titleImg와 imgs를 한번에 가져온다.
   useGetImage(setImage, companyDetail);
 
   return (

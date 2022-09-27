@@ -9,7 +9,7 @@ import {
 } from "../Services/string";
 
 import DetailContentList from "../components/common/DetailContentList";
-import GetCompany from "../components/common/GetCompany";
+import GetCompany from "../components/common/DetailCompanyComponent";
 import LayoutTopButton from "../components/common/LayoutTopButton";
 
 export default function DetailCompany() {

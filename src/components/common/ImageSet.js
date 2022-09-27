@@ -1,5 +1,4 @@
 import { BiUpload } from "react-icons/bi";
-import { IoMdRemoveCircleOutline } from "react-icons/io";
 import {
   servicesPostDataForm,
   servicesPostData,
@@ -8,7 +7,7 @@ import { useDidMountEffect } from "../../Services/customHook";
 import { urlUpImages, urlGetImages } from "../../Services/string";
 import ImageOnClick from "./ImageOnClick";
 
-export default function SetImage({
+export default function ImageSet({
   img,
   setImg,
   getData,
@@ -18,6 +17,9 @@ export default function SetImage({
   title,
   getDataFinish,
 }) {
+  // 대표이미지와 상세이미지의 이미지를 모두 사용하기 위해 아래와 같이 작성
+  // 해당 이벤트는 event.target.id로 구분하고 있기 때문에 이 외에 실행 시 코드 수정 필요
+
   const fnSetImg = (res) => {
     setImg && setImg(res);
   };
@@ -25,6 +27,7 @@ export default function SetImage({
     setImgs && setImgs(res);
   };
 
+  // 첫 렌더링을 방지하고, 기존 입력된 이미지가 있다면 서버에서 이미지를 가져온다.
   useDidMountEffect(() => {
     if (getData.titleImg) {
       servicesPostData(urlGetImages, {
@@ -33,7 +36,6 @@ export default function SetImage({
         fnSetImg(res.data);
       });
     }
-
     if (getData.imgs) {
       servicesPostData(urlGetImages, {
         imgs: getData.imgs,
@@ -43,6 +45,7 @@ export default function SetImage({
     }
   }, [getDataFinish]);
 
+  // 이미지 업로드 시 실행되는 코드
   function handleSetImage(event) {
     event.preventDefault();
     const files = event.target.files;
@@ -57,6 +60,7 @@ export default function SetImage({
       }
     }
 
+    // FormData에 저장된 데이터를 서버에 보냄
     servicesPostDataForm(urlUpImages, formData).then((res) => {
       if (event.target.id === "titleImg") {
         fnSetImg(res.data);
@@ -69,13 +73,12 @@ export default function SetImage({
     });
   }
 
+  // 이미지 삭제 시 실행되는 코드
   function onRemove(iid) {
     if (id === "titleImg") {
-      const newDiaryList = img.filter((it) => it.iid !== iid);
-      fnSetImg(newDiaryList);
+      fnSetImg(img.filter((it) => it.iid !== iid));
     } else {
-      const newDiaryList = imgs.filter((it) => it.iid !== iid);
-      fnSetImgs(newDiaryList);
+      fnSetImgs(imgs.filter((it) => it.iid !== iid));
     }
   }
 
