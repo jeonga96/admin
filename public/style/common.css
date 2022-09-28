@@ -1068,7 +1068,6 @@ ul.pagination li a:hover {
 .buttonLink:hover {
   background-color: var(--color-pointgray);
   color: var(--color-white);
-  box-shadow: var(--styles-boxShadowDeep);
 }
 .bigButton {
   width: 12rem;

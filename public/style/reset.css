@@ -55,12 +55,23 @@ p,
 span,
 div,
 li,
+td,
+button {
+  font-size: 0.875rem;
+}
+p,
+span,
+div,
+li,
 h1,
 h2,
 h3,
 h4,
 h5,
-h6 {
+h6,
+td,
+th,
+button {
   font-family: var(--font-point);
   font-weight: 400;
 }
