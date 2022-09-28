@@ -32,9 +32,9 @@ export default function ListCompany() {
           <table className="commonTable">
             <thead>
               <tr>
-                <th className="widthM">회원번호</th>
-                <th className="widthB">계약자명</th>
-                <th className="widthM">생성시간</th>
+                <th className="widthM">사업자번호</th>
+                <th className="widthB">계약자</th>
+                <th className="widthM">계약일</th>
                 <th className="widthS">인증</th>
               </tr>
             </thead>

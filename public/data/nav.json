@@ -24,5 +24,20 @@
         "url": "/companyContract"
       }
     ]
+  },
+  {
+    "name": "공사콕 앱 관리",
+    "icon": "https://demo.dashboardpack.com/sales-html/img/menu-icon/dashboard.svg",
+    "url": null,
+    "subNav": [
+      {
+        "subName": "앱 배너 관리",
+        "url": "/companyContract"
+      },
+      {
+        "subName": "공지사항 관리",
+        "url": "/company"
+      }
+    ]
   }
 ]
