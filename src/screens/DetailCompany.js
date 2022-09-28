@@ -39,6 +39,7 @@ export default function DetailCompany() {
   return (
     <>
       <ul className="tableTopWrap">
+        <LayoutTopButton url="/company" text="목록으로 가기" />
         <LayoutTopButton url="setcompanydetail" text="상세정보 수정" />
       </ul>
       <div className="paddingBox commonBox">

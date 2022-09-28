@@ -1,7 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
 import { servicesPostData } from "../Services/importData";
-import { servicesGetImgsIid } from "../Services/useData";
 import { urlGetCompanyDetail, urlSetCompanyDetail } from "../Services/string";
 import SetImage from "../components/common/ImageSet";
 import LayoutTopButton from "../components/common/LayoutTopButton";
@@ -31,7 +30,7 @@ export default function SetCompanyDetail() {
   // getDataFinish:기존에 입력된 값이 있어 값을 불러왔다면 true로 변경,
   // mapcoor:위도 경도 저장,
   const [titleImg, setTitleImg] = useState(null);
-  const [imgs, setImgs] = useState(null);
+  const [imgs, setImgs] = useState([]);
   const getDataFinish = useRef(false);
   const mapcoor = useRef({ longitude: "", latitude: "" });
   const imgsIid = [];
@@ -129,12 +128,12 @@ export default function SetCompanyDetail() {
           </ul>
           <div className="formContentWrap">
             <label htmlFor="name" className="blockLabel">
-              사업자명
+              업체 이름
             </label>
             <input
               type="text"
               id="name"
-              placeholder="사업자명을 입력해 주세요."
+              placeholder="업체 이름을 입력해 주세요."
               onChange={onChange}
               value={
                 getDataFinish.current

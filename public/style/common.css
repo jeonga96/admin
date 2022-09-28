@@ -607,6 +607,8 @@ button {
   background-size: contain;
   margin-right: 0.25rem;
   cursor: pointer;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 .imgsThumbnail span {
   display: block;
@@ -792,6 +794,8 @@ button {
 }
 .hashTag {
   display: flex;
+  justify-content: left;
+  flex-wrap: wrap;
 }
 .hashTag li {
   width: auto;

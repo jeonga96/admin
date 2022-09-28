@@ -52,7 +52,7 @@ export default function AddCompany() {
           </ul>
           <div className="formContentWrap">
             <label htmlFor="name" className="blockLabel">
-              사업자명
+              계약자명
             </label>
             <input
               type="text"
