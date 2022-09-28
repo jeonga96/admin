@@ -37,6 +37,7 @@ export default function DetailUser() {
   return (
     <>
       <ul className="tableTopWrap">
+        <LayoutTopButton url="/user" text="목록으로 가기" />
         <LayoutTopButton url="setUserDetail" text="수정" />
       </ul>
       <div className="paddingBox commonBox">
