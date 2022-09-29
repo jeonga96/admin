@@ -14,3 +14,10 @@ export function serviesPostDataSettingRcid(url, valueName, setData) {
     }
   });
 }
+
+//서버에 imgs의 iid값만을 보내기 위해 실행하는 반복문 함수
+export function serviesGetImgsIid(variable, data) {
+  for (let i = 0; i < data.length; i++) {
+    variable.push(data[i].iid);
+  }
+}

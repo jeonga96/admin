@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
 import { servicesPostData } from "../Services/importData";
+import { serviesGetImgsIid } from "../Services/useData";
 import { urlGetCompanyDetail, urlSetCompanyDetail } from "../Services/string";
 import SetImage from "../components/common/ImageSet";
 import LayoutTopButton from "../components/common/LayoutTopButton";
@@ -71,16 +72,10 @@ export default function SetCompanyDetail() {
     setCompanyData({ ...companyData, [e.target.id]: e.target.value });
   }
 
-  //서버에 imgs의 iid값만을 보내기 위해 실행하는 반복문 함수
-  function getImgsIid(variable, data) {
-    for (let i = 0; i < data.length; i++) {
-      variable.push(data[i].iid);
-    }
-  }
-
   // 실행되는 form submit 이벤트
   const addUserEvent = () => {
-    getImgsIid(imgsIid, imgs);
+    //서버에 imgs의 iid값만을 보내기 위해 실행하는 반복문 함수
+    serviesGetImgsIid(imgsIid, imgs);
     servicesPostData(urlSetCompanyDetail, {
       rcid: cid,
       name: companyData.name,

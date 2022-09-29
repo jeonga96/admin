@@ -42,7 +42,7 @@ export default function ListUserSearchComponent() {
         <div className="listSearchWrap">
           <div className="title">회원상태</div>
 
-          <label className="listSearchRadioLabel" for="useFlag1">
+          <label className="listSearchRadioLabel" htmlFor="useFlag1">
             회원
           </label>
           <input
@@ -53,7 +53,7 @@ export default function ListUserSearchComponent() {
             value="1"
           />
 
-          <label className="listSearchRadioLabel" for="useFlag2">
+          <label className="listSearchRadioLabel" htmlFor="useFlag2">
             비회원
           </label>
           <input
@@ -64,7 +64,7 @@ export default function ListUserSearchComponent() {
             value="2"
           />
 
-          <label className="listSearchRadioLabel" for="useFlag0">
+          <label className="listSearchRadioLabel" htmlFor="useFlag0">
             휴먼계정
           </label>
           <input
