@@ -5,6 +5,7 @@ import { urlGetUserDetail } from "../Services/string";
 import { useDidMountEffect } from "../Services/customHook";
 
 import LayoutTopButton from "../components/common/LayoutTopButton";
+import ErrorNullBox from "../components/common/ErrorNullBox";
 
 export default function DetailUser() {
   let { uid } = useParams();
@@ -33,22 +34,15 @@ export default function DetailUser() {
       }
     });
   }, []);
-
-  return (
+  return userDetail && userDetail.length === 0 ? (
+    <ErrorNullBox />
+  ) : (
     <>
       <ul className="tableTopWrap">
         <LayoutTopButton url="/user" text="목록으로 가기" />
         <LayoutTopButton url="setUserDetail" text="수정" />
       </ul>
       <div className="paddingBox commonBox">
-        {/* {userDetail.updateTime && (
-              <li className="detailSpan detailTime">
-                <div>{`${userDetail.updateTime.slice(
-                  0,
-                  10
-                )} ${userDetail.updateTime.slice(11, 19)}`}</div>
-              </li>
-            )} */}
         <div className="detailPageLayout">
           <div className="formContentWrap">
             <h4>이름</h4>

@@ -72,7 +72,7 @@ export default function GetCompany({ companyDetail }) {
 
       <div className="formContentWrap">
         <h4>연락처 정보</h4>
-        <ul className="detailWidthContent">
+        <ul className="detailWidthContent detailWidthContentCallNum">
           <li>
             <em>전화 번호</em>
             <span>{companyDetail.telnum}</span>
@@ -82,7 +82,7 @@ export default function GetCompany({ companyDetail }) {
             <span>{companyDetail.mobilenum}</span>
           </li>
           <li>
-            <em>추가 번호</em>
+            <em>안심 번호</em>
             <span>{companyDetail.extnum}</span>
           </li>
         </ul>
@@ -90,7 +90,7 @@ export default function GetCompany({ companyDetail }) {
 
       <div className="formContentWrap">
         <h4>대표 이미지</h4>
-        <div className="detailWidthContent">
+        <div className="detailWidthContent detailWidthContentImg">
           {!!image[0] && (
             <ImageOnClick
               getData={image}
@@ -103,7 +103,7 @@ export default function GetCompany({ companyDetail }) {
 
       <div className="formContentWrap">
         <h4>사업자 상세 이미지</h4>
-        <div className="detailWidthContent detailWidthContents">
+        <div className="detailWidthContent detailWidthContentImg">
           {images &&
             images.map((item) => (
               <ImageOnClick

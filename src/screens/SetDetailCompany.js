@@ -123,6 +123,27 @@ export default function SetCompanyDetail() {
     <>
       <div className="commonBox">
         <form className="formLayout" onSubmit={AddUserSubmit}>
+          <div className="formContentWrapWithButton">
+            <label htmlFor="name" className="blockLabel">
+              계약자명
+            </label>
+            <input
+              type="text"
+              id="name"
+              placeholder="업체 이름을 입력해 주세요."
+              onChange={onChange}
+              value={
+                getDataFinish.current
+                  ? companyData.name
+                  : companyData.name || ""
+              }
+            />
+            <button>저장</button>
+          </div>
+        </form>
+      </div>
+      <div className="commonBox">
+        <form className="formLayout" onSubmit={AddUserSubmit}>
           <ul className="tableTopWrap">
             <LayoutTopButton text="완료" />
           </ul>

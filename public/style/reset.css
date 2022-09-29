@@ -56,7 +56,8 @@ span,
 div,
 li,
 td,
-button {
+button,
+a {
   font-size: 0.875rem;
 }
 p,

@@ -5,6 +5,7 @@ import { urlNoticeList } from "../Services/string";
 import { MdOutlineImage } from "react-icons/md";
 
 import LayoutTopButton from "../components/common/LayoutTopButton";
+import ErrorNullBox from "../components/common/ErrorNullBox";
 // import PageButton from "../components/common/PageButton";
 
 export default function ListCompanyNotice() {
@@ -21,8 +22,10 @@ export default function ListCompanyNotice() {
       // setListPage(res.page);
     });
   }, []);
-
-  return (
+  console.log(notice);
+  return notice === undefined ? (
+    <ErrorNullBox />
+  ) : (
     <>
       <ul className="tableTopWrap">
         <LayoutTopButton url={`/company/${cid}/addnotice`} text="작성" />

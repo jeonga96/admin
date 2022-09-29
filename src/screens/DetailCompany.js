@@ -11,6 +11,7 @@ import {
 import DetailContentList from "../components/common/DetailContentList";
 import GetCompany from "../components/common/DetailCompanyComponent";
 import LayoutTopButton from "../components/common/LayoutTopButton";
+import ErrorNullBox from "../components/common/ErrorNullBox";
 
 export default function DetailCompany() {
   let { cid } = useParams();
@@ -36,7 +37,9 @@ export default function DetailCompany() {
     serviesPostDataSettingRcid(urlNoticeList, cid, setNoticeList);
     serviesPostDataSettingRcid(urlReviewList, cid, setReviewList);
   }, []);
-  return (
+  return companyDetail && companyDetail.length === 0 ? (
+    <ErrorNullBox />
+  ) : (
     <>
       <ul className="tableTopWrap">
         <LayoutTopButton url="/company" text="목록으로 가기" />

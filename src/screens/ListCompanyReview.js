@@ -4,6 +4,8 @@ import { servicesPostData } from "../Services/importData";
 import { urlReviewList } from "../Services/string";
 import { MdOutlineImage } from "react-icons/md";
 
+import ErrorNullBox from "../components/common/ErrorNullBox";
+
 export default function ListCompanyReview() {
   let { cid } = useParams();
   const [review, setReview] = useState([]);
@@ -16,7 +18,9 @@ export default function ListCompanyReview() {
     });
   }, []);
 
-  return (
+  return review === undefined ? (
+    <ErrorNullBox />
+  ) : (
     <>
       <section className="tableWrap">
         <h3 className="blind">table</h3>

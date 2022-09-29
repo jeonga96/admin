@@ -5,6 +5,7 @@ import { servicesPostData } from "../Services/importData";
 import { urlCompanylist } from "../Services/string";
 import PageButton from "../components/common/PaginationButton";
 import LayoutTopButton from "../components/common/LayoutTopButton";
+import ListCompanySearchComponent from "../components/common/ListCompanySearchComponent";
 
 export default function ListCompany() {
   const [companyList, setCompanyList] = useState([]);
@@ -23,6 +24,7 @@ export default function ListCompany() {
 
   return (
     <>
+      <ListCompanySearchComponent />
       <ul className="tableTopWrap">
         <LayoutTopButton url="/addcompany" text="사업자 추가" />
       </ul>
@@ -32,7 +34,7 @@ export default function ListCompany() {
           <table className="commonTable">
             <thead>
               <tr>
-                <th className="widthM">사업자번호</th>
+                <th className="widthM">관리번호</th>
                 <th className="widthB">계약자</th>
                 <th className="widthM">계약일</th>
                 <th className="widthS">인증</th>

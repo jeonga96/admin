@@ -6,6 +6,7 @@ import { urlUserlist } from "../Services/string";
 
 import PageButton from "../components/common/PaginationButton";
 import LayoutTopButton from "../components/common/LayoutTopButton";
+import ListUserSearchComponent from "./ListUserSearchComponent";
 
 export default function ListUser() {
   const [userList, setUserList] = useState([]);
@@ -24,6 +25,7 @@ export default function ListUser() {
 
   return (
     <>
+      <ListUserSearchComponent />
       <ul className="tableTopWrap">
         <LayoutTopButton url="/adduser" text="회원 추가" />
       </ul>
