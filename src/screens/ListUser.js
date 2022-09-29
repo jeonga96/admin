@@ -35,11 +35,11 @@ export default function ListUser() {
           <table className="commonTable">
             <thead>
               <tr>
-                <th className="widthM">회원번호</th>
+                <th className="widthM">회원 관리번호</th>
                 <th className="widthB">아이디</th>
                 <th className="widthS">회원 권한</th>
                 <th className="widthM">계약일</th>
-                <th className="widthS">인증</th>
+                <th className="widthS">상세정보</th>
               </tr>
             </thead>
             <tbody>

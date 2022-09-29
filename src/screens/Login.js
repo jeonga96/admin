@@ -40,7 +40,7 @@ export default function Login() {
               onChange={onChange}
             />
           </div>
-          <div className="formContentWrap">
+          <div className="formContentWrap" style={{ marginBottom: "20px" }}>
             <label htmlFor="passwd" className="blockLabel">
               Password
             </label>

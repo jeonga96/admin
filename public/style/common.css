@@ -1173,13 +1173,14 @@ ul.pagination li a:hover {
 .listSearchWrap {
   width: 25%;
   height: auto;
-  /* background-color: red; */
-  /* border: 1px solid black; */
   padding: 2px;
-}
-.listSearchWrap label {
-  display: block;
   margin-bottom: 6px;
+}
+.listSearchWrap label,
+.listSearchWrap .title {
+  display: block;
+  width: 100%;
+  height: 20px;
 }
 .listSearchWrap input {
   width: 100%;
@@ -1188,7 +1189,7 @@ ul.pagination li a:hover {
 }
 .listSearchWrap .listSearchCheckLabel {
   display: inline-block;
-  width: auto;
+  width: 100%;
   margin-right: 4px;
 }
 .listSearchWrap .listSearchCheckInput {
@@ -1196,13 +1197,26 @@ ul.pagination li a:hover {
   width: 15px;
   height: 15px;
 }
+
+.listSearchWrap .listSearchRadioLabel {
+  display: inline-block;
+  width: auto;
+  margin-right: 2px;
+}
+.listSearchWrap .listSearchRadioInput {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin-right: 8px;
+}
+
 .listSearchButtonWrap {
   display: flex;
   justify-content: center;
   width: 100%;
   margin-top: 20px;
 }
-.listSearchButtonWrap button {
+.listSearchButtonWrap input {
   width: 80px;
   height: 24px;
   background-color: var(--color-gray);

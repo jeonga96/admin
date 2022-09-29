@@ -37,7 +37,7 @@ export default function ListCompany() {
                 <th className="widthM">관리번호</th>
                 <th className="widthB">계약자</th>
                 <th className="widthM">계약일</th>
-                <th className="widthS">인증</th>
+                <th className="widthS">상세정보</th>
               </tr>
             </thead>
             <tbody>
