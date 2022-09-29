@@ -78,16 +78,10 @@ export default function ListCompanySearchComponent() {
             value="3"
           />
         </div>
-        {/* <div className="listSearchWrap">
-          <label>사업자 번호</label>
-          <input></input>
-        </div> */}
 
         <div className="listSearchButtonWrap">
-          <div className="listSearchButtonWrap">
-            <input type="reset" value="초기화" />
-            <input type="submit" value="검색" />
-          </div>
+          <input type="reset" value="초기화" />
+          <input type="submit" value="검색" />
         </div>
       </form>
     </div>
