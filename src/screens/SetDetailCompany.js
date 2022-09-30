@@ -178,7 +178,7 @@ export default function SetCompanyDetail() {
               onChange={onChangeComapnyInfo}
               value={companyInfo.name || ""}
             />
-            <button>저장</button>
+            <button type="submit">수정</button>
           </div>
         </form>
       </div>

@@ -583,6 +583,32 @@ button {
 .selectForm select:focus {
   outline: none;
 }
+
+/* 다른 입력창이 입력될 때를 기다리지 않고 입력된 값을 바로 보낼 땐 formContentWrapWithButton로 감싸준다. */
+.formContentWrapWithButton {
+  width: 100%;
+  height: auto;
+  padding-top: 2px;
+}
+.formContentWrapWithButton label,
+.detailTitle {
+  width: 30%;
+}
+.formContentWrapWithButton input,
+.detailContent {
+  display: inline-block;
+  width: 80%;
+  margin-right: 5px;
+}
+.formContentWrapWithButton button,
+.detailButton {
+  display: inline-block;
+  width: 15%;
+  height: 2rem;
+  margin-top: 0.5rem;
+  background-color: var(--color-gray);
+}
+
 .setImageWrap {
   display: block;
 }
@@ -700,15 +726,15 @@ button {
   }
   .formContentWrapWithButton input,
   .detailContent {
-    display: inline;
     width: 80%;
     margin-right: 5px;
   }
   .formContentWrapWithButton button,
   .detailButton {
-    display: inline;
+    display: block;
     width: 15%;
-    height: 100%;
+    height: 2rem;
+    margin-top: 0.5rem;
     background-color: var(--color-gray);
   }
 
