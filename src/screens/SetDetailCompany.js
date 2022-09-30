@@ -2,14 +2,26 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
 import { servicesPostData } from "../Services/importData";
 import { serviesGetImgsIid } from "../Services/useData";
-import { urlGetCompanyDetail, urlSetCompanyDetail } from "../Services/string";
+import {
+  urlGetCompanyDetail,
+  urlSetCompanyDetail,
+  urlGetCompany,
+  urlSetCompany,
+} from "../Services/string";
 import SetImage from "../components/common/ImageSet";
 import LayoutTopButton from "../components/common/LayoutTopButton";
 
 export default function SetCompanyDetail() {
   const { cid } = useParams();
 
-  const [companyData, setCompanyData] = useState({
+  //"/admin/setCompany" 로 보내기 위한 기본 회사정보
+  const [companyInfo, setCompanyInfo] = useState({
+    cid: "",
+    name: "",
+  });
+
+  ///"/admin/setCompanyDetailInfo" 로 보내기 위한 상세 회사 정보
+  const [companyDetailInfo, setCompanyDetailInfo] = useState({
     name: "",
     comment: "",
     location: "",
@@ -47,18 +59,31 @@ export default function SetCompanyDetail() {
       }
       addUserEvent();
     };
-    geocoder.addressSearch(companyData.address, callback);
+    geocoder.addressSearch(companyDetailInfo.address, callback);
   };
 
   // 현재 페이지가 렌더링되자마자 기존에 입력된 값의 여부를 확인한다.
   useEffect(() => {
+    // 기본 회사정보 불러오기
+    servicesPostData(urlGetCompany, {
+      cid: cid,
+    })
+      .then((res) => {
+        if (res.status === "success") {
+          setCompanyInfo(res.data);
+          console.log("불러왔다!!", companyInfo);
+        }
+      })
+      .catch((res) => console.log(res));
+
+    // 상세 회사정보 불러오기 기존 값이 없다면 새로운 회원이다. 새로 작성함
     servicesPostData(urlGetCompanyDetail, {
       rcid: cid,
     })
       .then((res) => {
         if (res.status === "success") {
           // 값이 있다면 comapnyData에 저장한 후 getDataFinish 값을 변경
-          setCompanyData(res.data);
+          setCompanyDetailInfo(res.data);
           getDataFinish.current = true;
         } else if (res.data === "fail") {
           console.log("새로운 사업자 회원입니다.");
@@ -68,33 +93,44 @@ export default function SetCompanyDetail() {
   }, []);
 
   // input onChange 이벤트
-  function onChange(e) {
-    setCompanyData({ ...companyData, [e.target.id]: e.target.value });
+  function onChangeComapnyInfo(e) {
+    setCompanyInfo({
+      ...companyInfo,
+      [e.target.id]: e.target.value,
+    });
   }
 
-  // 실행되는 form submit 이벤트
+  // detailInfo input onChange 이벤트
+  function onChange(e) {
+    setCompanyDetailInfo({
+      ...companyDetailInfo,
+      [e.target.id]: e.target.value,
+    });
+  }
+
+  // form submit 이벤트
   const addUserEvent = () => {
     //서버에 imgs의 iid값만을 보내기 위해 실행하는 반복문 함수
     serviesGetImgsIid(imgsIid, imgs);
     servicesPostData(urlSetCompanyDetail, {
       rcid: cid,
-      name: companyData.name,
-      comment: companyData.comment,
-      location: companyData.location,
-      address: companyData.address,
-      registration: companyData.registration,
-      workTime: companyData.workTime,
-      offer: companyData.offer,
+      name: companyDetailInfo.name,
+      comment: companyDetailInfo.comment,
+      location: companyDetailInfo.location,
+      address: companyDetailInfo.address,
+      registration: companyDetailInfo.registration,
+      workTime: companyDetailInfo.workTime,
+      offer: companyDetailInfo.offer,
       titleImg: titleImg ? titleImg[0].iid : "",
       imgs: setImgs ? imgsIid.toString() : "",
       longitude: mapcoor.current.longitude,
       latitude: mapcoor.current.latitude,
-      telnum: companyData.telnum,
-      mobilenum: companyData.mobilenum,
-      email: companyData.email,
-      extnum: companyData.extnum,
-      keywords: companyData.keywords,
-      tags: companyData.tags,
+      telnum: companyDetailInfo.telnum,
+      mobilenum: companyDetailInfo.mobilenum,
+      email: companyDetailInfo.email,
+      extnum: companyDetailInfo.extnum,
+      keywords: companyDetailInfo.keywords,
+      tags: companyDetailInfo.tags,
       useFlag: 1,
     })
       .then((res) => {
@@ -106,18 +142,31 @@ export default function SetCompanyDetail() {
       })
       .catch((error) => console.log("실패", error.response));
   };
-
-  function AddUserSubmit(e) {
+  function UserInfoSubmit(e) {
     e.preventDefault();
+    servicesPostData(urlSetCompany, {
+      cid: cid,
+      name: companyInfo.name,
+    })
+      .then((res) => {
+        if (res.status === "success") {
+          alert("수정 되었습니다.");
+          return;
+        }
+      })
+      .catch((error) => console.log("실패", error.response));
+  }
 
-    // companyData.address가 입력되어 있으면 위도경도 구하는 함수 실행(내부에 addUserEvent이벤트 실행 코드 있음)
-    companyData.address ? callMapcoor() : addUserEvent();
+  function UserDetailInfoSubmit(e) {
+    e.preventDefault();
+    // companyDetailInfo.address가 입력되어 있으면 위도경도 구하는 함수 실행(내부에 addUserEvent이벤트 실행 코드 있음)
+    companyDetailInfo.address ? callMapcoor() : addUserEvent();
   }
 
   return (
     <>
       <div className="commonBox">
-        <form className="formLayout" onSubmit={AddUserSubmit}>
+        <form className="formLayout" onSubmit={UserInfoSubmit}>
           <div className="formContentWrapWithButton">
             <label htmlFor="name" className="blockLabel">
               계약자명
@@ -125,20 +174,16 @@ export default function SetCompanyDetail() {
             <input
               type="text"
               id="name"
-              placeholder="업체 이름을 입력해 주세요."
-              onChange={onChange}
-              value={
-                getDataFinish.current
-                  ? companyData.name
-                  : companyData.name || ""
-              }
+              placeholder="고객명을 입력해 주세요."
+              onChange={onChangeComapnyInfo}
+              value={companyInfo.name || ""}
             />
             <button>저장</button>
           </div>
         </form>
       </div>
       <div className="commonBox">
-        <form className="formLayout" onSubmit={AddUserSubmit}>
+        <form className="formLayout" onSubmit={UserDetailInfoSubmit}>
           <ul className="tableTopWrap">
             <LayoutTopButton text="완료" />
           </ul>
@@ -153,8 +198,8 @@ export default function SetCompanyDetail() {
               onChange={onChange}
               value={
                 getDataFinish.current
-                  ? companyData.name
-                  : companyData.name || ""
+                  ? companyDetailInfo.name
+                  : companyDetailInfo.name || ""
               }
             />
           </div>
@@ -170,8 +215,8 @@ export default function SetCompanyDetail() {
               onChange={onChange}
               value={
                 getDataFinish.current
-                  ? companyData.comment
-                  : companyData.comment || ""
+                  ? companyDetailInfo.comment
+                  : companyDetailInfo.comment || ""
               }
             />
           </div>
@@ -187,8 +232,8 @@ export default function SetCompanyDetail() {
               onChange={onChange}
               value={
                 getDataFinish.current
-                  ? companyData.location
-                  : companyData.location || ""
+                  ? companyDetailInfo.location
+                  : companyDetailInfo.location || ""
               }
             />
           </div>
@@ -204,8 +249,8 @@ export default function SetCompanyDetail() {
               onChange={onChange}
               value={
                 getDataFinish.current
-                  ? companyData.address
-                  : companyData.address || ""
+                  ? companyDetailInfo.address
+                  : companyDetailInfo.address || ""
               }
             />
           </div>
@@ -221,8 +266,8 @@ export default function SetCompanyDetail() {
               onChange={onChange}
               value={
                 getDataFinish.current
-                  ? companyData.registration
-                  : companyData.registration || ""
+                  ? companyDetailInfo.registration
+                  : companyDetailInfo.registration || ""
               }
             />
           </div>
@@ -238,8 +283,8 @@ export default function SetCompanyDetail() {
               onChange={onChange}
               value={
                 getDataFinish.current
-                  ? companyData.workTime
-                  : companyData.workTime || ""
+                  ? companyDetailInfo.workTime
+                  : companyDetailInfo.workTime || ""
               }
             />
           </div>
@@ -255,8 +300,8 @@ export default function SetCompanyDetail() {
               onChange={onChange}
               value={
                 getDataFinish.current
-                  ? companyData.offer
-                  : companyData.offer || ""
+                  ? companyDetailInfo.offer
+                  : companyDetailInfo.offer || ""
               }
             />
           </div>
@@ -264,7 +309,7 @@ export default function SetCompanyDetail() {
           <SetImage
             img={titleImg}
             setImg={setTitleImg}
-            getData={companyData}
+            getData={companyDetailInfo}
             id="titleImg"
             title="대표 이미지"
             getDataFinish={getDataFinish.current}
@@ -275,7 +320,7 @@ export default function SetCompanyDetail() {
             setImgs={setImgs}
             id="imgs"
             title="상세설명 이미지"
-            getData={companyData}
+            getData={companyDetailInfo}
             getDataFinish={getDataFinish.current}
           />
 
@@ -290,8 +335,8 @@ export default function SetCompanyDetail() {
               onChange={onChange}
               value={
                 getDataFinish.current
-                  ? companyData.telnum
-                  : companyData.telnum || ""
+                  ? companyDetailInfo.telnum
+                  : companyDetailInfo.telnum || ""
               }
             />
           </div>
@@ -307,8 +352,8 @@ export default function SetCompanyDetail() {
               onChange={onChange}
               value={
                 getDataFinish.current
-                  ? companyData.mobilenum
-                  : companyData.mobilenum || ""
+                  ? companyDetailInfo.mobilenum
+                  : companyDetailInfo.mobilenum || ""
               }
             />
           </div>
@@ -324,8 +369,8 @@ export default function SetCompanyDetail() {
               onChange={onChange}
               value={
                 getDataFinish.current
-                  ? companyData.email
-                  : companyData.email || ""
+                  ? companyDetailInfo.email
+                  : companyDetailInfo.email || ""
               }
             />
           </div>
@@ -341,8 +386,8 @@ export default function SetCompanyDetail() {
               onChange={onChange}
               value={
                 getDataFinish.current
-                  ? companyData.extnum
-                  : companyData.extnum || ""
+                  ? companyDetailInfo.extnum
+                  : companyDetailInfo.extnum || ""
               }
             />
           </div>
@@ -358,8 +403,8 @@ export default function SetCompanyDetail() {
               onChange={onChange}
               value={
                 getDataFinish.current
-                  ? companyData.keywords
-                  : companyData.keywords || ""
+                  ? companyDetailInfo.keywords
+                  : companyDetailInfo.keywords || ""
               }
             />
           </div>
@@ -375,8 +420,8 @@ export default function SetCompanyDetail() {
               onChange={onChange}
               value={
                 getDataFinish.current
-                  ? companyData.tags
-                  : companyData.tags || ""
+                  ? companyDetailInfo.tags
+                  : companyDetailInfo.tags || ""
               }
             />
           </div>

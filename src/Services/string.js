@@ -20,6 +20,8 @@ export const urlAddcompany = urlPrefix + "/admin/addCompany";
 export const urlCompanylist = urlPrefix + "/admin/listCompany";
 export const urlGetCompanyDetail = urlPrefix + "/admin/getCompanyDetailInfo";
 export const urlSetCompanyDetail = urlPrefix + "/admin/setCompanyDetailInfo";
+export const urlSetCompany = urlPrefix + "/admin/setCompany";
+export const urlGetCompany = urlPrefix + "/admin/getCompany";
 
 /* 이미지 관련 */
 export const urlUpImages = urlPrefix + "/svc/upImages";
