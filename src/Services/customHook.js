@@ -14,7 +14,7 @@ export function useDidMountEffect(func, deps) {
 export function useGetImage(setImage, companyDetail) {
   const reqImgs = useRef({ imgImg: "", totalImg: "" });
 
-  useDidMountEffect(() => {
+  useEffect(() => {
     if (companyDetail.titleImg && companyDetail.imgs) {
       reqImgs.current.totalImg =
         companyDetail.titleImg + "," + companyDetail.imgs;
@@ -22,7 +22,8 @@ export function useGetImage(setImage, companyDetail) {
       servicesPostData(urlGetImages, {
         imgs: reqImgs.current.totalImg,
       }).then((res) => {
-        return setImage(res.data);
+        setImage(res.data);
+        console.log(res.data);
       });
     } else if (companyDetail.titleImg || companyDetail.imgs) {
       companyDetail.titleImg

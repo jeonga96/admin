@@ -1,5 +1,5 @@
-import { useState, useRef } from "react";
-import { useDidMountEffect, useGetImage } from "../../Services/customHook";
+import { useState, useRef, useEffect } from "react";
+import { useGetImage } from "../../Services/customHook";
 import ImageOnClick from "./ImageOnClick";
 
 export default function GetCompany({ companyDetail }) {
@@ -9,19 +9,22 @@ export default function GetCompany({ companyDetail }) {
   const mapLinkAdress = useRef("");
   const keyword = useRef("");
 
-  // 첫 렌더링을 방지하고, 해당 회원의 데이터가 companyDetail에 저장되면 아래 기능 수행
-  useDidMountEffect(() => {
+  // 해당 회원의 데이터가 companyDetail에 저장되면 아래 기능 수행
+  useEffect(() => {
     if (!!companyDetail.address) {
       mapLinkAdress.current = companyDetail.address.replace(/ /gi, "+");
+
+      console.log("이것은 주소", mapLinkAdress.current);
     }
     if (companyDetail.keywords) {
       keyword.current = companyDetail.keywords.split(",");
+      console.log("이것은 키워드", keyword.current);
     }
   }, [companyDetail]);
 
   // 서버에서 이미지를 한 번에 가져오기 위해 image에 대표이미지와 상세이미지를 담았음.
   // images에 상세이미지를 저장하기 위해 첫번째 이미지 제거
-  useDidMountEffect(() => {
+  useEffect(() => {
     if (companyDetail.titleImg) {
       image && setImages(image.filter((_, index) => index !== 0));
     } else {

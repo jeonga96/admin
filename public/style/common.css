@@ -864,6 +864,7 @@ button {
   width: 0;
 }
 .hashTag {
+  width: 100%;
   display: flex;
   justify-content: left;
   flex-wrap: wrap;
