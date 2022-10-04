@@ -8,7 +8,6 @@ export default function Login() {
     watch,
     formState: { isSubmitting, errors },
   } = useForm();
-  const login = useSelector((state) => state.login);
   const dispatch = useDispatch();
 
   const fnLogin = (e) => {
@@ -21,10 +20,6 @@ export default function Login() {
       type: "loginEvent",
     });
   };
-
-  console.log("📍", errors);
-  console.log("📍👀", watch("user_id"), watch("pass_wd"));
-  // console.log("📍👀", watchLoginValue[0], watchLoginValue[1]);
 
   return (
     <section className="loginWrap">
@@ -41,14 +36,14 @@ export default function Login() {
               id="userid"
               placeholder="아이디를 입력해 주세요."
               {...register("user_id", {
-                required: "아이디는 필수 입력입니다.",
+                required: "아이디는 필수로 입력해야 합니다.",
                 minLength: {
                   value: 2,
                   message: "아이디는 2글자 이상 입력해 주세요.",
                 },
                 maxLength: {
-                  value: 15,
-                  message: "아이디는 15글자를 초과할 수 없습니다.",
+                  value: 16,
+                  message: "16자 이하의 아이디만 사용 가능합니다.",
                 },
                 pattern: {
                   value: /[A-Za-z]/,
@@ -57,24 +52,24 @@ export default function Login() {
               })}
             />
           </div>
-          {errors.userid?.type === "required" && (
+          {errors.user_id?.type === "required" && (
             <div className="errorMessageWrap">
-              <span>{errors.userid.message}</span>
+              <span>{errors.user_id.message}</span>
             </div>
           )}
-          {errors.userid?.type === "minLength" && (
+          {errors.user_id?.type === "minLength" && (
             <div className="errorMessageWrap">
-              <span>{errors.userid.message}</span>
+              <span>{errors.user_id.message}</span>
             </div>
           )}
-          {errors.userid?.type === "maxLength" && (
+          {errors.user_id?.type === "maxLength" && (
             <div className="errorMessageWrap">
-              <span>{errors.userid.message}</span>
+              <span>{errors.user_id.message}</span>
             </div>
           )}
-          {errors.userid?.type === "pattern" && (
+          {errors.user_id?.type === "pattern" && (
             <div className="errorMessageWrap">
-              <span>{errors.userid.message}</span>
+              <span>{errors.user_id.message}</span>
             </div>
           )}
 
@@ -90,30 +85,30 @@ export default function Login() {
               {...register("pass_wd", {
                 required: "비밀번호는 필수로 입력해야 합니다.",
                 maxLength: {
-                  value: 25,
-                  message: "비밀번호는 25글자를 초과할 수 없습니다.",
+                  value: 16,
+                  message: "16자 이하의 비밀번호만 사용가능합니다.",
                 },
                 minLength: {
                   value: 2,
-                  message: "비밀번호는 2글자 이상 입력해 주세요.",
+                  message: "2자 이상의 비밀번호만 사용가능합니다.",
                 },
               })}
             />
           </div>
 
-          {errors.passwd?.type === "required" && (
+          {errors.pass_wd?.type === "required" && (
             <div className="errorMessageWrap">
-              <span>{errors.passwd.message}</span>
+              <span>{errors.pass_wd.message}</span>
             </div>
           )}
-          {errors.passwd?.type === "maxLength" && (
+          {errors.pass_wd?.type === "maxLength" && (
             <div className="errorMessageWrap">
-              <span>{errors.passwd.message}</span>
+              <span>{errors.pass_wd.message}</span>
             </div>
           )}
-          {errors.passwd?.type === "minLength" && (
+          {errors.pass_wd?.type === "minLength" && (
             <div className="errorMessageWrap">
-              <span>{errors.passwd.message}</span>
+              <span>{errors.pass_wd.message}</span>
             </div>
           )}
 

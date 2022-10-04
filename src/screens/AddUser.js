@@ -1,11 +1,18 @@
 import { useState } from "react";
-import { servicesPostData } from "../Services/importData";
+import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { servicesPostData } from "../Services/importData";
 import { urlAdduser } from "../Services/string";
 
 import LayoutTopButton from "../components/common/LayoutTopButton";
 
 export default function AddUser() {
+  const {
+    handleSubmit,
+    register,
+    getValues,
+    formState: { isSubmitting, errors },
+  } = useForm();
   const navigate = useNavigate();
   const [userData, setUserData] = useState({
     userid: "",
@@ -17,7 +24,7 @@ export default function AddUser() {
     setUserData({ ...userData, [e.target.id]: [e.target.value] });
   }
 
-  function addUserEvent() {
+  const AddUserSubmit = (e) => {
     servicesPostData(urlAdduser, {
       userid: userData.userid[0],
       passwd: userData.passwd[0],
@@ -44,30 +51,13 @@ export default function AddUser() {
         }
       })
       .catch((error) => console.log("실패", error));
-  }
-
-  const AddUserSubmit = (e) => {
-    e.preventDefault();
-    if (
-      userData.userid[0] === "" ||
-      userData.passwd[0] === "" ||
-      userData.passwdCk[0] === ""
-    ) {
-      alert("아이디와 비밀번호를 모두 입력해 주세요.");
-      return;
-    }
-    if (userData.passwd[0] !== userData.passwdCk[0]) {
-      alert("비밀번호가 다릅니다. 비밀번호를 다시 입력해 주세요.");
-      return;
-    }
-    addUserEvent();
   };
   return (
     <>
       <div className="commonBox">
-        <form className="formLayout " onSubmit={AddUserSubmit}>
+        <form className="formLayout " onSubmit={handleSubmit(AddUserSubmit)}>
           <ul className="tableTopWrap">
-            <LayoutTopButton text="완료" />
+            <LayoutTopButton text="완료" disabled={isSubmitting} />
           </ul>
           <div className="formContentWrap">
             <label htmlFor="userid" className="blockLabel">
@@ -78,9 +68,44 @@ export default function AddUser() {
               name="user_id"
               id="userid"
               placeholder="아이디를 입력해 주세요."
-              onChange={onChange}
+              {...register("user_id", {
+                onChange: onChange,
+                required: "아이디는 필수로 입력해야 합니다.",
+                minLength: {
+                  value: 2,
+                  message: "2자 이상의 아이디만 사용가능합니다.",
+                },
+                maxLength: {
+                  value: 16,
+                  message: "16자 이하의 아이디만 사용가능합니다.",
+                },
+                pattern: {
+                  value: /[A-Za-z]/,
+                  message: "입력 형식에 맞지 않습니다.",
+                },
+              })}
             />
           </div>
+          {errors.user_id?.type === "required" && (
+            <div className="errorMessageWrap">
+              <span>{errors.user_id.message}</span>
+            </div>
+          )}
+          {errors.user_id?.type === "minLength" && (
+            <div className="errorMessageWrap">
+              <span>{errors.user_id.message}</span>
+            </div>
+          )}
+          {errors.user_id?.type === "maxLength" && (
+            <div className="errorMessageWrap">
+              <span>{errors.user_id.message}</span>
+            </div>
+          )}
+          {errors.user_id?.type === "pattern" && (
+            <div className="errorMessageWrap">
+              <span>{errors.user_id.message}</span>
+            </div>
+          )}
 
           <div className="formContentWrap">
             <label htmlFor="passwd" className="blockLabel">
@@ -91,9 +116,36 @@ export default function AddUser() {
               name="pass_wd"
               id="passwd"
               placeholder="비밀번호를 입력해 주세요."
-              onChange={onChange}
+              {...register("pass_wd", {
+                onChange: onChange,
+                required: "비밀번호는 필수로 입력해야 합니다.",
+                maxLength: {
+                  value: 16,
+                  message: "16자 이하의 비밀번호만 사용가능합니다.",
+                },
+                minLength: {
+                  value: 2,
+                  message: "2자 이상의 비밀번호만 사용가능합니다.",
+                },
+              })}
             />
           </div>
+
+          {errors.pass_wd?.type === "required" && (
+            <div className="errorMessageWrap">
+              <span>{errors.pass_wd.message}</span>
+            </div>
+          )}
+          {errors.pass_wd?.type === "maxLength" && (
+            <div className="errorMessageWrap">
+              <span>{errors.pass_wd.message}</span>
+            </div>
+          )}
+          {errors.pass_wd?.type === "minLength" && (
+            <div className="errorMessageWrap">
+              <span>{errors.pass_wd.message}</span>
+            </div>
+          )}
 
           <div className="formContentWrap">
             <label htmlFor="passwdCk" className="blockLabel">
@@ -104,9 +156,24 @@ export default function AddUser() {
               name="pass_wdCk"
               id="passwdCk"
               placeholder="비밀번호를 한 번 더 입력해 주세요."
-              onChange={onChange}
+              {...register("pass_wdCk", {
+                onChange: onChange,
+                required: "비밀번호 확인을 진행해 주세요.",
+                validate: {
+                  matchesPreviousPassword: (value) => {
+                    const { pass_wd } = getValues();
+                    console.log(pass_wd, value);
+                    return pass_wd === value || "비밀번호가 일치하지 않습니다.";
+                  },
+                },
+              })}
             />
           </div>
+          {errors.pass_wdCk && (
+            <div className="errorMessageWrap">
+              <span>{errors.pass_wdCk.message}</span>
+            </div>
+          )}
         </form>
       </div>
     </>
