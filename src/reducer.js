@@ -12,8 +12,8 @@ const reducer = (state = initialState, action) => {
   switch (action.type) {
     case "loginEvent":
       servicesPostData(urlLogin, {
-        userid: newState.login.userid[0],
-        passwd: newState.login.passwd[0],
+        userid: newState.login.userid,
+        passwd: newState.login.passwd,
       })
         .then((res) => {
           if (res.status === "fail") {
