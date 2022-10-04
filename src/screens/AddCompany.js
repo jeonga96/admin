@@ -1,10 +1,17 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+
 import { servicesPostData } from "../Services/importData";
 import { urlAddcompany } from "../Services/string";
 import LayoutTopButton from "../components/common/LayoutTopButton";
 
 export default function AddCompany() {
+  const {
+    handleSubmit,
+    register,
+    formState: { isSubmitting, errors },
+  } = useForm();
   let navigate = useNavigate();
   const [CompanyData, setCompanyData] = useState({
     name: "",
@@ -14,7 +21,7 @@ export default function AddCompany() {
     setCompanyData({ [e.target.id]: [e.target.value] });
   }
 
-  function addCompanyEvent() {
+  const AddCompanySubmit = (e) => {
     servicesPostData(urlAddcompany, {
       name: CompanyData.name[0],
     })
@@ -33,22 +40,14 @@ export default function AddCompany() {
         }
       })
       .catch((error) => console.log("실패", error.response));
-  }
-
-  const AddCompanySubmit = (e) => {
-    e.preventDefault();
-    if (CompanyData.name === "") {
-      return alert("추가하실 업체명을 입력해 주세요.");
-    }
-    addCompanyEvent();
   };
 
   return (
     <>
       <div className="commonBox">
-        <form className="formLayout" onSubmit={AddCompanySubmit}>
+        <form className="formLayout" onSubmit={handleSubmit(AddCompanySubmit)}>
           <ul className="tableTopWrap">
-            <LayoutTopButton text="완료" />
+            <LayoutTopButton text="완료" disabled={isSubmitting} />
           </ul>
           <div className="formContentWrap">
             <label htmlFor="name" className="blockLabel">
@@ -58,10 +57,46 @@ export default function AddCompany() {
               type="text"
               name="name"
               id="name"
-              placeholder="사업자명을 입력해 주세요."
+              placeholder="계약자명을 입력해 주세요."
               onChange={onChange}
+              {...register("name", {
+                onChange: onChange,
+                required: "계약자명은 필수로 입력해야 합니다.",
+                minLength: {
+                  value: 2,
+                  message: "2자 이상의 이름만 사용가능합니다.",
+                },
+                maxLength: {
+                  value: 8,
+                  message: "8자 이하의 이름만 사용가능합니다.",
+                },
+                pattern: {
+                  value: /[ㄱ-ㅎ가-힣]/,
+                  message: "입력 형식에 맞지 않습니다.",
+                },
+              })}
             />
           </div>
+          {errors.name?.type === "required" && (
+            <div className="errorMessageWrap">
+              <span>{errors.name.message}</span>
+            </div>
+          )}
+          {errors.name?.type === "minLength" && (
+            <div className="errorMessageWrap">
+              <span>{errors.name.message}</span>
+            </div>
+          )}
+          {errors.name?.type === "maxLength" && (
+            <div className="errorMessageWrap">
+              <span>{errors.name.message}</span>
+            </div>
+          )}
+          {errors.name?.type === "pattern" && (
+            <div className="errorMessageWrap">
+              <span>{errors.name.message}</span>
+            </div>
+          )}
         </form>
       </div>
     </>
