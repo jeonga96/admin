@@ -609,11 +609,24 @@ button {
   background-color: var(--color-gray);
 }
 
-.setImageWrap {
-  display: block;
-}
-.imgsTitle {
+/* 다른 입력창이 입력될 때를 기다리지 않고 입력된 값을 바로 보낼 땐 formContentWrapWithButton로 감싸준다. */
+.formContentWrapWithRadio {
+  display: flex;
+  justify-content: space-between;
   width: 100%;
+  height: auto;
+}
+.formContentWrapWithRadio > div {
+  width: 33%;
+  height: 30px;
+  background-color: var(--color-bggray);
+}
+.formContentWrapWithRadio .blockLabel {
+  display: inline-block;
+  font-weight: 700;
+  width: 80px;
+  height: 100%;
+  margin-top: 0;
 }
 
 /*이미지 설정 - 썸네일*/
@@ -1213,6 +1226,7 @@ ul.pagination li a:hover {
   height: 20px;
   background-color: var(--color-bggray);
 }
+
 .listSearchWrap .listSearchCheckLabel {
   display: inline-block;
   width: 100%;
@@ -1227,13 +1241,14 @@ ul.pagination li a:hover {
 .listSearchWrap .listSearchRadioLabel {
   display: inline-block;
   width: auto;
-  margin-right: 2px;
+  margin-right: 4px;
+  padding-top: 5px;
 }
 .listSearchWrap .listSearchRadioInput {
   display: inline-block;
   width: 10px;
   height: 10px;
-  margin-right: 8px;
+  margin-right: 10px;
 }
 
 .listSearchButtonWrap {

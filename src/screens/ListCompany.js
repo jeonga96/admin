@@ -15,7 +15,7 @@ export default function ListCompany() {
   useLayoutEffect(() => {
     servicesPostData(urlCompanylist, {
       offset: page.getPage,
-      size: 10,
+      size: 15,
     }).then((res) => {
       setCompanyList(res.data);
       setListPage(res.page);

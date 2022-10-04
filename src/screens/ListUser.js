@@ -6,7 +6,7 @@ import { urlUserlist } from "../Services/string";
 
 import PageButton from "../components/common/PaginationButton";
 import LayoutTopButton from "../components/common/LayoutTopButton";
-import ListUserSearchComponent from "./ListUserSearchComponent";
+import ListUserSearchComponent from "../components/common/ListUserSearchComponent";
 
 export default function ListUser() {
   const [userList, setUserList] = useState([]);
@@ -16,7 +16,7 @@ export default function ListUser() {
   useEffect(() => {
     servicesPostData(urlUserlist, {
       offset: page.getPage,
-      size: 10,
+      size: 15,
     }).then((res) => {
       setUserList(res.data);
       setListPage(res.page);

@@ -65,7 +65,7 @@ export default function ListUserSearchComponent() {
           />
 
           <label className="listSearchRadioLabel" htmlFor="useFlag0">
-            휴먼계정
+            휴면
           </label>
           <input
             className="listSearchRadioInput"

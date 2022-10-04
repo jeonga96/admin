@@ -14,12 +14,6 @@ import LayoutTopButton from "../components/common/LayoutTopButton";
 export default function SetCompanyDetail() {
   const { cid } = useParams();
 
-  //"/admin/setCompany" 로 보내기 위한 기본 회사정보
-  const [companyInfo, setCompanyInfo] = useState({
-    cid: "",
-    name: "",
-  });
-
   ///"/admin/setCompanyDetailInfo" 로 보내기 위한 상세 회사 정보
   const [companyDetailInfo, setCompanyDetailInfo] = useState({
     name: "",
@@ -40,13 +34,21 @@ export default function SetCompanyDetail() {
     useFlag: "",
   });
   // titleImg:대표 이미지저장 및 표시, imgs:상세 이미지저장 및 표시, imgsIid:서버에 이미지를 보낼 때는, iid값만 필요
+  // useFlag radio
   // getDataFinish:기존에 입력된 값이 있어 값을 불러왔다면 true로 변경,
   // mapcoor:위도 경도 저장,
   const [titleImg, setTitleImg] = useState(null);
   const [imgs, setImgs] = useState([]);
+  const [useFlagCheck, setUseFlagCheck] = useState(1);
   const getDataFinish = useRef(false);
   const mapcoor = useRef({ longitude: "", latitude: "" });
   const imgsIid = [];
+
+  //"/admin/setCompany" 로 보내기 위한 기본 회사정보
+  const [companyInfo, setCompanyInfo] = useState({
+    cid: "",
+    name: "",
+  });
 
   // 카카오 API, 주소를 위도 경도로 변환
   const callMapcoor = () => {
@@ -108,6 +110,11 @@ export default function SetCompanyDetail() {
     });
   }
 
+  // useFlag ridio onChange 이벤트
+  function onChangeUseFlag(e) {
+    setUseFlagCheck(e.target.value);
+  }
+
   // form submit 이벤트
   const addUserEvent = () => {
     //서버에 imgs의 iid값만을 보내기 위해 실행하는 반복문 함수
@@ -131,7 +138,7 @@ export default function SetCompanyDetail() {
       extnum: companyDetailInfo.extnum,
       keywords: companyDetailInfo.keywords,
       tags: companyDetailInfo.tags,
-      useFlag: 1,
+      useFlag: useFlagCheck,
     })
       .then((res) => {
         if (res.status === "success") {
@@ -187,6 +194,37 @@ export default function SetCompanyDetail() {
           <ul className="tableTopWrap">
             <LayoutTopButton text="완료" />
           </ul>
+
+          <fieldset className="formContentWrapWithRadio">
+            <div className="listSearchWrap">
+              <div className="blockLabel">회원관리</div>
+              <label className="listSearchRadioLabel" htmlFor="0">
+                휴면
+              </label>
+              <input
+                className="listSearchRadioInput"
+                type="radio"
+                checked={useFlagCheck === 0}
+                onChange={onChangeUseFlag}
+                name="useFlag"
+                value="0"
+              />
+              <label className="listSearchRadioLabel" htmlFor="1">
+                사용
+              </label>
+              <input
+                className="listSearchRadioInput"
+                type="radio"
+                checked={useFlagCheck === 1}
+                onChange={onChangeUseFlag}
+                name="useFlag"
+                value="1"
+              />
+            </div>
+            <div />
+            <div />
+          </fieldset>
+
           <div className="formContentWrap">
             <label htmlFor="name" className="blockLabel">
               업체 이름
