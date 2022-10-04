@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { ErrorMessage } from "@hookform/error-message";
 
 import { servicesPostData } from "../Services/importData";
 import { urlAddcompany } from "../Services/string";
@@ -77,26 +78,13 @@ export default function AddCompany() {
               })}
             />
           </div>
-          {errors.name?.type === "required" && (
-            <div className="errorMessageWrap">
-              <span>{errors.name.message}</span>
-            </div>
-          )}
-          {errors.name?.type === "minLength" && (
-            <div className="errorMessageWrap">
-              <span>{errors.name.message}</span>
-            </div>
-          )}
-          {errors.name?.type === "maxLength" && (
-            <div className="errorMessageWrap">
-              <span>{errors.name.message}</span>
-            </div>
-          )}
-          {errors.name?.type === "pattern" && (
-            <div className="errorMessageWrap">
-              <span>{errors.name.message}</span>
-            </div>
-          )}
+          <ErrorMessage
+            errors={errors}
+            name="name"
+            render={({ message }) => (
+              <span className="errorMessageWrap">{message}</span>
+            )}
+          />
         </form>
       </div>
     </>

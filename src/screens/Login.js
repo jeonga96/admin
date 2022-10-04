@@ -1,5 +1,6 @@
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
+import { ErrorMessage } from "@hookform/error-message";
 
 export default function Login() {
   const {
@@ -52,26 +53,13 @@ export default function Login() {
               })}
             />
           </div>
-          {errors.user_id?.type === "required" && (
-            <div className="errorMessageWrap">
-              <span>{errors.user_id.message}</span>
-            </div>
-          )}
-          {errors.user_id?.type === "minLength" && (
-            <div className="errorMessageWrap">
-              <span>{errors.user_id.message}</span>
-            </div>
-          )}
-          {errors.user_id?.type === "maxLength" && (
-            <div className="errorMessageWrap">
-              <span>{errors.user_id.message}</span>
-            </div>
-          )}
-          {errors.user_id?.type === "pattern" && (
-            <div className="errorMessageWrap">
-              <span>{errors.user_id.message}</span>
-            </div>
-          )}
+          <ErrorMessage
+            errors={errors}
+            name="user_id"
+            render={({ message }) => (
+              <span className="errorMessageWrap">{message}</span>
+            )}
+          />
 
           <div className="formContentWrap">
             <label htmlFor="passwd" className="blockLabel">
@@ -95,22 +83,13 @@ export default function Login() {
               })}
             />
           </div>
-
-          {errors.pass_wd?.type === "required" && (
-            <div className="errorMessageWrap">
-              <span>{errors.pass_wd.message}</span>
-            </div>
-          )}
-          {errors.pass_wd?.type === "maxLength" && (
-            <div className="errorMessageWrap">
-              <span>{errors.pass_wd.message}</span>
-            </div>
-          )}
-          {errors.pass_wd?.type === "minLength" && (
-            <div className="errorMessageWrap">
-              <span>{errors.pass_wd.message}</span>
-            </div>
-          )}
+          <ErrorMessage
+            errors={errors}
+            name="pass_wd"
+            render={({ message }) => (
+              <span className="errorMessageWrap">{message}</span>
+            )}
+          />
 
           <button
             type="submit"

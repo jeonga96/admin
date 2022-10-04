@@ -631,14 +631,13 @@ button {
 .errorMessageWrap {
   width: 100%;
   height: auto;
-}
-.errorMessageWrap span {
   display: block;
   width: 100%;
   height: auto;
   color: var(--color-primary2);
   text-align: right;
 }
+
 /*이미지 설정 - 썸네일*/
 .imgsThumbnail {
   display: flex;

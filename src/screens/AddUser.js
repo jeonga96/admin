@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { ErrorMessage } from "@hookform/error-message";
 import { useNavigate } from "react-router-dom";
 import { servicesPostData } from "../Services/importData";
 import { urlAdduser } from "../Services/string";
@@ -7,6 +8,7 @@ import { urlAdduser } from "../Services/string";
 import LayoutTopButton from "../components/common/LayoutTopButton";
 
 export default function AddUser() {
+  // react-hook-form 라이브러리
   const {
     handleSubmit,
     register,
@@ -20,17 +22,18 @@ export default function AddUser() {
     passwdCk: "",
   });
 
+  // input 입력값 저장 이벤트
   function onChange(e) {
     setUserData({ ...userData, [e.target.id]: [e.target.value] });
   }
 
+  // 회원 추가 이벤트
   const AddUserSubmit = (e) => {
     servicesPostData(urlAdduser, {
       userid: userData.userid[0],
       passwd: userData.passwd[0],
     })
       .then((res) => {
-        console.log("axios는 성공했는데 말이죠", res);
         if (
           res.status === "fail" &&
           res.emsg === "Database update failure. check duplicate userid"
@@ -86,26 +89,13 @@ export default function AddUser() {
               })}
             />
           </div>
-          {errors.user_id?.type === "required" && (
-            <div className="errorMessageWrap">
-              <span>{errors.user_id.message}</span>
-            </div>
-          )}
-          {errors.user_id?.type === "minLength" && (
-            <div className="errorMessageWrap">
-              <span>{errors.user_id.message}</span>
-            </div>
-          )}
-          {errors.user_id?.type === "maxLength" && (
-            <div className="errorMessageWrap">
-              <span>{errors.user_id.message}</span>
-            </div>
-          )}
-          {errors.user_id?.type === "pattern" && (
-            <div className="errorMessageWrap">
-              <span>{errors.user_id.message}</span>
-            </div>
-          )}
+          <ErrorMessage
+            errors={errors}
+            name="user_id"
+            render={({ message }) => (
+              <span className="errorMessageWrap">{message}</span>
+            )}
+          />
 
           <div className="formContentWrap">
             <label htmlFor="passwd" className="blockLabel">
@@ -130,22 +120,13 @@ export default function AddUser() {
               })}
             />
           </div>
-
-          {errors.pass_wd?.type === "required" && (
-            <div className="errorMessageWrap">
-              <span>{errors.pass_wd.message}</span>
-            </div>
-          )}
-          {errors.pass_wd?.type === "maxLength" && (
-            <div className="errorMessageWrap">
-              <span>{errors.pass_wd.message}</span>
-            </div>
-          )}
-          {errors.pass_wd?.type === "minLength" && (
-            <div className="errorMessageWrap">
-              <span>{errors.pass_wd.message}</span>
-            </div>
-          )}
+          <ErrorMessage
+            errors={errors}
+            name="pass_wd"
+            render={({ message }) => (
+              <span className="errorMessageWrap">{message}</span>
+            )}
+          />
 
           <div className="formContentWrap">
             <label htmlFor="passwdCk" className="blockLabel">
@@ -160,20 +141,21 @@ export default function AddUser() {
                 onChange: onChange,
                 required: "비밀번호 확인을 진행해 주세요.",
                 validate: {
-                  matchesPreviousPassword: (value) => {
+                  matchesPassword: (value) => {
                     const { pass_wd } = getValues();
-                    console.log(pass_wd, value);
                     return pass_wd === value || "비밀번호가 일치하지 않습니다.";
                   },
                 },
               })}
             />
           </div>
-          {errors.pass_wdCk && (
-            <div className="errorMessageWrap">
-              <span>{errors.pass_wdCk.message}</span>
-            </div>
-          )}
+          <ErrorMessage
+            errors={errors}
+            name="pass_wdCk"
+            render={({ message }) => (
+              <span className="errorMessageWrap">{message}</span>
+            )}
+          />
         </form>
       </div>
     </>
