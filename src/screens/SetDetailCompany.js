@@ -161,7 +161,6 @@ export default function SetCompanyDetail() {
       .catch((error) => console.log("실패", error.response));
   };
   function UserInfoSubmit(e) {
-    e.preventDefault();
     servicesPostData(urlSetCompany, {
       cid: cid,
       name: companyInfo.name,
@@ -176,11 +175,9 @@ export default function SetCompanyDetail() {
   }
 
   function UserDetailInfoSubmit(e) {
-    e.preventDefault();
     // companyDetailInfo.address가 입력되어 있으면 위도경도 구하는 함수 실행(내부에 addUserEvent이벤트 실행 코드 있음)
     companyDetailInfo.address ? callMapcoor() : addUserEvent();
   }
-  console.log(errors);
 
   return (
     <>
@@ -194,12 +191,12 @@ export default function SetCompanyDetail() {
               <input
                 type="text"
                 id="name"
-                name="_name"
+                name="_companyName"
                 placeholder="고객명을 입력해 주세요."
                 value={companyInfo.name || ""}
-                {...register("_name", {
+                {...register("_companyName", {
                   onChange: onChangeComapnyInfo,
-                  required: "입력되지 않았습니다.",
+                  // required: "입력되지 않았습니다.",
                   maxLength: {
                     value: 8,
                     message: "8자 이하의 글자만 사용가능합니다.",
@@ -214,14 +211,14 @@ export default function SetCompanyDetail() {
                 수정
               </button>
             </div>
-            <ErrorMessage
-              errors={errors}
-              name="_name"
-              render={({ message }) => (
-                <span className="errorMessageWrap">{message}</span>
-              )}
-            />
           </div>
+          <ErrorMessage
+            errors={errors}
+            name="_companyName"
+            render={({ message }) => (
+              <span className="errorMessageWrap">{message}</span>
+            )}
+          />
         </form>
       </div>
 
@@ -277,14 +274,13 @@ export default function SetCompanyDetail() {
               id="name"
               name="_name"
               placeholder="업체 이름을 입력해 주세요."
-              onChange={onChange}
               value={
                 getDataFinish.current
                   ? companyDetailInfo.name
                   : companyDetailInfo.name || ""
               }
               {...register("_name", {
-                onChange: onChangeComapnyInfo,
+                onChange: onChange,
                 required: "입력되지 않았습니다.",
                 maxLength: {
                   value: 16,
@@ -292,11 +288,18 @@ export default function SetCompanyDetail() {
                 },
                 minLength: {
                   value: 2,
-                  message: "2자 이상의 비밀번호만 사용가능합니다.",
+                  message: "2자 이상의 글자만 사용가능합니다.",
                 },
               })}
             />
           </div>
+          <ErrorMessage
+            errors={errors}
+            name="_name"
+            render={({ message }) => (
+              <span className="errorMessageWrap">{message}</span>
+            )}
+          />
 
           <div className="formContentWrap">
             <label htmlFor="comment" className=" blockLabel">
@@ -305,15 +308,29 @@ export default function SetCompanyDetail() {
             <input
               type="text"
               id="comment"
+              name="_comment"
               placeholder="사업자에 대한 짧은 소개글을 입력해 주세요."
-              onChange={onChange}
               value={
                 getDataFinish.current
                   ? companyDetailInfo.comment
                   : companyDetailInfo.comment || ""
               }
+              {...register("_comment", {
+                onChange: onChange,
+                maxLength: {
+                  value: 300,
+                  message: "300자 이하의 글자만 사용가능합니다.",
+                },
+              })}
             />
           </div>
+          <ErrorMessage
+            errors={errors}
+            name="_comment"
+            render={({ message }) => (
+              <span className="errorMessageWrap">{message}</span>
+            )}
+          />
 
           <div className="formContentWrap">
             <label htmlFor="location" className=" blockLabel">
@@ -322,15 +339,29 @@ export default function SetCompanyDetail() {
             <input
               type="text"
               id="location"
-              placeholder="사업자의 위치를 입력해 주세요. ex.ㅇㅇ구, ㅇㅇ동"
-              onChange={onChange}
+              name="_location"
+              placeholder="사업자의 위치를 입력해 주세요. (예시 ㅇㅇ구, ㅇㅇ동)"
               value={
                 getDataFinish.current
                   ? companyDetailInfo.location
                   : companyDetailInfo.location || ""
               }
+              {...register("_location", {
+                onChange: onChange,
+                maxLength: {
+                  value: 50,
+                  message: "50자 이하의 글자만 사용가능합니다.",
+                },
+              })}
             />
           </div>
+          <ErrorMessage
+            errors={errors}
+            name="_location"
+            render={({ message }) => (
+              <span className="errorMessageWrap">{message}</span>
+            )}
+          />
 
           <div className="formContentWrap">
             <label htmlFor="address" className=" blockLabel">
@@ -339,15 +370,30 @@ export default function SetCompanyDetail() {
             <input
               type="text"
               id="address"
+              name="_address"
               placeholder="주소를 입력해 주세요."
-              onChange={onChange}
               value={
                 getDataFinish.current
                   ? companyDetailInfo.address
                   : companyDetailInfo.address || ""
               }
+              {...register("_address", {
+                onChange: onChange,
+                required: "입력되지 않았습니다.",
+                maxLength: {
+                  value: 50,
+                  message: "50자 이하의 글자만 사용가능합니다.",
+                },
+              })}
             />
           </div>
+          <ErrorMessage
+            errors={errors}
+            name="_location"
+            render={({ message }) => (
+              <span className="errorMessageWrap">{message}</span>
+            )}
+          />
 
           <div className="formContentWrap">
             <label htmlFor="registration" className=" blockLabel">
@@ -356,15 +402,32 @@ export default function SetCompanyDetail() {
             <input
               type="text"
               id="registration"
-              placeholder="사업자 등록 번호를 입력해 주세요."
-              onChange={onChange}
+              name="_registration"
+              placeholder="사업자 등록 번호를 입력해 주세요. (예시 000-00-00000)"
               value={
                 getDataFinish.current
                   ? companyDetailInfo.registration
-                  : companyDetailInfo.registration || ""
+                  : companyDetailInfo.registration
+                      .replace(/[^0-9]/g, "")
+                      .replace(/^(\d{3})(\d{2})(\d{5})$/, `$1-$2-$3`) || ""
               }
+              {...register("_registration", {
+                onChange: onChange,
+                required: "입력되지 않았습니다.",
+                pattern: {
+                  value: /^[0-9]{3}-[0-9]{2}-[0-9]{5}/,
+                  message: "형식에 맞지 않습니다.",
+                },
+              })}
             />
           </div>
+          <ErrorMessage
+            errors={errors}
+            name="_registration"
+            render={({ message }) => (
+              <span className="errorMessageWrap">{message}</span>
+            )}
+          />
 
           <div className="formContentWrap">
             <label htmlFor="workTime" className=" blockLabel">
@@ -373,15 +436,29 @@ export default function SetCompanyDetail() {
             <input
               type="text"
               id="workTime"
+              name="_workTime"
               placeholder="근무 시간을 입력해 주세요."
-              onChange={onChange}
               value={
                 getDataFinish.current
                   ? companyDetailInfo.workTime
                   : companyDetailInfo.workTime || ""
               }
+              {...register("_workTime", {
+                onChange: onChange,
+                maxLength: {
+                  value: 20,
+                  message: "20자 이하의 글자만 사용가능합니다.",
+                },
+              })}
             />
           </div>
+          <ErrorMessage
+            errors={errors}
+            name="_workTime"
+            render={({ message }) => (
+              <span className="errorMessageWrap">{message}</span>
+            )}
+          />
 
           <div className="formContentWrap">
             <label htmlFor="offer" className="blockLabel">
@@ -390,6 +467,7 @@ export default function SetCompanyDetail() {
             <textarea
               type="text"
               id="offer"
+              name="_offer"
               placeholder="사업자 소개글을 입력해 주세요."
               onChange={onChange}
               value={
@@ -397,8 +475,22 @@ export default function SetCompanyDetail() {
                   ? companyDetailInfo.offer
                   : companyDetailInfo.offer || ""
               }
+              {...register("_offer", {
+                onChange: onChange,
+                maxLength: {
+                  value: 500,
+                  message: "500자 이하의 글자만 사용가능합니다.",
+                },
+              })}
             />
           </div>
+          <ErrorMessage
+            errors={errors}
+            name="_offer"
+            render={({ message }) => (
+              <span className="errorMessageWrap">{message}</span>
+            )}
+          />
 
           <SetImage
             img={titleImg}
@@ -425,15 +517,32 @@ export default function SetCompanyDetail() {
             <input
               type="text"
               id="telnum"
-              placeholder="전화번호를 입력해 주세요."
-              onChange={onChange}
+              name="_telnum"
+              placeholder="전화번호를 입력해 주세요. (예시 00-0000-0000)"
               value={
                 getDataFinish.current
                   ? companyDetailInfo.telnum
-                  : companyDetailInfo.telnum || ""
+                  : companyDetailInfo.telnum
+                      .replace(/[^0-9]/g, "")
+                      .replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`) || ""
               }
+              {...register("_telnum", {
+                onChange: onChange,
+                required: "입력되지 않았습니다.",
+                pattern: {
+                  value: /^[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}/,
+                  message: "형식에 맞지 않습니다.",
+                },
+              })}
             />
           </div>
+          <ErrorMessage
+            errors={errors}
+            name="_telnum"
+            render={({ message }) => (
+              <span className="errorMessageWrap">{message}</span>
+            )}
+          />
 
           <div className="formContentWrap">
             <label htmlFor="mobilenum" className=" blockLabel">
@@ -442,15 +551,32 @@ export default function SetCompanyDetail() {
             <input
               type="text"
               id="mobilenum"
-              placeholder="핸드폰번호를 입력해 주세요."
-              onChange={onChange}
+              name="_mobilenum"
               value={
                 getDataFinish.current
                   ? companyDetailInfo.mobilenum
-                  : companyDetailInfo.mobilenum || ""
+                  : companyDetailInfo.mobilenum
+                      .replace(/[^0-9]/g, "")
+                      .replace(/^(\d{3})(\d{3,4})(\d{4})$/, `$1-$2-$3`) || ""
               }
+              placeholder="핸드폰번호를 입력해 주세요. (예시 000-0000-0000)"
+              {...register("_mobilenum", {
+                onChange: onChange,
+                required: "입력되지 않았습니다.",
+                pattern: {
+                  value: /^[0-9]{3}-[0-9]{3,4}-[0-9]{4}/,
+                  message: "형식에 맞지 않습니다.",
+                },
+              })}
             />
           </div>
+          <ErrorMessage
+            errors={errors}
+            name="_mobilenum"
+            render={({ message }) => (
+              <span className="errorMessageWrap">{message}</span>
+            )}
+          />
 
           <div className="formContentWrap">
             <label htmlFor="email" className=" blockLabel">
@@ -459,6 +585,7 @@ export default function SetCompanyDetail() {
             <input
               type="text"
               id="email"
+              name="_email"
               placeholder="이메일을 입력해 주세요."
               onChange={onChange}
               value={
@@ -466,8 +593,23 @@ export default function SetCompanyDetail() {
                   ? companyDetailInfo.email
                   : companyDetailInfo.email || ""
               }
+              {...register("_email", {
+                onChange: onChange,
+                pattern: {
+                  value:
+                    /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i,
+                  message: "형식에 맞지 않습니다.",
+                },
+              })}
             />
           </div>
+          <ErrorMessage
+            errors={errors}
+            name="_email"
+            render={({ message }) => (
+              <span className="errorMessageWrap">{message}</span>
+            )}
+          />
 
           <div className="formContentWrap">
             <label htmlFor="extnum" className=" blockLabel">
@@ -476,6 +618,7 @@ export default function SetCompanyDetail() {
             <input
               type="text"
               id="extnum"
+              name="_extnum"
               placeholder="추가 번호를 입력해 주세요."
               onChange={onChange}
               value={
@@ -483,8 +626,26 @@ export default function SetCompanyDetail() {
                   ? companyDetailInfo.extnum
                   : companyDetailInfo.extnum || ""
               }
+              {...register("_extnum", {
+                onChange: onChange,
+                maxLength: {
+                  value: 13,
+                  message: "형식에 맞지 않습니다.",
+                },
+                pattern: {
+                  value: /[0-9]/,
+                  message: "형식에 맞지 않습니다.",
+                },
+              })}
             />
           </div>
+          <ErrorMessage
+            errors={errors}
+            name="_extnum"
+            render={({ message }) => (
+              <span className="errorMessageWrap">{message}</span>
+            )}
+          />
 
           <div className="formContentWrap">
             <label htmlFor="keywords" className=" blockLabel">
@@ -493,15 +654,29 @@ export default function SetCompanyDetail() {
             <input
               type="text"
               id="keywords"
+              name="_keywords"
               placeholder="키워드를 입력해 주세요."
-              onChange={onChange}
               value={
                 getDataFinish.current
                   ? companyDetailInfo.keywords
-                  : companyDetailInfo.keywords || ""
+                  : companyDetailInfo.keywords.replace(" ", ",") || ""
               }
+              {...register("_keywords", {
+                onChange: onChange,
+                maxLength: {
+                  value: 100,
+                  message: "100자 이하의 글자만 사용가능합니다.",
+                },
+              })}
             />
           </div>
+          <ErrorMessage
+            errors={errors}
+            name="_keywords"
+            render={({ message }) => (
+              <span className="errorMessageWrap">{message}</span>
+            )}
+          />
 
           <div className="formContentWrap">
             <label htmlFor="tags" className=" blockLabel">
@@ -510,15 +685,30 @@ export default function SetCompanyDetail() {
             <input
               type="text"
               id="tags"
+              name="_tags"
               placeholder="태그를 입력해 주세요."
               onChange={onChange}
               value={
                 getDataFinish.current
                   ? companyDetailInfo.tags
-                  : companyDetailInfo.tags || ""
+                  : companyDetailInfo.tags.replace(" ", ",") || ""
               }
+              {...register("_tags", {
+                onChange: onChange,
+                maxLength: {
+                  value: 100,
+                  message: "100자 이하의 글자만 사용가능합니다.",
+                },
+              })}
             />
           </div>
+          <ErrorMessage
+            errors={errors}
+            name="_tags"
+            render={({ message }) => (
+              <span className="errorMessageWrap">{message}</span>
+            )}
+          />
         </form>
       </div>
     </>
