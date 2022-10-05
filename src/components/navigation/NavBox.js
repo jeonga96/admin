@@ -30,10 +30,7 @@ export default function NavBox() {
       <div className="navTop">
         <h1 className="blind">wazzang admin</h1>
         <Link to="/">
-          <img
-            src="https://demo.dashboardpack.com/sales-html/img/logo.png"
-            alt="wazzang admin"
-          />
+          <img src="/data/gonsacokLogoEn.png" alt="와짱 관리자페이지" />
         </Link>
         <button type="button" onClick={onClickBtn} id="nav_close_btn">
           <span className="blind">닫기</span>
