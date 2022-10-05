@@ -102,7 +102,6 @@ export default function ImageSet({
         />
       </div>
       <div className="imgsThumbnail">
-        {/* {imgs === null ? <span>이미지를 두개 이상 업로드해주세요.</span> : null} */}
         {img !== null && id === "titleImg" ? (
           <ImageOnClick
             getData={img}

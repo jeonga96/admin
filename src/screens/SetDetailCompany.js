@@ -1,5 +1,8 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
+import { useForm } from "react-hook-form";
+import { ErrorMessage } from "@hookform/error-message";
+
 import { servicesPostData } from "../Services/importData";
 import { serviesGetImgsIid } from "../Services/useData";
 import {
@@ -13,6 +16,14 @@ import LayoutTopButton from "../components/common/LayoutTopButton";
 
 export default function SetCompanyDetail() {
   const { cid } = useParams();
+
+  // react-hook-form 라이브러리
+  const {
+    handleSubmit,
+    register,
+    getValues,
+    formState: { isSubmitting, errors },
+  } = useForm();
 
   ///"/admin/setCompanyDetailInfo" 로 보내기 위한 상세 회사 정보
   const [companyDetailInfo, setCompanyDetailInfo] = useState({
@@ -169,30 +180,58 @@ export default function SetCompanyDetail() {
     // companyDetailInfo.address가 입력되어 있으면 위도경도 구하는 함수 실행(내부에 addUserEvent이벤트 실행 코드 있음)
     companyDetailInfo.address ? callMapcoor() : addUserEvent();
   }
+  console.log(errors);
 
   return (
     <>
       <div className="commonBox">
-        <form className="formLayout" onSubmit={UserInfoSubmit}>
+        <form className="formLayout" onSubmit={handleSubmit(UserInfoSubmit)}>
           <div className="formContentWrapWithButton">
             <label htmlFor="name" className="blockLabel">
               계약자명
             </label>
-            <input
-              type="text"
-              id="name"
-              placeholder="고객명을 입력해 주세요."
-              onChange={onChangeComapnyInfo}
-              value={companyInfo.name || ""}
+            <div>
+              <input
+                type="text"
+                id="name"
+                name="_name"
+                placeholder="고객명을 입력해 주세요."
+                value={companyInfo.name || ""}
+                {...register("_name", {
+                  onChange: onChangeComapnyInfo,
+                  required: "입력되지 않았습니다.",
+                  maxLength: {
+                    value: 8,
+                    message: "8자 이하의 글자만 사용가능합니다.",
+                  },
+                  minLength: {
+                    value: 2,
+                    message: "2자 이상의 글자만 사용가능합니다.",
+                  },
+                })}
+              />
+              <button type="submit" disabled={isSubmitting}>
+                수정
+              </button>
+            </div>
+            <ErrorMessage
+              errors={errors}
+              name="_name"
+              render={({ message }) => (
+                <span className="errorMessageWrap">{message}</span>
+              )}
             />
-            <button type="submit">수정</button>
           </div>
         </form>
       </div>
+
       <div className="commonBox">
-        <form className="formLayout" onSubmit={UserDetailInfoSubmit}>
+        <form
+          className="formLayout"
+          onSubmit={handleSubmit(UserDetailInfoSubmit)}
+        >
           <ul className="tableTopWrap">
-            <LayoutTopButton text="완료" />
+            <LayoutTopButton text="완료" disabled={isSubmitting} />
           </ul>
 
           <fieldset className="formContentWrapWithRadio">
@@ -205,9 +244,11 @@ export default function SetCompanyDetail() {
                 className="listSearchRadioInput"
                 type="radio"
                 checked={useFlagCheck === 0}
-                onChange={onChangeUseFlag}
                 name="useFlag"
                 value="0"
+                {...register("useFlag", {
+                  onChange: onChangeUseFlag,
+                })}
               />
               <label className="listSearchRadioLabel" htmlFor="1">
                 사용
@@ -216,9 +257,11 @@ export default function SetCompanyDetail() {
                 className="listSearchRadioInput"
                 type="radio"
                 checked={useFlagCheck === 1}
-                onChange={onChangeUseFlag}
                 name="useFlag"
                 value="1"
+                {...register("useFlag", {
+                  onChange: onChangeUseFlag,
+                })}
               />
             </div>
             <div />
@@ -232,6 +275,7 @@ export default function SetCompanyDetail() {
             <input
               type="text"
               id="name"
+              name="_name"
               placeholder="업체 이름을 입력해 주세요."
               onChange={onChange}
               value={
@@ -239,6 +283,18 @@ export default function SetCompanyDetail() {
                   ? companyDetailInfo.name
                   : companyDetailInfo.name || ""
               }
+              {...register("_name", {
+                onChange: onChangeComapnyInfo,
+                required: "입력되지 않았습니다.",
+                maxLength: {
+                  value: 16,
+                  message: "16자 이하의 글자만 사용가능합니다.",
+                },
+                minLength: {
+                  value: 2,
+                  message: "2자 이상의 비밀번호만 사용가능합니다.",
+                },
+              })}
             />
           </div>
 

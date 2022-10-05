@@ -592,24 +592,26 @@ button {
 }
 .formContentWrapWithButton label,
 .detailTitle {
-  width: 30%;
+  width: 100%;
+}
+.formContentWrapWithButton > div {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  height: auto;
 }
 .formContentWrapWithButton input,
 .detailContent {
-  display: inline-block;
   width: 80%;
-  margin-right: 5px;
 }
 .formContentWrapWithButton button,
 .detailButton {
-  display: inline-block;
-  width: 15%;
+  width: 19%;
   height: 2rem;
   margin-top: 0.5rem;
   background-color: var(--color-gray);
 }
 
-/* 다른 입력창이 입력될 때를 기다리지 않고 입력된 값을 바로 보낼 땐 formContentWrapWithButton로 감싸준다. */
 .formContentWrapWithRadio {
   display: flex;
   justify-content: space-between;
@@ -629,8 +631,6 @@ button {
   margin-top: 0;
 }
 .errorMessageWrap {
-  width: 100%;
-  height: auto;
   display: block;
   width: 100%;
   height: auto;
@@ -714,6 +714,7 @@ button {
   color: var(--color-white);
 }
 
+/*pc 버전*/
 @media screen and (min-width: 768px) {
   .formLayout {
     padding: 0;
@@ -746,15 +747,20 @@ button {
   .detailTitle {
     width: 30%;
   }
+  .formContentWrapWithButton > div {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: auto;
+  }
   .formContentWrapWithButton input,
   .detailContent {
     width: 80%;
-    margin-right: 5px;
   }
   .formContentWrapWithButton button,
   .detailButton {
     display: block;
-    width: 15%;
+    width: 19%;
     height: 2rem;
     margin-top: 0.5rem;
     background-color: var(--color-gray);

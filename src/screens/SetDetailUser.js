@@ -5,7 +5,7 @@ import { serviesGetImgsIid } from "../Services/useData";
 import { urlSetUserDetail, urlGetUserDetail } from "../Services/string";
 
 import LayoutTopButton from "../components/common/LayoutTopButton";
-import SetImage from "../components/common/ImageSet";
+import ImageSet from "../components/common/ImageSet";
 import SelctUserRole from "../components/common/SelectUserRole";
 
 export default function SetDetailUser() {
@@ -184,7 +184,7 @@ export default function SetDetailUser() {
             />
           </div>
 
-          <SetImage
+          <ImageSet
             img={titleImg}
             setImg={setTitleImg}
             getData={userDetail}
@@ -193,7 +193,7 @@ export default function SetDetailUser() {
             getDataFinish={getDataFinish.current}
           />
 
-          <SetImage
+          <ImageSet
             imgs={imgs}
             setImgs={setImgs}
             id="imgs"
