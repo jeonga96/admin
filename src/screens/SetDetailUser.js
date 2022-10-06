@@ -5,7 +5,12 @@ import { ErrorMessage } from "@hookform/error-message";
 
 import { servicesPostData } from "../Services/importData";
 import { serviesGetImgsIid } from "../Services/useData";
-import { urlSetUserDetail, urlGetUserDetail } from "../Services/string";
+import {
+  urlSetUser,
+  urlSetUserRole,
+  urlSetUserDetail,
+  urlGetUserDetail,
+} from "../Services/string";
 
 import LayoutTopButton from "../components/common/LayoutTopButton";
 import ImageSet from "../components/common/ImageSet";
@@ -21,6 +26,7 @@ export default function SetDetailUser() {
     formState: { isSubmitting, errors },
   } = useForm();
 
+  const [user, setUser] = useState({});
   const [userDetail, setUserDetail] = useState({
     name: "",
     address: "",
@@ -31,6 +37,7 @@ export default function SetDetailUser() {
     imgs: "",
     nick: "",
   });
+
   // titleImg:대표 이미지저장 및 표시, imgs:상세 이미지저장 및 표시, imgsIid:서버에 이미지를 보낼 때는, iid값만 필요
   // getDataFinish:기존에 입력된 값이 있어 값을 불러왔다면 true로 변경,
   // mapcoor:위도 경도 저장,
@@ -49,8 +56,6 @@ export default function SetDetailUser() {
           // 값이 있다면 comapnyData에 저장한 후 getDataFinish 값을 변경
           setUserDetail(res.data);
           getDataFinish.current = true;
-        } else if (res.data === "fail") {
-          console.log("새로운 회원입니다.");
         }
       })
       .catch((res) => console.log(res));
@@ -63,6 +68,15 @@ export default function SetDetailUser() {
   function AddUserSubmit(e) {
     //서버에 imgs의 iid값만을 보내기 위해 실행하는 반복문 함수
     serviesGetImgsIid(imgsIid, imgs);
+
+    // getDataFinish값이 false라면 수정이 아닌, 생성이므로 userole의 기본값을 입력한다.
+    if (!getDataFinish) {
+      servicesPostData(urlSetUserRole, {
+        uid: uid,
+        userrole: "ROLE_USER",
+      });
+    }
+
     servicesPostData(urlSetUserDetail, {
       ruid: uid,
       name: userDetail.name,
@@ -75,7 +89,6 @@ export default function SetDetailUser() {
       nick: userDetail.nick,
     })
       .then((res) => {
-        console.log("axios 성공!", res);
         if (res.status === "success") {
           alert("가입이 완료되었습니다!");
           window.location.href = `/user/${uid}`;
@@ -87,6 +100,23 @@ export default function SetDetailUser() {
 
   return (
     <>
+      {/* <div className="commonBox">
+        <ul className="detailContentCenter">
+          <li className="detailHead">
+            <h4>회원 권한 설정</h4>
+            <SelctUserRole />
+          </li>
+        </ul>
+      </div> */}
+      <div className="commonBox">
+        <ul className="detailContentCenter">
+          <li className="detailHead">
+            <h4>회원 권한 설정</h4>
+            <SelctUserRole />
+          </li>
+        </ul>
+      </div>
+
       <div className="commonBox">
         <form className="formLayout" onSubmit={handleSubmit(AddUserSubmit)}>
           <ul className="tableTopWrap">
@@ -293,14 +323,6 @@ export default function SetDetailUser() {
             getDataFinish={getDataFinish.current}
           />
         </form>
-      </div>
-      <div className="commonBox">
-        <ul className="detailContentCenter">
-          <li className="detailHead">
-            <h4>회원 권한 설정</h4>
-            <SelctUserRole uid={uid} />
-          </li>
-        </ul>
       </div>
     </>
   );

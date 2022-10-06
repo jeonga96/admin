@@ -84,7 +84,7 @@ export default function AddUser() {
                   message: "16자 이하의 아이디만 사용가능합니다.",
                 },
                 pattern: {
-                  value: /[A-Za-z]/,
+                  value: /^[a-z]+[a-z0-9]$/g,
                   message: "입력 형식에 맞지 않습니다.",
                 },
               })}
