@@ -38,8 +38,9 @@ export default function ListUser() {
                 <th className="widthS">관리번호</th>
                 <th className="widthM">아이디</th>
                 <th className="widthS">이름</th>
+                <th className="widthS">회원유형</th>
                 <th className="widthM">핸드폰번호</th>
-                <th className="widthM">계약일</th>
+                <th className="widthS">계약일</th>
                 <th className="widthS">상세정보</th>
               </tr>
             </thead>
@@ -49,6 +50,9 @@ export default function ListUser() {
                   <td>{item.uid}</td>
                   <td>{item.userid}</td>
                   <td>{item.name}</td>
+                  <td>
+                    {item.userrole.includes("ROLE_ADMIN") ? "관리자" : "일반"}
+                  </td>
                   <td>{item.mobile}</td>
                   <td>{item.createTime.slice(0, 10)}</td>
                   <td>
