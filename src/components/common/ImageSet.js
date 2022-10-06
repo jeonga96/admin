@@ -56,7 +56,7 @@ export default function ImageSet({
     } else {
       for (let i = 0; i < files.length; i++) {
         formData.append("Imgs", files[i]);
-        console.log(i, "titleUpload click-->", files[i]);
+        console.log("imgsUpload click-->", files[i]);
       }
     }
 
@@ -65,7 +65,6 @@ export default function ImageSet({
       if (event.target.id === "titleImg") {
         fnSetImg(res.data);
       } else {
-        console.log(imgs);
         fnSetImgs([...imgs]);
         for (let i = 0; i < res.data.length; i++) {
           fnSetImgs((prev) => [res.data[i], ...prev]);

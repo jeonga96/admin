@@ -13,12 +13,9 @@ export default function GetCompany({ companyDetail }) {
   useEffect(() => {
     if (!!companyDetail.address) {
       mapLinkAdress.current = companyDetail.address.replace(/ /gi, "+");
-
-      console.log("이것은 주소", mapLinkAdress.current);
     }
     if (companyDetail.keywords) {
       keyword.current = companyDetail.keywords.split(",");
-      console.log("이것은 키워드", keyword.current);
     }
   }, [companyDetail]);
 

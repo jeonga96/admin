@@ -9,9 +9,9 @@ import LayoutTopButton from "../components/common/LayoutTopButton";
 export default function SetDetailCompanyNotice() {
   const id = useParams();
 
-  const [imgs, setImgs] = useState(null);
-  const imgsIid = useRef([]);
-  const getDataFinish = useRef(null);
+  const [imgs, setImgs] = useState([]);
+  const imgsIid = [];
+  const getDataFinish = useRef(false);
   const [noticeDetail, setNoticeDetail] = useState({
     comnid: "",
     useFlag: "",
@@ -35,19 +35,20 @@ export default function SetDetailCompanyNotice() {
       .catch((res) => console.log(res));
   }, []);
 
+  console.log(noticeDetail);
+
   function onChange(e) {
     setNoticeDetail({ ...noticeDetail, [e.target.id]: e.target.value });
   }
 
-  const addUserEvent = () => {
-    console.log(id.comnid);
-
+  function AddUserSubmit(e) {
+    e.preventDefault();
     servicesPostData(urlSetNotice, {
       comnid: id.comnid,
       useFlag: 1,
       title: noticeDetail.title,
       content: noticeDetail.content,
-      imgs: imgsIid.current.toString(),
+      imgs: setImgs ? imgsIid.toString() : "",
     })
       .then((res) => {
         console.log("axios 성공!", res);
@@ -60,12 +61,7 @@ export default function SetDetailCompanyNotice() {
           return;
         }
       })
-      .catch((error) => console.log("axios 실패ㅜ", error.response));
-  };
-
-  function AddUserSubmit(e) {
-    e.preventDefault();
-    addUserEvent();
+      .catch((error) => console.log("axios 실패", error.response));
   }
 
   return (
@@ -93,11 +89,10 @@ export default function SetDetailCompanyNotice() {
           </div>
 
           <SetImage
-            img={imgs}
-            setImg={setImgs}
+            imgs={imgs}
+            setImgs={setImgs}
             id="imgs"
-            title="이미지 추가"
-            imgsIid={true}
+            title="공지사항 이미지"
             getData={noticeDetail}
             getDataFinish={getDataFinish.current}
           />

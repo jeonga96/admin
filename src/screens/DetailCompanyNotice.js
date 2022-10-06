@@ -5,25 +5,28 @@ import { urlGetNotice } from "../Services/string";
 import { useGetImage } from "../Services/customHook";
 
 import LayoutTopButton from "../components/common/LayoutTopButton";
+import ImageOnClick from "../components/common/ImageOnClick";
 
 function CompanyNoticeDetail() {
   const [companyDetail, setCompanyDetail] = useState([]);
-  const [image, setImage] = useState([]);
+  const [images, setImages] = useState([]);
   const comnid = useParams().comnid;
 
+  // 해당 공지사항 번호에 맞는 데이터를 가져온다.
   useEffect(() => {
     servicesPostData(urlGetNotice, {
       comnid: comnid,
     }).then((res) => {
       if (res.status === "success") {
         setCompanyDetail(res.data);
-        console.log("res.data!!!", res.data);
         return;
       }
     });
   }, []);
-  useGetImage(setImage, companyDetail);
 
+  // 서버에서 image를 가져오는 customHook imgs를 가져온다.
+  useGetImage(setImages, companyDetail);
+  console.log(">", images);
   return (
     <>
       <div className="commonBox paddingBox">
@@ -60,20 +63,17 @@ function CompanyNoticeDetail() {
           <li className="formContentWrap">
             <h4>상세 이미지</h4>
             <ul
-              className="detailWidthContent"
+              className="detailWidthContent detailWidthContentImg"
               style={{ justifyContent: "left" }}
             >
-              {image &&
-                image.map((item) => (
-                  <li
+              {images &&
+                images.map((item) => (
+                  <ImageOnClick
                     key={item.iid}
-                    className="img"
-                    style={{
-                      backgroundImage: `url("${image && item.storagePath}")`,
-                    }}
-                  >
-                    <span className="blind">공지사항 이미지 </span>
-                  </li>
+                    getData={images}
+                    url={item.storagePath}
+                    text="공지사항 이미지"
+                  />
                 ))}
             </ul>
           </li>
