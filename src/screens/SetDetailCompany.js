@@ -21,7 +21,6 @@ export default function SetCompanyDetail() {
   const {
     handleSubmit,
     register,
-    getValues,
     formState: { isSubmitting, errors },
   } = useForm();
 
@@ -389,7 +388,7 @@ export default function SetCompanyDetail() {
           </div>
           <ErrorMessage
             errors={errors}
-            name="_location"
+            name="_address"
             render={({ message }) => (
               <span className="errorMessageWrap">{message}</span>
             )}
