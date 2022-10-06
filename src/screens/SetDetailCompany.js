@@ -77,16 +77,15 @@ export default function SetCompanyDetail() {
   // 현재 페이지가 렌더링되자마자 기존에 입력된 값의 여부를 확인한다.
   useEffect(() => {
     // 기본 회사정보 불러오기
-    servicesPostData(urlGetCompany, {
-      cid: cid,
-    })
-      .then((res) => {
-        if (res.status === "success") {
-          setCompanyInfo(res.data);
-          console.log("불러왔다!!", companyInfo);
-        }
-      })
-      .catch((res) => console.log(res));
+    // servicesPostData(urlGetCompany, {
+    //   cid: cid,
+    // })
+    //   .then((res) => {
+    //     if (res.status === "success") {
+    //       setCompanyInfo(res.data);
+    //     }
+    //   })
+    //   .catch((res) => console.log(res));
 
     // 상세 회사정보 불러오기 기존 값이 없다면 새로운 회원이다. 새로 작성함
     servicesPostData(urlGetCompanyDetail, {
@@ -233,34 +232,36 @@ export default function SetCompanyDetail() {
           <fieldset className="formContentWrapWithRadio">
             <div className="listSearchWrap">
               <div className="blockLabel">회원관리</div>
-              <label className="listSearchRadioLabel" htmlFor="0">
-                휴면
-              </label>
-              <input
-                className="listSearchRadioInput"
-                type="radio"
-                checked={useFlagCheck === 0}
-                name="useFlag"
-                value="0"
-                {...register("useFlag", {
-                  onChange: onChangeUseFlag,
-                })}
-              />
-              <label className="listSearchRadioLabel" htmlFor="1">
-                사용
-              </label>
-              <input
-                className="listSearchRadioInput"
-                type="radio"
-                checked={useFlagCheck === 1}
-                name="useFlag"
-                value="1"
-                {...register("useFlag", {
-                  onChange: onChangeUseFlag,
-                })}
-              />
+              <div className="formContentWrapWithRadioValue">
+                <input
+                  className="listSearchRadioInput"
+                  type="radio"
+                  checked={useFlagCheck === "0"}
+                  name="_useFlag"
+                  value="0"
+                  {...register("_useFlag", {
+                    onChange: onChangeUseFlag,
+                  })}
+                />
+                <label className="listSearchRadioLabel" htmlFor="0">
+                  휴면
+                </label>
+
+                <input
+                  className="listSearchRadioInput"
+                  type="radio"
+                  checked={useFlagCheck === "1"}
+                  name="_useFlag"
+                  value="1"
+                  {...register("_useFlag", {
+                    onChange: onChangeUseFlag,
+                  })}
+                />
+                <label className="listSearchRadioLabel" htmlFor="1">
+                  사용
+                </label>
+              </div>
             </div>
-            <div />
             <div />
           </fieldset>
 

@@ -6,7 +6,6 @@ import { ErrorMessage } from "@hookform/error-message";
 import { servicesPostData } from "../Services/importData";
 import { serviesGetImgsIid } from "../Services/useData";
 import {
-  urlSetUser,
   urlSetUserRole,
   urlSetUserDetail,
   urlGetUserDetail,
@@ -14,7 +13,7 @@ import {
 
 import LayoutTopButton from "../components/common/LayoutTopButton";
 import ImageSet from "../components/common/ImageSet";
-import SelctUserRole from "../components/common/SelectUserRole";
+import SelctUserRole from "../components/common/DetailUserComponent";
 
 export default function SetDetailUser() {
   const { uid } = useParams();
@@ -26,7 +25,6 @@ export default function SetDetailUser() {
     formState: { isSubmitting, errors },
   } = useForm();
 
-  const [user, setUser] = useState({});
   const [userDetail, setUserDetail] = useState({
     name: "",
     address: "",
@@ -100,23 +98,7 @@ export default function SetDetailUser() {
 
   return (
     <>
-      {/* <div className="commonBox">
-        <ul className="detailContentCenter">
-          <li className="detailHead">
-            <h4>회원 권한 설정</h4>
-            <SelctUserRole />
-          </li>
-        </ul>
-      </div> */}
-      <div className="commonBox">
-        <ul className="detailContentCenter">
-          <li className="detailHead">
-            <h4>회원 권한 설정</h4>
-            <SelctUserRole />
-          </li>
-        </ul>
-      </div>
-
+      <SelctUserRole />
       <div className="commonBox">
         <form className="formLayout" onSubmit={handleSubmit(AddUserSubmit)}>
           <ul className="tableTopWrap">
