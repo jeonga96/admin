@@ -26,7 +26,7 @@ function CompanyNoticeDetail() {
 
   // 서버에서 image를 가져오는 customHook imgs를 가져온다.
   useGetImage(setImages, companyDetail);
-  console.log(">", images);
+
   return (
     <>
       <div className="commonBox paddingBox">

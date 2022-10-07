@@ -9,7 +9,7 @@ import BarChart from "../components/common/BarChart";
 
 export default function DetailCompanyReview() {
   const [companyDetail, setCompanyDetail] = useState([]);
-  const [image, setImage] = useState([]);
+  const [images, setImages] = useState([]);
   const comrid = useParams().comrid;
 
   useEffect(() => {
@@ -24,7 +24,8 @@ export default function DetailCompanyReview() {
     });
   }, []);
 
-  useGetImage(setImage, companyDetail);
+  // 서버에서 image를 가져오는 customHook imgs를 가져온다.
+  useGetImage(setImages, companyDetail);
 
   return (
     <>
@@ -80,12 +81,12 @@ export default function DetailCompanyReview() {
 
           <li className="formContentWrap">
             <h4>리뷰 이미지</h4>
-            <div className="detailWidthContent detailWidthContents">
-              {image &&
-                image.map((item) => (
+            <div className="detailWidthContent detailWidthContentImg">
+              {images &&
+                images.map((item) => (
                   <ImageOnClick
                     key={item.iid}
-                    getData={image}
+                    getData={images}
                     url={item.storagePath}
                     text="리뷰 이미지"
                   />
