@@ -42,9 +42,6 @@ export default function ListUserSearchComponent() {
         <div className="listSearchWrap">
           <div className="title">회원상태</div>
 
-          <label className="listSearchRadioLabel" htmlFor="useFlag1">
-            회원
-          </label>
           <input
             className="listSearchRadioInput"
             type="radio"
@@ -52,21 +49,10 @@ export default function ListUserSearchComponent() {
             name="drone"
             value="1"
           />
-
-          <label className="listSearchRadioLabel" htmlFor="useFlag2">
-            비회원
+          <label className="listSearchRadioLabel" htmlFor="useFlag1">
+            회원
           </label>
-          <input
-            className="listSearchRadioInput"
-            type="radio"
-            id="useFlag2"
-            name="drone"
-            value="2"
-          />
 
-          <label className="listSearchRadioLabel" htmlFor="useFlag0">
-            휴면
-          </label>
           <input
             className="listSearchRadioInput"
             type="radio"
@@ -74,6 +60,9 @@ export default function ListUserSearchComponent() {
             name="drone"
             value="0"
           />
+          <label className="listSearchRadioLabel" htmlFor="useFlag0">
+            해지
+          </label>
         </div>
 
         <div className="listSearchButtonWrap">

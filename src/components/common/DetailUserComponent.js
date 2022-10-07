@@ -129,15 +129,6 @@ export default function SelectUserRole() {
                 })}
               />
               <button
-                name="_passwdReset"
-                onClick={(e) => {
-                  e.preventDefault();
-                  setPasswd("7942@@");
-                }}
-              >
-                기본
-              </button>
-              <button
                 name="_passwdSave"
                 onClick={(e) => {
                   e.preventDefault();
