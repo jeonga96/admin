@@ -8,11 +8,11 @@ import { serviesGetImgsIid } from "../Services/useData";
 import {
   urlGetCompanyDetail,
   urlSetCompanyDetail,
-  urlGetCompany,
   urlSetCompany,
 } from "../Services/string";
 import SetImage from "../components/common/ImageSet";
 import LayoutTopButton from "../components/common/LayoutTopButton";
+import SetAllKeyWord from "../components/common/SetAllKeyWord";
 
 export default function SetCompanyDetail() {
   const { cid } = useParams();
@@ -609,7 +609,7 @@ export default function SetCompanyDetail() {
             <label htmlFor="keywords" className=" blockLabel">
               키워드
             </label>
-            <input
+            {/* <input
               type="text"
               id="keywords"
               name="_keywords"
@@ -622,15 +622,16 @@ export default function SetCompanyDetail() {
                   message: "100자 이하의 글자만 사용가능합니다.",
                 },
               })}
-            />
+            /> */}
+            <SetAllKeyWord />
           </div>
-          <ErrorMessage
+          {/* <ErrorMessage
             errors={errors}
             name="_keywords"
             render={({ message }) => (
               <span className="errorMessageWrap">{message}</span>
             )}
-          />
+          /> */}
 
           <div className="formContentWrap">
             <label htmlFor="tags" className=" blockLabel">

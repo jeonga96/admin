@@ -79,9 +79,13 @@ function App() {
     // 로컬에 token이 없으면서 현재 페이지가 login이 아닐 때면 login 으로 이동
     userCheck();
 
-    // 키워드 검색을 위해 전체 키워드 받아오기
-    // servicesSetStorage(ALLKEYWORD, servicesPostData(urlAllKeyword));
-    // console.log("d", servicesPostData(urlAllKeyword));
+    // 키워드 검색을 위해 전체 키워드 받아와 로컬스토리지에 저장
+    if (!!user) {
+      servicesPostData(urlAllKeyword, {}).then((res) => {
+        servicesSetStorage(ALLKEYWORD, JSON.stringify(res.data));
+      });
+    }
+
     //refresh token 다시 받아오기 이벤트, 현재 10시간마다 토큰을 받아오는 것으로 설정
     if (notLoginScreens) {
       const tokenCheckTime = 3600000 * 10;

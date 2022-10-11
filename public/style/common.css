@@ -1310,3 +1310,29 @@ ul.pagination li a:hover {
   background-color: var(--color-gray);
   margin-right: 4px;
 }
+.keywordWrap {
+  width: 100%;
+  display: flex;
+}
+.keywordWrap > div {
+  width: 50%;
+  height: auto;
+}
+.keywordWrap > div:last-child {
+  padding-top: 10px;
+  padding-left: 5px;
+}
+.keywordWrap .keywordBox {
+  overflow: scroll;
+  width: 100%;
+  border: 1px solid var(--color-bggray);
+  height: 100px;
+  margin-top: 4px;
+}
+.keywordWrap .keywordInput {
+  width: 100%;
+}
+.keywordWrap .keywordSelectWrap {
+  height: 100%;
+  background-color: var(--color-bggray);
+}
