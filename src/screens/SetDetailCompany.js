@@ -238,7 +238,7 @@ export default function SetCompanyDetail() {
                   type="radio"
                   checked={useFlagCheck === "0"}
                   name="_useFlag"
-                  // value="0"
+                  value="0"
                   {...register("_useFlag", {
                     onChange: onChangeUseFlag,
                   })}
@@ -252,7 +252,7 @@ export default function SetCompanyDetail() {
                   type="radio"
                   checked={useFlagCheck === "1"}
                   name="_useFlag"
-                  // value="1"
+                  value="1"
                   {...register("_useFlag", {
                     onChange: onChangeUseFlag,
                   })}
@@ -274,11 +274,7 @@ export default function SetCompanyDetail() {
               id="name"
               name="_name"
               placeholder="업체 이름을 입력해 주세요."
-              value={
-                getDataFinish.current
-                  ? companyDetailInfo.name
-                  : companyDetailInfo.name || ""
-              }
+              value={companyDetailInfo.name || ""}
               {...register("_name", {
                 onChange: onChange,
                 required: "입력되지 않았습니다.",
@@ -310,11 +306,7 @@ export default function SetCompanyDetail() {
               id="comment"
               name="_comment"
               placeholder="사업자에 대한 짧은 소개글을 입력해 주세요."
-              value={
-                getDataFinish.current
-                  ? companyDetailInfo.comment
-                  : companyDetailInfo.comment || ""
-              }
+              value={companyDetailInfo.comment || ""}
               {...register("_comment", {
                 onChange: onChange,
                 maxLength: {
@@ -341,11 +333,7 @@ export default function SetCompanyDetail() {
               id="location"
               name="_location"
               placeholder="사업자의 위치를 입력해 주세요. (예시 ㅇㅇ구, ㅇㅇ동)"
-              value={
-                getDataFinish.current
-                  ? companyDetailInfo.location
-                  : companyDetailInfo.location || ""
-              }
+              value={companyDetailInfo.location || ""}
               {...register("_location", {
                 onChange: onChange,
                 maxLength: {
@@ -372,11 +360,7 @@ export default function SetCompanyDetail() {
               id="address"
               name="_address"
               placeholder="주소를 입력해 주세요."
-              value={
-                getDataFinish.current
-                  ? companyDetailInfo.address
-                  : companyDetailInfo.address || ""
-              }
+              value={companyDetailInfo.address || ""}
               {...register("_address", {
                 onChange: onChange,
                 required: "입력되지 않았습니다.",
@@ -404,16 +388,7 @@ export default function SetCompanyDetail() {
               id="registration"
               name="_registration"
               placeholder="사업자 등록 번호를 입력해 주세요. (예시 000-00-00000)"
-              value={
-                // getDataFinish.current
-                //   ? companyDetailInfo.registration
-                //   : companyDetailInfo.registration
-                //       .replace(/[^0-9]/g, "")
-                //       .replace(/^(\d{3})(\d{2})(\d{5})$/, `$1-$2-$3`) || ""
-                getDataFinish.current
-                  ? companyDetailInfo.registration
-                  : companyDetailInfo.registration || ""
-              }
+              value={companyDetailInfo.registration || ""}
               {...register("_registration", {
                 onChange: onChange,
                 required: "입력되지 않았습니다.",
@@ -441,11 +416,7 @@ export default function SetCompanyDetail() {
               id="workTime"
               name="_workTime"
               placeholder="근무 시간을 입력해 주세요."
-              value={
-                getDataFinish.current
-                  ? companyDetailInfo.workTime
-                  : companyDetailInfo.workTime || ""
-              }
+              value={companyDetailInfo.workTime || ""}
               {...register("_workTime", {
                 onChange: onChange,
                 maxLength: {
@@ -473,11 +444,7 @@ export default function SetCompanyDetail() {
               name="_offer"
               placeholder="사업자 소개글을 입력해 주세요."
               onChange={onChange}
-              value={
-                getDataFinish.current
-                  ? companyDetailInfo.offer
-                  : companyDetailInfo.offer || ""
-              }
+              value={companyDetailInfo.offer || ""}
               {...register("_offer", {
                 onChange: onChange,
                 maxLength: {
@@ -523,14 +490,9 @@ export default function SetCompanyDetail() {
               name="_telnum"
               placeholder="전화번호를 입력해 주세요. (예시 00-0000-0000)"
               value={
-                // getDataFinish.current
-                //   ? companyDetailInfo.telnum
-                //   : companyDetailInfo.telnum
-                //       .replace(/[^0-9]/g, "")
-                //       .replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`) || ""
-                getDataFinish.current
-                  ? companyDetailInfo.telnum
-                  : companyDetailInfo.telnum || ""
+                companyDetailInfo.telnum
+                  .replace(/[^0-9]/g, "")
+                  .replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`) || ""
               }
               {...register("_telnum", {
                 onChange: onChange,
@@ -559,14 +521,9 @@ export default function SetCompanyDetail() {
               id="mobilenum"
               name="_mobilenum"
               value={
-                getDataFinish.current
-                  ? companyDetailInfo.mobilenum
-                  : companyDetailInfo.mobilenum || ""
-                // getDataFinish.current
-                //   ? companyDetailInfo.mobilenum
-                //   : companyDetailInfo.mobilenum
-                //       .replace(/[^0-9]/g, "")
-                //       .replace(/^(\d{3})(\d{3,4})(\d{4})$/, `$1-$2-$3`) || ""
+                companyDetailInfo.mobilenum
+                  .replace(/[^0-9]/g, "")
+                  .replace(/^(\d{3})(\d{3,4})(\d{4})$/, `$1-$2-$3`) || ""
               }
               placeholder="핸드폰번호를 입력해 주세요. (예시 000-0000-0000)"
               {...register("_mobilenum", {
@@ -597,11 +554,7 @@ export default function SetCompanyDetail() {
               name="_email"
               placeholder="이메일을 입력해 주세요."
               onChange={onChange}
-              value={
-                getDataFinish.current
-                  ? companyDetailInfo.email
-                  : companyDetailInfo.email || ""
-              }
+              value={companyDetailInfo.email || ""}
               {...register("_email", {
                 onChange: onChange,
                 pattern: {
@@ -630,11 +583,7 @@ export default function SetCompanyDetail() {
               name="_extnum"
               placeholder="추가 번호를 입력해 주세요."
               onChange={onChange}
-              value={
-                getDataFinish.current
-                  ? companyDetailInfo.extnum
-                  : companyDetailInfo.extnum || ""
-              }
+              value={companyDetailInfo.extnum || ""}
               {...register("_extnum", {
                 onChange: onChange,
                 maxLength: {
@@ -665,14 +614,7 @@ export default function SetCompanyDetail() {
               id="keywords"
               name="_keywords"
               placeholder="키워드를 입력해 주세요."
-              value={
-                getDataFinish.current
-                  ? companyDetailInfo.keywords
-                  : companyDetailInfo.keywords || ""
-                // getDataFinish.current
-                //   ? companyDetailInfo.keywords
-                //   : companyDetailInfo.keywords.replace(" ", ",") || ""
-              }
+              value={companyDetailInfo.keywords.replace(" ", ",") || ""}
               {...register("_keywords", {
                 onChange: onChange,
                 maxLength: {
@@ -700,14 +642,7 @@ export default function SetCompanyDetail() {
               name="_tags"
               placeholder="태그를 입력해 주세요."
               onChange={onChange}
-              value={
-                // getDataFinish.current
-                //   ? companyDetailInfo.tags
-                //   : companyDetailInfo.tags.replace(" ", ",") || ""
-                getDataFinish.current
-                  ? companyDetailInfo.tags
-                  : companyDetailInfo.tags || ""
-              }
+              value={companyDetailInfo.tags.replace(" ", ",") || ""}
               {...register("_tags", {
                 onChange: onChange,
                 maxLength: {

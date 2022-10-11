@@ -80,11 +80,7 @@ export default function SetDetailCompanyNotice() {
               id="title"
               placeholder="제목을 입력해 주세요."
               onChange={onChange}
-              value={
-                getDataFinish.current
-                  ? noticeDetail.title
-                  : noticeDetail.title || ""
-              }
+              value={noticeDetail.title || ""}
             />
           </div>
 
@@ -105,11 +101,7 @@ export default function SetDetailCompanyNotice() {
               id="content"
               placeholder="내용을 입력해 주세요."
               onChange={onChange}
-              value={
-                getDataFinish.current
-                  ? noticeDetail.content
-                  : noticeDetail.content || ""
-              }
+              value={noticeDetail.content || ""}
             />
           </div>
         </form>

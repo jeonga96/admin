@@ -114,9 +114,7 @@ export default function SetDetailUser() {
               id="name"
               name="_name"
               placeholder="이름을 입력해 주세요."
-              value={
-                getDataFinish.current ? userDetail.name : userDetail.name || ""
-              }
+              value={userDetail.name || ""}
               {...register("_name", {
                 onChange: onChange,
                 required: "입력되지 않았습니다.",
@@ -144,9 +142,7 @@ export default function SetDetailUser() {
               id="nick"
               name="_nick"
               placeholder="별명을 입력해 주세요."
-              value={
-                getDataFinish.current ? userDetail.nick : userDetail.nick || ""
-              }
+              value={userDetail.nick || ""}
               {...register("_nick", {
                 onChange: onChange,
                 maxLength: {
@@ -177,11 +173,7 @@ export default function SetDetailUser() {
               id="location"
               name="_location"
               placeholder="주소를 입력해 주세요."
-              value={
-                getDataFinish.current
-                  ? userDetail.location
-                  : userDetail.location || ""
-              }
+              value={userDetail.location || ""}
               {...register("_location", {
                 onChange: onChange,
                 maxLength: {
@@ -212,11 +204,7 @@ export default function SetDetailUser() {
               id="address"
               name="_address"
               placeholder="상세주소를 입력해 주세요."
-              value={
-                getDataFinish.current
-                  ? userDetail.address
-                  : userDetail.address || ""
-              }
+              value={userDetail.address || ""}
               {...register("_address", {
                 onChange: onChange,
               })}
@@ -233,11 +221,9 @@ export default function SetDetailUser() {
               name="_mobile"
               placeholder="핸드폰 번호 (예시 000-0000-0000)"
               value={
-                getDataFinish.current
-                  ? userDetail.mobile
-                  : userDetail.mobile
-                      .replace(/[^0-9]/g, "")
-                      .replace(/^(\d{3})(\d{3,4})(\d{4})$/, `$1-$2-$3`) || ""
+                userDetail.mobile
+                  .replace(/[^0-9]/g, "")
+                  .replace(/^(\d{3})(\d{3,4})(\d{4})$/, `$1-$2-$3`) || ""
               }
               {...register("_mobile", {
                 onChange: onChange,
@@ -266,9 +252,7 @@ export default function SetDetailUser() {
               id="mail"
               name="_mail"
               placeholder="이메일을 입력해 주세요."
-              value={
-                getDataFinish.current ? userDetail.mail : userDetail.mail || ""
-              }
+              value={userDetail.mail || ""}
               {...register("_mail", {
                 onChange: onChange,
                 pattern: {

@@ -54,15 +54,12 @@ export default function ListCompany() {
                     ) : null}
                   </td>
                   <td className="tableButton">
-                    <Link to={`${item.cid}`} className="buttonLink Link">
+                    <Link to={`${item.cid}`} className="Link">
                       상세
                     </Link>
                   </td>
                   <td className="tableButton">
-                    <Link
-                      to={`${item.cid}/setcompanydetail`}
-                      className="buttonLink Link"
-                    >
+                    <Link to={`${item.cid}/setcompanydetail`} className="Link">
                       수정
                     </Link>
                   </td>
