@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { servicesPostData } from "../Services/importData";
 import { urlGetUserDetail } from "../Services/string";
-import { useDidMountEffect, useGetImage } from "../Services/customHook";
+import { useGetImage } from "../Services/customHook";
 
 import LayoutTopButton from "../components/common/LayoutTopButton";
 import ImageOnClick from "../components/common/ImageOnClick";
@@ -16,25 +16,6 @@ export default function DetailUser() {
   const [mapLinkAddress, setMapLinkAddress] = useState("");
   const [image, setImage] = useState([]);
   const [images, setImages] = useState(null);
-
-  // 첫 렌더링을 막음
-  useDidMountEffect(() => {
-    if (userDetail.address) {
-      // 주소를 활용허여 지도 링크로 이동하기 위한 작업
-      setMapLinkAddress(userDetail.address.replace(/ /gi, "+"));
-    }
-
-    // 서버에서 이미지를 한 번에 가져오기 위해 image에 대표이미지와 상세이미지를 담았음.
-    // images에 상세이미지를 저장하기 위해 첫번째 이미지 제거
-    if (userDetail.titleImg) {
-      image && setImages(image.filter((_, index) => index !== 0));
-    } else {
-      setImages(image);
-    }
-  }, [userDetail]);
-
-  // 서버에서 image를 가져오는 customHook titleImg와 imgs를 한번에 가져온다.
-  useGetImage(setImage, userDetail);
 
   useEffect(() => {
     servicesPostData(urlGetUserDetail, {
@@ -51,6 +32,31 @@ export default function DetailUser() {
       }
     });
   }, []);
+
+  // 서버에서 image를 가져오는 customHook titleImg와 imgs를 한번에 가져온다.
+  useGetImage(setImage, userDetail);
+
+  // 첫 렌더링을 막음
+  useEffect(() => {
+    if (userDetail.address) {
+      // 주소를 활용허여 지도 링크로 이동하기 위한 작업
+      setMapLinkAddress(userDetail.address.replace(/ /gi, "+"));
+    }
+  }, [userDetail]);
+
+  useEffect(() => {
+    // 서버에서 이미지를 한 번에 가져오기 위해 image에 대표이미지와 상세이미지를 담았음.
+    // images에 상세이미지를 저장하기 위해 첫번째 이미지 제거
+    if (userDetail.titleImg && userDetail.imgs) {
+      const selctImgs = image.filter((_, index) => index !== 0);
+      setImages(selctImgs);
+      console.log("useEffect userDetail.titleImg", selctImgs);
+    } else if (userDetail.imgs) {
+      setImages(image);
+      console.log("userDetail.imgs", image);
+    }
+  }, [image]);
+
   return userDetail && userDetail.length === 0 ? (
     <ErrorNullBox />
   ) : (
