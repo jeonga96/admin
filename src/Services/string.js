@@ -33,14 +33,18 @@ export const urlNoticeList = urlPrefix + "/pub/listCompanyNotice";
 export const urlGetNotice = urlPrefix + "/pub/getCompanyNotice";
 export const urlSetNotice = urlPrefix + "/svc/setCompanyNotice";
 
-/* 리쥬 */
+/* 리뷰 */
 export const urlReviewList = urlPrefix + "/pub/listCompanyReview";
 export const urlGetReview = urlPrefix + "/pub/getCompanyReview";
+
+// 키워드
+export const urlAllKeyword = urlPrefix + "/admin/allKeyword";
 
 /* string 선언 - reducer */
 export const TOKEN = "token";
 export const RETOKEN = "re_token";
 export const UID = "uid";
+export const ALLKEYWORD = "allKeyword";
 
 /* 외부 키 */
 export const KAKAO_KEY = "0dc0b365e2e0ca17c6c8032ea93a8337";

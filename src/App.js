@@ -32,8 +32,10 @@ import DetailCompanyReview from "./screens/DetailCompanyReview";
 import {
   servicesGetStorage,
   servicesGetRefreshToken,
+  servicesPostData,
+  servicesSetStorage,
 } from "./Services/importData";
-import { TOKEN } from "./Services/string";
+import { urlAllKeyword, TOKEN, ALLKEYWORD } from "./Services/string";
 
 function App() {
   const location = useLocation();
@@ -42,8 +44,9 @@ function App() {
   const user = servicesGetStorage(TOKEN);
   const navChange = useSelector((state) => state.navState);
   const dispatch = useDispatch();
-
   const notLoginScreens = location.pathname !== "/login";
+
+  // 로컬에 token이 없으면서 현재 페이지가 login이 아닐 때
   const userCheck = () => {
     if (!user && notLoginScreens) {
       navigate("/login");
@@ -62,6 +65,7 @@ function App() {
     fnNavEvent(matches);
   };
 
+  // 네비게이션 반응형
   useEffect(() => {
     let mql = window.matchMedia("screen and (min-width:992px)");
     if (!mql.matches) {
@@ -72,9 +76,13 @@ function App() {
   }, []);
 
   useEffect(() => {
+    // 로컬에 token이 없으면서 현재 페이지가 login이 아닐 때면 login 으로 이동
     userCheck();
 
-    //refresh token
+    // 키워드 검색을 위해 전체 키워드 받아오기
+    // servicesSetStorage(ALLKEYWORD, servicesPostData(urlAllKeyword));
+    // console.log("d", servicesPostData(urlAllKeyword));
+    //refresh token 다시 받아오기 이벤트, 현재 10시간마다 토큰을 받아오는 것으로 설정
     if (notLoginScreens) {
       const tokenCheckTime = 3600000 * 10;
       setTimeout(servicesGetRefreshToken, tokenCheckTime);

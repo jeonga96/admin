@@ -238,7 +238,7 @@ export default function SetCompanyDetail() {
                   type="radio"
                   checked={useFlagCheck === "0"}
                   name="_useFlag"
-                  value="0"
+                  // value="0"
                   {...register("_useFlag", {
                     onChange: onChangeUseFlag,
                   })}
@@ -252,7 +252,7 @@ export default function SetCompanyDetail() {
                   type="radio"
                   checked={useFlagCheck === "1"}
                   name="_useFlag"
-                  value="1"
+                  // value="1"
                   {...register("_useFlag", {
                     onChange: onChangeUseFlag,
                   })}
@@ -405,11 +405,14 @@ export default function SetCompanyDetail() {
               name="_registration"
               placeholder="사업자 등록 번호를 입력해 주세요. (예시 000-00-00000)"
               value={
+                // getDataFinish.current
+                //   ? companyDetailInfo.registration
+                //   : companyDetailInfo.registration
+                //       .replace(/[^0-9]/g, "")
+                //       .replace(/^(\d{3})(\d{2})(\d{5})$/, `$1-$2-$3`) || ""
                 getDataFinish.current
                   ? companyDetailInfo.registration
-                  : companyDetailInfo.registration
-                      .replace(/[^0-9]/g, "")
-                      .replace(/^(\d{3})(\d{2})(\d{5})$/, `$1-$2-$3`) || ""
+                  : companyDetailInfo.registration || ""
               }
               {...register("_registration", {
                 onChange: onChange,
@@ -520,11 +523,14 @@ export default function SetCompanyDetail() {
               name="_telnum"
               placeholder="전화번호를 입력해 주세요. (예시 00-0000-0000)"
               value={
+                // getDataFinish.current
+                //   ? companyDetailInfo.telnum
+                //   : companyDetailInfo.telnum
+                //       .replace(/[^0-9]/g, "")
+                //       .replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`) || ""
                 getDataFinish.current
                   ? companyDetailInfo.telnum
-                  : companyDetailInfo.telnum
-                      .replace(/[^0-9]/g, "")
-                      .replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`) || ""
+                  : companyDetailInfo.telnum || ""
               }
               {...register("_telnum", {
                 onChange: onChange,
@@ -555,9 +561,12 @@ export default function SetCompanyDetail() {
               value={
                 getDataFinish.current
                   ? companyDetailInfo.mobilenum
-                  : companyDetailInfo.mobilenum
-                      .replace(/[^0-9]/g, "")
-                      .replace(/^(\d{3})(\d{3,4})(\d{4})$/, `$1-$2-$3`) || ""
+                  : companyDetailInfo.mobilenum || ""
+                // getDataFinish.current
+                //   ? companyDetailInfo.mobilenum
+                //   : companyDetailInfo.mobilenum
+                //       .replace(/[^0-9]/g, "")
+                //       .replace(/^(\d{3})(\d{3,4})(\d{4})$/, `$1-$2-$3`) || ""
               }
               placeholder="핸드폰번호를 입력해 주세요. (예시 000-0000-0000)"
               {...register("_mobilenum", {
@@ -659,7 +668,10 @@ export default function SetCompanyDetail() {
               value={
                 getDataFinish.current
                   ? companyDetailInfo.keywords
-                  : companyDetailInfo.keywords.replace(" ", ",") || ""
+                  : companyDetailInfo.keywords || ""
+                // getDataFinish.current
+                //   ? companyDetailInfo.keywords
+                //   : companyDetailInfo.keywords.replace(" ", ",") || ""
               }
               {...register("_keywords", {
                 onChange: onChange,
@@ -689,9 +701,12 @@ export default function SetCompanyDetail() {
               placeholder="태그를 입력해 주세요."
               onChange={onChange}
               value={
+                // getDataFinish.current
+                //   ? companyDetailInfo.tags
+                //   : companyDetailInfo.tags.replace(" ", ",") || ""
                 getDataFinish.current
                   ? companyDetailInfo.tags
-                  : companyDetailInfo.tags.replace(" ", ",") || ""
+                  : companyDetailInfo.tags || ""
               }
               {...register("_tags", {
                 onChange: onChange,

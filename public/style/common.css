@@ -1155,10 +1155,13 @@ ul.pagination li a:hover {
 }
 .tableButton {
   float: right;
-  transform: translateY(10%);
+  transform: translateY(50%);
   margin-right: 0.325rem;
-  width: 4rem;
-  height: 2rem;
+  width: 2rem;
+  height: 1.5rem;
+}
+.tableButton a:hover {
+  font-weight: 700;
 }
 .smallButton {
   width: 6.25rem;

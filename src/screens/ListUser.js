@@ -63,8 +63,13 @@ export default function ListUser() {
                     ) : null}
                   </td>
                   <td className="tableButton">
-                    <Link to={`${item.uid}`} className="buttonLink Link">
+                    <Link to={`${item.uid}`} className="Link">
                       상세
+                    </Link>
+                  </td>
+                  <td className="tableButton">
+                    <Link to={`${item.uid}/setUserdetail`} className="Link">
+                      수정
                     </Link>
                   </td>
                 </tr>
