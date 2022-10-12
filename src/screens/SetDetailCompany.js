@@ -490,9 +490,11 @@ export default function SetCompanyDetail() {
               name="_telnum"
               placeholder="전화번호를 입력해 주세요. (예시 00-0000-0000)"
               value={
-                companyDetailInfo.telnum
-                  .replace(/[^0-9]/g, "")
-                  .replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`) || ""
+                (companyDetailInfo.telnum &&
+                  companyDetailInfo.telnum
+                    .replace(/[^0-9]/g, "")
+                    .replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`)) ||
+                ""
               }
               {...register("_telnum", {
                 onChange: onChange,
@@ -521,9 +523,11 @@ export default function SetCompanyDetail() {
               id="mobilenum"
               name="_mobilenum"
               value={
-                companyDetailInfo.mobilenum
-                  .replace(/[^0-9]/g, "")
-                  .replace(/^(\d{3})(\d{3,4})(\d{4})$/, `$1-$2-$3`) || ""
+                (companyDetailInfo.mobilenum &&
+                  companyDetailInfo.mobilenum
+                    .replace(/[^0-9]/g, "")
+                    .replace(/^(\d{3})(\d{3,4})(\d{4})$/, `$1-$2-$3`)) ||
+                ""
               }
               placeholder="핸드폰번호를 입력해 주세요. (예시 000-0000-0000)"
               {...register("_mobilenum", {
@@ -643,7 +647,11 @@ export default function SetCompanyDetail() {
               name="_tags"
               placeholder="태그를 입력해 주세요."
               onChange={onChange}
-              value={companyDetailInfo.tags.replace(" ", ",") || ""}
+              value={
+                (companyDetailInfo.tags &&
+                  companyDetailInfo.tags.replace(" ", ",")) ||
+                ""
+              }
               {...register("_tags", {
                 onChange: onChange,
                 maxLength: {
