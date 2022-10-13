@@ -27,6 +27,7 @@ import SetDetailCompanyNotice from "./screens/SetDetailCompanyNotice";
 
 /* 앱관리 */
 import ListAdminNotice from "./screens/ListAdminNotice";
+import DetailAdminNotice from "./screens/DetailAdminNotice";
 
 /* 리뷰 */
 import ListCompanyReview from "./screens/ListCompanyReview";
@@ -232,7 +233,7 @@ function App() {
         />
         {/* ------- 공사콕 앱관리 ------- */}
         <Route
-          path="company/noticelist"
+          path="admin/noticelist"
           element={
             <MainLayout
               nowTitle="공사콕 공지사항"
@@ -241,7 +242,7 @@ function App() {
           }
         />
         <Route
-          path="company/addnotice"
+          path="admin/addnotice"
           element={
             <MainLayout
               nowTitle="공사콕 공지사항 작성"
@@ -250,16 +251,16 @@ function App() {
           }
         />
         <Route
-          path="company/notice/:comnid"
+          path="admin/notice/:contid"
           element={
             <MainLayout
-              nowTitle="공사콕 공지사항 상세정보"
-              component={<DetailCompanyNotice />}
+              nowTitle="공사콕 공지사항"
+              component={<DetailAdminNotice />}
             />
           }
         />
         <Route
-          path="company/notice/:comnid/modify"
+          path="admin/notice/:contid/modify"
           element={
             <MainLayout
               nowTitle="공사콕 공지사항 수정"

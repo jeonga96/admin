@@ -39,6 +39,7 @@ export const urlGetReview = urlPrefix + "/pub/getCompanyReview";
 
 /* 앱관리 */
 export const urlContentList = urlPrefix + "/pub/listContent";
+export const urlGetContent = urlPrefix + "/pub/getContent";
 
 // 키워드
 export const urlAllKeyword = urlPrefix + "/admin/allKeyword";

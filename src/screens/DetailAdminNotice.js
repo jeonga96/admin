@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { servicesPostData } from "../Services/importData";
-import { urlGetContent } from "../Services/string";
-import { useGetImage } from "../Services/customHook";
+import { urlGetContent, urlGetImages } from "../Services/string";
+import { useDidMountEffect } from "../Services/customHook";
 
 import LayoutTopButton from "../components/common/LayoutTopButton";
 import ImageOnClick from "../components/common/ImageOnClick";
 
-export default function CompanyNoticeDetail() {
-  const [companyDetail, setCompanyDetail] = useState([]);
+export default function DetailAdminNotice() {
+  const [notice, setNotice] = useState("");
   const [images, setImages] = useState([]);
   const { contid } = useParams();
 
@@ -18,14 +18,18 @@ export default function CompanyNoticeDetail() {
       contid: contid,
     }).then((res) => {
       if (res.status === "success") {
-        setCompanyDetail(res.data);
+        setNotice(res.data);
         return;
       }
     });
   }, []);
 
-  // 서버에서 image를 가져오는 customHook imgs를 가져온다.
-  useGetImage(setImages, companyDetail);
+  //공지사항 이미지(imgString)를 가져온다.
+  useDidMountEffect(() => {
+    servicesPostData(urlGetImages, {
+      imgs: notice.imgString,
+    }).then((res) => setImages(res.data));
+  }, [notice]);
 
   return (
     <>
@@ -38,26 +42,31 @@ export default function CompanyNoticeDetail() {
             <div>
               <em>작성 시간</em>
               <span>
-                {companyDetail.createTime &&
-                  companyDetail.createTime.slice(0, 10) +
+                {notice.createTime &&
+                  notice.createTime.slice(0, 10) +
                     " " +
-                    companyDetail.createTime.slice(11, 19)}
+                    notice.createTime.slice(11, 19)}
               </span>
             </div>
             <div>
               <em>수정 시간</em>
               <span>
-                {companyDetail.updateTime &&
-                  companyDetail.updateTime.slice(0, 10) +
+                {notice.updateTime &&
+                  notice.updateTime.slice(0, 10) +
                     " " +
-                    companyDetail.updateTime.slice(11, 19)}
+                    notice.updateTime.slice(11, 19)}
               </span>
             </div>
           </li>
 
           <li className="formContentWrap">
+            <h4>번호</h4>
+            <span>{notice.contid}</span>
+          </li>
+
+          <li className="formContentWrap">
             <h4>제목</h4>
-            <span>{companyDetail.title}</span>
+            <span>{notice.contentString}</span>
           </li>
 
           <li className="formContentWrap">
@@ -80,7 +89,7 @@ export default function CompanyNoticeDetail() {
 
           <li className="formContentWrap">
             <h4>공지사항 내용</h4>
-            <p>{companyDetail.content}</p>
+            <p>{notice.contentDetail}</p>
           </li>
         </ul>
       </div>

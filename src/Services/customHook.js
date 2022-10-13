@@ -38,3 +38,19 @@ export function useGetImage(setImage, companyDetail) {
     }
   }, [companyDetail]);
 }
+
+export function useGetContentImgs(setImage, companyDetail) {
+  const reqImgs = useRef({ imgImg: "", totalImg: "" });
+
+  useEffect(() => {
+    reqImgs.current.totalImg =
+      companyDetail.titleImg + "," + companyDetail.imgs;
+
+    servicesPostData(urlGetImages, {
+      imgs: reqImgs.current.totalImg,
+    }).then((res) => {
+      setImage(res.data);
+      console.log(res.data);
+    });
+  }, [companyDetail]);
+}

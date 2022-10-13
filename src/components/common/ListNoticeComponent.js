@@ -19,10 +19,7 @@ export default function ListNoticeComponent({ notice, ISADMIN }) {
                 <tr key={item.contid} style={{ height: "5.25rem" }}>
                   <td>{item.contid}</td>
                   <td className="tableContentWrap">
-                    <Link
-                      to={`/company/notice/${item.contid}`}
-                      className="Link"
-                    >
+                    <Link to={`/admin/notice/${item.contid}`} className="Link">
                       <em>{item.contentString}</em>
                       <i>{item.imgString ? <MdOutlineImage /> : null}</i>
                       <p>
