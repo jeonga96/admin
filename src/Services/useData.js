@@ -21,3 +21,10 @@ export function serviesGetImgsIid(variable, data) {
     variable.push(data[i].iid);
   }
 }
+
+//서버에 keywords의 keyword 데이터를 보내기 위해 실행하는 함수
+export function serviesGetKeywords(variable, data) {
+  for (let i = 0; i < data.length; i++) {
+    variable.push(data[i].keyword);
+  }
+}

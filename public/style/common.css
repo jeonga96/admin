@@ -672,7 +672,8 @@ button {
   display: flex;
   justify-content: left;
   width: 100%;
-  height: 4.5rem;
+  height: auto;
+  min-height: 4.5rem;
   background-color: rgba(243, 244, 243, 0.5);
   border: 0.0625rem solid var(--color-bggray);
   padding: 0.2rem;
@@ -685,6 +686,7 @@ button {
   height: 4rem;
   background-size: contain;
   margin-right: 0.25rem;
+  margin-bottom: 0.25rem;
   cursor: pointer;
   background-repeat: no-repeat;
   background-size: cover;
@@ -892,11 +894,13 @@ button {
 .detailWidthContentImg {
   display: flex;
   justify-content: left;
+  flex-wrap: wrap;
 }
 .detailWidthContentImg > div {
   width: 19%;
   height: 5rem;
   margin-right: 0.2rem;
+  margin-bottom: 0.2rem;
 }
 .detailWidthContentImg > div:last-child {
   margin-right: 0;
@@ -1319,14 +1323,15 @@ ul.pagination li a:hover {
 
 .keywordWrap .keywordBox {
   position: absolute;
-  top: 2.125rem;
+  top: 0.3125rem;
   z-index: 1;
   overflow: scroll;
-  width: 100%;
+  width: 25rem;
   border: 0.0625rem solid var(--color-bggray);
   background-color: var(--color-white);
   height: 6.875rem;
   margin-top: 0.25rem;
+  padding: 0.25rem;
 }
 .keywordWrap > div {
   display: flex;
@@ -1343,9 +1348,6 @@ ul.pagination li a:hover {
   margin-top: 0.625rem;
 }
 
-.keywordBox {
-  padding: 0.25rem;
-}
 .keywordBox li {
   width: 100%;
   height: auto;
@@ -1370,6 +1372,10 @@ ul.pagination li a:hover {
 .keywordBox button:hover {
   background-color: var(--color-bggray);
 }
+.keywordBox button:focus {
+  font-weight: 700;
+  background-color: var(--color-gray);
+}
 .keywordBox button:hover::before {
   display: block;
   content: "추가 +";
@@ -1391,11 +1397,26 @@ ul.pagination li a:hover {
   margin-top: 0.25rem;
 }
 .keywordSelectWrap li {
+  position: relative;
   width: auto;
   height: auto;
-  background-color: #fff;
-  border-radius: 5px;
+  border-radius: 10px;
   margin-right: 4px;
   margin-bottom: 4px;
-  padding: 2px 4px;
+  padding: 2px 8px;
+  border: 1px solid var(--color-gray);
+}
+.keywordSelectWrap li:hover::before {
+  position: absolute;
+  content: "x";
+  display: block;
+  right: -3px;
+  top: -3px;
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  font-size: 10px;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.4);
+  color: var(--color-white);
 }

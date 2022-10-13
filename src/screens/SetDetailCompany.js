@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 
 import { servicesPostData } from "../Services/importData";
-import { serviesGetImgsIid } from "../Services/useData";
+import { serviesGetImgsIid, serviesGetKeywords } from "../Services/useData";
 import {
   urlGetCompanyDetail,
   urlSetCompanyDetail,
@@ -39,21 +39,25 @@ export default function SetCompanyDetail() {
     mobilenum: "",
     email: "",
     extnum: "",
-    keywords: "",
     tags: "",
     useFlag: "",
   });
-  // titleImg:대표 이미지저장 및 표시, imgs:상세 이미지저장 및 표시, imgsIid:서버에 이미지를 보낼 때는, iid값만 필요
-  // useFlag radio
-  // getDataFinish:기존에 입력된 값이 있어 값을 불러왔다면 true로 변경,
-  // mapcoor:위도 경도 저장,
+
+  // titleImg:대표 이미지저장 및 표시, imgs:상세 이미지저장 및 표시
+  // imgsIid:서버에 이미지를 보낼 때는, iid값만 필요
   const [titleImg, setTitleImg] = useState(null);
   const [imgs, setImgs] = useState([]);
-  const [useFlagCheck, setUseFlagCheck] = useState(1);
-  const getDataFinish = useRef(false);
-  const mapcoor = useRef({ longitude: "", latitude: "" });
   const imgsIid = [];
-
+  // useFlag radio
+  const [useFlagCheck, setUseFlagCheck] = useState(1);
+  // getDataFinish:기존에 입력된 값이 있어 값을 불러왔다면 true로 변경,
+  const getDataFinish = useRef(false);
+  // mapcoor:위도 경도 저장,
+  const mapcoor = useRef({ longitude: "", latitude: "" });
+  // 선택된 키워드 저장되는 state
+  // keywordValue:서버에 키워드를 보낼 때 키워드 내용만 필요
+  const [companyDetailKeyword, setCompanyDetailKeyword] = useState([]);
+  const keywordValue = [];
   //"/admin/setCompany" 로 보내기 위한 기본 회사정보
   const [companyInfo, setCompanyInfo] = useState({
     cid: "",
@@ -73,6 +77,8 @@ export default function SetCompanyDetail() {
     };
     geocoder.addressSearch(companyDetailInfo.address, callback);
   };
+
+  console.log("@@@@", companyDetailKeyword);
 
   // 현재 페이지가 렌더링되자마자 기존에 입력된 값의 여부를 확인한다.
   useEffect(() => {
@@ -124,10 +130,13 @@ export default function SetCompanyDetail() {
     setUseFlagCheck(e.target.value);
   }
 
+  console.log("keywordValue", keywordValue.toString());
   // form submit 이벤트
   const addUserEvent = () => {
     //서버에 imgs의 iid값만을 보내기 위해 실행하는 반복문 함수
     serviesGetImgsIid(imgsIid, imgs);
+    // 서버에 keywords의 keyword value만을 보내기 위해 실행하는 함수
+    serviesGetKeywords(keywordValue, companyDetailKeyword);
     servicesPostData(urlSetCompanyDetail, {
       rcid: cid,
       name: companyDetailInfo.name,
@@ -145,7 +154,7 @@ export default function SetCompanyDetail() {
       mobilenum: companyDetailInfo.mobilenum,
       email: companyDetailInfo.email,
       extnum: companyDetailInfo.extnum,
-      keywords: companyDetailInfo.keywords,
+      keywords: keywordValue.toString() || "",
       tags: companyDetailInfo.tags,
       useFlag: useFlagCheck,
     })
@@ -627,9 +636,12 @@ export default function SetCompanyDetail() {
                 },
               })}
             /> */}
-            <SetAllKeyWord />
+            <SetAllKeyWord
+              companyDetailKeyword={companyDetailKeyword}
+              setCompanyDetailKeyword={setCompanyDetailKeyword}
+            />
           </div>
-          {/* <ErrorMessage
+          {/* <ErrorMessagecompanyDetailKeyword
             errors={errors}
             name="_keywords"
             render={({ message }) => (
