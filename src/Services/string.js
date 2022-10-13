@@ -37,6 +37,9 @@ export const urlSetNotice = urlPrefix + "/svc/setCompanyNotice";
 export const urlReviewList = urlPrefix + "/pub/listCompanyReview";
 export const urlGetReview = urlPrefix + "/pub/getCompanyReview";
 
+/* 앱관리 */
+export const urlContentList = urlPrefix + "/pub/listContent";
+
 // 키워드
 export const urlAllKeyword = urlPrefix + "/admin/allKeyword";
 

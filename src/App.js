@@ -25,6 +25,9 @@ import AddCompanyNotice from "./screens/AddCompanyNotice";
 import DetailCompanyNotice from "./screens/DetailCompanyNotice";
 import SetDetailCompanyNotice from "./screens/SetDetailCompanyNotice";
 
+/* 앱관리 */
+import ListAdminNotice from "./screens/ListAdminNotice";
+
 /* 리뷰 */
 import ListCompanyReview from "./screens/ListCompanyReview";
 import DetailCompanyReview from "./screens/DetailCompanyReview";
@@ -41,14 +44,15 @@ function App() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const user = servicesGetStorage(TOKEN);
+  const ISUSER = servicesGetStorage(TOKEN);
+  const ISALLKEYWORD = servicesGetStorage(ALLKEYWORD);
   const navChange = useSelector((state) => state.navState);
   const dispatch = useDispatch();
   const notLoginScreens = location.pathname !== "/login";
 
   // 로컬에 token이 없으면서 현재 페이지가 login이 아닐 때
   const userCheck = () => {
-    if (!user && notLoginScreens) {
+    if (!ISUSER && notLoginScreens) {
       navigate("/login");
       return;
     }
@@ -80,7 +84,7 @@ function App() {
     userCheck();
 
     // 키워드 검색을 위해 전체 키워드 받아와 로컬스토리지에 저장
-    if (!!user) {
+    if (!!ISUSER & !ISALLKEYWORD) {
       servicesPostData(urlAllKeyword, {}).then((res) => {
         servicesSetStorage(ALLKEYWORD, JSON.stringify(res.data));
       });
@@ -223,6 +227,43 @@ function App() {
             <MainLayout
               nowTitle="사업자 리뷰 보기"
               component={<DetailCompanyReview />}
+            />
+          }
+        />
+        {/* ------- 공사콕 앱관리 ------- */}
+        <Route
+          path="company/noticelist"
+          element={
+            <MainLayout
+              nowTitle="공사콕 공지사항"
+              component={<ListAdminNotice />}
+            />
+          }
+        />
+        <Route
+          path="company/addnotice"
+          element={
+            <MainLayout
+              nowTitle="공사콕 공지사항 작성"
+              component={<AddCompanyNotice />}
+            />
+          }
+        />
+        <Route
+          path="company/notice/:comnid"
+          element={
+            <MainLayout
+              nowTitle="공사콕 공지사항 상세정보"
+              component={<DetailCompanyNotice />}
+            />
+          }
+        />
+        <Route
+          path="company/notice/:comnid/modify"
+          element={
+            <MainLayout
+              nowTitle="공사콕 공지사항 수정"
+              component={<SetDetailCompanyNotice />}
             />
           }
         />

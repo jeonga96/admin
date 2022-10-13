@@ -1,0 +1,62 @@
+import { Link } from "react-router-dom";
+import { MdOutlineImage } from "react-icons/md";
+
+export default function ListNoticeComponent({ notice, ISADMIN }) {
+  return (
+    <>
+      <table className="commonTable">
+        <thead>
+          <tr>
+            <th className="widthM">번호</th>
+            <th className="widthBB">내용</th>
+            <th className="widthM">날짜</th>
+          </tr>
+        </thead>
+        <tbody className="commonTable">
+          {notice &&
+            notice.map((item) =>
+              ISADMIN ? (
+                <tr key={item.contid} style={{ height: "5.25rem" }}>
+                  <td>{item.contid}</td>
+                  <td className="tableContentWrap">
+                    <Link
+                      to={`/company/notice/${item.contid}`}
+                      className="Link"
+                    >
+                      <em>{item.contentString}</em>
+                      <i>{item.imgString ? <MdOutlineImage /> : null}</i>
+                      <p>
+                        {item.contentDetail.length > 55
+                          ? item.contentDetail.slice(0, 54) + "..."
+                          : item.contentDetail}
+                      </p>
+                    </Link>
+                  </td>
+                  <td>{item.createTime.slice(0, 10)}</td>
+                </tr>
+              ) : (
+                <tr key={item.comnid} style={{ height: "5.25rem" }}>
+                  <td>{item.comnid}</td>
+                  <td className="tableContentWrap">
+                    <Link
+                      to={`/company/${item.rcid}/notice/${item.comnid}`}
+                      className="Link"
+                    >
+                      <em>{item.title}</em>
+                      <i>{item.imgs ? <MdOutlineImage /> : null}</i>
+                      <p>
+                        {item.content.length > 55
+                          ? item.content.slice(0, 54) + "..."
+                          : item.content}
+                      </p>
+                    </Link>
+                  </td>
+                  <td>{item.createTime.slice(0, 10)}</td>
+                </tr>
+              )
+            )}
+        </tbody>
+      </table>
+    </>
+  );
+}

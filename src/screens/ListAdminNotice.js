@@ -1,25 +1,27 @@
 import { useParams } from "react-router-dom";
 import { useState, useLayoutEffect } from "react";
 import { servicesPostData } from "../Services/importData";
-import { urlNoticeList } from "../Services/string";
+import { urlContentList } from "../Services/string";
 
 import LayoutTopButton from "../components/common/LayoutTopButton";
 import ErrorNullBox from "../components/common/ErrorNullBox";
 import ListNoticeComponent from "../components/common/ListNoticeComponent";
-// import PageButton from "../components/common/PageButton";
+import PaginationButton from "../components/common/PaginationButton";
 
-export default function ListCompanyNotice() {
+export default function ListAdminNotice() {
   let { cid } = useParams();
   const [notice, setNotice] = useState([]);
-  // const [listPage, setListPage] = useState({});
-  // const [page, setPage] = useState({ getPage: 0, activePage: 1 });
+  const [listPage, setListPage] = useState({});
+  const [page, setPage] = useState({ getPage: 0, activePage: 1 });
 
   useLayoutEffect(() => {
-    servicesPostData(urlNoticeList, {
-      rcid: cid,
+    servicesPostData(urlContentList, {
+      category: "notice",
+      offset: 0,
+      size: 15,
     }).then((res) => {
       setNotice(res.data);
-      // setListPage(res.page);
+      setListPage(res.page);
     });
   }, []);
   console.log(notice);
@@ -31,9 +33,10 @@ export default function ListCompanyNotice() {
         <LayoutTopButton url={`/company/${cid}/addnotice`} text="작성" />
       </ul>
       <section className="tableWrap">
-        <h3 className="blind">사업자 공지사항 목록</h3>
+        <h3 className="blind">공사콕 공지사항 목록</h3>
         <div className="paddingBox commonBox">
-          <ListNoticeComponent notice={notice} url={urlNoticeList} />
+          <ListNoticeComponent notice={notice} ISADMIN />
+          <PaginationButton listPage={listPage} page={page} setPage={setPage} />
         </div>
       </section>
     </>
