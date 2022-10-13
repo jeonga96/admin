@@ -31,12 +31,12 @@
     "url": null,
     "subNav": [
       {
-        "subName": "앱 배너 관리",
-        "url": "/companyContract"
-      },
-      {
         "subName": "공지사항 관리",
         "url": "/admin/noticelist"
+      },
+      {
+        "subName": "앱 배너 관리",
+        "url": "/companyContract"
       }
     ]
   }

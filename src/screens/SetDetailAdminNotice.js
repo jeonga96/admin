@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
-import { ErrorMessage } from "@hookform/error-message";
 
 import { urlSetContent, urlGetContent } from "../Services/string";
 import { servicesPostData } from "../Services/importData";
@@ -25,18 +24,20 @@ export default function SetDetailAdminNotice() {
   });
 
   useEffect(() => {
-    servicesPostData(urlGetContent, {
-      contid: contid,
-    })
-      .then((res) => {
-        if (res.status === "success") {
-          setNoticeDetail(res.data);
-          getDataFinish.current = true;
-        } else if (res.data === "fail") {
-          console.log("기존에 입력된 데이터가 없습니다.");
-        }
+    if (!!contid) {
+      servicesPostData(urlGetContent, {
+        contid: contid,
       })
-      .catch((res) => console.log(res));
+        .then((res) => {
+          if (res.status === "success") {
+            setNoticeDetail(res.data);
+            getDataFinish.current = true;
+          } else if (res.data === "fail") {
+            console.log("기존에 입력된 데이터가 없습니다.");
+          }
+        })
+        .catch((res) => console.log(res));
+    }
   }, []);
 
   function onChange(e) {
@@ -45,20 +46,30 @@ export default function SetDetailAdminNotice() {
 
   function AddUserSubmit(e) {
     serviesGetImgsIid(imgsIid, imgs);
-    servicesPostData(urlSetContent, {
-      contid: contid,
-      category: "notice",
-      contentString: noticeDetail.contentString,
-      contentDetail: noticeDetail.contentDetail,
-      imgString: setImgs ? imgsIid.toString() : "",
-    })
+    servicesPostData(
+      urlSetContent,
+      !!contid
+        ? {
+            contid: contid,
+            category: "notice",
+            contentString: noticeDetail.contentString,
+            contentDetail: noticeDetail.contentDetail,
+            imgString: setImgs ? imgsIid.toString() : "",
+          }
+        : {
+            category: "notice",
+            contentString: noticeDetail.contentString,
+            contentDetail: noticeDetail.contentDetail,
+            imgString: setImgs ? imgsIid.toString() : "",
+          }
+    )
       .then((res) => {
-        if (res.status === "fail" && res.emsg === "not valid company user.") {
-          alert("사업자 회원이 아닙니다.");
+        if (res.status === "fail") {
+          alert("입력에 실패했습니다,");
         }
         if (res.status === "success") {
-          alert("수정이 완료되었습니다!");
-          window.location.href = `/admin/notice/${contid}`;
+          alert("완료되었습니다!");
+          window.location.href = `/admin/notice/${res.data.contid}`;
           return;
         }
       })

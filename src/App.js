@@ -247,7 +247,7 @@ function App() {
           element={
             <MainLayout
               nowTitle="공사콕 공지사항 작성"
-              component={<AddCompanyNotice />}
+              component={<SetDetailAdminNotice />}
             />
           }
         />
