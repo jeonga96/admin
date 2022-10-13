@@ -36,9 +36,9 @@ export default function ImageSet({
         fnSetImg(res.data);
       });
     }
-    if (getData.imgs) {
+    if (getData.imgs || getData.imgString) {
       servicesPostData(urlGetImages, {
-        imgs: getData.imgs,
+        imgs: getData.imgs || getData.imgString,
       }).then((res) => {
         fnSetImgs(res.data);
       });

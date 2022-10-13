@@ -1,4 +1,3 @@
-import { useParams } from "react-router-dom";
 import { useState, useLayoutEffect } from "react";
 import { servicesPostData } from "../Services/importData";
 import { urlContentList } from "../Services/string";
@@ -9,7 +8,6 @@ import ListNoticeComponent from "../components/common/ListNoticeComponent";
 import PaginationButton from "../components/common/PaginationButton";
 
 export default function ListAdminNotice() {
-  let { contid } = useParams();
   const [notice, setNotice] = useState([]);
   const [listPage, setListPage] = useState({});
   const [page, setPage] = useState({ getPage: 0, activePage: 1 });

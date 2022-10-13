@@ -28,6 +28,7 @@ import SetDetailCompanyNotice from "./screens/SetDetailCompanyNotice";
 /* 앱관리 */
 import ListAdminNotice from "./screens/ListAdminNotice";
 import DetailAdminNotice from "./screens/DetailAdminNotice";
+import SetDetailAdminNotice from "./screens/SetDetailAdminNotice";
 
 /* 리뷰 */
 import ListCompanyReview from "./screens/ListCompanyReview";
@@ -264,7 +265,7 @@ function App() {
           element={
             <MainLayout
               nowTitle="공사콕 공지사항 수정"
-              component={<SetDetailCompanyNotice />}
+              component={<SetDetailAdminNotice />}
             />
           }
         />

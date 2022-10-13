@@ -78,8 +78,6 @@ export default function SetCompanyDetail() {
     geocoder.addressSearch(companyDetailInfo.address, callback);
   };
 
-  console.log("@@@@", companyDetailKeyword);
-
   // 현재 페이지가 렌더링되자마자 기존에 입력된 값의 여부를 확인한다.
   useEffect(() => {
     // 기본 회사정보 불러오기
