@@ -29,6 +29,7 @@ import SetDetailCompanyNotice from "./screens/SetDetailCompanyNotice";
 import ListAdminNotice from "./screens/ListAdminNotice";
 import DetailAdminNotice from "./screens/DetailAdminNotice";
 import SetDetailAdminNotice from "./screens/SetDetailAdminNotice";
+import SetAdminAppbanner from "./screens/SetAdminAppbanner";
 
 /* 리뷰 */
 import ListCompanyReview from "./screens/ListCompanyReview";
@@ -266,6 +267,15 @@ function App() {
             <MainLayout
               nowTitle="공사콕 공지사항 수정"
               component={<SetDetailAdminNotice />}
+            />
+          }
+        />
+        <Route
+          path="admin/appbanner"
+          element={
+            <MainLayout
+              nowTitle="공사콕 배너관리"
+              component={<SetAdminAppbanner />}
             />
           }
         />
