@@ -16,7 +16,7 @@ export default function ListAdminNotice() {
     servicesPostData(urlContentList, {
       category: "notice",
       offset: 0,
-      size: 15,
+      size: 10,
     }).then((res) => {
       setNotice(res.data);
       setListPage(res.page);

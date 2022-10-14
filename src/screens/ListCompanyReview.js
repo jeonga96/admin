@@ -41,25 +41,20 @@ export default function ListCompanyReview() {
                     <td>{item.comrid}</td>
                     <td>{item.ruidNick}</td>
                     <td className="tableContentWrap">
-                      <em>{item.title}</em>
-                      <i>{item.imgs ? <MdOutlineImage /> : null}</i>
-                      <p>
-                        {item.content.length > 55
-                          ? item.content.slice(0, 54) + "..."
-                          : item.content}
-                      </p>
+                      <Link
+                        to={`/company/${item.rcid}/review/${item.comrid}`}
+                        className="Link"
+                      >
+                        <em>{item.title}</em>
+                        <i>{item.imgs ? <MdOutlineImage /> : null}</i>
+                        <p>
+                          {item.content.length > 55
+                            ? item.content.slice(0, 54) + "..."
+                            : item.content}
+                        </p>
+                      </Link>
                     </td>
                     <td>{item.createTime.slice(0, 10)}</td>
-                    <td>
-                      <div className="tableButton">
-                        <Link
-                          to={`/company/${item.rcid}/review/${item.comrid}`}
-                          className="buttonLink Link"
-                        >
-                          보기
-                        </Link>
-                      </div>
-                    </td>
                   </tr>
                 ))}
             </tbody>
