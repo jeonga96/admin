@@ -10,7 +10,7 @@ import {
   urlSetCompanyDetail,
   urlSetCompany,
 } from "../Services/string";
-import SetImage from "../components/common/ImageSet";
+import SetImage from "../components/common/ImageSetPreview";
 import LayoutTopButton from "../components/common/LayoutTopButton";
 import SetAllKeyWord from "../components/common/SetAllKeyWord";
 

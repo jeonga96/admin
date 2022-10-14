@@ -6,7 +6,7 @@ import { servicesPostData } from "../Services/importData";
 import { serviesGetImgsIid } from "../Services/useData";
 import { useParams } from "react-router-dom";
 
-import SetImage from "../components/common/ImageSet";
+import SetImage from "../components/common/ImageSetPreview";
 import LayoutTopButton from "../components/common/LayoutTopButton";
 
 export default function SetDetailAdminNotice() {

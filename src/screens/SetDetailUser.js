@@ -12,8 +12,8 @@ import {
 } from "../Services/string";
 
 import LayoutTopButton from "../components/common/LayoutTopButton";
-import ImageSet from "../components/common/ImageSet";
-import SelctUserRole from "../components/common/DetailUserComponent";
+import ImageSet from "../components/common/ImageSetPreview";
+import DetailUserComponent from "../components/common/DetailUserComponent";
 
 export default function SetDetailUser() {
   const { uid } = useParams();
@@ -98,7 +98,7 @@ export default function SetDetailUser() {
 
   return (
     <>
-      <SelctUserRole />
+      <DetailUserComponent />
       <div className="commonBox">
         <form className="formLayout" onSubmit={handleSubmit(AddUserSubmit)}>
           <ul className="tableTopWrap">
