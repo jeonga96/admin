@@ -140,7 +140,7 @@ export default function GetCompany({ companyDetail }) {
 
       <div className="formContentWrap">
         <h4>사업자 소개글</h4>
-        <span>{companyDetail.offer}</span>
+        <p>{companyDetail.offer}</p>
       </div>
 
       <div className="formContentWrap">
