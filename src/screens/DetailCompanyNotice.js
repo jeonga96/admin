@@ -5,7 +5,7 @@ import { urlGetContent } from "../Services/string";
 import { useGetImage } from "../Services/customHook";
 
 import LayoutTopButton from "../components/common/LayoutTopButton";
-import ImageOnClick from "../components/common/ImageOnClick";
+import ServicesImageOnClick from "../components/common/ServicesImageOnClick";
 
 export default function CompanyNoticeDetail() {
   const [companyDetail, setCompanyDetail] = useState([]);
@@ -68,7 +68,7 @@ export default function CompanyNoticeDetail() {
             >
               {images &&
                 images.map((item) => (
-                  <ImageOnClick
+                  <ServicesImageOnClick
                     key={item.iid}
                     getData={images}
                     url={item.storagePath}

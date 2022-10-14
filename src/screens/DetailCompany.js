@@ -8,10 +8,10 @@ import {
   urlReviewList,
 } from "../Services/string";
 
-import DetailContentList from "../components/common/DetailContentList";
-import GetCompany from "../components/common/DetailCompanyComponent";
+import PieceDetailListLink from "../components/common/PieceDetailListLink";
+import GetCompany from "../components/common/ComponentDetailCompany";
 import LayoutTopButton from "../components/common/LayoutTopButton";
-import ErrorNullBox from "../components/common/ErrorNullBox";
+import ComponentErrorNull from "../components/common/ComponentErrorNull";
 
 export default function DetailCompany() {
   let { cid } = useParams();
@@ -38,7 +38,7 @@ export default function DetailCompany() {
     serviesPostDataSettingRcid(urlReviewList, cid, setReviewList);
   }, []);
   return companyDetail && companyDetail.length === 0 ? (
-    <ErrorNullBox />
+    <ComponentErrorNull />
   ) : (
     <>
       <ul className="tableTopWrap">
@@ -51,14 +51,14 @@ export default function DetailCompany() {
       <div className="paddingBox commonBox">
         <ul className="detailContentsList detailContentCenter">
           {noticeList && (
-            <DetailContentList
+            <PieceDetailListLink
               getData={noticeList}
               url={`/company/${companyDetail.rcid}/noticelist`}
               title="공지사항"
             />
           )}
           {companyDetail && (
-            <DetailContentList
+            <PieceDetailListLink
               getData={reviewList}
               url={`/company/${companyDetail.rcid}/reviewlist`}
               title="리뷰"

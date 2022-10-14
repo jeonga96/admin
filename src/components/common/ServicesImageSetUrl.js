@@ -5,7 +5,7 @@ import {
 } from "../../Services/importData";
 import { useDidMountEffect } from "../../Services/customHook";
 import { urlUpImages, urlGetImages } from "../../Services/string";
-import ImageOnClick from "./ImageOnClick";
+import ServicesImageOnClick from "./ServicesImageOnClick";
 
 export default function ImageSet({
   img,
@@ -102,7 +102,7 @@ export default function ImageSet({
       </div>
       <div className="imgsThumbnail">
         {img !== null && id === "titleImg" ? (
-          <ImageOnClick
+          <ServicesImageOnClick
             getData={img}
             url={img[0] && img[0].storagePath}
             text="사업자 대표 이미지"
@@ -113,7 +113,7 @@ export default function ImageSet({
         {imgs !== null && id === "imgs"
           ? !!imgs &&
             imgs.map((item) => (
-              <ImageOnClick
+              <ServicesImageOnClick
                 key={item.iid}
                 getData={imgs}
                 url={item.storagePath && item.storagePath}

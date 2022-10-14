@@ -4,7 +4,7 @@ import { servicesPostData } from "../Services/importData";
 import { urlReviewList } from "../Services/string";
 import { MdOutlineImage } from "react-icons/md";
 
-import ErrorNullBox from "../components/common/ErrorNullBox";
+import ComponentErrorNull from "../components/common/ComponentErrorNull";
 
 export default function ListCompanyReview() {
   let { cid } = useParams();
@@ -19,7 +19,7 @@ export default function ListCompanyReview() {
   }, []);
 
   return review === undefined ? (
-    <ErrorNullBox />
+    <ComponentErrorNull />
   ) : (
     <>
       <section className="tableWrap">

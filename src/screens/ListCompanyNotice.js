@@ -4,8 +4,8 @@ import { servicesPostData } from "../Services/importData";
 import { urlNoticeList } from "../Services/string";
 
 import LayoutTopButton from "../components/common/LayoutTopButton";
-import ErrorNullBox from "../components/common/ErrorNullBox";
-import ListNoticeComponent from "../components/common/ListNoticeComponent";
+import ComponentErrorNull from "../components/common/ComponentErrorNull";
+import ComponentListNotice from "../components/common/ComponentListNotice";
 // import PageButton from "../components/common/PageButton";
 
 export default function ListCompanyNotice() {
@@ -24,7 +24,7 @@ export default function ListCompanyNotice() {
   }, []);
   console.log(notice);
   return notice === undefined ? (
-    <ErrorNullBox />
+    <ComponentErrorNull />
   ) : (
     <>
       <ul className="tableTopWrap">
@@ -33,7 +33,7 @@ export default function ListCompanyNotice() {
       <section className="tableWrap">
         <h3 className="blind">사업자 공지사항 목록</h3>
         <div className="paddingBox commonBox">
-          <ListNoticeComponent notice={notice} url={urlNoticeList} />
+          <ComponentListNotice notice={notice} url={urlNoticeList} />
         </div>
       </section>
     </>

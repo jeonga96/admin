@@ -3,9 +3,10 @@ import { useState, useLayoutEffect } from "react";
 import { BsCheck2 } from "react-icons/bs";
 import { servicesPostData } from "../Services/importData";
 import { urlCompanylist } from "../Services/string";
-import PageButton from "../components/common/PaginationButton";
+
+import PageButton from "../components/common/PiecePaginationButton";
 import LayoutTopButton from "../components/common/LayoutTopButton";
-import ListCompanySearchComponent from "../components/common/ListCompanySearchComponent";
+import ComponentListCompanySearch from "../components/common/ComponentListCompanySearch";
 
 export default function ListCompany() {
   const [companyList, setCompanyList] = useState([]);
@@ -24,7 +25,7 @@ export default function ListCompany() {
 
   return (
     <>
-      <ListCompanySearchComponent />
+      <ComponentListCompanySearch />
       <ul className="tableTopWrap">
         <LayoutTopButton url="/addcompany" text="사업자 추가" />
       </ul>

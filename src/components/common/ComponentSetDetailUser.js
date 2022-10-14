@@ -7,7 +7,7 @@ import { urlSetUserRole, urlSetUser } from "../../Services/string";
 
 import LayoutTopButton from "./LayoutTopButton";
 
-export default function SelectUserRole() {
+export default function ComponentListUserSearch() {
   const { uid } = useParams();
 
   // react-hook-form 라이브러리

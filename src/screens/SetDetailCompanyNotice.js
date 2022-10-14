@@ -3,7 +3,7 @@ import { urlSetNotice, urlGetNotice } from "../Services/string";
 import { servicesPostData } from "../Services/importData";
 import { useParams } from "react-router-dom";
 
-import SetImage from "../components/common/ImageSetPreview";
+import SetImage from "../components/common/ServicesImageSetPreview";
 import LayoutTopButton from "../components/common/LayoutTopButton";
 
 export default function SetDetailCompanyNotice() {

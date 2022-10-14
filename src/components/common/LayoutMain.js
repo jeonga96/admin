@@ -2,7 +2,7 @@ import Nav from "../navigation/NavBox";
 import Header from "../header/HeaderBox";
 import Footer from "../footer/FooterBox";
 
-export default function MainLayout({ nowTitle, component }) {
+export default function LayoutMain({ nowTitle, component }) {
   return (
     <div id="wrap">
       <Nav />

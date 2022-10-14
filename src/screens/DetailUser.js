@@ -5,8 +5,8 @@ import { urlGetUserDetail } from "../Services/string";
 import { useGetImage } from "../Services/customHook";
 
 import LayoutTopButton from "../components/common/LayoutTopButton";
-import ImageOnClick from "../components/common/ImageOnClick";
-import ErrorNullBox from "../components/common/ErrorNullBox";
+import ServicesImageOnClick from "../components/common/ServicesImageOnClick";
+import ComponentErrorNull from "../components/common/ComponentErrorNull";
 
 export default function DetailUser() {
   let { uid } = useParams();
@@ -58,7 +58,7 @@ export default function DetailUser() {
   }, [image]);
 
   return userDetail && userDetail.length === 0 ? (
-    <ErrorNullBox />
+    <ComponentErrorNull />
   ) : (
     <>
       <ul className="tableTopWrap">
@@ -113,7 +113,7 @@ export default function DetailUser() {
             <h4>대표 이미지</h4>
             <div className="detailWidthContent detailWidthContentImg">
               {!!image[0] && (
-                <ImageOnClick
+                <ServicesImageOnClick
                   getData={image}
                   url={image[0].storagePath}
                   text="회원 대표 이미지"
@@ -127,7 +127,7 @@ export default function DetailUser() {
             <div className="detailWidthContent detailWidthContentImg">
               {images &&
                 images.map((item) => (
-                  <ImageOnClick
+                  <ServicesImageOnClick
                     key={item.iid}
                     getData={images}
                     url={item.storagePath}

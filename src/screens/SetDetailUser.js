@@ -12,8 +12,8 @@ import {
 } from "../Services/string";
 
 import LayoutTopButton from "../components/common/LayoutTopButton";
-import ImageSet from "../components/common/ImageSetPreview";
-import DetailUserComponent from "../components/common/DetailUserComponent";
+import ImageSet from "../components/common/ServicesImageSetPreview";
+import DetailUserComponent from "../components/common/ComponentSetDetailUser";
 
 export default function SetDetailUser() {
   const { uid } = useParams();

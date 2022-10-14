@@ -1,4 +1,4 @@
-export default function ListCompanySearchComponent() {
+export default function ComponentListCompanySearch() {
   return (
     <div className="commonBox">
       <h3 className="blind">사업자관리 검색 필터</h3>

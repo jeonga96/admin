@@ -1,7 +1,7 @@
 import { BsArrowRightShort } from "react-icons/bs";
 import { Link } from "react-router-dom";
 
-export default function DetailContentList({ getData, url, title }) {
+export default function PieceDetailListLink({ getData, url, title }) {
   return (
     <li>
       <Link to={url}>

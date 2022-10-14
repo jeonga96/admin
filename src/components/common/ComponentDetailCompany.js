@@ -1,8 +1,8 @@
 import { useState, useRef, useEffect } from "react";
 import { useGetImage } from "../../Services/customHook";
-import ImageOnClick from "./ImageOnClick";
+import ServicesImageOnClick from "./ServicesImageOnClick";
 
-export default function GetCompany({ companyDetail }) {
+export default function ComponentDetailCompany({ companyDetail }) {
   // image:대표이미지, images:상세이미지 mapLinkAdress는 클릭 시 네이버 지도로 가기 위한 변수
   const [image, setImage] = useState([]);
   const [images, setImages] = useState(null);
@@ -92,7 +92,7 @@ export default function GetCompany({ companyDetail }) {
         <h4>대표 이미지</h4>
         <div className="detailWidthContent detailWidthContentImg">
           {!!image[0] && (
-            <ImageOnClick
+            <ServicesImageOnClick
               getData={image}
               url={image[0].storagePath}
               text="사업자 대표 이미지"
@@ -106,7 +106,7 @@ export default function GetCompany({ companyDetail }) {
         <div className="detailWidthContent detailWidthContentImg">
           {images &&
             images.map((item) => (
-              <ImageOnClick
+              <ServicesImageOnClick
                 key={item.iid}
                 getData={images}
                 url={item.storagePath}

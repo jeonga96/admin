@@ -10,9 +10,9 @@ import {
   urlSetCompanyDetail,
   urlSetCompany,
 } from "../Services/string";
-import SetImage from "../components/common/ImageSetPreview";
+import SetImage from "../components/common/ServicesImageSetPreview";
 import LayoutTopButton from "../components/common/LayoutTopButton";
-import SetAllKeyWord from "../components/common/SetAllKeyWord";
+import SetAllKeyWord from "../components/common/ComponentSetAllKeyWord";
 
 export default function SetCompanyDetail() {
   const { cid } = useParams();

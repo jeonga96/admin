@@ -5,7 +5,7 @@ import { urlGetContent, urlGetImages } from "../Services/string";
 import { useDidMountEffect } from "../Services/customHook";
 
 import LayoutTopButton from "../components/common/LayoutTopButton";
-import ImageOnClick from "../components/common/ImageOnClick";
+import ServicesImageOnClick from "../components/common/ServicesImageOnClick";
 
 export default function DetailAdminNotice() {
   const [notice, setNotice] = useState("");
@@ -78,7 +78,7 @@ export default function DetailAdminNotice() {
             >
               {images &&
                 images.map((item) => (
-                  <ImageOnClick
+                  <ServicesImageOnClick
                     key={item.iid}
                     getData={images}
                     url={item.storagePath}

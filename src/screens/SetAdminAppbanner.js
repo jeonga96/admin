@@ -9,7 +9,7 @@ import {
 import { servicesPostData } from "../Services/importData";
 import { serviesGetImgsIid } from "../Services/useData";
 
-import SetImage from "../components/common/ImageSetPreview";
+import SetImage from "../components/common/ServicesImageSetUrl";
 
 export default function SetAdminAppbanner() {
   const [bannerlist, setBannerlist] = useState([]);

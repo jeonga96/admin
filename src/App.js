@@ -3,7 +3,7 @@ import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 /* 기본 레이아웃 & 기능 */
-import MainLayout from "./components/common/MainLayout";
+import MainLayout from "./components/common/LayoutMain";
 import Home from "./screens/Home";
 import Login from "./screens/Login";
 

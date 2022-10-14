@@ -4,8 +4,8 @@ import { servicesPostData } from "../Services/importData";
 import { urlGetReview } from "../Services/string";
 import { useGetImage } from "../Services/customHook";
 
-import ImageOnClick from "../components/common/ImageOnClick";
-import BarChart from "../components/common/BarChart";
+import ServicesImageOnClick from "../components/common/ServicesImageOnClick";
+import PieceBarChart from "../components/common/PieceBarChart";
 
 export default function DetailCompanyReview() {
   const [companyDetail, setCompanyDetail] = useState([]);
@@ -71,7 +71,7 @@ export default function DetailCompanyReview() {
             <h4>업체 만족도</h4>
             <p>
               {companyDetail.negativeCount && (
-                <BarChart
+                <PieceBarChart
                   negativeCount={companyDetail.negativeCount}
                   positiveCount={companyDetail.positiveCount}
                 />
@@ -84,7 +84,7 @@ export default function DetailCompanyReview() {
             <div className="detailWidthContent detailWidthContentImg">
               {images &&
                 images.map((item) => (
-                  <ImageOnClick
+                  <ServicesImageOnClick
                     key={item.iid}
                     getData={images}
                     url={item.storagePath}

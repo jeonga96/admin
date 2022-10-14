@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { MdOutlineImage } from "react-icons/md";
 
-export default function ListNoticeComponent({ notice, ISADMIN }) {
+export default function ComponentListNotice({ notice, ISADMIN }) {
   return (
     <>
       <table className="commonTable">
