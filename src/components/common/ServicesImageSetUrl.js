@@ -35,7 +35,6 @@ export default function ImageSet({
       return setChangeImg(res.data);
     });
   }
-  console.log("changeImg", changeImg);
 
   return (
     <div className="basicInputWrap">
@@ -51,7 +50,7 @@ export default function ImageSet({
       ) : (
         <div>
           <label htmlFor={id} className="basicWrapLabel">
-            수정
+            변경
           </label>
           <input
             type="file"

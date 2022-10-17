@@ -667,7 +667,20 @@ button {
   color: var(--color-primary2);
   text-align: right;
 }
-
+.infoMessageBox {
+  width: 100%;
+  height: auto;
+  padding: 10px;
+  color: var(--color-bgblack);
+}
+.infoMessageBox .title {
+  display: block;
+  font-size: var(--font-size-em);
+  margin-bottom: 10px;
+}
+.infoMessageBox li {
+  margin-bottom: 5px;
+}
 /*이미지 설정 - 썸네일*/
 .imgsThumbnail {
   display: flex;
@@ -907,7 +920,8 @@ button {
 }
 
 .detailWidthContent > div,
-.detailWidthContent > li {
+.detailWidthContent > li,
+.commonTable div {
   width: auto;
   height: auto;
   background-size: cover;

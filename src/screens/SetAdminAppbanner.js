@@ -50,7 +50,6 @@ export default function SetAdminAppbanner() {
       .catch((res) => console.log(res));
   }, []);
 
-  console.log("changeImg", changeImg);
   // bannerlist의 데이터를 받아오면 기존 배너의 이미지 데이터를 받아온다.
   useDidMountEffect(() => {
     serviesGetImgId(imgsIid, bannerlist);
@@ -131,6 +130,19 @@ export default function SetAdminAppbanner() {
 
   return (
     <>
+      {/* <div className="commonBox">
+        <div className="infoMessageBox">
+          <span className="title">안내 메세지</span>
+          <ul>
+            <li>[배너추가] 내용을 입력한 후 추가 버튼을 클릭해 주십시오.</li>
+            <li>
+              [배너수정] 관리 → 수정 버튼클릭 → 수정할 내용을 입력을 한 후 수정
+              버튼을 클릭해 주십시오.
+            </li>
+            <li>배너 이미지의 사이즈는 0000*000으로 지정해 주십시오.</li>
+          </ul>
+        </div>
+      </div> */}
       <div className="commonBox">
         <form className="formLayout" onSubmit={AddUserSubmit}>
           <fieldset className="formContentWrapWithRadio">
@@ -178,7 +190,7 @@ export default function SetAdminAppbanner() {
             </div>
 
             <div className="listSearchWrap">
-              <div className="blockLabel">배너 이미지</div>
+              <div className="blockLabel">배너이미지</div>
               <div className="formContentWrapWithTextValue">
                 <SetImage
                   id="titleImg"
@@ -219,7 +231,7 @@ export default function SetAdminAppbanner() {
           <thead>
             <tr>
               <th className="widthBB">배너이미지</th>
-              <th className="widthM">랜딩 URL</th>
+              <th className="widthM">배너이름 / 랜딩 URL</th>
               <th className="widthS">사용여부</th>
               <th className="widthS">관리</th>
             </tr>
@@ -240,8 +252,20 @@ export default function SetAdminAppbanner() {
                     ></div>
                   </td>
                   <td>
-                    <div>{item.contentString}</div>
-                    <div>{item.contentDetail}</div>
+                    <div style={{ fontWeight: "700" }}>
+                      {item.contentString}
+                    </div>
+                    <div>
+                      <a
+                        href={item.contentDetail}
+                        target="_blank"
+                        without
+                        rel="noreferrer"
+                        impliesrel="noopener"
+                      >
+                        {item.contentDetail}
+                      </a>
+                    </div>
                   </td>
                   <td>{item.useFlag ? "ON" : "OFF"}</td>
                   <td>
