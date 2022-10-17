@@ -755,6 +755,17 @@ button {
 .formContentWrapWithTextValue .basicInputWrap > input:focus {
   border-bottom: none;
 }
+.basicInputWrap .basicWrapLabel {
+  cursor: pointer;
+  width: 65px;
+  height: 20px;
+  background-color: var(--color-bggray);
+  border: 1px solid var(--color-pointgray);
+  border-radius: 5px;
+  text-align: center;
+  font-size: var(--font-size-small);
+  line-height: 22px;
+}
 
 /*pc 버전*/
 @media screen and (min-width: 768px) {

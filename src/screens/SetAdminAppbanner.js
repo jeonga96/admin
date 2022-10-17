@@ -29,8 +29,9 @@ export default function SetAdminAppbanner() {
   const [img, setImg] = useState(null);
   // imgsIid:서버에 이미지를 보낼 때는, iid값만 필요
   const imgsIid = [];
+  const [changeImg, setChangeImg] = useState("");
   // useFlag radio
-  const [useFlagCheck, setUseFlagCheck] = useState(1);
+  const [useFlagCheck, setUseFlagCheck] = useState("1");
 
   // 화면 렌더링 시 가장 처음 발생되는 이벤트
   useEffect(() => {
@@ -49,7 +50,8 @@ export default function SetAdminAppbanner() {
       .catch((res) => console.log(res));
   }, []);
 
-  // bannerlist의 데이터를 받아오면 이미지 데이터를 받아온다.
+  console.log("changeImg", changeImg);
+  // bannerlist의 데이터를 받아오면 기존 배너의 이미지 데이터를 받아온다.
   useDidMountEffect(() => {
     serviesGetImgId(imgsIid, bannerlist);
     servicesPostData(urlGetImages, {
@@ -67,8 +69,8 @@ export default function SetAdminAppbanner() {
       .then((res) => {
         if (res.status === "success") {
           setBannerDetail(res.data);
-          setUseFlagCheck(res.data.useFlag);
-
+          setUseFlagCheck(res.data.useFlag.toString());
+          setChangeImg(res.data.imgid);
           getDataFinish.current = true;
         } else if (res.data === "fail") {
           console.log("기존에 입력된 데이터가 없습니다.");
@@ -83,7 +85,6 @@ export default function SetAdminAppbanner() {
   function onChangeUseFlag(e) {
     setUseFlagCheck(e.target.value);
   }
-  console.log(!!clickedContid);
 
   function AddUserSubmit(e) {
     e.preventDefault();
@@ -93,14 +94,14 @@ export default function SetAdminAppbanner() {
         ? {
             contid: clickedContid,
             category: "banner",
-            imgid: img[0].iid,
+            imgid: changeImg[0] ? changeImg[0].iid : changeImg,
             contentDetail: bannerDetail.contentDetail,
             contentString: bannerDetail.contentString,
             useFlag: useFlagCheck,
           }
         : {
             category: "banner",
-            imgid: img[0].iid,
+            imgid: changeImg[0] ? changeImg[0].iid : changeImg,
             contentDetail: bannerDetail.contentDetail,
             contentString: bannerDetail.contentString,
             useFlag: 1,
@@ -151,7 +152,7 @@ export default function SetAdminAppbanner() {
                 <input
                   className="listSearchRadioInput"
                   type="radio"
-                  checked={useFlagCheck === 0}
+                  checked={useFlagCheck === "0"}
                   name="_useFlag"
                   value="0"
                   id="useFlag0"
@@ -164,7 +165,7 @@ export default function SetAdminAppbanner() {
                 <input
                   className="listSearchRadioInput"
                   type="radio"
-                  checked={useFlagCheck === 1}
+                  checked={useFlagCheck === "1"}
                   name="_useFlag"
                   value="1"
                   id="useFlag1"
@@ -180,11 +181,11 @@ export default function SetAdminAppbanner() {
               <div className="blockLabel">배너 이미지</div>
               <div className="formContentWrapWithTextValue">
                 <SetImage
-                  img={img}
-                  setImg={setImg}
                   id="titleImg"
                   getData={bannerlist}
                   getDataFinish={getDataFinish.current}
+                  setChangeImg={setChangeImg}
+                  changeImg={changeImg}
                 />
               </div>
             </div>
