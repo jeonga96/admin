@@ -216,7 +216,27 @@ export default function SetAdminAppbanner() {
           </fieldset>
 
           <div className="listSearchButtonWrap">
-            <input type="reset" value="초기화" />
+            <input
+              type="reset"
+              value="취소"
+              onClick={() => {
+                if (!!clickedContid) {
+                  setClickedContid("");
+                  setChangeImg("");
+                  setBannerDetail({
+                    contentString: "",
+                    contentDetail: "",
+                  });
+                } else {
+                  setBannerDetail({
+                    contentString: "",
+                    contentDetail: "",
+                  });
+                  setChangeImg("");
+                }
+              }}
+            />
+
             {!!clickedContid ? (
               <input type="submit" value="수정" />
             ) : (
@@ -259,7 +279,6 @@ export default function SetAdminAppbanner() {
                       <a
                         href={item.contentDetail}
                         target="_blank"
-                        without
                         rel="noreferrer"
                         impliesrel="noopener"
                       >
