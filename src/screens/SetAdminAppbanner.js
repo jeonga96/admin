@@ -1,6 +1,4 @@
 import { useState, useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
-
 import {
   urlSetContent,
   urlGetContent,
@@ -85,38 +83,46 @@ export default function SetAdminAppbanner() {
     setUseFlagCheck(e.target.value);
   }
 
+  // console.log(changeImg);
   function AddUserSubmit(e) {
     e.preventDefault();
-    servicesPostData(
-      urlSetContent,
-      !!clickedContid
-        ? {
-            contid: clickedContid,
-            category: "banner",
-            imgid: changeImg[0] ? changeImg[0].iid : changeImg,
-            contentDetail: bannerDetail.contentDetail,
-            contentString: bannerDetail.contentString,
-            useFlag: useFlagCheck,
+    const ifImg = changeImg[0] ? changeImg[0].iid : changeImg;
+    // 입력되지 않은 값이 있다면 전송되지 않도록 설정
+    if (ifImg && bannerDetail.contentDetail && bannerDetail.contentString) {
+      servicesPostData(
+        urlSetContent,
+        // clickedContid(수정 버튼이 클릭되면) contid도 함께 전달
+        !!clickedContid
+          ? {
+              contid: clickedContid,
+              category: "banner",
+              imgid: ifImg,
+              contentDetail: bannerDetail.contentDetail,
+              contentString: bannerDetail.contentString,
+              useFlag: useFlagCheck,
+            }
+          : {
+              category: "banner",
+              imgid: ifImg,
+              contentDetail: bannerDetail.contentDetail,
+              contentString: bannerDetail.contentString,
+              useFlag: 1,
+            }
+      )
+        .then((res) => {
+          if (res.status === "fail") {
+            alert("입력에 실패했습니다.");
           }
-        : {
-            category: "banner",
-            imgid: changeImg[0] ? changeImg[0].iid : changeImg,
-            contentDetail: bannerDetail.contentDetail,
-            contentString: bannerDetail.contentString,
-            useFlag: 1,
+          if (res.status === "success") {
+            alert("완료되었습니다!");
+            window.location.reload();
+            return;
           }
-    )
-      .then((res) => {
-        if (res.status === "fail") {
-          alert("입력에 실패했습니다.");
-        }
-        if (res.status === "success") {
-          alert("완료되었습니다!");
-          window.location.reload();
-          return;
-        }
-      })
-      .catch((error) => console.log("axios 실패", error.response));
+        })
+        .catch((error) => console.log("axios 실패", error.response));
+    } else {
+      alert("입력되지 않은 값이 있습니다.");
+    }
   }
 
   // bannerlist imgid에 맞는 image storagePath 값을 전달해주는 함수
@@ -250,8 +256,9 @@ export default function SetAdminAppbanner() {
         <table className="commonTable">
           <thead>
             <tr>
-              <th className="widthBB">배너이미지</th>
-              <th className="widthM">배너이름 / 랜딩 URL</th>
+              <th className="widthM">배너이미지</th>
+              <th className="widthM">배너이름</th>
+              <th className="widthM">랜딩 URL</th>
               <th className="widthS">사용여부</th>
               <th className="widthS">관리</th>
             </tr>
@@ -264,17 +271,16 @@ export default function SetAdminAppbanner() {
                     <div
                       style={
                         img && {
-                          width: "100%",
+                          width: "212px",
                           height: "84px",
                           backgroundImage: `url('${filterImgIid(img, item)}')`,
+                          margin: "0 auto",
                         }
                       }
                     ></div>
                   </td>
+                  <td>{item.contentString}</td>
                   <td>
-                    <div style={{ fontWeight: "700" }}>
-                      {item.contentString}
-                    </div>
                     <div>
                       <a
                         href={item.contentDetail}

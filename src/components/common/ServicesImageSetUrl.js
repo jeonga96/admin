@@ -39,6 +39,7 @@ export default function ImageSet({
   return (
     <div className="basicInputWrap">
       <label htmlFor={id} className="blind" style={{ width: "20px" }} />
+      {/* change 이벤트가 발생하였거나, 기존에 입력된 값이 있는 경우 기본 인풋 태그가 표시된다. */}
       {changeImg === "" ? (
         <input
           type="file"
