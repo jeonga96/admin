@@ -116,7 +116,7 @@ export default function SetAdminAppbanner() {
           }
           if (res.status === "success") {
             alert("완료되었습니다!");
-            // window.location.reload();
+            window.location.reload();
             return;
           }
         })
