@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { useLocation } from "react-router-dom";
 import {
   urlSetContent,
   urlGetContent,
@@ -12,6 +13,7 @@ import { serviesGetImgId } from "../Services/useData";
 import SetImage from "../components/common/ServicesImageSetUrl";
 
 export default function SetAdminAppbanner() {
+  const location = useLocation();
   // 저장된 배너 리스트 불러오기 & 저장
   const [bannerlist, setBannerlist] = useState([]);
   // 배너 리스트 내부의 배너 상세 내용에 onChange 이벤트를 적용할 수 있도록 설정
@@ -83,8 +85,7 @@ export default function SetAdminAppbanner() {
     setUseFlagCheck(e.target.value);
   }
 
-  // console.log(changeImg);
-  function AddUserSubmit(e) {
+  function HandleSubmit(e) {
     e.preventDefault();
     const ifImg = changeImg[0] ? changeImg[0].iid : changeImg;
     // 입력되지 않은 값이 있다면 전송되지 않도록 설정
@@ -115,7 +116,7 @@ export default function SetAdminAppbanner() {
           }
           if (res.status === "success") {
             alert("완료되었습니다!");
-            window.location.reload();
+            // window.location.reload();
             return;
           }
         })
@@ -150,7 +151,7 @@ export default function SetAdminAppbanner() {
         </div>
       </div> */}
       <div className="commonBox">
-        <form className="formLayout" onSubmit={AddUserSubmit}>
+        <form className="formLayout" onSubmit={HandleSubmit}>
           <fieldset className="formContentWrapWithRadio">
             <div className="listSearchWrap">
               <div className="blockLabel">배너이름</div>

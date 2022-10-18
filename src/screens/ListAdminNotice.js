@@ -5,6 +5,7 @@ import { urlContentList } from "../Services/string";
 import LayoutTopButton from "../components/common/LayoutTopButton";
 import ComponentErrorNull from "../components/common/ComponentErrorNull";
 import ComponentListNotice from "../components/common/ComponentListNotice";
+
 import PaginationButton from "../components/common/PiecePaginationButton";
 
 export default function ListAdminNotice() {
@@ -28,7 +29,7 @@ export default function ListAdminNotice() {
   ) : (
     <>
       <ul className="tableTopWrap">
-        <LayoutTopButton url={`/admin/addnotice`} text="작성" />
+        <LayoutTopButton url={`/addnotice`} text="작성" />
       </ul>
       <section className="tableWrap">
         <h3 className="blind">공사콕 공지사항 목록</h3>

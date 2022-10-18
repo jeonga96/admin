@@ -35,7 +35,7 @@ export default function DetailAdminNotice() {
     <>
       <div className="commonBox paddingBox">
         <ul className="tableTopWrap">
-          <LayoutTopButton url="/admin/noticelist" text="목록으로 가기" />
+          <LayoutTopButton url="/noticelist" text="목록으로 가기" />
           <LayoutTopButton url="modify" text="수정" />
         </ul>
         <ul className="detailPageLayout">

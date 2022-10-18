@@ -32,11 +32,11 @@
     "subNav": [
       {
         "subName": "공지사항 관리",
-        "url": "/admin/noticelist"
+        "url": "/noticelist"
       },
       {
         "subName": "앱 배너 관리",
-        "url": "/admin/appbanner"
+        "url": "/appbanner"
       }
     ]
   }

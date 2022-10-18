@@ -235,7 +235,7 @@ function App() {
         />
         {/* ------- 공사콕 앱관리 ------- */}
         <Route
-          path="admin/noticelist"
+          path="noticelist"
           element={
             <MainLayout
               nowTitle="공사콕 공지사항"
@@ -244,16 +244,16 @@ function App() {
           }
         />
         <Route
-          path="admin/addnotice"
+          path="addnotice"
           element={
             <MainLayout
               nowTitle="공사콕 공지사항 작성"
-              component={<AddCompanyNotice />}
+              component={<SetDetailAdminNotice />}
             />
           }
         />
         <Route
-          path="admin/notice/:contid"
+          path="notice/:contid"
           element={
             <MainLayout
               nowTitle="공사콕 공지사항"
@@ -262,7 +262,7 @@ function App() {
           }
         />
         <Route
-          path="admin/notice/:contid/modify"
+          path="notice/:contid/modify"
           element={
             <MainLayout
               nowTitle="공사콕 공지사항 수정"
@@ -271,7 +271,7 @@ function App() {
           }
         />
         <Route
-          path="admin/appbanner"
+          path="appbanner"
           element={
             <MainLayout
               nowTitle="공사콕 배너관리"

@@ -69,7 +69,7 @@ export default function SetDetailAdminNotice() {
         }
         if (res.status === "success") {
           alert("완료되었습니다!");
-          window.location.href = `/admin/notice/${res.data.contid}`;
+          window.location.href = `/notice/${res.data.contid}`;
           return;
         }
       })
