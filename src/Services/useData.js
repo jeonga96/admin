@@ -37,3 +37,15 @@ export function serviesGetKeywords(variable, data) {
     variable.push(data[i].keyword);
   }
 }
+//서버에 keywords의 keyword 데이터를 보내기 위해 실행하는 함수
+export function serviesGetKid(variable, data, allData) {
+  const arrData = data.split(",");
+  const arrPushData = [];
+  allData.filter((it) => {
+    if (arrData.includes(it.keyword)) {
+      console.log("variable", it);
+      return arrPushData.push(it);
+    }
+  });
+  return variable(arrPushData);
+}

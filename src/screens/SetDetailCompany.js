@@ -3,12 +3,17 @@ import { useEffect, useState, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 
-import { servicesPostData } from "../Services/importData";
-import { serviesGetImgsIid, serviesGetKeywords } from "../Services/useData";
+import { servicesPostData, servicesGetStorage } from "../Services/importData";
+import {
+  serviesGetImgsIid,
+  serviesGetKeywords,
+  serviesGetKid,
+} from "../Services/useData";
 import {
   urlGetCompanyDetail,
   urlSetCompanyDetail,
   urlSetCompany,
+  ALLKEYWORD,
 } from "../Services/string";
 import SetImage from "../components/common/ServicesImageSetPreview";
 import LayoutTopButton from "../components/common/LayoutTopButton";
@@ -55,8 +60,8 @@ export default function SetCompanyDetail() {
   // mapcoor:위도 경도 저장,
   const mapcoor = useRef({ longitude: "", latitude: "" });
   // 선택된 키워드 저장되는 state
-  // keywordValue:서버에 키워드를 보낼 때 키워드 내용만 필요
   const [companyDetailKeyword, setCompanyDetailKeyword] = useState([]);
+  // keywordValue:서버에 키워드를 보낼 때 keyword의 value만 필요
   const keywordValue = [];
   //"/admin/setCompany" 로 보내기 위한 기본 회사정보
   const [companyInfo, setCompanyInfo] = useState({
@@ -99,6 +104,15 @@ export default function SetCompanyDetail() {
         if (res.status === "success") {
           // 값이 있다면 comapnyData에 저장한 후 getDataFinish 값을 변경
           setCompanyDetailInfo(res.data);
+          // 로그인 시 로컬스토리지에 저장한 전체 키워드 가져오기
+          const allKeywordData = JSON.parse(servicesGetStorage(ALLKEYWORD));
+          // 이미 입력된 키워드 값이 있다면 가져온 keywords 와 allKeywordData의 keyword의 value를 비교하여 keyword 객체 가져오기
+          // 삭제 기능을 위해 kid도 불러와야 해서 해당 기능 추가
+          serviesGetKid(
+            setCompanyDetailKeyword,
+            res.data.keywords,
+            allKeywordData
+          );
           getDataFinish.current = true;
         } else if (res.data === "fail") {
           console.log("새로운 사업자 회원입니다.");
@@ -128,7 +142,6 @@ export default function SetCompanyDetail() {
     setUseFlagCheck(e.target.value);
   }
 
-  console.log("keywordValue", keywordValue.toString());
   // form submit 이벤트
   const addUserEvent = () => {
     //서버에 imgs의 iid값만을 보내기 위해 실행하는 반복문 함수
@@ -274,13 +287,13 @@ export default function SetCompanyDetail() {
 
           <div className="formContentWrap">
             <label htmlFor="name" className="blockLabel">
-              업체 이름
+              상호
             </label>
             <input
               type="text"
               id="name"
               name="_name"
-              placeholder="업체 이름을 입력해 주세요."
+              placeholder="상호명을 입력해 주세요."
               value={companyDetailInfo.name || ""}
               {...register("_name", {
                 onChange: onChange,
@@ -305,27 +318,128 @@ export default function SetCompanyDetail() {
           />
 
           <div className="formContentWrap">
-            <label htmlFor="comment" className=" blockLabel">
-              소개글
+            <label htmlFor="registration" className=" blockLabel">
+              사업자 등록 번호
             </label>
             <input
               type="text"
-              id="comment"
-              name="_comment"
-              placeholder="사업자에 대한 짧은 소개글을 입력해 주세요."
-              value={companyDetailInfo.comment || ""}
-              {...register("_comment", {
+              id="registration"
+              name="_registration"
+              placeholder="사업자 등록 번호를 입력해 주세요. (예시 000-00-00000)"
+              value={companyDetailInfo.registration || ""}
+              {...register("_registration", {
                 onChange: onChange,
-                maxLength: {
-                  value: 300,
-                  message: "300자 이하의 글자만 사용가능합니다.",
+                required: "입력되지 않았습니다.",
+                pattern: {
+                  value: /^[0-9]{3}-[0-9]{2}-[0-9]{5}/,
+                  message: "형식에 맞지 않습니다.",
                 },
               })}
             />
           </div>
           <ErrorMessage
             errors={errors}
-            name="_comment"
+            name="_registration"
+            render={({ message }) => (
+              <span className="errorMessageWrap">{message}</span>
+            )}
+          />
+
+          <div className="formContentWrap">
+            <label htmlFor="mobilenum" className=" blockLabel">
+              핸드폰번호
+            </label>
+            <input
+              type="text"
+              id="mobilenum"
+              name="_mobilenum"
+              value={
+                (companyDetailInfo.mobilenum &&
+                  companyDetailInfo.mobilenum
+                    .replace(/[^0-9]/g, "")
+                    .replace(/^(\d{3})(\d{3,4})(\d{4})$/, `$1-$2-$3`)) ||
+                ""
+              }
+              placeholder="핸드폰번호를 입력해 주세요. (예시 000-0000-0000)"
+              {...register("_mobilenum", {
+                onChange: onChange,
+                required: "입력되지 않았습니다.",
+                pattern: {
+                  value: /^[0-9]{3}-[0-9]{3,4}-[0-9]{4}/,
+                  message: "형식에 맞지 않습니다.",
+                },
+              })}
+            />
+          </div>
+          <ErrorMessage
+            errors={errors}
+            name="_mobilenum"
+            render={({ message }) => (
+              <span className="errorMessageWrap">{message}</span>
+            )}
+          />
+
+          <div className="formContentWrap">
+            <label htmlFor="telnum" className=" blockLabel">
+              전화번호
+            </label>
+            <input
+              type="text"
+              id="telnum"
+              name="_telnum"
+              placeholder="전화번호를 입력해 주세요. (예시 00-0000-0000)"
+              value={
+                (companyDetailInfo.telnum &&
+                  companyDetailInfo.telnum
+                    .replace(/[^0-9]/g, "")
+                    .replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`)) ||
+                ""
+              }
+              {...register("_telnum", {
+                onChange: onChange,
+                required: "입력되지 않았습니다.",
+                pattern: {
+                  value: /^[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}/,
+                  message: "형식에 맞지 않습니다.",
+                },
+              })}
+            />
+          </div>
+          <ErrorMessage
+            errors={errors}
+            name="_telnum"
+            render={({ message }) => (
+              <span className="errorMessageWrap">{message}</span>
+            )}
+          />
+
+          <div className="formContentWrap">
+            <label htmlFor="extnum" className=" blockLabel">
+              안심 번호
+            </label>
+            <input
+              type="text"
+              id="extnum"
+              name="_extnum"
+              placeholder="추가 번호를 입력해 주세요."
+              onChange={onChange}
+              value={companyDetailInfo.extnum || ""}
+              {...register("_extnum", {
+                onChange: onChange,
+                maxLength: {
+                  value: 13,
+                  message: "형식에 맞지 않습니다.",
+                },
+                pattern: {
+                  value: /[0-9]/,
+                  message: "형식에 맞지 않습니다.",
+                },
+              })}
+            />
+          </div>
+          <ErrorMessage
+            errors={errors}
+            name="_extnum"
             render={({ message }) => (
               <span className="errorMessageWrap">{message}</span>
             )}
@@ -387,20 +501,21 @@ export default function SetCompanyDetail() {
           />
 
           <div className="formContentWrap">
-            <label htmlFor="registration" className=" blockLabel">
-              사업자 등록 번호
+            <label htmlFor="email" className=" blockLabel">
+              이메일
             </label>
             <input
               type="text"
-              id="registration"
-              name="_registration"
-              placeholder="사업자 등록 번호를 입력해 주세요. (예시 000-00-00000)"
-              value={companyDetailInfo.registration || ""}
-              {...register("_registration", {
+              id="email"
+              name="_email"
+              placeholder="이메일을 입력해 주세요."
+              onChange={onChange}
+              value={companyDetailInfo.email || ""}
+              {...register("_email", {
                 onChange: onChange,
-                required: "입력되지 않았습니다.",
                 pattern: {
-                  value: /^[0-9]{3}-[0-9]{2}-[0-9]{5}/,
+                  value:
+                    /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i,
                   message: "형식에 맞지 않습니다.",
                 },
               })}
@@ -408,7 +523,34 @@ export default function SetCompanyDetail() {
           </div>
           <ErrorMessage
             errors={errors}
-            name="_registration"
+            name="_email"
+            render={({ message }) => (
+              <span className="errorMessageWrap">{message}</span>
+            )}
+          />
+
+          <div className="formContentWrap">
+            <label htmlFor="comment" className=" blockLabel">
+              사업자 한줄 소개
+            </label>
+            <input
+              type="text"
+              id="comment"
+              name="_comment"
+              placeholder="사업자에 대한 짧은 소개글을 입력해 주세요."
+              value={companyDetailInfo.comment || ""}
+              {...register("_comment", {
+                onChange: onChange,
+                maxLength: {
+                  value: 300,
+                  message: "300자 이하의 글자만 사용가능합니다.",
+                },
+              })}
+            />
+          </div>
+          <ErrorMessage
+            errors={errors}
+            name="_comment"
             render={({ message }) => (
               <span className="errorMessageWrap">{message}</span>
             )}
@@ -441,6 +583,24 @@ export default function SetCompanyDetail() {
             )}
           />
 
+          <SetImage
+            img={titleImg}
+            setImg={setTitleImg}
+            getData={companyDetailInfo}
+            id="titleImg"
+            title="대표 이미지"
+            getDataFinish={getDataFinish.current}
+          />
+
+          <SetImage
+            imgs={imgs}
+            setImgs={setImgs}
+            id="imgs"
+            title="상세 이미지"
+            getData={companyDetailInfo}
+            getDataFinish={getDataFinish.current}
+          />
+
           <div className="formContentWrap">
             <label htmlFor="offer" className="blockLabel">
               사업자 소개글
@@ -469,183 +629,16 @@ export default function SetCompanyDetail() {
             )}
           />
 
-          <SetImage
-            img={titleImg}
-            setImg={setTitleImg}
-            getData={companyDetailInfo}
-            id="titleImg"
-            title="대표 이미지"
-            getDataFinish={getDataFinish.current}
-          />
-
-          <SetImage
-            imgs={imgs}
-            setImgs={setImgs}
-            id="imgs"
-            title="상세설명 이미지"
-            getData={companyDetailInfo}
-            getDataFinish={getDataFinish.current}
-          />
-
-          <div className="formContentWrap">
-            <label htmlFor="telnum" className=" blockLabel">
-              전화번호
-            </label>
-            <input
-              type="text"
-              id="telnum"
-              name="_telnum"
-              placeholder="전화번호를 입력해 주세요. (예시 00-0000-0000)"
-              value={
-                (companyDetailInfo.telnum &&
-                  companyDetailInfo.telnum
-                    .replace(/[^0-9]/g, "")
-                    .replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`)) ||
-                ""
-              }
-              {...register("_telnum", {
-                onChange: onChange,
-                required: "입력되지 않았습니다.",
-                pattern: {
-                  value: /^[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}/,
-                  message: "형식에 맞지 않습니다.",
-                },
-              })}
-            />
-          </div>
-          <ErrorMessage
-            errors={errors}
-            name="_telnum"
-            render={({ message }) => (
-              <span className="errorMessageWrap">{message}</span>
-            )}
-          />
-
-          <div className="formContentWrap">
-            <label htmlFor="mobilenum" className=" blockLabel">
-              핸드폰번호
-            </label>
-            <input
-              type="text"
-              id="mobilenum"
-              name="_mobilenum"
-              value={
-                (companyDetailInfo.mobilenum &&
-                  companyDetailInfo.mobilenum
-                    .replace(/[^0-9]/g, "")
-                    .replace(/^(\d{3})(\d{3,4})(\d{4})$/, `$1-$2-$3`)) ||
-                ""
-              }
-              placeholder="핸드폰번호를 입력해 주세요. (예시 000-0000-0000)"
-              {...register("_mobilenum", {
-                onChange: onChange,
-                required: "입력되지 않았습니다.",
-                pattern: {
-                  value: /^[0-9]{3}-[0-9]{3,4}-[0-9]{4}/,
-                  message: "형식에 맞지 않습니다.",
-                },
-              })}
-            />
-          </div>
-          <ErrorMessage
-            errors={errors}
-            name="_mobilenum"
-            render={({ message }) => (
-              <span className="errorMessageWrap">{message}</span>
-            )}
-          />
-
-          <div className="formContentWrap">
-            <label htmlFor="email" className=" blockLabel">
-              이메일
-            </label>
-            <input
-              type="text"
-              id="email"
-              name="_email"
-              placeholder="이메일을 입력해 주세요."
-              onChange={onChange}
-              value={companyDetailInfo.email || ""}
-              {...register("_email", {
-                onChange: onChange,
-                pattern: {
-                  value:
-                    /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i,
-                  message: "형식에 맞지 않습니다.",
-                },
-              })}
-            />
-          </div>
-          <ErrorMessage
-            errors={errors}
-            name="_email"
-            render={({ message }) => (
-              <span className="errorMessageWrap">{message}</span>
-            )}
-          />
-
-          <div className="formContentWrap">
-            <label htmlFor="extnum" className=" blockLabel">
-              추가 번호
-            </label>
-            <input
-              type="text"
-              id="extnum"
-              name="_extnum"
-              placeholder="추가 번호를 입력해 주세요."
-              onChange={onChange}
-              value={companyDetailInfo.extnum || ""}
-              {...register("_extnum", {
-                onChange: onChange,
-                maxLength: {
-                  value: 13,
-                  message: "형식에 맞지 않습니다.",
-                },
-                pattern: {
-                  value: /[0-9]/,
-                  message: "형식에 맞지 않습니다.",
-                },
-              })}
-            />
-          </div>
-          <ErrorMessage
-            errors={errors}
-            name="_extnum"
-            render={({ message }) => (
-              <span className="errorMessageWrap">{message}</span>
-            )}
-          />
-
           <div className="formContentWrap">
             <label htmlFor="keywords" className=" blockLabel">
               키워드
             </label>
-            {/* <input
-              type="text"
-              id="keywords"
-              name="_keywords"
-              placeholder="키워드를 입력해 주세요."
-              value={companyDetailInfo.keywords.replace(" ", ",") || ""}
-              {...register("_keywords", {
-                onChange: onChange,
-                maxLength: {
-                  value: 100,
-                  message: "100자 이하의 글자만 사용가능합니다.",
-                },
-              })}
-            /> */}
             <SetAllKeyWord
+              getDataKeyword={companyDetailInfo && companyDetailInfo.keywords}
               companyDetailKeyword={companyDetailKeyword}
               setCompanyDetailKeyword={setCompanyDetailKeyword}
             />
           </div>
-          {/* <ErrorMessagecompanyDetailKeyword
-            errors={errors}
-            name="_keywords"
-            render={({ message }) => (
-              <span className="errorMessageWrap">{message}</span>
-            )}
-          /> */}
 
           <div className="formContentWrap">
             <label htmlFor="tags" className=" blockLabel">

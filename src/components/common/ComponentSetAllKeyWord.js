@@ -1,8 +1,10 @@
 import { servicesGetStorage } from "../../Services/importData";
+import { useDidMountEffect } from "../../Services/customHook";
 import { ALLKEYWORD } from "../../Services/string";
 import { useState, useEffect, useRef } from "react";
 
 export default function SetAllKeyWord({
+  getDataKeyword,
   companyDetailKeyword,
   setCompanyDetailKeyword,
 }) {
@@ -27,7 +29,7 @@ export default function SetAllKeyWord({
     else if (data.keyword.toLowerCase().includes(searchValue.toLowerCase())) {
       return data;
     }
-  });
+  }, []);
 
   // 키워드가 검색된 목록에서 키워드 클릭하는 이벤트
   const handleKeywordOnclick = (item, e) => {

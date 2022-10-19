@@ -284,7 +284,7 @@ export default function SetDetailUser() {
             imgs={imgs}
             setImgs={setImgs}
             id="imgs"
-            title="상세설명 이미지"
+            title="상세 이미지"
             getData={userDetail}
             getDataFinish={getDataFinish.current}
           />

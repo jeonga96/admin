@@ -34,40 +34,14 @@ export default function ComponentDetailCompany({ companyDetail }) {
 
   return (
     <div className="detailPageLayout">
-      <li className="detailTime">
-        <div>
-          <em>작성 시간</em>
-          <span>
-            {companyDetail.createTime &&
-              companyDetail.createTime.slice(0, 10) +
-                " " +
-                companyDetail.createTime.slice(11, 19)}
-          </span>
-        </div>
-        <div>
-          <em>수정 시간</em>
-          <span>
-            {companyDetail.updateTime &&
-              companyDetail.updateTime.slice(0, 10) +
-                " " +
-                companyDetail.updateTime.slice(11, 19)}
-          </span>
-        </div>
-      </li>
-
       <div className="formContentWrap">
-        <h4>이름</h4>
+        <h4>상호</h4>
         <span>{companyDetail.name}</span>
       </div>
 
       <div className="formContentWrap">
-        <h4>사업자 소개글</h4>
-        <p>{companyDetail.comment}</p>
-      </div>
-
-      <div className="formContentWrap">
-        <h4>영업 시간</h4>
-        <span>{companyDetail.workTime}</span>
+        <h4>사업자 등록 번호</h4>
+        <span>{companyDetail.registration}</span>
       </div>
 
       <div className="formContentWrap">
@@ -89,39 +63,6 @@ export default function ComponentDetailCompany({ companyDetail }) {
       </div>
 
       <div className="formContentWrap">
-        <h4>대표 이미지</h4>
-        <div className="detailWidthContent detailWidthContentImg">
-          {!!image[0] && (
-            <ServicesImageOnClick
-              getData={image}
-              url={image[0].storagePath}
-              text="사업자 대표 이미지"
-            />
-          )}
-        </div>
-      </div>
-
-      <div className="formContentWrap">
-        <h4>사업자 상세 이미지</h4>
-        <div className="detailWidthContent detailWidthContentImg">
-          {images &&
-            images.map((item) => (
-              <ServicesImageOnClick
-                key={item.iid}
-                getData={images}
-                url={item.storagePath}
-                text="사업자 상세 이미지"
-              />
-            ))}
-        </div>
-      </div>
-
-      <div className="formContentWrap">
-        <h4>이메일</h4>
-        <span>{companyDetail.email}</span>
-      </div>
-
-      <div className="formContentWrap">
         <h4>주소</h4>
         <span>
           {companyDetail.address}
@@ -139,13 +80,51 @@ export default function ComponentDetailCompany({ companyDetail }) {
       </div>
 
       <div className="formContentWrap">
-        <h4>사업자 소개글</h4>
-        <p>{companyDetail.offer}</p>
+        <h4>이메일</h4>
+        <span>{companyDetail.email}</span>
       </div>
 
       <div className="formContentWrap">
-        <h4>사업자 등록 번호</h4>
-        <span>{companyDetail.registration}</span>
+        <h4>사업자 한줄 소개</h4>
+        <p>{companyDetail.comment}</p>
+      </div>
+
+      <div className="formContentWrap">
+        <h4>영업 시간</h4>
+        <span>{companyDetail.workTime}</span>
+      </div>
+
+      <div className="formContentWrap">
+        <h4>대표 이미지</h4>
+        <div className="detailWidthContent detailWidthContentImg">
+          {!!image[0] && (
+            <ServicesImageOnClick
+              getData={image}
+              url={image[0].storagePath}
+              text="사업자 대표 이미지"
+            />
+          )}
+        </div>
+      </div>
+
+      <div className="formContentWrap">
+        <h4>상세 이미지</h4>
+        <div className="detailWidthContent detailWidthContentImg">
+          {images &&
+            images.map((item) => (
+              <ServicesImageOnClick
+                key={item.iid}
+                getData={images}
+                url={item.storagePath}
+                text="사업자 상세 이미지"
+              />
+            ))}
+        </div>
+      </div>
+
+      <div className="formContentWrap">
+        <h4>사업자 소개글</h4>
+        <p>{companyDetail.offer}</p>
       </div>
 
       <div className="formContentWrap">
@@ -153,6 +132,32 @@ export default function ComponentDetailCompany({ companyDetail }) {
         <ul className="detailContent hashTag">
           {keyword.current &&
             keyword.current.map((item, key) => <li key={key}># {item}</li>)}
+        </ul>
+      </div>
+
+      <div className="formContentWrap">
+        <h4>계약일</h4>
+        <ul className="detailWidthContent detailWidthContentCallNum">
+          <li>
+            <em>계약일</em>
+            <span>
+              {" "}
+              {companyDetail.createTime &&
+                companyDetail.createTime.slice(0, 10) +
+                  " " +
+                  companyDetail.createTime.slice(11, 19)}
+            </span>
+          </li>
+          <li>
+            {companyDetail.useFlag === 0 ? <em>휴면일</em> : <em>수정일</em>}
+            <span>
+              {" "}
+              {companyDetail.updateTime &&
+                companyDetail.updateTime.slice(0, 10) +
+                  " " +
+                  companyDetail.updateTime.slice(11, 19)}
+            </span>
+          </li>
         </ul>
       </div>
     </div>
