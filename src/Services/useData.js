@@ -43,7 +43,6 @@ export function serviesGetKid(variable, data, allData) {
   const arrPushData = [];
   allData.filter((it) => {
     if (arrData.includes(it.keyword)) {
-      console.log("variable", it);
       return arrPushData.push(it);
     }
   });

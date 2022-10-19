@@ -4,79 +4,108 @@ export default function ComponentListCompanySearch() {
       <h3 className="blind">사업자관리 검색 필터</h3>
       <form className="listSearchForm">
         <div className="listSearchWrap">
-          <label>관리번호</label>
-          <input></input>
+          <label className="blockLabel">관리번호</label>
+          <div>
+            <input></input>
+          </div>
         </div>
         <div className="listSearchWrap">
-          <label>사업자 등록번호</label>
-          <input></input>
+          <label className="blockLabel">사업자 등록번호</label>
+          <div>
+            <input></input>
+          </div>
         </div>
         <div className="listSearchWrap">
-          <label>업체명</label>
-          <input></input>
+          <label className="blockLabel">업체명</label>
+          <div>
+            <input></input>
+          </div>
         </div>
         <div className="listSearchWrap">
-          <label>생성일</label>
+          <label className="blockLabel">생성일</label>
           <input type="date"></input>
         </div>
         <div className="listSearchWrap">
-          <label>아이디</label>
-          <input></input>
+          <label className="blockLabel">아이디</label>
+          <div>
+            <input></input>
+          </div>
         </div>
         <div className="listSearchWrap">
-          <label>계약자명</label>
-          <input></input>
+          <label className="blockLabel">계약자명</label>
+          <div>
+            <input></input>
+          </div>
         </div>
         <div className="listSearchWrap">
-          <label>핸드폰 번호</label>
-          <input></input>
+          <label className="blockLabel">핸드폰 번호</label>
+          <div>
+            <input></input>
+          </div>
         </div>
+
         <div className="listSearchWrap">
-          <div className="title">회원상태</div>
+          <div className="blockLabel">회원상태</div>
+          <div>
+            <input
+              className="listSearchRadioInput"
+              type="radio"
+              id="status2"
+              name="status"
+              value="2"
+            />
+            <label className="listSearchRadioLabel" htmlFor="status2">
+              대기
+            </label>
 
-          <label className="listSearchRadioLabel" htmlFor="useFlag0">
-            대기
-          </label>
-          <input
-            className="listSearchRadioInput"
-            type="radio"
-            id="useFlag0"
-            name="drone"
-            value="0"
-          />
+            <input
+              className="listSearchRadioInput"
+              type="radio"
+              id="status1"
+              name="status"
+              value="1"
+            />
+            <label className="listSearchRadioLabel" htmlFor="status1">
+              완료
+            </label>
 
-          <label className="listSearchRadioLabel" htmlFor="useFlag1">
-            완료
-          </label>
-          <input
-            className="listSearchRadioInput"
-            type="radio"
-            id="useFlag1"
-            name="drone"
-            value="1"
-          />
+            <input
+              className="listSearchRadioInput"
+              type="radio"
+              id="status0"
+              name="status"
+              value="0"
+            />
+            <label className="listSearchRadioLabel" htmlFor="status0">
+              거절
+            </label>
+          </div>
+        </div>
 
-          <label className="listSearchRadioLabel" htmlFor="useFlag2">
-            거절
-          </label>
-          <input
-            className="listSearchRadioInput"
-            type="radio"
-            id="useFlag2"
-            name="drone"
-            value="2"
-          />
-
-          <label className="listSearchRadioLabel" htmlFor="useFlag3">
-            휴면
-          </label>
-          <input
-            className="listSearchRadioInput"
-            type="radio"
-            id="useFlag3"
-            name="drone"
-            value="3"
-          />
+        <div className="listSearchWrap">
+          <div className="blockLabel">회원상태</div>
+          <div>
+            <input
+              className="listSearchRadioInput"
+              type="radio"
+              id="useFlag0"
+              name="usFlag"
+              value="0"
+            />
+            <label className="listSearchRadioLabel" htmlFor="useFlag0">
+              해지
+            </label>
+            <input
+              className="listSearchRadioInput"
+              type="radio"
+              id="useFlag1"
+              name="usFlag"
+              value="1"
+            />
+            <label className="listSearchRadioLabel" htmlFor="useFlag1">
+              정상
+            </label>
+          </div>
         </div>
 
         <div className="listSearchButtonWrap">

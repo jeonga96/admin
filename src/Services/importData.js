@@ -34,7 +34,6 @@ export function servicesPostData(url, postData) {
     data: postData,
   })
     .then((res) => {
-      console.log("importData.axiosSetData", res);
       return res.data;
     })
     .catch((error) => console.log("importData.axiosSetData", error));

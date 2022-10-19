@@ -1,7 +1,7 @@
 export default function FooterBox() {
   return (
     <footer className="footer">
-      <span>2020 © Influence - Designed by Dashboard</span>
+      <span>Copyright 2022. wazzang All rights reserved.</span>
     </footer>
   );
 }
