@@ -46,7 +46,7 @@ export default function ListCompany() {
                 <tr key={item.cid}>
                   <td>{item.cid}</td>
                   <td>{item.name}</td>
-                  <td>{item.createTime.slice(0, 10)}</td>
+                  <td>{item.createTime && item.createTime.slice(0, 10)}</td>
                   <td>
                     {item.useFlag ? (
                       <i>

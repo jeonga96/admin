@@ -356,13 +356,7 @@ export default function SetCompanyDetail() {
               type="text"
               id="mobilenum"
               name="_mobilenum"
-              value={
-                (companyDetailInfo.mobilenum &&
-                  companyDetailInfo.mobilenum
-                    .replace(/[^0-9]/g, "")
-                    .replace(/^(\d{3})(\d{3,4})(\d{4})$/, `$1-$2-$3`)) ||
-                ""
-              }
+              value={companyDetailInfo.mobilenum || ""}
               placeholder="핸드폰번호를 입력해 주세요. (예시 000-0000-0000)"
               {...register("_mobilenum", {
                 onChange: onChange,
@@ -391,13 +385,7 @@ export default function SetCompanyDetail() {
               id="telnum"
               name="_telnum"
               placeholder="전화번호를 입력해 주세요. (예시 00-0000-0000)"
-              value={
-                (companyDetailInfo.telnum &&
-                  companyDetailInfo.telnum
-                    .replace(/[^0-9]/g, "")
-                    .replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`)) ||
-                ""
-              }
+              value={companyDetailInfo.telnum || ""}
               {...register("_telnum", {
                 onChange: onChange,
                 required: "입력되지 않았습니다.",

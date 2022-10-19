@@ -22,7 +22,7 @@ export default function ListUser() {
       setListPage(res.page);
     });
   }, [page.getPage]);
-  console.log(userList);
+
   return (
     <>
       <ComponentListUserSearch />
@@ -45,35 +45,38 @@ export default function ListUser() {
               </tr>
             </thead>
             <tbody>
-              {userList.map((item) => (
-                <tr key={item.uid}>
-                  <td>{item.uid}</td>
-                  <td>{item.userid}</td>
-                  <td>{item.name}</td>
-                  <td>
-                    {item.userrole.includes("ROLE_ADMIN") ? "관리자" : "일반"}
-                  </td>
-                  <td>{item.mobile}</td>
-                  <td>{item.createTime.slice(0, 10)}</td>
-                  <td>
-                    {item.useFlag ? (
-                      <i>
-                        <BsCheck2 />
-                      </i>
-                    ) : null}
-                  </td>
-                  <td className="tableButton">
-                    <Link to={`${item.uid}`} className="Link">
-                      상세
-                    </Link>
-                  </td>
-                  <td className="tableButton">
-                    <Link to={`${item.uid}/setUserdetail`} className="Link">
-                      수정
-                    </Link>
-                  </td>
-                </tr>
-              ))}
+              {userList &&
+                userList.map((item) => (
+                  <tr key={item.uid}>
+                    <td>{item.uid}</td>
+                    <td>{item.userid}</td>
+                    <td>{item.name}</td>
+                    <td>
+                      {item.userrole && item.userrole.includes("ROLE_ADMIN")
+                        ? "관리자"
+                        : "일반"}
+                    </td>
+                    <td>{item.mobile}</td>
+                    <td>{item.createTime && item.createTime.slice(0, 10)}</td>
+                    <td>
+                      {item.useFlag ? (
+                        <i>
+                          <BsCheck2 />
+                        </i>
+                      ) : null}
+                    </td>
+                    <td className="tableButton">
+                      <Link to={`${item.uid}`} className="Link">
+                        상세
+                      </Link>
+                    </td>
+                    <td className="tableButton">
+                      <Link to={`${item.uid}/setUserdetail`} className="Link">
+                        수정
+                      </Link>
+                    </td>
+                  </tr>
+                ))}
             </tbody>
           </table>
           <PageButton listPage={listPage} page={page} setPage={setPage} />

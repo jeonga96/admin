@@ -220,11 +220,7 @@ export default function SetDetailUser() {
               id="mobile"
               name="_mobile"
               placeholder="핸드폰 번호 (예시 000-0000-0000)"
-              value={
-                userDetail.mobile
-                  .replace(/[^0-9]/g, "")
-                  .replace(/^(\d{3})(\d{3,4})(\d{4})$/, `$1-$2-$3`) || ""
-              }
+              value={userDetail.mobile || ""}
               {...register("_mobile", {
                 onChange: onChange,
                 required: "입력되지 않았습니다.",
