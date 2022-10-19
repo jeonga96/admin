@@ -104,6 +104,7 @@ export default function SetCompanyDetail() {
         if (res.status === "success") {
           // 값이 있다면 comapnyData에 저장한 후 getDataFinish 값을 변경
           setCompanyDetailInfo(res.data);
+          setUseFlagCheck(res.data.useFlag);
           // 로그인 시 로컬스토리지에 저장한 전체 키워드 가져오기
           const allKeywordData = JSON.parse(servicesGetStorage(ALLKEYWORD));
           // 이미 입력된 키워드 값이 있다면 가져온 keywords 와 allKeywordData의 keyword의 value를 비교하여 keyword 객체 가져오기
@@ -256,9 +257,10 @@ export default function SetCompanyDetail() {
                 <input
                   className="listSearchRadioInput"
                   type="radio"
-                  checked={useFlagCheck === "0"}
+                  checked={useFlagCheck == 0}
                   name="_useFlag"
                   value="0"
+                  id="0"
                   {...register("_useFlag", {
                     onChange: onChangeUseFlag,
                   })}
@@ -270,9 +272,10 @@ export default function SetCompanyDetail() {
                 <input
                   className="listSearchRadioInput"
                   type="radio"
-                  checked={useFlagCheck === "1"}
+                  checked={useFlagCheck == 1}
                   name="_useFlag"
                   value="1"
+                  id="1"
                   {...register("_useFlag", {
                     onChange: onChangeUseFlag,
                   })}
