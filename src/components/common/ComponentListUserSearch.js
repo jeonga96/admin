@@ -15,18 +15,21 @@ export default function ComponentListUserSearch() {
             <input></input>
           </div>
         </div>
-        <div className="listSearchWrap">
-          <label className="blockLabel">회원권한</label>
-          <div>
-            <input></input>
-          </div>
-        </div>
+
         <div className="listSearchWrap">
           <label className="blockLabel">이름</label>
           <div>
             <input></input>
           </div>
         </div>
+
+        <div className="listSearchWrap">
+          <label className="blockLabel">회원권한</label>
+          <div>
+            <input></input>
+          </div>
+        </div>
+
         <div className="listSearchWrap">
           <label className="blockLabel">핸드폰번호</label>
           <div>
@@ -50,7 +53,7 @@ export default function ComponentListUserSearch() {
           />
         </div> */}
         <div className="listSearchWrap">
-          <div className="blockLabel">회원상태</div>
+          <div className="blockLabel">계약관리</div>
           <div>
             <input
               className="listSearchRadioInput"

@@ -9,6 +9,14 @@ export default function ComponentListCompanySearch() {
             <input></input>
           </div>
         </div>
+
+        <div className="listSearchWrap">
+          <label className="blockLabel">상호</label>
+          <div>
+            <input></input>
+          </div>
+        </div>
+
         <div className="listSearchWrap">
           <label className="blockLabel">사업자 등록번호</label>
           <div>
@@ -16,27 +24,19 @@ export default function ComponentListCompanySearch() {
           </div>
         </div>
         <div className="listSearchWrap">
-          <label className="blockLabel">업체명</label>
+          <label className="blockLabel">계약자</label>
           <div>
             <input></input>
           </div>
         </div>
-        <div className="listSearchWrap">
-          <label className="blockLabel">생성일</label>
-          <input type="date"></input>
-        </div>
+
         <div className="listSearchWrap">
           <label className="blockLabel">아이디</label>
           <div>
             <input></input>
           </div>
         </div>
-        <div className="listSearchWrap">
-          <label className="blockLabel">계약자명</label>
-          <div>
-            <input></input>
-          </div>
-        </div>
+
         <div className="listSearchWrap">
           <label className="blockLabel">핸드폰 번호</label>
           <div>
@@ -83,7 +83,7 @@ export default function ComponentListCompanySearch() {
         </div>
 
         <div className="listSearchWrap">
-          <div className="blockLabel">회원상태</div>
+          <div className="blockLabel">계약관리</div>
           <div>
             <input
               className="listSearchRadioInput"
@@ -106,6 +106,11 @@ export default function ComponentListCompanySearch() {
               정상
             </label>
           </div>
+        </div>
+
+        <div className="listSearchWrap">
+          <label className="blockLabel">계약일</label>
+          <input type="date"></input>
         </div>
 
         <div className="listSearchButtonWrap">

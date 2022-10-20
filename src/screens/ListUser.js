@@ -38,7 +38,7 @@ export default function ListUser() {
                 <th className="widthS">관리번호</th>
                 <th className="widthM">아이디</th>
                 <th className="widthS">이름</th>
-                <th className="widthS">회원유형</th>
+                <th className="widthS">회원권한</th>
                 <th className="widthM">핸드폰번호</th>
                 <th className="widthS">계약일</th>
                 <th className="widthS">상세정보</th>

@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
-import { useForm } from "react-hook-form";
+import { useForm, useController } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 
 import { servicesPostData } from "../Services/importData";
@@ -13,7 +13,7 @@ import {
 
 import LayoutTopButton from "../components/common/LayoutTopButton";
 import ImageSet from "../components/common/ServicesImageSetPreview";
-import DetailUserComponent from "../components/common/ComponentSetDetailUser";
+import DetailUserComponent from "../components/common/ComponentSetUser";
 
 export default function SetDetailUser() {
   const { uid } = useParams();
@@ -22,6 +22,8 @@ export default function SetDetailUser() {
   const {
     handleSubmit,
     register,
+    watch,
+    setValue,
     formState: { isSubmitting, errors },
   } = useForm();
 

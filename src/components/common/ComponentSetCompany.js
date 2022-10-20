@@ -3,12 +3,12 @@ import { useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
 import { servicesPostData } from "../../Services/importData";
-import { urlSetUserRole, urlSetUser } from "../../Services/string";
+import { urlSetCompany } from "../../Services/string";
 
 import LayoutTopButton from "./LayoutTopButton";
 
-export default function ComponentListUserSearch() {
-  const { uid } = useParams();
+export default function ComponentSetCompany() {
+  const { cid } = useParams();
 
   // react-hook-form 라이브러리
   const {
@@ -17,14 +17,16 @@ export default function ComponentListUserSearch() {
     formState: { isSubmitting, errors },
   } = useForm();
 
-  const [userrole, setUserrole] = useState("ROLE_USER");
+  const [linkUid, setLinkUid] = useState("");
   const [useFlag, setUseFlag] = useState("1");
   const [passwd, setPasswd] = useState("");
+  const [name, setName] = useState("");
+
   function serviesSetUser(useData) {
-    servicesPostData(urlSetUser, {
-      uid: uid,
+    servicesPostData(urlSetCompany, {
+      cid: cid,
       ...useData,
-    });
+    }).then((res) => console.log(res));
     alert("변경되었습니다.");
   }
   return (
@@ -32,7 +34,34 @@ export default function ComponentListUserSearch() {
       <form className="formLayout">
         <fieldset className="formContentWrapWithRadio">
           <div className="listSearchWrap">
-            <div className="blockLabel">회원 활성화</div>
+            <div className="blockLabel">계약자</div>
+            <div className="formContentWrapWithTextValue">
+              <input
+                className="formContentInput"
+                type="text"
+                name="_name"
+                id="name"
+                value={name || ""}
+                {...register("_name", {
+                  onChange: (e) => {
+                    setName(e.target.value);
+                  },
+                })}
+              />
+              <button
+                name="_passwdSave"
+                onClick={(e) => {
+                  e.preventDefault();
+                  serviesSetUser({ name: name, jtoken: "" });
+                }}
+              >
+                저장
+              </button>
+            </div>
+          </div>
+
+          <div className="listSearchWrap">
+            <div className="blockLabel">사업자 활성화</div>
             <div className="formContentWrapWithRadioValue">
               <input
                 className="listSearchRadioInput"
@@ -73,43 +102,29 @@ export default function ComponentListUserSearch() {
           </div>
 
           <div className="listSearchWrap">
-            <div className="blockLabel">회원 권한</div>
-            <div className="formContentWrapWithRadioValue">
+            <div className="blockLabel">회원 연결</div>
+            <div className="formContentWrapWithTextValue">
               <input
-                className="listSearchRadioInput"
-                type="radio"
-                checked={userrole === "ROLE_USER"}
-                name="_userrole"
-                value="ROLE_USER"
-                id="ROLE_USER"
-                {...register("_userrole", {
+                className="formContentInput"
+                type="text"
+                name="_ruid"
+                id="ruid"
+                value={linkUid || ""}
+                {...register("_ruid", {
                   onChange: (e) => {
-                    setUserrole(e.target.value);
-                    serviesSetUser({ userrole: e.target.value });
+                    setLinkUid(e.target.value);
                   },
                 })}
               />
-              <label className="listSearchRadioLabel" htmlFor="ROLE_USER">
-                일반회원
-              </label>
-
-              <input
-                className="listSearchRadioInput"
-                type="radio"
-                checked={userrole === "ROLE_USER,ROLE_ADMIN"}
-                name="_userrole"
-                value="ROLE_USER,ROLE_ADMIN"
-                id="ROLE_ADMIN"
-                {...register("_userrole", {
-                  onChange: (e) => {
-                    setUserrole(e.target.value);
-                    serviesSetUser({ userrole: e.target.value });
-                  },
-                })}
-              />
-              <label className="listSearchRadioLabel" htmlFor="ROLE_ADMIN">
-                관리자
-              </label>
+              <button
+                name="_passwdSave"
+                onClick={(e) => {
+                  e.preventDefault();
+                  serviesSetUser({ ruid: linkUid, jtoken: "" });
+                }}
+              >
+                저장
+              </button>
             </div>
           </div>
 

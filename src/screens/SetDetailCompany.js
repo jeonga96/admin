@@ -12,12 +12,12 @@ import {
 import {
   urlGetCompanyDetail,
   urlSetCompanyDetail,
-  urlSetCompany,
   ALLKEYWORD,
 } from "../Services/string";
 import SetImage from "../components/common/ServicesImageSetPreview";
 import LayoutTopButton from "../components/common/LayoutTopButton";
 import SetAllKeyWord from "../components/common/ComponentSetAllKeyWord";
+import ComponentSetCompany from "../components/common/ComponentSetCompany";
 
 export default function SetCompanyDetail() {
   const { cid } = useParams();
@@ -63,11 +63,6 @@ export default function SetCompanyDetail() {
   const [companyDetailKeyword, setCompanyDetailKeyword] = useState([]);
   // keywordValue:서버에 키워드를 보낼 때 keyword의 value만 필요
   const keywordValue = [];
-  //"/admin/setCompany" 로 보내기 위한 기본 회사정보
-  const [companyInfo, setCompanyInfo] = useState({
-    cid: "",
-    name: "",
-  });
 
   // 카카오 API, 주소를 위도 경도로 변환
   const callMapcoor = () => {
@@ -122,14 +117,6 @@ export default function SetCompanyDetail() {
       .catch((res) => console.log(res));
   }, []);
 
-  // input onChange 이벤트
-  function onChangeComapnyInfo(e) {
-    setCompanyInfo({
-      ...companyInfo,
-      [e.target.id]: e.target.value,
-    });
-  }
-
   // detailInfo input onChange 이벤트
   function onChange(e) {
     setCompanyDetailInfo({
@@ -179,19 +166,6 @@ export default function SetCompanyDetail() {
       })
       .catch((error) => console.log("실패", error.response));
   };
-  function UserInfoSubmit(e) {
-    servicesPostData(urlSetCompany, {
-      cid: cid,
-      name: companyInfo.name,
-    })
-      .then((res) => {
-        if (res.status === "success") {
-          alert("수정 되었습니다.");
-          return;
-        }
-      })
-      .catch((error) => console.log("실패", error.response));
-  }
 
   function UserDetailInfoSubmit(e) {
     // companyDetailInfo.address가 입력되어 있으면 위도경도 구하는 함수 실행(내부에 addUserEvent이벤트 실행 코드 있음)
@@ -200,47 +174,7 @@ export default function SetCompanyDetail() {
 
   return (
     <>
-      <div className="commonBox">
-        <form className="formLayout" onSubmit={handleSubmit(UserInfoSubmit)}>
-          <div className="formContentWrapWithButton">
-            <label htmlFor="name" className="blockLabel">
-              계약자명
-            </label>
-            <div>
-              <input
-                type="text"
-                id="name"
-                name="_companyName"
-                placeholder="고객명을 입력해 주세요."
-                value={companyInfo.name || ""}
-                {...register("_companyName", {
-                  onChange: onChangeComapnyInfo,
-                  // required: "입력되지 않았습니다.",
-                  maxLength: {
-                    value: 8,
-                    message: "8자 이하의 글자만 사용가능합니다.",
-                  },
-                  minLength: {
-                    value: 2,
-                    message: "2자 이상의 글자만 사용가능합니다.",
-                  },
-                })}
-              />
-              <button type="submit" disabled={isSubmitting}>
-                수정
-              </button>
-            </div>
-          </div>
-          <ErrorMessage
-            errors={errors}
-            name="_companyName"
-            render={({ message }) => (
-              <span className="errorMessageWrap">{message}</span>
-            )}
-          />
-        </form>
-      </div>
-
+      <ComponentSetCompany />
       <div className="commonBox">
         <form
           className="formLayout"
