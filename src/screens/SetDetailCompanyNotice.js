@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { urlSetNotice, urlGetNotice } from "../Services/string";
+import { urlCompanyGetNotice, urlCompanySetNotice } from "../Services/string";
 import { servicesPostData } from "../Services/importData";
 import { useParams } from "react-router-dom";
 
@@ -7,7 +7,7 @@ import SetImage from "../components/common/ServicesImageSetPreview";
 import LayoutTopButton from "../components/common/LayoutTopButton";
 
 export default function SetDetailCompanyNotice() {
-  const id = useParams();
+  const { cid, comnid } = useParams();
 
   const [imgs, setImgs] = useState([]);
   const imgsIid = [];
@@ -18,11 +18,12 @@ export default function SetDetailCompanyNotice() {
     title: "",
     content: "",
     imgs: "",
+    rcid: "",
   });
 
   useEffect(() => {
-    servicesPostData(urlGetNotice, {
-      comnid: id.comnid,
+    servicesPostData(urlCompanyGetNotice, {
+      comnid: comnid,
     })
       .then((res) => {
         if (res.status === "success") {
@@ -35,29 +36,35 @@ export default function SetDetailCompanyNotice() {
       .catch((res) => console.log(res));
   }, []);
 
-  console.log(noticeDetail);
+  console.log(noticeDetail, !!comnid);
 
   function onChange(e) {
     setNoticeDetail({ ...noticeDetail, [e.target.id]: e.target.value });
   }
-
   function AddUserSubmit(e) {
     e.preventDefault();
-    servicesPostData(urlSetNotice, {
-      comnid: id.comnid,
-      useFlag: 1,
-      title: noticeDetail.title,
-      content: noticeDetail.content,
-      imgs: setImgs ? imgsIid.toString() : "",
-    })
+    servicesPostData(
+      urlCompanySetNotice,
+      !!comnid
+        ? {
+            comnid: comnid,
+            rcid: cid,
+            useFlag: 1,
+            title: noticeDetail.title,
+            content: noticeDetail.content,
+            imgs: setImgs ? imgsIid.toString() : "",
+          }
+        : {
+            rcid: cid,
+            title: noticeDetail.title,
+            content: noticeDetail.content,
+            imgs: setImgs ? imgsIid.toString() : "",
+          }
+    )
       .then((res) => {
-        console.log("axios 성공!", res);
-        if (res.status === "fail" && res.emsg === "not valid company user.") {
-          alert("사업자 회원이 아닙니다.");
-        }
         if (res.status === "success") {
-          alert("수정이 완료되었습니다!");
-          window.location.href = `/company/${id.cid}/notice`;
+          alert("완료되었습니다!");
+          window.location.href = `/company/${cid}/notice`;
           return;
         }
       })

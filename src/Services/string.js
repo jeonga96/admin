@@ -29,9 +29,9 @@ export const urlUpImages = urlPrefix + "/svc/upImages";
 export const urlGetImages = urlPrefix + "/svc/getImages";
 
 /* 공지사항 */
-export const urlNoticeList = urlPrefix + "/pub/listCompanyNotice";
-export const urlGetNotice = urlPrefix + "/pub/getCompanyNotice";
-export const urlSetNotice = urlPrefix + "/svc/setCompanyNotice";
+export const urlCompanyNoticeList = urlPrefix + "/pub/listCompanyNotice";
+export const urlCompanyGetNotice = urlPrefix + "/pub/getCompanyNotice";
+export const urlCompanySetNotice = urlPrefix + "/admin/setCompanyNotice";
 
 /* 리뷰 */
 export const urlReviewList = urlPrefix + "/pub/listCompanyReview";

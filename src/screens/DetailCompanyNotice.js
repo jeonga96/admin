@@ -1,21 +1,22 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { servicesPostData } from "../Services/importData";
-import { urlGetContent } from "../Services/string";
+import { urlCompanyGetNotice } from "../Services/string";
 import { useGetImage } from "../Services/customHook";
 
 import LayoutTopButton from "../components/common/LayoutTopButton";
-import ServicesImageOnClick from "../components/common/ServicesImageOnClick";
+import ImageOnClick from "../components/common/ServicesImageOnClick";
 
 export default function CompanyNoticeDetail() {
   const [companyDetail, setCompanyDetail] = useState([]);
   const [images, setImages] = useState([]);
-  const { contid } = useParams();
+  const { comnid } = useParams();
+  const { cid } = useParams();
 
   // 해당 공지사항 번호에 맞는 데이터를 가져온다.
   useEffect(() => {
-    servicesPostData(urlGetContent, {
-      contid: contid,
+    servicesPostData(urlCompanyGetNotice, {
+      comnid: comnid,
     }).then((res) => {
       if (res.status === "success") {
         setCompanyDetail(res.data);
@@ -31,7 +32,11 @@ export default function CompanyNoticeDetail() {
     <>
       <div className="commonBox paddingBox">
         <ul className="tableTopWrap">
-          <LayoutTopButton url="modify" text="수정" />
+          <LayoutTopButton
+            url={`/company/${cid}/notice`}
+            text="목록으로 가기"
+          />
+          <LayoutTopButton url={`set`} text="수정" />
         </ul>
         <ul className="detailPageLayout">
           <li className="detailTime">
@@ -68,7 +73,7 @@ export default function CompanyNoticeDetail() {
             >
               {images &&
                 images.map((item) => (
-                  <ServicesImageOnClick
+                  <ImageOnClick
                     key={item.iid}
                     getData={images}
                     url={item.storagePath}

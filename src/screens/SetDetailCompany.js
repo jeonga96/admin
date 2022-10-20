@@ -14,7 +14,7 @@ import {
   urlGetCompanyDetail,
   urlSetCompanyDetail,
   ALLKEYWORD,
-  urlNoticeList,
+  urlCompanyNoticeList,
   urlReviewList,
 } from "../Services/string";
 
@@ -124,7 +124,7 @@ export default function SetCompanyDetail() {
             res.data.keywords,
             allKeywordData
           );
-          serviesPostDataSettingRcid(urlNoticeList, cid, setNoticeList);
+          serviesPostDataSettingRcid(urlCompanyNoticeList, cid, setNoticeList);
           serviesPostDataSettingRcid(urlReviewList, cid, setReviewList);
           getDataFinish.current = true;
         } else if (res.data === "fail") {
@@ -758,14 +758,14 @@ export default function SetCompanyDetail() {
           {companyDetailInfo && (
             <PieceDetailListLink
               getData={noticeList}
-              url={`/company/${companyDetailInfo.rcid}/noticelist`}
+              url={`/company/${companyDetailInfo.rcid}/notice`}
               title="공지사항"
             />
           )}
           {companyDetailInfo && (
             <PieceDetailListLink
               getData={reviewList}
-              url={`/company/${companyDetailInfo.rcid}/reviewlist`}
+              url={`/company/${companyDetailInfo.rcid}/review`}
               title="리뷰"
             />
           )}

@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useState, useLayoutEffect } from "react";
 import { servicesPostData } from "../Services/importData";
-import { urlNoticeList } from "../Services/string";
+import { urlCompanyNoticeList } from "../Services/string";
 
 import LayoutTopButton from "../components/common/LayoutTopButton";
 import ComponentErrorNull from "../components/common/ComponentErrorNull";
@@ -15,7 +15,7 @@ export default function ListCompanyNotice() {
   // const [page, setPage] = useState({ getPage: 0, activePage: 1 });
 
   useLayoutEffect(() => {
-    servicesPostData(urlNoticeList, {
+    servicesPostData(urlCompanyNoticeList, {
       rcid: cid,
     }).then((res) => {
       setNotice(res.data);
@@ -28,12 +28,12 @@ export default function ListCompanyNotice() {
   ) : (
     <>
       <ul className="tableTopWrap">
-        <LayoutTopButton url={`/company/${cid}/addnotice`} text="작성" />
+        <LayoutTopButton url={`/company/${cid}/notice/set`} text="작성" />
       </ul>
       <section className="tableWrap">
         <h3 className="blind">사업자 공지사항 목록</h3>
         <div className="paddingBox commonBox">
-          <ComponentListNotice notice={notice} url={urlNoticeList} />
+          <ComponentListNotice notice={notice} />
         </div>
       </section>
     </>

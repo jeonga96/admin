@@ -10,20 +10,17 @@ import Login from "./screens/Login";
 /* 회원관리 */
 import ListUser from "./screens/ListUser";
 import AddUser from "./screens/AddUser";
-import UserDetail from "./screens/DetailUser";
 import SetDetailUser from "./screens/SetDetailUser";
 
 /* 사업자 관리 */
 import ListCompany from "./screens/ListCompany";
 import AddCompany from "./screens/AddCompany";
-// import DetailCompany from "./screens/DetailCompany";
 import SetDetailCompany from "./screens/SetDetailCompany";
 
 /* 공지사항 */
 import ListCompanyNotice from "./screens/ListCompanyNotice";
-import AddCompanyNotice from "./screens/AddCompanyNotice";
 import DetailCompanyNotice from "./screens/DetailCompanyNotice";
-import SetDetailCompanyNotice from "./screens/SetDetailCompanyNotice";
+import SetCompanyNotice from "./screens/SetDetailCompanyNotice";
 
 /* 앱관리 */
 import ListAdminNotice from "./screens/ListAdminNotice";
@@ -161,7 +158,7 @@ function App() {
         />
         {/* ------- 공지사항 ------- */}
         <Route
-          path="company/:cid/noticelist"
+          path="company/:cid/notice"
           element={
             <MainLayout
               nowTitle="사업자 공지사항"
@@ -170,11 +167,11 @@ function App() {
           }
         />
         <Route
-          path="company/:cid/addnotice"
+          path="company/:cid/notice/set"
           element={
             <MainLayout
               nowTitle="사업자 공지사항 작성"
-              component={<AddCompanyNotice />}
+              component={<SetCompanyNotice />}
             />
           }
         />
@@ -182,23 +179,24 @@ function App() {
           path="company/:cid/notice/:comnid"
           element={
             <MainLayout
-              nowTitle="사업자 공지사항 상세정보"
+              nowTitle="사업자 공지사항"
               component={<DetailCompanyNotice />}
             />
           }
         />
         <Route
-          path="company/:cid/notice/:comnid/modify"
+          path="company/:cid/notice/:comnid/set"
           element={
             <MainLayout
               nowTitle="사업자 공지사항 수정"
-              component={<SetDetailCompanyNotice />}
+              component={<SetCompanyNotice />}
             />
           }
         />
+
         {/* ------- 리뷰 ------- */}
         <Route
-          path="company/:cid/reviewlist"
+          path="company/:cid/review"
           element={
             <MainLayout
               nowTitle="사업자 리뷰"
@@ -210,7 +208,7 @@ function App() {
           path="company/:cid/review/:comrid"
           element={
             <MainLayout
-              nowTitle="사업자 리뷰 보기"
+              nowTitle="사업자 리뷰"
               component={<DetailCompanyReview />}
             />
           }
