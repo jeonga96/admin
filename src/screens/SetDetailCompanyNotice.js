@@ -36,8 +36,6 @@ export default function SetDetailCompanyNotice() {
       .catch((res) => console.log(res));
   }, []);
 
-  console.log(noticeDetail, !!comnid);
-
   function onChange(e) {
     setNoticeDetail({ ...noticeDetail, [e.target.id]: e.target.value });
   }

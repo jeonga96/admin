@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { servicesPostData } from "../Services/importData";
 import { urlCompanyGetNotice } from "../Services/string";
 import { useGetImage } from "../Services/customHook";

@@ -22,7 +22,7 @@ export default function ListCompanyNotice() {
       // setListPage(res.page);
     });
   }, []);
-  console.log(notice);
+
   return notice === undefined ? (
     <ComponentErrorNull />
   ) : (

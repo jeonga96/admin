@@ -38,7 +38,9 @@ export default function ComponentListUserSearch() {
         </div>
         <div className="listSearchWrap">
           <label className="blockLabel">계약일</label>
-          <input type="date"></input>
+          <div>
+            <input type="date"></input>
+          </div>
         </div>
         {/* <div className="listSearchWrap">
           <label className="listSearchCheckLabel" for="useFlag">
