@@ -5,8 +5,6 @@ import { useForm } from "react-hook-form";
 import { servicesPostData } from "../../Services/importData";
 import { urlSetCompany } from "../../Services/string";
 
-import LayoutTopButton from "./LayoutTopButton";
-
 export default function ComponentSetCompany() {
   const { cid } = useParams();
 

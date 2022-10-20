@@ -54,7 +54,11 @@ export default function SetCompanyDetail() {
   const [imgs, setImgs] = useState([]);
   const imgsIid = [];
   // useFlag radio
-  const [useFlagCheck, setUseFlagCheck] = useState(1);
+  const [detailUseFlag, setDetailUseFlag] = useState(1);
+  // status radio
+  const [status, setStatus] = useState(2);
+  // gongsaType radio
+  const [gongsaType, SetGonsaType] = useState("norm");
   // getDataFinish:기존에 입력된 값이 있어 값을 불러왔다면 true로 변경,
   const getDataFinish = useRef(false);
   // mapcoor:위도 경도 저장,
@@ -64,6 +68,7 @@ export default function SetCompanyDetail() {
   // keywordValue:서버에 키워드를 보낼 때 keyword의 value만 필요
   const keywordValue = [];
 
+  console.log(detailUseFlag, status, gongsaType);
   // 카카오 API, 주소를 위도 경도로 변환
   const callMapcoor = () => {
     var geocoder = new window.kakao.maps.services.Geocoder();
@@ -99,7 +104,9 @@ export default function SetCompanyDetail() {
         if (res.status === "success") {
           // 값이 있다면 comapnyData에 저장한 후 getDataFinish 값을 변경
           setCompanyDetailInfo(res.data);
-          setUseFlagCheck(res.data.useFlag);
+          setDetailUseFlag(res.data.useFlag || "1");
+          setStatus(res.data.status || "2");
+          SetGonsaType(res.data.gongsaType || "norm");
           // 로그인 시 로컬스토리지에 저장한 전체 키워드 가져오기
           const allKeywordData = JSON.parse(servicesGetStorage(ALLKEYWORD));
           // 이미 입력된 키워드 값이 있다면 가져온 keywords 와 allKeywordData의 keyword의 value를 비교하여 keyword 객체 가져오기
@@ -123,11 +130,6 @@ export default function SetCompanyDetail() {
       ...companyDetailInfo,
       [e.target.id]: e.target.value,
     });
-  }
-
-  // useFlag ridio onChange 이벤트
-  function onChangeUseFlag(e) {
-    setUseFlagCheck(e.target.value);
   }
 
   // form submit 이벤트
@@ -155,12 +157,15 @@ export default function SetCompanyDetail() {
       extnum: companyDetailInfo.extnum,
       keywords: keywordValue.toString() || "",
       tags: companyDetailInfo.tags,
-      useFlag: useFlagCheck,
+      useFlag: detailUseFlag,
+      gongsaType: gongsaType,
+      status: status,
     })
       .then((res) => {
         if (res.status === "success") {
           alert("완료되었습니다.");
-          window.location.href = cid ? `/company/${cid}` : "CompanyMyDetail";
+          // window.location.href = cid ? `/company/${cid}` : "CompanyMyDetail";
+          console.log(res.data);
           return;
         }
       })
@@ -191,35 +196,173 @@ export default function SetCompanyDetail() {
                 <input
                   className="listSearchRadioInput"
                   type="radio"
-                  checked={useFlagCheck == 0}
-                  name="_useFlag"
+                  checked={detailUseFlag == 0}
+                  name="_detailUseFlag"
                   value="0"
-                  id="0"
-                  {...register("_useFlag", {
-                    onChange: onChangeUseFlag,
+                  id="DetailUseFlog0"
+                  {...register("_detailUseFlag", {
+                    onChange: (e) => {
+                      setDetailUseFlag(e.target.value);
+                    },
                   })}
                 />
-                <label className="listSearchRadioLabel" htmlFor="0">
+                <label
+                  className="listSearchRadioLabel"
+                  htmlFor="DetailUseFlog0"
+                >
                   휴면
                 </label>
 
                 <input
                   className="listSearchRadioInput"
                   type="radio"
-                  checked={useFlagCheck == 1}
-                  name="_useFlag"
+                  checked={detailUseFlag == 1}
+                  name="_detailUseFlag"
                   value="1"
-                  id="1"
-                  {...register("_useFlag", {
-                    onChange: onChangeUseFlag,
+                  id="DetailUseFlog1"
+                  {...register("_detailUseFlag", {
+                    onChange: (e) => {
+                      setDetailUseFlag(e.target.value);
+                    },
                   })}
                 />
-                <label className="listSearchRadioLabel" htmlFor="1">
+                <label
+                  className="listSearchRadioLabel"
+                  htmlFor="DetailUseFlog1"
+                >
                   사용
                 </label>
               </div>
             </div>
-            <div />
+
+            <div className="listSearchWrap">
+              <div className="blockLabel">계약관리</div>
+              <div className="formContentWrapWithRadioValue">
+                <input
+                  className="listSearchRadioInput"
+                  type="radio"
+                  checked={status == 2}
+                  name="_statusCheck"
+                  value="2"
+                  id="status2"
+                  {...register("_statusCheck", {
+                    onChange: (e) => {
+                      setStatus(e.target.value);
+                    },
+                  })}
+                />
+                <label className="listSearchRadioLabel" htmlFor="status2">
+                  대기
+                </label>
+
+                <input
+                  className="listSearchRadioInput"
+                  type="radio"
+                  checked={status == 0}
+                  name="_statusCheck"
+                  value="0"
+                  id="status0"
+                  {...register("_statusCheck", {
+                    onChange: (e) => {
+                      setStatus(e.target.value);
+                    },
+                  })}
+                />
+                <label className="listSearchRadioLabel" htmlFor="status0">
+                  거절
+                </label>
+
+                <input
+                  className="listSearchRadioInput"
+                  type="radio"
+                  checked={status == 1}
+                  name="_statusCheck"
+                  value="1"
+                  id="status1"
+                  {...register("_statusCheck", {
+                    onChange: (e) => {
+                      setStatus(e.target.value);
+                    },
+                  })}
+                />
+                <label className="listSearchRadioLabel" htmlFor="status1">
+                  완료
+                </label>
+              </div>
+            </div>
+
+            <div className="listSearchWrap">
+              <div className="blockLabel">사업자 공사 관리</div>
+              <div className="formContentWrapWithRadioValue">
+                <input
+                  className="listSearchRadioInput"
+                  type="radio"
+                  checked={gongsaType === "emer"}
+                  name="_gonsaType"
+                  value="emer"
+                  id="typeEmer"
+                  {...register("_gonsaType", {
+                    onChange: (e) => {
+                      SetGonsaType(e.target.value);
+                    },
+                  })}
+                />
+                <label className="listSearchRadioLabel" htmlFor="typeEmer">
+                  긴급
+                </label>
+
+                <input
+                  className="listSearchRadioInput"
+                  type="radio"
+                  checked={gongsaType === "inday"}
+                  name="_gonsaType"
+                  value="inday"
+                  id="typeInday"
+                  {...register("_gonsaType", {
+                    onChange: (e) => {
+                      SetGonsaType(e.target.value);
+                    },
+                  })}
+                />
+                <label className="listSearchRadioLabel" htmlFor="typeInday">
+                  당일
+                </label>
+
+                <input
+                  className="listSearchRadioInput"
+                  type="radio"
+                  checked={gongsaType === "reser"}
+                  name="_gonsaType"
+                  value="reser"
+                  id="typeReser"
+                  {...register("_gonsaType", {
+                    onChange: (e) => {
+                      SetGonsaType(e.target.value);
+                    },
+                  })}
+                />
+                <label className="listSearchRadioLabel" htmlFor="typeReser">
+                  예약
+                </label>
+
+                <input
+                  className="listSearchRadioInput"
+                  type="radio"
+                  checked={gongsaType === "norm"}
+                  name="_gonsaType"
+                  value="norm"
+                  id="typeNorm"
+                  {...register("_gonsaType", {
+                    onChange: (e) => {
+                      SetGonsaType(e.target.value);
+                    },
+                  })}
+                />
+                <label className="listSearchRadioLabel" htmlFor="typeNorm">
+                  일반
+                </label>
+              </div>
+            </div>
           </fieldset>
 
           <div className="formContentWrap">
