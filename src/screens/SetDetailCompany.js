@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 
 import { servicesPostData, servicesGetStorage } from "../Services/importData";
+import { serviesPostDataSettingRcid } from "../Services/useData";
 import {
   serviesGetImgsIid,
   serviesGetKeywords,
@@ -13,11 +14,15 @@ import {
   urlGetCompanyDetail,
   urlSetCompanyDetail,
   ALLKEYWORD,
+  urlNoticeList,
+  urlReviewList,
 } from "../Services/string";
+
 import SetImage from "../components/common/ServicesImageSetPreview";
 import LayoutTopButton from "../components/common/LayoutTopButton";
 import SetAllKeyWord from "../components/common/ComponentSetAllKeyWord";
 import ComponentSetCompany from "../components/common/ComponentSetCompany";
+import PieceDetailListLink from "../components/common/PieceDetailListLink";
 
 export default function SetCompanyDetail() {
   const { cid } = useParams();
@@ -68,7 +73,10 @@ export default function SetCompanyDetail() {
   // keywordValue:서버에 키워드를 보낼 때 keyword의 value만 필요
   const keywordValue = [];
 
-  console.log(detailUseFlag, status, gongsaType);
+  // 하단 링크 이동 될 사업자 공지사항, 사업자 리뷰
+  const [noticeList, setNoticeList] = useState([]);
+  const [reviewList, setReviewList] = useState([]);
+
   // 카카오 API, 주소를 위도 경도로 변환
   const callMapcoor = () => {
     var geocoder = new window.kakao.maps.services.Geocoder();
@@ -116,6 +124,8 @@ export default function SetCompanyDetail() {
             res.data.keywords,
             allKeywordData
           );
+          serviesPostDataSettingRcid(urlNoticeList, cid, setNoticeList);
+          serviesPostDataSettingRcid(urlReviewList, cid, setReviewList);
           getDataFinish.current = true;
         } else if (res.data === "fail") {
           console.log("새로운 사업자 회원입니다.");
@@ -164,7 +174,7 @@ export default function SetCompanyDetail() {
       .then((res) => {
         if (res.status === "success") {
           alert("완료되었습니다.");
-          // window.location.href = cid ? `/company/${cid}` : "CompanyMyDetail";
+          window.location.href = cid ? `/company` : "CompanyMyDetail";
           console.log(res.data);
           return;
         }
@@ -186,6 +196,7 @@ export default function SetCompanyDetail() {
           onSubmit={handleSubmit(UserDetailInfoSubmit)}
         >
           <ul className="tableTopWrap">
+            <LayoutTopButton url="/company" text="목록으로 가기" />
             <LayoutTopButton text="완료" disabled={isSubmitting} />
           </ul>
 
@@ -740,6 +751,25 @@ export default function SetCompanyDetail() {
             )}
           />
         </form>
+      </div>
+
+      <div className="paddingBox commonBox">
+        <ul className="detailContentsList detailContentCenter">
+          {companyDetailInfo && (
+            <PieceDetailListLink
+              getData={noticeList}
+              url={`/company/${companyDetailInfo.rcid}/noticelist`}
+              title="공지사항"
+            />
+          )}
+          {companyDetailInfo && (
+            <PieceDetailListLink
+              getData={reviewList}
+              url={`/company/${companyDetailInfo.rcid}/reviewlist`}
+              title="리뷰"
+            />
+          )}
+        </ul>
       </div>
     </>
   );

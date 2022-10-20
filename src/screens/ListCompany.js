@@ -59,11 +59,6 @@ export default function ListCompany() {
                       상세
                     </Link>
                   </td>
-                  <td className="tableButton">
-                    <Link to={`${item.cid}/setcompanydetail`} className="Link">
-                      수정
-                    </Link>
-                  </td>
                 </tr>
               ))}
             </tbody>

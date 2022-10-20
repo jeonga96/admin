@@ -70,11 +70,6 @@ export default function ListUser() {
                         상세
                       </Link>
                     </td>
-                    <td className="tableButton">
-                      <Link to={`${item.uid}/setUserdetail`} className="Link">
-                        수정
-                      </Link>
-                    </td>
                   </tr>
                 ))}
             </tbody>

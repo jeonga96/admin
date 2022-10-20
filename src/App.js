@@ -16,7 +16,7 @@ import SetDetailUser from "./screens/SetDetailUser";
 /* 사업자 관리 */
 import ListCompany from "./screens/ListCompany";
 import AddCompany from "./screens/AddCompany";
-import DetailCompany from "./screens/DetailCompany";
+// import DetailCompany from "./screens/DetailCompany";
 import SetDetailCompany from "./screens/SetDetailCompany";
 
 /* 공지사항 */
@@ -124,21 +124,12 @@ function App() {
           path="user/:uid"
           element={
             <MainLayout
-              nowTitle="통합회원 상세정보 관리"
-              component={<UserDetail />}
-            />
-          }
-        />
-
-        <Route
-          path="user/:uid/setuserdetail"
-          element={
-            <MainLayout
-              nowTitle="통합회원 상세정보 수정"
+              nowTitle="통합회원 상세정보"
               component={<SetDetailUser />}
             />
           }
         />
+
         <Route
           path="adduser"
           element={
@@ -163,16 +154,7 @@ function App() {
           path="company/:cid"
           element={
             <MainLayout
-              nowTitle="사업자 상세정보 관리"
-              component={<DetailCompany />}
-            />
-          }
-        />
-        <Route
-          path="company/:cid/setcompanydetail"
-          element={
-            <MainLayout
-              nowTitle="사업자 상세정보 수정"
+              nowTitle="사업자 상세정보"
               component={<SetDetailCompany />}
             />
           }

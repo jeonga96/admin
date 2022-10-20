@@ -90,8 +90,8 @@ export default function SetDetailUser() {
     })
       .then((res) => {
         if (res.status === "success") {
-          alert("가입이 완료되었습니다!");
-          window.location.href = `/user/${uid}`;
+          alert("완료되었습니다!");
+          window.location.href = `/user`;
           return;
         }
       })
@@ -104,6 +104,7 @@ export default function SetDetailUser() {
       <div className="commonBox">
         <form className="formLayout" onSubmit={handleSubmit(AddUserSubmit)}>
           <ul className="tableTopWrap">
+            <LayoutTopButton url="/user" text="목록으로 가기" />
             <LayoutTopButton text="완료" disabled={isSubmitting} />
           </ul>
 
