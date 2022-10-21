@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
-import { useForm, useController } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 
 import { servicesPostData } from "../Services/importData";
@@ -22,25 +22,15 @@ export default function SetDetailUser() {
   const {
     handleSubmit,
     register,
-    watch,
     setValue,
+    getValues,
     formState: { isSubmitting, errors },
   } = useForm();
-
-  const [userDetail, setUserDetail] = useState({
-    name: "",
-    address: "",
-    mobile: "",
-    location: "",
-    mail: "",
-    titleImg: "",
-    imgs: "",
-    nick: "",
-  });
 
   // titleImg:대표 이미지저장 및 표시, imgs:상세 이미지저장 및 표시, imgsIid:서버에 이미지를 보낼 때는, iid값만 필요
   // getDataFinish:기존에 입력된 값이 있어 값을 불러왔다면 true로 변경,
   // mapcoor:위도 경도 저장,
+  const [getIid, setGetIid] = useState([]);
   const [titleImg, setTitleImg] = useState(null);
   const [imgs, setImgs] = useState([]);
   const getDataFinish = useRef(false);
@@ -53,17 +43,20 @@ export default function SetDetailUser() {
     })
       .then((res) => {
         if (res.status === "success") {
-          // 값이 있다면 comapnyData에 저장한 후 getDataFinish 값을 변경
-          setUserDetail(res.data);
+          // 이미지 iid를 가지고 오기 위해 (imgs, titleImg) 사용
+          setGetIid(res.data);
+          // 값이 있다면 inputValue에 저장한 후 getDataFinish 값을 변경
+          setValue("_name", res.data.name || "");
+          setValue("_nick", res.data.nick || "");
+          setValue("_address", res.data.address || "");
+          setValue("_mobile", res.data.mobile || "");
+          setValue("_location", res.data.location || "");
+          setValue("_mail", res.data.mail || "");
           getDataFinish.current = true;
         }
       })
       .catch((res) => console.log(res));
   }, []);
-
-  function onChange(e) {
-    setUserDetail({ ...userDetail, [e.target.id]: e.target.value });
-  }
 
   function AddUserSubmit(e) {
     //서버에 imgs의 iid값만을 보내기 위해 실행하는 반복문 함수
@@ -79,14 +72,14 @@ export default function SetDetailUser() {
 
     servicesPostData(urlSetUserDetail, {
       ruid: uid,
-      name: userDetail.name,
-      address: userDetail.address,
-      mobile: userDetail.mobile,
-      location: userDetail.location,
-      mail: userDetail.mail,
+      name: getValues("_name"),
+      nick: getValues("_nick"),
+      address: getValues("_address"),
+      mobile: getValues("_mobile"),
+      location: getValues("_location"),
+      mail: getValues("_mail"),
       titleImg: titleImg ? titleImg[0].iid : "",
       imgs: setImgs ? imgsIid.toString() : "",
-      nick: userDetail.nick,
     })
       .then((res) => {
         if (res.status === "success") {
@@ -117,9 +110,7 @@ export default function SetDetailUser() {
               id="name"
               name="_name"
               placeholder="이름을 입력해 주세요."
-              value={userDetail.name || ""}
               {...register("_name", {
-                onChange: onChange,
                 required: "입력되지 않았습니다.",
                 maxLength: {
                   value: 8,
@@ -145,9 +136,8 @@ export default function SetDetailUser() {
               id="nick"
               name="_nick"
               placeholder="별명을 입력해 주세요."
-              value={userDetail.nick || ""}
               {...register("_nick", {
-                onChange: onChange,
+                required: "입력되지 않았습니다.",
                 maxLength: {
                   value: 8,
                   message: "8자 이하의 글자만 사용가능합니다.",
@@ -176,9 +166,7 @@ export default function SetDetailUser() {
               id="location"
               name="_location"
               placeholder="주소를 입력해 주세요."
-              value={userDetail.location || ""}
               {...register("_location", {
-                onChange: onChange,
                 maxLength: {
                   value: 20,
                   message: "20자 이하의 글자만 사용가능합니다.",
@@ -207,9 +195,8 @@ export default function SetDetailUser() {
               id="address"
               name="_address"
               placeholder="상세주소를 입력해 주세요."
-              value={userDetail.address || ""}
               {...register("_address", {
-                onChange: onChange,
+                // onChange: onChange,
               })}
             />
           </div>
@@ -223,9 +210,7 @@ export default function SetDetailUser() {
               id="mobile"
               name="_mobile"
               placeholder="핸드폰 번호 (예시 000-0000-0000)"
-              value={userDetail.mobile || ""}
               {...register("_mobile", {
-                onChange: onChange,
                 required: "입력되지 않았습니다.",
                 pattern: {
                   value: /^[0-9]{3}-[0-9]{3,4}-[0-9]{4}/,
@@ -251,9 +236,7 @@ export default function SetDetailUser() {
               id="mail"
               name="_mail"
               placeholder="이메일을 입력해 주세요."
-              value={userDetail.mail || ""}
               {...register("_mail", {
-                onChange: onChange,
                 pattern: {
                   value:
                     /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i,
@@ -273,7 +256,7 @@ export default function SetDetailUser() {
           <ImageSet
             img={titleImg}
             setImg={setTitleImg}
-            getData={userDetail}
+            getData={getIid}
             id="titleImg"
             title="대표 이미지"
             getDataFinish={getDataFinish.current}
@@ -284,7 +267,7 @@ export default function SetDetailUser() {
             setImgs={setImgs}
             id="imgs"
             title="상세 이미지"
-            getData={userDetail}
+            getData={getIid}
             getDataFinish={getDataFinish.current}
           />
         </form>
