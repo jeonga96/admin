@@ -137,7 +137,6 @@ export default function SetDetailUser() {
               name="_nick"
               placeholder="별명을 입력해 주세요."
               {...register("_nick", {
-                required: "입력되지 않았습니다.",
                 maxLength: {
                   value: 8,
                   message: "8자 이하의 글자만 사용가능합니다.",
@@ -195,9 +194,7 @@ export default function SetDetailUser() {
               id="address"
               name="_address"
               placeholder="상세주소를 입력해 주세요."
-              {...register("_address", {
-                // onChange: onChange,
-              })}
+              {...register("_address")}
             />
           </div>
 

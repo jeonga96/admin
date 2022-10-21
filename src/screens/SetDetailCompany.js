@@ -31,28 +31,13 @@ export default function SetCompanyDetail() {
   const {
     handleSubmit,
     register,
+    setValue,
+    getValues,
     formState: { isSubmitting, errors },
   } = useForm();
 
-  ///"/admin/setCompanyDetailInfo" 로 보내기 위한 상세 회사 정보
-  const [companyDetailInfo, setCompanyDetailInfo] = useState({
-    name: "",
-    comment: "",
-    location: "",
-    address: "",
-    registration: "",
-    workTime: "",
-    offer: "",
-    titleImg: "",
-    imgs: "",
-    telnum: "",
-    mobilenum: "",
-    email: "",
-    extnum: "",
-    tags: "",
-    useFlag: "",
-  });
-
+  // 서버에서 titleImg, imgs의 iid를 받아오기 위해 사용
+  const [getIid, setGetIid] = useState([]);
   // titleImg:대표 이미지저장 및 표시, imgs:상세 이미지저장 및 표시
   // imgsIid:서버에 이미지를 보낼 때는, iid값만 필요
   const [titleImg, setTitleImg] = useState(null);
@@ -88,7 +73,7 @@ export default function SetCompanyDetail() {
       }
       addUserEvent();
     };
-    geocoder.addressSearch(companyDetailInfo.address, callback);
+    geocoder.addressSearch(getValues("_address"), callback);
   };
 
   // 현재 페이지가 렌더링되자마자 기존에 입력된 값의 여부를 확인한다.
@@ -110,8 +95,22 @@ export default function SetCompanyDetail() {
     })
       .then((res) => {
         if (res.status === "success") {
-          // 값이 있다면 comapnyData에 저장한 후 getDataFinish 값을 변경
-          setCompanyDetailInfo(res.data);
+          // 값이 있다면 저장한 후 getDataFinish 값을 변경
+          setGetIid(res.data);
+          setValue("_name", res.data.name || "");
+          setValue("_comment", res.data.comment || "");
+          setValue("_location", res.data.location || "");
+          setValue("_address", res.data.address || "");
+          setValue("_registration", res.data.registration || "");
+          setValue("_workTime", res.data.workTime || "");
+          setValue("_offer", res.data.offer || "");
+          setValue("_telnum", res.data.telnum || "");
+          setValue("_mobilenum", res.data.mobilenum || "");
+          setValue("_email", res.data.email || "");
+          setValue("_extnum", res.data.extnum || "");
+          setValue("_extnum", res.data.extnum || "");
+          setValue("_tags", res.data.tags || "");
+
           setDetailUseFlag(res.data.useFlag || "1");
           setStatus(res.data.status || "2");
           SetGonsaType(res.data.gongsaType || "norm");
@@ -134,14 +133,6 @@ export default function SetCompanyDetail() {
       .catch((res) => console.log(res));
   }, []);
 
-  // detailInfo input onChange 이벤트
-  function onChange(e) {
-    setCompanyDetailInfo({
-      ...companyDetailInfo,
-      [e.target.id]: e.target.value,
-    });
-  }
-
   // form submit 이벤트
   const addUserEvent = () => {
     //서버에 imgs의 iid값만을 보내기 위해 실행하는 반복문 함수
@@ -150,23 +141,23 @@ export default function SetCompanyDetail() {
     serviesGetKeywords(keywordValue, companyDetailKeyword);
     servicesPostData(urlSetCompanyDetail, {
       rcid: cid,
-      name: companyDetailInfo.name,
-      comment: companyDetailInfo.comment,
-      location: companyDetailInfo.location,
-      address: companyDetailInfo.address,
-      registration: companyDetailInfo.registration,
-      workTime: companyDetailInfo.workTime,
-      offer: companyDetailInfo.offer,
+      name: getValues("_name"),
+      comment: getValues("_comment"),
+      location: getValues("_location"),
+      address: getValues("_address"),
+      registration: getValues("_registration"),
+      workTime: getValues("_workTime"),
+      offer: getValues("_offer"),
       titleImg: titleImg ? titleImg[0].iid : "",
       imgs: setImgs ? imgsIid.toString() : "",
       longitude: mapcoor.current.longitude,
       latitude: mapcoor.current.latitude,
-      telnum: companyDetailInfo.telnum,
-      mobilenum: companyDetailInfo.mobilenum,
-      email: companyDetailInfo.email,
-      extnum: companyDetailInfo.extnum,
+      telnum: getValues("_telnum"),
+      mobilenum: getValues("_mobilenum"),
+      email: getValues("_email"),
+      extnum: getValues("_extnum"),
       keywords: keywordValue.toString() || "",
-      tags: companyDetailInfo.tags,
+      tags: getValues("_tags"),
       useFlag: detailUseFlag,
       gongsaType: gongsaType,
       status: status,
@@ -184,7 +175,7 @@ export default function SetCompanyDetail() {
 
   function UserDetailInfoSubmit(e) {
     // companyDetailInfo.address가 입력되어 있으면 위도경도 구하는 함수 실행(내부에 addUserEvent이벤트 실행 코드 있음)
-    companyDetailInfo.address ? callMapcoor() : addUserEvent();
+    getValues("_address") ? callMapcoor() : addUserEvent();
   }
 
   return (
@@ -385,9 +376,7 @@ export default function SetCompanyDetail() {
               id="name"
               name="_name"
               placeholder="상호명을 입력해 주세요."
-              value={companyDetailInfo.name || ""}
               {...register("_name", {
-                onChange: onChange,
                 required: "입력되지 않았습니다.",
                 maxLength: {
                   value: 16,
@@ -417,9 +406,7 @@ export default function SetCompanyDetail() {
               id="registration"
               name="_registration"
               placeholder="사업자 등록 번호를 입력해 주세요. (예시 000-00-00000)"
-              value={companyDetailInfo.registration || ""}
               {...register("_registration", {
-                onChange: onChange,
                 required: "입력되지 않았습니다.",
                 pattern: {
                   value: /^[0-9]{3}-[0-9]{2}-[0-9]{5}/,
@@ -444,10 +431,8 @@ export default function SetCompanyDetail() {
               type="text"
               id="mobilenum"
               name="_mobilenum"
-              value={companyDetailInfo.mobilenum || ""}
               placeholder="핸드폰번호를 입력해 주세요. (예시 000-0000-0000)"
               {...register("_mobilenum", {
-                onChange: onChange,
                 required: "입력되지 않았습니다.",
                 pattern: {
                   value: /^[0-9]{3}-[0-9]{3,4}-[0-9]{4}/,
@@ -473,9 +458,7 @@ export default function SetCompanyDetail() {
               id="telnum"
               name="_telnum"
               placeholder="전화번호를 입력해 주세요. (예시 00-0000-0000)"
-              value={companyDetailInfo.telnum || ""}
               {...register("_telnum", {
-                onChange: onChange,
                 required: "입력되지 않았습니다.",
                 pattern: {
                   value: /^[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}/,
@@ -501,10 +484,7 @@ export default function SetCompanyDetail() {
               id="extnum"
               name="_extnum"
               placeholder="추가 번호를 입력해 주세요."
-              onChange={onChange}
-              value={companyDetailInfo.extnum || ""}
               {...register("_extnum", {
-                onChange: onChange,
                 maxLength: {
                   value: 13,
                   message: "형식에 맞지 않습니다.",
@@ -533,9 +513,7 @@ export default function SetCompanyDetail() {
               id="location"
               name="_location"
               placeholder="사업자의 위치를 입력해 주세요. (예시 ㅇㅇ구, ㅇㅇ동)"
-              value={companyDetailInfo.location || ""}
               {...register("_location", {
-                onChange: onChange,
                 maxLength: {
                   value: 50,
                   message: "50자 이하의 글자만 사용가능합니다.",
@@ -560,9 +538,7 @@ export default function SetCompanyDetail() {
               id="address"
               name="_address"
               placeholder="주소를 입력해 주세요."
-              value={companyDetailInfo.address || ""}
               {...register("_address", {
-                onChange: onChange,
                 required: "입력되지 않았습니다.",
                 maxLength: {
                   value: 50,
@@ -588,10 +564,7 @@ export default function SetCompanyDetail() {
               id="email"
               name="_email"
               placeholder="이메일을 입력해 주세요."
-              onChange={onChange}
-              value={companyDetailInfo.email || ""}
               {...register("_email", {
-                onChange: onChange,
                 pattern: {
                   value:
                     /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i,
@@ -617,9 +590,7 @@ export default function SetCompanyDetail() {
               id="comment"
               name="_comment"
               placeholder="사업자에 대한 짧은 소개글을 입력해 주세요."
-              value={companyDetailInfo.comment || ""}
               {...register("_comment", {
-                onChange: onChange,
                 maxLength: {
                   value: 300,
                   message: "300자 이하의 글자만 사용가능합니다.",
@@ -644,9 +615,7 @@ export default function SetCompanyDetail() {
               id="workTime"
               name="_workTime"
               placeholder="근무 시간을 입력해 주세요."
-              value={companyDetailInfo.workTime || ""}
               {...register("_workTime", {
-                onChange: onChange,
                 maxLength: {
                   value: 20,
                   message: "20자 이하의 글자만 사용가능합니다.",
@@ -665,7 +634,7 @@ export default function SetCompanyDetail() {
           <SetImage
             img={titleImg}
             setImg={setTitleImg}
-            getData={companyDetailInfo}
+            getData={getIid}
             id="titleImg"
             title="대표 이미지"
             getDataFinish={getDataFinish.current}
@@ -676,7 +645,7 @@ export default function SetCompanyDetail() {
             setImgs={setImgs}
             id="imgs"
             title="상세 이미지"
-            getData={companyDetailInfo}
+            getData={getIid}
             getDataFinish={getDataFinish.current}
           />
 
@@ -689,10 +658,7 @@ export default function SetCompanyDetail() {
               id="offer"
               name="_offer"
               placeholder="사업자 소개글을 입력해 주세요."
-              onChange={onChange}
-              value={companyDetailInfo.offer || ""}
               {...register("_offer", {
-                onChange: onChange,
                 maxLength: {
                   value: 500,
                   message: "500자 이하의 글자만 사용가능합니다.",
@@ -713,7 +679,7 @@ export default function SetCompanyDetail() {
               키워드
             </label>
             <SetAllKeyWord
-              getDataKeyword={companyDetailInfo && companyDetailInfo.keywords}
+              getDataKeyword={getValues("_keywords")}
               companyDetailKeyword={companyDetailKeyword}
               setCompanyDetailKeyword={setCompanyDetailKeyword}
             />
@@ -728,14 +694,7 @@ export default function SetCompanyDetail() {
               id="tags"
               name="_tags"
               placeholder="태그를 입력해 주세요."
-              onChange={onChange}
-              value={
-                (companyDetailInfo.tags &&
-                  companyDetailInfo.tags.replace(" ", ",")) ||
-                ""
-              }
               {...register("_tags", {
-                onChange: onChange,
                 maxLength: {
                   value: 100,
                   message: "100자 이하의 글자만 사용가능합니다.",
@@ -755,17 +714,17 @@ export default function SetCompanyDetail() {
 
       <div className="paddingBox commonBox">
         <ul className="detailContentsList detailContentCenter">
-          {companyDetailInfo && (
+          {getIid && (
             <PieceDetailListLink
               getData={noticeList}
-              url={`/company/${companyDetailInfo.rcid}/notice`}
+              url={`/company/${getIid.rcid}/notice`}
               title="공지사항"
             />
           )}
-          {companyDetailInfo && (
+          {getIid && (
             <PieceDetailListLink
               getData={reviewList}
-              url={`/company/${companyDetailInfo.rcid}/review`}
+              url={`/company/${getIid.rcid}/review`}
               title="리뷰"
             />
           )}
