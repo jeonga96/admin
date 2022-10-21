@@ -37,7 +37,7 @@ export default function SetCompanyDetail() {
   } = useForm();
 
   // 서버에서 titleImg, imgs의 iid를 받아오기 위해 사용
-  const [getIid, setGetIid] = useState([]);
+  const [getedData, setGetedData] = useState([]);
   // titleImg:대표 이미지저장 및 표시, imgs:상세 이미지저장 및 표시
   // imgsIid:서버에 이미지를 보낼 때는, iid값만 필요
   const [titleImg, setTitleImg] = useState(null);
@@ -90,13 +90,16 @@ export default function SetCompanyDetail() {
     //   .catch((res) => console.log(res));
 
     // 상세 회사정보 불러오기 기존 값이 없다면 새로운 회원이다. 새로 작성함
+
     servicesPostData(urlGetCompanyDetail, {
       rcid: cid,
     })
       .then((res) => {
         if (res.status === "success") {
           // 값이 있다면 저장한 후 getDataFinish 값을 변경
-          setGetIid(res.data);
+          setGetedData(res.data);
+          mapcoor.current.longitude = res.data.longitude;
+          mapcoor.current.latitude = res.data.latitude;
           setValue("_name", res.data.name || "");
           setValue("_comment", res.data.comment || "");
           setValue("_location", res.data.location || "");
@@ -175,7 +178,7 @@ export default function SetCompanyDetail() {
 
   function UserDetailInfoSubmit(e) {
     // companyDetailInfo.address가 입력되어 있으면 위도경도 구하는 함수 실행(내부에 addUserEvent이벤트 실행 코드 있음)
-    getValues("_address") ? callMapcoor() : addUserEvent();
+    !!getValues("_address") ? callMapcoor() : addUserEvent();
   }
 
   return (
@@ -634,7 +637,7 @@ export default function SetCompanyDetail() {
           <SetImage
             img={titleImg}
             setImg={setTitleImg}
-            getData={getIid}
+            getData={getedData}
             id="titleImg"
             title="대표 이미지"
             getDataFinish={getDataFinish.current}
@@ -645,7 +648,7 @@ export default function SetCompanyDetail() {
             setImgs={setImgs}
             id="imgs"
             title="상세 이미지"
-            getData={getIid}
+            getData={getedData}
             getDataFinish={getDataFinish.current}
           />
 
@@ -714,17 +717,17 @@ export default function SetCompanyDetail() {
 
       <div className="paddingBox commonBox">
         <ul className="detailContentsList detailContentCenter">
-          {getIid && (
+          {getedData && (
             <PieceDetailListLink
               getData={noticeList}
-              url={`/company/${getIid.rcid}/notice`}
+              url={`/company/${getedData.rcid}/notice`}
               title="공지사항"
             />
           )}
-          {getIid && (
+          {getedData && (
             <PieceDetailListLink
               getData={reviewList}
-              url={`/company/${getIid.rcid}/review`}
+              url={`/company/${getedData.rcid}/review`}
               title="리뷰"
             />
           )}

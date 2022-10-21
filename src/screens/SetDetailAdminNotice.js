@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
+import { ErrorMessage } from "@hookform/error-message";
 
 import { urlSetContent, urlGetContent } from "../Services/string";
 import { servicesPostData } from "../Services/importData";
@@ -13,15 +14,18 @@ export default function SetDetailAdminNotice() {
   const { contid } = useParams();
 
   // react-hook-form 라이브러리
-  const { handleSubmit, register } = useForm();
+  const {
+    handleSubmit,
+    register,
+    setValue,
+    getValues,
+    formState: { isSubmitting, errors },
+  } = useForm();
 
   const [imgs, setImgs] = useState([]);
   const imgsIid = [];
   const getDataFinish = useRef(false);
-  const [noticeDetail, setNoticeDetail] = useState({
-    contentString: "",
-    contentDetail: "",
-  });
+  const [noticeDetail, setNoticeDetail] = useState({});
 
   useEffect(() => {
     if (!!contid) {
@@ -31,6 +35,8 @@ export default function SetDetailAdminNotice() {
         .then((res) => {
           if (res.status === "success") {
             setNoticeDetail(res.data);
+            setValue("_contentString", res.data.contentString || "");
+            setValue("_contentDetail", res.data.contentDetail || "");
             getDataFinish.current = true;
           } else if (res.data === "fail") {
             console.log("기존에 입력된 데이터가 없습니다.");
@@ -40,10 +46,6 @@ export default function SetDetailAdminNotice() {
     }
   }, []);
 
-  function onChange(e) {
-    setNoticeDetail({ ...noticeDetail, [e.target.id]: e.target.value });
-  }
-
   function AddUserSubmit(e) {
     serviesGetImgsIid(imgsIid, imgs);
     servicesPostData(
@@ -52,14 +54,14 @@ export default function SetDetailAdminNotice() {
         ? {
             contid: contid,
             category: "notice",
-            contentString: noticeDetail.contentString,
-            contentDetail: noticeDetail.contentDetail,
+            contentString: getValues("_contentString"),
+            contentDetail: getValues("_contentDetail"),
             imgString: setImgs ? imgsIid.toString() : "",
           }
         : {
             category: "notice",
-            contentString: noticeDetail.contentString,
-            contentDetail: noticeDetail.contentDetail,
+            contentString: getValues("_contentString"),
+            contentDetail: getValues("_contentDetail"),
             imgString: setImgs ? imgsIid.toString() : "",
           }
     )
@@ -81,7 +83,7 @@ export default function SetDetailAdminNotice() {
       <div className="commonBox">
         <form className="formLayout" onSubmit={handleSubmit(AddUserSubmit)}>
           <ul className="tableTopWrap">
-            <LayoutTopButton text="완료" />
+            <LayoutTopButton text="완료" disabled={isSubmitting} />
           </ul>
           <div className="formContentWrap">
             <label htmlFor="title" className="blockLabel">
@@ -92,9 +94,8 @@ export default function SetDetailAdminNotice() {
               id="contentString"
               name="_contentString"
               placeholder="제목을 입력해 주세요."
-              value={noticeDetail.contentString || ""}
               {...register("_contentString", {
-                onChange: onChange,
+                required: "입력되지 않았습니다.",
                 minLength: {
                   value: 2,
                   message: "2자 이상의 글자만 사용가능합니다.",
@@ -102,6 +103,13 @@ export default function SetDetailAdminNotice() {
               })}
             />
           </div>
+          <ErrorMessage
+            errors={errors}
+            name="_contentString"
+            render={({ message }) => (
+              <span className="errorMessageWrap">{message}</span>
+            )}
+          />
 
           <SetImage
             imgs={imgs}
@@ -120,16 +128,22 @@ export default function SetDetailAdminNotice() {
               id="contentDetail"
               name="_contentDetail"
               placeholder="내용을 입력해 주세요."
-              value={noticeDetail.contentDetail || ""}
               {...register("_contentDetail", {
-                onChange: onChange,
+                equired: "입력되지 않았습니다.",
                 minLength: {
-                  value: 2,
-                  message: "2자 이상의 글자만 사용가능합니다.",
+                  value: 10,
+                  message: "10자 이상의 글자만 사용가능합니다.",
                 },
               })}
             />
           </div>
+          <ErrorMessage
+            errors={errors}
+            name="_contentDetail"
+            render={({ message }) => (
+              <span className="errorMessageWrap">{message}</span>
+            )}
+          />
         </form>
       </div>
     </>

@@ -11,7 +11,7 @@ export default function DetailAdminNotice() {
   const [notice, setNotice] = useState("");
   const [images, setImages] = useState([]);
   const { contid } = useParams();
-
+  console.log(notice);
   // 해당 공지사항 번호에 맞는 데이터를 가져온다.
   useEffect(() => {
     servicesPostData(urlGetContent, {
