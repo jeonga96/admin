@@ -21,11 +21,14 @@ export default function ListUser() {
       setUserList(res.data);
       setListPage(res.page);
     });
-  }, [page.getPage]);
+  }, [page.activePage]);
 
   return (
     <>
-      <ComponentListUserSearch />
+      <ComponentListUserSearch
+        setUserList={setUserList}
+        setListPage={setListPage}
+      />
       <ul className="tableTopWrap">
         <LayoutTopButton url="/adduser" text="회원 추가" />
       </ul>

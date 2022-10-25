@@ -13,21 +13,24 @@ export default function PageButton({ listPage, page, setPage }) {
       ? setPage({ getPage: page, activePage: page })
       : setPage({ getPage: page * 10 - 10, activePage: page });
   };
-  return (
-    <div>
-      {pageDataGet && (
-        <Pagination
-          activePage={page.activePage}
-          itemsCountPerPage={10}
-          totalItemsCount={listPage.totalElements}
-          pageRangeDisplayed={Math.ceil(listPage.totalElements / 10)}
-          firstPageText={<HiChevronDoubleLeft />}
-          lastPageText={<HiChevronDoubleRight />}
-          prevPageText={<HiChevronLeft />}
-          nextPageText={<HiChevronRight />}
-          onChange={handlePageChange}
-        />
-      )}
-    </div>
-  );
+  if (pageDataGet)
+    return (
+      <div>
+        {pageDataGet ? (
+          <Pagination
+            activePage={page.activePage}
+            itemsCountPerPage={10}
+            totalItemsCount={listPage.totalElements}
+            pageRangeDisplayed={Math.ceil(listPage.totalElements / 10)}
+            firstPageText={<HiChevronDoubleLeft />}
+            lastPageText={<HiChevronDoubleRight />}
+            prevPageText={<HiChevronLeft />}
+            nextPageText={<HiChevronRight />}
+            onChange={handlePageChange}
+          />
+        ) : (
+          <span>페이지 버튼 로딩중</span>
+        )}
+      </div>
+    );
 }
