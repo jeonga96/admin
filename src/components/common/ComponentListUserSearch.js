@@ -17,7 +17,7 @@ export default function ComponentListUserSearch({ setUserList, setListPage }) {
   } = useForm({
     defaultValues: {
       _uid: "",
-      _id: "",
+      _userid: "",
       _name: "",
       _userrole: "ROLE_USER",
       _mobile: "",
@@ -63,12 +63,19 @@ export default function ComponentListUserSearch({ setUserList, setListPage }) {
     });
   }
 
-  console.log(userrole, useFlag);
   function onChangeHandle(e) {
-    setSearchData({
-      ...searchData,
-      [e.target.id]: e.target.value,
-    });
+    if (e.target.id === "createTime") {
+      const pickDate = new Date(e.target.value);
+      setSearchData({
+        ...searchData,
+        [e.target.id]: pickDate.toISOString().slice(0, 19),
+      });
+    } else {
+      setSearchData({
+        ...searchData,
+        [e.target.id]: e.target.value,
+      });
+    }
   }
 
   function onResetHandle(e) {
@@ -105,10 +112,10 @@ export default function ComponentListUserSearch({ setUserList, setListPage }) {
           <div>
             <input
               type="text"
-              id="id"
-              name="_id"
+              id="userid"
+              name="_userid"
               placeholder="아이디를 입력해 주세요."
-              {...register("_id", {
+              {...register("_userid", {
                 onChange: onChangeHandle,
               })}
             />
