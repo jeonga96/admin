@@ -140,7 +140,6 @@ export default function SetCompanyDetail() {
       .catch((res) => console.log(res));
   }, []);
 
-  console.log("d", regImgs);
   // form submit 이벤트
   const addUserEvent = () => {
     //서버에 imgs의 iid값만을 보내기 위해 실행하는 반복문 함수
@@ -175,7 +174,6 @@ export default function SetCompanyDetail() {
       .then((res) => {
         if (res.status === "success") {
           alert("완료되었습니다.");
-          console.log(res);
           // window.location.href = cid ? `/company` : "CompanyMyDetail";
           return;
         }
@@ -389,12 +387,8 @@ export default function SetCompanyDetail() {
               {...register("_name", {
                 required: "입력되지 않았습니다.",
                 maxLength: {
-                  value: 16,
-                  message: "16자 이하의 글자만 사용가능합니다.",
-                },
-                minLength: {
-                  value: 2,
-                  message: "2자 이상의 글자만 사용가능합니다.",
+                  value: 15,
+                  message: "15자 이하의 글자만 사용가능합니다.",
                 },
               })}
             />
@@ -559,10 +553,6 @@ export default function SetCompanyDetail() {
               placeholder="주소를 입력해 주세요."
               {...register("_address", {
                 required: "입력되지 않았습니다.",
-                maxLength: {
-                  value: 50,
-                  message: "50자 이하의 글자만 사용가능합니다.",
-                },
               })}
             />
           </div>
@@ -638,8 +628,8 @@ export default function SetCompanyDetail() {
               placeholder="사업자에 대한 짧은 소개글을 입력해 주세요."
               {...register("_comment", {
                 maxLength: {
-                  value: 300,
-                  message: "300자 이하의 글자만 사용가능합니다.",
+                  value: 20,
+                  message: "20자 이하의 글자만 사용가능합니다.",
                 },
               })}
             />
@@ -660,7 +650,7 @@ export default function SetCompanyDetail() {
               type="text"
               id="ceogreet"
               name="_ceogreet"
-              placeholder="대표자의 한줄 인사말을 입력해 주세요."
+              placeholder="인사말을 입력해 주세요."
               {...register("_ceogreet", {
                 maxLength: {
                   value: 50,
@@ -731,8 +721,8 @@ export default function SetCompanyDetail() {
               placeholder="사업자 소개글을 입력해 주세요."
               {...register("_offer", {
                 maxLength: {
-                  value: 500,
-                  message: "500자 이하의 글자만 사용가능합니다.",
+                  value: 100,
+                  message: "100자 이하의 글자만 사용가능합니다.",
                 },
               })}
             />

@@ -34,8 +34,6 @@ export default function ImageSet({
 
   // 첫 렌더링을 방지하고, 기존 입력된 이미지가 있다면 서버에서 이미지를 가져온다.
   useDidMountEffect(() => {
-    console.log("getData", getData);
-
     if (getData.titleImg) {
       servicesPostData(urlGetImages, {
         imgs: getData.titleImg,
@@ -84,6 +82,9 @@ export default function ImageSet({
         fnSetRegImgs(res.data);
       } else {
         fnSetImgs([...imgs]);
+        if (imgs.length + res.data.length > 25) {
+          return alert("상세 이미지는 최대 25개까지 입력하실 수 있습니다.");
+        }
         for (let i = 0; i < res.data.length; i++) {
           fnSetImgs((prev) => [res.data[i], ...prev]);
         }
