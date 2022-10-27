@@ -32,6 +32,7 @@ export default function SetCompanyDetail() {
     handleSubmit,
     register,
     setValue,
+    watch,
     getValues,
     formState: { isSubmitting, errors },
   } = useForm();
@@ -78,6 +79,9 @@ export default function SetCompanyDetail() {
     geocoder.addressSearch(getValues("_address"), callback);
   };
 
+  // const nameVar = res.data.vidlinkurl.split(",");
+  console.log(`${watch("_vidlinkurl1")},${watch("_vidlinkurl2")}`);
+
   // 현재 페이지가 렌더링되자마자 기존에 입력된 값의 여부를 확인한다.
   useEffect(() => {
     // 기본 회사정보 불러오기
@@ -102,6 +106,10 @@ export default function SetCompanyDetail() {
           mapcoor.current.longitude = res.data.longitude;
           mapcoor.current.latitude = res.data.latitude;
 
+          setDetailUseFlag(res.data.useFlag || "1");
+          setStatus(res.data.status || "2");
+          SetGonsaType(res.data.gongsaType || "norm");
+
           setValue("_name", res.data.name || "");
           setValue("_comment", res.data.comment || "");
           setValue("_location", res.data.location || "");
@@ -117,10 +125,6 @@ export default function SetCompanyDetail() {
           setValue("_extnum", res.data.extnum || "");
           setValue("_tags", res.data.tags || "");
 
-          setDetailUseFlag(res.data.useFlag || "1");
-          setStatus(res.data.status || "2");
-          SetGonsaType(res.data.gongsaType || "norm");
-
           // 로그인 시 로컬스토리지에 저장한 전체 키워드 가져오기
           const allKeywordData = JSON.parse(servicesGetStorage(ALLKEYWORD));
           // 이미 입력된 키워드 값이 있다면 가져온 keywords 와 allKeywordData의 keyword의 value를 비교하여 keyword 객체 가져오기
@@ -130,6 +134,14 @@ export default function SetCompanyDetail() {
             res.data.keywords,
             allKeywordData
           );
+
+          // 외부 동영상 링크
+          if (res.data.vidlinkurl) {
+            const nameVar = res.data.vidlinkurl.split(",");
+            setValue("_vidlinkurl1", nameVar[0] || "");
+            setValue("_vidlinkurl2", nameVar[1] || "");
+          }
+
           serviesPostDataSettingRcid(urlCompanyNoticeList, cid, setNoticeList);
           serviesPostDataSettingRcid(urlReviewList, cid, setReviewList);
           getDataFinish.current = true;
@@ -167,6 +179,8 @@ export default function SetCompanyDetail() {
       extnum: getValues("_extnum"),
       keywords: keywordValue.toString() || "",
       tags: getValues("_tags"),
+      vidlinkurl:
+        `${getValues("_vidlinkurl1")},${getValues("_vidlinkurl2")}` || "",
       useFlag: detailUseFlag,
       gongsaType: gongsaType,
       status: status,
@@ -770,6 +784,26 @@ export default function SetCompanyDetail() {
               <span className="errorMessageWrap">{message}</span>
             )}
           />
+
+          <div className="formContentWrap">
+            <label className="blockLabel">동영상 링크</label>
+            <div>
+              <input
+                type="text"
+                id="vidlinkurl1"
+                name="_vidlinkurl1"
+                placeholder="외부 동영상 링크를 입력해 주세요."
+                {...register("_vidlinkurl1")}
+              />
+              <input
+                type="text"
+                id="vidlinkurl2"
+                name="_vidlinkurl2"
+                placeholder="외부 동영상 링크를 입력해 주세요."
+                {...register("_vidlinkurl2")}
+              />
+            </div>
+          </div>
         </form>
       </div>
 
