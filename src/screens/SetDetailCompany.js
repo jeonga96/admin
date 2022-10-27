@@ -43,6 +43,8 @@ export default function SetCompanyDetail() {
   const [titleImg, setTitleImg] = useState(null);
   const [imgs, setImgs] = useState([]);
   const imgsIid = [];
+  // 사업자 등록증 이미지
+  const [regImgs, setRegImgs] = useState(null);
   // useFlag radio
   const [detailUseFlag, setDetailUseFlag] = useState(1);
   // status radio
@@ -90,7 +92,6 @@ export default function SetCompanyDetail() {
     //   .catch((res) => console.log(res));
 
     // 상세 회사정보 불러오기 기존 값이 없다면 새로운 회원이다. 새로 작성함
-
     servicesPostData(urlGetCompanyDetail, {
       rcid: cid,
     })
@@ -100,6 +101,7 @@ export default function SetCompanyDetail() {
           setGetedData(res.data);
           mapcoor.current.longitude = res.data.longitude;
           mapcoor.current.latitude = res.data.latitude;
+
           setValue("_name", res.data.name || "");
           setValue("_comment", res.data.comment || "");
           setValue("_location", res.data.location || "");
@@ -107,6 +109,7 @@ export default function SetCompanyDetail() {
           setValue("_registration", res.data.registration || "");
           setValue("_workTime", res.data.workTime || "");
           setValue("_offer", res.data.offer || "");
+          setValue("_ceogreet", res.data.ceogreet || "");
           setValue("_telnum", res.data.telnum || "");
           setValue("_mobilenum", res.data.mobilenum || "");
           setValue("_email", res.data.email || "");
@@ -117,6 +120,7 @@ export default function SetCompanyDetail() {
           setDetailUseFlag(res.data.useFlag || "1");
           setStatus(res.data.status || "2");
           SetGonsaType(res.data.gongsaType || "norm");
+
           // 로그인 시 로컬스토리지에 저장한 전체 키워드 가져오기
           const allKeywordData = JSON.parse(servicesGetStorage(ALLKEYWORD));
           // 이미 입력된 키워드 값이 있다면 가져온 keywords 와 allKeywordData의 keyword의 value를 비교하여 keyword 객체 가져오기
@@ -136,6 +140,7 @@ export default function SetCompanyDetail() {
       .catch((res) => console.log(res));
   }, []);
 
+  console.log("d", regImgs);
   // form submit 이벤트
   const addUserEvent = () => {
     //서버에 imgs의 iid값만을 보내기 위해 실행하는 반복문 함수
@@ -152,12 +157,14 @@ export default function SetCompanyDetail() {
       workTime: getValues("_workTime"),
       offer: getValues("_offer"),
       titleImg: titleImg ? titleImg[0].iid : "",
+      regImgs: regImgs ? regImgs[0].iid : "",
       imgs: setImgs ? imgsIid.toString() : "",
       longitude: mapcoor.current.longitude,
       latitude: mapcoor.current.latitude,
       telnum: getValues("_telnum"),
       mobilenum: getValues("_mobilenum"),
       email: getValues("_email"),
+      ceogreet: getValues("_ceogreet"),
       extnum: getValues("_extnum"),
       keywords: keywordValue.toString() || "",
       tags: getValues("_tags"),
@@ -168,15 +175,15 @@ export default function SetCompanyDetail() {
       .then((res) => {
         if (res.status === "success") {
           alert("완료되었습니다.");
-          window.location.href = cid ? `/company` : "CompanyMyDetail";
-          console.log(res.data);
+          console.log(res);
+          // window.location.href = cid ? `/company` : "CompanyMyDetail";
           return;
         }
       })
       .catch((error) => console.log("실패", error.response));
   };
 
-  function UserDetailInfoSubmit(e) {
+  function UserDetailInfoSubmit() {
     // companyDetailInfo.address가 입력되어 있으면 위도경도 구하는 함수 실행(내부에 addUserEvent이벤트 실행 코드 있음)
     !!getValues("_address") ? callMapcoor() : addUserEvent();
   }
@@ -400,6 +407,15 @@ export default function SetCompanyDetail() {
             )}
           />
 
+          <SetImage
+            regImgs={regImgs}
+            setRegImgs={setRegImgs}
+            getData={getedData}
+            id="regImgs"
+            title="사업자 등록증"
+            getDataFinish={getDataFinish.current}
+          />
+
           <div className="formContentWrap">
             <label htmlFor="registration" className=" blockLabel">
               사업자 등록 번호
@@ -558,6 +574,33 @@ export default function SetCompanyDetail() {
             )}
           />
 
+          {/* mapcoor = useRef({ longitude: "", latitude: "" }); */}
+          {mapcoor.current.longitude && (
+            <div className="formContentWrap">
+              <label htmlFor="address" className=" blockLabel">
+                좌표
+              </label>
+              <ul className="detailContent" style={{ display: "flex" }}>
+                <li>
+                  <span>위도</span>
+                  <input
+                    type="text"
+                    disabled
+                    value={mapcoor.current.longitude}
+                  />
+                </li>
+                <li>
+                  <span>경도</span>
+                  <input
+                    type="text"
+                    disabled
+                    value={mapcoor.current.latitude}
+                  />
+                </li>
+              </ul>
+            </div>
+          )}
+
           <div className="formContentWrap">
             <label htmlFor="email" className=" blockLabel">
               이메일
@@ -604,6 +647,31 @@ export default function SetCompanyDetail() {
           <ErrorMessage
             errors={errors}
             name="_comment"
+            render={({ message }) => (
+              <span className="errorMessageWrap">{message}</span>
+            )}
+          />
+
+          <div className="formContentWrap">
+            <label htmlFor="comment" className=" blockLabel">
+              대표인사말
+            </label>
+            <input
+              type="text"
+              id="ceogreet"
+              name="_ceogreet"
+              placeholder="대표자의 한줄 인사말을 입력해 주세요."
+              {...register("_ceogreet", {
+                maxLength: {
+                  value: 50,
+                  message: "50자 이하의 글자만 사용가능합니다.",
+                },
+              })}
+            />
+          </div>
+          <ErrorMessage
+            errors={errors}
+            name="_ceogreet"
             render={({ message }) => (
               <span className="errorMessageWrap">{message}</span>
             )}

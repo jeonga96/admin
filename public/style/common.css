@@ -655,6 +655,7 @@ button {
   background-color: var(--color-gray);
   font-size: var(--font-size-small);
 }
+
 .errorMessageWrap {
   display: block;
   width: 100%;
@@ -790,13 +791,28 @@ button {
     justify-content: left;
   }
   .formContentWrap label,
-  .detailTitle {
+  .formContentWrap .detailTitle {
     width: 30%;
   }
   .formContentWrap input,
-  .detailContent {
-    display: inline;
+  .formContentWrap .detailContent {
+    display: inline-block;
     width: 100%;
+  }
+  .detailContent li {
+    width: auto;
+    height: auto;
+  }
+  .detailContent span {
+    display: inline-block;
+    width: 50px;
+    height: 100%;
+  }
+  .detailContent input {
+    display: inline-block;
+    width: auto;
+    height: 100%;
+    margin-top: 0;
   }
 
   /* 다른 입력창이 입력될 때를 기다리지 않고 입력된 값을 바로 보낼 땐 formContentWrapWithButton로 감싸준다. */

@@ -10,11 +10,13 @@ import ServicesImageOnClick from "./ServicesImageOnClick";
 export default function ImageSet({
   img,
   setImg,
-  getData,
+  regImgs,
+  setRegImgs,
   imgs,
   setImgs,
   id,
   title,
+  getData,
   getDataFinish,
 }) {
   // 대표이미지와 상세이미지의 이미지를 모두 사용하기 위해 아래와 같이 작성
@@ -26,9 +28,14 @@ export default function ImageSet({
   const fnSetImgs = (res) => {
     setImgs && setImgs(res);
   };
+  const fnSetRegImgs = (res) => {
+    setRegImgs && setRegImgs(res);
+  };
 
   // 첫 렌더링을 방지하고, 기존 입력된 이미지가 있다면 서버에서 이미지를 가져온다.
   useDidMountEffect(() => {
+    console.log("getData", getData);
+
     if (getData.titleImg) {
       servicesPostData(urlGetImages, {
         imgs: getData.titleImg,
@@ -36,6 +43,15 @@ export default function ImageSet({
         fnSetImg(res.data);
       });
     }
+    if (getData.regImgs) {
+      servicesPostData(urlGetImages, {
+        imgs: getData.regImgs,
+      }).then((res) => {
+        fnSetRegImgs(res.data);
+        console.log("regImgs", regImgs);
+      });
+    }
+
     if (getData.imgs || getData.imgString) {
       servicesPostData(urlGetImages, {
         imgs: getData.imgs || getData.imgString,
@@ -50,7 +66,7 @@ export default function ImageSet({
     event.preventDefault();
     const files = event.target.files;
     const formData = new FormData();
-    if (event.target.id === "titleImg") {
+    if (event.target.id === "titleImg" || event.target.id === "regImgs") {
       console.log("titleUpload click-->", files[0]);
       formData.append("Imgs", files[0]);
     } else {
@@ -64,6 +80,8 @@ export default function ImageSet({
     servicesPostDataForm(urlUpImages, formData).then((res) => {
       if (event.target.id === "titleImg") {
         fnSetImg(res.data);
+      } else if (event.target.id === "regImgs") {
+        fnSetRegImgs(res.data);
       } else {
         fnSetImgs([...imgs]);
         for (let i = 0; i < res.data.length; i++) {
@@ -77,6 +95,8 @@ export default function ImageSet({
   function onRemove(iid) {
     if (id === "titleImg") {
       fnSetImg(img.filter((it) => it.iid !== iid));
+    } else if (id === "regImgs") {
+      fnSetRegImgs(regImgs.filter((it) => it.iid !== iid));
     } else {
       fnSetImgs(imgs.filter((it) => it.iid !== iid));
     }
@@ -101,7 +121,7 @@ export default function ImageSet({
         />
       </div>
       <div className="imgsThumbnail">
-        {img !== null && id === "titleImg" ? (
+        {img !== null && img !== undefined && id === "titleImg" ? (
           <ServicesImageOnClick
             getData={img}
             url={img[0] && img[0].storagePath}
@@ -110,7 +130,18 @@ export default function ImageSet({
             onRemove={onRemove}
           />
         ) : null}
-        {imgs !== null && id === "imgs"
+
+        {regImgs !== null && regImgs !== undefined && id === "regImgs" ? (
+          <ServicesImageOnClick
+            getData={regImgs}
+            url={regImgs[0] && regImgs[0].storagePath}
+            text="사업자 등록증 이미지"
+            iid={regImgs[0] && regImgs[0].iid}
+            onRemove={onRemove}
+          />
+        ) : null}
+
+        {imgs !== null && imgs !== undefined && id === "imgs"
           ? !!imgs &&
             imgs.map((item) => (
               <ServicesImageOnClick

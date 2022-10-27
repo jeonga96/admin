@@ -12,7 +12,7 @@ export function useDidMountEffect(func, deps) {
 }
 
 export function useGetImage(setImage, companyDetail) {
-  const reqImgs = useRef({ imgImg: "", totalImg: "" });
+  const reqImgs = useRef({ imgImg: "", totalImg: "", regimgs: "" });
 
   useEffect(() => {
     if (companyDetail.titleImg && companyDetail.imgs) {

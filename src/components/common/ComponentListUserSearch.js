@@ -9,28 +9,17 @@ export default function ComponentListUserSearch({ setUserList, setListPage }) {
   // react-hook-form 라이브러리
   const {
     register,
-    setValue,
-    getValues,
     reset,
     handleSubmit,
     formState: { errors },
-  } = useForm({
-    defaultValues: {
-      _uid: "",
-      _userid: "",
-      _name: "",
-      _userrole: "ROLE_USER",
-      _mobile: "",
-      _createTime: "",
-      _userUseFlag: "1",
-    },
-  });
+  } = useForm({});
 
   const [searchData, setSearchData] = useState({});
   const [userrole, setUserrole] = useState("ROLE_USER");
   const [useFlag, setUseFlag] = useState("1");
 
-  console.log("searchData", searchData);
+  // 상위 컴포넌트에게 전달받은 useState의 set 함수
+  // setUserList가 set으로 전달받은 후 사용하기 위해 && 사용
   const userList = (res) => {
     setUserList && setUserList(res);
   };
@@ -38,6 +27,7 @@ export default function ComponentListUserSearch({ setUserList, setListPage }) {
     setListPage && setListPage(res);
   };
 
+  // submit 이벤트
   function SearchSubmit() {
     // input에 입력된 값을 업애도 useState에 담긴 키가 사라지지 않아, 해당 칸이 비어있으면 키를 제거
     const searchDataObj = Object.entries(searchData);
@@ -51,7 +41,6 @@ export default function ComponentListUserSearch({ setUserList, setListPage }) {
       userrole: userrole,
       ...searchDataReq,
     }).then((res) => {
-      console.log("d", res);
       if (res.status === "fail") {
         alert("검색하신 데이터가 없습니다.");
       }
@@ -59,18 +48,21 @@ export default function ComponentListUserSearch({ setUserList, setListPage }) {
         userList(res.data);
         listPage(res.page);
       }
-      // reset();
     });
   }
 
+  // 입력 이벤트
   function onChangeHandle(e) {
+    // input Type = "date"
     if (e.target.id === "createTime") {
+      // 날짜 포맷에 맞게 전송하기 위해 처리
       const pickDate = new Date(e.target.value);
       setSearchData({
         ...searchData,
         [e.target.id]: pickDate.toISOString().slice(0, 19),
       });
     } else {
+      // input Type = "date" 외의 나머지 코드 (text etc.)
       setSearchData({
         ...searchData,
         [e.target.id]: e.target.value,
@@ -78,6 +70,7 @@ export default function ComponentListUserSearch({ setUserList, setListPage }) {
     }
   }
 
+  // 초기화 이벤트
   function onResetHandle(e) {
     reset();
     setSearchData({});
