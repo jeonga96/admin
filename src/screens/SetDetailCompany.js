@@ -23,6 +23,7 @@ import LayoutTopButton from "../components/common/LayoutTopButton";
 import SetAllKeyWord from "../components/common/ComponentSetAllKeyWord";
 import ComponentSetCompany from "../components/common/ComponentSetCompany";
 import PieceDetailListLink from "../components/common/PieceDetailListLink";
+import PieceRegisterSearchPopUp from "../components/common/PieceRegisterSearchPopUp";
 
 export default function SetCompanyDetail() {
   const { cid } = useParams();
@@ -32,7 +33,6 @@ export default function SetCompanyDetail() {
     handleSubmit,
     register,
     setValue,
-    watch,
     getValues,
     formState: { isSubmitting, errors },
   } = useForm();
@@ -54,33 +54,16 @@ export default function SetCompanyDetail() {
   const [gongsaType, SetGonsaType] = useState("norm");
   // getDataFinish:기존에 입력된 값이 있어 값을 불러왔다면 true로 변경,
   const getDataFinish = useRef(false);
-  // mapcoor:위도 경도 저장,
-  const mapcoor = useRef({ longitude: "", latitude: "" });
+  // address:신주소,  oldaddress:구주소,  zipcode:우편번호,  latitude:위도,  longitude:경도
+  const [multilAddress, setMultilAddress] = useState({});
+  // const mapcoor = useRef({ longitude: "", latitude: "" });
   // 선택된 키워드 저장되는 state
   const [companyDetailKeyword, setCompanyDetailKeyword] = useState([]);
   // keywordValue:서버에 키워드를 보낼 때 keyword의 value만 필요
   const keywordValue = [];
-
   // 하단 링크 이동 될 사업자 공지사항, 사업자 리뷰
   const [noticeList, setNoticeList] = useState([]);
   const [reviewList, setReviewList] = useState([]);
-
-  // 카카오 API, 주소를 위도 경도로 변환
-  const callMapcoor = () => {
-    var geocoder = new window.kakao.maps.services.Geocoder();
-    var callback = function (result, status) {
-      if (status === window.kakao.maps.services.Status.OK) {
-        mapcoor.current.longitude = Math.floor(result[0].x * 100000);
-        mapcoor.current.latitude = Math.floor(result[0].y * 100000);
-        console.log("kako map API 이상없음!", mapcoor.current);
-      }
-      addUserEvent();
-    };
-    geocoder.addressSearch(getValues("_address"), callback);
-  };
-
-  // const nameVar = res.data.vidlinkurl.split(",");
-  console.log(`${watch("_vidlinkurl1")},${watch("_vidlinkurl2")}`);
 
   // 현재 페이지가 렌더링되자마자 기존에 입력된 값의 여부를 확인한다.
   useEffect(() => {
@@ -103,8 +86,6 @@ export default function SetCompanyDetail() {
         if (res.status === "success") {
           // 값이 있다면 저장한 후 getDataFinish 값을 변경
           setGetedData(res.data);
-          mapcoor.current.longitude = res.data.longitude;
-          mapcoor.current.latitude = res.data.latitude;
 
           setDetailUseFlag(res.data.useFlag || "1");
           setStatus(res.data.status || "2");
@@ -113,7 +94,6 @@ export default function SetCompanyDetail() {
           setValue("_name", res.data.name || "");
           setValue("_comment", res.data.comment || "");
           setValue("_location", res.data.location || "");
-          setValue("_address", res.data.address || "");
           setValue("_registration", res.data.registration || "");
           setValue("_workTime", res.data.workTime || "");
           setValue("_offer", res.data.offer || "");
@@ -163,7 +143,7 @@ export default function SetCompanyDetail() {
   }, []);
 
   // form submit 이벤트
-  const addUserEvent = () => {
+  function UserDetailInfoSubmit() {
     //서버에 imgs의 iid값만을 보내기 위해 실행하는 반복문 함수
     serviesGetImgsIid(imgsIid, imgs);
     // 서버에 keywords의 keyword value만을 보내기 위해 실행하는 함수
@@ -173,15 +153,17 @@ export default function SetCompanyDetail() {
       name: getValues("_name"),
       comment: getValues("_comment"),
       location: getValues("_location"),
-      address: getValues("_address"),
       registration: getValues("_registration"),
+      address: multilAddress.address,
+      oldaddress: multilAddress.oldaddress,
+      zipcode: multilAddress.zipcode,
       workTime: getValues("_workTime"),
       offer: getValues("_offer"),
       titleImg: titleImg ? titleImg[0].iid : "",
       regImgs: regImgs ? regImgs[0].iid : "",
       imgs: setImgs ? imgsIid.toString() : "",
-      longitude: mapcoor.current.longitude,
-      latitude: mapcoor.current.latitude,
+      longitude: multilAddress.longitude,
+      latitude: multilAddress.latitude,
       telnum: getValues("_telnum"),
       mobilenum: getValues("_mobilenum"),
       email: getValues("_email"),
@@ -202,16 +184,10 @@ export default function SetCompanyDetail() {
       .then((res) => {
         if (res.status === "success") {
           alert("완료되었습니다.");
-          // window.location.href = cid ? `/company` : "CompanyMyDetail";
           return;
         }
       })
       .catch((error) => console.log("실패", error.response));
-  };
-
-  function UserDetailInfoSubmit() {
-    // companyDetailInfo.address가 입력되어 있으면 위도경도 구하는 함수 실행(내부에 addUserEvent이벤트 실행 코드 있음)
-    !!getValues("_address") ? callMapcoor() : addUserEvent();
   }
 
   return (
@@ -570,54 +546,16 @@ export default function SetCompanyDetail() {
             )}
           />
 
-          <div className="formContentWrap">
-            <label htmlFor="address" className=" blockLabel">
-              주소
-            </label>
-            <input
-              type="text"
-              id="address"
-              name="_address"
-              placeholder="주소를 입력해 주세요."
-              {...register("_address", {
-                required: "입력되지 않았습니다.",
-              })}
-            />
-          </div>
-          <ErrorMessage
-            errors={errors}
-            name="_address"
-            render={({ message }) => (
-              <span className="errorMessageWrap">{message}</span>
-            )}
+          {/* <div className="formContentWrap"> */}
+          <label htmlFor="address" className=" blockLabel">
+            주소
+          </label>
+          <PieceRegisterSearchPopUp
+            setMultilAddress={setMultilAddress}
+            multilAddress={multilAddress}
+            getedData={getedData}
           />
-
-          {/* mapcoor = useRef({ longitude: "", latitude: "" }); */}
-          {mapcoor.current.longitude && (
-            <div className="formContentWrap">
-              <label htmlFor="address" className=" blockLabel">
-                좌표
-              </label>
-              <ul className="detailContent" style={{ display: "flex" }}>
-                <li>
-                  <span>위도</span>
-                  <input
-                    type="text"
-                    disabled
-                    value={mapcoor.current.longitude}
-                  />
-                </li>
-                <li>
-                  <span>경도</span>
-                  <input
-                    type="text"
-                    disabled
-                    value={mapcoor.current.latitude}
-                  />
-                </li>
-              </ul>
-            </div>
-          )}
+          {/* </div> */}
 
           <div className="formContentWrap">
             <label htmlFor="email" className=" blockLabel">
