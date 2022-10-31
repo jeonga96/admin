@@ -142,6 +142,16 @@ export default function SetCompanyDetail() {
             setValue("_vidlinkurl2", nameVar[1] || "");
           }
 
+          // 외부 링크
+          if (res.data.linkurl) {
+            const nameVar = res.data.linkurl.split(",");
+            setValue("_linkurl1", nameVar[0] || "");
+            setValue("_linkurl2", nameVar[1] || "");
+            setValue("_linkurl3", nameVar[2] || "");
+            setValue("_linkurl4", nameVar[3] || "");
+            setValue("_linkurl5", nameVar[4] || "");
+          }
+
           serviesPostDataSettingRcid(urlCompanyNoticeList, cid, setNoticeList);
           serviesPostDataSettingRcid(urlReviewList, cid, setReviewList);
           getDataFinish.current = true;
@@ -181,6 +191,10 @@ export default function SetCompanyDetail() {
       tags: getValues("_tags"),
       vidlinkurl:
         `${getValues("_vidlinkurl1")},${getValues("_vidlinkurl2")}` || "",
+      linkurl:
+        `${getValues("_linkurl1")},${getValues("_linkurl2")},${getValues(
+          "_linkurl3"
+        )},${getValues("_linkurl4")},${getValues("_linkurl5")},` || "",
       useFlag: detailUseFlag,
       gongsaType: gongsaType,
       status: status,
@@ -801,6 +815,47 @@ export default function SetCompanyDetail() {
                 name="_vidlinkurl2"
                 placeholder="외부 동영상 링크를 입력해 주세요."
                 {...register("_vidlinkurl2")}
+              />
+            </div>
+          </div>
+
+          <div className="formContentWrap">
+            <label className="blockLabel">외부 링크</label>
+            <div>
+              <input
+                type="text"
+                id="linkurl1"
+                name="_linkurl1"
+                placeholder="외부 링크를 입력해 주세요."
+                {...register("_linkurl1")}
+              />
+              <input
+                type="text"
+                id="linkurl2"
+                name="_linkurl2"
+                placeholder="외부 링크를 입력해 주세요."
+                {...register("_linkurl2")}
+              />
+              <input
+                type="text"
+                id="linkurl3"
+                name="_linkurl3"
+                placeholder="외부 링크를 입력해 주세요."
+                {...register("_linkurl3")}
+              />
+              <input
+                type="text"
+                id="linkurl4"
+                name="_linkurl4"
+                placeholder="외부 링크를 입력해 주세요."
+                {...register("_linkurl4")}
+              />
+              <input
+                type="text"
+                id="linkurl5"
+                name="_linkurl5"
+                placeholder="외부 링크를 입력해 주세요."
+                {...register("_linkurl5")}
               />
             </div>
           </div>
