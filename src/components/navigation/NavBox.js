@@ -1,13 +1,13 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { servicesGetData } from "../../Services/importData";
 import { navUrl } from "../../Services/string";
 import { useState, useEffect } from "react";
 
 import { GrClose } from "react-icons/gr";
-import NavInnerSub from "./NavInnerSub";
 
 export default function NavBox() {
+  const { pathname } = useLocation();
   const navChange = useSelector((state) => state.navState);
   const dispatch = useDispatch();
   const onClickBtn = () => {
@@ -39,24 +39,30 @@ export default function NavBox() {
           </i>
         </button>
       </div>
+
       <div className="navBottom">
         <h2 className="blind">카테고리 보기</h2>
-
         <ul>
           {data.map((item, key) => (
-            <li key={key}>
-              {item.url ? (
-                <Link className="link navInnerSub" to={item.url}>
-                  <div className="navPart">
-                    <div>
-                      <img src={item.icon} alt={item.name} />
-                    </div>
-                    <span>{item.name}</span>
-                  </div>
-                </Link>
-              ) : (
-                <NavInnerSub item={item} />
-              )}
+            <li key={key} className="navInner">
+              <div className="navHeaderPart">
+                <span>{item.name}</span>
+              </div>
+
+              <ul className="navContentPart">
+                {item.subNav.map((item, key) => (
+                  <li key={key}>
+                    <Link
+                      to={item.url}
+                      className={
+                        pathname === item.url ? "link focusNavLink" : "link"
+                      }
+                    >
+                      {item.subName}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
             </li>
           ))}
         </ul>

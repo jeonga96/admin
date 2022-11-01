@@ -57,8 +57,6 @@ export default function Postcode({
     open({ onComplete: handleComplete });
   };
 
-  console.log("address.zipcode ", multilAddress.zipcode);
-
   return (
     <>
       <input

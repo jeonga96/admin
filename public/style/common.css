@@ -1,13 +1,22 @@
 /*common --------------------------------------------------------------*/
 :root {
-  --color-black: #161514;
+  --color-black: #212121;
+  --color-bgblack: #757575;
+  --color-white: #fff;
+  --color-gray: #bdbdbd;
+  --color-bggray: #f6f5f4;
+  --color-primary: #3f51b5;
+  --color-lightprimary: #c5cae9;
+  --color-darkprimary: #303f9f;
+  --color-acceent: #ffc107;
+  /* --color-black: #161514;
   --color-bgblack: #636055;
   --color-white: #fff;
   --color-gray: #d6d0ce;
   --color-pointgray: #9d968f;
   --color-bggray: #f6f5f4;
   --color-primary: #62bfad;
-  --color-primary2: #ff8d8d;
+  --color-primary2: #ff8d8d; */
   --font-point: "NanumSquare", Pretendard, -apple-system, BlinkMacSystemFont,
     system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo",
     "Noto Sans KR", "Malgun Gothic", sans-serif;
@@ -21,7 +30,7 @@
   --styles-boxShadowDeep: 0 0.1875rem 0.6875rem rgb(0 0 0 / 17%);
 }
 i {
-  color: var(--color-pointGray);
+  color: var(--color-lightprimary);
 }
 
 #wrap {
@@ -303,9 +312,8 @@ button {
   top: 0;
   width: 16.875rem;
   height: 100%;
-  background-color: var(--color-white);
+  background-color: var(--color-primary);
   transition: all 500ms ease-in;
-  box-shadow: var(--styles-boxShadow);
 }
 
 @media screen and (min-width: 992px) and (max-width: 1199px) {
@@ -330,18 +338,14 @@ button {
 .navTop {
   width: auto;
   height: auto;
-  margin: 1.875rem;
-  padding: 0.875rem;
-}
-@media screen and (max-width: 767px) {
-  .navTop {
-    padding: 1.875rem;
-  }
+  padding: 1.875rem;
 }
 
 .navTop img {
-  width: 9rem;
+  display: block;
+  width: 10rem;
   height: auto;
+  margin: 0 auto;
 }
 
 .navTop button {
@@ -354,7 +358,7 @@ button {
 
 .navTop i {
   font-size: var(--font-size-big);
-  color: var(--color-pointgray);
+  color: var(--color-lightprimary);
 }
 
 @media screen and (min-width: 992px) {
@@ -363,112 +367,64 @@ button {
   }
 }
 
-/*title - navBottom*/
+/*title - navInner : 하위 메뉴가 열리는 nav button*/
 .navBottom {
   width: 100%;
-  height: 100%;
+  height: auto;
+  padding: 8px;
 }
-
 .navBottom ul {
   width: 100%;
-  height: auto;
-}
-.navBottom li {
-  width: 15.625rem;
-  height: auto;
-  min-height: 2.125rem;
-  margin-right: 1.25rem;
+  height: 100%;
+  background-color: var(--color-white);
+  padding: 4px;
 }
 
-@media screen and (min-width: 992px) and (max-width: 1199px) {
-  .navBottom li {
-    width: 100%;
-  }
-}
-
-/*title - navInner : 링크로 연결되는 nav button*/
 .navInner {
-  padding-right: 1.5625rem;
-  margin-top: 1.5625rem;
-  margin-left: 1.875rem;
-}
-
-/*title - navInner : 하위 메뉴가 열리는 nav button*/
-.navInnerSub {
   width: 100%;
   height: auto;
-  padding: 0;
-  padding-right: 1.5625rem;
-  margin-top: 1.5625rem;
-  margin-left: 1.875rem;
-  text-align: left;
+  margin-bottom: 0.625rem;
+}
+.navInner:last-child {
+  margin-bottom: 0;
 }
 
-.navSubList ul {
-  width: 11.25rem;
-  margin-left: 1.875rem;
-  padding-bottom: 0.3125rem;
+.navInner li:last-child {
+  border-bottom: none;
 }
-.navSubList li {
+
+.navHeaderPart {
   width: 100%;
   height: auto;
-  line-height: 2.5625rem;
-}
-.navSubList > div {
-  position: relative;
-}
-
-.navSubList > div:first-child:after,
-.navSubList > div:first-child::after {
-  display: block;
-  content: "";
-  position: absolute;
-  right: 1.25rem;
-  top: 0.625rem;
-  width: 0.4375rem;
-  height: 0.4375rem;
-  border-top: 0.0625rem solid var(--color-pointgray);
-  border-left: 0.0625rem solid var(--color-pointgray);
-  transform: rotate(135deg);
-  transition: all 300ms ease-in;
+  line-height: 30px;
+  background-color: var(--color-darkprimary);
+  padding-left: 5px;
 }
 
-.sub_show_btn {
-  width: 100%;
-  height: auto;
-}
-.sub_show_btn > div:first-child:after,
-.sub_show_btn > div:first-child::after {
-  transform: rotate(225deg);
-}
-
-.subLink {
-  text-decoration: none;
-  font-family: var(--font-point);
-  font-size: var(--font-size-small);
-}
-
-/*title - navPart - navInner를 이루는 조각*/
-.navPart {
-  width: 100%;
-  height: auto;
-}
-
-.navPart div {
-  display: inline-block;
-  width: 2.125rem;
-  height: 2.125rem;
-  padding-top: 0.625rem;
-}
-.navPart img {
-  width: 0.875rem;
-  height: 0.875rem;
-}
-.navPart span {
-  font-family: var(--font-point);
-  color: var(--color-black);
+.navHeaderPart span {
+  color: var(--color-white);
   font-size: var(--font-size-basic);
+  font-weight: 500;
+}
+.navContentPart {
+  width: 100%;
+  height: auto;
+}
+.navContentPart li {
+  width: 100%;
+  height: auto;
+  padding: 0 10px;
+  line-height: 28px;
+  border-bottom: 1px solid var(--color-bggray);
+}
+.navContentPart a {
+  text-decoration: none;
+  font-size: var(--font-size-small);
   font-weight: 400;
+}
+.navContentPart .focusNavLink {
+  font-weight: 500;
+  color: var(--color-darkprimary);
 }
 
 .loginWrap {
@@ -478,8 +434,6 @@ button {
   height: 100%;
   padding: 0 1rem;
 }
-
-/* 오류 화면 표시 */
 
 /*wide PC version*/
 
@@ -660,7 +614,7 @@ button {
   display: block;
   width: 100%;
   height: auto;
-  color: var(--color-primary2);
+  color: var(--color-acceent);
   text-align: right;
 }
 .infoMessageBox {
@@ -706,7 +660,7 @@ button {
   font-weight: 400;
   height: auto;
   font-size: var(--font-size-small);
-  color: var(--color-pointgray);
+  color: var(--color-lightprimary);
   margin-top: 0.125rem;
 }
 
@@ -769,7 +723,7 @@ button {
   width: 65px;
   height: 20px;
   background-color: var(--color-bggray);
-  border: 1px solid var(--color-pointgray);
+  border: 1px solid var(--color-lightprimary);
   border-radius: 5px;
   text-align: center;
   font-size: var(--font-size-small);
@@ -913,7 +867,7 @@ button {
   width: auto;
   height: auto;
   margin-right: 0.4rem;
-  color: var(--color-pointgray);
+  color: var(--color-lightprimary);
 }
 .detailTime > div > span {
   width: 9.375rem;
@@ -921,7 +875,7 @@ button {
   min-height: inherit;
   line-height: inherit;
   display: inline-block;
-  color: var(--color-pointgray);
+  color: var(--color-lightprimary);
 }
 .detailWidthContent {
   width: 100%;
@@ -1031,7 +985,7 @@ p {
   display: inline-block;
   width: auto;
   font-size: var(--font-size-small);
-  color: var(--color-pointgray);
+  color: var(--color-lightprimary);
   font-weight: 500;
   transition: color 300ms ease-in;
   padding: 0.25rem 0.625rem;
@@ -1047,7 +1001,7 @@ p {
 .detailContentImage span {
   display: block;
   font-weight: 500;
-  color: var(--color-pointgray);
+  color: var(--color-lightprimary);
 }
 .detailContentImage img {
   width: 100%;
@@ -1108,7 +1062,7 @@ p {
 /*테이블 내 세부 콘텐츠*/
 .commonTable i {
   display: inline-block;
-  color: var(--color-pointgray);
+  color: var(--color-lightprimary);
   margin-left: 0.625rem;
 }
 .commonTable .tableContentWrap {
@@ -1151,7 +1105,7 @@ ul.pagination li a {
 ul.pagination li svg {
   width: 50%;
   height: 50%;
-  color: var(--color-pointgray);
+  color: var(--color-lightprimary);
   margin-top: 0.375rem;
 }
 ul.pagination li a.active {
@@ -1162,7 +1116,7 @@ ul.pagination li a:hover {
 }
 .pagination .active {
   font-weight: 600;
-  color: var(--color-primary2);
+  color: var(--color-acceent);
 }
 
 /*button & Link--------------------------------------------------------------*/
@@ -1208,7 +1162,7 @@ ul.pagination li a:hover {
 .linkAnchorBg:hover,
 .linkAnchorBg:focus {
   text-decoration: none;
-  background-color: var(--color-primary2);
+  background-color: var(--color-acceent);
 }
 .tableButton {
   float: right;
@@ -1240,7 +1194,7 @@ ul.pagination li a:hover {
   border-radius: 0.3125rem;
 }
 .buttonLink:hover {
-  background-color: var(--color-pointgray);
+  background-color: var(--color-lightprimary);
   color: var(--color-white);
 }
 .bigButton {
@@ -1294,7 +1248,7 @@ ul.pagination li a:hover {
   color: var(--color-white);
 }
 .widthFullButton:focus {
-  background-color: var(--color-pointgray);
+  background-color: var(--color-lightprimary);
   color: var(--color-white);
   box-shadow: var(--styles-boxShadow);
 }
@@ -1452,7 +1406,7 @@ ul.pagination li a:hover {
   right: 0.625rem;
   width: auto;
   height: auto;
-  color: var(--color-pointgray);
+  color: var(--color-lightprimary);
 }
 
 .keywordSelectWrap {
