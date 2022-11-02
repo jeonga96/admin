@@ -38,14 +38,14 @@ export default function ListUser() {
           <table className="commonTable">
             <thead>
               <tr>
-                <th className="widthS">관리번호</th>
-                <th className="widthM">아이디</th>
-                <th className="widthS">이름</th>
-                <th className="widthS">회원권한</th>
-                <th className="widthM">핸드폰번호</th>
-                <th className="widthS">계약일</th>
-                <th className="widthS">상세정보</th>
-                <th className="widthS"></th>
+                <th style={{ width: "200px" }}>관리번호</th>
+                <th style={{ width: "200px" }}>아이디</th>
+                <th style={{ width: "150px" }}>이름</th>
+                <th style={{ width: "100px" }}>회원권한</th>
+                <th style={{ width: "200px" }}>핸드폰번호</th>
+                <th style={{ width: "200px" }}>계약일</th>
+                <th style={{ width: "100px" }}>상세정보</th>
+                <th style={{ width: "auto" }}></th>
               </tr>
             </thead>
             <tbody>
@@ -66,7 +66,7 @@ export default function ListUser() {
                       {item.useFlag ? (
                         <i>
                           {/* <BsCheck2 /> */}
-                          상세
+                          입력
                         </i>
                       ) : null}
                     </td>

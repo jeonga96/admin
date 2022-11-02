@@ -35,11 +35,16 @@ export default function ListCompany() {
           <table className="commonTable">
             <thead>
               <tr>
-                <th className="widthM">관리번호</th>
-                <th className="widthB">계약자</th>
-                <th className="widthM">계약일</th>
-                <th className="widthS">상세정보</th>
-                <th className="widthS"></th>
+                <th style={{ width: "300px" }}>관리번호</th>
+                <th style={{ width: "250px" }}>계약자</th>
+                <th style={{ width: "300px" }}>계약일</th>
+                <th style={{ width: "200px" }}>상세정보</th>
+                <th style={{ width: "auto" }}></th>
+                {/* <th style={{ width: "200px" }}>관리번호</th>
+                <th style={{ width: "150px" }}>계약자</th>
+                <th style={{ width: "300px" }}>계약일</th>
+                <th style={{ width: "100px" }}>상세정보</th>
+                <th style={{ width: "auto" }}></th> */}
               </tr>
             </thead>
             <tbody>

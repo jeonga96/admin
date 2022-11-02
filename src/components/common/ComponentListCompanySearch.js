@@ -114,13 +114,14 @@ export default function ComponentListCompanySearch() {
             <input type="date"></input>
           </div>
         </div>
-
-        <button type="reset" value="초기화">
-          초기화
-        </button>
-        <button type="submit" value="검색">
-          검색
-        </button>
+        <div className="listSearchButtonWrap">
+          <button type="reset" value="초기화">
+            초기화
+          </button>
+          <button type="submit" value="검색">
+            검색
+          </button>
+        </div>
       </form>
     </div>
   );
