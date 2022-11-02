@@ -135,6 +135,10 @@ input {
   box-sizing: border-box;
 }
 
+p {
+  white-space: nowrap;
+}
+
 input[type="text"],
 input[type="password"],
 input[type="tel"],
@@ -171,4 +175,56 @@ span {
   font-family: -apple-system, BlinkMacSystemFont, system-ui, Roboto,
     "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR",
     "Malgun Gothic", sans-serif;
+}
+
+/*common className --------------------------------------------------------------*/
+.blind_wrap a > span,
+.blind_wrap button > span,
+.blind {
+  display: block;
+  position: absolute;
+  z-index: -1;
+  clip: rect(0 0 0 0);
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+.blind_wrap a {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+}
+
+.none {
+  display: none;
+}
+
+.clearfix {
+  width: 100%;
+  height: auto;
+}
+
+.clearfix:after,
+.clearfix::after {
+  content: "";
+  display: block;
+  clear: both;
+  width: 100%;
+  height: 0;
+}
+
+.link,
+button {
+  display: block;
+  width: auto;
+  height: 100%;
+}
+.link:hover {
+  text-decoration: none;
+}
+.link:focus {
+  outline: none;
 }

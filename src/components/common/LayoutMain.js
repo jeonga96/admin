@@ -6,7 +6,7 @@ export default function LayoutMain({ nowTitle, component }) {
   return (
     <div id="wrap">
       <Nav />
-      <div id="WrapBox">
+      <div>
         <Header />
         <section className="containerWrap">
           <h2>{nowTitle}</h2>

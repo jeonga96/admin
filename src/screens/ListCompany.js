@@ -39,6 +39,7 @@ export default function ListCompany() {
                 <th className="widthB">계약자</th>
                 <th className="widthM">계약일</th>
                 <th className="widthS">상세정보</th>
+                <th className="widthS"></th>
               </tr>
             </thead>
             <tbody>
@@ -47,13 +48,7 @@ export default function ListCompany() {
                   <td>{item.cid}</td>
                   <td>{item.name}</td>
                   <td>{item.createTime && item.createTime.slice(0, 10)}</td>
-                  <td>
-                    {item.useFlag ? (
-                      <i>
-                        <BsCheck2 />
-                      </i>
-                    ) : null}
-                  </td>
+                  <td>{item.useFlag ? <i>입력</i> : null}</td>
                   <td className="tableButton">
                     <Link to={`${item.cid}`} className="Link">
                       상세

@@ -9,14 +9,6 @@
   --color-lightprimary: #c5cae9;
   --color-darkprimary: #303f9f;
   --color-acceent: #ffc107;
-  /* --color-black: #161514;
-  --color-bgblack: #636055;
-  --color-white: #fff;
-  --color-gray: #d6d0ce;
-  --color-pointgray: #9d968f;
-  --color-bggray: #f6f5f4;
-  --color-primary: #62bfad;
-  --color-primary2: #ff8d8d; */
   --font-point: "NanumSquare", Pretendard, -apple-system, BlinkMacSystemFont,
     system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo",
     "Noto Sans KR", "Malgun Gothic", sans-serif;
@@ -63,79 +55,13 @@ i {
   }
 }
 
-/*common className --------------------------------------------------------------*/
-.blind_wrap a > span,
-.blind_wrap button > span,
-.blind {
-  display: block;
-  position: absolute;
-  z-index: -1;
-  clip: rect(0 0 0 0);
-  width: 0;
-  height: 0;
-  overflow: hidden;
-}
-
-.blind_wrap a {
-  display: block;
-  width: 100%;
-  height: 100%;
-  background-repeat: no-repeat;
-  background-position: 50% 50%;
-}
-
-.none {
-  display: none;
-}
-
-.clearfix {
-  width: 100%;
-  height: auto;
-}
-
-.clearfix:after,
-.clearfix::after {
-  content: "";
-  display: block;
-  clear: both;
-  width: 100%;
-  height: 0;
-}
-
-.link,
-button {
-  display: block;
-  width: auto;
-  height: 100%;
-}
-.link:hover {
-  text-decoration: none;
-}
-.link:focus {
-  outline: none;
-}
-.commonBox {
-  background-color: var(--color-white);
-  padding: 1.25rem 0;
-  margin-top: 5px;
-}
-.commonBox:first-child {
-  padding-top: 0;
-}
-.commonBox:last-child {
-  margin-bottom: 0;
-}
-.commonBox h3 {
-  font-size: var(--font-size-title);
-}
-
 /*container --------------------------------------------------------------*/
 .containerWrap {
   position: relative;
   width: 100%;
   height: auto;
-  background-color: var(--color-bggray);
   padding: 1.25rem;
+  background-color: var(--color-bggray);
 }
 @media screen and (max-width: 992px) {
   .containerWrap {
@@ -145,35 +71,41 @@ button {
 .contentBox {
   width: 100%;
   max-width: 1280px;
+  min-width: 1120px;
   height: auto;
-}
-@media screen and (min-width: 1200px) {
-  .contentBox {
-    padding: 1rem;
-  }
 }
 
 /*title - content title wrap& title content*/
 .containerWrap h2 {
   width: auto;
-  height: auto;
-  font-family: var(--font-point);
+  height: 50px;
   font-size: var(--font-size-title);
-  line-height: 1.2;
-  margin-bottom: 0.5rem;
+  font-family: var(--font-point);
   font-weight: 700;
   color: var(--color-black);
 }
-.ContainertitleText {
-  width: auto;
+
+/* 컨텐츠 영역 --------------------------------------------------------------*/
+.commonBox {
+  width: 100%;
   height: auto;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-gray);
+  padding: 0.625rem;
+  margin-bottom: 0.25rem;
+}
+.commonBox:last-child {
+  margin-bottom: 0;
+}
+.commonBox h3 {
+  font-size: var(--font-size-title);
 }
 
 /*footer --------------------------------------------------------------*/
 .footer {
   width: 100%;
   height: 1.5rem;
-  background-color: var(--color-primary);
+  background-color: var(--color-bgblack);
 }
 .footer span {
   display: inline-block;
@@ -186,10 +118,10 @@ button {
 }
 
 /*header --------------------------------------------------------------*/
-/*title - basic*/
+
 .headerWrap {
   width: 100%;
-  height: 3rem;
+  height: 2rem;
 }
 @media screen and (max-width: 992px) {
   .headerWrap {
@@ -209,20 +141,23 @@ button {
     opacity: 0.8;
   }
 }
-@media screen and (min-width: 1200px) {
-  .headerWrap {
-    padding: 0 1.875rem;
-  }
-}
-@media screen and (max-width: 1199px) {
-  .headerWrap {
-    padding: 0 1.25rem;
-  }
-}
 
 .headerBox {
   width: 100%;
-  height: 3rem;
+  max-width: 1280px;
+  min-width: 1120px;
+  height: 100%;
+}
+.infoWrap {
+  display: flex;
+  justify-content: right;
+  width: 100%;
+  height: 100%;
+}
+.infoWrap button {
+  text-align: right;
+  width: 80px;
+  height: 100%;
 }
 
 /*title - menu open button*/
@@ -243,66 +178,6 @@ button {
   width: 100%;
   height: 100%;
   font-size: var(--font-size-big);
-}
-
-/*title - headerSearch*/
-.headerSearch {
-  float: left;
-  width: 19.375rem;
-  height: 100%;
-}
-@media screen and (min-width: 768px) and (max-width: 991px) {
-  .headerSearch {
-    width: 12.5rem;
-  }
-}
-@media screen and (max-width: 767px) {
-  .headerSearch {
-    display: none;
-  }
-}
-
-.headerSearch form {
-  display: flex;
-  width: 100%;
-  height: 100%;
-  border-radius: 3.125rem;
-  border: 0.0625rem solid var(--color-primary);
-  box-sizing: border-box;
-}
-
-.headerSearch button {
-  width: 0.875rem;
-  height: 100%;
-  padding: 0.0625rem 1.4375rem 0.0625rem 1.25rem;
-}
-
-.headerSearch input {
-  width: 15.225rem;
-  height: 100%;
-  border: none;
-  background-color: transparent;
-}
-@media screen and (min-width: 768px) and (max-width: 991px) {
-  .headerSearch input {
-    width: 8.25rem;
-  }
-}
-
-/* title - info*/
-.infoWrap {
-  float: right;
-  display: flex;
-  justify-content: space-between;
-  width: auto;
-  height: 100%;
-  padding: 0 0.75rem;
-}
-.infoWrap .Link {
-  width: auto;
-  padding: 0 0.75rem;
-  color: var(--color-black);
-  font-size: var(--font-size-small);
 }
 
 /*navigator --------------------------------------------------------------*/
@@ -334,7 +209,6 @@ button {
   left: 0;
 }
 
-/*title - navTop*/
 .navTop {
   width: auto;
   height: auto;
@@ -423,10 +297,11 @@ button {
   font-weight: 400;
 }
 .navContentPart .focusNavLink {
-  font-weight: 500;
+  font-weight: 700;
   color: var(--color-darkprimary);
 }
 
+/* 로그인 --------------------------------------------------------------*/
 .loginWrap {
   position: absolute;
   background-color: var(--color-primary);
@@ -434,8 +309,6 @@ button {
   height: 100%;
   padding: 0 1rem;
 }
-
-/*wide PC version*/
 
 .loginWrap .loginBox {
   position: absolute;
@@ -458,22 +331,44 @@ button {
     height: 30.25rem;
   }
 }
+.widthFullButton {
+  width: 100%;
+  height: 2.5rem;
+  border-radius: 0.3125rem;
+  transition: all 300ms ease-in;
+  color: var(--color-black);
+  background-color: var(--color-bggray);
+}
+.widthFullButton:hover {
+  background-color: var(--color-gray);
+}
+.widthFullButton:focus {
+  background-color: var(--color-darkprimary);
+  color: var(--color-white);
+  box-shadow: var(--styles-boxShadow);
+}
 
+/* 기본적인 form Wrap --------------------------------------------------------------*/
 .formLayout {
-  margin: 0 auto;
-  width: auto;
-  max-width: 62.5rem;
+  width: 100%;
   height: auto;
-  padding: 0 0.625rem;
 }
 .formLayout .smallSubmitButton {
   right: 0.625rem;
 }
+.formContentWrap {
+  width: 100%;
+  height: auto;
+  margin-bottom: 0.625rem;
+}
+
 .formLayout .blockLabel {
   display: block;
-  margin-top: 1rem;
-  font-weight: 500;
   height: auto;
+  min-height: 2rem;
+  font-size: var(--font-size-basic);
+  line-height: 2rem;
+  font-weight: 500;
   color: var(--color-black);
 }
 
@@ -482,12 +377,11 @@ button {
   height: 2rem;
   background-color: rgba(243, 244, 243, 0.3);
   border: 0.0625rem solid var(--color-bggray);
-  margin-top: 0.5rem;
 }
 .formLayout input:focus,
 .listSearchForm input:focus {
   transition: all 300ms ease-in;
-  border-bottom: 0.0625rem solid var(--color-primary);
+  border: 0.0625rem solid var(--color-lightprimary);
   background-color: var(--color-bggray);
 }
 .formLayout textarea {
@@ -497,18 +391,12 @@ button {
   padding: 0.3125rem;
   background-color: rgba(243, 244, 243, 0.3);
   border: 0.0625rem solid var(--color-bggray);
-  margin-top: 0.5rem;
 }
 .formLayout textarea:focus {
   outline: none;
   transition: all 300ms ease-in;
-  border-bottom: 0.0625rem solid var(--color-primary);
+  border: 0.0625rem solid var(--color-lightprimary);
   background-color: var(--color-bggray);
-}
-
-.formContentWrap {
-  width: 100%;
-  height: auto;
 }
 
 /*form layout 기타 요소*/
@@ -543,7 +431,9 @@ button {
   outline: none;
 }
 
+/* --------------------------------------------------------------*/
 /* 다른 입력창이 입력될 때를 기다리지 않고 입력된 값을 바로 보낼 땐 formContentWrapWithButton로 감싸준다. */
+/* --------------------------------------------------------------*/
 .formContentWrapWithButton {
   width: 100%;
   height: auto;
@@ -815,11 +705,116 @@ button {
   }
 }
 
+/* keyword 클릭 이벤트 */
+.keywordWrap {
+  position: relative;
+  width: 100%;
+  height: auto;
+}
+
+.keywordWrap .keywordBox {
+  position: absolute;
+  top: 0.3125rem;
+  z-index: 1;
+  overflow: scroll;
+  width: 25rem;
+  border: 0.0625rem solid var(--color-bggray);
+  background-color: var(--color-white);
+  height: 6.875rem;
+  margin-top: 0.25rem;
+  padding: 0.25rem;
+}
+.keywordWrap > div {
+  display: flex;
+  justify-content: space-between;
+}
+.keywordWrap .keywordInput {
+  width: 80%;
+}
+
+.keywordInput ~ button {
+  width: 18%;
+  height: 1.875rem;
+  background-color: var(--color-bggray);
+  margin-top: 0.625rem;
+}
+
+.keywordBox li {
+  width: 100%;
+  height: auto;
+  border-bottom: 0.0625rem solid var(--color-bggray);
+}
+.keywordBox li:last-child {
+  border-bottom: none;
+}
+.keywordBox span {
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0.25rem 0;
+}
+.keywordBox button {
+  width: 100%;
+  height: 1.25rem;
+  text-align: left;
+  font-size: var(--font-size-small);
+  text-indent: 0.625rem;
+}
+.keywordBox button:hover {
+  background-color: var(--color-bggray);
+}
+.keywordBox button:focus {
+  font-weight: 700;
+  background-color: var(--color-gray);
+}
+.keywordBox button:hover::before {
+  display: block;
+  content: "추가 +";
+  position: absolute;
+  right: 0.625rem;
+  width: auto;
+  height: auto;
+  color: var(--color-lightprimary);
+}
+
+.keywordSelectWrap {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: left;
+  height: 100%;
+  height: auto;
+  background-color: var(--color-bggray);
+  padding: 0.625rem;
+  margin-top: 0.25rem;
+}
+.keywordSelectWrap li {
+  position: relative;
+  width: auto;
+  height: auto;
+  border-radius: 10px;
+  margin-right: 4px;
+  margin-bottom: 4px;
+  padding: 2px 8px;
+  border: 1px solid var(--color-gray);
+}
+.keywordSelectWrap li:hover::before {
+  position: absolute;
+  content: "x";
+  display: block;
+  right: -3px;
+  top: -3px;
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  font-size: 10px;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.4);
+  color: var(--color-white);
+}
+
 /*page --------------------------------------------------------------*/
 .detailPageLayout {
-  margin: 0 auto;
   width: 100%;
-  max-width: 62.5rem;
   height: auto;
   padding: 0 0.625rem;
 }
@@ -827,7 +822,7 @@ button {
   padding: 0.4rem 0;
   border-bottom: 0.0625rem solid var(--color-bggray);
 }
-.formContentWrap:last-child {
+.detailPageLayout .formContentWrap:last-child {
   border: none;
 }
 .detailPageLayout h4 {
@@ -1014,25 +1009,19 @@ p {
   width: 100%;
   height: auto;
 }
-
-@media screen and (max-width: 520px) {
-  .tableWrap th:nth-child(4),
-  .tableWrap td:nth-child(4) {
-    display: none;
-  }
-}
 .commonTable {
   width: 100%;
   height: auto;
 }
 .commonTable thead {
-  border-bottom: 0.125rem solid var(--color-bggray);
+  border-bottom: 0.0625rem solid var(--color-gray);
   font-size: var(--font-size-basic);
-  line-height: var(--font-size-titleem);
   height: 2.8rem;
+  line-height: 2.8rem;
+  background-color: var(--color-bggray);
 }
 .commonTable tr {
-  width: auto;
+  width: 100%;
   height: auto;
 }
 .commonTable tbody tr {
@@ -1044,26 +1033,17 @@ p {
 .commonTable td {
   text-align: center;
 }
-.commonTable .widthS {
-  width: 8%;
-}
-.commonTable .widthB {
-  width: 30%;
-}
-.commonTable .widthBB {
-  width: 40%;
-}
-.commonTable .widthM {
-  width: 20%;
-}
-.commonTable .left {
-  text-align: left;
-}
-/*테이블 내 세부 콘텐츠*/
+
+/* 테이블 내 세부 콘텐츠 */
 .commonTable i {
   display: inline-block;
-  color: var(--color-lightprimary);
-  margin-left: 0.625rem;
+  width: 30px;
+  height: 14px;
+  line-height: 14px;
+  background-color: var(--color-acceent);
+  color: var(--color-black);
+  font-size: 10px;
+  border-radius: 3px;
 }
 .commonTable .tableContentWrap {
   text-align: left;
@@ -1073,11 +1053,8 @@ p {
   font-weight: 700;
   margin-bottom: 0.375rem;
 }
-.tableContentWrap p {
-  white-space: nowrap;
-}
 
-/*btn 영역*/
+/*pagination 영역 ------------------------------------------------------*/
 .pagination {
   display: flex;
   justify-content: center;
@@ -1128,16 +1105,17 @@ ul.pagination li a:hover {
   display: flex;
   justify-content: right;
   width: 100%;
-  height: 3.825rem;
-  padding: 1rem 0;
-  background-color: var(--color-white);
-  margin-top: 1.5rem;
-  border-bottom: 1px solid var(--color-bggray);
+  height: 40px;
+  padding: 10px;
+  background-color: var(--color-bggray);
 }
 
-.tableTopWrap .smallButton {
+.tableTopWrap .smallButton,
+.tableTopWrap .buttonLink {
   width: 6rem;
-  height: 1.75rem;
+  height: 20px;
+  background-color: var(--color-bgblack);
+  color: var(--color-white);
 }
 
 @media screen and (max-width: 990px) {
@@ -1146,24 +1124,6 @@ ul.pagination li a:hover {
   }
 }
 
-.linkAnchorBg {
-  width: auto;
-  height: auto;
-  padding: 0.125rem 0.25rem;
-  margin-left: 1.25rem;
-  font-size: var(--font-size-basic);
-  font-weight: 400;
-  color: var(--color-white);
-  background-color: var(--color-primary);
-  border-radius: 0.3125rem;
-  text-decoration: none;
-  transition: all 500ms ease-in;
-}
-.linkAnchorBg:hover,
-.linkAnchorBg:focus {
-  text-decoration: none;
-  background-color: var(--color-acceent);
-}
 .tableButton {
   float: right;
   transform: translateY(50%);
@@ -1175,46 +1135,30 @@ ul.pagination li a:hover {
   font-weight: 700;
 }
 .smallButton {
+  display: inline-block;
   width: 6.25rem;
   height: 1.825rem;
   margin: 0 0.325rem;
   background-color: var(--color-bggray);
 }
+
 .smallSubmitButton {
   top: 1.5rem;
   right: 0.625rem;
   width: 6.25rem;
-  height: 1.825rem;
+  height: 20px;
 }
 .buttonLink {
   text-align: center;
-  line-height: 1.825rem;
+  line-height: 20px;
   font-weight: 400;
   background-color: var(--color-bggray);
-  border-radius: 0.3125rem;
 }
 .buttonLink:hover {
   background-color: var(--color-lightprimary);
   color: var(--color-white);
 }
-.bigButton {
-  width: 12rem;
-  height: 2rem;
-  text-align: center;
-  line-height: 2rem;
-  font-weight: 400;
-}
-.bigButton .Link {
-  border-radius: 0.3125rem;
-  background-color: var(--color-primary);
-  color: var(--color-white);
-}
-.bigButton .Link:hover {
-  background-color: var(--color-gray);
-  color: var(--color-black);
-  box-shadow: var(--styles-boxShadowDeep);
-}
-/*Link ----------------------------*/
+
 .Link {
   display: block;
   width: 100%;
@@ -1222,91 +1166,40 @@ ul.pagination li a:hover {
   font-size: var(--font-size-small);
   transition: all 200ms ease-in;
 }
-.Link:hover {
-  text-decoration: none;
-}
-.boxTitle {
-  font-size: var(--font-size-big);
-  font-weight: 500;
-  margin-bottom: 2.5rem;
-}
-.userDetailWrap .detailHead {
-  margin-bottom: 1.25rem;
-}
-.widthFullButton {
-  width: 100%;
-  height: 2.5rem;
-  background-color: var(--color-gray);
-  border-radius: 0.3125rem;
-  transition: all 300ms ease-in;
-  color: var(--color-black);
-  margin-bottom: 1.25rem;
-  outline: none;
-}
-.widthFullButton:hover {
-  background-color: var(--color-primary);
-  color: var(--color-white);
-}
-.widthFullButton:focus {
-  background-color: var(--color-lightprimary);
-  color: var(--color-white);
-  box-shadow: var(--styles-boxShadow);
-}
-.smallButton {
-  display: inline-block;
-  width: 3.125rem;
-  height: 2.5rem;
-  border-radius: 0.3125rem;
-}
 
-/* 검색 필터 */
+/* 검색 필터 --------------------------------------------------------------*/
 .listSearchForm {
   display: flex;
   flex-wrap: wrap;
   width: 100%;
   height: auto;
-  padding: 1rem;
 }
 .listSearchWrap {
   display: flex;
   width: 25%;
-  height: auto;
-  padding: 0.25rem;
-  margin-bottom: 0.375rem;
+  height: 40px;
+  padding: 5px;
+}
+.listSearchWrap .blockLabel {
+  width: 110px;
+  height: 100%;
+  text-align: center;
+  background-color: var(--color-bgblack);
+  color: var(--color-white);
+  line-height: 30px;
 }
 
 .listSearchWrap div:nth-child(2) {
-  width: 100%;
+  width: calc(100% - 110px);
   padding: 3px;
-}
-
-.listSearchWrap .blockLabel {
-  font-weight: 700;
-  width: 10rem;
-  height: 100%;
-  margin-top: 0;
-  text-align: center;
-  line-height: 1.875rem;
-  background-color: var(--color-bggray);
+  border: 1px solid var(--color-bgblack);
 }
 
 .listSearchWrap input {
   width: 100%;
   height: 100%;
   background-color: rgba(243, 244, 243, 0.3);
-  border: 0.0625rem solid var(--color-bggray);
-  margin-top: 0;
-}
-
-.listSearchWrap .listSearchCheckLabel {
-  display: inline-block;
-  width: 100%;
-  margin-right: 0.25rem;
-}
-.listSearchWrap .listSearchCheckInput {
-  display: inline-block;
-  width: 0.9375rem;
-  height: 0.9375rem;
+  border: 0.0625rem solid var(--color-gray);
 }
 
 .listSearchWrap .listSearchRadioLabel {
@@ -1327,119 +1220,12 @@ ul.pagination li a:hover {
   display: flex;
   justify-content: center;
   width: 100%;
-  margin-top: 0.25rem;
+  margin-top: 0.5rem;
 }
-.listSearchButtonWrap input {
+.listSearchButtonWrap button {
   width: 5rem;
   height: 1.5rem;
   background-color: var(--color-gray);
   margin-right: 0.25rem;
-}
-.listSearchButtonWrap input:focus {
-  border-bottom: none;
-}
-.keywordWrap {
-  position: relative;
-  width: 100%;
-  height: auto;
-}
-
-.keywordWrap .keywordBox {
-  position: absolute;
-  top: 0.3125rem;
-  z-index: 1;
-  overflow: scroll;
-  width: 25rem;
-  border: 0.0625rem solid var(--color-bggray);
-  background-color: var(--color-white);
-  height: 6.875rem;
-  margin-top: 0.25rem;
-  padding: 0.25rem;
-}
-.keywordWrap > div {
-  display: flex;
-  justify-content: space-between;
-}
-.keywordWrap .keywordInput {
-  width: 80%;
-}
-
-.keywordInput ~ button {
-  width: 18%;
-  height: 1.875rem;
-  background-color: var(--color-bggray);
-  margin-top: 0.625rem;
-}
-
-.keywordBox li {
-  width: 100%;
-  height: auto;
-  border-bottom: 0.0625rem solid var(--color-bggray);
-}
-.keywordBox li:last-child {
-  border-bottom: none;
-}
-.keywordBox span {
-  display: block;
-  width: 100%;
-  height: 100%;
-  padding: 0.25rem 0;
-}
-.keywordBox button {
-  width: 100%;
-  height: 1.25rem;
-  text-align: left;
   font-size: var(--font-size-small);
-  text-indent: 0.625rem;
-}
-.keywordBox button:hover {
-  background-color: var(--color-bggray);
-}
-.keywordBox button:focus {
-  font-weight: 700;
-  background-color: var(--color-gray);
-}
-.keywordBox button:hover::before {
-  display: block;
-  content: "추가 +";
-  position: absolute;
-  right: 0.625rem;
-  width: auto;
-  height: auto;
-  color: var(--color-lightprimary);
-}
-
-.keywordSelectWrap {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: left;
-  height: 100%;
-  height: auto;
-  background-color: var(--color-bggray);
-  padding: 0.625rem;
-  margin-top: 0.25rem;
-}
-.keywordSelectWrap li {
-  position: relative;
-  width: auto;
-  height: auto;
-  border-radius: 10px;
-  margin-right: 4px;
-  margin-bottom: 4px;
-  padding: 2px 8px;
-  border: 1px solid var(--color-gray);
-}
-.keywordSelectWrap li:hover::before {
-  position: absolute;
-  content: "x";
-  display: block;
-  right: -3px;
-  top: -3px;
-  width: 10px;
-  height: 10px;
-  border-radius: 5px;
-  font-size: 10px;
-  text-align: center;
-  background-color: rgba(0, 0, 0, 0.4);
-  color: var(--color-white);
 }

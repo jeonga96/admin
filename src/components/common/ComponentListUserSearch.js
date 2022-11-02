@@ -229,8 +229,12 @@ export default function ComponentListUserSearch({ setUserList, setListPage }) {
         </div>
 
         <div className="listSearchButtonWrap">
-          <input type="reset" value="초기화" onClick={onResetHandle} />
-          <input type="submit" value="검색" />
+          <button type="reset" value="초기화" onClick={onResetHandle}>
+            초기화
+          </button>
+          <button type="submit" value="검색">
+            검색
+          </button>
         </div>
       </form>
     </div>

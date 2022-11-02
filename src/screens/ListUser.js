@@ -45,6 +45,7 @@ export default function ListUser() {
                 <th className="widthM">핸드폰번호</th>
                 <th className="widthS">계약일</th>
                 <th className="widthS">상세정보</th>
+                <th className="widthS"></th>
               </tr>
             </thead>
             <tbody>
@@ -64,7 +65,8 @@ export default function ListUser() {
                     <td>
                       {item.useFlag ? (
                         <i>
-                          <BsCheck2 />
+                          {/* <BsCheck2 /> */}
+                          상세
                         </i>
                       ) : null}
                     </td>
