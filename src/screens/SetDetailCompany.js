@@ -60,9 +60,7 @@ export default function SetCompanyDetail() {
   const [noticeList, setNoticeList] = useState([]);
   const [reviewList, setReviewList] = useState([]);
   //  setUser 수정 (useFlag만 기본값으로 설정)
-  const [companyData, setCompanyData] = useState({
-    useFlag: 1,
-  });
+  const [companyData, setCompanyData] = useState({});
   const [detailComapanyRadio, setDetailComapanyRadio] = useState({});
 
   // 현재 페이지가 렌더링되자마자 기존에 입력된 값의 여부를 확인한다.
@@ -76,9 +74,10 @@ export default function SetCompanyDetail() {
           // 값이 있다면 저장한 후 getDataFinish 값을 변경
           setGetedData(res.data);
 
+          console.log("1", detailComapanyRadio.useFlag);
           setDetailComapanyRadio({
-            useFlag: res.data.useFlag || "1",
-            status: res.data.status || "2",
+            useFlag: String(res.data.useFlag) || "1",
+            status: String(res.data.status) || "2",
             gongsaType: res.data.gongsaType || "norm",
           });
 
@@ -132,6 +131,13 @@ export default function SetCompanyDetail() {
       })
       .catch((res) => console.log(res));
   }, []);
+
+  console.log(
+    "2",
+    detailComapanyRadio,
+    detailComapanyRadio.useFlag,
+    detailComapanyRadio.status
+  );
 
   // form submit 이벤트
   function UserDetailInfoSubmit() {
@@ -187,7 +193,6 @@ export default function SetCompanyDetail() {
       })
       .catch((error) => console.log("실패", error.response));
   }
-  console.log(detailComapanyRadio);
 
   return (
     <>
@@ -213,10 +218,10 @@ export default function SetCompanyDetail() {
                 <input
                   className="listSearchRadioInput"
                   type="radio"
-                  checked={detailComapanyRadio.useFlag == 0}
+                  checked={detailComapanyRadio.useFlag == "0"}
                   name="_detailUseFlag"
                   value="0"
-                  id="DetailUseFlog0"
+                  id="DetailUseFlag0"
                   {...register("_detailUseFlag", {
                     onChange: (e) => {
                       setDetailComapanyRadio({
@@ -228,7 +233,7 @@ export default function SetCompanyDetail() {
                 />
                 <label
                   className="listSearchRadioLabel"
-                  htmlFor="DetailUseFlog0"
+                  htmlFor="DetailUseFlag0"
                 >
                   휴면
                 </label>
@@ -236,10 +241,10 @@ export default function SetCompanyDetail() {
                 <input
                   className="listSearchRadioInput"
                   type="radio"
-                  checked={detailComapanyRadio.useFlag == 1}
+                  checked={detailComapanyRadio.useFlag == "1"}
                   name="_detailUseFlag"
                   value="1"
-                  id="DetailUseFlog1"
+                  id="DetailUseFlag1"
                   {...register("_detailUseFlag", {
                     onChange: (e) => {
                       setDetailComapanyRadio({
@@ -251,7 +256,7 @@ export default function SetCompanyDetail() {
                 />
                 <label
                   className="listSearchRadioLabel"
-                  htmlFor="DetailUseFlog1"
+                  htmlFor="DetailUseFlag1"
                 >
                   사용
                 </label>

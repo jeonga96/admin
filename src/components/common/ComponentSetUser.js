@@ -21,10 +21,10 @@ export default function ComponentSetUser({ setUserData, userData }) {
     })
       .then((res) => {
         if (res.status === "success") {
-          setValue("_passwd", res.data.passwd || "");
+          // 비밀번호는 기본값 설정되면 안 되기 때문에 X
           fnSetUserData({
-            userrole: res.data.userrole,
-            useFlag: res.data.useFlag,
+            userrole: res.data.userrole || "ROLE_USER",
+            useFlag: String(res.data.useFlag) || "1",
           });
         }
       })

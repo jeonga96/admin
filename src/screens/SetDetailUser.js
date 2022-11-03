@@ -35,11 +35,8 @@ export default function SetDetailUser() {
   const [imgs, setImgs] = useState([]);
   const getDataFinish = useRef(false);
   const imgsIid = [];
-  // setUser 수정, 비밀번호는 기본값 설정되면 안 되기 때문에 X
-  const [userData, setUserData] = useState({
-    userrole: "ROLE_USER",
-    useFlag: "1",
-  });
+  // setUser 수정
+  const [userData, setUserData] = useState({});
 
   // 현재 페이지가 렌더링되자마자 기존에 입력된 값의 여부를 확인한다.
   useEffect(() => {

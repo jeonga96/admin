@@ -68,23 +68,6 @@ export default function ComponentSetCompany({ companyData, setCompanyData }) {
           <input
             className="listSearchRadioInput"
             type="radio"
-            checked={companyData.useFlag == "1"}
-            name="_useFlag"
-            value="1"
-            id="useFlag1"
-            {...register("_useFlag", {
-              onChange: (e) => {
-                fnSetCompanyrData({ useFlag: e.target.value });
-              },
-            })}
-          />
-          <label className="listSearchRadioLabel" htmlFor="useFlag1">
-            활성화
-          </label>
-
-          <input
-            className="listSearchRadioInput"
-            type="radio"
             checked={companyData.useFlag == "0"}
             name="_useFlag"
             value="0"
@@ -97,6 +80,23 @@ export default function ComponentSetCompany({ companyData, setCompanyData }) {
           />
           <label className="listSearchRadioLabel" htmlFor="useFlag0">
             비활성화
+          </label>
+
+          <input
+            className="listSearchRadioInput"
+            type="radio"
+            checked={companyData.useFlag == "1"}
+            name="_useFlag"
+            value="1"
+            id="useFlag1"
+            {...register("_useFlag", {
+              onChange: (e) => {
+                fnSetCompanyrData({ useFlag: e.target.value });
+              },
+            })}
+          />
+          <label className="listSearchRadioLabel" htmlFor="useFlag1">
+            활성화
           </label>
         </div>
       </div>
