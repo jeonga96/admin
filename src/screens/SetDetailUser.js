@@ -6,9 +6,9 @@ import { ErrorMessage } from "@hookform/error-message";
 import { servicesPostData } from "../Services/importData";
 import { serviesGetImgsIid } from "../Services/useData";
 import {
-  urlSetUserRole,
   urlSetUserDetail,
   urlGetUserDetail,
+  urlSetUser,
 } from "../Services/string";
 
 import LayoutTopButton from "../components/common/LayoutTopButton";
@@ -35,6 +35,11 @@ export default function SetDetailUser() {
   const [imgs, setImgs] = useState([]);
   const getDataFinish = useRef(false);
   const imgsIid = [];
+  // setUser 수정, 비밀번호는 기본값 설정되면 안 되기 때문에 X
+  const [userData, setUserData] = useState({
+    userrole: "ROLE_USER",
+    useFlag: "1",
+  });
 
   // 현재 페이지가 렌더링되자마자 기존에 입력된 값의 여부를 확인한다.
   useEffect(() => {
@@ -62,14 +67,14 @@ export default function SetDetailUser() {
     //서버에 imgs의 iid값만을 보내기 위해 실행하는 반복문 함수
     serviesGetImgsIid(imgsIid, imgs);
 
-    // getDataFinish값이 false라면 수정이 아닌, 생성이므로 userole의 기본값을 입력한다.
-    if (!getDataFinish) {
-      servicesPostData(urlSetUserRole, {
-        uid: uid,
-        userrole: "ROLE_USER",
-      });
-    }
+    // setUser 수정 (회원활성화, 비밀번호, userrole)
+    // DetailUserComponent
+    servicesPostData(urlSetUser, {
+      uid: uid,
+      ...userData,
+    });
 
+    // setUserDetailInfo 수정
     servicesPostData(urlSetUserDetail, {
       ruid: uid,
       name: getValues("_name"),
@@ -84,7 +89,6 @@ export default function SetDetailUser() {
       .then((res) => {
         if (res.status === "success") {
           alert("완료되었습니다!");
-          window.location.href = `/user`;
           return;
         }
       })
@@ -93,13 +97,13 @@ export default function SetDetailUser() {
 
   return (
     <>
-      <DetailUserComponent />
       <div className="commonBox">
         <form className="formLayout" onSubmit={handleSubmit(AddUserSubmit)}>
           <ul className="tableTopWrap">
             <LayoutTopButton url="/user" text="목록으로 가기" />
             <LayoutTopButton text="완료" disabled={isSubmitting} />
           </ul>
+          <DetailUserComponent setUserData={setUserData} userData={userData} />
 
           <div className="formContentWrap">
             <label htmlFor="name" className=" blockLabel">

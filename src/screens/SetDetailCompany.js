@@ -13,6 +13,7 @@ import {
 import {
   urlGetCompanyDetail,
   urlSetCompanyDetail,
+  urlSetCompany,
   ALLKEYWORD,
   urlCompanyNoticeList,
   urlReviewList,
@@ -46,12 +47,6 @@ export default function SetCompanyDetail() {
   const imgsIid = [];
   // 사업자 등록증 이미지
   const [regImgs, setRegImgs] = useState(null);
-  // useFlag radio
-  const [detailUseFlag, setDetailUseFlag] = useState(1);
-  // status radio
-  const [status, setStatus] = useState(2);
-  // gongsaType radio
-  const [gongsaType, SetGonsaType] = useState("norm");
   // getDataFinish:기존에 입력된 값이 있어 값을 불러왔다면 true로 변경,
   const getDataFinish = useRef(false);
   // address:신주소,  oldaddress:구주소,  zipcode:우편번호,  latitude:위도,  longitude:경도
@@ -64,20 +59,14 @@ export default function SetCompanyDetail() {
   // 하단 링크 이동 될 사업자 공지사항, 사업자 리뷰
   const [noticeList, setNoticeList] = useState([]);
   const [reviewList, setReviewList] = useState([]);
+  //  setUser 수정 (useFlag만 기본값으로 설정)
+  const [companyData, setCompanyData] = useState({
+    useFlag: 1,
+  });
+  const [detailComapanyRadio, setDetailComapanyRadio] = useState({});
 
   // 현재 페이지가 렌더링되자마자 기존에 입력된 값의 여부를 확인한다.
   useEffect(() => {
-    // 기본 회사정보 불러오기
-    // servicesPostData(urlGetCompany, {
-    //   cid: cid,
-    // })
-    //   .then((res) => {
-    //     if (res.status === "success") {
-    //       setCompanyInfo(res.data);
-    //     }
-    //   })
-    //   .catch((res) => console.log(res));
-
     // 상세 회사정보 불러오기 기존 값이 없다면 새로운 회원이다. 새로 작성함
     servicesPostData(urlGetCompanyDetail, {
       rcid: cid,
@@ -87,9 +76,11 @@ export default function SetCompanyDetail() {
           // 값이 있다면 저장한 후 getDataFinish 값을 변경
           setGetedData(res.data);
 
-          setDetailUseFlag(res.data.useFlag || "1");
-          setStatus(res.data.status || "2");
-          SetGonsaType(res.data.gongsaType || "norm");
+          setDetailComapanyRadio({
+            useFlag: res.data.useFlag || "1",
+            status: res.data.status || "2",
+            gongsaType: res.data.gongsaType || "norm",
+          });
 
           setValue("_name", res.data.name || "");
           setValue("_comment", res.data.comment || "");
@@ -148,6 +139,13 @@ export default function SetCompanyDetail() {
     serviesGetImgsIid(imgsIid, imgs);
     // 서버에 keywords의 keyword value만을 보내기 위해 실행하는 함수
     serviesGetKeywords(keywordValue, companyDetailKeyword);
+    servicesPostData(urlSetCompany, {
+      cid: cid,
+      ...companyData,
+    });
+
+    // ComponentSetCompany submit
+    // setComapny (계약자명, uid, 사업자 활성화)
     servicesPostData(urlSetCompanyDetail, {
       rcid: cid,
       name: getValues("_name"),
@@ -177,9 +175,9 @@ export default function SetCompanyDetail() {
         `${getValues("_linkurl1")},${getValues("_linkurl2")},${getValues(
           "_linkurl3"
         )},${getValues("_linkurl4")},${getValues("_linkurl5")},` || "",
-      useFlag: detailUseFlag,
-      gongsaType: gongsaType,
-      status: status,
+      useFlag: detailComapanyRadio.useFlag,
+      gongsaType: detailComapanyRadio.gongsaType,
+      status: detailComapanyRadio.status,
     })
       .then((res) => {
         if (res.status === "success") {
@@ -189,10 +187,10 @@ export default function SetCompanyDetail() {
       })
       .catch((error) => console.log("실패", error.response));
   }
+  console.log(detailComapanyRadio);
 
   return (
     <>
-      <ComponentSetCompany />
       <div className="commonBox">
         <form
           className="formLayout"
@@ -203,6 +201,11 @@ export default function SetCompanyDetail() {
             <LayoutTopButton text="완료" disabled={isSubmitting} />
           </ul>
 
+          <ComponentSetCompany
+            setCompanyData={setCompanyData}
+            companyData={companyData}
+          />
+
           <fieldset className="formContentWrapWithRadio">
             <div className="listSearchWrap">
               <div className="blockLabel">회원관리</div>
@@ -210,13 +213,16 @@ export default function SetCompanyDetail() {
                 <input
                   className="listSearchRadioInput"
                   type="radio"
-                  checked={detailUseFlag == 0}
+                  checked={detailComapanyRadio.useFlag == 0}
                   name="_detailUseFlag"
                   value="0"
                   id="DetailUseFlog0"
                   {...register("_detailUseFlag", {
                     onChange: (e) => {
-                      setDetailUseFlag(e.target.value);
+                      setDetailComapanyRadio({
+                        ...detailComapanyRadio,
+                        useFlag: e.target.value,
+                      });
                     },
                   })}
                 />
@@ -230,13 +236,16 @@ export default function SetCompanyDetail() {
                 <input
                   className="listSearchRadioInput"
                   type="radio"
-                  checked={detailUseFlag == 1}
+                  checked={detailComapanyRadio.useFlag == 1}
                   name="_detailUseFlag"
                   value="1"
                   id="DetailUseFlog1"
                   {...register("_detailUseFlag", {
                     onChange: (e) => {
-                      setDetailUseFlag(e.target.value);
+                      setDetailComapanyRadio({
+                        ...detailComapanyRadio,
+                        useFlag: e.target.value,
+                      });
                     },
                   })}
                 />
@@ -255,13 +264,16 @@ export default function SetCompanyDetail() {
                 <input
                   className="listSearchRadioInput"
                   type="radio"
-                  checked={status == 2}
+                  checked={detailComapanyRadio.status == 2}
                   name="_statusCheck"
                   value="2"
                   id="status2"
                   {...register("_statusCheck", {
                     onChange: (e) => {
-                      setStatus(e.target.value);
+                      setDetailComapanyRadio({
+                        ...detailComapanyRadio,
+                        status: e.target.value,
+                      });
                     },
                   })}
                 />
@@ -272,13 +284,16 @@ export default function SetCompanyDetail() {
                 <input
                   className="listSearchRadioInput"
                   type="radio"
-                  checked={status == 0}
+                  checked={detailComapanyRadio.status == 0}
                   name="_statusCheck"
                   value="0"
                   id="status0"
                   {...register("_statusCheck", {
                     onChange: (e) => {
-                      setStatus(e.target.value);
+                      setDetailComapanyRadio({
+                        ...detailComapanyRadio,
+                        status: e.target.value,
+                      });
                     },
                   })}
                 />
@@ -289,13 +304,16 @@ export default function SetCompanyDetail() {
                 <input
                   className="listSearchRadioInput"
                   type="radio"
-                  checked={status == 1}
+                  checked={detailComapanyRadio.status == 1}
                   name="_statusCheck"
                   value="1"
                   id="status1"
                   {...register("_statusCheck", {
                     onChange: (e) => {
-                      setStatus(e.target.value);
+                      setDetailComapanyRadio({
+                        ...detailComapanyRadio,
+                        status: e.target.value,
+                      });
                     },
                   })}
                 />
@@ -311,13 +329,16 @@ export default function SetCompanyDetail() {
                 <input
                   className="listSearchRadioInput"
                   type="radio"
-                  checked={gongsaType === "emer"}
-                  name="_gonsaType"
+                  checked={detailComapanyRadio.gongsaType === "emer"}
+                  name="_gongsaType"
                   value="emer"
                   id="typeEmer"
-                  {...register("_gonsaType", {
+                  {...register("_gongsaType", {
                     onChange: (e) => {
-                      SetGonsaType(e.target.value);
+                      setDetailComapanyRadio({
+                        ...detailComapanyRadio,
+                        gongsaType: e.target.value,
+                      });
                     },
                   })}
                 />
@@ -328,13 +349,16 @@ export default function SetCompanyDetail() {
                 <input
                   className="listSearchRadioInput"
                   type="radio"
-                  checked={gongsaType === "inday"}
-                  name="_gonsaType"
+                  checked={detailComapanyRadio.gongsaType === "inday"}
+                  name="_gongsaType"
                   value="inday"
                   id="typeInday"
-                  {...register("_gonsaType", {
+                  {...register("_gongsaType", {
                     onChange: (e) => {
-                      SetGonsaType(e.target.value);
+                      setDetailComapanyRadio({
+                        ...detailComapanyRadio,
+                        gongsaType: e.target.value,
+                      });
                     },
                   })}
                 />
@@ -345,13 +369,16 @@ export default function SetCompanyDetail() {
                 <input
                   className="listSearchRadioInput"
                   type="radio"
-                  checked={gongsaType === "reser"}
-                  name="_gonsaType"
+                  checked={detailComapanyRadio.gongsaType === "reser"}
+                  name="_gongsaType"
                   value="reser"
                   id="typeReser"
-                  {...register("_gonsaType", {
+                  {...register("_gongsaType", {
                     onChange: (e) => {
-                      SetGonsaType(e.target.value);
+                      setDetailComapanyRadio({
+                        ...detailComapanyRadio,
+                        gongsaType: e.target.value,
+                      });
                     },
                   })}
                 />
@@ -362,13 +389,16 @@ export default function SetCompanyDetail() {
                 <input
                   className="listSearchRadioInput"
                   type="radio"
-                  checked={gongsaType === "norm"}
-                  name="_gonsaType"
+                  checked={detailComapanyRadio.gongsaType === "norm"}
+                  name="_gongsaType"
                   value="norm"
                   id="typeNorm"
-                  {...register("_gonsaType", {
+                  {...register("_gongsaType", {
                     onChange: (e) => {
-                      SetGonsaType(e.target.value);
+                      setDetailComapanyRadio({
+                        ...detailComapanyRadio,
+                        gongsaType: e.target.value,
+                      });
                     },
                   })}
                 />

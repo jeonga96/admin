@@ -12,6 +12,7 @@ export const urlRefreshtoken = urlPrefix + "/svc/refreshToken";
 export const urlAdduser = urlPrefix + "/pub/addUser";
 export const urlUserlist = urlPrefix + "/admin/listUser";
 export const urlSetUser = urlPrefix + "/admin/setUser";
+export const urlGetUser = urlPrefix + "/admin/getUser";
 export const urlGetUserDetail = urlPrefix + "/admin/getUserDetail";
 export const urlSetUserDetail = urlPrefix + "/admin/setUserDetail";
 export const urlSetUserRole = urlPrefix + "/admin/setUserRole";
