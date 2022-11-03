@@ -15,8 +15,6 @@ export default function ComponentSetUser({ setUserData, userData }) {
   // react-hook-form 라이브러리
   const { register, setValue } = useForm();
 
-  const [passwd, setPasswd] = useState("");
-
   useEffect(() => {
     servicesPostData(urlGetUser, {
       uid: uid,
@@ -47,7 +45,7 @@ export default function ComponentSetUser({ setUserData, userData }) {
             id="useFlag1"
             {...register("_useFlag", {
               onChange: (e) => {
-                fnSetUserData({ [e.target.id]: e.target.value });
+                fnSetUserData({ useFlag: e.target.value });
               },
             })}
           />
@@ -64,7 +62,7 @@ export default function ComponentSetUser({ setUserData, userData }) {
             id="useFlag0"
             {...register("_useFlag", {
               onChange: (e) => {
-                fnSetUserData({ [e.target.id]: e.target.value });
+                fnSetUserData({ useFlag: e.target.value });
               },
             })}
           />
@@ -86,7 +84,7 @@ export default function ComponentSetUser({ setUserData, userData }) {
             id="ROLE_USER"
             {...register("_userrole", {
               onChange: (e) => {
-                fnSetUserData({ [e.target.id]: e.target.value });
+                fnSetUserData({ userrole: e.target.value });
               },
             })}
           />
@@ -103,7 +101,7 @@ export default function ComponentSetUser({ setUserData, userData }) {
             id="ROLE_ADMIN"
             {...register("_userrole", {
               onChange: (e) => {
-                fnSetUserData({ [e.target.id]: e.target.value });
+                fnSetUserData({ userrole: e.target.value });
               },
             })}
           />
@@ -121,10 +119,8 @@ export default function ComponentSetUser({ setUserData, userData }) {
             type="text"
             name="_passwd"
             id="passwd"
-            value={passwd || ""}
             {...register("_passwd", {
               onChange: (e) => {
-                setPasswd(e.target.value);
                 fnSetUserData({ passwd: e.target.value });
               },
             })}

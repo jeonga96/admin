@@ -94,7 +94,7 @@ export default function SetDetailUser() {
       })
       .catch((error) => console.log("axios 실패", error.response));
   }
-
+  console.log(userData);
   return (
     <>
       <div className="commonBox">
