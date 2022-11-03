@@ -14,25 +14,16 @@ export default function AddUser() {
     handleSubmit,
     register,
     getValues,
+    setValue,
     formState: { isSubmitting, errors },
   } = useForm();
   const navigate = useNavigate();
-  const [userData, setUserData] = useState({
-    userid: "",
-    passwd: "",
-    passwdCk: "",
-  });
-
-  // input 입력값 저장 이벤트
-  function onChange(e) {
-    setUserData({ ...userData, [e.target.id]: [e.target.value] });
-  }
 
   // 회원 추가 이벤트
   const AddUserSubmit = (e) => {
     servicesPostData(urlAdduser, {
-      userid: userData.userid[0],
-      passwd: userData.passwd[0],
+      userid: getValues("_userid"),
+      passwd: getValues("_passwd"),
     })
       .then((res) => {
         if (
@@ -69,30 +60,29 @@ export default function AddUser() {
             </label>
             <input
               type="text"
-              name="user_id"
+              name="_userid"
               id="userid"
               placeholder="아이디를 입력해 주세요."
-              {...register("user_id", {
-                onChange: onChange,
+              {...register("_userid", {
                 required: "아이디는 필수로 입력해야 합니다.",
                 minLength: {
-                  value: 2,
-                  message: "2자 이상의 아이디만 사용가능합니다.",
+                  value: 4,
+                  message: "4자 이상으로 입력해주세요.",
                 },
                 maxLength: {
                   value: 16,
-                  message: "16자 이하의 아이디만 사용가능합니다.",
+                  message: "16자 이상으로 입력해주세요.",
                 },
                 pattern: {
-                  value: /^[a-z]+[a-z0-9]$/g,
-                  message: "입력 형식에 맞지 않습니다.",
+                  value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{4,16}$/g,
+                  message: "영문, 숫자를 포함해 주세요.",
                 },
               })}
             />
           </div>
           <ErrorMessage
             errors={errors}
-            name="user_id"
+            name="_userid"
             render={({ message }) => (
               <span className="errorMessageWrap">{message}</span>
             )}
@@ -104,26 +94,39 @@ export default function AddUser() {
             </label>
             <input
               type="password"
-              name="pass_wd"
+              name="_passwd"
               id="passwd"
               placeholder="비밀번호를 입력해 주세요."
-              {...register("pass_wd", {
-                onChange: onChange,
+              {...register("_passwd", {
                 required: "비밀번호는 필수로 입력해야 합니다.",
+                minLength: {
+                  value: 6,
+                  message: "6자 이상으로 입력해주세요.",
+                },
                 maxLength: {
                   value: 16,
-                  message: "16자 이하의 비밀번호만 사용가능합니다.",
+                  message: "16자 이하로 입력해주세요.",
                 },
-                minLength: {
-                  value: 2,
-                  message: "2자 이상의 비밀번호만 사용가능합니다.",
+                pattern: {
+                  value:
+                    /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{6,16}$/g,
+                  message: "영문, 숫자, 특수문자를 포함해 주세요.",
+                },
+                validate: {
+                  matchesPassword: (value) => {
+                    const { _userid } = getValues();
+                    return (
+                      _userid !== value ||
+                      "아이디와 동일한 비밀번호는 사용할 수 없습니다."
+                    );
+                  },
                 },
               })}
             />
           </div>
           <ErrorMessage
             errors={errors}
-            name="pass_wd"
+            name="_passwd"
             render={({ message }) => (
               <span className="errorMessageWrap">{message}</span>
             )}
@@ -135,16 +138,15 @@ export default function AddUser() {
             </label>
             <input
               type="password"
-              name="pass_wdCk"
-              id="passwdCk"
+              name="_passwdck"
+              id="passwdck"
               placeholder="비밀번호를 한 번 더 입력해 주세요."
-              {...register("pass_wdCk", {
-                onChange: onChange,
+              {...register("_passwdck", {
                 required: "비밀번호 확인을 진행해 주세요.",
                 validate: {
                   matchesPassword: (value) => {
-                    const { pass_wd } = getValues();
-                    return pass_wd === value || "비밀번호가 일치하지 않습니다.";
+                    const { _passwd } = getValues();
+                    return _passwd === value || "비밀번호가 일치하지 않습니다.";
                   },
                 },
               })}
@@ -152,7 +154,7 @@ export default function AddUser() {
           </div>
           <ErrorMessage
             errors={errors}
-            name="pass_wdCk"
+            name="_passwdck"
             render={({ message }) => (
               <span className="errorMessageWrap">{message}</span>
             )}

@@ -6,7 +6,7 @@ export default function Login() {
   const {
     handleSubmit,
     register,
-    watch,
+    getValues,
     formState: { isSubmitting, errors },
   } = useForm();
   const dispatch = useDispatch();
@@ -15,7 +15,7 @@ export default function Login() {
     // reducer - initialState로 값 전달
     dispatch({
       type: "userInfoInputChange",
-      payload: { userid: watch("user_id"), passwd: watch("pass_wd") },
+      payload: { userid: getValues("_userid"), passwd: getValues("_passwd") },
     });
     dispatch({
       type: "loginEvent",
@@ -25,37 +25,37 @@ export default function Login() {
   return (
     <section className="loginWrap">
       <div className="commonBox loginBox">
-        <h3>login</h3>
+        <h3>관리자 로그인</h3>
         <form className="formLayout " onSubmit={handleSubmit(fnLogin)}>
           <div className="formContentWrap">
             <label htmlFor="userid" className="blockLabel">
-              ID
+              아이디
             </label>
             <input
               type="text"
-              name="user_id"
+              name="_userid"
               id="userid"
               placeholder="아이디를 입력해 주세요."
-              {...register("user_id", {
+              {...register("_userid", {
                 required: "아이디는 필수로 입력해야 합니다.",
-                minLength: {
-                  value: 2,
-                  message: "아이디는 2글자 이상 입력해 주세요.",
-                },
-                maxLength: {
-                  value: 16,
-                  message: "16자 이하의 아이디만 사용 가능합니다.",
-                },
-                pattern: {
-                  value: /[A-Za-z]/,
-                  message: "입력 형식에 맞지 않습니다.",
-                },
+                // minLength: {
+                //   value: 4,
+                //   message: "4자 이상으로 입력해주세요.",
+                // },
+                // maxLength: {
+                //   value: 16,
+                //   message: "16자 이상으로 입력해주세요.",
+                // },
+                // pattern: {
+                //   value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{4,16}$/g,
+                //   message: "영문, 숫자를 포함해 주세요.",
+                // },
               })}
             />
           </div>
           <ErrorMessage
             errors={errors}
-            name="user_id"
+            name="_userid"
             render={({ message }) => (
               <span className="errorMessageWrap">{message}</span>
             )}
@@ -63,29 +63,34 @@ export default function Login() {
 
           <div className="formContentWrap">
             <label htmlFor="passwd" className="blockLabel">
-              Password
+              비밀번호
             </label>
             <input
               type="password"
-              name="pass_wd"
+              name="_passwd"
               id="passwd"
               placeholder="비밀번호를 입력해 주세요."
-              {...register("pass_wd", {
+              {...register("_passwd", {
                 required: "비밀번호는 필수로 입력해야 합니다.",
-                maxLength: {
-                  value: 16,
-                  message: "16자 이하의 비밀번호만 사용가능합니다.",
-                },
-                minLength: {
-                  value: 2,
-                  message: "2자 이상의 비밀번호만 사용가능합니다.",
-                },
+                // minLength: {
+                //   value: 6,
+                //   message: "6자 이상으로 입력해주세요.",
+                // },
+                // maxLength: {
+                //   value: 16,
+                //   message: "16자 이하로 입력해주세요.",
+                // },
+                // pattern: {
+                //   value:
+                //     /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{6,16}$/g,
+                //   message: "영문, 숫자, 특수문자를 포함해 주세요.",
+                // },
               })}
             />
           </div>
           <ErrorMessage
             errors={errors}
-            name="pass_wd"
+            name="_passwd"
             render={({ message }) => (
               <span className="errorMessageWrap">{message}</span>
             )}
@@ -97,7 +102,7 @@ export default function Login() {
             disabled={isSubmitting}
             style={{ marginTop: "20px" }}
           >
-            Log In
+            로그인
           </button>
         </form>
       </div>

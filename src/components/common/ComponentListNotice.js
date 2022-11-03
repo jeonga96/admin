@@ -7,9 +7,9 @@ export default function ComponentListNotice({ notice, ISADMIN }) {
       <table className="commonTable">
         <thead>
           <tr>
-            <th className="widthM">번호</th>
-            <th className="widthBB">내용</th>
-            <th className="widthM">날짜</th>
+            <th style={{ width: "100px" }}>번호</th>
+            <th style={{ width: "auto" }}>내용</th>
+            <th style={{ width: "150px" }}>날짜</th>
           </tr>
         </thead>
         <tbody className="commonTable">

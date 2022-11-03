@@ -322,7 +322,9 @@ i {
 }
 .loginBox h3 {
   margin-bottom: 1.25rem;
+  text-align: center;
 }
+
 @media screen and (max-width: 767px) {
   .loginWrap .loginBox {
     padding: 0.625rem;
@@ -349,6 +351,10 @@ i {
 }
 
 /* 기본적인 form Wrap --------------------------------------------------------------*/
+.blockLabel {
+  text-align: center;
+}
+
 .formLayout {
   width: 100%;
   height: auto;
