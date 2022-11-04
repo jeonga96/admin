@@ -19,10 +19,6 @@ export default function ComponentSetCompany({ companyData, setCompanyData }) {
     setCompanyData({ ...companyData, ...res });
   }
 
-  // const [linkUid, setLinkUid] = useState("");
-  const [useFlag, setUseFlag] = useState("1");
-  // const [name, setName] = useState("");
-
   useEffect(() => {
     // 기본 회사정보 불러오기
     servicesPostData(urlGetCompany, {
@@ -34,7 +30,7 @@ export default function ComponentSetCompany({ companyData, setCompanyData }) {
           fnSetCompanyrData({
             name: res.data.name,
             ruid: res.data.ruid,
-            useFlag: res.data.useFlag,
+            useFlag: String(res.data.useFlag) || "1",
           });
           setValue("_name", res.data.name);
           setValue("_ruid", res.data.ruid);

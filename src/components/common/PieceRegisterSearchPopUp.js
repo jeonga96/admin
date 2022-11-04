@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { useDaumPostcodePopup } from "react-daum-postcode";
 
 export default function Postcode({
+  userComponent,
   setMultilAddress,
   multilAddress,
   getedData,
@@ -18,93 +19,136 @@ export default function Postcode({
   }
 
   // 카카오 API, 주소를 위도 경도로 변환
-  const callMapcoor = (data) => {
+  const callMapcoor = (res) => {
     var geocoder = new window.kakao.maps.services.Geocoder();
     var callback = function (result, status) {
       if (status === window.kakao.maps.services.Status.OK) {
         // 공사콕에서 사용하는 key와 다음 카카오의 키가 다름!
         // 다음 카카오 신주소 : roadAddress, 구주소 :jibunAddress, 우편번호 : zonecode
+        console.log(res);
         fnSetAddress({
-          address: data.roadAddress,
-          oldaddress: data.jibunAddress,
-          zipcode: data.zonecode,
+          address: res.roadAddress,
+          oldaddress: res.jibunAddress,
+          zipcode: res.zonecode,
           latitude: Math.floor(result[0].y * 100000),
           longitude: Math.floor(result[0].x * 100000),
         });
       }
     };
-    geocoder.addressSearch(multilAddress.address, callback);
+    geocoder.addressSearch(res.address, callback);
   };
 
   useEffect(() => {
-    //  신주소 : address, 구주소 :oldaddress, 우편번호 : zipcode
-    fnSetAddress({
-      address: getedData.address,
-      oldaddress: getedData.oldaddress,
-      zipcode: getedData.zipcode,
-      longitude: getedData.longitude,
-      latitude: getedData.latitude,
-    });
+    // setUser는 주소값만 저장함
+    if (getedData !== [] && userComponent) {
+      fnSetAddress({
+        address: getedData.address,
+      });
+    }
+    // setCompany는 아래와 같은 정보가 필요함
+    if (getedData !== [] && !userComponent) {
+      //  신주소 : address, 구주소 :oldaddress, 우편번호 : zipcode
+      fnSetAddress({
+        address: getedData.address,
+        oldaddress: getedData.oldaddress,
+        zipcode: getedData.zipcode,
+        longitude: getedData.longitude,
+        latitude: getedData.latitude,
+      });
+    }
   }, [getedData]);
 
   // 팝업 입력창에 값을 입력하면 작동하는 함수
   const handleComplete = (data) => {
-    // 팝업 입력창에 값을 입력하면 해당 주소로 좌표를 구함
-    callMapcoor(data);
+    // setUser는 주소값만 저장함
+    if (userComponent) {
+      fnSetAddress({
+        address: data.roadAddress,
+      });
+    }
+    // setCompany는 아래와 같은 정보가 필요함
+    if (!userComponent) {
+      // 팝업 입력창에 값을 입력하면 해당 주소로 좌표를 구함
+      callMapcoor(data);
+    }
   };
 
   const handleClick = () => {
     open({ onComplete: handleComplete });
   };
 
-  return (
-    <>
-      <input
-        type="text"
-        id="roadAddress"
-        disabled
-        value={multilAddress.address || ""}
-      />
-      <input
-        type="text"
-        id="zipcode"
-        value={multilAddress.zipcode || ""}
-        disabled
-      />
+  // setUser
+  if (!!userComponent) {
+    return (
+      <>
+        <input
+          type="text"
+          id="roadAddress"
+          disabled
+          value={multilAddress.address || ""}
+        />
+        <button
+          type="button"
+          onClick={handleClick}
+          style={{ backgroundColor: "red" }}
+        >
+          Open
+        </button>
+      </>
+    );
+  }
 
-      <button
-        type="button"
-        onClick={handleClick}
-        style={{ backgroundColor: "red" }}
-      >
-        Open
-      </button>
+  // setCompany
+  if (!userComponent) {
+    return (
+      <>
+        <input
+          type="text"
+          id="roadAddress"
+          disabled
+          value={multilAddress.address || ""}
+        />
+        <input
+          type="text"
+          id="zipcode"
+          value={multilAddress.zipcode || ""}
+          disabled
+        />
 
-      <div className="formContentWrap">
-        <label htmlFor="address" className=" blockLabel">
-          좌표
-        </label>
-        <ul className="detailContent" style={{ display: "flex" }}>
-          <li>
-            <span>위도</span>
-            <input
-              type="text"
-              disabled
-              placeholder="위도 값이 없습니다."
-              value={multilAddress.latitude || ""}
-            />
-          </li>
-          <li>
-            <span>경도</span>
-            <input
-              type="text"
-              disabled
-              placeholder="경도 값이 없습니다."
-              value={multilAddress.longitude || ""}
-            />
-          </li>
-        </ul>
-      </div>
-    </>
-  );
+        <button
+          type="button"
+          onClick={handleClick}
+          style={{ backgroundColor: "red" }}
+        >
+          Open
+        </button>
+
+        <div className="formContentWrap">
+          <label htmlFor="address" className=" blockLabel">
+            좌표
+          </label>
+          <ul className="detailContent" style={{ display: "flex" }}>
+            <li>
+              <span>위도</span>
+              <input
+                type="text"
+                disabled
+                placeholder="위도 값이 없습니다."
+                value={multilAddress.latitude || ""}
+              />
+            </li>
+            <li>
+              <span>경도</span>
+              <input
+                type="text"
+                disabled
+                placeholder="경도 값이 없습니다."
+                value={multilAddress.longitude || ""}
+              />
+            </li>
+          </ul>
+        </div>
+      </>
+    );
+  }
 }

@@ -14,6 +14,7 @@ import {
 import LayoutTopButton from "../components/common/LayoutTopButton";
 import ImageSet from "../components/common/ServicesImageSetPreview";
 import DetailUserComponent from "../components/common/ComponentSetUser";
+import PieceRegisterSearchPopUp from "../components/common/PieceRegisterSearchPopUp";
 
 export default function SetDetailUser() {
   const { uid } = useParams();
@@ -28,15 +29,19 @@ export default function SetDetailUser() {
   } = useForm();
 
   // titleImg:대표 이미지저장 및 표시, imgs:상세 이미지저장 및 표시, imgsIid:서버에 이미지를 보낼 때는, iid값만 필요
-  // getDataFinish:기존에 입력된 값이 있어 값을 불러왔다면 true로 변경,
-  // mapcoor:위도 경도 저장,
-  const [getIid, setGetIid] = useState([]);
+  const [getedData, setGetedData] = useState([]);
   const [titleImg, setTitleImg] = useState(null);
   const [imgs, setImgs] = useState([]);
+  // getDataFinish:기존에 입력된 값이 있어 값을 불러왔다면 true로 변경,
   const getDataFinish = useRef(false);
   const imgsIid = [];
-  // setUser 수정
-  const [userData, setUserData] = useState({});
+  // address:신주소,  oldaddress:구주소,  zipcode:우편번호,  latitude:위도,  longitude:경도
+  const [multilAddress, setMultilAddress] = useState({});
+  // 비밀번호는 기본값 설정되면 안 되기 때문에 X
+  const [userData, setUserData] = useState({
+    userrole: "ROLE_USER",
+    useFlag: "1",
+  });
 
   // 현재 페이지가 렌더링되자마자 기존에 입력된 값의 여부를 확인한다.
   useEffect(() => {
@@ -46,11 +51,11 @@ export default function SetDetailUser() {
       .then((res) => {
         if (res.status === "success") {
           // 이미지 iid를 가지고 오기 위해 (imgs, titleImg) 사용
-          setGetIid(res.data);
+          setGetedData(res.data);
           // 값이 있다면 inputValue에 저장한 후 getDataFinish 값을 변경
           setValue("_name", res.data.name || "");
           setValue("_nick", res.data.nick || "");
-          setValue("_address", res.data.address || "");
+          // setValue("_address", res.data.address || "");
           setValue("_mobile", res.data.mobile || "");
           setValue("_location", res.data.location || "");
           setValue("_mail", res.data.mail || "");
@@ -76,7 +81,7 @@ export default function SetDetailUser() {
       ruid: uid,
       name: getValues("_name"),
       nick: getValues("_nick"),
-      address: getValues("_address"),
+      address: multilAddress.address,
       mobile: getValues("_mobile"),
       location: getValues("_location"),
       mail: getValues("_mail"),
@@ -91,7 +96,7 @@ export default function SetDetailUser() {
       })
       .catch((error) => console.log("axios 실패", error.response));
   }
-  console.log(userData);
+
   return (
     <>
       <div className="commonBox">
@@ -186,18 +191,15 @@ export default function SetDetailUser() {
             )}
           />
 
-          <div className="formContentWrap">
-            <label htmlFor="comment" className=" blockLabel">
-              상세 주소
-            </label>
-            <input
-              type="text"
-              id="address"
-              name="_address"
-              placeholder="상세주소를 입력해 주세요."
-              {...register("_address")}
-            />
-          </div>
+          <label htmlFor="address" className=" blockLabel">
+            주소
+          </label>
+          <PieceRegisterSearchPopUp
+            userComponent
+            setMultilAddress={setMultilAddress}
+            multilAddress={multilAddress}
+            getedData={getedData}
+          />
 
           <div className="formContentWrap">
             <label htmlFor="mobile" className="blockLabel">
@@ -254,7 +256,7 @@ export default function SetDetailUser() {
           <ImageSet
             img={titleImg}
             setImg={setTitleImg}
-            getData={getIid}
+            getData={getedData}
             id="titleImg"
             title="대표 이미지"
             getDataFinish={getDataFinish.current}
@@ -265,7 +267,7 @@ export default function SetDetailUser() {
             setImgs={setImgs}
             id="imgs"
             title="상세 이미지"
-            getData={getIid}
+            getData={getedData}
             getDataFinish={getDataFinish.current}
           />
         </form>

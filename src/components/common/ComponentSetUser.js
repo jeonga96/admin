@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
 import { servicesPostData } from "../../Services/importData";
-import { urlGetUser, urlSetUser } from "../../Services/string";
+import { urlGetUser } from "../../Services/string";
 
 export default function ComponentSetUser({ setUserData, userData }) {
   const { uid } = useParams();
@@ -13,7 +13,7 @@ export default function ComponentSetUser({ setUserData, userData }) {
   }
 
   // react-hook-form 라이브러리
-  const { register, setValue } = useForm();
+  const { register } = useForm();
 
   useEffect(() => {
     servicesPostData(urlGetUser, {
@@ -21,7 +21,6 @@ export default function ComponentSetUser({ setUserData, userData }) {
     })
       .then((res) => {
         if (res.status === "success") {
-          // 비밀번호는 기본값 설정되면 안 되기 때문에 X
           fnSetUserData({
             userrole: res.data.userrole || "ROLE_USER",
             useFlag: String(res.data.useFlag) || "1",
