@@ -25,7 +25,6 @@ export default function Postcode({
       if (status === window.kakao.maps.services.Status.OK) {
         // 공사콕에서 사용하는 key와 다음 카카오의 키가 다름!
         // 다음 카카오 신주소 : roadAddress, 구주소 :jibunAddress, 우편번호 : zonecode
-        console.log(res);
         fnSetAddress({
           address: res.roadAddress,
           oldaddress: res.jibunAddress,
@@ -80,7 +79,10 @@ export default function Postcode({
   // setUser
   if (!!userComponent) {
     return (
-      <>
+      <div className="formContentWrap">
+        <label htmlFor="address" className=" blockLabel">
+          주소
+        </label>
         <input
           type="text"
           id="roadAddress"
@@ -94,7 +96,7 @@ export default function Postcode({
         >
           Open
         </button>
-      </>
+      </div>
     );
   }
 
@@ -102,32 +104,44 @@ export default function Postcode({
   if (!userComponent) {
     return (
       <>
-        <input
-          type="text"
-          id="roadAddress"
-          disabled
-          value={multilAddress.address || ""}
-        />
-        <input
-          type="text"
-          id="zipcode"
-          value={multilAddress.zipcode || ""}
-          disabled
-        />
+        <div className="formContentWrap">
+          <label htmlFor="address" className=" blockLabel">
+            주소
+          </label>
+          <div>
+            <input
+              type="text"
+              id="roadAddress"
+              disabled
+              value={multilAddress.address || ""}
+            />
+            <input
+              type="text"
+              id="zipcode"
+              value={multilAddress.zipcode || ""}
+              disabled
+              style={{
+                width: "200px",
+                float: "left",
+                marginRight: "10px",
+              }}
+            />
 
-        <button
-          type="button"
-          onClick={handleClick}
-          style={{ backgroundColor: "red" }}
-        >
-          Open
-        </button>
+            <button
+              type="button"
+              onClick={handleClick}
+              className="formContentBtn"
+            >
+              주소검색
+            </button>
+          </div>
+        </div>
 
         <div className="formContentWrap">
           <label htmlFor="address" className=" blockLabel">
             좌표
           </label>
-          <ul className="detailContent" style={{ display: "flex" }}>
+          <ul className="detailContent">
             <li>
               <span>위도</span>
               <input

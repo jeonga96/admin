@@ -324,6 +324,13 @@ i {
   margin-bottom: 1.25rem;
   text-align: center;
 }
+.loginWrap .loginBox label {
+  background-color: transparent;
+  border: none;
+}
+.loginWrap .loginBox input {
+  height: 32px;
+}
 
 @media screen and (max-width: 767px) {
   .loginWrap .loginBox {
@@ -351,21 +358,24 @@ i {
 }
 
 /* 기본적인 form Wrap --------------------------------------------------------------*/
-.blockLabel {
-  text-align: center;
-}
-
 .formLayout {
   width: 100%;
   height: auto;
 }
+
 .formLayout .smallSubmitButton {
   right: 0.625rem;
 }
-.formContentWrap {
+.errorMessageWrap {
+  position: absolute;
+  right: 0;
+  bottom: -16px;
+  display: block;
   width: 100%;
   height: auto;
-  margin-top: 0.625rem;
+  color: var(--color-acceent);
+  text-align: right;
+  font-size: var(--font-size-small);
 }
 
 .formLayout .blockLabel {
@@ -376,6 +386,9 @@ i {
   line-height: 2rem;
   font-weight: 500;
   color: var(--color-black);
+  width: 150px;
+  background-color: var(--color-bggray);
+  border: 1px solid var(--color-gray);
 }
 
 .formLayout input {
@@ -393,7 +406,7 @@ i {
 .formLayout textarea {
   resize: none;
   width: 100%;
-  height: 21.875rem;
+  height: 120px;
   padding: 0.3125rem;
   background-color: rgba(243, 244, 243, 0.3);
   border: 0.0625rem solid var(--color-bggray);
@@ -407,22 +420,23 @@ i {
 
 /*form layout 기타 요소*/
 .formLayout .fileboxLabel {
-  width: 6rem;
-  padding: 0.3em 0.5em;
-  color: var(--color-black);
+  display: block;
+  width: 7rem;
+  padding: 0.3em 0;
+  height: auto;
   font-size: var(--font-size-small);
-  line-height: normal;
   text-align: center;
   cursor: pointer;
   border: 0.0625rem solid var(--color-bggray);
   background-color: rgba(243, 244, 243, 0.5);
   transition: all 100ms ease-in;
+  margin: 0 auto;
+  margin-top: 10px;
 }
 
 .fileboxLabel:hover,
 .fileboxLabel:active {
   background-color: var(--color-gray);
-  border: 0.0625rem solid var(--color-primary);
 }
 
 .selectForm select {
@@ -437,108 +451,18 @@ i {
   outline: none;
 }
 
-/* --------------------------------------------------------------*/
-/* 다른 입력창이 입력될 때를 기다리지 않고 입력된 값을 바로 보낼 땐 formContentWrapWithButton로 감싸준다. */
-/* --------------------------------------------------------------*/
-.formContentWrapWithButton {
-  width: 100%;
-  height: auto;
-  padding-top: 2px;
-}
-.formContentWrapWithButton label,
-.detailTitle {
-  width: 100%;
-}
-.formContentWrapWithButton > div {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  height: auto;
-}
-.formContentWrapWithButton input,
-.detailContent {
-  width: 80%;
-}
-.formContentWrapWithButton button,
-.detailButton {
-  width: 19%;
-  height: 2rem;
-  margin-top: 0.5rem;
-  background-color: var(--color-gray);
-}
-
-.formContentWrapWithRadio {
-  display: flex;
-  flex-wrap: wrap;
-  width: 100%;
-  height: auto;
-  padding-top: 20px;
-}
-.formContentWrapWithRadio > div {
-  display: flex;
-  width: 50%;
-  height: 1.875rem;
-  padding: 0;
-  margin: 0;
-  border: 0.0625rem solid var(--color-bggray);
-  border-collapse: collapse;
-}
-.formContentWrapWithRadioValue {
-  padding-left: 4px;
-}
-.formContentWrapWithTextValue {
-  display: flex;
-  padding: 2px;
-}
-
-.formContentWrapWithTextValue .formContentInput {
-  width: 80%;
-  height: 100%;
-  margin-top: 0;
-  border: 1px solid var(--color-gray);
-}
-.formContentWrapWithTextValue button {
-  display: block;
-  width: 20%;
-  height: 100%;
-  margin-left: 2px;
-  background-color: var(--color-gray);
-  font-size: var(--font-size-small);
-}
-
-.errorMessageWrap {
-  display: block;
-  width: 100%;
-  height: auto;
-  color: var(--color-acceent);
-  text-align: right;
-}
-.infoMessageBox {
-  width: 100%;
-  height: auto;
-  padding: 10px;
-  color: var(--color-bgblack);
-}
-.infoMessageBox .title {
-  display: block;
-  font-size: var(--font-size-em);
-  margin-bottom: 10px;
-}
-.infoMessageBox li {
-  margin-bottom: 5px;
-}
 /*이미지 설정 - 썸네일*/
 .imgsThumbnail {
   display: flex;
   justify-content: left;
-  width: 100%;
+  flex-wrap: wrap;
+  width: calc(100% - 160px);
   height: auto;
   min-height: 4.5rem;
   background-color: rgba(243, 244, 243, 0.5);
   border: 0.0625rem solid var(--color-bggray);
   padding: 0.2rem;
-  flex-wrap: wrap;
-  margin-top: 0.5rem;
+  margin: 0 auto;
 }
 .imgsThumbnail > div,
 .imgsThumbnail > li {
@@ -605,7 +529,7 @@ i {
   color: var(--color-white);
 }
 
-/* 라벨 제거한 input basic css */
+/* 라벨 제거한 input basic css (공사콕 배너관리-배너이비지) */
 .formContentWrapWithTextValue .basicInputWrap > input {
   border: none;
   background-color: transparent;
@@ -614,6 +538,7 @@ i {
 .formContentWrapWithTextValue .basicInputWrap > input:focus {
   border-bottom: none;
 }
+
 .basicInputWrap .basicWrapLabel {
   cursor: pointer;
   width: 65px;
@@ -626,125 +551,109 @@ i {
   line-height: 22px;
 }
 
-/*pc 버전*/
-@media screen and (min-width: 768px) {
-  .formLayout {
-    padding: 0;
-  }
-  .formLayout .smallSubmitButton {
-    right: 0;
-  }
-
-  /* form으로 한 번에 전송되는 인풋은 formContentWrap로 감싸준다. */
-  .formContentWrap {
-    display: flex;
-    justify-content: left;
-  }
-  .formContentWrap label,
-  .formContentWrap .detailTitle {
-    width: 30%;
-  }
-  .formContentWrap input,
-  .formContentWrap .detailContent {
-    display: inline-block;
-    width: 100%;
-  }
-  .detailContent li {
-    width: auto;
-    height: auto;
-  }
-  .detailContent span {
-    display: inline-block;
-    width: 50px;
-    height: 100%;
-  }
-  .detailContent input {
-    display: inline-block;
-    width: auto;
-    height: 100%;
-    margin-top: 0;
-  }
-
-  /* 다른 입력창이 입력될 때를 기다리지 않고 입력된 값을 바로 보낼 땐 formContentWrapWithButton로 감싸준다. */
-  .formContentWrapWithButton {
-    display: flex;
-    justify-content: left;
-  }
-  .formContentWrapWithButton label,
-  .detailTitle {
-    width: 30%;
-  }
-  .formContentWrapWithButton > div {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    height: auto;
-  }
-  .formContentWrapWithButton input,
-  .detailContent {
-    width: 80%;
-  }
-  .formContentWrapWithButton button,
-  .detailButton {
-    display: block;
-    width: 19%;
-    height: 2rem;
-    margin-top: 0.5rem;
-    background-color: var(--color-gray);
-  }
-
-  .setImageWrap {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-  }
-  .imgsTitle {
-    width: 30%;
-  }
-  .imgsTitle input {
-    width: 20px;
-    height: 20px;
-    margin-bottom: 0;
-  }
-  .detailPageLayout {
-    padding: 0;
-  }
+.formWrap {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: left;
+  width: 100%;
+  height: auto;
+}
+.formWrap fieldset {
+  position: relative;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--color-lightprimary);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: left;
+  padding: 4px;
+  margin-top: 20px;
+}
+.formWrap fieldset > h3 {
+  position: absolute;
+  top: -10px;
+  font-size: var(--font-size-small);
+  font-weight: 600;
+  background-color: #fff;
+  padding: 0 10px;
 }
 
-/* keyword 클릭 이벤트 */
+.formContentWrap {
+  position: relative;
+  display: flex;
+  width: 50%;
+  height: auto;
+  justify-content: left;
+  margin-top: 20px;
+}
+.formContentWrap > div:last-child,
+.formContentWrap .detailContent {
+  width: calc(100% - 160px);
+  height: 100%;
+  margin: 0 auto;
+}
+.formContentWrap div input {
+  margin-bottom: 4px;
+}
+.formContentWrap div input:last-child {
+  margin-bottom: 0;
+}
+.formContentBtn {
+  width: 60px;
+  height: 34px;
+  background-color: var(--color-bggray);
+  font-size: var(--font-size-small);
+}
+
+.setImageWrap {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.imgsTitle input {
+  width: 20px;
+  height: 20px;
+  margin-bottom: 0;
+}
+.detailPageLayout {
+  padding: 0;
+}
+/* keyword 클릭 이벤트 ---------------------------------- */
 .keywordWrap {
   position: relative;
   width: 100%;
   height: auto;
 }
-
-.keywordWrap .keywordBox {
-  position: absolute;
-  top: 0.3125rem;
-  z-index: 1;
-  overflow: scroll;
-  width: 25rem;
-  border: 0.0625rem solid var(--color-bggray);
-  background-color: var(--color-white);
-  height: 6.875rem;
-  margin-top: 0.25rem;
-  padding: 0.25rem;
-}
 .keywordWrap > div {
+  width: 100%;
+  height: 34px;
   display: flex;
   justify-content: space-between;
 }
 .keywordWrap .keywordInput {
-  width: 80%;
+  width: calc(100% - 64px);
+  height: 100%;
 }
 
 .keywordInput ~ button {
-  width: 18%;
-  height: 1.875rem;
+  width: 60px;
+  height: 100%;
   background-color: var(--color-bggray);
-  margin-top: 0.625rem;
+  font-size: var(--font-size-small);
 }
-
+.keywordBox {
+  position: absolute;
+  top: 0;
+  z-index: 1;
+  overflow: scroll;
+  width: 25.3125rem;
+  border: 0.0625rem solid var(--color-bggray);
+  background-color: var(--color-white);
+  height: 6.875rem;
+  padding: 0.25rem;
+}
 .keywordBox li {
   width: 100%;
   height: auto;
@@ -805,27 +714,28 @@ i {
 }
 .keywordSelectWrap li:hover::before {
   position: absolute;
-  content: "x";
+  content: "X";
   display: block;
-  right: -3px;
-  top: -3px;
+  right: -2px;
+  top: -2px;
   width: 10px;
   height: 10px;
   border-radius: 5px;
   font-size: 10px;
   text-align: center;
-  background-color: rgba(0, 0, 0, 0.4);
+  line-height: 10px;
+  background-color: rgba(0, 0, 0, 0.5);
   color: var(--color-white);
 }
 
 /*page --------------------------------------------------------------*/
+
 .detailPageLayout {
   width: 100%;
   height: auto;
   padding: 0 0.625rem;
 }
 .detailPageLayout .formContentWrap {
-  padding: 0.4rem 0;
   border-bottom: 0.0625rem solid var(--color-bggray);
 }
 .detailPageLayout .formContentWrap:last-child {
@@ -930,12 +840,34 @@ i {
   font-size: var(--font-size-small);
   line-height: 1.875rem;
 }
-
 .detailContentCenter {
   display: flex;
+  justify-content: space-between;
   margin: 0 auto;
   width: 43.75rem;
   height: auto;
+}
+/* detailPage- 주소:좌표 */
+.detailContent {
+  width: 100%;
+  height: auto;
+  display: flex;
+}
+.detailContent li {
+  display: flex;
+  width: 50%;
+  height: 34px;
+}
+.detailContent span {
+  display: block;
+  width: 60px;
+  height: 100%;
+  text-align: center;
+  line-height: 32px;
+}
+.detailContent input {
+  width: calc(100% - 60px);
+  height: 100%;
 }
 
 /* 사업자 상세정보 확인 하단 리뷰 & 공지사항 */
@@ -971,11 +903,6 @@ i {
   text-align: right;
   height: auto;
   font-weight: 500;
-}
-
-.detailContentTextArea,
-p {
-  white-space: pre-wrap;
 }
 
 .detailContentLink {
@@ -1184,8 +1111,9 @@ ul.pagination li a:hover {
   display: flex;
   width: 25%;
   height: 40px;
-  padding: 5px;
+  padding: 5px 0;
 }
+
 .listSearchWrap .blockLabel {
   width: 110px;
   height: 100%;
@@ -1208,13 +1136,13 @@ ul.pagination li a:hover {
   border: 0.0625rem solid var(--color-bggray);
 }
 
-.listSearchWrap .listSearchRadioLabel {
+.formLayout .listSearchRadioLabel {
   display: inline-block;
   width: auto;
   padding-top: 0.3125rem;
   margin-right: 0.625rem;
 }
-.listSearchWrap .listSearchRadioInput {
+.formLayout .listSearchRadioInput {
   display: inline-block;
   width: 0.625rem;
   height: 0.625rem;

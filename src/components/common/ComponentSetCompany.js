@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
 import { servicesPostData } from "../../Services/importData";
-import { urlSetCompany, urlGetCompany } from "../../Services/string";
+import { urlGetCompany } from "../../Services/string";
 
 export default function ComponentSetCompany({ companyData, setCompanyData }) {
   const { cid } = useParams();
@@ -40,8 +40,8 @@ export default function ComponentSetCompany({ companyData, setCompanyData }) {
   }, []);
 
   return (
-    <fieldset className="formContentWrapWithRadio">
-      <div className="listSearchWrap">
+    <>
+      <div className="formContentWrap">
         <div className="blockLabel">계약자</div>
         <div>
           <input
@@ -58,9 +58,9 @@ export default function ComponentSetCompany({ companyData, setCompanyData }) {
         </div>
       </div>
 
-      <div className="listSearchWrap">
+      <div className="formContentWrap">
         <div className="blockLabel">사업자 활성화</div>
-        <div className="formContentWrapWithRadioValue">
+        <div>
           <input
             className="listSearchRadioInput"
             type="radio"
@@ -97,7 +97,7 @@ export default function ComponentSetCompany({ companyData, setCompanyData }) {
         </div>
       </div>
 
-      <div className="listSearchWrap">
+      <div className="formContentWrap">
         <div className="blockLabel">회원 연결</div>
         <div>
           <input
@@ -113,6 +113,6 @@ export default function ComponentSetCompany({ companyData, setCompanyData }) {
           />
         </div>
       </div>
-    </fieldset>
+    </>
   );
 }

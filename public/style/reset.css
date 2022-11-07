@@ -135,8 +135,10 @@ input {
   box-sizing: border-box;
 }
 
-p {
-  white-space: nowrap;
+p,
+textarea {
+  /* white-space: nowrap; */
+  white-space: pre-wrap;
 }
 
 input[type="text"],
@@ -227,4 +229,7 @@ button {
 }
 .link:focus {
   outline: none;
+}
+.blockLabel {
+  text-align: center;
 }

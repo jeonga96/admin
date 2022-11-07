@@ -2,7 +2,7 @@ export default function ComponentListCompanySearch() {
   return (
     <div className="commonBox">
       <h3 className="blind">사업자관리 검색 필터</h3>
-      <form className="listSearchForm">
+      <form className="listSearchForm formLayout">
         <div className="listSearchWrap">
           <label className="blockLabel">관리번호</label>
           <div>

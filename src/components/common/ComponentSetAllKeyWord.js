@@ -56,12 +56,6 @@ export default function SetAllKeyWord({
           placeholder="키워드를 입력해 주세요."
           onChange={(e) => setSearchValue(e.target.value)}
           className="keywordInput"
-          // onKeyUp={(e) => {
-          //   if (e.key === "Enter") {
-          //     e.preventDefault();
-          //     setSearchBtn(!searchBtn);
-          //   }
-          // }}
         />
         <button
           onClick={(e) => {
@@ -72,6 +66,7 @@ export default function SetAllKeyWord({
           {searchBtn ? "닫기" : "검색"}
         </button>
       </div>
+
       {searchBtn && (
         <ul className="keywordBox">
           {keywordFilter.length > 0 ? (

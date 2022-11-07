@@ -105,10 +105,9 @@ export default function ImageSet({
 
   return (
     <div className="setImageWrap">
-      <div className="imgsTitle">
+      <div>
         <div className="blockLabel">{title}</div>
-
-        <label htmlFor={id} className="blockLabel fileboxLabel">
+        <label htmlFor={id} className="fileboxLabel">
           <BiUpload /> 사진 업로드
         </label>
         <input
@@ -121,6 +120,7 @@ export default function ImageSet({
           multiple={id === "imgs" ? "multiple" : null}
         />
       </div>
+
       <div className="imgsThumbnail">
         {img !== null && img !== undefined && id === "titleImg" ? (
           <ServicesImageOnClick
