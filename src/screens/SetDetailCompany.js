@@ -214,7 +214,7 @@ export default function SetCompanyDetail() {
               {/* setDetailCompanyInfo radio ================================================================ */}
               <div className="formContentWrap">
                 <div className="blockLabel">회원관리</div>
-                <div>
+                <div className="formPaddingWrap">
                   <input
                     className="listSearchRadioInput"
                     type="radio"
@@ -265,7 +265,7 @@ export default function SetCompanyDetail() {
 
               <div className="formContentWrap">
                 <div className="blockLabel">계약관리</div>
-                <div>
+                <div className="formPaddingWrap">
                   <input
                     className="listSearchRadioInput"
                     type="radio"
@@ -331,7 +331,7 @@ export default function SetCompanyDetail() {
 
             <div className="formContentWrap">
               <div className="blockLabel">사업자 공사 관리</div>
-              <div>
+              <div className="formPaddingWrap">
                 <input
                   className="listSearchRadioInput"
                   type="radio"

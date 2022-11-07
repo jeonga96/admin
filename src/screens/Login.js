@@ -26,8 +26,8 @@ export default function Login() {
     <section className="loginWrap">
       <div className="commonBox loginBox">
         <h3>관리자 로그인</h3>
-        <form className="formLayout " onSubmit={handleSubmit(fnLogin)}>
-          <div className="formContentWrap">
+        <form onSubmit={handleSubmit(fnLogin)}>
+          <div className="formContentWrap" style={{ width: "100%" }}>
             <label htmlFor="userid" className="blockLabel">
               아이디
             </label>
@@ -61,7 +61,7 @@ export default function Login() {
             )}
           />
 
-          <div className="formContentWrap">
+          <div>
             <label htmlFor="passwd" className="blockLabel">
               비밀번호
             </label>
@@ -98,9 +98,8 @@ export default function Login() {
 
           <button
             type="submit"
-            className="widthFullButton"
+            className="widthWideBtn"
             disabled={isSubmitting}
-            style={{ marginTop: "20px" }}
           >
             로그인
           </button>

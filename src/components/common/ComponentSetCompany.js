@@ -60,7 +60,7 @@ export default function ComponentSetCompany({ companyData, setCompanyData }) {
 
       <div className="formContentWrap">
         <div className="blockLabel">사업자 활성화</div>
-        <div>
+        <div className="formPaddingWrap">
           <input
             className="listSearchRadioInput"
             type="radio"

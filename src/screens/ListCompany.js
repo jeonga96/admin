@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import { useState, useLayoutEffect } from "react";
-import { BsCheck2 } from "react-icons/bs";
 import { servicesPostData } from "../Services/importData";
 import { urlCompanylist } from "../Services/string";
 
@@ -38,13 +37,9 @@ export default function ListCompany() {
                 <th style={{ width: "300px" }}>관리번호</th>
                 <th style={{ width: "250px" }}>계약자</th>
                 <th style={{ width: "300px" }}>계약일</th>
-                <th style={{ width: "200px" }}>상세정보</th>
+                <th style={{ width: "200px" }}>계약관리</th>
+                {/* <th style={{ width: "200px" }}>상세정보</th> */}
                 <th style={{ width: "auto" }}></th>
-                {/* <th style={{ width: "200px" }}>관리번호</th>
-                <th style={{ width: "150px" }}>계약자</th>
-                <th style={{ width: "300px" }}>계약일</th>
-                <th style={{ width: "100px" }}>상세정보</th>
-                <th style={{ width: "auto" }}></th> */}
               </tr>
             </thead>
             <tbody>
@@ -53,7 +48,8 @@ export default function ListCompany() {
                   <td>{item.cid}</td>
                   <td>{item.name}</td>
                   <td>{item.createTime && item.createTime.slice(0, 10)}</td>
-                  <td>{item.useFlag ? <i>입력</i> : null}</td>
+                  <td>{item.useFlag && item.name ? <i>정상</i> : null}</td>
+                  {/* <td>{item.updateTime ? <i>입력</i> : null}</td> */}
                   <td className="tableButton">
                     <Link to={`${item.cid}`} className="Link">
                       상세

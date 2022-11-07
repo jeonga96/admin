@@ -34,7 +34,7 @@ export default function ComponentSetUser({ setUserData, userData }) {
     <>
       <div className="formContentWrap">
         <div className="blockLabel">회원 활성화</div>
-        <div>
+        <div className="formPaddingWrap">
           <input
             className="listSearchRadioInput"
             type="radio"
@@ -73,7 +73,7 @@ export default function ComponentSetUser({ setUserData, userData }) {
 
       <div className="formContentWrap">
         <div className="blockLabel">회원 권한</div>
-        <div>
+        <div className="formPaddingWrap">
           <input
             className="listSearchRadioInput"
             type="radio"

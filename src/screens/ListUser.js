@@ -38,13 +38,14 @@ export default function ListUser() {
           <table className="commonTable">
             <thead>
               <tr>
-                <th style={{ width: "200px" }}>관리번호</th>
-                <th style={{ width: "200px" }}>아이디</th>
+                <th style={{ width: "100px" }}>관리번호</th>
+                <th style={{ width: "250px" }}>아이디</th>
                 <th style={{ width: "150px" }}>이름</th>
                 <th style={{ width: "100px" }}>회원권한</th>
-                <th style={{ width: "200px" }}>핸드폰번호</th>
-                <th style={{ width: "200px" }}>계약일</th>
-                <th style={{ width: "100px" }}>상세정보</th>
+                <th style={{ width: "250px" }}>핸드폰번호</th>
+                <th style={{ width: "100px" }}>계약일</th>
+                <th style={{ width: "100px" }}>상세입력</th>
+                <th style={{ width: "100px" }}>사업자</th>
                 <th style={{ width: "auto" }}></th>
               </tr>
             </thead>
@@ -62,14 +63,8 @@ export default function ListUser() {
                     </td>
                     <td>{item.mobile}</td>
                     <td>{item.createTime && item.createTime.slice(0, 10)}</td>
-                    <td>
-                      {item.useFlag ? (
-                        <i>
-                          {/* <BsCheck2 /> */}
-                          입력
-                        </i>
-                      ) : null}
-                    </td>
+                    <td>{item.udid ? <i>입력</i> : null}</td>
+                    <td>{item.cid ? <i>사업자</i> : null}</td>
                     <td className="tableButton">
                       <Link to={`${item.uid}`} className="Link">
                         상세
