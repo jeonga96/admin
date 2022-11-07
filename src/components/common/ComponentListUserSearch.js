@@ -1,18 +1,12 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { ErrorMessage } from "@hookform/error-message";
 
 import { servicesPostData } from "../../Services/importData";
 import { urlUserlist } from "../../Services/string";
 
 export default function ComponentListUserSearch({ setUserList, setListPage }) {
   // react-hook-form 라이브러리
-  const {
-    register,
-    reset,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({});
+  const { register, reset, handleSubmit } = useForm({});
 
   const [searchData, setSearchData] = useState({});
   const [userrole, setUserrole] = useState("ROLE_USER");

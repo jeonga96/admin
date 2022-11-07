@@ -31,10 +31,10 @@ export default function ComponentSetUser({ setUserData, userData }) {
   }, []);
 
   return (
-    <fieldset className="formContentWrapWithRadio">
-      <div className="listSearchWrap">
+    <>
+      <div className="formContentWrap">
         <div className="blockLabel">회원 활성화</div>
-        <div className="formContentWrapWithRadioValue">
+        <div>
           <input
             className="listSearchRadioInput"
             type="radio"
@@ -71,9 +71,9 @@ export default function ComponentSetUser({ setUserData, userData }) {
         </div>
       </div>
 
-      <div className="listSearchWrap">
+      <div className="formContentWrap">
         <div className="blockLabel">회원 권한</div>
-        <div className="formContentWrapWithRadioValue">
+        <div>
           <input
             className="listSearchRadioInput"
             type="radio"
@@ -110,7 +110,7 @@ export default function ComponentSetUser({ setUserData, userData }) {
         </div>
       </div>
 
-      <div className="listSearchWrap">
+      <div className="formContentWrap">
         <div className="blockLabel">비밀번호 관리</div>
         <div>
           <input
@@ -126,6 +126,6 @@ export default function ComponentSetUser({ setUserData, userData }) {
           />
         </div>
       </div>
-    </fieldset>
+    </>
   );
 }

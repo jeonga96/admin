@@ -105,171 +105,186 @@ export default function SetDetailUser() {
             <LayoutTopButton url="/user" text="목록으로 가기" />
             <LayoutTopButton text="완료" disabled={isSubmitting} />
           </ul>
-          <DetailUserComponent setUserData={setUserData} userData={userData} />
+          <div className="formWrap">
+            {/* setUser (회원활성화, 회원권한, 비밀번호관리) ================================================================ */}
+            <DetailUserComponent
+              setUserData={setUserData}
+              userData={userData}
+            />
 
-          <div className="formContentWrap">
-            <label htmlFor="name" className=" blockLabel">
-              이름
-            </label>
-            <input
-              type="text"
-              id="name"
-              name="_name"
-              placeholder="이름을 입력해 주세요."
-              {...register("_name", {
-                required: "입력되지 않았습니다.",
-                maxLength: {
-                  value: 8,
-                  message: "8자 이하의 글자만 사용가능합니다.",
-                },
-              })}
+            {/* setDetailUserInfo  ================================================================ */}
+            <div className="formContentWrap">
+              <label htmlFor="name" className=" blockLabel">
+                이름
+              </label>
+              <div>
+                <input
+                  type="text"
+                  id="name"
+                  name="_name"
+                  placeholder="이름을 입력해 주세요."
+                  {...register("_name", {
+                    required: "입력되지 않았습니다.",
+                    maxLength: {
+                      value: 8,
+                      message: "8자 이하의 글자만 사용가능합니다.",
+                    },
+                  })}
+                />
+                <ErrorMessage
+                  errors={errors}
+                  name="_name"
+                  render={({ message }) => (
+                    <span className="errorMessageWrap">{message}</span>
+                  )}
+                />
+              </div>
+            </div>
+
+            <div className="formContentWrap">
+              <label htmlFor="nick" className="blockLabel">
+                별명
+              </label>
+              <div>
+                <input
+                  type="text"
+                  id="nick"
+                  name="_nick"
+                  placeholder="별명을 입력해 주세요."
+                  {...register("_nick", {
+                    maxLength: {
+                      value: 8,
+                      message: "8자 이하의 글자만 사용가능합니다.",
+                    },
+                    pattern: {
+                      value: /^[a-zA-Z0-9ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/,
+                      message: "형식에 맞지 않습니다.",
+                    },
+                  })}
+                />
+                <ErrorMessage
+                  errors={errors}
+                  name="_nick"
+                  render={({ message }) => (
+                    <span className="errorMessageWrap">{message}</span>
+                  )}
+                />
+              </div>
+            </div>
+
+            <div className="formContentWrap">
+              <label htmlFor="location" className=" blockLabel">
+                주소 (ㅇㅇ구, ㅇㅇ동)
+              </label>
+              <div>
+                <input
+                  type="text"
+                  id="location"
+                  name="_location"
+                  placeholder="주소를 입력해 주세요."
+                  {...register("_location", {
+                    maxLength: {
+                      value: 20,
+                      message: "20자 이하의 글자만 사용가능합니다.",
+                    },
+                    pattern: {
+                      value: /^[a-zA-Z0-9ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/,
+                      message: "형식에 맞지 않습니다.",
+                    },
+                  })}
+                />
+                <ErrorMessage
+                  errors={errors}
+                  name="_location"
+                  render={({ message }) => (
+                    <span className="errorMessageWrap">{message}</span>
+                  )}
+                />
+              </div>
+            </div>
+
+            {/* 주소 */}
+            <PieceRegisterSearchPopUp
+              userComponent
+              setMultilAddress={setMultilAddress}
+              multilAddress={multilAddress}
+              getedData={getedData}
+            />
+
+            <div className="formContentWrap">
+              <label htmlFor="mobile" className="blockLabel">
+                핸드폰 번호
+              </label>
+              <div>
+                <input
+                  type="text"
+                  id="mobile"
+                  name="_mobile"
+                  placeholder="핸드폰 번호 (예시 000-0000-0000)"
+                  {...register("_mobile", {
+                    required: "입력되지 않았습니다.",
+                    pattern: {
+                      value: /^[0-9]{3}-[0-9]{3,4}-[0-9]{4}/,
+                      message: "형식에 맞지 않습니다.",
+                    },
+                  })}
+                />
+                <ErrorMessage
+                  errors={errors}
+                  name="_mobile"
+                  render={({ message }) => (
+                    <span className="errorMessageWrap">{message}</span>
+                  )}
+                />
+              </div>
+            </div>
+
+            <div className="formContentWrap">
+              <label htmlFor="mail" className=" blockLabel">
+                이메일
+              </label>
+              <div>
+                <input
+                  type="text"
+                  id="mail"
+                  name="_mail"
+                  placeholder="이메일을 입력해 주세요."
+                  {...register("_mail", {
+                    pattern: {
+                      value:
+                        /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i,
+                      message: "형식에 맞지 않습니다.",
+                    },
+                  })}
+                />
+                <ErrorMessage
+                  errors={errors}
+                  name="_mail"
+                  render={({ message }) => (
+                    <span className="errorMessageWrap">{message}</span>
+                  )}
+                />
+              </div>
+            </div>
+
+            <ImageSet
+              img={titleImg}
+              setImg={setTitleImg}
+              getData={getedData}
+              id="titleImg"
+              title="대표 이미지"
+              getDataFinish={getDataFinish.current}
+            />
+
+            <ImageSet
+              imgs={imgs}
+              setImgs={setImgs}
+              id="imgs"
+              title="상세 이미지"
+              getData={getedData}
+              getDataFinish={getDataFinish.current}
             />
           </div>
-          <ErrorMessage
-            errors={errors}
-            name="_name"
-            render={({ message }) => (
-              <span className="errorMessageWrap">{message}</span>
-            )}
-          />
-
-          <div className="formContentWrap">
-            <label htmlFor="nick" className="blockLabel">
-              별명
-            </label>
-            <input
-              type="text"
-              id="nick"
-              name="_nick"
-              placeholder="별명을 입력해 주세요."
-              {...register("_nick", {
-                maxLength: {
-                  value: 8,
-                  message: "8자 이하의 글자만 사용가능합니다.",
-                },
-                pattern: {
-                  value: /^[a-zA-Z0-9ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/,
-                  message: "형식에 맞지 않습니다.",
-                },
-              })}
-            />
-          </div>
-          <ErrorMessage
-            errors={errors}
-            name="_nick"
-            render={({ message }) => (
-              <span className="errorMessageWrap">{message}</span>
-            )}
-          />
-
-          <div className="formContentWrap">
-            <label htmlFor="location" className=" blockLabel">
-              주소 (ㅇㅇ구, ㅇㅇ동)
-            </label>
-            <input
-              type="text"
-              id="location"
-              name="_location"
-              placeholder="주소를 입력해 주세요."
-              {...register("_location", {
-                maxLength: {
-                  value: 20,
-                  message: "20자 이하의 글자만 사용가능합니다.",
-                },
-                pattern: {
-                  value: /^[a-zA-Z0-9ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/,
-                  message: "형식에 맞지 않습니다.",
-                },
-              })}
-            />
-          </div>
-          <ErrorMessage
-            errors={errors}
-            name="_location"
-            render={({ message }) => (
-              <span className="errorMessageWrap">{message}</span>
-            )}
-          />
-
-          <label htmlFor="address" className=" blockLabel">
-            주소
-          </label>
-          <PieceRegisterSearchPopUp
-            userComponent
-            setMultilAddress={setMultilAddress}
-            multilAddress={multilAddress}
-            getedData={getedData}
-          />
-
-          <div className="formContentWrap">
-            <label htmlFor="mobile" className="blockLabel">
-              핸드폰 번호
-            </label>
-            <input
-              type="text"
-              id="mobile"
-              name="_mobile"
-              placeholder="핸드폰 번호 (예시 000-0000-0000)"
-              {...register("_mobile", {
-                required: "입력되지 않았습니다.",
-                pattern: {
-                  value: /^[0-9]{3}-[0-9]{3,4}-[0-9]{4}/,
-                  message: "형식에 맞지 않습니다.",
-                },
-              })}
-            />
-          </div>
-          <ErrorMessage
-            errors={errors}
-            name="_mobile"
-            render={({ message }) => (
-              <span className="errorMessageWrap">{message}</span>
-            )}
-          />
-
-          <div className="formContentWrap">
-            <label htmlFor="mail" className=" blockLabel">
-              이메일
-            </label>
-            <input
-              type="text"
-              id="mail"
-              name="_mail"
-              placeholder="이메일을 입력해 주세요."
-              {...register("_mail", {
-                pattern: {
-                  value:
-                    /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i,
-                  message: "형식에 맞지 않습니다.",
-                },
-              })}
-            />
-          </div>
-          <ErrorMessage
-            errors={errors}
-            name="_mail"
-            render={({ message }) => (
-              <span className="errorMessageWrap">{message}</span>
-            )}
-          />
-
-          <ImageSet
-            img={titleImg}
-            setImg={setTitleImg}
-            getData={getedData}
-            id="titleImg"
-            title="대표 이미지"
-            getDataFinish={getDataFinish.current}
-          />
-
-          <ImageSet
-            imgs={imgs}
-            setImgs={setImgs}
-            id="imgs"
-            title="상세 이미지"
-            getData={getedData}
-            getDataFinish={getDataFinish.current}
-          />
         </form>
       </div>
     </>

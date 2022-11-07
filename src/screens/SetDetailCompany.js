@@ -205,13 +205,13 @@ export default function SetCompanyDetail() {
           <div className="formWrap">
             <fieldset>
               <h3>구역 설명</h3>
-              {/* setUser radio ================================================================ */}
+              {/* setCompany radio (계약자, 사업자활성화, 회원연결) ================================================================ */}
               <ComponentSetCompany
                 setCompanyData={setCompanyData}
                 companyData={companyData}
               />
 
-              {/* setDetailUserInfo radio ================================================================ */}
+              {/* setDetailCompanyInfo radio ================================================================ */}
               <div className="formContentWrap">
                 <div className="blockLabel">회원관리</div>
                 <div>
@@ -595,6 +595,7 @@ export default function SetCompanyDetail() {
               </div>
             </div>
 
+            {/* 주소 */}
             <PieceRegisterSearchPopUp
               setMultilAddress={setMultilAddress}
               multilAddress={multilAddress}

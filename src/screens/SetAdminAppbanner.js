@@ -152,80 +152,81 @@ export default function SetAdminAppbanner() {
       </div> */}
       <div className="commonBox">
         <form className="formLayout" onSubmit={HandleSubmit}>
-          <fieldset className="formContentWrapWithRadio">
-            <div className="listSearchWrap">
-              <div className="blockLabel">배너이름</div>
-              <div>
-                <input
-                  type="text"
-                  id="contentString"
-                  placeholder="제목을 입력해 주세요."
-                  onChange={onChange}
-                  value={bannerDetail.contentString || ""}
-                />
+          <fieldset>
+            <div className="formWrap">
+              <div className="listSearchWrap" style={{ width: "50%" }}>
+                <div className="blockLabel">배너이름</div>
+                <div>
+                  <input
+                    type="text"
+                    id="contentString"
+                    placeholder="제목을 입력해 주세요."
+                    onChange={onChange}
+                    value={bannerDetail.contentString || ""}
+                  />
+                </div>
               </div>
-            </div>
-            <div className="listSearchWrap">
-              <div className="blockLabel">사용여부</div>
-              <div className="formContentWrapWithTextValue">
-                <input
-                  className="listSearchRadioInput"
-                  type="radio"
-                  checked={useFlagCheck === "0"}
-                  name="_useFlag"
-                  value="0"
-                  id="useFlag0"
-                  onChange={onChangeUseFlag}
-                />
-                <label className="listSearchRadioLabel" htmlFor="useFlag0">
-                  OFF
-                </label>
+              <div className="listSearchWrap" style={{ width: "50%" }}>
+                <div className="blockLabel">사용여부</div>
+                <div className="formContentWrapWithTextValue">
+                  <input
+                    className="listSearchRadioInput"
+                    type="radio"
+                    checked={useFlagCheck === "0"}
+                    name="_useFlag"
+                    value="0"
+                    id="useFlag0"
+                    onChange={onChangeUseFlag}
+                  />
+                  <label className="listSearchRadioLabel" htmlFor="useFlag0">
+                    OFF
+                  </label>
 
-                <input
-                  className="listSearchRadioInput"
-                  type="radio"
-                  checked={useFlagCheck === "1"}
-                  name="_useFlag"
-                  value="1"
-                  id="useFlag1"
-                  onChange={onChangeUseFlag}
-                />
-                <label className="listSearchRadioLabel" htmlFor="useFlag1">
-                  ON
-                </label>
+                  <input
+                    className="listSearchRadioInput"
+                    type="radio"
+                    checked={useFlagCheck === "1"}
+                    name="_useFlag"
+                    value="1"
+                    id="useFlag1"
+                    onChange={onChangeUseFlag}
+                  />
+                  <label className="listSearchRadioLabel" htmlFor="useFlag1">
+                    ON
+                  </label>
+                </div>
               </div>
-            </div>
 
-            <div className="listSearchWrap">
-              <div className="blockLabel">배너이미지</div>
-              <div className="formContentWrapWithTextValue">
-                <SetImage
-                  id="titleImg"
-                  getData={bannerlist}
-                  getDataFinish={getDataFinish.current}
-                  setChangeImg={setChangeImg}
-                  changeImg={changeImg}
-                />
+              <div className="listSearchWrap" style={{ width: "50%" }}>
+                <div className="blockLabel">배너이미지</div>
+                <div className="formContentWrapWithTextValue">
+                  <SetImage
+                    id="titleImg"
+                    getData={bannerlist}
+                    getDataFinish={getDataFinish.current}
+                    setChangeImg={setChangeImg}
+                    changeImg={changeImg}
+                  />
+                </div>
               </div>
-            </div>
-            <div className="listSearchWrap">
-              <div className="blockLabel">랜딩 URL</div>
-              <div>
-                <input
-                  type="text"
-                  id="contentDetail"
-                  placeholder="연결될 URL을 입력해 주세요."
-                  onChange={onChange}
-                  value={bannerDetail.contentDetail || ""}
-                />
+              <div className="listSearchWrap" style={{ width: "50%" }}>
+                <div className="blockLabel">랜딩 URL</div>
+                <div>
+                  <input
+                    type="text"
+                    id="contentDetail"
+                    placeholder="연결될 URL을 입력해 주세요."
+                    onChange={onChange}
+                    value={bannerDetail.contentDetail || ""}
+                  />
+                </div>
               </div>
             </div>
           </fieldset>
 
           <div className="listSearchButtonWrap">
-            <input
+            <button
               type="reset"
-              value="취소"
               onClick={() => {
                 if (!!clickedContid) {
                   setClickedContid("");
@@ -242,16 +243,22 @@ export default function SetAdminAppbanner() {
                   setChangeImg("");
                 }
               }}
-            />
+            >
+              취소
+            </button>
 
             {!!clickedContid ? (
-              <input type="submit" value="수정" />
+              <button type="submit" value="수정">
+                수정
+              </button>
             ) : (
-              <input type="submit" value="추가" />
+              <button type="submit" value="추가">
+                추가
+              </button>
             )}
           </div>
         </form>
-        {/* 하단 list */}
+        {/* 하단 list ---------------------------------------- */}
       </div>
       <div className="commonBox">
         <table className="commonTable">

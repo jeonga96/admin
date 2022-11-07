@@ -49,7 +49,7 @@ export default function ImageSet({
           onChange={handleSetImage}
         />
       ) : (
-        <div>
+        <>
           <label htmlFor={id} className="basicWrapLabel">
             변경
           </label>
@@ -60,8 +60,9 @@ export default function ImageSet({
             accept="image/*"
             onChange={handleSetImage}
             className="blind"
+            style={{ width: "1px", height: "1px" }}
           />
-        </div>
+        </>
       )}
     </div>
   );

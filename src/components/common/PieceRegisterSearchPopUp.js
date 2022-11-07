@@ -83,19 +83,26 @@ export default function Postcode({
         <label htmlFor="address" className=" blockLabel">
           주소
         </label>
-        <input
-          type="text"
-          id="roadAddress"
-          disabled
-          value={multilAddress.address || ""}
-        />
-        <button
-          type="button"
-          onClick={handleClick}
-          style={{ backgroundColor: "red" }}
-        >
-          Open
-        </button>
+        <div>
+          <input
+            type="text"
+            id="roadAddress"
+            disabled
+            value={multilAddress.address || ""}
+            style={{
+              width: "85%",
+              float: "left",
+              marginRight: "10px",
+            }}
+          />
+          <button
+            type="button"
+            onClick={handleClick}
+            className="formContentBtn"
+          >
+            주소검색
+          </button>
+        </div>
       </div>
     );
   }
