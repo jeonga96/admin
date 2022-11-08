@@ -416,7 +416,7 @@ i {
 .formLayout textarea {
   resize: none;
   width: 100%;
-  height: 120px;
+  height: 100%;
   padding: 0.3125rem;
   background-color: rgba(243, 244, 243, 0.3);
   border: 0.0625rem solid var(--color-bggray);
@@ -591,7 +591,7 @@ i {
 .formContentWrap > div:last-child,
 .formContentWrap .detailContent {
   width: calc(100% - 150px);
-  height: 100%;
+  height: auto;
   margin: 0 auto;
   border-top: 1px solid rgba(0, 0, 0, 0.1);
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
@@ -599,15 +599,13 @@ i {
 .formPaddingWrap {
   padding: 4px;
 }
-.formContentWrap div input {
+.formContentWrap div input:not(:nth-last-of-type(1)) {
   margin-bottom: 4px;
 }
-.formContentWrap div input:last-child {
-  margin-bottom: 0;
-}
+
 .formContentBtn {
   width: 60px;
-  height: 34px;
+  height: 32px;
   background-color: var(--color-bggray);
   font-size: var(--font-size-small);
 }
@@ -735,65 +733,79 @@ i {
   color: var(--color-white);
 }
 
-/*page --------------------------------------------------------------*/
+/*page (공지사항 & ) --------------------------------------------------------------*/
 
 .detailPageLayout {
   width: 100%;
   height: auto;
   padding: 0 0.625rem;
 }
-.detailPageLayout .formContentWrap {
-  border-bottom: 0.0625rem solid var(--color-bggray);
+.detailContentWrap {
+  display: flex;
+  width: 100%;
+  height: auto;
+  min-height: 60px;
+  border-bottom: 2px solid var(--color-bggray);
 }
-.detailPageLayout .formContentWrap:last-child {
+.detailContentWrap:last-child {
   border: none;
 }
-.detailPageLayout h4 {
-  width: 30%;
+.detailContentWrap h4 {
   display: block;
-  margin: 0.25rem 0;
-  font-weight: 500;
-  height: auto;
+  width: 150px;
+  height: 100%;
+  font-weight: 700;
   color: var(--color-black);
+  line-height: 60px;
+  text-align: center;
 }
-.detailPageLayout span,
-.detailPageLayout p {
+.detailContentWrap > div {
   color: var(--color-bgblack);
   display: block;
   width: 100%;
   height: auto;
   min-height: 1.5rem;
 }
-.detailPageLayout span {
-  line-height: 1.5rem;
+.detailContentWrap p {
+  width: 100%;
+  height: auto;
+  min-height: 80px;
+  margin: 20px 0;
+  border-bottom: 1px solid var(--color-bggray);
 }
+.detailContentWrap span {
+  line-height: 60px;
+}
+/* 공지사항 - 이미지 */
+.detailContentWrap .detailWidthContentImg > div {
+  width: 50px;
+  height: 50px;
+}
+/* 공지사항 - 생성, 수정날짜 */
 .detailTime {
   width: 100%;
-  height: 1.25rem;
+  height: auto;
   font-size: var(--font-size-small);
-  margin-bottom: 1.25rem;
 }
 .detailTime > div {
   float: right;
-  display: flex;
   width: auto;
   height: 1.25rem;
   margin-left: 0.625rem;
+  color: var(--color-gray);
 }
 .detailTime em {
   display: inline-block;
   width: auto;
   height: auto;
   margin-right: 0.4rem;
-  color: var(--color-lightprimary);
 }
 .detailTime > div > span {
-  width: 9.375rem;
+  width: auto;
   height: auto;
   min-height: inherit;
   line-height: inherit;
   display: inline-block;
-  color: var(--color-lightprimary);
 }
 .detailWidthContent {
   width: 100%;
@@ -847,13 +859,7 @@ i {
   font-size: var(--font-size-small);
   line-height: 1.875rem;
 }
-.detailContentCenter {
-  display: flex;
-  justify-content: space-between;
-  margin: 0 auto;
-  width: 43.75rem;
-  height: auto;
-}
+
 /* detailPage- 주소:좌표 */
 .detailContent {
   width: 100%;
@@ -876,10 +882,16 @@ i {
   width: calc(100% - 60px);
   height: 100%;
 }
-
 /* 사업자 상세정보 확인 하단 리뷰 & 공지사항 */
+.detailContentsList {
+  display: flex;
+  justify-content: left;
+  margin: 0 auto;
+  width: 100%;
+  height: auto;
+}
 .detailContentsList li {
-  width: calc(25% - 15px);
+  width: calc(20% - 20px);
   height: auto;
   background-color: var(--color-bggray);
   padding: 0.3125rem;
@@ -902,7 +914,7 @@ i {
 }
 .detailContentsList span {
   display: inline-block;
-  height: 2rem;
+  height: auto;
   font-weight: 400;
   padding-left: 4px;
 }
@@ -980,10 +992,14 @@ i {
   width: 30px;
   height: 14px;
   line-height: 14px;
+  font-size: 10px;
+  margin-left: 5px;
+}
+.commonTable .tableIcon {
   background-color: var(--color-acceent);
   color: var(--color-black);
-  font-size: 10px;
   border-radius: 3px;
+  margin-left: 0;
 }
 .commonTable .tableContentWrap {
   text-align: left;

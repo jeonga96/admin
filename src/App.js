@@ -17,16 +17,20 @@ import ListCompany from "./screens/ListCompany";
 import AddCompany from "./screens/AddCompany";
 import SetDetailCompany from "./screens/SetDetailCompany";
 
-/* 공지사항 */
+/* 공지사항 - 사업자*/
 import ListCompanyNotice from "./screens/ListCompanyNotice";
-import DetailCompanyNotice from "./screens/DetailCompanyNotice";
+import DetailNotice from "./screens/DetailNotice";
 import SetCompanyNotice from "./screens/SetDetailCompanyNotice";
 
-/* 앱관리 */
+/* 공지사항 - 관리자*/
 import ListAdminNotice from "./screens/ListAdminNotice";
-import DetailAdminNotice from "./screens/DetailAdminNotice";
 import SetDetailAdminNotice from "./screens/SetDetailAdminNotice";
+
+/* 앱관리 */
 import SetAdminAppbanner from "./screens/SetAdminAppbanner";
+
+/* 키워드 조회량 관리 */
+import SetKeywords from "./screens/SetKeywords";
 
 /* 리뷰 */
 import ListCompanyReview from "./screens/ListCompanyReview";
@@ -180,7 +184,7 @@ function App() {
           element={
             <MainLayout
               nowTitle="사업자 공지사항"
-              component={<DetailCompanyNotice />}
+              component={<DetailNotice />}
             />
           }
         />
@@ -213,7 +217,8 @@ function App() {
             />
           }
         />
-        {/* ------- 공사콕 앱관리 ------- */}
+        {/* --------------앱관리 --------------*/}
+        {/* ------- 공지사항 관리 ------- */}
         <Route
           path="noticelist"
           element={
@@ -223,6 +228,7 @@ function App() {
             />
           }
         />
+
         <Route
           path="addnotice"
           element={
@@ -237,7 +243,7 @@ function App() {
           element={
             <MainLayout
               nowTitle="공사콕 공지사항"
-              component={<DetailAdminNotice />}
+              component={<DetailNotice />}
             />
           }
         />
@@ -250,12 +256,23 @@ function App() {
             />
           }
         />
+        {/* ------- 배너 관리 ------- */}
         <Route
           path="appbanner"
           element={
             <MainLayout
               nowTitle="공사콕 배너관리"
               component={<SetAdminAppbanner />}
+            />
+          }
+        />
+        {/* ------- 키워드 조회량 관리 ------- */}
+        <Route
+          path="setkeywords"
+          element={
+            <MainLayout
+              nowTitle="공사콕 키워드 조회량 관리"
+              component={<SetKeywords />}
             />
           }
         />

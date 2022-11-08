@@ -48,7 +48,11 @@ export default function ListCompany() {
                   <td>{item.cid}</td>
                   <td>{item.name}</td>
                   <td>{item.createTime && item.createTime.slice(0, 10)}</td>
-                  <td>{item.useFlag && item.name ? <i>정상</i> : null}</td>
+                  <td>
+                    {item.useFlag && item.name ? (
+                      <i className="tableIcon">정상</i>
+                    ) : null}
+                  </td>
                   {/* <td>{item.updateTime ? <i>입력</i> : null}</td> */}
                   <td className="tableButton">
                     <Link to={`${item.cid}`} className="Link">

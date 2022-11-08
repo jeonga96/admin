@@ -24,7 +24,12 @@ export default function ListCompanyNotice() {
   }, []);
 
   return notice === undefined ? (
-    <ComponentErrorNull />
+    <>
+      <ul className="tableTopWrap">
+        <LayoutTopButton url={`/company/${cid}/notice/set`} text="작성" />
+      </ul>
+      <ComponentErrorNull />
+    </>
   ) : (
     <>
       <ul className="tableTopWrap">

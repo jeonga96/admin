@@ -860,7 +860,7 @@ export default function SetCompanyDetail() {
 
       {/* notice, review 링크 이동 ================================================================ */}
       <div className="paddingBox commonBox">
-        <ul className="detailContentsList detailContentCenter">
+        <ul className="detailContentsList">
           {getedData && (
             <PieceDetailListLink
               getData={noticeList}

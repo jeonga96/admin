@@ -54,3 +54,13 @@ export function useGetContentImgs(setImage, companyDetail) {
     });
   }, [companyDetail]);
 }
+
+export function useGetimgStringImgs(setImage, companyDetail) {
+  useEffect(() => {
+    servicesPostData(urlGetImages, {
+      imgs: companyDetail.imgString,
+    }).then((res) => {
+      setImage(res.data);
+    });
+  }, [companyDetail.imgString]);
+}

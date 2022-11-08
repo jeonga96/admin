@@ -83,16 +83,14 @@ export default function Postcode({
         <label htmlFor="address" className=" blockLabel">
           주소
         </label>
-        <div>
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
           <input
             type="text"
             id="roadAddress"
             disabled
             value={multilAddress.address || ""}
             style={{
-              width: "85%",
-              float: "left",
-              marginRight: "10px",
+              width: "84%",
             }}
           />
           <button

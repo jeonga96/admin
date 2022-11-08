@@ -63,8 +63,12 @@ export default function ListUser() {
                     </td>
                     <td>{item.mobile}</td>
                     <td>{item.createTime && item.createTime.slice(0, 10)}</td>
-                    <td>{item.udid ? <i>입력</i> : null}</td>
-                    <td>{item.cid ? <i>사업자</i> : null}</td>
+                    <td>
+                      {item.udid ? <i className="tableIcon">입력</i> : null}
+                    </td>
+                    <td>
+                      {item.cid ? <i className="tableIcon">사업자</i> : null}
+                    </td>
                     <td className="tableButton">
                       <Link to={`${item.uid}`} className="Link">
                         상세

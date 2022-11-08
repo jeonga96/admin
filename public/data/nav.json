@@ -33,6 +33,10 @@
       {
         "subName": "앱 배너 관리",
         "url": "/appbanner"
+      },
+      {
+        "subName": "키워드 조회량 관리",
+        "url": "/setkeywords"
       }
     ]
   }
