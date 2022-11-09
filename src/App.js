@@ -30,7 +30,7 @@ import SetDetailAdminNotice from "./screens/SetDetailAdminNotice";
 import SetAdminAppbanner from "./screens/SetAdminAppbanner";
 
 /* 키워드 조회량 관리 */
-import SetKeywords from "./screens/SetKeywords";
+import SetAdminKeywords from "./screens/SetAdminKeywords";
 
 /* 리뷰 */
 import ListCompanyReview from "./screens/ListCompanyReview";
@@ -272,7 +272,7 @@ function App() {
           element={
             <MainLayout
               nowTitle="공사콕 키워드 조회량 관리"
-              component={<SetKeywords />}
+              component={<SetAdminKeywords />}
             />
           }
         />

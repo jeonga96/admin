@@ -417,9 +417,11 @@ i {
   resize: none;
   width: 100%;
   height: 100%;
+  min-height: 120px;
   padding: 0.3125rem;
   background-color: rgba(243, 244, 243, 0.3);
   border: 0.0625rem solid var(--color-bggray);
+  line-height: 1.2rem;
 }
 .formLayout textarea:focus {
   outline: none;
@@ -651,7 +653,7 @@ i {
 .keywordBox {
   position: absolute;
   top: 0;
-  z-index: 1;
+  z-index: 10;
   overflow: scroll;
   width: 25.3125rem;
   border: 0.0625rem solid var(--color-bggray);

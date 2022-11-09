@@ -45,6 +45,7 @@ export const urlSetContent = urlPrefix + "/admin/setContent";
 
 // 키워드
 export const urlAllKeyword = urlPrefix + "/admin/allKeyword";
+export const urlSetKeyword = urlPrefix + "/admin/setKeyword";
 
 /* string 선언 - reducer */
 export const TOKEN = "token";

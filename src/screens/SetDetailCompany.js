@@ -10,6 +10,7 @@ import {
   serviesGetKeywords,
   serviesGetKid,
 } from "../Services/useData";
+
 import {
   urlGetCompanyDetail,
   urlSetCompanyDetail,
@@ -761,7 +762,6 @@ export default function SetCompanyDetail() {
                 키워드
               </label>
               <SetAllKeyWord
-                getDataKeyword={getValues("_keywords")}
                 companyDetailKeyword={companyDetailKeyword}
                 setCompanyDetailKeyword={setCompanyDetailKeyword}
               />

@@ -1,10 +1,8 @@
 import { servicesGetStorage } from "../../Services/importData";
-import { useDidMountEffect } from "../../Services/customHook";
 import { ALLKEYWORD } from "../../Services/string";
 import { useState, useEffect, useRef } from "react";
 
 export default function SetAllKeyWord({
-  getDataKeyword,
   companyDetailKeyword,
   setCompanyDetailKeyword,
 }) {
