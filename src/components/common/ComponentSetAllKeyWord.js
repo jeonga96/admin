@@ -41,14 +41,6 @@ export default function SetAllKeyWord({
   }, []);
 
   // 키워드가 검색된 목록에서 키워드 클릭하는 이벤트
-  const handleKeywordRefresh = () => {
-    companyDetailKeyword.forEach((el) => clickedKeyword.push(el.kid));
-    // if (!clickedKeyword.includes(item.kid)) {
-    // setCompanyDetailKeyword([...companyDetailKeyword, item]);
-    // }
-  };
-
-  // 키워드가 검색된 목록에서 키워드 클릭하는 이벤트
   const handleKeywordOnclick = (item, e) => {
     e.preventDefault();
     companyDetailKeyword.forEach((el) => clickedKeyword.push(el.kid));

@@ -635,6 +635,8 @@ i {
 }
 .keywordWrap > div {
   width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
   height: 34px;
   display: flex;
   justify-content: space-between;
@@ -642,6 +644,7 @@ i {
 .keywordWrap .keywordInput {
   width: calc(100% - 64px);
   height: 100%;
+  border: 1px solid var(--color-bggray);
 }
 
 .keywordInput ~ button {
@@ -660,6 +663,10 @@ i {
   background-color: var(--color-white);
   height: 6.875rem;
   padding: 0.25rem;
+}
+#keywordBoxAdmin {
+  left: 203px;
+  width: 636px;
 }
 .keywordBox li {
   width: 100%;

@@ -2,23 +2,55 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { urlSetKeyword, urlAllKeyword, ALLKEYWORD } from "../Services/string";
 import { servicesPostData, servicesSetStorage } from "../Services/importData";
-
-import ComponentSetAllKeyWord from "../components/common/ComponentSetAllKeyWord";
 import LayoutTopButton from "../components/common/LayoutTopButton";
 
-export default function SetAdminAppbanner() {
+export default function SetAdminKeyeords() {
   // react-hook-form 라이브러리
   const {
     handleSubmit,
-    register,
-    getValues,
-    formState: { isSubmitting, errors },
+    formState: { isSubmitting },
   } = useForm();
+
+  // 전체 키워드 받아오기
+  const [allKeywords, setAllKeywords] = useState(null);
+  // 입력된 값이 포함된 키워드 저장되는 state
+  const [searchValue, setSearchValue] = useState(null);
+  // 검색창 닫기, 검색 버튼
+  const [searchBtn, setSearchBtn] = useState(false);
   // 키워드 추가할 때마다 요소가 추가
   const [companyDetailKeyword, setCompanyDetailKeyword] = useState([]);
   // 수정된 값 저장
   const [modifyData, setModifyData] = useState(null);
-  const [refrash, setRefresh] = useState(false);
+
+  // 전체 키워드에서 입력한 키워드가 포함됐을 때의 값을 반환하는 코드
+  const keywordFilter =
+    !!allKeywords &&
+    allKeywords.filter((data) => {
+      if (searchValue === null) return data;
+      else if (data.keyword.toLowerCase().includes(searchValue.toLowerCase())) {
+        return data;
+      }
+    }, []);
+
+  function handleOpenBtn(e) {
+    e.preventDefault();
+    setSearchBtn(!searchBtn);
+    searchBtn === false
+      ? servicesPostData(urlAllKeyword, {})
+          .then((res) => {
+            servicesSetStorage(ALLKEYWORD, JSON.stringify(res.data));
+            setAllKeywords(res.data);
+          })
+          .then(setSearchBtn(!searchBtn))
+      : setSearchBtn(!searchBtn);
+  }
+
+  const handleKeywordOnclick = (item, e) => {
+    e.preventDefault();
+    const addArr = [item, ...companyDetailKeyword];
+    const newKeyword = new Set(addArr);
+    setCompanyDetailKeyword([...newKeyword]);
+  };
 
   function onChange(e) {
     if (modifyData === null) {
@@ -38,28 +70,58 @@ export default function SetAdminAppbanner() {
     }
   }
 
-  function HandleSubmit() {
+  const HandleSubmit = async () => {
     for (let i = 0; i < modifyData.length; i++) {
-      servicesPostData(urlSetKeyword, modifyData[i])
-        .then((res) => console.log(res))
-        .then(
-          servicesPostData(urlAllKeyword, {}).then((res) => {
-            servicesSetStorage(ALLKEYWORD, JSON.stringify(res.data));
-            setRefresh(!refrash);
-          })
-        );
+      servicesPostData(urlSetKeyword, modifyData[i]);
     }
-  }
-  console.log(companyDetailKeyword);
+    await setCompanyDetailKeyword([]);
+    await setModifyData(null);
+    await setSearchBtn(!searchBtn);
+  };
 
   return (
     <>
       <div className="commonBox">
-        <ComponentSetAllKeyWord
-          companyDetailKeyword={companyDetailKeyword}
-          setCompanyDetailKeyword={setCompanyDetailKeyword}
-          reFrash={refrash}
-        />
+        {/* -------------------- 키워드 검색 -------------------- */}
+        <div className="keywordWrap">
+          <div style={{ marginBottom: "10px" }}>
+            <input
+              type="text"
+              placeholder="키워드를 입력해 주세요."
+              onChange={(e) => setSearchValue(e.target.value)}
+              className="keywordInput"
+            />
+            <button onClick={handleOpenBtn}>
+              {searchBtn ? "닫기" : "검색"}
+            </button>
+          </div>
+
+          {searchBtn && (
+            <ul className="keywordBox" id="keywordBoxAdmin">
+              {keywordFilter.length > 0 ? (
+                keywordFilter.map((item) => (
+                  <li key={item.kid}>
+                    <span>
+                      <button
+                        onClick={(e) => {
+                          handleKeywordOnclick(item, e);
+                        }}
+                      >
+                        {item.keyword}
+                      </button>
+                    </span>
+                  </li>
+                ))
+              ) : (
+                <li>
+                  <span>검색된 데이터가 없습니다. 다시 입력해 주세요.</span>
+                </li>
+              )}
+            </ul>
+          )}
+        </div>
+
+        {/* -------------------- 수정값 입력 폼 -------------------- */}
         <form className="formLayout" onSubmit={handleSubmit(HandleSubmit)}>
           <ul className="tableTopWrap">
             <LayoutTopButton text="완료" disabled={isSubmitting} />
@@ -82,14 +144,14 @@ export default function SetAdminAppbanner() {
                   </div>
 
                   <div className="listSearchWrap" style={{ width: "33.333%" }}>
-                    <div className="blockLabel">기존 값</div>
+                    <div className="blockLabel">기존 조회량</div>
                     <div>
                       <input id="initalKeyword" value={it.hitCount} disabled />
                     </div>
                   </div>
 
                   <div className="listSearchWrap" style={{ width: "33.333%" }}>
-                    <div className="blockLabel">더할 수</div>
+                    <div className="blockLabel">더할 조회량</div>
                     <div>
                       <input
                         id={it.kid}
