@@ -18,6 +18,7 @@ export default function SetAdminAppbanner() {
   const [companyDetailKeyword, setCompanyDetailKeyword] = useState([]);
   // 수정된 값 저장
   const [modifyData, setModifyData] = useState(null);
+  const [refrash, setRefresh] = useState(false);
 
   function onChange(e) {
     if (modifyData === null) {
@@ -36,17 +37,17 @@ export default function SetAdminAppbanner() {
       setModifyData([...initalValue, ...sameLastValue]);
     }
   }
-  console.log("fff", modifyData);
-  function refreshButton() {
-    servicesPostData(urlAllKeyword, {}).then((res) => {
-      servicesSetStorage(ALLKEYWORD, JSON.stringify(res.data));
-    });
-  }
+
   function HandleSubmit() {
     for (let i = 0; i < modifyData.length; i++) {
-      servicesPostData(urlSetKeyword, modifyData[i]).then((res) =>
-        console.log(res)
-      );
+      servicesPostData(urlSetKeyword, modifyData[i])
+        .then((res) => console.log(res))
+        .then(
+          servicesPostData(urlAllKeyword, {}).then((res) => {
+            servicesSetStorage(ALLKEYWORD, JSON.stringify(res.data));
+            setRefresh(!refrash);
+          })
+        );
     }
   }
   console.log(companyDetailKeyword);
@@ -57,14 +58,10 @@ export default function SetAdminAppbanner() {
         <ComponentSetAllKeyWord
           companyDetailKeyword={companyDetailKeyword}
           setCompanyDetailKeyword={setCompanyDetailKeyword}
+          reFrash={refrash}
         />
         <form className="formLayout" onSubmit={handleSubmit(HandleSubmit)}>
           <ul className="tableTopWrap">
-            <LayoutTopButton
-              text="키워드 새로고침"
-              fn={refreshButton}
-              disabled={isSubmitting}
-            />
             <LayoutTopButton text="완료" disabled={isSubmitting} />
           </ul>
           {companyDetailKeyword !== [] &&
