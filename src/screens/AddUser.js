@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 import { useNavigate } from "react-router-dom";
@@ -14,7 +13,6 @@ export default function AddUser() {
     handleSubmit,
     register,
     getValues,
-    setValue,
     formState: { isSubmitting, errors },
   } = useForm();
   const navigate = useNavigate();
@@ -71,7 +69,7 @@ export default function AddUser() {
                 },
                 maxLength: {
                   value: 16,
-                  message: "16자 이상으로 입력해주세요.",
+                  message: "16자 이하로 입력해주세요.",
                 },
                 pattern: {
                   value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{4,16}$/g,

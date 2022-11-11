@@ -70,13 +70,14 @@ export default function SetAdminKeyeords() {
     }
   }
 
-  const HandleSubmit = async () => {
+  const HandleSubmit = () => {
     for (let i = 0; i < modifyData.length; i++) {
       servicesPostData(urlSetKeyword, modifyData[i]);
     }
-    await setCompanyDetailKeyword([]);
-    await setModifyData(null);
-    await setSearchBtn(!searchBtn);
+    setCompanyDetailKeyword([]);
+    setModifyData(null);
+    setSearchBtn(false);
+    setAllKeywords([]);
   };
 
   return (

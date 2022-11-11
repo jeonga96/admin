@@ -96,7 +96,6 @@ export default function SetCompanyDetail() {
           setValue("_mobilenum", res.data.mobilenum || "");
           setValue("_email", res.data.email || "");
           setValue("_extnum", res.data.extnum || "");
-          setValue("_extnum", res.data.extnum || "");
           setValue("_tags", res.data.tags || "");
 
           // 로그인 시 로컬스토리지에 저장한 전체 키워드 가져오기

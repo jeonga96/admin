@@ -24,7 +24,7 @@ import SetCompanyNotice from "./screens/SetDetailCompanyNotice";
 
 /* 공지사항 - 관리자*/
 import ListAdminNotice from "./screens/ListAdminNotice";
-import SetDetailAdminNotice from "./screens/SetDetailAdminNotice";
+import SetAdminNotice from "./screens/SetAdminNotice";
 
 /* 앱관리 */
 import SetAdminAppbanner from "./screens/SetAdminAppbanner";
@@ -234,7 +234,7 @@ function App() {
           element={
             <MainLayout
               nowTitle="공사콕 공지사항 작성"
-              component={<SetDetailAdminNotice />}
+              component={<SetAdminNotice />}
             />
           }
         />
@@ -252,7 +252,7 @@ function App() {
           element={
             <MainLayout
               nowTitle="공사콕 공지사항 수정"
-              component={<SetDetailAdminNotice />}
+              component={<SetAdminNotice />}
             />
           }
         />

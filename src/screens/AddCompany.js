@@ -34,7 +34,7 @@ export default function AddCompany() {
         }
         if (res.status === "success") {
           alert("가입이 완료되었습니다!");
-          navigate(`/company/${res.data.cid}/setcompanydetail`, {
+          navigate(`/company/${res.data.cid}`, {
             replace: true,
           });
           return;

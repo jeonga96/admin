@@ -174,21 +174,21 @@ export default function SetDetailUser() {
 
             <div className="formContentWrap">
               <label htmlFor="location" className=" blockLabel">
-                주소 (ㅇㅇ구, ㅇㅇ동)
+                키워드 주소
               </label>
               <div>
                 <input
                   type="text"
                   id="location"
                   name="_location"
-                  placeholder="주소를 입력해 주세요."
+                  placeholder="주소를 입력해 주세요. (ㅇㅇ구, ㅇㅇ동)"
                   {...register("_location", {
                     maxLength: {
-                      value: 20,
-                      message: "20자 이하의 글자만 사용가능합니다.",
+                      value: 50,
+                      message: "50자 이하의 글자만 사용가능합니다.",
                     },
                     pattern: {
-                      value: /^[a-zA-Z0-9ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/,
+                      value: /^[0-9가-힣]/,
                       message: "형식에 맞지 않습니다.",
                     },
                   })}

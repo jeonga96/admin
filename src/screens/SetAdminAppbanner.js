@@ -137,19 +137,6 @@ export default function SetAdminAppbanner() {
 
   return (
     <>
-      {/* <div className="commonBox">
-        <div className="infoMessageBox">
-          <span className="title">안내 메세지</span>
-          <ul>
-            <li>[배너추가] 내용을 입력한 후 추가 버튼을 클릭해 주십시오.</li>
-            <li>
-              [배너수정] 관리 → 수정 버튼클릭 → 수정할 내용을 입력을 한 후 수정
-              버튼을 클릭해 주십시오.
-            </li>
-            <li>배너 이미지의 사이즈는 0000*000으로 지정해 주십시오.</li>
-          </ul>
-        </div>
-      </div> */}
       <div className="commonBox">
         <form className="formLayout" onSubmit={HandleSubmit}>
           <fieldset>
