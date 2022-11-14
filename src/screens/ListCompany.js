@@ -27,7 +27,6 @@ function ListInTr({
         id === "useFlag"
           ? setClickedUseFlag([...clickedUseFlag, name])
           : setClickedStatus([...clickedStatus, name]);
-
         // 동일한 선택을 할 때 중복 선택되지 않도록 설정
       } else if (!isChecked && clickedUseFlag.includes(name)) {
         setClickedUseFlag(clickedUseFlag.filter((it) => it !== name));
@@ -39,6 +38,7 @@ function ListInTr({
 
   // 체크 이벤트 동작 & 상위 컴포넌트에게 전달하기 위한 이벤트 동작
   const checkHandler = ({ target }) => {
+    // useFlag 이벤트
     if (target.id === "useFlag") {
       if (clickedStatus.length == 0) {
         setUseFlagCk(!useFlagCk);
@@ -47,13 +47,15 @@ function ListInTr({
         alert("계약관리와 회원상태를 한 번에 수정하실 수 없습니다.");
       }
     }
+
+    // status 이벤트
     if (target.id === "status") {
       if (clickedUseFlag.length == 0) {
         setStatusCk(!statusCk);
         checkedItemHandler(target.name, target.id, target.checked);
+      } else {
+        alert("계약관리와 회원상태를 한 번에 수정하실 수 없습니다.");
       }
-    } else {
-      alert("계약관리와 회원상태를 한 번에 수정하실 수 없습니다.");
     }
   };
 

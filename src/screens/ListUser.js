@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import { BsCheck2 } from "react-icons/bs";
 import { useEffect, useState } from "react";
 import { servicesPostData } from "../Services/importData";
 import { urlUserlist } from "../Services/string";
@@ -7,6 +6,85 @@ import { urlUserlist } from "../Services/string";
 import PageButton from "../components/common/PiecePaginationButton";
 import LayoutTopButton from "../components/common/LayoutTopButton";
 import ComponentListUserSearch from "../components/common/ComponentListUserSearch";
+
+function ListInTr({
+  item,
+  setClickedStatus,
+  clickedStatus,
+  setClickedUseFlag,
+  clickedUseFlag,
+}) {
+  const [useFlagCk, setUseFlagCk] = useState(false);
+  const [statusCk, setStatusCk] = useState(false);
+
+  const checkedItemHandler = (name, id, isChecked) => {
+    (() => {
+      if (isChecked) {
+        id === "useFlag"
+          ? setClickedUseFlag([...clickedUseFlag, name])
+          : setClickedStatus([...clickedStatus, name]);
+
+        // 동일한 선택을 할 때 중복 선택되지 않도록 설정
+      } else if (!isChecked && clickedUseFlag.includes(name)) {
+        setClickedUseFlag(clickedUseFlag.filter((it) => it !== name));
+      } else if (!isChecked && clickedStatus.includes(name)) {
+        setClickedStatus(clickedStatus.filter((it) => it !== name));
+      }
+    })();
+  };
+
+  // 체크 이벤트 동작 & 상위 컴포넌트에게 전달하기 위한 이벤트 동작
+  const checkHandler = ({ target }) => {
+    if (target.id === "useFlag") {
+      if (clickedStatus.length == 0) {
+        setUseFlagCk(!useFlagCk);
+        checkedItemHandler(target.name, target.id, target.checked);
+      } else {
+        alert("계약관리와 회원상태를 한 번에 수정하실 수 없습니다.");
+      }
+    }
+    if (target.id === "status") {
+      if (clickedUseFlag.length == 0) {
+        setStatusCk(!statusCk);
+        checkedItemHandler(target.name, target.id, target.checked);
+      }
+    } else {
+      alert("계약관리와 회원상태를 한 번에 수정하실 수 없습니다.");
+    }
+  };
+
+  return (
+    <tr>
+      <td>
+        <input
+          type="checkbox"
+          name={item.cid}
+          checked={useFlagCk}
+          id="useFlag"
+          onChange={checkHandler}
+        />
+      </td>
+      <td>
+        <input
+          type="checkbox"
+          name={item.cid}
+          checked={statusCk}
+          id="status"
+          onChange={checkHandler}
+        />
+      </td>
+
+      <td>{item.cid}</td>
+      <td>{item.name}</td>
+      <td>{item.createTime && item.createTime.slice(0, 10)}</td>
+      <td className="tableButton">
+        <Link to={`${item.cid}`} className="Link">
+          상세
+        </Link>
+      </td>
+    </tr>
+  );
+}
 
 export default function ListUser() {
   const [userList, setUserList] = useState([]);
