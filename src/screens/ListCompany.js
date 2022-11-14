@@ -22,32 +22,38 @@ function ListInTr({
   const [statusCk, setStatusCk] = useState(false);
 
   const checkedItemHandler = (name, id, isChecked) => {
-    if (isChecked) {
-      (() => {
+    (() => {
+      if (isChecked) {
         id === "useFlag"
           ? setClickedUseFlag([...clickedUseFlag, name])
           : setClickedStatus([...clickedStatus, name]);
-      })();
-    } else if (!isChecked && clickedUseFlag.includes(name)) {
-      console.log("삭제", !isChecked, clickedUseFlag);
-      (() => {
+
+        // 동일한 선택을 할 때 중복 선택되지 않도록 설정
+      } else if (!isChecked && clickedUseFlag.includes(name)) {
         setClickedUseFlag(clickedUseFlag.filter((it) => it !== name));
-      })();
-    } else if (!isChecked && clickedStatus.includes(name)) {
-      (() => {
+      } else if (!isChecked && clickedStatus.includes(name)) {
         setClickedStatus(clickedStatus.filter((it) => it !== name));
-      })();
-    }
+      }
+    })();
   };
 
+  // 체크 이벤트 동작 & 상위 컴포넌트에게 전달하기 위한 이벤트 동작
   const checkHandler = ({ target }) => {
     if (target.id === "useFlag") {
-      setUseFlagCk(!useFlagCk);
-      checkedItemHandler(target.name, target.id, target.checked);
+      if (clickedStatus.length == 0) {
+        setUseFlagCk(!useFlagCk);
+        checkedItemHandler(target.name, target.id, target.checked);
+      } else {
+        alert("계약관리와 회원상태를 한 번에 수정하실 수 없습니다.");
+      }
     }
     if (target.id === "status") {
-      setStatusCk(!statusCk);
-      checkedItemHandler(target.name, target.id, target.checked);
+      if (clickedUseFlag.length == 0) {
+        setStatusCk(!statusCk);
+        checkedItemHandler(target.name, target.id, target.checked);
+      }
+    } else {
+      alert("계약관리와 회원상태를 한 번에 수정하실 수 없습니다.");
     }
   };
 
@@ -102,15 +108,28 @@ export default function ListCompany() {
     });
   }, [page.getPage]);
 
-  const handleUseFlag = () => {
-    for (let i = 0; i < clickedUseFlag.length; i++) {
-      servicesPostData(urlSetCompany, {
-        cid: clickedUseFlag[i],
-        useFlag: "0",
-      }).then(window.location.reload());
+  console.log(clickedUseFlag, clickedStatus);
+
+  // 계약관리 submit
+  const handleUseFlag = (e) => {
+    if (e.target.id === "useFlagY") {
+      for (let i = 0; i < clickedUseFlag.length; i++) {
+        servicesPostData(urlSetCompany, {
+          cid: clickedUseFlag[i],
+          useFlag: "1",
+        }).then(window.location.reload());
+      }
+    } else {
+      for (let i = 0; i < clickedUseFlag.length; i++) {
+        servicesPostData(urlSetCompany, {
+          cid: clickedUseFlag[i],
+          useFlag: "0",
+        }).then(window.location.reload());
+      }
     }
   };
 
+  // 회원상태 submit
   const handleStauts = (e) => {
     switch (e.target.id) {
       case "waiting":
@@ -145,7 +164,10 @@ export default function ListCompany() {
       <ComponentListCompanySearch />
       <ul className="tableTopWrap">
         {clickedUseFlag.length > 0 && (
-          <LayoutTopButton text="해지" fn={handleUseFlag} />
+          <LayoutTopButton text="정상" fn={handleUseFlag} id="useFlagY" />
+        )}
+        {clickedUseFlag.length > 0 && (
+          <LayoutTopButton text="해지" fn={handleUseFlag} id="useFlagN" />
         )}
         {clickedStatus.length > 0 && (
           <LayoutTopButton text="대기" fn={handleStauts} id="waiting" />
