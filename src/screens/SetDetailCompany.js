@@ -546,14 +546,10 @@ export default function SetCompanyDetail() {
                   type="text"
                   id="extnum"
                   name="_extnum"
-                  placeholder="추가 번호를 입력해 주세요."
+                  placeholder="안심 번호를 입력해 주세요."
                   {...register("_extnum", {
-                    maxLength: {
-                      value: 13,
-                      message: "형식에 맞지 않습니다.",
-                    },
                     pattern: {
-                      value: /[0-9]/,
+                      value: /^[0-9]{3}-[0-9]{3,5}-[0-9]{4}/,
                       message: "형식에 맞지 않습니다.",
                     },
                   })}

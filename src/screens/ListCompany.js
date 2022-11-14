@@ -112,12 +112,9 @@ export default function ListCompany() {
   };
 
   const handleStauts = (e) => {
-    console.log(clickedStatus.length);
     switch (e.target.id) {
       case "waiting":
         for (let i = 0; i < clickedStatus.length; i++) {
-          console.log("Waiting", clickedStatus[i]);
-
           servicesPostData(urlSetCompanyDetail, {
             rcid: clickedStatus[i],
             status: 2,
@@ -126,7 +123,6 @@ export default function ListCompany() {
         break;
       case "completion":
         for (let i = 0; i < clickedStatus.length; i++) {
-          console.log("completion");
           servicesPostData(urlSetCompanyDetail, {
             rcid: clickedStatus[i],
             status: 1,
@@ -135,7 +131,6 @@ export default function ListCompany() {
         break;
       default:
         for (let i = 0; i < clickedStatus.length; i++) {
-          console.log("거절");
           servicesPostData(urlSetCompanyDetail, {
             rcid: clickedStatus[i],
             status: 0,
