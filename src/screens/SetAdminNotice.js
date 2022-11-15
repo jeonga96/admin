@@ -26,7 +26,6 @@ export default function SetDetailAdminNotice() {
   const imgsIid = [];
   const getDataFinish = useRef(false);
   const [noticeDetail, setNoticeDetail] = useState({});
-  const [categoryRadio, setCategoryRadio] = useState("notice");
 
   useEffect(() => {
     if (!!contid) {
@@ -36,7 +35,7 @@ export default function SetDetailAdminNotice() {
         .then((res) => {
           if (res.status === "success") {
             setNoticeDetail(res.data);
-            setCategoryRadio(res.data.category);
+            setValue("_category", res.data.category || "notice");
             setValue("_contentString", res.data.contentString || "");
             setValue("_contentDetail", res.data.contentDetail || "");
             getDataFinish.current = true;
@@ -55,13 +54,13 @@ export default function SetDetailAdminNotice() {
       !!contid
         ? {
             contid: contid,
-            category: categoryRadio,
+            category: getValues("_category"),
             contentString: getValues("_contentString"),
             contentDetail: getValues("_contentDetail"),
             imgString: setImgs ? imgsIid.toString() : "",
           }
         : {
-            category: categoryRadio,
+            category: getValues("_category"),
             contentString: getValues("_contentString"),
             contentDetail: getValues("_contentDetail"),
             imgString: setImgs ? imgsIid.toString() : "",
@@ -80,7 +79,6 @@ export default function SetDetailAdminNotice() {
       .catch((error) => console.log("axios 실패", error.response));
   }
 
-  console.log(categoryRadio);
   return (
     <>
       <div className="commonBox">
@@ -90,7 +88,17 @@ export default function SetDetailAdminNotice() {
           </ul>
 
           <div className="formWrap">
-            <div className="formContentWrap">
+            <div className="filterWrap">
+              <select {...register("_category")}>
+                <option value="notice">전체 회원 공지</option>
+                <option value="noticeCompany">사업자 회원 공지</option>
+              </select>
+            </div>
+
+            <div
+              className="formContentWrap"
+              style={{ marginTop: "0", width: "100%" }}
+            >
               <label htmlFor="title" className="blockLabel">
                 제목
               </label>
@@ -108,17 +116,17 @@ export default function SetDetailAdminNotice() {
                     },
                   })}
                 />
+                <ErrorMessage
+                  errors={errors}
+                  name="_contentString"
+                  render={({ message }) => (
+                    <span className="errorMessageWrap">{message}</span>
+                  )}
+                />
               </div>
-              <ErrorMessage
-                errors={errors}
-                name="_contentString"
-                render={({ message }) => (
-                  <span className="errorMessageWrap">{message}</span>
-                )}
-              />
             </div>
 
-            <div className="formContentWrap">
+            {/* <div className="formContentWrap">
               <label htmlFor="title" className="blockLabel">
                 카테고리
               </label>
@@ -158,7 +166,7 @@ export default function SetDetailAdminNotice() {
                   사업자 회원 공지
                 </label>
               </div>
-            </div>
+            </div> */}
 
             <SetImage
               imgs={imgs}
@@ -186,14 +194,14 @@ export default function SetDetailAdminNotice() {
                     },
                   })}
                 />
+                <ErrorMessage
+                  errors={errors}
+                  name="_contentDetail"
+                  render={({ message }) => (
+                    <span className="errorMessageWrap">{message}</span>
+                  )}
+                />
               </div>
-              <ErrorMessage
-                errors={errors}
-                name="_contentDetail"
-                render={({ message }) => (
-                  <span className="errorMessageWrap">{message}</span>
-                )}
-              />
             </div>
           </div>
         </form>

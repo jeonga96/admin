@@ -84,12 +84,7 @@ export default function ComponentListCompanySearch() {
 
         <div className="listSearchWrap">
           <div className="blockLabel">계약관리</div>
-          <div
-          // style={{
-          //   display: "flex",
-          //   justifyContent: "center",
-          // }}
-          >
+          <div>
             <input
               className="listSearchRadioInput"
               type="radio"

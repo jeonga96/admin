@@ -9,10 +9,11 @@ import Pagination from "react-js-pagination";
 export default function PageButton({ listPage, page, setPage }) {
   const pageDataGet = listPage.totalElements && page;
   const handlePageChange = (page) => {
-    page === 1
+    page.getPage === 1
       ? setPage({ getPage: page, activePage: page })
-      : setPage({ getPage: page * 10 - 10, activePage: page });
+      : setPage({ getPage: page * 15 - 15, activePage: page });
   };
+
   if (pageDataGet)
     return (
       <div>
@@ -21,7 +22,7 @@ export default function PageButton({ listPage, page, setPage }) {
             activePage={page.activePage}
             itemsCountPerPage={10}
             totalItemsCount={listPage.totalElements}
-            pageRangeDisplayed={Math.ceil(listPage.totalElements / 10)}
+            pageRangeDisplayed={Math.ceil(listPage.totalElements / 15)}
             firstPageText={<HiChevronDoubleLeft />}
             lastPageText={<HiChevronDoubleRight />}
             prevPageText={<HiChevronLeft />}

@@ -7,7 +7,7 @@ import {
   urlSetCompanyDetail,
 } from "../Services/string";
 
-import PageButton from "../components/common/PiecePaginationButton";
+import PaginationButton from "../components/common/PiecePaginationButton";
 import LayoutTopButton from "../components/common/LayoutTopButton";
 import ComponentListCompanySearch from "../components/common/ComponentListCompanySearch";
 
@@ -96,7 +96,6 @@ export default function ListCompany() {
   const [companyList, setCompanyList] = useState([]);
   const [listPage, setListPage] = useState({});
   const [page, setPage] = useState({ getPage: 0, activePage: 1 });
-  // const [useFlagValue, setUseFlagValue] = useState("0")
   const [clickedUseFlag, setClickedUseFlag] = useState([]);
   const [clickedStatus, setClickedStatus] = useState([]);
 
@@ -210,7 +209,7 @@ export default function ListCompany() {
               ))}
             </tbody>
           </table>
-          <PageButton listPage={listPage} page={page} setPage={setPage} />
+          <PaginationButton listPage={listPage} page={page} setPage={setPage} />
         </div>
       </section>
     </>

@@ -1030,6 +1030,18 @@ i {
   margin-bottom: 0.375rem;
 }
 
+.filterWrap {
+  width: 100%;
+  display: flex;
+  justify-content: right;
+  padding: 10px 5px;
+}
+.filterWrap select {
+  border: 1px solid var(--color-gray);
+  background-color: var(--color-bggray);
+  border-radius: 4px;
+  padding: 1px;
+}
 /*pagination 영역 ------------------------------------------------------*/
 .pagination {
   display: flex;
