@@ -1145,6 +1145,8 @@ ul.pagination li a:hover {
 }
 
 .listSearchWrap div:nth-child(2) {
+  display: flex;
+  justify-content: center;
   width: calc(100% - 110px);
   height: 100%;
   padding: 3px;

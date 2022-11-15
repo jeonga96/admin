@@ -82,7 +82,7 @@ export default function SetCompanyDetail() {
           setDetailComapanyRadio({
             useFlag: String(res.data.useFlag) || "1",
             status: String(res.data.status) || "2",
-            gongsaType: res.data.gongsaType || "norm",
+            gongsaType: res.data.gongsaType || "reser",
           });
 
           setValue("_name", res.data.name || "");
@@ -390,26 +390,6 @@ export default function SetCompanyDetail() {
                 />
                 <label className="listSearchRadioLabel" htmlFor="typeReser">
                   예약
-                </label>
-
-                <input
-                  className="listSearchRadioInput"
-                  type="radio"
-                  checked={detailComapanyRadio.gongsaType === "norm"}
-                  name="_gongsaType"
-                  value="norm"
-                  id="typeNorm"
-                  {...register("_gongsaType", {
-                    onChange: (e) => {
-                      setDetailComapanyRadio({
-                        ...detailComapanyRadio,
-                        gongsaType: e.target.value,
-                      });
-                    },
-                  })}
-                />
-                <label className="listSearchRadioLabel" htmlFor="typeNorm">
-                  일반
                 </label>
               </div>
             </div>

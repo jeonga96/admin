@@ -92,7 +92,6 @@ export default function ListUser() {
       }
     }
   };
-  console.log(clickedUseFlag);
 
   return (
     <>
