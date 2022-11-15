@@ -34,23 +34,23 @@ export default function ComponentDetailNotice({ detail }) {
           </span>
         </div>
       </li>
-      <li className="detailContentWrap">
-        <h4>제목</h4>
+      <li className="detailContentWrap title">
+        <h4 className="blind">제목</h4>
         <div>
           <span>{ADMIN ? detail.contentString : detail.title}</span>
         </div>
       </li>
 
       <li className="detailContentWrap">
-        <h4>내용</h4>
+        <h4 className="blind">내용</h4>
         <div>
           <p>{ADMIN ? detail.contentDetail : detail.content}</p>
-          <div
-            className="detailWidthContent detailWidthContentImg"
-            style={{ justifyContent: "left" }}
-          >
-            {images &&
-              images.map((item) => (
+          {images && (
+            <div
+              className="detailWidthContent detailWidthContentImg"
+              style={{ justifyContent: "left" }}
+            >
+              {images.map((item) => (
                 <ImageOnClick
                   key={item.iid}
                   getData={images}
@@ -58,7 +58,8 @@ export default function ComponentDetailNotice({ detail }) {
                   text="공지사항 이미지"
                 />
               ))}
-          </div>
+            </div>
+          )}
         </div>
       </li>
     </ul>

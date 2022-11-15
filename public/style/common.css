@@ -590,6 +590,9 @@ i {
   justify-content: left;
   margin-top: 20px;
 }
+.formContentWideWrap {
+  width: 100%;
+}
 .formContentWrap > div:last-child,
 .formContentWrap .detailContent {
   width: calc(100% - 150px);
@@ -755,37 +758,45 @@ i {
   height: auto;
   min-height: 60px;
   border-bottom: 2px solid var(--color-bggray);
+  color: var(--color-black);
 }
 .detailContentWrap:last-child {
   border: none;
 }
-.detailContentWrap h4 {
-  display: block;
-  width: 150px;
+.detailContentWrap.title {
   height: 100%;
   font-weight: 700;
   color: var(--color-black);
   line-height: 60px;
-  text-align: center;
+}
+.detailContentWrap.title span {
+  font-size: var(--font-size-title);
+  font-weight: 500;
 }
 .detailContentWrap > div {
-  color: var(--color-bgblack);
+  color: var(--color-black);
   display: block;
   width: 100%;
   height: auto;
   min-height: 1.5rem;
+  text-indent: 10px;
 }
 .detailContentWrap p {
   width: 100%;
   height: auto;
   min-height: 80px;
   margin: 20px 0;
-  border-bottom: 1px solid var(--color-bggray);
 }
 .detailContentWrap span {
   line-height: 60px;
 }
 /* 공지사항 - 이미지 */
+.detailContentWrap .detailWidthContentImg {
+  width: 100%;
+  height: auto;
+  border-top: 1px solid var(--color-bggray);
+  padding: 10px 0;
+}
 .detailContentWrap .detailWidthContentImg > div {
   width: 50px;
   height: 50px;
