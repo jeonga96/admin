@@ -28,10 +28,10 @@ export default function ListCompanyReview() {
           <table className="commonTable">
             <thead>
               <tr>
-                <th className="widthM">번호</th>
-                <th className="widthM">별명</th>
-                <th className="widthBB">내용</th>
-                <th className="widthM">날짜</th>
+                <th style={{ width: "80px" }}>번호</th>
+                <th style={{ width: "120px" }}>별명</th>
+                <th style={{ width: "auto" }}>내용</th>
+                <th style={{ width: "100px" }}>날짜</th>
               </tr>
             </thead>
             <tbody className="commonTable">

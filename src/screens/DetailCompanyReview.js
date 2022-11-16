@@ -52,45 +52,42 @@ export default function DetailCompanyReview() {
             </div>
           </li>
 
-          <li className="formContentWrap">
-            <h4>제목</h4>
-            <span>{companyDetail.title}</span>
+          <li className="detailContentWrap title">
+            <h4 className="blind">제목</h4>
+            <div>
+              <span className="titleText">{companyDetail.title}</span>
+              <span className="contentText">{companyDetail.ruidNick}</span>
+            </div>
           </li>
 
-          <li className="formContentWrap">
-            <h4>별명</h4>
-            <span>{companyDetail.ruidNick}</span>
-          </li>
-
-          <li className="formContentWrap">
-            <h4>리뷰 내용</h4>
-            <p>{companyDetail.content}</p>
-          </li>
-
-          <li className="formContentWrap">
-            <h4>업체 만족도</h4>
-            <p>
-              {companyDetail.negativeCount && (
-                <PieceBarChart
-                  negativeCount={companyDetail.negativeCount}
-                  positiveCount={companyDetail.positiveCount}
-                />
-              )}
-            </p>
-          </li>
-
-          <li className="formContentWrap">
-            <h4>리뷰 이미지</h4>
-            <div className="detailWidthContent detailWidthContentImg">
-              {images &&
-                images.map((item) => (
-                  <ServicesImageOnClick
-                    key={item.iid}
-                    getData={images}
-                    url={item.storagePath}
-                    text="리뷰 이미지"
-                  />
-                ))}
+          <li className="detailContentWrap">
+            <h4 className="blind">내용</h4>
+            <div>
+              <p>{companyDetail.content}</p>
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                {companyDetail.negativeCount && (
+                  <div style={{ width: "49.5%", height: "75px" }}>
+                    <PieceBarChart
+                      negativeCount={companyDetail.negativeCount}
+                      positiveCount={companyDetail.positiveCount}
+                    />
+                  </div>
+                )}
+                <div
+                  className=" detailWidthContentImg detailWidthContent"
+                  style={{ justifyContent: "left", width: "49.5%" }}
+                >
+                  {images &&
+                    images.map((item) => (
+                      <ServicesImageOnClick
+                        key={item.iid}
+                        getData={images}
+                        url={item.storagePath}
+                        text="리뷰 이미지"
+                      />
+                    ))}
+                </div>
+              </div>
             </div>
           </li>
         </ul>

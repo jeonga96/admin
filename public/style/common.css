@@ -763,15 +763,21 @@ i {
 .detailContentWrap:last-child {
   border: none;
 }
-.detailContentWrap.title {
+.title {
   height: 100%;
   font-weight: 700;
-  color: var(--color-black);
   line-height: 60px;
 }
-.detailContentWrap.title span {
+.title .contentText {
+  font-size: var(--font-size-em);
+  color: var(--color-gray);
+  line-height: 30px;
+  margin-left: 10px;
+}
+.title .titleText {
   font-size: var(--font-size-title);
   font-weight: 500;
+  color: var(--color-black);
 }
 .detailContentWrap > div {
   color: var(--color-black);
