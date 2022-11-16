@@ -1,16 +1,36 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 import { servicesPostData } from "../../Services/importData";
 import { urlUserlist } from "../../Services/string";
 
-export default function ComponentListUserSearch({ setUserList, setListPage }) {
+export default function ComponentListUserSearch({
+  setUserList,
+  setListPage,
+  searchClick,
+  setSearchClick,
+  page,
+}) {
   // react-hook-form 라이브러리
   const { register, reset, handleSubmit } = useForm({});
 
   const [searchData, setSearchData] = useState({});
   const [userrole, setUserrole] = useState("ROLE_USER");
   const [useFlag, setUseFlag] = useState("1");
+
+  useEffect(() => {
+    // searchClick을 클릭한 (true) 상태에서 동작
+    console.log(searchClick);
+    searchClick === true && SearchSubmit();
+    // !searchClick &&
+    //   servicesPostData(urlUserlist, {
+    //     offset: page.getPage,
+    //     size: 15,
+    //   }).then((res) => {
+    //     setUserList(res.data);
+    //     setListPage(res.page);
+    //   });
+  }, [page.activePage]);
 
   // 상위 컴포넌트에게 전달받은 useState의 set 함수
   // setUserList가 set으로 전달받은 후 사용하기 위해 && 사용
@@ -23,13 +43,13 @@ export default function ComponentListUserSearch({ setUserList, setListPage }) {
 
   // submit 이벤트
   function SearchSubmit() {
-    // input에 입력된 값을 업애도 useState에 담긴 키가 사라지지 않아, 해당 칸이 비어있으면 키를 제거
+    // input에 입력된 값을 없애도 useState에 담긴 키가 사라지지 않아, 해당 값이 빈칸이라면 키를 제거하기 위해 filter 사용
     const searchDataObj = Object.entries(searchData);
     const searchDataFilter = searchDataObj.filter((it) => it[1] !== "");
     const searchDataReq = Object.fromEntries(searchDataFilter);
 
     servicesPostData(urlUserlist, {
-      offset: 0,
+      offset: page.getPage,
       size: 15,
       useFlag: useFlag,
       userrole: userrole,
@@ -41,6 +61,7 @@ export default function ComponentListUserSearch({ setUserList, setListPage }) {
       if (res.status === "success") {
         userList(res.data);
         listPage(res.page);
+        setSearchClick(true);
       }
     });
   }
@@ -70,6 +91,7 @@ export default function ComponentListUserSearch({ setUserList, setListPage }) {
     setSearchData({});
     setUseFlag("1");
     setUserrole("ROLE_USER");
+    setSearchClick(false);
   }
   // formWrap
 

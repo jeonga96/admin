@@ -49,7 +49,7 @@ function ListInTr({ item, setClickedUseFlag, clickedUseFlag }) {
       <td>{item.createTime && item.createTime.slice(0, 10)}</td>
       <td>{item.udid ? <i className="tableIcon">입력</i> : null}</td>
       <td>{item.cid ? <i className="tableIcon">사업자</i> : null}</td>
-      <td className="tableButton">
+      <td className="tableButton" style={{ width: "auto" }}>
         <Link to={`${item.uid}`} className="Link">
           상세
         </Link>
@@ -63,15 +63,19 @@ export default function ListUser() {
   const [listPage, setListPage] = useState({});
   const [page, setPage] = useState({ getPage: 0, activePage: 1 });
   const [clickedUseFlag, setClickedUseFlag] = useState([]);
+  const [searchClick, setSearchClick] = useState(false);
 
   useEffect(() => {
-    servicesPostData(urlUserlist, {
-      offset: page.getPage,
-      size: 15,
-    }).then((res) => {
-      setUserList(res.data);
-      setListPage(res.page);
-    });
+    // searchClick을 클릭하지 않은 (false) 상태에서 동작
+    searchClick === false &&
+      servicesPostData(urlUserlist, {
+        offset: page.getPage,
+        size: 15,
+      }).then((res) => {
+        console.log(res);
+        setUserList(res.data);
+        setListPage(res.page);
+      });
   }, [page.activePage]);
 
   // 계약관리 submit
@@ -98,6 +102,9 @@ export default function ListUser() {
       <ComponentListUserSearch
         setUserList={setUserList}
         setListPage={setListPage}
+        searchClick={searchClick}
+        setSearchClick={setSearchClick}
+        page={page}
       />
       <ul className="tableTopWrap">
         {clickedUseFlag.length > 0 && (
@@ -114,15 +121,15 @@ export default function ListUser() {
           <table className="commonTable">
             <thead>
               <tr>
-                <th style={{ width: "65px" }}>계약관리</th>
+                <th>계약관리</th>
                 <th style={{ width: "100px" }}>관리번호</th>
-                <th style={{ width: "250px" }}>아이디</th>
+                <th style={{ width: "200px" }}>아이디</th>
                 <th style={{ width: "150px" }}>이름</th>
                 <th style={{ width: "100px" }}>회원권한</th>
                 <th style={{ width: "250px" }}>핸드폰번호</th>
                 <th style={{ width: "100px" }}>계약일</th>
-                <th style={{ width: "100px" }}>상세입력</th>
-                <th style={{ width: "100px" }}>사업자</th>
+                <th style={{ width: "70px" }}>상세입력</th>
+                <th style={{ width: "70px" }}>사업자</th>
                 <th style={{ width: "auto" }}></th>
               </tr>
             </thead>

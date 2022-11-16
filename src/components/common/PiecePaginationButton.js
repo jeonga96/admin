@@ -11,7 +11,10 @@ export default function PageButton({ listPage, page, setPage }) {
   const handlePageChange = (page) => {
     page.getPage === 1
       ? setPage({ getPage: page, activePage: page })
-      : setPage({ getPage: page * 15 - 15, activePage: page });
+      : setPage({
+          getPage: page * 15 - 15,
+          activePage: page,
+        });
   };
 
   if (pageDataGet)
@@ -20,7 +23,7 @@ export default function PageButton({ listPage, page, setPage }) {
         {pageDataGet ? (
           <Pagination
             activePage={page.activePage}
-            itemsCountPerPage={10}
+            itemsCountPerPage={15}
             totalItemsCount={listPage.totalElements}
             pageRangeDisplayed={Math.ceil(listPage.totalElements / 15)}
             firstPageText={<HiChevronDoubleLeft />}

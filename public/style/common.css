@@ -982,6 +982,8 @@ i {
   height: auto;
 }
 .commonTable {
+  table-layout: fixed;
+  width: 250px;
   width: 100%;
   height: auto;
 }
@@ -992,18 +994,16 @@ i {
   line-height: 2.8rem;
   background-color: var(--color-bggray);
 }
-.commonTable tr {
-  width: 100%;
-  height: auto;
-}
 .commonTable tbody tr {
-  width: 100%;
   height: 2.3rem;
   border-bottom: 0.0625rem solid var(--color-bggray);
   color: var(--color-bgblack);
 }
 .commonTable td {
+  overflow: hidden;
   text-align: center;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 /* 테이블 내 세부 콘텐츠 */
