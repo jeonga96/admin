@@ -36,7 +36,7 @@ export default function ListAdminNotice() {
   ) : (
     <>
       <ul className="tableTopWrap">
-        <LayoutTopButton url={`/addnotice`} text="작성" />
+        <LayoutTopButton url={`set`} text="작성" />
       </ul>
       <section className="tableWrap">
         <h3 className="blind">공사콕 공지사항 목록</h3>

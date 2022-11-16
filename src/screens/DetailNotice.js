@@ -50,8 +50,8 @@ export default function CompanyNoticeDetail() {
             </>
           ) : (
             <>
-              <LayoutTopButton url="/noticelist" text="목록으로 가기" />
-              <LayoutTopButton url="modify" text="수정" />
+              <LayoutTopButton url="/adminnotice" text="목록으로 가기" />
+              <LayoutTopButton url="set" text="수정" />
             </>
           )}
         </ul>

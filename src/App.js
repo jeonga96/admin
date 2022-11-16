@@ -220,7 +220,7 @@ function App() {
         {/* --------------앱관리 --------------*/}
         {/* ------- 공지사항 관리 ------- */}
         <Route
-          path="noticelist"
+          path="adminnotice"
           element={
             <MainLayout
               nowTitle="공사콕 공지사항"
@@ -230,7 +230,7 @@ function App() {
         />
 
         <Route
-          path="addnotice"
+          path="adminnotice/set"
           element={
             <MainLayout
               nowTitle="공사콕 공지사항 작성"
@@ -239,7 +239,7 @@ function App() {
           }
         />
         <Route
-          path="notice/:contid"
+          path="adminnotice/:contid"
           element={
             <MainLayout
               nowTitle="공사콕 공지사항"
@@ -248,7 +248,7 @@ function App() {
           }
         />
         <Route
-          path="notice/:contid/modify"
+          path="adminnotice/:contid/set"
           element={
             <MainLayout
               nowTitle="공사콕 공지사항 수정"

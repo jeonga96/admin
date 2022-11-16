@@ -25,6 +25,8 @@ export default function NavBox() {
     axiosData();
   }, []);
 
+  // console.log(pathname.includes("/company"));
+
   return (
     <div className={navChange ? "show navigationWrap" : "hide navigationWrap"}>
       <div className="navTop">
@@ -55,7 +57,9 @@ export default function NavBox() {
                     <Link
                       to={item.url}
                       className={
-                        pathname === item.url ? "link focusNavLink" : "link"
+                        pathname.includes(item.url)
+                          ? "link focusNavLink"
+                          : "link"
                       }
                     >
                       {item.subName}

@@ -19,16 +19,9 @@ export default function ComponentListNotice({ notice, ISADMIN }) {
                 <tr key={item.contid} style={{ height: "5.25rem" }}>
                   <td>{item.contid}</td>
                   <td className="tableContentWrap">
-                    <Link to={`/notice/${item.contid}`} className="Link">
+                    <Link to={`/adminnotice/${item.contid}`} className="Link">
                       <em>{item.contentString}</em>
                       <i>{item.imgString ? <MdOutlineImage /> : null}</i>
-                      {/* <i>
-                        {item.category === "notice" ? (
-                          <span>전체 공지</span>
-                        ) : (
-                          <span>사업자 공지</span>
-                        )}
-                      </i> */}
                       <p>
                         {item.contentDetail.length > 55
                           ? item.contentDetail.slice(0, 54) + "..."

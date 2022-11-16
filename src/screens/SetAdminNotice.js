@@ -126,48 +126,6 @@ export default function SetDetailAdminNotice() {
               </div>
             </div>
 
-            {/* <div className="formContentWrap">
-              <label htmlFor="title" className="blockLabel">
-                카테고리
-              </label>
-
-              <div className="formPaddingWrap">
-                <input
-                  className="listSearchRadioInput"
-                  type="radio"
-                  checked={categoryRadio == "notice"}
-                  name="_category"
-                  value="notice"
-                  id="notice"
-                  {...register("_category", {
-                    onChange: (e) => {
-                      setCategoryRadio(e.target.value);
-                    },
-                  })}
-                />
-                <label className="listSearchRadioLabel" htmlFor="notice">
-                  전체 회원 공지
-                </label>
-
-                <input
-                  className="listSearchRadioInput"
-                  type="radio"
-                  checked={categoryRadio == "noticeCompany"}
-                  name="_category"
-                  value="noticeCompany"
-                  id="noticeCompany"
-                  {...register("_category", {
-                    onChange: (e) => {
-                      setCategoryRadio(e.target.value);
-                    },
-                  })}
-                />
-                <label className="listSearchRadioLabel" htmlFor="noticeCompany">
-                  사업자 회원 공지
-                </label>
-              </div>
-            </div> */}
-
             <SetImage
               imgs={imgs}
               setImgs={setImgs}

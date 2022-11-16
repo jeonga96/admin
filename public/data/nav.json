@@ -28,7 +28,7 @@
     "subNav": [
       {
         "subName": "공지사항 관리",
-        "url": "/noticelist"
+        "url": "/adminnotice"
       },
       {
         "subName": "앱 배너 관리",

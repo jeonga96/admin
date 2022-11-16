@@ -23,24 +23,22 @@ export default function ListCompanyNotice() {
     });
   }, []);
 
-  return notice === undefined ? (
+  return (
     <>
       <ul className="tableTopWrap">
+        <LayoutTopButton url={`/company/${cid}`} text="상세정보 가기" />
         <LayoutTopButton url={`/company/${cid}/notice/set`} text="작성" />
       </ul>
-      <ComponentErrorNull />
-    </>
-  ) : (
-    <>
-      <ul className="tableTopWrap">
-        <LayoutTopButton url={`/company/${cid}/notice/set`} text="작성" />
-      </ul>
-      <section className="tableWrap">
-        <h3 className="blind">사업자 공지사항 목록</h3>
-        <div className="paddingBox commonBox">
-          <ComponentListNotice notice={notice} />
-        </div>
-      </section>
+      {notice === undefined ? (
+        <ComponentErrorNull />
+      ) : (
+        <section className="tableWrap">
+          <h3 className="blind">사업자 공지사항 목록</h3>
+          <div className="paddingBox commonBox">
+            <ComponentListNotice notice={notice} />
+          </div>
+        </section>
+      )}
     </>
   );
 }
