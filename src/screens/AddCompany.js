@@ -54,37 +54,39 @@ export default function AddCompany() {
             <label htmlFor="name" className="blockLabel">
               계약자명
             </label>
-            <input
-              type="text"
-              name="name"
-              id="name"
-              placeholder="계약자명을 입력해 주세요."
-              onChange={onChange}
-              {...register("name", {
-                onChange: onChange,
-                required: "계약자명은 필수로 입력해야 합니다.",
-                minLength: {
-                  value: 2,
-                  message: "2자 이상의 이름만 사용가능합니다.",
-                },
-                maxLength: {
-                  value: 8,
-                  message: "8자 이하의 이름만 사용가능합니다.",
-                },
-                pattern: {
-                  value: /[ㄱ-ㅎ가-힣]/,
-                  message: "입력 형식에 맞지 않습니다.",
-                },
-              })}
-            />
+            <div>
+              <input
+                type="text"
+                name="name"
+                id="name"
+                placeholder="계약자명을 입력해 주세요."
+                onChange={onChange}
+                {...register("name", {
+                  onChange: onChange,
+                  required: "계약자명은 필수로 입력해야 합니다.",
+                  minLength: {
+                    value: 2,
+                    message: "2자 이상의 이름만 사용가능합니다.",
+                  },
+                  maxLength: {
+                    value: 8,
+                    message: "8자 이하의 이름만 사용가능합니다.",
+                  },
+                  pattern: {
+                    value: /[ㄱ-ㅎ가-힣]/,
+                    message: "입력 형식에 맞지 않습니다.",
+                  },
+                })}
+              />
+              <ErrorMessage
+                errors={errors}
+                name="name"
+                render={({ message }) => (
+                  <span className="errorMessageWrap">{message}</span>
+                )}
+              />
+            </div>
           </div>
-          <ErrorMessage
-            errors={errors}
-            name="name"
-            render={({ message }) => (
-              <span className="errorMessageWrap">{message}</span>
-            )}
-          />
         </form>
       </div>
     </>

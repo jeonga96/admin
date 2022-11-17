@@ -32,7 +32,7 @@ export default function SetAdminKeyeords() {
       }
     }, []);
 
-  function handleOpenBtn(e) {
+  const handleOpenBtn = (e) => {
     e.preventDefault();
     setSearchBtn(!searchBtn);
     searchBtn === false
@@ -43,7 +43,7 @@ export default function SetAdminKeyeords() {
           })
           .then(setSearchBtn(!searchBtn))
       : setSearchBtn(!searchBtn);
-  }
+  };
 
   const handleKeywordOnclick = (item, e) => {
     e.preventDefault();
@@ -52,7 +52,7 @@ export default function SetAdminKeyeords() {
     setCompanyDetailKeyword([...newKeyword]);
   };
 
-  function onChange(e) {
+  const onChange = (e) => {
     if (modifyData === null) {
       // modifyData가 비어있다면 아직 아무것도 입력되지 않았음으로 값 추가만 진행
       return setModifyData([{ kid: e.target.id, hitCount: e.target.value }]);
@@ -68,8 +68,9 @@ export default function SetAdminKeyeords() {
       const initalValue = copyArr.filter((v, i) => v.kid !== e.target.id);
       setModifyData([...initalValue, ...sameLastValue]);
     }
-  }
+  };
 
+  // 수정 버튼
   const HandleSubmit = () => {
     for (let i = 0; i < modifyData.length; i++) {
       servicesPostData(urlSetKeyword, modifyData[i]);
@@ -78,14 +79,16 @@ export default function SetAdminKeyeords() {
     setModifyData(null);
     setSearchBtn(false);
     setAllKeywords([]);
+    alert("완료되었습니다.");
   };
 
+  console.log(keywordFilter);
   return (
     <>
       <div className="commonBox">
         {/* -------------------- 키워드 검색 -------------------- */}
         <div className="keywordWrap">
-          <div style={{ marginBottom: "10px" }}>
+          <div style={{ marginBottom: "46px", marginTop: "36px" }}>
             <input
               type="text"
               placeholder="키워드를 입력해 주세요."
@@ -99,7 +102,7 @@ export default function SetAdminKeyeords() {
 
           {searchBtn && (
             <ul className="keywordBox" id="keywordBoxAdmin">
-              {keywordFilter.length > 0 ? (
+              {keywordFilter.length > 0 &&
                 keywordFilter.map((item) => (
                   <li key={item.kid}>
                     <span>
@@ -112,10 +115,15 @@ export default function SetAdminKeyeords() {
                       </button>
                     </span>
                   </li>
-                ))
-              ) : (
+                ))}
+
+              {allKeywords !== null && keywordFilter.length === 0 ? (
                 <li>
                   <span>검색된 데이터가 없습니다. 다시 입력해 주세요.</span>
+                </li>
+              ) : (
+                <li>
+                  <span>Loading ... </span>
                 </li>
               )}
             </ul>
@@ -125,7 +133,7 @@ export default function SetAdminKeyeords() {
         {/* -------------------- 수정값 입력 폼 -------------------- */}
         <form className="formLayout" onSubmit={handleSubmit(HandleSubmit)}>
           <ul className="tableTopWrap">
-            <LayoutTopButton text="완료" disabled={isSubmitting} />
+            <LayoutTopButton text="수정" disabled={isSubmitting} />
           </ul>
           {companyDetailKeyword !== [] &&
             companyDetailKeyword.map((it, key, arr) => (

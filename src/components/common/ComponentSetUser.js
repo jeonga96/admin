@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { useForm } from "react-hook-form";
+import { useForm, getValues, setValue } from "react-hook-form";
 
 import { servicesPostData } from "../../Services/importData";
 import { urlGetUser } from "../../Services/string";

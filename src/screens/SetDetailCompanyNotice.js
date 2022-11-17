@@ -58,7 +58,7 @@ export default function SetDetailCompanyNotice() {
           }
         : {
             rcid: cid,
-            title: getValues("_name"),
+            title: getValues("_title"),
             content: getValues("_content"),
             imgs: setImgs ? imgsIid.toString() : "",
           }
@@ -80,30 +80,33 @@ export default function SetDetailCompanyNotice() {
           <ul className="tableTopWrap">
             <LayoutTopButton text="완료" disabled={isSubmitting} />
           </ul>
-          <div className="formContentWrap">
+          <div className="formContentWrap formContentWideWrap">
             <label htmlFor="title" className="blockLabel">
               제목
             </label>
-            <input
-              type="text"
-              id="title"
-              placeholder="제목을 입력해 주세요."
-              {...register("_title", {
-                required: "입력되지 않았습니다.",
-                minLength: {
-                  value: 2,
-                  message: "2자 이상의 글자만 사용가능합니다.",
-                },
-              })}
-            />
+            <div>
+              <input
+                type="text"
+                id="title"
+                placeholder="제목을 입력해 주세요."
+                {...register("_title", {
+                  required: "입력되지 않았습니다.",
+                  minLength: {
+                    value: 2,
+                    message: "2자 이상의 글자만 사용가능합니다.",
+                  },
+                })}
+              />
+
+              <ErrorMessage
+                errors={errors}
+                name="_title"
+                render={({ message }) => (
+                  <span className="errorMessageWrap">{message}</span>
+                )}
+              />
+            </div>
           </div>
-          <ErrorMessage
-            errors={errors}
-            name="_title"
-            render={({ message }) => (
-              <span className="errorMessageWrap">{message}</span>
-            )}
-          />
 
           <SetImage
             imgs={imgs}
@@ -114,29 +117,32 @@ export default function SetDetailCompanyNotice() {
             getDataFinish={getDataFinish.current}
           />
 
-          <div className="formContentWrap">
+          <div className="formContentWrap formContentWideWrap">
             <label htmlFor="title" className="blockLabel">
               내용
             </label>
-            <textarea
-              id="content"
-              placeholder="내용을 입력해 주세요."
-              {...register("_content", {
-                equired: "입력되지 않았습니다.",
-                minLength: {
-                  value: 10,
-                  message: "10자 이상의 글자만 사용가능합니다.",
-                },
-              })}
-            />
+            <div>
+              <textarea
+                id="content"
+                placeholder="내용을 입력해 주세요."
+                {...register("_content", {
+                  equired: "입력되지 않았습니다.",
+                  minLength: {
+                    value: 10,
+                    message: "10자 이상의 글자만 사용가능합니다.",
+                  },
+                })}
+              />
+
+              <ErrorMessage
+                errors={errors}
+                name="_content"
+                render={({ message }) => (
+                  <span className="errorMessageWrap">{message}</span>
+                )}
+              />
+            </div>
           </div>
-          <ErrorMessage
-            errors={errors}
-            name="_content"
-            render={({ message }) => (
-              <span className="errorMessageWrap">{message}</span>
-            )}
-          />
         </form>
       </div>
     </>

@@ -44,7 +44,7 @@ export default function ListAdminNotice() {
           <div className="filterWrap">
             <select {...register("_category")}>
               <option value="notice">전체 회원 공지</option>
-              <option value="noticeCompany">사업자 회원 공지</option>
+              <option value="noticeTocompany">사업자 회원 공지</option>
             </select>
           </div>
 

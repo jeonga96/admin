@@ -11,8 +11,6 @@ import ComponentListNotice from "../components/common/ComponentListNotice";
 export default function ListCompanyNotice() {
   let { cid } = useParams();
   const [notice, setNotice] = useState([]);
-  // const [listPage, setListPage] = useState({});
-  // const [page, setPage] = useState({ getPage: 0, activePage: 1 });
 
   useLayoutEffect(() => {
     servicesPostData(urlCompanyNoticeList, {

@@ -72,7 +72,7 @@ export default function SetDetailAdminNotice() {
         }
         if (res.status === "success") {
           alert("완료되었습니다!");
-          window.location.href = `/notice/${res.data.contid}`;
+          window.location.href = `/adminnotice/${res.data.contid}`;
           return;
         }
       })
@@ -91,7 +91,7 @@ export default function SetDetailAdminNotice() {
             <div className="filterWrap">
               <select {...register("_category")}>
                 <option value="notice">전체 회원 공지</option>
-                <option value="noticeCompany">사업자 회원 공지</option>
+                <option value="noticeTocompany">사업자 회원 공지</option>
               </select>
             </div>
 

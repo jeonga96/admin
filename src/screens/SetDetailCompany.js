@@ -65,7 +65,7 @@ export default function SetCompanyDetail() {
   const [detailComapanyRadio, setDetailComapanyRadio] = useState({
     useFlag: "1",
     status: "2",
-    gongsaType: "norm",
+    gongsaType: "reser",
   });
 
   // 현재 페이지가 렌더링되자마자 기존에 입력된 값의 여부를 확인한다.
@@ -135,12 +135,15 @@ export default function SetCompanyDetail() {
       .catch((res) => console.log(res));
   }, []);
 
+  console.log(detailComapanyRadio);
+
   // form submit 이벤트
   function UserDetailInfoSubmit() {
     //서버에 imgs의 iid값만을 보내기 위해 실행하는 반복문 함수
     serviesGetImgsIid(imgsIid, imgs);
     // 서버에 keywords의 keyword value만을 보내기 위해 실행하는 함수
     serviesGetKeywords(keywordValue, companyDetailKeyword);
+
     servicesPostData(urlSetCompany, {
       cid: cid,
       ...companyData,
