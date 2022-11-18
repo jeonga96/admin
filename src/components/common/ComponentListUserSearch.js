@@ -20,17 +20,8 @@ export default function ComponentListUserSearch({
 
   useEffect(() => {
     // searchClick을 클릭한 (true) 상태에서 동작
-    console.log(searchClick);
     searchClick === true && SearchSubmit();
-    // !searchClick &&
-    //   servicesPostData(urlUserlist, {
-    //     offset: page.getPage,
-    //     size: 15,
-    //   }).then((res) => {
-    //     setUserList(res.data);
-    //     setListPage(res.page);
-    //   });
-  }, [page.activePage]);
+  }, [page.activePage || searchClick]);
 
   // 상위 컴포넌트에게 전달받은 useState의 set 함수
   // setUserList가 set으로 전달받은 후 사용하기 위해 && 사용

@@ -47,6 +47,11 @@ export const urlSetContent = urlPrefix + "/admin/setContent";
 export const urlAllKeyword = urlPrefix + "/admin/allKeyword";
 export const urlSetKeyword = urlPrefix + "/admin/setKeyword";
 
+// 키워드
+export const urlGetEstimateInfo = urlPrefix + "/admin/getEstimateInfo";
+export const urlSetEstimateInfo = urlPrefix + "/admin/setEstimateInfo";
+export const urlListEstimateInfo = urlPrefix + "/admin/listEstimateInfo";
+
 /* string 선언 - reducer */
 export const TOKEN = "token";
 export const RETOKEN = "re_token";

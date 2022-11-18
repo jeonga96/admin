@@ -26,15 +26,17 @@ import SetCompanyNotice from "./screens/SetDetailCompanyNotice";
 import ListAdminNotice from "./screens/ListAdminNotice";
 import SetAdminNotice from "./screens/SetAdminNotice";
 
-/* 앱관리 */
-import SetAdminAppbanner from "./screens/SetAdminAppbanner";
-
-/* 키워드 조회량 관리 */
-import SetAdminKeywords from "./screens/SetAdminKeywords";
-
 /* 리뷰 */
 import ListCompanyReview from "./screens/ListCompanyReview";
 import DetailCompanyReview from "./screens/DetailCompanyReview";
+
+/* 앱관리 */
+import SetAdminAppbanner from "./screens/SetAdminAppbanner";
+/* 키워드 조회량 관리 */
+import SetAdminKeywords from "./screens/SetAdminKeywords";
+/* 키워드 조회량 관리 */
+import ListEstimateinfo from "./screens/ListEstimateinfo";
+import SetAdminEstimateinfo from "./screens/SetAdminEstimateinfo";
 
 import {
   servicesGetStorage,
@@ -273,6 +275,25 @@ function App() {
             <MainLayout
               nowTitle="공사콕 키워드 조회량 관리"
               component={<SetAdminKeywords />}
+            />
+          }
+        />
+        {/* ------- 견적 요청서 관리 ------- */}
+        <Route
+          path="estimateinfo"
+          element={
+            <MainLayout
+              nowTitle="공사콕 견적 요청서"
+              component={<ListEstimateinfo />}
+            />
+          }
+        />
+        <Route
+          path="estimateinfo/:esid"
+          element={
+            <MainLayout
+              nowTitle="공사콕 견적 요청서 상세 관리"
+              component={<SetAdminEstimateinfo />}
             />
           }
         />

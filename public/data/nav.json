@@ -37,6 +37,10 @@
       {
         "subName": "키워드 조회량 관리",
         "url": "/setkeywords"
+      },
+      {
+        "subName": "견적 요청서 관리",
+        "url": "/estimateinfo"
       }
     ]
   }

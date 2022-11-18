@@ -37,14 +37,18 @@ export default function ComponentDetailNotice({ detail }) {
       <li className="detailContentWrap title">
         <h4 className="blind">제목</h4>
         <div>
-          <span>{ADMIN ? detail.contentString : detail.title}</span>
+          <span className="titleText">
+            {ADMIN ? detail.contentString : detail.title}
+          </span>
         </div>
       </li>
 
       <li className="detailContentWrap">
         <h4 className="blind">내용</h4>
         <div>
-          <p>{ADMIN ? detail.contentDetail : detail.content}</p>
+          <p className="contentText">
+            {ADMIN ? detail.contentDetail : detail.content}
+          </p>
           {images && (
             <div
               className="detailWidthContent detailWidthContentImg"

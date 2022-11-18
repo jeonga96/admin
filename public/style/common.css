@@ -1020,9 +1020,11 @@ i {
   margin-left: 5px;
 }
 .commonTable .tableIcon {
-  background-color: var(--color-acceent);
-  color: var(--color-black);
+  background-color: var(--color-bgblack);
+  color: var(--color-white);
   border-radius: 3px;
+}
+.commonTable .tableIcon:first-child {
   margin-left: 0;
 }
 .commonTable .tableContentWrap {
