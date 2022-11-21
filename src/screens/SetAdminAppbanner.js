@@ -155,7 +155,7 @@ export default function SetAdminAppbanner() {
               </div>
               <div className="listSearchWrap" style={{ width: "50%" }}>
                 <div className="blockLabel">사용여부</div>
-                <div className="formContentWrapWithTextValue">
+                <div>
                   <input
                     className="listSearchRadioInput"
                     type="radio"
@@ -186,7 +186,7 @@ export default function SetAdminAppbanner() {
 
               <div className="listSearchWrap" style={{ width: "50%" }}>
                 <div className="blockLabel">배너이미지</div>
-                <div className="formContentWrapWithTextValue">
+                <div>
                   <SetImage
                     id="titleImg"
                     getData={bannerlist}

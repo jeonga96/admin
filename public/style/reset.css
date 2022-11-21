@@ -147,7 +147,6 @@ input[type="tel"],
 input[type="url"],
 input[type="email"],
 input[type="search"] {
-  text-indent: 0.5rem;
   cursor: pointer;
 }
 

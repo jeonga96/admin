@@ -402,9 +402,11 @@ i {
 .formLayout input {
   width: 100%;
   height: 2rem;
-  background-color: rgba(243, 244, 243, 0.3);
+  background-color: transparent;
   border: 0.0625rem solid var(--color-bggray);
+  padding: 0 0.3125rem;
 }
+
 .formLayout input:focus,
 .listSearchForm input:focus {
   transition: all 300ms ease-in;
@@ -568,8 +570,11 @@ i {
   display: flex;
   flex-wrap: wrap;
   justify-content: left;
-  padding: 4px;
-  margin-top: 20px;
+  padding: 10px 4px;
+  margin: 25px 0;
+}
+.formWrap fieldset:last-child {
+  margin-bottom: 0;
 }
 .formWrap fieldset > h3 {
   position: absolute;
@@ -596,11 +601,14 @@ i {
   width: calc(100% - 150px);
   height: auto;
   margin: 0 auto;
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  background-color: rgba(243, 244, 243, 0.3);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-left: none;
 }
 .formPaddingWrap {
-  padding: 4px;
+  padding: 3px 5px;
+  display: flex;
+  justify-content: center;
 }
 .formContentWrap div input:not(:nth-last-of-type(1)) {
   margin-bottom: 4px;

@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { useDaumPostcodePopup } from "react-daum-postcode";
 
 export default function Postcode({
+  siteAddress,
   userComponent,
   setMultilAddress,
   multilAddress,
@@ -38,14 +39,22 @@ export default function Postcode({
   };
 
   useEffect(() => {
+    // siteAddress는 주소값만 저장함
+    if (getedData !== [] && siteAddress) {
+      fnSetAddress({
+        siteAddress: getedData.siteAddress,
+      });
+    }
+
     // setUser는 주소값만 저장함
     if (getedData !== [] && userComponent) {
       fnSetAddress({
         address: getedData.address,
       });
     }
+
     // setCompany는 아래와 같은 정보가 필요함
-    if (getedData !== [] && !userComponent) {
+    if (getedData !== [] && !userComponent && !siteAddress) {
       //  신주소 : address, 구주소 :oldaddress, 우편번호 : zipcode
       fnSetAddress({
         address: getedData.address,
@@ -59,14 +68,22 @@ export default function Postcode({
 
   // 팝업 입력창에 값을 입력하면 작동하는 함수
   const handleComplete = (data) => {
+    console.log(data);
+    // siteAddress 주소값만 저장함
+    if (!!siteAddress) {
+      fnSetAddress({
+        siteAddress: data.roadAddress,
+      });
+    }
+
     // setUser는 주소값만 저장함
-    if (userComponent) {
+    if (!!userComponent) {
       fnSetAddress({
         address: data.roadAddress,
       });
     }
     // setCompany는 아래와 같은 정보가 필요함
-    if (!userComponent) {
+    if (!userComponent && !siteAddress) {
       // 팝업 입력창에 값을 입력하면 해당 주소로 좌표를 구함
       callMapcoor(data);
     }
@@ -75,6 +92,35 @@ export default function Postcode({
   const handleClick = () => {
     open({ onComplete: handleComplete });
   };
+
+  // siteAddress
+  if (!!siteAddress) {
+    return (
+      <div className="formContentWrap">
+        <label htmlFor="address" className=" blockLabel">
+          방문 요청 주소
+        </label>
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <input
+            type="text"
+            id="roadAddress"
+            disabled
+            value={multilAddress.siteAddress || ""}
+            style={{
+              width: "84%",
+            }}
+          />
+          <button
+            type="button"
+            onClick={handleClick}
+            className="formContentBtn"
+          >
+            주소검색
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   // setUser
   if (!!userComponent) {
