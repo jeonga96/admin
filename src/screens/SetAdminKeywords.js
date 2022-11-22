@@ -117,13 +117,9 @@ export default function SetAdminKeyeords() {
                   </li>
                 ))}
 
-              {allKeywords !== null && keywordFilter.length === 0 ? (
+              {allKeywords !== null && keywordFilter.length === 0 && (
                 <li>
                   <span>검색된 데이터가 없습니다. 다시 입력해 주세요.</span>
-                </li>
-              ) : (
-                <li>
-                  <span>Loading ... </span>
                 </li>
               )}
             </ul>

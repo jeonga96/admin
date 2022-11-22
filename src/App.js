@@ -273,7 +273,7 @@ function App() {
           path="setkeywords"
           element={
             <MainLayout
-              nowTitle="공사콕 키워드 조회량 관리"
+              nowTitle="공사콕 키워드 검색순위 관리"
               component={<SetAdminKeywords />}
             />
           }

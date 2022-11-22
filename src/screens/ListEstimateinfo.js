@@ -45,18 +45,21 @@ export default function ListEsimateinfo() {
                 <th style={{ width: "150px" }}>견적 요청</th>
                 <th style={{ width: "150px" }}>견적 수령</th>
                 <th style={{ width: "150px" }}>방문날짜</th>
-                <th style={{ width: "110px" }}>공사타입</th>
+                <th style={{ width: "120px" }}>공사타입</th>
                 <th style={{ width: "100px" }}>견적서</th>
                 <th style={{ width: "100px" }}>세금계산서</th>
                 <th style={{ width: "100px" }}>활성화</th>
-                <th style={{ width: "auto" }}></th>
               </tr>
             </thead>
             <tbody>
               {list !== [] &&
                 list.map((item, key) => (
                   <tr key={key}>
-                    <td>{item.esid}</td>
+                    <td className="tableButton">
+                      <Link to={`${item.esid}`} className="Link">
+                        {item.esid}
+                      </Link>
+                    </td>
                     <td>{item.fromUid}</td>
                     <td>{item.toUid}</td>
                     <td>{item.reqVisit && item.reqVisit.slice(0, 10)}</td>
@@ -96,11 +99,6 @@ export default function ListEsimateinfo() {
                     </td>
                     <td>
                       {item.useFlag == "1" && <i className="tableIcon">정상</i>}
-                    </td>
-                    <td className="tableButton" style={{ width: "auto" }}>
-                      <Link to={`${item.esid}`} className="Link">
-                        상세
-                      </Link>
                     </td>
                   </tr>
                 ))}

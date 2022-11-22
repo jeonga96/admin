@@ -287,7 +287,9 @@ export default function SetAdminAppbanner() {
                       </a>
                     </div>
                   </td>
-                  <td>{item.useFlag ? "ON" : "OFF"}</td>
+                  <td>
+                    {item.useFlag == "1" && <i className="tableIcon">ON</i>}
+                  </td>
                   <td>
                     <button
                       className="Link"

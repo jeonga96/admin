@@ -87,7 +87,6 @@ export default function SetAdminEstimateinfo() {
     const reqDate = new Date(getValues("_reqVisit"));
     const proDate = new Date(getValues("_proVisit"));
 
-    console.log(imgsIid.toString());
     // setUserDetailInfo 수정
     servicesPostData(urlSetEstimateInfo, {
       esid: esid,
@@ -97,15 +96,15 @@ export default function SetAdminEstimateinfo() {
       reqDetail: getValues("_reqDetail"),
       reqPrice: getValues("_reqPrice"),
       siteAddress: multilAddress.siteAddress,
-      reqVisit: reqDate.toISOString().slice(0, 19),
+      reqVisit: reqDate.toISOString().slice(0, 19) || "",
       reqEstimate: checkData.reqEstimate,
       reqBill: checkData.reqBill,
       useFlag: checkData.useFlag,
       addInfo: getValues("_addInfo"),
       proDetail: getValues("_proDetail"),
       proPrice: getValues("_proPrice"),
-      proVisit: proDate.toISOString().slice(0, 19),
-      addImgs: imgsIid.toString(),
+      proVisit: proDate.toISOString().slice(0, 19) || "",
+      addImgs: imgsIid.toString() || "",
     })
       .then((res) => {
         if (res.status === "success") {
@@ -117,6 +116,7 @@ export default function SetAdminEstimateinfo() {
       .catch((error) => console.log("axios 실패", error.response));
   }
 
+  console.log(checkData.gongsaType);
   return (
     <>
       <div className="commonBox">
@@ -202,7 +202,7 @@ export default function SetAdminEstimateinfo() {
                     onChange={(e) =>
                       setCheckData({
                         ...checkData,
-                        gongsaType: e.target.value,
+                        gongsaType: [checkData.gongsaType, e.target.value],
                       })
                     }
                   />
@@ -219,7 +219,7 @@ export default function SetAdminEstimateinfo() {
                     onChange={(e) =>
                       setCheckData({
                         ...checkData,
-                        gongsaType: e.target.value,
+                        gongsaType: [checkData.gongsaType, e.target.value],
                       })
                     }
                   />
@@ -236,7 +236,7 @@ export default function SetAdminEstimateinfo() {
                     onChange={(e) =>
                       setCheckData({
                         ...checkData,
-                        gongsaType: e.target.value,
+                        gongsaType: [...checkData.gongsaType, e.target.value],
                       })
                     }
                   />

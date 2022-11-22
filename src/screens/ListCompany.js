@@ -79,15 +79,13 @@ function ListInTr({
           onChange={checkHandler}
         />
       </td>
-
-      <td>{item.cid}</td>
-      <td>{item.name}</td>
-      <td>{item.createTime && item.createTime.slice(0, 10)}</td>
       <td className="tableButton">
         <Link to={`${item.cid}`} className="Link">
-          상세
+          {item.cid}
         </Link>
       </td>
+      <td>{item.name}</td>
+      <td>{item.createTime && item.createTime.slice(0, 10)}</td>
     </tr>
   );
 }
@@ -189,11 +187,10 @@ export default function ListCompany() {
               <tr>
                 <th style={{ width: "65px" }}>계약관리</th>
                 <th style={{ width: "65px" }}>회원상태</th>
-                <th style={{ width: "300px" }}>관리번호</th>
+                <th style={{ width: "100px" }}>관리번호</th>
                 <th style={{ width: "250px" }}>계약자</th>
                 <th style={{ width: "300px" }}>계약일</th>
                 {/* <th style={{ width: "200px" }}>상세정보</th> */}
-                <th style={{ width: "auto" }}></th>
               </tr>
             </thead>
             <tbody>

@@ -1,13 +1,15 @@
 /*common --------------------------------------------------------------*/
 :root {
+  accent-color: #757575;
   --color-black: #212121;
   --color-bgblack: #757575;
   --color-white: #fff;
   --color-gray: #bdbdbd;
   --color-bggray: #f6f5f4;
-  --color-primary: #3f51b5;
-  --color-lightprimary: #c5cae9;
-  --color-darkprimary: #303f9f;
+  /* --color-primary: #b761e9; */
+  --color-primary: #9c27b0;
+  --color-lightprimary: #e1bee7;
+  --color-darkprimary: #7b1fa2;
   --color-acceent: #ffc107;
   --font-point: "NanumSquare", Pretendard, -apple-system, BlinkMacSystemFont,
     system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo",
@@ -405,6 +407,7 @@ i {
   background-color: transparent;
   border: 0.0625rem solid var(--color-bggray);
   padding: 0 0.3125rem;
+  text-align: center;
 }
 
 .formLayout input:focus,
@@ -654,6 +657,7 @@ i {
   width: calc(100% - 64px);
   height: 100%;
   border: 1px solid var(--color-bggray);
+  padding: 0 5px;
 }
 
 .keywordInput ~ button {
@@ -1141,15 +1145,14 @@ ul.pagination li a:hover {
 }
 
 /* 상세 */
-.tableButton {
-  float: right;
-  transform: translateY(50%);
-  margin-right: 0.325rem;
-  width: 2rem;
-  height: 1.5rem;
+.tableButton a {
+  width: 100%;
+  height: 100%;
+  font-size: 0.875rem;
+  font-weight: 400;
 }
 .tableButton a:hover {
-  font-weight: 700;
+  color: var(--color-acceent);
 }
 
 .Link {

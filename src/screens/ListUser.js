@@ -37,7 +37,16 @@ function ListInTr({ item, setClickedUseFlag, clickedUseFlag }) {
           onChange={checkHandler}
         />
       </td>
-      <td>{item.uid}</td>
+      <td className="tableButton">
+        <Link to={`${item.uid}`} className="Link">
+          {item.uid}
+        </Link>
+      </td>
+      <td className="tableButton">
+        <Link to={`/company/${item.cid}`} className="Link">
+          {item.cid}
+        </Link>
+      </td>
       <td>{item.userid}</td>
       <td>{item.name}</td>
       <td>
@@ -48,12 +57,12 @@ function ListInTr({ item, setClickedUseFlag, clickedUseFlag }) {
       <td>{item.mobile}</td>
       <td>{item.createTime && item.createTime.slice(0, 10)}</td>
       <td>{item.udid ? <i className="tableIcon">입력</i> : null}</td>
-      <td>{item.cid ? <i className="tableIcon">사업자</i> : null}</td>
-      <td className="tableButton" style={{ width: "auto" }}>
+
+      {/* <td className="tableButton" style={{ width: "auto" }}>
         <Link to={`${item.uid}`} className="Link">
           상세
         </Link>
-      </td>
+      </td> */}
     </tr>
   );
 }
@@ -123,14 +132,13 @@ export default function ListUser() {
               <tr>
                 <th>계약관리</th>
                 <th style={{ width: "100px" }}>관리번호</th>
+                <th style={{ width: "100px" }}>사업자관리번호</th>
                 <th style={{ width: "200px" }}>아이디</th>
                 <th style={{ width: "150px" }}>이름</th>
                 <th style={{ width: "100px" }}>회원권한</th>
                 <th style={{ width: "250px" }}>핸드폰번호</th>
                 <th style={{ width: "100px" }}>계약일</th>
                 <th style={{ width: "70px" }}>상세입력</th>
-                <th style={{ width: "70px" }}>사업자</th>
-                <th style={{ width: "auto" }}></th>
               </tr>
             </thead>
             <tbody>
