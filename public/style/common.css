@@ -1,6 +1,5 @@
 /*common --------------------------------------------------------------*/
 :root {
-  accent-color: #757575;
   --color-black: #212121;
   --color-bgblack: #757575;
   --color-white: #fff;
@@ -25,6 +24,10 @@
 }
 i {
   color: var(--color-lightprimary);
+}
+input[type="checkbox"],
+input[type="radio"] {
+  accent-color: #757575;
 }
 
 #wrap {

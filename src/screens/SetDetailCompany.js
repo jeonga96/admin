@@ -18,6 +18,8 @@ import {
   ALLKEYWORD,
   urlCompanyNoticeList,
   urlReviewList,
+  urlListEstimateInfo,
+  urlGetCompany,
 } from "../Services/string";
 
 import SetImage from "../components/common/ServicesImageSetPreview";
@@ -57,9 +59,13 @@ export default function SetCompanyDetail() {
   const [companyDetailKeyword, setCompanyDetailKeyword] = useState([]);
   // keywordValue:서버에 키워드를 보낼 때 keyword의 value만 필요
   const keywordValue = [];
-  // 하단 링크 이동 될 사업자 공지사항, 사업자 리뷰
+
+  // 하단 링크 이동 될 사업자 공지사항, 사업자 리뷰, 견적서
   const [noticeList, setNoticeList] = useState([]);
   const [reviewList, setReviewList] = useState([]);
+  const [toEstimateinfo, setToEstimateinfo] = useState([]);
+  const [fromEstimateinfo, setFromEstimateinfo] = useState([]);
+
   //  setUser 수정 (useFlag만 기본값으로 설정)
   const [companyData, setCompanyData] = useState({});
   const [detailComapanyRadio, setDetailComapanyRadio] = useState({
@@ -125,8 +131,28 @@ export default function SetCompanyDetail() {
             setValue("_linkurl5", nameVar[4] || "");
           }
 
+          console.log("uid", companyData.ruid);
+          // 공지사항, 리뷰, 견적요청서 링크 이동 개수 확인하기 위해 데이터 받아오기
           serviesPostDataSettingRcid(urlCompanyNoticeList, cid, setNoticeList);
           serviesPostDataSettingRcid(urlReviewList, cid, setReviewList);
+          // 견적요청서 - uid가 필요하기 떄문에 cid로 uid를 확인한 후 진행
+          servicesPostData(urlGetCompany, { cid: cid }).then((res) => {
+            // 요청
+            servicesPostData(urlListEstimateInfo, {
+              fromUid: res.data.ruid,
+              offset: 0,
+              size: 5,
+            }).then((res) => setFromEstimateinfo(res.page));
+            // 수령
+            servicesPostData(urlListEstimateInfo, {
+              toUid: res.data.ruid,
+              offset: 0,
+              size: 5,
+            }).then((res) => setToEstimateinfo(res.page));
+          });
+
+          // 공지사항, 리뷰, 견적요청서 ------------------------------------
+
           getDataFinish.current = true;
         } else if (res.data === "fail") {
           console.log("새로운 사업자 회원입니다.");
@@ -134,8 +160,6 @@ export default function SetCompanyDetail() {
       })
       .catch((res) => console.log(res));
   }, []);
-
-  console.log(detailComapanyRadio);
 
   // form submit 이벤트
   function UserDetailInfoSubmit() {
@@ -851,6 +875,20 @@ export default function SetCompanyDetail() {
               getData={reviewList}
               url={`/company/${getedData.rcid}/review`}
               title="리뷰"
+            />
+          )}
+          {toEstimateinfo && companyData.ruid && (
+            <PieceDetailListLink
+              getData={toEstimateinfo}
+              url={`toestimateinfo`}
+              title="[요청] 견적 요청서"
+            />
+          )}
+          {fromEstimateinfo && companyData.ruid && (
+            <PieceDetailListLink
+              getData={fromEstimateinfo}
+              url={`fromestimateinfo`}
+              title="[수령] 견적 요청서"
             />
           )}
         </ul>

@@ -9,7 +9,6 @@ export function serviesPostDataSettingRcid(url, valueName, setData) {
     }
     if (res.status === "fail" && res.emsg === "process failed.") {
       setData([]);
-      // console.log("작성된 내용이 없습니다.", res);
       return;
     }
   });

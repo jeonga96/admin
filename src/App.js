@@ -37,6 +37,7 @@ import SetAdminKeywords from "./screens/SetAdminKeywords";
 /* 키워드 조회량 관리 */
 import ListEstimateinfo from "./screens/ListEstimateinfo";
 import SetAdminEstimateinfo from "./screens/SetAdminEstimateinfo";
+import DetailCompanyEstimateinfo from "./screens/DetailCompanyEstimateinfo";
 
 import {
   servicesGetStorage,
@@ -294,6 +295,24 @@ function App() {
             <MainLayout
               nowTitle="공사콕 견적 요청서 상세 관리"
               component={<SetAdminEstimateinfo />}
+            />
+          }
+        />
+        <Route
+          path="company/:rcid/toestimateinfo"
+          element={
+            <MainLayout
+              nowTitle="[요청] 공사콕 견적 요청서"
+              component={<DetailCompanyEstimateinfo />}
+            />
+          }
+        />
+        <Route
+          path="company/:rcid/fromestimateinfo"
+          element={
+            <MainLayout
+              nowTitle="[수령] 공사콕 견적 요청서"
+              component={<DetailCompanyEstimateinfo />}
             />
           }
         />

@@ -7,7 +7,7 @@ import PageButton from "../components/common/PiecePaginationButton";
 import LayoutTopButton from "../components/common/LayoutTopButton";
 import ComponentListEstmateinfoSearch from "../components/common/ComponentListEstmateinfoSearch";
 
-export default function ListEsimateinfo() {
+export default function ListEstimateinfo() {
   const [list, setList] = useState([]);
   const [listPage, setListPage] = useState({});
   const [page, setPage] = useState({ getPage: 0, activePage: 1 });

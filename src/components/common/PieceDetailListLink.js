@@ -6,7 +6,15 @@ export default function PieceDetailListLink({ getData, url, title }) {
     <li>
       <Link to={url}>
         <h4>{title}</h4>
-        <span>{getData && getData.length > 0 ? getData.length : "0"}개</span>
+        <span>
+          {!!getData && !!getData.totalElements
+            ? getData.totalElements
+            : getData && getData.length > 0
+            ? getData.length
+            : "0"}
+          개
+        </span>
+        <span>{/* {getData && }개 */}</span>
         <div className="link">
           상세보기
           <BsArrowRightShort />

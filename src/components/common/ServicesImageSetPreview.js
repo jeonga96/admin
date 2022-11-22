@@ -32,8 +32,6 @@ export default function ImageSet({
     setRegImgs && setRegImgs(res);
   };
 
-  console.log(imgs);
-
   // 첫 렌더링을 방지하고, 기존 입력된 이미지가 있다면 서버에서 이미지를 가져온다.
   useDidMountEffect(() => {
     if (!!getData.titleImg) {
