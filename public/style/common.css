@@ -5,7 +5,6 @@
   --color-white: #fff;
   --color-gray: #bdbdbd;
   --color-bggray: #f6f5f4;
-  /* --color-primary: #b761e9; */
   --color-primary: #9c27b0;
   --color-lightprimary: #e1bee7;
   --color-darkprimary: #7b1fa2;
@@ -16,9 +15,8 @@
   --font-size-small: 0.75rem;
   --font-size-basic: 0.875rem;
   --font-size-em: 1rem;
-  --font-size-big: 1.125rem;
+  --font-size-subtitle: 1.375rem;
   --font-size-title: 1.625rem;
-  --font-size-titleem: 2rem;
   --styles-boxShadow: 0 0.75rem 1.875rem rgb(80 143 244 / 10%);
   --styles-boxShadowDeep: 0 0.1875rem 0.6875rem rgb(0 0 0 / 17%);
 }
@@ -101,12 +99,11 @@ input[type="radio"] {
   margin-bottom: 0;
 }
 .commonBox h3 {
-  font-size: var(--font-size-title);
+  font-size: var(--font-size-subtitle);
   color: var(--color-black);
+  font-weight: 700;
 }
 .tableWrap h3 {
-  font-size: var(--font-size-big);
-  font-weight: 700;
   height: 50px;
   line-height: 50px;
 }
@@ -809,7 +806,7 @@ input[type="radio"] {
   margin-left: 10px;
 }
 .title .titleText {
-  font-size: var(--font-size-title);
+  font-size: var(--font-size-subtitle);
   font-weight: 500;
   color: var(--color-black);
 }
