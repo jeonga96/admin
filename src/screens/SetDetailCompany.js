@@ -131,7 +131,6 @@ export default function SetCompanyDetail() {
             setValue("_linkurl5", nameVar[4] || "");
           }
 
-          console.log("uid", companyData.ruid);
           // 공지사항, 리뷰, 견적요청서 링크 이동 개수 확인하기 위해 데이터 받아오기
           serviesPostDataSettingRcid(urlCompanyNoticeList, cid, setNoticeList);
           serviesPostDataSettingRcid(urlReviewList, cid, setReviewList);
@@ -160,6 +159,29 @@ export default function SetCompanyDetail() {
       })
       .catch((res) => console.log(res));
   }, []);
+
+  // checkbox, 복수 선택 이벤트
+  const handleOnchangeGonsatype = (e) => {
+    const INVERTORARR = detailComapanyRadio.gongsaType.split(",");
+    let arr = [];
+    if (INVERTORARR.length == 1) {
+      if (detailComapanyRadio.gongsaType !== e.target.value) {
+        arr = [detailComapanyRadio.gongsaType, e.target.value];
+      }
+    } else {
+      arr = [...INVERTORARR];
+      if (arr.includes(e.target.value)) {
+        arr = arr.filter((it) => it !== e.target.value);
+      } else {
+        arr.push(e.target.value);
+      }
+    }
+    arr = arr.filter((it) => it !== "");
+    setDetailComapanyRadio({
+      ...detailComapanyRadio,
+      gongsaType: arr.toString(),
+    });
+  };
 
   // form submit 이벤트
   function UserDetailInfoSubmit() {
@@ -364,7 +386,7 @@ export default function SetCompanyDetail() {
               <div className="blockLabel">
                 <span>사업자 공사 관리</span>
               </div>
-              <div className="formPaddingWrap">
+              {/* <div className="formPaddingWrap">
                 <input
                   className="listSearchRadioInput"
                   type="radio"
@@ -422,6 +444,45 @@ export default function SetCompanyDetail() {
                   })}
                 />
                 <label className="listSearchRadioLabel" htmlFor="typeReser">
+                  예약
+                </label> */}
+              {/* </div> */}
+
+              <div className="formPaddingWrap">
+                <input
+                  type="checkbox"
+                  value="emer"
+                  id="emer"
+                  name="gongsaType"
+                  className="listSearchRadioInput"
+                  checked={detailComapanyRadio.gongsaType.includes("emer")}
+                  onChange={handleOnchangeGonsatype}
+                />
+                <label htmlFor="emer" className="listSearchRadioLabel">
+                  긴급
+                </label>
+                <input
+                  type="checkbox"
+                  value="inday"
+                  id="inday"
+                  name="gongsaType"
+                  className="listSearchRadioInput"
+                  checked={detailComapanyRadio.gongsaType.includes("inday")}
+                  onChange={handleOnchangeGonsatype}
+                />
+                <label htmlFor="inday" className="listSearchRadioLabel">
+                  당일
+                </label>
+                <input
+                  type="checkbox"
+                  value="reser"
+                  id="reser"
+                  name="gongsaType"
+                  className="listSearchRadioInput"
+                  checked={detailComapanyRadio.gongsaType.includes("reser")}
+                  onChange={handleOnchangeGonsatype}
+                />
+                <label htmlFor="reser" className="listSearchRadioLabel">
                   예약
                 </label>
               </div>

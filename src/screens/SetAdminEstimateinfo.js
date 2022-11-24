@@ -116,10 +116,7 @@ export default function SetAdminEstimateinfo() {
       .catch((error) => console.log("axios 실패", error.response));
   }
 
-  // const arrrr = ["a", "a", "bb", "b", "c"];
-  // const ar1 = arrrr.filter((it) => it !== "bb");
-  // console.log(ar1);
-
+  // checkbox, 복수 선택 이벤트
   const handleOnchangeGonsatype = (e) => {
     const INVERTORARR = checkData.gongsaType.split(",");
     let arr = [];
@@ -130,21 +127,17 @@ export default function SetAdminEstimateinfo() {
     } else {
       arr = [...INVERTORARR];
       if (arr.includes(e.target.value)) {
-        console.log("1", arr);
         arr = arr.filter((it) => it !== e.target.value);
       } else {
         arr.push(e.target.value);
       }
-      return arr;
     }
-    arr = arr.toString();
+    arr = arr.filter((it) => it !== "");
     setCheckData({
       ...checkData,
-      gongsaType: arr,
+      gongsaType: arr.toString(),
     });
   };
-
-  console.log("toString", checkData.gongsaType);
 
   return (
     <>
