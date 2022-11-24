@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from "react";
-import { useLocation } from "react-router-dom";
 import {
   urlSetContent,
   urlGetContent,
@@ -13,7 +12,6 @@ import { serviesGetImgId } from "../Services/useData";
 import SetImage from "../components/common/ServicesImageSetUrl";
 
 export default function SetAdminAppbanner() {
-  const location = useLocation();
   // 저장된 배너 리스트 불러오기 & 저장
   const [bannerlist, setBannerlist] = useState([]);
   // 배너 리스트 내부의 배너 상세 내용에 onChange 이벤트를 적용할 수 있도록 설정
@@ -142,7 +140,9 @@ export default function SetAdminAppbanner() {
           <fieldset>
             <div className="formWrap">
               <div className="listSearchWrap" style={{ width: "50%" }}>
-                <div className="blockLabel">배너이름</div>
+                <div className="blockLabel">
+                  <span>배너이름</span>
+                </div>
                 <div>
                   <input
                     type="text"
@@ -154,7 +154,9 @@ export default function SetAdminAppbanner() {
                 </div>
               </div>
               <div className="listSearchWrap" style={{ width: "50%" }}>
-                <div className="blockLabel">사용여부</div>
+                <div className="blockLabel">
+                  <span>사용여부</span>
+                </div>
                 <div>
                   <input
                     className="listSearchRadioInput"
@@ -185,7 +187,9 @@ export default function SetAdminAppbanner() {
               </div>
 
               <div className="listSearchWrap" style={{ width: "50%" }}>
-                <div className="blockLabel">배너이미지</div>
+                <div className="blockLabel">
+                  <span>배너이미지</span>
+                </div>
                 <div>
                   <SetImage
                     id="titleImg"
@@ -197,7 +201,9 @@ export default function SetAdminAppbanner() {
                 </div>
               </div>
               <div className="listSearchWrap" style={{ width: "50%" }}>
-                <div className="blockLabel">랜딩 URL</div>
+                <div className="blockLabel">
+                  <span>랜딩 URL</span>
+                </div>
                 <div>
                   <input
                     type="text"

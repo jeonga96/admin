@@ -101,9 +101,12 @@ input[type="radio"] {
   margin-bottom: 0;
 }
 .commonBox h3 {
+  font-size: var(--font-size-title);
+  color: var(--color-black);
+}
+.tableWrap h3 {
   font-size: var(--font-size-big);
   font-weight: 700;
-  color: var(--color-black);
   height: 50px;
   line-height: 50px;
 }
@@ -396,16 +399,19 @@ input[type="radio"] {
 }
 
 .formLayout .blockLabel {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   height: auto;
   min-height: 2rem;
-  font-size: var(--font-size-basic);
-  line-height: 2rem;
-  font-weight: 500;
-  color: var(--color-black);
   width: 150px;
   background-color: var(--color-bggray);
   border: 1px solid rgba(0, 0, 0, 0.1);
+}
+.formLayout .blockLabel span {
+  font-weight: 500;
+  color: var(--color-black);
+  font-size: var(--font-size-basic);
 }
 
 .formLayout input {
@@ -552,17 +558,25 @@ input[type="radio"] {
 }
 
 /* 라벨 제거한 input basic css (공사콕 배너관리-배너이비지) */
-.basicInputWrap .basicWrapLabel {
+.basicInputWrap {
+  width: 100%;
+}
+.basicInputWrap #titleImg {
+  border: none;
+  background-color: transparent;
+}
+.basicInputWrap .basicModifyBtn {
   display: block;
   cursor: pointer;
   width: 65px;
   height: 20px;
   background-color: var(--color-bggray);
-  border: 1px solid var(--color-lightprimary);
+  border: 1px solid var(--color-gray);
   border-radius: 5px;
   text-align: center;
   font-size: var(--font-size-small);
   line-height: 22px;
+  color: var(--color-black);
 }
 
 .formWrap {
@@ -665,6 +679,9 @@ input[type="radio"] {
   height: 100%;
   border: 1px solid var(--color-bggray);
   padding: 0 5px;
+}
+.keywordInput:focus {
+  border: 1px solid var(--color-lightprimary);
 }
 
 .keywordInput ~ button {
@@ -1044,6 +1061,10 @@ input[type="radio"] {
 
 .flexTableWrap button {
   margin: 0 auto;
+  color: var(--color-bgblack);
+}
+.flexTableWrap button:hover {
+  color: var(--color-black);
 }
 
 /* 테이블 내 세부 콘텐츠 */
@@ -1204,11 +1225,12 @@ ul.pagination li a:hover {
 .listSearchWrap .blockLabel {
   width: 110px;
   height: 100%;
-  text-align: center;
   background-color: var(--color-bgblack);
-  color: var(--color-white);
-  line-height: 32px;
   border: none;
+}
+.listSearchWrap .blockLabel span {
+  text-align: center;
+  color: var(--color-white);
 }
 
 .listSearchWrap div:nth-child(2) {

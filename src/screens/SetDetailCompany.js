@@ -240,7 +240,9 @@ export default function SetCompanyDetail() {
 
               {/* setDetailCompanyInfo radio ================================================================ */}
               <div className="formContentWrap">
-                <div className="blockLabel">회원관리</div>
+                <div className="blockLabel">
+                  <span>회원관리</span>
+                </div>
                 <div className="formPaddingWrap">
                   <input
                     className="listSearchRadioInput"
@@ -291,7 +293,9 @@ export default function SetCompanyDetail() {
               </div>
 
               <div className="formContentWrap">
-                <div className="blockLabel">계약관리</div>
+                <div className="blockLabel">
+                  <span>계약관리</span>
+                </div>
                 <div className="formPaddingWrap">
                   <input
                     className="listSearchRadioInput"
@@ -357,7 +361,9 @@ export default function SetCompanyDetail() {
             </fieldset>
 
             <div className="formContentWrap">
-              <div className="blockLabel">사업자 공사 관리</div>
+              <div className="blockLabel">
+                <span>사업자 공사 관리</span>
+              </div>
               <div className="formPaddingWrap">
                 <input
                   className="listSearchRadioInput"
@@ -425,7 +431,7 @@ export default function SetCompanyDetail() {
 
             <div className="formContentWrap">
               <label htmlFor="name" className="blockLabel">
-                상호
+                <span>상호</span>
               </label>
               <div>
                 <input
@@ -452,8 +458,8 @@ export default function SetCompanyDetail() {
             </div>
 
             <div className="formContentWrap">
-              <label htmlFor="registration" className=" blockLabel">
-                사업자 등록 번호
+              <label htmlFor="registration" className="blockLabel">
+                <span>사업자 등록 번호</span>
               </label>
               <div>
                 <input
@@ -490,7 +496,7 @@ export default function SetCompanyDetail() {
 
             <div className="formContentWrap">
               <label htmlFor="mobilenum" className="blockLabel">
-                핸드폰번호
+                <span>핸드폰번호</span>
               </label>
               <div>
                 <input
@@ -517,8 +523,8 @@ export default function SetCompanyDetail() {
             </div>
 
             <div className="formContentWrap">
-              <label htmlFor="telnum" className=" blockLabel">
-                전화번호
+              <label htmlFor="telnum" className="blockLabel">
+                <span>전화번호</span>
               </label>
               <div>
                 <input
@@ -545,8 +551,8 @@ export default function SetCompanyDetail() {
             </div>
 
             <div className="formContentWrap">
-              <label htmlFor="extnum" className=" blockLabel">
-                안심 번호
+              <label htmlFor="extnum" className="blockLabel">
+                <span>안심 번호</span>
               </label>
               <div>
                 <input
@@ -572,8 +578,8 @@ export default function SetCompanyDetail() {
             </div>
 
             <div className="formContentWrap">
-              <label htmlFor="location" className=" blockLabel">
-                위치
+              <label htmlFor="location" className="blockLabel">
+                <span>위치</span>
               </label>
               <div>
                 <input
@@ -606,8 +612,8 @@ export default function SetCompanyDetail() {
             />
 
             <div className="formContentWrap">
-              <label htmlFor="email" className=" blockLabel">
-                이메일
+              <label htmlFor="email" className="blockLabel">
+                <span>이메일</span>
               </label>
               <div>
                 <input
@@ -634,8 +640,8 @@ export default function SetCompanyDetail() {
             </div>
 
             <div className="formContentWrap">
-              <label htmlFor="comment" className=" blockLabel">
-                사업자 한줄 소개
+              <label htmlFor="comment" className="blockLabel">
+                <span>사업자 한줄 소개</span>
               </label>
               <div>
                 <input
@@ -661,8 +667,8 @@ export default function SetCompanyDetail() {
             </div>
 
             <div className="formContentWrap">
-              <label htmlFor="comment" className=" blockLabel">
-                대표인사말
+              <label htmlFor="comment" className="blockLabel">
+                <span>대표인사말</span>
               </label>
               <div>
                 <input
@@ -688,8 +694,8 @@ export default function SetCompanyDetail() {
             </div>
 
             <div className="formContentWrap">
-              <label htmlFor="workTime" className=" blockLabel">
-                근무 시간
+              <label htmlFor="workTime" className="blockLabel">
+                <span>근무 시간</span>
               </label>
               <div>
                 <input
@@ -734,7 +740,7 @@ export default function SetCompanyDetail() {
 
             <div className="formContentWrap" style={{ width: "100%" }}>
               <label htmlFor="offer" className="blockLabel">
-                사업자 소개글
+                <span>사업자 소개글</span>
               </label>
               <div>
                 <textarea
@@ -761,7 +767,7 @@ export default function SetCompanyDetail() {
 
             <div className="formContentWrap">
               <label htmlFor="keywords" className="blockLabel">
-                키워드
+                <span>키워드</span>
               </label>
               <SetAllKeyWord
                 companyDetailKeyword={companyDetailKeyword}
@@ -770,8 +776,8 @@ export default function SetCompanyDetail() {
             </div>
 
             <div className="formContentWrap">
-              <label htmlFor="tags" className=" blockLabel">
-                태그
+              <label htmlFor="tags" className="blockLabel">
+                <span>태그</span>
               </label>
               <div>
                 <input
@@ -797,7 +803,9 @@ export default function SetCompanyDetail() {
             </div>
 
             <div className="formContentWrap">
-              <label className="blockLabel">동영상 링크</label>
+              <label className="blockLabel">
+                <span>동영상 링크</span>
+              </label>
               <div>
                 <input
                   type="text"
@@ -817,7 +825,10 @@ export default function SetCompanyDetail() {
             </div>
 
             <div className="formContentWrap">
-              <label className="blockLabel">외부 링크</label>
+              <label className="blockLabel">
+                {" "}
+                <span>외부 링크</span>
+              </label>
               <div>
                 <input
                   type="text"

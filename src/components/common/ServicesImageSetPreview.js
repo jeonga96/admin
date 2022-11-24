@@ -118,7 +118,9 @@ export default function ImageSet({
   return (
     <div className="setImageWrap">
       <div>
-        <div className="blockLabel">{title}</div>
+        <div className="blockLabel">
+          <span>{title}</span>
+        </div>
         <label htmlFor={id} className="fileboxLabel">
           <BiUpload /> 사진 업로드
         </label>

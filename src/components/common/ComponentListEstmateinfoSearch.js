@@ -87,7 +87,9 @@ export default function ComponentListUserSearch({
         <fieldset>
           <div className="formWrap">
             <div className="listSearchWrap" style={{ width: "50%" }}>
-              <label className="blockLabel">견적 요청</label>
+              <label className="blockLabel">
+                <span>견적 요청</span>
+              </label>
               <div>
                 <input
                   type="text"
@@ -104,7 +106,9 @@ export default function ComponentListUserSearch({
               </div>
             </div>
             <div className="listSearchWrap" style={{ width: "50%" }}>
-              <label className="blockLabel">견적 수령</label>
+              <label className="blockLabel">
+                <span>견적 수령</span>
+              </label>
               <div>
                 <input
                   type="text"

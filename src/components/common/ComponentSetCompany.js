@@ -42,7 +42,9 @@ export default function ComponentSetCompany({ companyData, setCompanyData }) {
   return (
     <>
       <div className="formContentWrap">
-        <div className="blockLabel">계약자</div>
+        <div className="blockLabel">
+          <span>계약자</span>
+        </div>
         <div>
           <input
             className="formContentInput"
@@ -59,7 +61,9 @@ export default function ComponentSetCompany({ companyData, setCompanyData }) {
       </div>
 
       <div className="formContentWrap">
-        <div className="blockLabel">사업자 활성화</div>
+        <div className="blockLabel">
+          <span>사업자 활성화</span>
+        </div>
         <div className="formPaddingWrap">
           <input
             className="listSearchRadioInput"
@@ -75,7 +79,7 @@ export default function ComponentSetCompany({ companyData, setCompanyData }) {
             })}
           />
           <label className="listSearchRadioLabel" htmlFor="useFlag0">
-            비활성화
+            <span>비활성화</span>
           </label>
 
           <input
@@ -98,7 +102,9 @@ export default function ComponentSetCompany({ companyData, setCompanyData }) {
       </div>
 
       <div className="formContentWrap">
-        <div className="blockLabel">회원 연결</div>
+        <div className="blockLabel">
+          <span>회원 연결</span>
+        </div>
         <div>
           <input
             className="formContentInput"

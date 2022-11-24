@@ -98,7 +98,7 @@ export default function Postcode({
     return (
       <div className="formContentWrap">
         <label htmlFor="address" className=" blockLabel">
-          방문 요청 주소
+          <span>방문 요청 주소</span>
         </label>
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <input
@@ -127,7 +127,7 @@ export default function Postcode({
     return (
       <div className="formContentWrap">
         <label htmlFor="address" className=" blockLabel">
-          주소
+          <span>주소</span>
         </label>
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <input
@@ -157,7 +157,7 @@ export default function Postcode({
       <>
         <div className="formContentWrap">
           <label htmlFor="address" className=" blockLabel">
-            주소
+            <span>주소</span>
           </label>
           <div>
             <input
@@ -190,7 +190,7 @@ export default function Postcode({
 
         <div className="formContentWrap">
           <label htmlFor="address" className=" blockLabel">
-            좌표
+            <span>좌표</span>
           </label>
           <ul className="detailContent">
             <li>

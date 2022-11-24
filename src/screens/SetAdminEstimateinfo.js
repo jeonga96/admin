@@ -143,6 +143,7 @@ export default function SetAdminEstimateinfo() {
       gongsaType: arr,
     });
   };
+
   console.log("toString", checkData.gongsaType);
 
   return (
@@ -164,7 +165,9 @@ export default function SetAdminEstimateinfo() {
 
               {/* 사용 플래그  */}
               <div className="formContentWrap">
-                <div className="blockLabel">회원관리</div>
+                <div className="blockLabel">
+                  <span>회원관리</span>
+                </div>
                 <div className="formPaddingWrap">
                   <input
                     className="listSearchRadioInput"
@@ -217,7 +220,7 @@ export default function SetAdminEstimateinfo() {
               {/* 공사 타입 */}
               <div className="formContentWrap">
                 <label htmlFor="name" className=" blockLabel">
-                  공사 타입
+                  <span>공사 타입</span>
                 </label>
                 <div className="formPaddingWrap">
                   <input
@@ -261,7 +264,7 @@ export default function SetAdminEstimateinfo() {
 
               <div className="formContentWrap">
                 <label htmlFor="toUid" className=" blockLabel">
-                  견적 요청
+                  <span>견적 요청</span>
                 </label>
                 <div>
                   <input
@@ -285,7 +288,7 @@ export default function SetAdminEstimateinfo() {
 
               <div className="formContentWrap">
                 <label htmlFor="fromUid" className=" blockLabel">
-                  견적 수령
+                  <span>견적 수령</span>
                 </label>
                 <div>
                   <input
@@ -309,7 +312,7 @@ export default function SetAdminEstimateinfo() {
 
               <div className="formContentWrap">
                 <label htmlFor="reqVisit" className=" blockLabel">
-                  방문 요청일
+                  <span>방문 요청일</span>
                 </label>
                 <div>
                   <input
@@ -331,7 +334,7 @@ export default function SetAdminEstimateinfo() {
 
               <div className="formContentWrap" style={{ width: "100%" }}>
                 <label htmlFor="toUid" className=" blockLabel">
-                  요청 내역
+                  <span>요청 내역</span>
                 </label>
                 <div>
                   <textarea
@@ -355,7 +358,9 @@ export default function SetAdminEstimateinfo() {
 
               {/* 세금 계산서 요청 */}
               <div className="formContentWrap">
-                <div className="blockLabel">세금계산서 요청</div>
+                <div className="blockLabel">
+                  <span>세금계산서 요청</span>
+                </div>
                 <div className="formPaddingWrap">
                   <input
                     className="listSearchRadioInput"
@@ -407,7 +412,9 @@ export default function SetAdminEstimateinfo() {
 
               {/* 견적 요청서 요청 */}
               <div className="formContentWrap">
-                <div className="blockLabel">견적서 요청</div>
+                <div className="blockLabel">
+                  <span>견적서 요청</span>
+                </div>
                 <div className="formPaddingWrap">
                   <input
                     className="listSearchRadioInput"
@@ -459,7 +466,7 @@ export default function SetAdminEstimateinfo() {
 
               <div className="formContentWrap">
                 <label htmlFor="reqPrice" className=" blockLabel">
-                  공사 희망 금액
+                  <span>공사 희망 금액</span>
                 </label>
                 <div>
                   <input
@@ -483,7 +490,7 @@ export default function SetAdminEstimateinfo() {
 
               <div className="formContentWrap" style={{ width: "100%" }}>
                 <label htmlFor="addInfo" className=" blockLabel">
-                  추가 정보
+                  <span>추가 정보</span>
                 </label>
                 <div>
                   <textarea
@@ -502,7 +509,7 @@ export default function SetAdminEstimateinfo() {
 
               <div className="formContentWrap">
                 <label htmlFor="proVisit" className=" blockLabel">
-                  방문 제안일
+                  <span>방문 제안일</span>
                 </label>
                 <div>
                   <input
@@ -516,7 +523,7 @@ export default function SetAdminEstimateinfo() {
 
               <div className="formContentWrap">
                 <label htmlFor="proPrice" className=" blockLabel">
-                  공사 제안 금액
+                  <span>공사 제안 금액</span>
                 </label>
                 <div>
                   <input
@@ -531,7 +538,7 @@ export default function SetAdminEstimateinfo() {
 
               <div className="formContentWrap" style={{ width: "100%" }}>
                 <label htmlFor="proDetail" className=" blockLabel">
-                  응답 내용
+                  <span>응답 내용</span>
                 </label>
                 <div>
                   <textarea

@@ -94,7 +94,9 @@ export default function ComponentListUserSearch({
         onSubmit={handleSubmit(SearchSubmit)}
       >
         <div className="listSearchWrap">
-          <label className="blockLabel">관리번호</label>
+          <label className="blockLabel">
+            <span>관리번호</span>
+          </label>
           <div>
             <input
               type="text"
@@ -112,7 +114,9 @@ export default function ComponentListUserSearch({
           </div>
         </div>
         <div className="listSearchWrap">
-          <label className="blockLabel">아이디</label>
+          <label className="blockLabel">
+            <span>아이디</span>
+          </label>
           <div>
             <input
               type="text"
@@ -127,7 +131,9 @@ export default function ComponentListUserSearch({
         </div>
 
         <div className="listSearchWrap">
-          <label className="blockLabel">이름</label>
+          <label className="blockLabel">
+            <span>이름</span>
+          </label>
           <div>
             <input
               type="text"
@@ -142,7 +148,9 @@ export default function ComponentListUserSearch({
         </div>
 
         <div className="listSearchWrap">
-          <div className="blockLabel">회원권한</div>
+          <div className="blockLabel">
+            <span>회원권한</span>
+          </div>
           <div>
             <input
               className="listSearchRadioInput"
@@ -177,7 +185,9 @@ export default function ComponentListUserSearch({
         </div>
 
         <div className="listSearchWrap">
-          <label className="blockLabel">핸드폰번호</label>
+          <label className="blockLabel">
+            <span>핸드폰번호</span>
+          </label>
           <div>
             <input
               type="text"
@@ -191,7 +201,9 @@ export default function ComponentListUserSearch({
           </div>
         </div>
         <div className="listSearchWrap">
-          <label className="blockLabel">계약일</label>
+          <label className="blockLabel">
+            <span>계약일</span>
+          </label>
           <div>
             <input
               type="date"
@@ -205,7 +217,9 @@ export default function ComponentListUserSearch({
         </div>
 
         <div className="listSearchWrap">
-          <div className="blockLabel">계약관리</div>
+          <div className="blockLabel">
+            <span>계약관리</span>
+          </div>
           <div>
             <input
               className="listSearchRadioInput"

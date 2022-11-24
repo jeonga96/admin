@@ -33,7 +33,9 @@ export default function ComponentSetUser({ setUserData, userData }) {
   return (
     <>
       <div className="formContentWrap">
-        <div className="blockLabel">회원 활성화</div>
+        <div className="blockLabel">
+          <span>회원 활성화</span>
+        </div>
         <div className="formPaddingWrap">
           <input
             className="listSearchRadioInput"
@@ -72,7 +74,9 @@ export default function ComponentSetUser({ setUserData, userData }) {
       </div>
 
       <div className="formContentWrap">
-        <div className="blockLabel">회원 권한</div>
+        <div className="blockLabel">
+          <span>회원 권한</span>
+        </div>
         <div className="formPaddingWrap">
           <input
             className="listSearchRadioInput"
@@ -111,7 +115,9 @@ export default function ComponentSetUser({ setUserData, userData }) {
       </div>
 
       <div className="formContentWrap">
-        <div className="blockLabel">비밀번호 관리</div>
+        <div className="blockLabel">
+          <span>비밀번호 관리</span>
+        </div>
         <div>
           <input
             className="formContentInput"

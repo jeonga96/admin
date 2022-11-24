@@ -115,7 +115,7 @@ export default function SetDetailUser() {
             {/* setDetailUserInfo  ================================================================ */}
             <div className="formContentWrap">
               <label htmlFor="name" className=" blockLabel">
-                이름
+                <span>이름</span>
               </label>
               <div>
                 <input
@@ -143,7 +143,7 @@ export default function SetDetailUser() {
 
             <div className="formContentWrap">
               <label htmlFor="nick" className="blockLabel">
-                별명
+                <span>별명</span>
               </label>
               <div>
                 <input
@@ -174,7 +174,7 @@ export default function SetDetailUser() {
 
             <div className="formContentWrap">
               <label htmlFor="location" className=" blockLabel">
-                키워드 주소
+                <span>키워드 주소</span>
               </label>
               <div>
                 <input
@@ -213,7 +213,7 @@ export default function SetDetailUser() {
 
             <div className="formContentWrap">
               <label htmlFor="mobile" className="blockLabel">
-                핸드폰 번호
+                <span>핸드폰 번호</span>
               </label>
               <div>
                 <input
@@ -241,7 +241,7 @@ export default function SetDetailUser() {
 
             <div className="formContentWrap">
               <label htmlFor="mail" className=" blockLabel">
-                이메일
+                <span>이메일</span>
               </label>
               <div>
                 <input

@@ -50,7 +50,7 @@ export default function ImageSet({
         />
       ) : (
         <>
-          <label htmlFor={id} className="basicWrapLabel">
+          <label htmlFor={id} className="basicModifyBtn">
             변경
           </label>
           <input

@@ -29,7 +29,7 @@ export default function Login() {
         <form onSubmit={handleSubmit(fnLogin)}>
           <div className="formContentWrap" style={{ width: "100%" }}>
             <label htmlFor="userid" className="blockLabel">
-              아이디
+              <span>아이디</span>
             </label>
             <input
               type="text"
@@ -63,7 +63,7 @@ export default function Login() {
 
           <div>
             <label htmlFor="passwd" className="blockLabel">
-              비밀번호
+              <span>비밀번호</span>
             </label>
             <input
               type="password"

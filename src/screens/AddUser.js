@@ -54,7 +54,7 @@ export default function AddUser() {
           </ul>
           <div className="formContentWrap">
             <label htmlFor="userid" className="blockLabel">
-              아이디
+              <span>아이디</span>
             </label>
             <div>
               <input
@@ -91,7 +91,7 @@ export default function AddUser() {
 
           <div className="formContentWrap">
             <label htmlFor="passwd" className="blockLabel">
-              비밀번호
+              <span>비밀번호</span>
             </label>
             <div>
               <input
@@ -137,7 +137,7 @@ export default function AddUser() {
 
           <div className="formContentWrap">
             <label htmlFor="passwdCk" className="blockLabel">
-              비밀번호 확인
+              <span>비밀번호 확인</span>
             </label>
             <div>
               <input

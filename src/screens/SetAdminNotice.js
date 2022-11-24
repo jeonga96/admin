@@ -100,7 +100,7 @@ export default function SetDetailAdminNotice() {
               style={{ marginTop: "0", width: "100%" }}
             >
               <label htmlFor="title" className="blockLabel">
-                제목
+                <span>제목</span>
               </label>
               <div>
                 <input
@@ -137,7 +137,7 @@ export default function SetDetailAdminNotice() {
 
             <div className="formContentWrap formContentWideWrap">
               <label htmlFor="title" className="blockLabel">
-                내용
+                <span>내용</span>
               </label>
               <div>
                 <textarea

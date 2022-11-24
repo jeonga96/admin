@@ -21,7 +21,7 @@ export default function ComponentListAdminKeyword({
   return (
     <section className="tableWrap">
       <div className="commonBox">
-        <h3>키워드 검색 순위 상위 100위</h3>
+        <h3>키워드 검색순위 상위 100위</h3>
         <div className="flexTableWrap">
           <table className="commonTable">
             <thead>

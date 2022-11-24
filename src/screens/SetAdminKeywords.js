@@ -148,7 +148,9 @@ export default function SetAdminKeyeords() {
               <fieldset key={it.kid}>
                 <div className="formWrap">
                   <div className="listSearchWrap" style={{ width: "33.333%" }}>
-                    <div className="blockLabel">키워드</div>
+                    <div className="blockLabel">
+                      <span>키워드</span>
+                    </div>
                     <div>
                       <input
                         id="keyword"
@@ -161,14 +163,18 @@ export default function SetAdminKeyeords() {
                   </div>
 
                   <div className="listSearchWrap" style={{ width: "33.333%" }}>
-                    <div className="blockLabel">기존 검색량</div>
+                    <div className="blockLabel">
+                      <span>기존 검색량</span>
+                    </div>
                     <div>
                       <input id="initalKeyword" value={it.hitCount} disabled />
                     </div>
                   </div>
 
                   <div className="listSearchWrap" style={{ width: "33.333%" }}>
-                    <div className="blockLabel">더할 검색량</div>
+                    <div className="blockLabel">
+                      <span>더할 검색량</span>
+                    </div>
                     <div>
                       <input
                         id={it.kid}

@@ -4,48 +4,62 @@ export default function ComponentListCompanySearch() {
       <h3 className="blind">사업자관리 검색 필터</h3>
       <form className="listSearchForm formLayout">
         <div className="listSearchWrap">
-          <label className="blockLabel">관리번호</label>
+          <label className="blockLabel">
+            <span>관리번호</span>
+          </label>
           <div>
             <input></input>
           </div>
         </div>
 
         <div className="listSearchWrap">
-          <label className="blockLabel">상호</label>
+          <label className="blockLabel">
+            <span>상호</span>
+          </label>
           <div>
             <input></input>
           </div>
         </div>
 
         <div className="listSearchWrap">
-          <label className="blockLabel">사업자 등록번호</label>
+          <label className="blockLabel">
+            <span>사업자 등록번호</span>
+          </label>
           <div>
             <input></input>
           </div>
         </div>
         <div className="listSearchWrap">
-          <label className="blockLabel">계약자</label>
-          <div>
-            <input></input>
-          </div>
-        </div>
-
-        <div className="listSearchWrap">
-          <label className="blockLabel">아이디</label>
-          <div>
-            <input></input>
-          </div>
-        </div>
-
-        <div className="listSearchWrap">
-          <label className="blockLabel">핸드폰 번호</label>
+          <label className="blockLabel">
+            <span>계약자</span>
+          </label>
           <div>
             <input></input>
           </div>
         </div>
 
         <div className="listSearchWrap">
-          <div className="blockLabel">회원상태</div>
+          <label className="blockLabel">
+            <span>아이디</span>
+          </label>
+          <div>
+            <input></input>
+          </div>
+        </div>
+
+        <div className="listSearchWrap">
+          <label className="blockLabel">
+            <span>핸드폰 번호</span>
+          </label>
+          <div>
+            <input></input>
+          </div>
+        </div>
+
+        <div className="listSearchWrap">
+          <div className="blockLabel">
+            <span>회원상태</span>
+          </div>
           <div>
             <input
               className="listSearchRadioInput"
@@ -83,7 +97,9 @@ export default function ComponentListCompanySearch() {
         </div>
 
         <div className="listSearchWrap">
-          <div className="blockLabel">계약관리</div>
+          <div className="blockLabel">
+            <span>계약관리</span>
+          </div>
           <div>
             <input
               className="listSearchRadioInput"
@@ -109,7 +125,9 @@ export default function ComponentListCompanySearch() {
         </div>
 
         <div className="listSearchWrap">
-          <label className="blockLabel">계약일</label>
+          <label className="blockLabel">
+            <span>계약일</span>
+          </label>
           <div>
             <input type="date"></input>
           </div>
