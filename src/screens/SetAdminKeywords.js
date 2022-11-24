@@ -132,6 +132,15 @@ export default function SetAdminKeyeords() {
         {/* -------------------- 수정값 입력 폼 -------------------- */}
         <form className="formLayout" onSubmit={handleSubmit(HandleSubmit)}>
           <ul className="tableTopWrap">
+            <LayoutTopButton
+              text="초기화"
+              fn={(e) => {
+                setCompanyDetailKeyword([]);
+                setModifyData(null);
+                setSearchBtn(false);
+                setAllKeywords([]);
+              }}
+            />
             <LayoutTopButton text="수정" disabled={isSubmitting} />
           </ul>
           {companyDetailKeyword !== [] &&

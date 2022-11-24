@@ -101,7 +101,11 @@ input[type="radio"] {
   margin-bottom: 0;
 }
 .commonBox h3 {
-  font-size: var(--font-size-title);
+  font-size: var(--font-size-big);
+  font-weight: 700;
+  color: var(--color-black);
+  height: 50px;
+  line-height: 50px;
 }
 
 /*footer --------------------------------------------------------------*/
