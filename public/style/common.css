@@ -1000,9 +1000,9 @@ input[type="radio"] {
   width: 100%;
   height: auto;
 }
+
 .commonTable {
   table-layout: fixed;
-  width: 250px;
   width: 100%;
   height: auto;
 }
@@ -1019,10 +1019,27 @@ input[type="radio"] {
   color: var(--color-bgblack);
 }
 .commonTable td {
+  word-break: break-all;
   overflow: hidden;
   text-align: center;
   white-space: nowrap;
   text-overflow: ellipsis;
+}
+
+.flexTableWrap {
+  display: flex;
+  width: 100%;
+  height: auto;
+}
+.flexTableWrap .commonTable {
+  width: 25%;
+}
+.flexTableWrap .commonTable:not(:last-child) {
+  border-right: 1px solid var(--color-bggray);
+}
+
+.flexTableWrap button {
+  margin: 0 auto;
 }
 
 /* 테이블 내 세부 콘텐츠 */

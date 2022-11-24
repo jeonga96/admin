@@ -116,7 +116,35 @@ export default function SetAdminEstimateinfo() {
       .catch((error) => console.log("axios 실패", error.response));
   }
 
-  console.log(checkData.gongsaType);
+  // const arrrr = ["a", "a", "bb", "b", "c"];
+  // const ar1 = arrrr.filter((it) => it !== "bb");
+  // console.log(ar1);
+
+  const handleOnchangeGonsatype = (e) => {
+    const INVERTORARR = checkData.gongsaType.split(",");
+    let arr = [];
+    if (INVERTORARR.length == 1) {
+      if (checkData.gongsaType !== e.target.value) {
+        arr = [checkData.gongsaType, e.target.value];
+      }
+    } else {
+      arr = [...INVERTORARR];
+      if (arr.includes(e.target.value)) {
+        console.log("1", arr);
+        arr = arr.filter((it) => it !== e.target.value);
+      } else {
+        arr.push(e.target.value);
+      }
+      return arr;
+    }
+    arr = arr.toString();
+    setCheckData({
+      ...checkData,
+      gongsaType: arr,
+    });
+  };
+  console.log("toString", checkData.gongsaType);
+
   return (
     <>
       <div className="commonBox">
@@ -198,13 +226,8 @@ export default function SetAdminEstimateinfo() {
                     id="emer"
                     name="gongsaType"
                     className="listSearchRadioInput"
-                    checked={checkData.gongsaType == "emer"}
-                    onChange={(e) =>
-                      setCheckData({
-                        ...checkData,
-                        gongsaType: [checkData.gongsaType, e.target.value],
-                      })
-                    }
+                    checked={checkData.gongsaType.includes("emer")}
+                    onChange={handleOnchangeGonsatype}
                   />
                   <label htmlFor="emer" className="listSearchRadioLabel">
                     긴급
@@ -215,13 +238,8 @@ export default function SetAdminEstimateinfo() {
                     id="inday"
                     name="gongsaType"
                     className="listSearchRadioInput"
-                    checked={checkData.gongsaType == "inday"}
-                    onChange={(e) =>
-                      setCheckData({
-                        ...checkData,
-                        gongsaType: [checkData.gongsaType, e.target.value],
-                      })
-                    }
+                    checked={checkData.gongsaType.includes("inday")}
+                    onChange={handleOnchangeGonsatype}
                   />
                   <label htmlFor="inday" className="listSearchRadioLabel">
                     당일
@@ -232,13 +250,8 @@ export default function SetAdminEstimateinfo() {
                     id="reser"
                     name="gongsaType"
                     className="listSearchRadioInput"
-                    checked={checkData.gongsaType == "reser"}
-                    onChange={(e) =>
-                      setCheckData({
-                        ...checkData,
-                        gongsaType: [...checkData.gongsaType, e.target.value],
-                      })
-                    }
+                    checked={checkData.gongsaType.includes("reser")}
+                    onChange={handleOnchangeGonsatype}
                   />
                   <label htmlFor="reser" className="listSearchRadioLabel">
                     예약

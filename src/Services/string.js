@@ -46,6 +46,7 @@ export const urlSetContent = urlPrefix + "/admin/setContent";
 // 키워드
 export const urlAllKeyword = urlPrefix + "/admin/allKeyword";
 export const urlSetKeyword = urlPrefix + "/admin/setKeyword";
+export const urlSuggestKeyword = urlPrefix + "/pub/suggestKeyword";
 
 // 키워드
 export const urlGetEstimateInfo = urlPrefix + "/admin/getEstimateInfo";

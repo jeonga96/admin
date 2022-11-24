@@ -2,7 +2,9 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { urlSetKeyword, urlAllKeyword, ALLKEYWORD } from "../Services/string";
 import { servicesPostData, servicesSetStorage } from "../Services/importData";
+
 import LayoutTopButton from "../components/common/LayoutTopButton";
+import ComponentListAdminKeyword from "../components/common/ComponentListAdminKeyword";
 
 export default function SetAdminKeyeords() {
   // react-hook-form 라이브러리
@@ -21,6 +23,7 @@ export default function SetAdminKeyeords() {
   const [companyDetailKeyword, setCompanyDetailKeyword] = useState([]);
   // 수정된 값 저장
   const [modifyData, setModifyData] = useState(null);
+  const [sumbit, setSubmit] = useState(false);
 
   // 전체 키워드에서 입력한 키워드가 포함됐을 때의 값을 반환하는 코드
   const keywordFilter =
@@ -79,10 +82,10 @@ export default function SetAdminKeyeords() {
     setModifyData(null);
     setSearchBtn(false);
     setAllKeywords([]);
+    setSubmit(!sumbit);
     alert("완료되었습니다.");
   };
 
-  console.log(keywordFilter);
   return (
     <>
       <div className="commonBox">
@@ -149,14 +152,14 @@ export default function SetAdminKeyeords() {
                   </div>
 
                   <div className="listSearchWrap" style={{ width: "33.333%" }}>
-                    <div className="blockLabel">기존 조회량</div>
+                    <div className="blockLabel">기존 검색량</div>
                     <div>
                       <input id="initalKeyword" value={it.hitCount} disabled />
                     </div>
                   </div>
 
                   <div className="listSearchWrap" style={{ width: "33.333%" }}>
-                    <div className="blockLabel">더할 조회량</div>
+                    <div className="blockLabel">더할 검색량</div>
                     <div>
                       <input
                         id={it.kid}
@@ -172,6 +175,10 @@ export default function SetAdminKeyeords() {
             ))}
         </form>
       </div>
+      <ComponentListAdminKeyword
+        handleOnclick={handleKeywordOnclick}
+        CKECKSUMBIT={sumbit}
+      />
 
       {/* 하단 list ---------------------------------------- */}
     </>
