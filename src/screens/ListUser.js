@@ -116,14 +116,14 @@ export default function ListUser() {
           <table className="commonTable">
             <thead>
               <tr>
-                <th>계약관리</th>
-                <th style={{ width: "100px" }}>관리번호</th>
-                <th style={{ width: "100px" }}>사업자관리번호</th>
-                <th style={{ width: "200px" }}>아이디</th>
-                <th style={{ width: "150px" }}>이름</th>
+                <th style={{ width: "70px" }}> 계약관리</th>
+                <th style={{ width: "140px" }}>관리번호</th>
+                <th style={{ width: "140px" }}>사업자관리번호</th>
+                <th style={{ width: "140px" }}>아이디</th>
+                <th style={{ width: "140px" }}>이름</th>
                 <th style={{ width: "100px" }}>회원권한</th>
-                <th style={{ width: "250px" }}>핸드폰번호</th>
-                <th style={{ width: "100px" }}>계약일</th>
+                <th style={{ width: "auto" }}>핸드폰번호</th>
+                <th style={{ width: "140px" }}>계약일</th>
                 <th style={{ width: "70px" }}>상세입력</th>
               </tr>
             </thead>

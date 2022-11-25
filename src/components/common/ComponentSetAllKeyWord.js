@@ -43,9 +43,13 @@ export default function SetAllKeyWord({
   // 키워드가 검색된 목록에서 키워드 클릭하는 이벤트
   const handleKeywordOnclick = (item, e) => {
     e.preventDefault();
-    companyDetailKeyword.forEach((el) => clickedKeyword.push(el.kid));
-    if (!clickedKeyword.includes(item.kid)) {
-      setCompanyDetailKeyword([...companyDetailKeyword, item]);
+    if (companyDetailKeyword.length >= 20) {
+      alert("최대 20개까지 입력할 수 있습니다.");
+    } else {
+      companyDetailKeyword.forEach((el) => clickedKeyword.push(el.kid));
+      if (!clickedKeyword.includes(item.kid)) {
+        setCompanyDetailKeyword([...companyDetailKeyword, item]);
+      }
     }
   };
 
@@ -58,7 +62,7 @@ export default function SetAllKeyWord({
   };
 
   return (
-    <div className="keywordWrap">
+    <div className="pieceKeywordWrap">
       <div>
         <input
           type="text"
@@ -77,27 +81,31 @@ export default function SetAllKeyWord({
       </div>
 
       {searchBtn && (
-        <ul className="keywordBox">
-          {keywordFilter.length > 0 ? (
-            keywordFilter.map((item) => (
-              <li key={item.kid}>
-                <span>
-                  <button
-                    onClick={(e) => {
-                      handleKeywordOnclick(item, e);
-                    }}
-                  >
-                    {item.keyword}
-                  </button>
-                </span>
-              </li>
-            ))
-          ) : (
-            <li>
-              <span>검색된 데이터가 없습니다. 다시 입력해 주세요.</span>
-            </li>
-          )}
-        </ul>
+        <div className="keywordArea" id="pieceKeywordArea">
+          <div>
+            <ul>
+              {keywordFilter.length > 0 ? (
+                keywordFilter.map((item) => (
+                  <li key={item.kid}>
+                    <span>
+                      <button
+                        onClick={(e) => {
+                          handleKeywordOnclick(item, e);
+                        }}
+                      >
+                        {item.keyword}
+                      </button>
+                    </span>
+                  </li>
+                ))
+              ) : (
+                <li>
+                  <span>검색된 데이터가 없습니다. 다시 입력해 주세요.</span>
+                </li>
+              )}
+            </ul>
+          </div>
+        </div>
       )}
       {!setKeywordPage && companyDetailKeyword.length > 0 && (
         <ul className="keywordSelectWrap">

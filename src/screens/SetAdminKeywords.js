@@ -118,9 +118,9 @@ export default function SetAdminKeyeords() {
             </div>
 
             {searchBtn && (
-              <ul className="keywordArea">
+              <div className="keywordArea">
                 <div>
-                  <div>
+                  <ul>
                     {keywordFilter.length > 0 &&
                       keywordFilter.map((item) => (
                         <li key={item.kid}>
@@ -143,9 +143,9 @@ export default function SetAdminKeyeords() {
                         </span>
                       </li>
                     )}
-                  </div>
+                  </ul>
                 </div>
-              </ul>
+              </div>
             )}
           </div>
         </div>
@@ -180,7 +180,7 @@ export default function SetAdminKeyeords() {
 
                   <div className="listSearchWrap" style={{ width: "33.333%" }}>
                     <div className="blockLabel">
-                      <span>기존 검색량</span>
+                      <span>조회수</span>
                     </div>
                     <div>
                       <input id="initalKeyword" value={it.hitCount} disabled />
@@ -189,14 +189,14 @@ export default function SetAdminKeyeords() {
 
                   <div className="listSearchWrap" style={{ width: "33.333%" }}>
                     <div className="blockLabel">
-                      <span>더할 검색량</span>
+                      <span>조회수 수정</span>
                     </div>
                     <div>
                       <input
                         id={it.kid}
                         name="_hitCount"
                         type="number"
-                        placeholder="해당 키워드가 검색된 수치입니다."
+                        placeholder="+,-로 조회수를 수정할 수 있습니다."
                         onChange={onChange}
                       />
                     </div>

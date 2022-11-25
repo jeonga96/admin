@@ -30,7 +30,7 @@ export default function ComponentListAdminKeyword({
               <tr>
                 <th style={{ width: "10%" }}>순위</th>
                 <th style={{ width: "70%" }}>키워드</th>
-                <th style={{ width: "20%" }}>검색량</th>
+                <th style={{ width: "20%" }}>조회수</th>
               </tr>
             </thead>
             <tbody>
@@ -53,7 +53,7 @@ export default function ComponentListAdminKeyword({
               <tr>
                 <th style={{ width: "10%" }}>순위</th>
                 <th style={{ width: "70%" }}>키워드</th>
-                <th style={{ width: "20%" }}>검색량</th>
+                <th style={{ width: "20%" }}>조회수</th>
               </tr>
             </thead>
             <tbody>
@@ -76,7 +76,7 @@ export default function ComponentListAdminKeyword({
               <tr>
                 <th style={{ width: "10%" }}>순위</th>
                 <th style={{ width: "70%" }}>키워드</th>
-                <th style={{ width: "20%" }}>검색량</th>
+                <th style={{ width: "20%" }}>조회수</th>
               </tr>
             </thead>
             <tbody>
@@ -99,7 +99,7 @@ export default function ComponentListAdminKeyword({
               <tr>
                 <th style={{ width: "10%" }}>순위</th>
                 <th style={{ width: "70%" }}>키워드</th>
-                <th style={{ width: "20%" }}>검색량</th>
+                <th style={{ width: "20%" }}>조회수</th>
               </tr>
             </thead>
             <tbody>

@@ -93,7 +93,7 @@ input[type="radio"] {
   background-color: var(--color-white);
   border: 0.0625rem solid var(--color-gray);
   padding: 0.625rem;
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.5rem;
 }
 .commonBox:last-child {
   margin-bottom: 0;
@@ -658,7 +658,29 @@ input[type="radio"] {
   padding: 0;
 }
 /* keyword 클릭 이벤트 ---------------------------------- */
+/* set page  -  키워드 검색 */
+.pieceKeywordWrap {
+  position: relative;
+  width: 100%;
+  height: auto;
+}
+.pieceKeywordWrap > div {
+  display: flex;
+  justify-content: space-between;
+  height: 2.125rem;
+}
+.pieceKeywordWrap .keywordInput {
+  width: 410px;
+}
+#pieceKeywordArea {
+  width: 410px;
+  height: 6.875rem;
+  background-color: var(--color-white);
+}
+
+/* 키워드 조회량 관리 키워드 검색  */
 .keywordWrap {
+  position: relative;
   width: 100%;
   height: auto;
   padding: 2.25rem 16.25rem 2.875rem;
@@ -707,7 +729,7 @@ input[type="radio"] {
   width: 41.875rem;
   height: 6.375rem;
 }
-.keywordArea > div > div {
+.keywordArea > div > ul {
   overflow-y: scroll;
   width: 43.75rem;
   height: 8rem;
