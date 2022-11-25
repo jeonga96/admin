@@ -9,13 +9,15 @@ export default function ComponentListAdminKeyword({
   const [getData, setGetData] = useState([]);
 
   useEffect(() => {
-    // submit 버튼 클릭했다면, 서버에서 값을 다시 받아와서 렌더링 한다.
+    // 서버에서 새로 값을 받아와도 map이 렌더링 되지 않으므로 getData를 빈배열로 반든 후, 새로 할당
     setGetData([]);
+    // 값을 서버에 보내고, 다시 받아올 때 시간 차이를 두기 위해 0.1초 후 진행하도록 설정
     setTimeout(() => {
       servicesPostData(urlSuggestKeyword, {}).then((res) =>
         setGetData(res.data)
       );
     }, 100);
+    // submit 버튼 클릭했다면, 서버에서 값을 다시 받아와서 렌더링 한다.
   }, [CKECKSUMBIT]);
 
   return (

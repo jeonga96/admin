@@ -72,14 +72,14 @@ input[type="radio"] {
   }
 }
 .contentBox {
-  width: 1280px;
+  width: 80rem;
   height: auto;
 }
 
 /*title - content title wrap& title content*/
 .containerWrap h2 {
   width: auto;
-  height: 50px;
+  height: 3.125rem;
   font-size: var(--font-size-title);
   font-family: var(--font-point);
   font-weight: 700;
@@ -91,7 +91,7 @@ input[type="radio"] {
   width: 100%;
   height: auto;
   background-color: var(--color-white);
-  border: 1px solid var(--color-gray);
+  border: 0.0625rem solid var(--color-gray);
   padding: 0.625rem;
   margin-bottom: 0.25rem;
 }
@@ -104,8 +104,8 @@ input[type="radio"] {
   font-weight: 700;
 }
 .tableWrap h3 {
-  height: 50px;
-  line-height: 50px;
+  height: 3.125rem;
+  line-height: 3.125rem;
 }
 
 /*footer --------------------------------------------------------------*/
@@ -151,8 +151,8 @@ input[type="radio"] {
 
 .headerBox {
   width: 100%;
-  max-width: 1280px;
-  min-width: 1200px;
+  max-width: 80rem;
+  min-width: 75rem;
   height: 100%;
 }
 .infoWrap {
@@ -163,7 +163,7 @@ input[type="radio"] {
 }
 .infoWrap button {
   text-align: right;
-  width: 80px;
+  width: 5rem;
   height: 100%;
 }
 
@@ -659,80 +659,92 @@ input[type="radio"] {
 }
 /* keyword 클릭 이벤트 ---------------------------------- */
 .keywordWrap {
+  width: 100%;
+  height: auto;
+  padding: 2.25rem 16.25rem 2.875rem;
+}
+.keywordBox {
   position: relative;
   width: 100%;
   height: auto;
 }
-.keywordWrap > div {
+.keywordBox > div {
   width: 100%;
-  max-width: 700px;
-  margin: 0 auto;
-  height: 34px;
+  height: 2.125rem;
   display: flex;
   justify-content: space-between;
 }
+
 .keywordWrap .keywordInput {
-  width: calc(100% - 64px);
+  width: 41.875rem;
   height: 100%;
-  border: 1px solid var(--color-bggray);
-  padding: 0 5px;
+  border: 0.0625rem solid var(--color-bggray);
+  padding: 0 0.3125rem;
 }
 .keywordInput:focus {
-  border: 1px solid var(--color-lightprimary);
+  border: 0.0625rem solid var(--color-lightprimary);
 }
 
 .keywordInput ~ button {
-  width: 60px;
+  width: 3.75rem;
   height: 100%;
   background-color: var(--color-bggray);
   font-size: var(--font-size-small);
 }
-.keywordBox {
+.keywordArea {
   position: absolute;
   top: 0;
+  left: 0;
   z-index: 10;
-  overflow: scroll;
-  width: 25.3125rem;
+  width: 41.875rem;
   border: 0.0625rem solid var(--color-bggray);
   background-color: var(--color-white);
   height: 6.875rem;
   padding: 0.25rem;
 }
-#keywordBoxAdmin {
-  left: 203px;
-  width: 636px;
+.keywordArea > div {
+  overflow: hidden;
+  width: 41.875rem;
+  height: 6.375rem;
 }
-.keywordBox li {
-  width: 100%;
+.keywordArea > div > div {
+  overflow-y: scroll;
+  width: 43.75rem;
+  height: 8rem;
+}
+
+.keywordArea li {
+  width: 41.375rem;
   height: auto;
   border-bottom: 0.0625rem solid var(--color-bggray);
 }
-.keywordBox li:last-child {
+.keywordArea li:last-child {
   border-bottom: none;
 }
-.keywordBox span {
+.keywordArea span {
   display: block;
   width: 100%;
   height: 100%;
   padding: 0.25rem 0;
 }
-.keywordBox button {
+.keywordArea button {
+  position: relative;
   width: 100%;
   height: 1.25rem;
   text-align: left;
   font-size: var(--font-size-small);
   text-indent: 0.625rem;
 }
-.keywordBox button:hover {
+.keywordArea button:hover {
   background-color: var(--color-bggray);
 }
-.keywordBox button:focus {
+.keywordArea button:focus {
   font-weight: 700;
   background-color: var(--color-gray);
 }
-.keywordBox button:hover::before {
-  display: block;
+.keywordArea button:hover::before {
   content: "추가 +";
+  display: block;
   position: absolute;
   right: 0.625rem;
   width: auto;
@@ -754,24 +766,24 @@ input[type="radio"] {
   position: relative;
   width: auto;
   height: auto;
-  border-radius: 10px;
-  margin-right: 4px;
-  margin-bottom: 4px;
-  padding: 2px 8px;
-  border: 1px solid var(--color-gray);
+  border-radius: 0.625rem;
+  margin-right: 0.25rem;
+  margin-bottom: 0.25rem;
+  padding: 0.125rem 0.5rem;
+  border: 0.0625rem solid var(--color-gray);
 }
 .keywordSelectWrap li:hover::before {
   position: absolute;
   content: "X";
   display: block;
-  right: -2px;
-  top: -2px;
-  width: 10px;
-  height: 10px;
-  border-radius: 5px;
-  font-size: 10px;
+  right: -0.125rem;
+  top: -0.125rem;
+  width: 0.625rem;
+  height: 0.625rem;
+  border-radius: 0.3125rem;
+  font-size: 0.625rem;
   text-align: center;
-  line-height: 10px;
+  line-height: 0.625rem;
   background-color: rgba(0, 0, 0, 0.5);
   color: var(--color-white);
 }
@@ -787,8 +799,8 @@ input[type="radio"] {
   display: flex;
   width: 100%;
   height: auto;
-  min-height: 60px;
-  border-bottom: 2px solid var(--color-bggray);
+  min-height: 3.75rem;
+  border-bottom: 0.125rem solid var(--color-bggray);
   color: var(--color-black);
 }
 .detailContentWrap:last-child {
@@ -797,13 +809,13 @@ input[type="radio"] {
 .title {
   height: 100%;
   font-weight: 700;
-  line-height: 60px;
+  line-height: 3.75rem;
 }
 .title .contentText {
   font-size: var(--font-size-em);
   color: var(--color-gray);
-  line-height: 30px;
-  margin-left: 10px;
+  line-height: 1.875rem;
+  margin-left: 0.625rem;
 }
 .title .titleText {
   font-size: var(--font-size-subtitle);
@@ -816,27 +828,27 @@ input[type="radio"] {
   width: 100%;
   height: auto;
   min-height: 1.5rem;
-  text-indent: 10px;
+  text-indent: 0.625rem;
 }
 .detailContentWrap p {
   width: 100%;
   height: auto;
-  min-height: 80px;
-  margin: 20px 0;
+  min-height: 5rem;
+  margin: 1.25rem 0;
 }
 .detailContentWrap span {
-  line-height: 60px;
+  line-height: 3.75rem;
 }
 /* 공지사항 - 이미지 */
 .detailContentWrap .detailWidthContentImg {
   width: 100%;
   height: auto;
-  border-top: 1px solid var(--color-bggray);
-  padding: 10px 0;
+  border-top: 0.0625rem solid var(--color-bggray);
+  padding: 0.625rem 0;
 }
 .detailContentWrap .detailWidthContentImg > div {
-  width: 50px;
-  height: 50px;
+  width: 3.125rem;
+  height: 3.125rem;
 }
 /* 공지사항 - 생성, 수정날짜 */
 .detailTime {
@@ -894,7 +906,7 @@ input[type="radio"] {
   margin-right: 0;
 }
 .detailWidthContentCallNum li {
-  margin-right: 40px;
+  margin-right: 2.5rem;
 }
 .detailWidthContent .blind {
   width: 0;
@@ -926,17 +938,17 @@ input[type="radio"] {
 .detailContent li {
   display: flex;
   width: 50%;
-  height: 34px;
+  height: 2.125rem;
 }
 .detailContent span {
   display: block;
-  width: 60px;
+  width: 3.75rem;
   height: 100%;
   text-align: center;
-  line-height: 32px;
+  line-height: 2rem;
 }
 .detailContent input {
-  width: calc(100% - 60px);
+  width: calc(100% - 3.75rem);
   height: 100%;
 }
 /* 사업자 상세정보 확인 하단 리뷰 & 공지사항 */
@@ -948,7 +960,7 @@ input[type="radio"] {
   height: auto;
 }
 .detailContentsList li {
-  width: calc(20% - 20px);
+  width: calc(20% - 1.25rem);
   height: auto;
   background-color: var(--color-bggray);
   padding: 0.3125rem;
@@ -973,7 +985,7 @@ input[type="radio"] {
   display: inline-block;
   height: auto;
   font-weight: 400;
-  padding-left: 4px;
+  padding-left: 0.25rem;
 }
 .detailContentsList .link {
   text-align: right;
@@ -1053,7 +1065,7 @@ input[type="radio"] {
   width: 25%;
 }
 .flexTableWrap .commonTable:not(:last-child) {
-  border-right: 1px solid var(--color-bggray);
+  border-right: 0.0625rem solid var(--color-bggray);
 }
 
 .flexTableWrap button {
@@ -1067,16 +1079,16 @@ input[type="radio"] {
 /* 테이블 내 세부 콘텐츠 */
 .commonTable i {
   display: inline-block;
-  width: 30px;
-  height: 14px;
-  line-height: 14px;
-  font-size: 10px;
-  margin-left: 5px;
+  width: 1.875rem;
+  height: 0.875rem;
+  line-height: 0.875rem;
+  font-size: 0.625rem;
+  margin-left: 0.3125rem;
 }
 .commonTable .tableIcon {
   background-color: var(--color-bgblack);
   color: var(--color-white);
-  border-radius: 3px;
+  border-radius: 0.1875rem;
 }
 .commonTable .tableIcon:first-child {
   margin-left: 0;
@@ -1097,13 +1109,13 @@ input[type="radio"] {
   width: 100%;
   display: flex;
   justify-content: right;
-  padding: 10px 5px;
+  padding: 0.625rem 0.3125rem;
 }
 .filterWrap select {
-  border: 1px solid var(--color-gray);
+  border: 0.0625rem solid var(--color-gray);
   background-color: var(--color-bggray);
-  border-radius: 4px;
-  padding: 1px;
+  border-radius: 0.25rem;
+  padding: 0.0625rem;
 }
 /*pagination 영역 ------------------------------------------------------*/
 .pagination {
@@ -1164,10 +1176,10 @@ ul.pagination li a:hover {
 .tableTopWrap .smallButton,
 .tableTopWrap .smallSubmitButton {
   width: 6rem;
-  height: 20px;
+  height: 1.25rem;
   text-align: center;
-  line-height: 20px;
-  margin-left: 4px;
+  line-height: 1.25rem;
+  margin-left: 0.25rem;
 }
 .tableTopWrap a,
 .tableTopWrap button {
@@ -1215,12 +1227,12 @@ ul.pagination li a:hover {
 .listSearchWrap {
   display: flex;
   width: 25%;
-  height: 40px;
-  padding: 4px;
+  height: 2.5rem;
+  padding: 0.25rem;
 }
 
 .listSearchWrap .blockLabel {
-  width: 110px;
+  width: 6.875rem;
   height: 100%;
   background-color: var(--color-bgblack);
   border: none;
@@ -1233,10 +1245,10 @@ ul.pagination li a:hover {
 .listSearchWrap div:nth-child(2) {
   display: flex;
   justify-content: center;
-  width: calc(100% - 110px);
+  width: calc(100% - 6.875rem);
   height: 100%;
-  padding: 3px;
-  border: 1px solid var(--color-bgblack);
+  padding: 0.1875rem;
+  border: 0.0625rem solid var(--color-bgblack);
 }
 
 .listSearchWrap input {
@@ -1274,7 +1286,7 @@ ul.pagination li a:hover {
   margin-right: 0.25rem;
   font-size: var(--font-size-small);
   color: var(--color-black);
-  border-radius: 4px;
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 0.25rem;
+  border: 0.0625rem solid rgba(0, 0, 0, 0.1);
   font-weight: 600;
 }

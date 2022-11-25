@@ -386,67 +386,6 @@ export default function SetCompanyDetail() {
               <div className="blockLabel">
                 <span>사업자 공사 관리</span>
               </div>
-              {/* <div className="formPaddingWrap">
-                <input
-                  className="listSearchRadioInput"
-                  type="radio"
-                  checked={detailComapanyRadio.gongsaType === "emer"}
-                  name="_gongsaType"
-                  value="emer"
-                  id="typeEmer"
-                  {...register("_gongsaType", {
-                    onChange: (e) => {
-                      setDetailComapanyRadio({
-                        ...detailComapanyRadio,
-                        gongsaType: e.target.value,
-                      });
-                    },
-                  })}
-                />
-                <label className="listSearchRadioLabel" htmlFor="typeEmer">
-                  긴급
-                </label>
-
-                <input
-                  className="listSearchRadioInput"
-                  type="radio"
-                  checked={detailComapanyRadio.gongsaType === "inday"}
-                  name="_gongsaType"
-                  value="inday"
-                  id="typeInday"
-                  {...register("_gongsaType", {
-                    onChange: (e) => {
-                      setDetailComapanyRadio({
-                        ...detailComapanyRadio,
-                        gongsaType: e.target.value,
-                      });
-                    },
-                  })}
-                />
-                <label className="listSearchRadioLabel" htmlFor="typeInday">
-                  당일
-                </label>
-
-                <input
-                  className="listSearchRadioInput"
-                  type="radio"
-                  checked={detailComapanyRadio.gongsaType === "reser"}
-                  name="_gongsaType"
-                  value="reser"
-                  id="typeReser"
-                  {...register("_gongsaType", {
-                    onChange: (e) => {
-                      setDetailComapanyRadio({
-                        ...detailComapanyRadio,
-                        gongsaType: e.target.value,
-                      });
-                    },
-                  })}
-                />
-                <label className="listSearchRadioLabel" htmlFor="typeReser">
-                  예약
-                </label> */}
-              {/* </div> */}
 
               <div className="formPaddingWrap">
                 <input

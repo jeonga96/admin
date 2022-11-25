@@ -11,6 +11,7 @@ import PaginationButton from "../components/common/PiecePaginationButton";
 import LayoutTopButton from "../components/common/LayoutTopButton";
 import ComponentListCompanySearch from "../components/common/ComponentListCompanySearch";
 
+// 하위 컴포넌트, useState를 별도로 관리하기 위해 하위 컴포넌트로 분리
 function ListInTr({
   item,
   setClickedStatus,
@@ -90,6 +91,7 @@ function ListInTr({
   );
 }
 
+// 상위 컴포넌트
 export default function ListCompany() {
   const [companyList, setCompanyList] = useState([]);
   const [listPage, setListPage] = useState({});
@@ -111,20 +113,11 @@ export default function ListCompany() {
 
   // 계약관리 submit
   const handleUseFlag = (e) => {
-    if (e.target.id === "useFlagY") {
-      for (let i = 0; i < clickedUseFlag.length; i++) {
-        servicesPostData(urlSetCompany, {
-          cid: clickedUseFlag[i],
-          useFlag: "1",
-        }).then(window.location.reload());
-      }
-    } else {
-      for (let i = 0; i < clickedUseFlag.length; i++) {
-        servicesPostData(urlSetCompany, {
-          cid: clickedUseFlag[i],
-          useFlag: "0",
-        }).then(window.location.reload());
-      }
+    for (let i = 0; i < clickedUseFlag.length; i++) {
+      servicesPostData(urlSetCompany, {
+        cid: clickedUseFlag[i],
+        useFlag: e.target.id === "useFlagY" ? "1" : "0",
+      }).then(window.location.reload());
     }
   };
 
@@ -166,7 +159,7 @@ export default function ListCompany() {
           <LayoutTopButton text="정상" fn={handleUseFlag} id="useFlagY" />
         )}
         {clickedUseFlag.length > 0 && (
-          <LayoutTopButton text="해지" fn={handleUseFlag} id="useFlagN" />
+          <LayoutTopButton text="해지" fn={handleUseFlag} />
         )}
         {clickedStatus.length > 0 && (
           <LayoutTopButton text="대기" fn={handleStauts} id="waiting" />
@@ -190,7 +183,6 @@ export default function ListCompany() {
                 <th style={{ width: "100px" }}>관리번호</th>
                 <th style={{ width: "250px" }}>계약자</th>
                 <th style={{ width: "300px" }}>계약일</th>
-                {/* <th style={{ width: "200px" }}>상세정보</th> */}
               </tr>
             </thead>
             <tbody>

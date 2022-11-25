@@ -10,7 +10,7 @@ import ComponentListUserSearch from "../components/common/ComponentListUserSearc
 function ListInTr({ item, setClickedUseFlag, clickedUseFlag }) {
   const [useFlagCk, setUseFlagCk] = useState(false);
 
-  const checkedItemHandler = (name, id, isChecked) => {
+  const checkedItemHandler = (name, isChecked) => {
     (() => {
       if (isChecked) {
         setClickedUseFlag([...clickedUseFlag, name]);
@@ -23,7 +23,7 @@ function ListInTr({ item, setClickedUseFlag, clickedUseFlag }) {
   // 체크 이벤트 동작 & 상위 컴포넌트에게 전달하기 위한 이벤트 동작
   const checkHandler = ({ target }) => {
     setUseFlagCk(!useFlagCk);
-    checkedItemHandler(target.name, target.id, target.checked);
+    checkedItemHandler(target.name, target.checked);
   };
 
   return (
@@ -57,12 +57,6 @@ function ListInTr({ item, setClickedUseFlag, clickedUseFlag }) {
       <td>{item.mobile}</td>
       <td>{item.createTime && item.createTime.slice(0, 10)}</td>
       <td>{item.udid ? <i className="tableIcon">입력</i> : null}</td>
-
-      {/* <td className="tableButton" style={{ width: "auto" }}>
-        <Link to={`${item.uid}`} className="Link">
-          상세
-        </Link>
-      </td> */}
     </tr>
   );
 }
@@ -89,20 +83,12 @@ export default function ListUser() {
 
   // 계약관리 submit
   const handleUseFlag = (e) => {
-    if (e.target.id === "useFlagY") {
-      for (let i = 0; i < clickedUseFlag.length; i++) {
-        servicesPostData(urlSetUser, {
-          uid: clickedUseFlag[i],
-          useFlag: "1",
-        }).then(window.location.reload());
-      }
-    } else {
-      for (let i = 0; i < clickedUseFlag.length; i++) {
-        servicesPostData(urlSetUser, {
-          uid: clickedUseFlag[i],
-          useFlag: "0",
-        }).then(window.location.reload());
-      }
+    // useFlag 활성화(정상) 버튼 클릭 시 useFlag:1, 해지 버튼 클릭시 useFlag:0
+    for (let i = 0; i < clickedUseFlag.length; i++) {
+      servicesPostData(urlSetUser, {
+        uid: clickedUseFlag[i],
+        useFlag: e.target.id === "useFlagUse" ? "1" : "0",
+      }).then(window.location.reload());
     }
   };
 
@@ -117,10 +103,10 @@ export default function ListUser() {
       />
       <ul className="tableTopWrap">
         {clickedUseFlag.length > 0 && (
-          <LayoutTopButton text="정상" fn={handleUseFlag} id="useFlagY" />
+          <LayoutTopButton text="정상" fn={handleUseFlag} id="useFlagUse" />
         )}
         {clickedUseFlag.length > 0 && (
-          <LayoutTopButton text="해지" fn={handleUseFlag} id="useFlagN" />
+          <LayoutTopButton text="해지" fn={handleUseFlag} />
         )}
         <LayoutTopButton url="/adduser" text="회원 추가" />
       </ul>
@@ -142,6 +128,7 @@ export default function ListUser() {
               </tr>
             </thead>
             <tbody>
+              {/* checkbox를 별도로 관리하기 위해 컴포넌트로 관리 */}
               {userList &&
                 userList.map((item) => (
                   <ListInTr

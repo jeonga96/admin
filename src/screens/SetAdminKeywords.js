@@ -35,6 +35,8 @@ export default function SetAdminKeyeords() {
       }
     }, []);
 
+  // 검색, 닫기 버튼 클릭 이벤트
+  // 기존 검색량을 최근 것으로 수정하기 위해 검색버튼 클릭 시 서버에서 전체 키워드를 다시 받아오도록 설정
   const handleOpenBtn = (e) => {
     e.preventDefault();
     setSearchBtn(!searchBtn);
@@ -48,6 +50,8 @@ export default function SetAdminKeyeords() {
       : setSearchBtn(!searchBtn);
   };
 
+  // 수정이 가능하도록 하는 input 입력창 표시되는 click 이벤트
+  // 중복이 발생하지 않도록 new Set 이용
   const handleKeywordOnclick = (item, e) => {
     e.preventDefault();
     const addArr = [item, ...companyDetailKeyword];
@@ -55,6 +59,7 @@ export default function SetAdminKeyeords() {
     setCompanyDetailKeyword([...newKeyword]);
   };
 
+  // hitCount 수정하는 input onChange 이벤트
   const onChange = (e) => {
     if (modifyData === null) {
       // modifyData가 비어있다면 아직 아무것도 입력되지 않았음으로 값 추가만 진행
@@ -86,68 +91,79 @@ export default function SetAdminKeyeords() {
     alert("완료되었습니다.");
   };
 
+  // 초기화 버튼
+  const HandleReset = () => {
+    setCompanyDetailKeyword([]);
+    setModifyData(null);
+    setSearchBtn(false);
+    setAllKeywords([]);
+  };
+
   return (
     <>
       <div className="commonBox">
         {/* -------------------- 키워드 검색 -------------------- */}
         <div className="keywordWrap">
-          <div style={{ marginBottom: "46px", marginTop: "36px" }}>
-            <input
-              type="text"
-              placeholder="키워드를 입력해 주세요."
-              onChange={(e) => setSearchValue(e.target.value)}
-              className="keywordInput"
-            />
-            <button onClick={handleOpenBtn}>
-              {searchBtn ? "닫기" : "검색"}
-            </button>
+          <div className="keywordBox">
+            <div>
+              <input
+                type="text"
+                placeholder="키워드를 입력해 주세요."
+                onChange={(e) => setSearchValue(e.target.value)}
+                className="keywordInput"
+              />
+              <button onClick={handleOpenBtn}>
+                {searchBtn ? "닫기" : "검색"}
+              </button>
+            </div>
+
+            {searchBtn && (
+              <ul className="keywordArea">
+                <div>
+                  <div>
+                    {keywordFilter.length > 0 &&
+                      keywordFilter.map((item) => (
+                        <li key={item.kid}>
+                          <span>
+                            <button
+                              onClick={(e) => {
+                                handleKeywordOnclick(item, e);
+                              }}
+                            >
+                              {item.keyword}
+                            </button>
+                          </span>
+                        </li>
+                      ))}
+
+                    {allKeywords !== null && keywordFilter.length === 0 && (
+                      <li>
+                        <span>
+                          검색된 데이터가 없습니다. 다시 입력해 주세요.
+                        </span>
+                      </li>
+                    )}
+                  </div>
+                </div>
+              </ul>
+            )}
           </div>
-
-          {searchBtn && (
-            <ul className="keywordBox" id="keywordBoxAdmin">
-              {keywordFilter.length > 0 &&
-                keywordFilter.map((item) => (
-                  <li key={item.kid}>
-                    <span>
-                      <button
-                        onClick={(e) => {
-                          handleKeywordOnclick(item, e);
-                        }}
-                      >
-                        {item.keyword}
-                      </button>
-                    </span>
-                  </li>
-                ))}
-
-              {allKeywords !== null && keywordFilter.length === 0 && (
-                <li>
-                  <span>검색된 데이터가 없습니다. 다시 입력해 주세요.</span>
-                </li>
-              )}
-            </ul>
-          )}
         </div>
 
         {/* -------------------- 수정값 입력 폼 -------------------- */}
         <form className="formLayout" onSubmit={handleSubmit(HandleSubmit)}>
           <ul className="tableTopWrap">
-            <LayoutTopButton
-              text="초기화"
-              fn={(e) => {
-                setCompanyDetailKeyword([]);
-                setModifyData(null);
-                setSearchBtn(false);
-                setAllKeywords([]);
-              }}
-            />
+            <LayoutTopButton text="초기화" fn={HandleReset} />
             <LayoutTopButton text="수정" disabled={isSubmitting} />
           </ul>
+
+          {/* 검색 결과 & 표 클릭 결과 표시되는 수정 값 입력하는 인풋 */}
           {companyDetailKeyword !== [] &&
-            companyDetailKeyword.map((it, key, arr) => (
+            companyDetailKeyword.map((it) => (
               <fieldset key={it.kid}>
                 <div className="formWrap">
                   <div className="listSearchWrap" style={{ width: "33.333%" }}>
+                    {/* 키워드와 기존 검색량은 확인을 위한 표시일 뿐 입력하여 수정할 순 없다. -> disabled */}
                     <div className="blockLabel">
                       <span>키워드</span>
                     </div>
@@ -190,12 +206,11 @@ export default function SetAdminKeyeords() {
             ))}
         </form>
       </div>
+      {/* 하단 list ---------------------------------------- */}
       <ComponentListAdminKeyword
         handleOnclick={handleKeywordOnclick}
         CKECKSUMBIT={sumbit}
       />
-
-      {/* 하단 list ---------------------------------------- */}
     </>
   );
 }
