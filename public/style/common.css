@@ -444,7 +444,27 @@ input[type="radio"] {
 }
 
 /*form layout 기타 요소*/
-.formLayout .fileboxLabel {
+
+.selectForm select {
+  display: inline-block;
+  width: 8.125rem;
+  height: 2.5rem;
+  background-color: var(--color-bggray);
+  border-radius: 0.3125rem;
+  margin-right: 0.3125rem;
+}
+.selectForm select:focus {
+  outline: none;
+}
+
+/*이미지 설정 - 썸네일*/
+.setImageWrap {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+.setImageWrap .fileboxLabel {
   display: block;
   width: 7rem;
   padding: 0.3em 0;
@@ -461,33 +481,20 @@ input[type="radio"] {
 
 .fileboxLabel:hover,
 .fileboxLabel:active {
-  background-color: var(--color-gray);
+  background-color: var(--color-acceent);
 }
 
-.selectForm select {
-  display: inline-block;
-  width: 8.125rem;
-  height: 2.5rem;
-  background-color: var(--color-bggray);
-  border-radius: 0.3125rem;
-  margin-right: 0.3125rem;
-}
-.selectForm select:focus {
-  outline: none;
-}
-
-/*이미지 설정 - 썸네일*/
 .imgsThumbnail {
   display: flex;
   justify-content: left;
   flex-wrap: wrap;
-  width: calc(100% - 160px);
+  width: 100%;
   height: auto;
   min-height: 4.5rem;
-  background-color: rgba(243, 244, 243, 0.5);
-  border: 0.0625rem solid var(--color-bggray);
-  padding: 0.2rem;
+  padding: 0.25rem 0.25rem 0;
   margin: 0 auto;
+  background-color: rgba(243, 244, 243, 0.3);
+  border: 1px solid rgba(0, 0, 0, 0.1);
 }
 .imgsThumbnail > div,
 .imgsThumbnail > li {
@@ -642,18 +649,6 @@ input[type="radio"] {
   font-size: var(--font-size-small);
 }
 
-.setImageWrap {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  margin-top: 20px;
-}
-
-.imgsTitle input {
-  width: 20px;
-  height: 20px;
-  margin-bottom: 0;
-}
 .detailPageLayout {
   padding: 0;
 }
