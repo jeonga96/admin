@@ -43,7 +43,7 @@ export default function SetAllKeyWord({
   // 키워드가 검색된 목록에서 키워드 클릭하는 이벤트
   const handleKeywordOnclick = (item, e) => {
     e.preventDefault();
-    if (companyDetailKeyword.length >= 20) {
+    if (companyDetailKeyword.length > 20) {
       alert("최대 20개까지 입력할 수 있습니다.");
     } else {
       companyDetailKeyword.forEach((el) => clickedKeyword.push(el.kid));

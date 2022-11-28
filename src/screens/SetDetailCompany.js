@@ -38,6 +38,7 @@ export default function SetCompanyDetail() {
     register,
     setValue,
     getValues,
+    watch,
     formState: { isSubmitting, errors },
   } = useForm();
 
@@ -183,8 +184,19 @@ export default function SetCompanyDetail() {
     });
   };
 
+  const onChangeValidation = (e) => {
+    let arr = e.target.value.split(",");
+    if (arr.length > 20) {
+      alert("최대 20개까지 입력할 수 있습니다.");
+      arr = arr.filter((it, i) => i < 20);
+      return setValue("_tag", arr.toString());
+    } else {
+      return setValue("_tag", arr.toString());
+    }
+  };
+
   // form submit 이벤트
-  function UserDetailInfoSubmit() {
+  const handleSubmitEvent = () => {
     //서버에 imgs의 iid값만을 보내기 위해 실행하는 반복문 함수
     serviesGetImgsIid(imgsIid, imgs);
     // 서버에 keywords의 keyword value만을 보내기 위해 실행하는 함수
@@ -237,15 +249,12 @@ export default function SetCompanyDetail() {
         }
       })
       .catch((error) => console.log("실패", error.response));
-  }
+  };
 
   return (
     <>
       <div className="commonBox">
-        <form
-          className="formLayout"
-          onSubmit={handleSubmit(UserDetailInfoSubmit)}
-        >
+        <form className="formLayout" onSubmit={handleSubmit(handleSubmitEvent)}>
           <ul className="tableTopWrap">
             <LayoutTopButton url="/company" text="목록으로 가기" />
             <LayoutTopButton text="완료" disabled={isSubmitting} />
@@ -785,11 +794,11 @@ export default function SetCompanyDetail() {
                   id="tags"
                   name="_tags"
                   placeholder="태그를 입력해 주세요."
+                  value={
+                    (watch("_tags") && watch("_tags").replace(" ", ",")) || ""
+                  }
                   {...register("_tags", {
-                    maxLength: {
-                      value: 100,
-                      message: "100자 이하의 글자만 사용가능합니다.",
-                    },
+                    onChange: onChangeValidation,
                   })}
                 />
                 <ErrorMessage
