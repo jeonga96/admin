@@ -426,6 +426,11 @@ input[type="radio"] {
   border: 0.0625rem solid var(--color-lightprimary);
   background-color: var(--color-bggray);
 }
+.formLayout input:disabled {
+  /* border: 1px solid rgba(50, 50, 50, 0.1); */
+  background-color: var(--color-bggray);
+  color: var(--color-bgblack);
+}
 .formLayout textarea {
   resize: none;
   width: 100%;

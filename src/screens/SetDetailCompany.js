@@ -104,6 +104,8 @@ export default function SetCompanyDetail() {
           setValue("_email", res.data.email || "");
           setValue("_extnum", res.data.extnum || "");
           setValue("_tags", res.data.tags || "");
+          setValue("_bigCategory", res.data.bigCategory || "");
+          setValue("_subCategory", res.data.subCategory || "");
 
           // 로그인 시 로컬스토리지에 저장한 전체 키워드 가져오기
           const allKeywordData = JSON.parse(servicesGetStorage(ALLKEYWORD));
@@ -186,12 +188,20 @@ export default function SetCompanyDetail() {
 
   const onChangeValidation = (e) => {
     let arr = e.target.value.split(",");
-    if (arr.length > 20) {
-      alert("최대 20개까지 입력할 수 있습니다.");
-      arr = arr.filter((it, i) => i < 20);
+    if (e.target.id === "tags") {
+      if (arr.length > 20) {
+        alert("최대 20개까지 입력할 수 있습니다.");
+        arr = arr.filter((it, i) => i < 20);
+      }
       return setValue("_tag", arr.toString());
     } else {
-      return setValue("_tag", arr.toString());
+      if (arr.length > 10) {
+        alert("최대 10개까지 입력할 수 있습니다.");
+        arr = arr.filter((it, i) => i < 10);
+      }
+      return e.target.id === "bigCategory"
+        ? setValue("_bigCategory", arr.toString())
+        : setValue("_subCategory", arr.toString());
     }
   };
 
@@ -232,6 +242,8 @@ export default function SetCompanyDetail() {
       extnum: getValues("_extnum"),
       keywords: keywordValue.toString() || "",
       tags: getValues("_tags"),
+      subCategory: getValues("_subCategory"),
+      bigCategory: getValues("_bigCategory"),
       vidlinkurl:
         `${getValues("_vidlinkurl1")},${getValues("_vidlinkurl2")}` || "",
       linkurl:
@@ -808,6 +820,64 @@ export default function SetCompanyDetail() {
                     <span className="errorMessageWrap">{message}</span>
                   )}
                 />
+              </div>
+            </div>
+
+            <div className="formContentWrap">
+              <label htmlFor="bigCategory" className="blockLabel">
+                <span>대표업종</span>
+              </label>
+              <div>
+                <input
+                  type="text"
+                  id="bigCategory"
+                  name="_bigCategory"
+                  placeholder="대표업종을 입력해 주세요."
+                  value={
+                    (watch("_bigCategory") &&
+                      watch("_bigCategory").replace(" ", ",")) ||
+                    ""
+                  }
+                  {...register("_bigCategory", {
+                    onChange: onChangeValidation,
+                  })}
+                />
+                {/* <ErrorMessage
+                  errors={errors}
+                  name="_bigCategory"
+                  render={({ message }) => (
+                    <span className="errorMessageWrap">{message}</span>
+                  )}
+                /> */}
+              </div>
+            </div>
+
+            <div className="formContentWrap">
+              <label htmlFor="subCategory" className="blockLabel">
+                <span>상세업종</span>
+              </label>
+              <div>
+                <input
+                  type="text"
+                  id="subCategory"
+                  name="_subCategory"
+                  placeholder="상세업종을 입력해 주세요."
+                  value={
+                    (watch("_subCategory") &&
+                      watch("_subCategory").replace(" ", ",")) ||
+                    ""
+                  }
+                  {...register("_subCategory", {
+                    onChange: onChangeValidation,
+                  })}
+                />
+                {/* <ErrorMessage
+                  errors={errors}
+                  name="_subCategory"
+                  render={({ message }) => (
+                    <span className="errorMessageWrap">{message}</span>
+                  )}
+                /> */}
               </div>
             </div>
 
