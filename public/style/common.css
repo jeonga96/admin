@@ -675,7 +675,6 @@ input[type="radio"] {
 #pieceKeywordArea {
   width: 410px;
   height: 6.875rem;
-  background-color: var(--color-white);
 }
 
 /* 키워드 조회량 관리 키워드 검색  */
@@ -690,7 +689,7 @@ input[type="radio"] {
   width: 100%;
   height: auto;
 }
-.keywordBox > div {
+.keywordBox > div:first-child {
   width: 100%;
   height: 2.125rem;
   display: flex;
@@ -719,9 +718,9 @@ input[type="radio"] {
   left: 0;
   z-index: 10;
   width: 41.875rem;
+  height: 6.875rem;
   border: 0.0625rem solid var(--color-bggray);
   background-color: var(--color-white);
-  height: 6.875rem;
   padding: 0.25rem;
 }
 .keywordArea > div {
