@@ -106,6 +106,9 @@ export default function SetCompanyDetail() {
           setValue("_tags", res.data.tags || "");
           setValue("_bigCategory", res.data.bigCategory || "");
           setValue("_subCategory", res.data.subCategory || "");
+          setValue("_reCount", res.data.reCount || "");
+          setValue("_okCount", res.data.okCount || "");
+          setValue("_noCount", res.data.noCount || "");
 
           // 로그인 시 로컬스토리지에 저장한 전체 키워드 가져오기
           const allKeywordData = JSON.parse(servicesGetStorage(ALLKEYWORD));
@@ -244,6 +247,9 @@ export default function SetCompanyDetail() {
       tags: getValues("_tags"),
       subCategory: getValues("_subCategory"),
       bigCategory: getValues("_bigCategory"),
+      reCount: getValues("_reCount"),
+      okCount: getValues("_okCount"),
+      noCount: getValues("_noCount"),
       vidlinkurl:
         `${getValues("_vidlinkurl1")},${getValues("_vidlinkurl2")}` || "",
       linkurl:
@@ -474,6 +480,50 @@ export default function SetCompanyDetail() {
                   render={({ message }) => (
                     <span className="errorMessageWrap">{message}</span>
                   )}
+                />
+              </div>
+            </div>
+
+            <div className="formContentWrap">
+              <label htmlFor="bigCategory" className="blockLabel">
+                <span>대표업종</span>
+              </label>
+              <div>
+                <input
+                  type="text"
+                  id="bigCategory"
+                  name="_bigCategory"
+                  placeholder="대표업종을 입력해 주세요."
+                  value={
+                    (watch("_bigCategory") &&
+                      watch("_bigCategory").replace(" ", ",")) ||
+                    ""
+                  }
+                  {...register("_bigCategory", {
+                    onChange: onChangeValidation,
+                  })}
+                />
+              </div>
+            </div>
+
+            <div className="formContentWrap">
+              <label htmlFor="subCategory" className="blockLabel">
+                <span>상세업종</span>
+              </label>
+              <div>
+                <input
+                  type="text"
+                  id="subCategory"
+                  name="_subCategory"
+                  placeholder="상세업종을 입력해 주세요."
+                  value={
+                    (watch("_subCategory") &&
+                      watch("_subCategory").replace(" ", ",")) ||
+                    ""
+                  }
+                  {...register("_subCategory", {
+                    onChange: onChangeValidation,
+                  })}
                 />
               </div>
             </div>
@@ -813,71 +863,6 @@ export default function SetCompanyDetail() {
                     onChange: onChangeValidation,
                   })}
                 />
-                <ErrorMessage
-                  errors={errors}
-                  name="_tags"
-                  render={({ message }) => (
-                    <span className="errorMessageWrap">{message}</span>
-                  )}
-                />
-              </div>
-            </div>
-
-            <div className="formContentWrap">
-              <label htmlFor="bigCategory" className="blockLabel">
-                <span>대표업종</span>
-              </label>
-              <div>
-                <input
-                  type="text"
-                  id="bigCategory"
-                  name="_bigCategory"
-                  placeholder="대표업종을 입력해 주세요."
-                  value={
-                    (watch("_bigCategory") &&
-                      watch("_bigCategory").replace(" ", ",")) ||
-                    ""
-                  }
-                  {...register("_bigCategory", {
-                    onChange: onChangeValidation,
-                  })}
-                />
-                {/* <ErrorMessage
-                  errors={errors}
-                  name="_bigCategory"
-                  render={({ message }) => (
-                    <span className="errorMessageWrap">{message}</span>
-                  )}
-                /> */}
-              </div>
-            </div>
-
-            <div className="formContentWrap">
-              <label htmlFor="subCategory" className="blockLabel">
-                <span>상세업종</span>
-              </label>
-              <div>
-                <input
-                  type="text"
-                  id="subCategory"
-                  name="_subCategory"
-                  placeholder="상세업종을 입력해 주세요."
-                  value={
-                    (watch("_subCategory") &&
-                      watch("_subCategory").replace(" ", ",")) ||
-                    ""
-                  }
-                  {...register("_subCategory", {
-                    onChange: onChangeValidation,
-                  })}
-                />
-                {/* <ErrorMessage
-                  errors={errors}
-                  name="_subCategory"
-                  render={({ message }) => (
-                    <span className="errorMessageWrap">{message}</span>
-                  )}
-                /> */}
               </div>
             </div>
 
@@ -905,7 +890,6 @@ export default function SetCompanyDetail() {
 
             <div className="formContentWrap">
               <label className="blockLabel">
-                {" "}
                 <span>외부 링크</span>
               </label>
               <div>
@@ -946,6 +930,51 @@ export default function SetCompanyDetail() {
                 />
               </div>
             </div>
+
+            <fieldset>
+              <h3>고객 관리</h3>
+              <div className="formContentWrap">
+                <label htmlFor="address" className=" blockLabel">
+                  <span>평점</span>
+                </label>
+                <ul className="detailContent">
+                  <li style={{ width: "33.3333%" }}>
+                    <div>
+                      <span>추천</span>
+                      <input
+                        type="number"
+                        id="reCount"
+                        name="_reCount"
+                        {...register("_reCount")}
+                      />
+                    </div>
+                  </li>
+
+                  <li style={{ width: "33.3333%" }}>
+                    <div>
+                      <span>만족</span>
+                      <input
+                        type="number"
+                        id="okCount"
+                        name="_okCount"
+                        {...register("_okCount")}
+                      />
+                    </div>
+                  </li>
+                  <li style={{ width: "33.3333%" }}>
+                    <div>
+                      <span>불만족</span>
+                      <input
+                        type="number"
+                        id="noCount"
+                        name="_noCount"
+                        {...register("_noCount")}
+                      />
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </fieldset>
           </div>
         </form>
       </div>

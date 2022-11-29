@@ -56,6 +56,7 @@ export default function Postcode({
     // setCompany는 아래와 같은 정보가 필요함
     if (getedData !== [] && !userComponent && !siteAddress) {
       //  신주소 : address, 구주소 :oldaddress, 우편번호 : zipcode
+
       fnSetAddress({
         address: getedData.address,
         oldaddress: getedData.oldaddress,
@@ -166,15 +167,16 @@ export default function Postcode({
               disabled
               value={multilAddress.address || ""}
             />
+
             <input
               type="text"
               id="zipcode"
               value={multilAddress.zipcode || ""}
               disabled
               style={{
-                width: "200px",
+                width: "155px",
                 float: "left",
-                marginRight: "10px",
+                marginRight: "5px",
               }}
             />
 
@@ -194,22 +196,26 @@ export default function Postcode({
           </label>
           <ul className="detailContent">
             <li>
-              <span>위도</span>
-              <input
-                type="text"
-                disabled
-                placeholder="위도 값이 없습니다."
-                value={multilAddress.latitude || ""}
-              />
+              <div>
+                <span>위도</span>
+                <input
+                  type="text"
+                  disabled
+                  placeholder="위도 값이 없습니다."
+                  value={multilAddress.latitude || ""}
+                />
+              </div>
             </li>
             <li>
-              <span>경도</span>
-              <input
-                type="text"
-                disabled
-                placeholder="경도 값이 없습니다."
-                value={multilAddress.longitude || ""}
-              />
+              <div>
+                <span>경도</span>
+                <input
+                  type="text"
+                  disabled
+                  placeholder="경도 값이 없습니다."
+                  value={multilAddress.longitude || ""}
+                />
+              </div>
             </li>
           </ul>
         </div>
