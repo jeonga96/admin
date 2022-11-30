@@ -75,7 +75,6 @@ export default function ListUser() {
         offset: page.getPage,
         size: 15,
       }).then((res) => {
-        console.log(res);
         setUserList(res.data);
         setListPage(res.page);
       });

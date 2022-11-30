@@ -42,6 +42,7 @@ export default function SetCompanyDetail() {
     formState: { isSubmitting, errors },
   } = useForm();
 
+  // 이미지 ------------------------------------------------------------------------
   // 서버에서 titleImg, imgs의 iid를 받아오기 위해 사용
   const [getedData, setGetedData] = useState([]);
   // titleImg:대표 이미지저장 및 표시, imgs:상세 이미지저장 및 표시
@@ -51,26 +52,31 @@ export default function SetCompanyDetail() {
   const imgsIid = [];
   // 사업자 등록증 이미지
   const [regImgs, setRegImgs] = useState(null);
-  // getDataFinish:기존에 입력된 값이 있어 값을 불러왔다면 true로 변경,
-  const getDataFinish = useRef(false);
+
+  // 주소 ------------------------------------------------------------------------
   // address:신주소,  oldaddress:구주소,  zipcode:우편번호,  latitude:위도,  longitude:경도
   const [multilAddress, setMultilAddress] = useState({});
-  // const mapcoor = useRef({ longitude: "", latitude: "" });
+
+  // 키워드 ------------------------------------------------------------------------
   // 선택된 키워드 저장되는 state
   const [companyDetailKeyword, setCompanyDetailKeyword] = useState([]);
   // keywordValue:서버에 키워드를 보낼 때 keyword의 value만 필요
   const keywordValue = [];
 
+  // 데이터 불러오기 알림 --------------------------------------------------------------
+  // getDataFinish:기존에 입력된 값이 있어 값을 불러왔다면 true로 변경,
+  const getDataFinish = useRef(false);
+
+  // admin/setCompanyDetailInfo 기타 API 저장  --------------------------------------
+  //  setUser 수정 (useFlag만 기본값으로 설정)
+  const [companyData, setCompanyData] = useState({});
   // 하단 링크 이동 될 사업자 공지사항, 사업자 리뷰, 견적서
   const [noticeList, setNoticeList] = useState([]);
   const [reviewList, setReviewList] = useState([]);
   const [toEstimateinfo, setToEstimateinfo] = useState([]);
   const [fromEstimateinfo, setFromEstimateinfo] = useState([]);
 
-  //  setUser 수정 (useFlag만 기본값으로 설정)
-  const [companyData, setCompanyData] = useState({});
-
-  // 현재 페이지가 렌더링되자마자 기존에 입력된 값의 여부를 확인한다.
+  // 현재 페이지가 렌더링되자마자 기존에 입력된 값의 여부를 확인한다. ==============
   useEffect(() => {
     // 상세 회사정보 불러오기 기존 값이 없다면 새로운 회원이다. 새로 작성함
     servicesPostData(urlGetCompanyDetail, {
@@ -78,7 +84,6 @@ export default function SetCompanyDetail() {
     })
       .then((res) => {
         if (res.status === "success") {
-          console.log(res.data);
           // 값이 있다면 저장한 후 getDataFinish 값을 변경
           setGetedData(res.data);
 
@@ -149,8 +154,6 @@ export default function SetCompanyDetail() {
             }).then((res) => setToEstimateinfo(res.page));
           });
 
-          // 공지사항, 리뷰, 견적요청서 ------------------------------------
-
           getDataFinish.current = true;
         } else if (res.data === "fail") {
           console.log("새로운 사업자 회원입니다.");
@@ -159,6 +162,7 @@ export default function SetCompanyDetail() {
       .catch((res) => console.log(res));
   }, []);
 
+  // input ","로 구분된 문자열 최대 입력 개수제한 ========================
   const onChangeValidation = (e) => {
     let arr = e.target.value.split(",");
     if (e.target.id === "tags") {
@@ -178,7 +182,7 @@ export default function SetCompanyDetail() {
     }
   };
 
-  // form submit 이벤트
+  // form submit 이벤트 =========================================
   const handleSubmitEvent = () => {
     //서버에 imgs의 iid값만을 보내기 위해 실행하는 반복문 함수
     serviesGetImgsIid(imgsIid, imgs);
@@ -232,7 +236,6 @@ export default function SetCompanyDetail() {
     })
       .then((res) => {
         if (res.status === "success") {
-          console.log(res.data);
           alert("완료되었습니다.");
           return;
         }

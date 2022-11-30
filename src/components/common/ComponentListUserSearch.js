@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 import { servicesPostData } from "../../Services/importData";
@@ -12,12 +12,13 @@ export default function ComponentListUserSearch({
   page,
 }) {
   // react-hook-form 라이브러리
-  const { register, reset, handleSubmit } = useForm({});
+  const { register, setValue, getValues, watch, reset, handleSubmit } =
+    useForm();
 
-  const [searchData, setSearchData] = useState({
-    userrole: "ROLE_USER",
-    useFlag: "1",
-  });
+  useEffect(() => {
+    setValue("_userrole", "ROLE_USER");
+    setValue("_useFlag", "1");
+  }, []);
 
   useEffect(() => {
     // searchClick을 클릭한 (true) 상태에서 동작
@@ -35,15 +36,17 @@ export default function ComponentListUserSearch({
 
   // submit 이벤트
   function SearchSubmit() {
-    const searchDataObj = Object.entries(searchData);
-    // input에 입력된 값을 없애도 useState에 담긴 키가 사라지지 않아, 해당 값이 빈칸이라면 키를 제거하기 위해 filter 사용
-    const searchDataFilter = searchDataObj.filter((it) => it[1] !== "");
-    const searchDataReq = Object.fromEntries(searchDataFilter);
-
     servicesPostData(urlUserlist, {
       offset: page.getPage,
       size: 15,
-      ...searchDataReq,
+      uid: getValues("_uid"),
+      userid: getValues("_userid"),
+      name: getValues("_name"),
+      userrole: getValues("_userrole"),
+      mobile: getValues("_mobile"),
+      createTime: getValues("_createTime"),
+      isCid: getValues("_isCid"),
+      useFlag: getValues("_useFlag"),
     }).then((res) => {
       if (res.status === "fail") {
         alert("검색하신 데이터가 없습니다.");
@@ -56,29 +59,11 @@ export default function ComponentListUserSearch({
     });
   }
 
-  // 입력 이벤트
-  function onChangeHandle(e) {
-    // input Type = "date"
-    if (e.target.id === "createTime") {
-      // 날짜 포맷에 맞게 전송하기 위해 처리
-      const pickDate = new Date(e.target.value);
-      setSearchData({
-        ...searchData,
-        [e.target.id]: pickDate.toISOString().slice(0, 19),
-      });
-    }
-    setSearchData({
-      ...searchData,
-      [e.target.name.slice(1)]: e.target.value,
-    });
-    // }
-  }
-
   // 초기화 이벤트
   function onResetHandle(e) {
     reset();
-    setSearchData({});
     setSearchClick(false);
+    SearchSubmit();
   }
   // formWrap
 
@@ -97,10 +82,8 @@ export default function ComponentListUserSearch({
             <input
               type="text"
               id="uid"
-              name="_uid"
               placeholder="관리번호를 입력해 주세요."
               {...register("_uid", {
-                onChange: onChangeHandle,
                 pattern: {
                   value: /[0-9]/,
                   message: "숫자만 입력할 수 있습니다.",
@@ -117,11 +100,8 @@ export default function ComponentListUserSearch({
             <input
               type="text"
               id="userid"
-              name="_userid"
               placeholder="아이디를 입력해 주세요."
-              {...register("_userid", {
-                onChange: onChangeHandle,
-              })}
+              {...register("_userid")}
             />
           </div>
         </div>
@@ -134,11 +114,8 @@ export default function ComponentListUserSearch({
             <input
               type="text"
               id="name"
-              name="_name"
               placeholder="이름을 입력해 주세요."
-              {...register("_name", {
-                onChange: onChangeHandle,
-              })}
+              {...register("_name")}
             />
           </div>
         </div>
@@ -152,12 +129,9 @@ export default function ComponentListUserSearch({
               className="listSearchRadioInput"
               type="radio"
               id="userroleUser"
-              name="_userrole"
               value="ROLE_USER"
-              checked={searchData.userrole === "ROLE_USER"}
-              {...register("_userrole", {
-                onChange: onChangeHandle,
-              })}
+              checked={watch("_userrole") == "ROLE_USER"}
+              {...register("_userrole")}
             />
             <label className="listSearchRadioLabel" htmlFor="userroleUser">
               일반
@@ -167,12 +141,9 @@ export default function ComponentListUserSearch({
               className="listSearchRadioInput"
               type="radio"
               id="userroleAdmin"
-              name="_userrole"
               value="ROLE_USER,ROLE_ADMIN"
-              checked={searchData.userrole === "ROLE_USER,ROLE_ADMIN"}
-              {...register("_userrole", {
-                onChange: onChangeHandle,
-              })}
+              checked={watch("_userrole") === "ROLE_USER,ROLE_ADMIN"}
+              {...register("_userrole")}
             />
             <label className="listSearchRadioLabel" htmlFor="userroleAdmin">
               관리자
@@ -188,11 +159,8 @@ export default function ComponentListUserSearch({
             <input
               type="text"
               id="mobile"
-              name="_mobile"
               placeholder="핸드폰 번호를 입력해 주세요."
-              {...register("_mobile", {
-                onChange: onChangeHandle,
-              })}
+              {...register("_mobile")}
             />
           </div>
         </div>
@@ -204,9 +172,11 @@ export default function ComponentListUserSearch({
             <input
               type="date"
               id="createTime"
-              name="_createTime"
               {...register("_createTime", {
-                onChange: onChangeHandle,
+                onChange: (e) => {
+                  const pickDate = new Date(e.target.value);
+                  setValue("_createTime", pickDate.toISOString().slice(0, 19));
+                },
               })}
             />
           </div>
@@ -222,11 +192,8 @@ export default function ComponentListUserSearch({
               className="listSearchRadioInput"
               type="radio"
               id="isCid0"
-              name="_isCid"
               value="0"
-              {...register("_isCid", {
-                onChange: onChangeHandle,
-              })}
+              {...register("_isCid")}
             />
             <label className="listSearchRadioLabel" htmlFor="isCid0">
               일반회원
@@ -235,11 +202,8 @@ export default function ComponentListUserSearch({
               className="listSearchRadioInput"
               type="radio"
               id="isCid1"
-              name="_isCid"
               value="1"
-              {...register("_isCid", {
-                onChange: onChangeHandle,
-              })}
+              {...register("_isCid")}
             />
             <label className="listSearchRadioLabel" htmlFor="isCid1">
               사업자회원
@@ -256,12 +220,9 @@ export default function ComponentListUserSearch({
               className="listSearchRadioInput"
               type="radio"
               id="useFlag1"
-              name="_userUseFlag"
               value="1"
-              checked={searchData.useFlag === "1"}
-              {...register("_useFlag", {
-                onChange: onChangeHandle,
-              })}
+              checked={watch("_useFlag") === "1"}
+              {...register("_useFlag")}
             />
             <label className="listSearchRadioLabel" htmlFor="useFlag1">
               회원
@@ -271,12 +232,9 @@ export default function ComponentListUserSearch({
               className="listSearchRadioInput"
               type="radio"
               id="useFlag0"
-              name="_useFlag"
               value="0"
-              checked={searchData.useFlag === "0"}
-              {...register("_useFlag", {
-                onChange: onChangeHandle,
-              })}
+              checked={watch("_useFlag") === "0"}
+              {...register("_useFlag")}
             />
             <label className="listSearchRadioLabel" htmlFor="useFlag0">
               해지

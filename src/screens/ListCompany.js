@@ -109,8 +109,6 @@ export default function ListCompany() {
     });
   }, [page.getPage]);
 
-  console.log(clickedUseFlag, clickedStatus);
-
   // 계약관리 submit
   const handleUseFlag = (e) => {
     for (let i = 0; i < clickedUseFlag.length; i++) {
