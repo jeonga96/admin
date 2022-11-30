@@ -69,11 +69,6 @@ export default function SetCompanyDetail() {
 
   //  setUser 수정 (useFlag만 기본값으로 설정)
   const [companyData, setCompanyData] = useState({});
-  const [detailComapanyRadio, setDetailComapanyRadio] = useState({
-    useFlag: "1",
-    status: "2",
-    gongsaType: "reser",
-  });
 
   // 현재 페이지가 렌더링되자마자 기존에 입력된 값의 여부를 확인한다.
   useEffect(() => {
@@ -83,15 +78,13 @@ export default function SetCompanyDetail() {
     })
       .then((res) => {
         if (res.status === "success") {
+          console.log(res.data);
           // 값이 있다면 저장한 후 getDataFinish 값을 변경
           setGetedData(res.data);
 
-          setDetailComapanyRadio({
-            useFlag: String(res.data.useFlag) || "1",
-            status: String(res.data.status) || "2",
-            gongsaType: res.data.gongsaType || "reser",
-          });
-
+          setValue("_detailUseFlag", res.data.useFlag.toString() || "1");
+          setValue("_status", res.data.status.toString() || "2");
+          setValue("_gongsaType", res.data.gongsaType || "reser");
           setValue("_name", res.data.name || "");
           setValue("_comment", res.data.comment || "");
           setValue("_location", res.data.location || "");
@@ -166,29 +159,6 @@ export default function SetCompanyDetail() {
       .catch((res) => console.log(res));
   }, []);
 
-  // checkbox, 복수 선택 이벤트
-  const handleOnchangeGonsatype = (e) => {
-    const INVERTORARR = detailComapanyRadio.gongsaType.split(",");
-    let arr = [];
-    if (INVERTORARR.length == 1) {
-      if (detailComapanyRadio.gongsaType !== e.target.value) {
-        arr = [detailComapanyRadio.gongsaType, e.target.value];
-      }
-    } else {
-      arr = [...INVERTORARR];
-      if (arr.includes(e.target.value)) {
-        arr = arr.filter((it) => it !== e.target.value);
-      } else {
-        arr.push(e.target.value);
-      }
-    }
-    arr = arr.filter((it) => it !== "");
-    setDetailComapanyRadio({
-      ...detailComapanyRadio,
-      gongsaType: arr.toString(),
-    });
-  };
-
   const onChangeValidation = (e) => {
     let arr = e.target.value.split(",");
     if (e.target.id === "tags") {
@@ -224,6 +194,9 @@ export default function SetCompanyDetail() {
     // setComapny (계약자명, uid, 사업자 활성화)
     servicesPostData(urlSetCompanyDetail, {
       rcid: cid,
+      useFlag: getValues("_detailUseFlag"),
+      gongsaType: getValues("_gongsaType").toString(),
+      status: getValues("_status").toString(),
       name: getValues("_name"),
       comment: getValues("_comment"),
       location: getValues("_location"),
@@ -256,12 +229,10 @@ export default function SetCompanyDetail() {
         `${getValues("_linkurl1")},${getValues("_linkurl2")},${getValues(
           "_linkurl3"
         )},${getValues("_linkurl4")},${getValues("_linkurl5")},` || "",
-      useFlag: detailComapanyRadio.useFlag,
-      gongsaType: detailComapanyRadio.gongsaType,
-      status: detailComapanyRadio.status,
     })
       .then((res) => {
         if (res.status === "success") {
+          console.log(res.data);
           alert("완료되었습니다.");
           return;
         }
@@ -296,18 +267,10 @@ export default function SetCompanyDetail() {
                   <input
                     className="listSearchRadioInput"
                     type="radio"
-                    checked={detailComapanyRadio.useFlag == "0"}
-                    name="_detailUseFlag"
+                    checked={watch("_detailUseFlag") == "0"}
                     value="0"
                     id="DetailUseFlag0"
-                    {...register("_detailUseFlag", {
-                      onChange: (e) => {
-                        setDetailComapanyRadio({
-                          ...detailComapanyRadio,
-                          useFlag: e.target.value,
-                        });
-                      },
-                    })}
+                    {...register("_detailUseFlag", {})}
                   />
                   <label
                     className="listSearchRadioLabel"
@@ -319,18 +282,10 @@ export default function SetCompanyDetail() {
                   <input
                     className="listSearchRadioInput"
                     type="radio"
-                    checked={detailComapanyRadio.useFlag == "1"}
-                    name="_detailUseFlag"
+                    checked={watch("_detailUseFlag") == "1"}
                     value="1"
                     id="DetailUseFlag1"
-                    {...register("_detailUseFlag", {
-                      onChange: (e) => {
-                        setDetailComapanyRadio({
-                          ...detailComapanyRadio,
-                          useFlag: e.target.value,
-                        });
-                      },
-                    })}
+                    {...register("_detailUseFlag", {})}
                   />
                   <label
                     className="listSearchRadioLabel"
@@ -349,18 +304,11 @@ export default function SetCompanyDetail() {
                   <input
                     className="listSearchRadioInput"
                     type="radio"
-                    checked={detailComapanyRadio.status == 2}
-                    name="_statusCheck"
+                    checked={watch("_status") == 2}
+                    name="_status"
                     value="2"
                     id="status2"
-                    {...register("_statusCheck", {
-                      onChange: (e) => {
-                        setDetailComapanyRadio({
-                          ...detailComapanyRadio,
-                          status: e.target.value,
-                        });
-                      },
-                    })}
+                    {...register("_status")}
                   />
                   <label className="listSearchRadioLabel" htmlFor="status2">
                     대기
@@ -369,18 +317,11 @@ export default function SetCompanyDetail() {
                   <input
                     className="listSearchRadioInput"
                     type="radio"
-                    checked={detailComapanyRadio.status == 0}
-                    name="_statusCheck"
+                    checked={watch("_status") == 0}
+                    name="_status"
                     value="0"
                     id="status0"
-                    {...register("_statusCheck", {
-                      onChange: (e) => {
-                        setDetailComapanyRadio({
-                          ...detailComapanyRadio,
-                          status: e.target.value,
-                        });
-                      },
-                    })}
+                    {...register("_status")}
                   />
                   <label className="listSearchRadioLabel" htmlFor="status0">
                     거절
@@ -389,18 +330,11 @@ export default function SetCompanyDetail() {
                   <input
                     className="listSearchRadioInput"
                     type="radio"
-                    checked={detailComapanyRadio.status == 1}
-                    name="_statusCheck"
+                    checked={watch("_status") == 1}
+                    name="_status"
                     value="1"
                     id="status1"
-                    {...register("_statusCheck", {
-                      onChange: (e) => {
-                        setDetailComapanyRadio({
-                          ...detailComapanyRadio,
-                          status: e.target.value,
-                        });
-                      },
-                    })}
+                    {...register("_status")}
                   />
                   <label className="listSearchRadioLabel" htmlFor="status1">
                     완료
@@ -419,10 +353,13 @@ export default function SetCompanyDetail() {
                   type="checkbox"
                   value="emer"
                   id="emer"
-                  name="gongsaType"
                   className="listSearchRadioInput"
-                  checked={detailComapanyRadio.gongsaType.includes("emer")}
-                  onChange={handleOnchangeGonsatype}
+                  checked={
+                    (getValues("_gongsaType") &&
+                      watch("_gongsaType").includes("emer")) ||
+                    false
+                  }
+                  {...register("_gongsaType")}
                 />
                 <label htmlFor="emer" className="listSearchRadioLabel">
                   긴급
@@ -431,10 +368,13 @@ export default function SetCompanyDetail() {
                   type="checkbox"
                   value="inday"
                   id="inday"
-                  name="gongsaType"
                   className="listSearchRadioInput"
-                  checked={detailComapanyRadio.gongsaType.includes("inday")}
-                  onChange={handleOnchangeGonsatype}
+                  checked={
+                    (getValues("_gongsaType") &&
+                      watch("_gongsaType").includes("inday")) ||
+                    false
+                  }
+                  {...register("_gongsaType")}
                 />
                 <label htmlFor="inday" className="listSearchRadioLabel">
                   당일
@@ -443,10 +383,13 @@ export default function SetCompanyDetail() {
                   type="checkbox"
                   value="reser"
                   id="reser"
-                  name="gongsaType"
                   className="listSearchRadioInput"
-                  checked={detailComapanyRadio.gongsaType.includes("reser")}
-                  onChange={handleOnchangeGonsatype}
+                  checked={
+                    (getValues("_gongsaType") &&
+                      watch("_gongsaType").includes("reser")) ||
+                    false
+                  }
+                  {...register("_gongsaType")}
                 />
                 <label htmlFor="reser" className="listSearchRadioLabel">
                   예약
@@ -464,7 +407,6 @@ export default function SetCompanyDetail() {
                 <input
                   type="text"
                   id="name"
-                  name="_name"
                   placeholder="상호명을 입력해 주세요."
                   {...register("_name", {
                     required: "입력되지 않았습니다.",
@@ -492,10 +434,9 @@ export default function SetCompanyDetail() {
                 <input
                   type="text"
                   id="bigCategory"
-                  name="_bigCategory"
                   placeholder="대표업종을 입력해 주세요."
                   value={
-                    (watch("_bigCategory") &&
+                    (getValues("_bigCategory") &&
                       watch("_bigCategory").replace(" ", ",")) ||
                     ""
                   }
@@ -514,10 +455,9 @@ export default function SetCompanyDetail() {
                 <input
                   type="text"
                   id="subCategory"
-                  name="_subCategory"
                   placeholder="상세업종을 입력해 주세요."
                   value={
-                    (watch("_subCategory") &&
+                    (getValues("_subCategory") &&
                       watch("_subCategory").replace(" ", ",")) ||
                     ""
                   }
@@ -536,7 +476,6 @@ export default function SetCompanyDetail() {
                 <input
                   type="text"
                   id="registration"
-                  name="_registration"
                   placeholder="사업자 등록 번호를 입력해 주세요. (예시 000-00-00000)"
                   {...register("_registration", {
                     required: "입력되지 않았습니다.",
@@ -573,7 +512,6 @@ export default function SetCompanyDetail() {
                 <input
                   type="text"
                   id="mobilenum"
-                  name="_mobilenum"
                   placeholder="핸드폰번호를 입력해 주세요. (예시 000-0000-0000)"
                   {...register("_mobilenum", {
                     required: "입력되지 않았습니다.",
@@ -601,7 +539,6 @@ export default function SetCompanyDetail() {
                 <input
                   type="text"
                   id="telnum"
-                  name="_telnum"
                   placeholder="전화번호를 입력해 주세요. (예시 00-0000-0000)"
                   {...register("_telnum", {
                     required: "입력되지 않았습니다.",
@@ -629,7 +566,6 @@ export default function SetCompanyDetail() {
                 <input
                   type="text"
                   id="extnum"
-                  name="_extnum"
                   placeholder="안심 번호를 입력해 주세요."
                   {...register("_extnum", {
                     pattern: {
@@ -656,7 +592,6 @@ export default function SetCompanyDetail() {
                 <input
                   type="text"
                   id="location"
-                  name="_location"
                   placeholder="사업자의 위치를 입력해 주세요. (예시 ㅇㅇ구, ㅇㅇ동)"
                   {...register("_location", {
                     maxLength: {
@@ -690,7 +625,6 @@ export default function SetCompanyDetail() {
                 <input
                   type="text"
                   id="email"
-                  name="_email"
                   placeholder="이메일을 입력해 주세요."
                   {...register("_email", {
                     pattern: {
@@ -718,7 +652,6 @@ export default function SetCompanyDetail() {
                 <input
                   type="text"
                   id="comment"
-                  name="_comment"
                   placeholder="사업자에 대한 짧은 소개글을 입력해 주세요."
                   {...register("_comment", {
                     maxLength: {
@@ -745,7 +678,6 @@ export default function SetCompanyDetail() {
                 <input
                   type="text"
                   id="ceogreet"
-                  name="_ceogreet"
                   placeholder="인사말을 입력해 주세요."
                   {...register("_ceogreet", {
                     maxLength: {
@@ -772,7 +704,6 @@ export default function SetCompanyDetail() {
                 <input
                   type="text"
                   id="workTime"
-                  name="_workTime"
                   placeholder="근무 시간을 입력해 주세요."
                   {...register("_workTime", {
                     maxLength: {
@@ -817,7 +748,6 @@ export default function SetCompanyDetail() {
                 <textarea
                   type="text"
                   id="offer"
-                  name="_offer"
                   placeholder="사업자 소개글을 입력해 주세요."
                   {...register("_offer", {
                     maxLength: {
@@ -854,7 +784,6 @@ export default function SetCompanyDetail() {
                 <input
                   type="text"
                   id="tags"
-                  name="_tags"
                   placeholder="태그를 입력해 주세요."
                   value={
                     (watch("_tags") && watch("_tags").replace(" ", ",")) || ""
@@ -874,14 +803,12 @@ export default function SetCompanyDetail() {
                 <input
                   type="text"
                   id="vidlinkurl1"
-                  name="_vidlinkurl1"
                   placeholder="외부 동영상 링크를 입력해 주세요."
                   {...register("_vidlinkurl1")}
                 />
                 <input
                   type="text"
                   id="vidlinkurl2"
-                  name="_vidlinkurl2"
                   placeholder="외부 동영상 링크를 입력해 주세요."
                   {...register("_vidlinkurl2")}
                 />
@@ -896,35 +823,30 @@ export default function SetCompanyDetail() {
                 <input
                   type="text"
                   id="linkurl1"
-                  name="_linkurl1"
                   placeholder="외부 링크를 입력해 주세요."
                   {...register("_linkurl1")}
                 />
                 <input
                   type="text"
                   id="linkurl2"
-                  name="_linkurl2"
                   placeholder="외부 링크를 입력해 주세요."
                   {...register("_linkurl2")}
                 />
                 <input
                   type="text"
                   id="linkurl3"
-                  name="_linkurl3"
                   placeholder="외부 링크를 입력해 주세요."
                   {...register("_linkurl3")}
                 />
                 <input
                   type="text"
                   id="linkurl4"
-                  name="_linkurl4"
                   placeholder="외부 링크를 입력해 주세요."
                   {...register("_linkurl4")}
                 />
                 <input
                   type="text"
                   id="linkurl5"
-                  name="_linkurl5"
                   placeholder="외부 링크를 입력해 주세요."
                   {...register("_linkurl5")}
                 />
@@ -944,7 +866,6 @@ export default function SetCompanyDetail() {
                       <input
                         type="number"
                         id="reCount"
-                        name="_reCount"
                         {...register("_reCount")}
                       />
                     </div>
@@ -956,7 +877,6 @@ export default function SetCompanyDetail() {
                       <input
                         type="number"
                         id="okCount"
-                        name="_okCount"
                         {...register("_okCount")}
                       />
                     </div>
@@ -967,7 +887,6 @@ export default function SetCompanyDetail() {
                       <input
                         type="number"
                         id="noCount"
-                        name="_noCount"
                         {...register("_noCount")}
                       />
                     </div>

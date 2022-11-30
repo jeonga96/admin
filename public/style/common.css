@@ -386,13 +386,14 @@ input[type="radio"] {
 .errorMessageWrap {
   position: absolute;
   right: 0;
-  bottom: -16px;
+  bottom: 0;
+  width: calc(100% - 152px);
   display: block;
-  width: 100%;
   height: auto;
-  color: var(--color-acceent);
+  color: var(--color-white);
   text-align: right;
   font-size: var(--font-size-small);
+  background-color: rgba(0, 0, 0, 0.3);
 }
 
 .formLayout .blockLabel {
@@ -601,21 +602,12 @@ input[type="radio"] {
   display: flex;
   flex-wrap: wrap;
   justify-content: left;
-  padding: 14px 4px 4px;
-  margin: 25px 0;
+  padding: 26px 4px 4px;
+  margin: 5px 0;
 }
 .formWrap fieldset:last-child {
   margin-bottom: 0;
 }
-/* .formWrap fieldset > h3 {
-  position: absolute;
-  height: auto;
-  top: -10px;
-  font-size: var(--font-size-small);
-  font-weight: 600;
-  background-color: #fff;
-  padding: 0 10px;
-} */
 
 .formWrap fieldset > h3 {
   position: absolute;
@@ -638,7 +630,7 @@ input[type="radio"] {
   width: 50%;
   height: auto;
   justify-content: left;
-  margin-top: 20px;
+  margin-top: 8px;
 }
 .formContentWideWrap {
   width: 100%;
