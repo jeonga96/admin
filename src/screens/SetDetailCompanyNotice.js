@@ -25,6 +25,7 @@ export default function SetDetailCompanyNotice() {
   const imgsIid = [];
   const getDataFinish = useRef(false);
 
+  // 하위 이미지 컴포넌트에게 데이터 넘기기 위해 사용
   const [noticeDetail, setNoticeDetail] = useState({});
 
   useEffect(() => {
@@ -34,6 +35,7 @@ export default function SetDetailCompanyNotice() {
       .then((res) => {
         if (res.status === "success") {
           setNoticeDetail(res.data);
+
           setValue("_title", res.data.title || "");
           setValue("_content", res.data.content || "");
           getDataFinish.current = true;

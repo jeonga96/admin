@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { useForm } from "react-hook-form";
 import {
   urlSetContent,
   urlGetContent,
@@ -12,13 +13,19 @@ import { serviesGetImgId } from "../Services/useData";
 import SetImage from "../components/common/ServicesImageSetUrl";
 
 export default function SetAdminAppbanner() {
+  const {
+    handleSubmit,
+    register,
+    setValue,
+    getValues,
+    reset,
+    watch,
+    formState: { isSubmitting },
+  } = useForm();
+
   // 저장된 배너 리스트 불러오기 & 저장
   const [bannerlist, setBannerlist] = useState([]);
-  // 배너 리스트 내부의 배너 상세 내용에 onChange 이벤트를 적용할 수 있도록 설정
-  const [bannerDetail, setBannerDetail] = useState({
-    contentString: "",
-    contentDetail: "",
-  });
+
   // getDataFinish:기존에 입력된 값이 있어 값을 불러왔다면 true로 변경,
   const getDataFinish = useRef(false);
   // clickedContid가 입력되면 수정 아니면 작성기능을 수행하도록 설정
@@ -28,8 +35,6 @@ export default function SetAdminAppbanner() {
   // imgsIid:서버에 이미지를 보낼 때는, iid값만 필요
   const imgsIid = [];
   const [changeImg, setChangeImg] = useState("");
-  // useFlag radio
-  const [useFlagCheck, setUseFlagCheck] = useState("1");
 
   // 화면 렌더링 시 가장 처음 발생되는 이벤트
   useEffect(() => {
@@ -46,6 +51,7 @@ export default function SetAdminAppbanner() {
         }
       })
       .catch((res) => console.log(res));
+    setValue("_useFlag", "1");
   }, []);
 
   // bannerlist의 데이터를 받아오면 기존 배너의 이미지 데이터를 받아온다.
@@ -65,8 +71,10 @@ export default function SetAdminAppbanner() {
     })
       .then((res) => {
         if (res.status === "success") {
-          setBannerDetail(res.data);
-          setUseFlagCheck(res.data.useFlag.toString());
+          setValue("_useFlag", res.data.useFlag.toString());
+          setValue("_contentDetail", res.data.contentDetail);
+          setValue("_contentString", res.data.contentString);
+
           setChangeImg(res.data.imgid);
           getDataFinish.current = true;
         } else if (res.data === "fail") {
@@ -76,18 +84,11 @@ export default function SetAdminAppbanner() {
       .catch((res) => console.log(res));
   }, [clickedContid]);
 
-  function onChange(e) {
-    setBannerDetail({ ...bannerDetail, [e.target.id]: e.target.value });
-  }
-  function onChangeUseFlag(e) {
-    setUseFlagCheck(e.target.value);
-  }
-
   function HandleSubmit(e) {
-    e.preventDefault();
+    // e.preventDefault();
     const ifImg = changeImg[0] ? changeImg[0].iid : changeImg;
     // 입력되지 않은 값이 있다면 전송되지 않도록 설정
-    if (ifImg && bannerDetail.contentDetail && bannerDetail.contentString) {
+    if (ifImg && getValues("_contentDetail") && getValues("_contentString")) {
       servicesPostData(
         urlSetContent,
         // clickedContid(수정 버튼이 클릭되면) contid도 함께 전달
@@ -96,16 +97,16 @@ export default function SetAdminAppbanner() {
               contid: clickedContid,
               category: "banner",
               imgid: ifImg,
-              contentDetail: bannerDetail.contentDetail,
-              contentString: bannerDetail.contentString,
-              useFlag: useFlagCheck,
+              contentDetail: getValues("_contentDetail"),
+              contentString: getValues("_contentString"),
+              useFlag: getValues("_useFlag"),
             }
           : {
               category: "banner",
               imgid: ifImg,
-              contentDetail: bannerDetail.contentDetail,
-              contentString: bannerDetail.contentString,
-              useFlag: 1,
+              contentDetail: getValues("_contentDetail"),
+              contentString: getValues("_contentString"),
+              useFlag: getValues("_useFlag"),
             }
       )
         .then((res) => {
@@ -136,7 +137,7 @@ export default function SetAdminAppbanner() {
   return (
     <>
       <div className="commonBox">
-        <form className="formLayout" onSubmit={HandleSubmit}>
+        <form className="formLayout" onSubmit={handleSubmit(HandleSubmit)}>
           <fieldset>
             <div className="formWrap">
               <div className="listSearchWrap" style={{ width: "50%" }}>
@@ -148,8 +149,7 @@ export default function SetAdminAppbanner() {
                     type="text"
                     id="contentString"
                     placeholder="제목을 입력해 주세요."
-                    onChange={onChange}
-                    value={bannerDetail.contentString || ""}
+                    {...register("_contentString")}
                   />
                 </div>
               </div>
@@ -161,11 +161,10 @@ export default function SetAdminAppbanner() {
                   <input
                     className="listSearchRadioInput"
                     type="radio"
-                    checked={useFlagCheck === "0"}
-                    name="_useFlag"
+                    checked={watch("_useFlag") === "0"}
                     value="0"
                     id="useFlag0"
-                    onChange={onChangeUseFlag}
+                    {...register("_useFlag")}
                   />
                   <label className="listSearchRadioLabel" htmlFor="useFlag0">
                     OFF
@@ -174,11 +173,10 @@ export default function SetAdminAppbanner() {
                   <input
                     className="listSearchRadioInput"
                     type="radio"
-                    checked={useFlagCheck === "1"}
-                    name="_useFlag"
+                    checked={watch("_useFlag") === "1"}
                     value="1"
                     id="useFlag1"
-                    onChange={onChangeUseFlag}
+                    {...register("_useFlag")}
                   />
                   <label className="listSearchRadioLabel" htmlFor="useFlag1">
                     ON
@@ -209,8 +207,7 @@ export default function SetAdminAppbanner() {
                     type="text"
                     id="contentDetail"
                     placeholder="연결될 URL을 입력해 주세요."
-                    onChange={onChange}
-                    value={bannerDetail.contentDetail || ""}
+                    {...register("_contentDetail")}
                   />
                 </div>
               </div>
@@ -218,34 +215,35 @@ export default function SetAdminAppbanner() {
           </fieldset>
 
           <div className="listSearchButtonWrap">
-            <button
-              type="reset"
-              onClick={() => {
-                if (!!clickedContid) {
+            {!!clickedContid ? (
+              <button
+                type="reset"
+                onClick={() => {
                   setClickedContid("");
                   setChangeImg("");
-                  setBannerDetail({
-                    contentString: "",
-                    contentDetail: "",
-                  });
-                } else {
-                  setBannerDetail({
-                    contentString: "",
-                    contentDetail: "",
-                  });
+                  reset();
+                }}
+              >
+                취소
+              </button>
+            ) : (
+              <button
+                type="reset"
+                onClick={() => {
+                  reset();
                   setChangeImg("");
-                }
-              }}
-            >
-              취소
-            </button>
+                }}
+              >
+                초기화
+              </button>
+            )}
 
             {!!clickedContid ? (
-              <button type="submit" value="수정">
+              <button type="submit" value="수정" disabled={isSubmitting}>
                 수정
               </button>
             ) : (
-              <button type="submit" value="추가">
+              <button type="submit" value="추가" disabled={isSubmitting}>
                 추가
               </button>
             )}

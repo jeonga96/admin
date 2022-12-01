@@ -358,7 +358,7 @@ export default function SetCompanyDetail() {
                   id="emer"
                   className="listSearchRadioInput"
                   checked={
-                    (getValues("_gongsaType") &&
+                    (watch("_gongsaType") &&
                       watch("_gongsaType").includes("emer")) ||
                     false
                   }
@@ -373,7 +373,7 @@ export default function SetCompanyDetail() {
                   id="inday"
                   className="listSearchRadioInput"
                   checked={
-                    (getValues("_gongsaType") &&
+                    (watch("_gongsaType") &&
                       watch("_gongsaType").includes("inday")) ||
                     false
                   }
@@ -388,7 +388,7 @@ export default function SetCompanyDetail() {
                   id="reser"
                   className="listSearchRadioInput"
                   checked={
-                    (getValues("_gongsaType") &&
+                    (watch("_gongsaType") &&
                       watch("_gongsaType").includes("reser")) ||
                     false
                   }
@@ -439,7 +439,7 @@ export default function SetCompanyDetail() {
                   id="bigCategory"
                   placeholder="대표업종을 입력해 주세요."
                   value={
-                    (getValues("_bigCategory") &&
+                    (watch("_bigCategory") &&
                       watch("_bigCategory").replace(" ", ",")) ||
                     ""
                   }
@@ -460,7 +460,7 @@ export default function SetCompanyDetail() {
                   id="subCategory"
                   placeholder="상세업종을 입력해 주세요."
                   value={
-                    (getValues("_subCategory") &&
+                    (watch("_subCategory") &&
                       watch("_subCategory").replace(" ", ",")) ||
                     ""
                   }
@@ -480,6 +480,14 @@ export default function SetCompanyDetail() {
                   type="text"
                   id="registration"
                   placeholder="사업자 등록 번호를 입력해 주세요. (예시 000-00-00000)"
+                  value={
+                    (watch("_registration") &&
+                      watch("_registration")
+                        .replace(/[^0-9]/g, "")
+                        .replace(/([0-9]{3})([0-9]{2})([0-9]+)/, "$1-$2-$3")
+                        .replace("--", "-")) ||
+                    ""
+                  }
                   {...register("_registration", {
                     required: "입력되지 않았습니다.",
                     pattern: {
@@ -516,10 +524,21 @@ export default function SetCompanyDetail() {
                   type="text"
                   id="mobilenum"
                   placeholder="핸드폰번호를 입력해 주세요. (예시 000-0000-0000)"
+                  value={
+                    (watch("_mobilenum") &&
+                      watch("_mobilenum")
+                        .replace(/[^0-9]/g, "")
+                        .replace(
+                          /(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)([0-9]{4}$)/,
+                          "$1-$2-$3"
+                        )
+                        .replace("--", "-")) ||
+                    ""
+                  }
                   {...register("_mobilenum", {
                     required: "입력되지 않았습니다.",
                     pattern: {
-                      value: /^[0-9]{3}-[0-9]{3,4}-[0-9]{4}/,
+                      value: /^[0-9]{3,4}-[0-9]{3,4}-[0-9]{4}/,
                       message: "형식에 맞지 않습니다.",
                     },
                   })}
@@ -543,10 +562,21 @@ export default function SetCompanyDetail() {
                   type="text"
                   id="telnum"
                   placeholder="전화번호를 입력해 주세요. (예시 00-0000-0000)"
+                  value={
+                    (watch("_telnum") &&
+                      watch("_telnum")
+                        .replace(/[^0-9]/g, "")
+                        .replace(
+                          /(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)([0-9]{4}$)/,
+                          "$1-$2-$3"
+                        )
+                        .replace("--", "-")) ||
+                    ""
+                  }
                   {...register("_telnum", {
                     required: "입력되지 않았습니다.",
                     pattern: {
-                      value: /^[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}/,
+                      value: /^[0-9]{2,4}-[0-9]{3,4}-[0-9]{4}/,
                       message: "형식에 맞지 않습니다.",
                     },
                   })}
@@ -570,6 +600,14 @@ export default function SetCompanyDetail() {
                   type="text"
                   id="extnum"
                   placeholder="안심 번호를 입력해 주세요."
+                  value={
+                    (watch("_extnum") &&
+                      watch("_extnum")
+                        .replace(/[^0-9]/g, "")
+                        .replace(/(^[0-9]{3})([0-9]+)([0-9]{4}$)/, "$1-$2-$3")
+                        .replace("--", "-")) ||
+                    ""
+                  }
                   {...register("_extnum", {
                     pattern: {
                       value: /^[0-9]{3}-[0-9]{3,5}-[0-9]{4}/,

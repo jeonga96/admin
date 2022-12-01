@@ -20,6 +20,7 @@ export default function SetAdminEstimateinfo() {
     register,
     setValue,
     getValues,
+    watch,
     formState: { isSubmitting, errors },
   } = useForm();
 
@@ -30,13 +31,6 @@ export default function SetAdminEstimateinfo() {
   const getDataFinish = useRef(false);
   const imgsIid = [];
   const [multilAddress, setMultilAddress] = useState({});
-  // 비밀번호는 기본값 설정되면 안 되기 때문에 X
-  const [checkData, setCheckData] = useState({
-    reqEstimate: 1,
-    reqBill: 1,
-    useFlag: 1,
-    gongsaType: "reser",
-  });
 
   // 현재 페이지가 렌더링되자마자 기존에 입력된 값의 여부를 확인한다.
   useEffect(() => {
@@ -66,13 +60,10 @@ export default function SetAdminEstimateinfo() {
             (res.data.proVisit && res.data.proVisit.slice(0, 10)) || ""
           );
 
-          // setMultilAddress({ siteAddress: res.data.siteAddress || "" });
-          setCheckData({
-            reqEstimate: String(res.data.reqEstimate) || "1",
-            reqBill: String(res.data.reqBill) || "1",
-            useFlag: String(res.data.useFlag) || "1",
-            gongsaType: res.data.gongsaType || "reser",
-          });
+          setValue("_reqEstimate", res.data.reqEstimate.toString() || "1");
+          setValue("_reqBill", res.data.reqBill.toString() || "1");
+          setValue("_useFlag", res.data.useFlag.toString() || "1");
+          setValue("_gongsaType", res.data.gongsaType || "reser");
 
           getDataFinish.current = true;
         }
@@ -88,24 +79,45 @@ export default function SetAdminEstimateinfo() {
     const proDate = new Date(getValues("_proVisit"));
 
     // setUserDetailInfo 수정
-    servicesPostData(urlSetEstimateInfo, {
-      esid: esid,
-      toUid: getValues("_toUid"),
-      fromUid: getValues("_fromUid"),
-      gongsaType: checkData.gongsaType,
-      reqDetail: getValues("_reqDetail"),
-      reqPrice: getValues("_reqPrice"),
-      siteAddress: multilAddress.siteAddress,
-      reqVisit: reqDate.toISOString().slice(0, 19) || "",
-      reqEstimate: checkData.reqEstimate,
-      reqBill: checkData.reqBill,
-      useFlag: checkData.useFlag,
-      addInfo: getValues("_addInfo"),
-      proDetail: getValues("_proDetail"),
-      proPrice: getValues("_proPrice"),
-      proVisit: proDate.toISOString().slice(0, 19) || "",
-      addImgs: imgsIid.toString() || "",
-    })
+    servicesPostData(
+      urlSetEstimateInfo,
+      // 견적서 응답 없음을 방문 제안일 기준으로 판단
+      !getValues("_proVisit")
+        ? // 견적서 응답 내용을 입력하지 않고, 요청서만 작성했을 때
+          {
+            esid: esid,
+            toUid: getValues("_toUid"),
+            fromUid: getValues("_fromUid"),
+            gongsaType: getValues("_gongsaType").toString(),
+            reqDetail: getValues("_reqDetail"),
+            reqPrice: getValues("_reqPrice"),
+            siteAddress: multilAddress.siteAddress,
+            reqVisit: reqDate.toISOString().slice(0, 19) || "",
+            reqEstimate: getValues("_reqEstimate"),
+            reqBill: getValues("_reqBill"),
+            useFlag: getValues("_useFlag"),
+            addInfo: getValues("_addInfo"),
+          }
+        : // 견적서 응답 내용을 입력했을 때
+          {
+            esid: esid,
+            toUid: getValues("_toUid"),
+            fromUid: getValues("_fromUid"),
+            gongsaType: getValues("_gongsaType").toString(),
+            reqDetail: getValues("_reqDetail"),
+            reqPrice: getValues("_reqPrice"),
+            siteAddress: multilAddress.siteAddress,
+            reqVisit: reqDate.toISOString().slice(0, 19) || "",
+            reqEstimate: getValues("_reqEstimate"),
+            reqBill: getValues("_reqBill"),
+            useFlag: getValues("_useFlag"),
+            addInfo: getValues("_addInfo"),
+            proDetail: getValues("_proDetail"),
+            proPrice: getValues("_proPrice"),
+            proVisit: proDate.toISOString().slice(0, 19) || "",
+            addImgs: imgsIid.toString() || "",
+          }
+    )
       .then((res) => {
         if (res.status === "success") {
           console.log(res);
@@ -115,29 +127,6 @@ export default function SetAdminEstimateinfo() {
       })
       .catch((error) => console.log("axios 실패", error.response));
   }
-
-  // checkbox, 복수 선택 이벤트
-  const handleOnchangeGonsatype = (e) => {
-    const INVERTORARR = checkData.gongsaType.split(",");
-    let arr = [];
-    if (INVERTORARR.length == 1) {
-      if (checkData.gongsaType !== e.target.value) {
-        arr = [checkData.gongsaType, e.target.value];
-      }
-    } else {
-      arr = [...INVERTORARR];
-      if (arr.includes(e.target.value)) {
-        arr = arr.filter((it) => it !== e.target.value);
-      } else {
-        arr.push(e.target.value);
-      }
-    }
-    arr = arr.filter((it) => it !== "");
-    setCheckData({
-      ...checkData,
-      gongsaType: arr.toString(),
-    });
-  };
 
   return (
     <>
@@ -165,18 +154,10 @@ export default function SetAdminEstimateinfo() {
                   <input
                     className="listSearchRadioInput"
                     type="radio"
-                    checked={checkData.useFlag == "0"}
-                    name="_detailUseFlag"
+                    checked={watch("_useFlag") == "0"}
                     value="0"
                     id="DetailUseFlag0"
-                    {...register("_detailUseFlag", {
-                      onChange: (e) => {
-                        setCheckData({
-                          ...checkData,
-                          useFlag: e.target.value,
-                        });
-                      },
-                    })}
+                    {...register("_useFlag")}
                   />
                   <label
                     className="listSearchRadioLabel"
@@ -188,18 +169,10 @@ export default function SetAdminEstimateinfo() {
                   <input
                     className="listSearchRadioInput"
                     type="radio"
-                    checked={checkData.useFlag == "1"}
-                    name="_detailUseFlag"
+                    checked={watch("_useFlag") == "1"}
                     value="1"
                     id="DetailUseFlag1"
-                    {...register("_detailUseFlag", {
-                      onChange: (e) => {
-                        setCheckData({
-                          ...checkData,
-                          useFlag: e.target.value,
-                        });
-                      },
-                    })}
+                    {...register("_useFlag")}
                   />
                   <label
                     className="listSearchRadioLabel"
@@ -220,10 +193,13 @@ export default function SetAdminEstimateinfo() {
                     type="checkbox"
                     value="emer"
                     id="emer"
-                    name="gongsaType"
                     className="listSearchRadioInput"
-                    checked={checkData.gongsaType.includes("emer")}
-                    onChange={handleOnchangeGonsatype}
+                    checked={
+                      (watch("_gongsaType") &&
+                        watch("_gongsaType").includes("emer")) ||
+                      false
+                    }
+                    {...register("_gongsaType")}
                   />
                   <label htmlFor="emer" className="listSearchRadioLabel">
                     긴급
@@ -234,8 +210,12 @@ export default function SetAdminEstimateinfo() {
                     id="inday"
                     name="gongsaType"
                     className="listSearchRadioInput"
-                    checked={checkData.gongsaType.includes("inday")}
-                    onChange={handleOnchangeGonsatype}
+                    checked={
+                      (watch("_gongsaType") &&
+                        watch("_gongsaType").includes("inday")) ||
+                      false
+                    }
+                    {...register("_gongsaType")}
                   />
                   <label htmlFor="inday" className="listSearchRadioLabel">
                     당일
@@ -246,8 +226,12 @@ export default function SetAdminEstimateinfo() {
                     id="reser"
                     name="gongsaType"
                     className="listSearchRadioInput"
-                    checked={checkData.gongsaType.includes("reser")}
-                    onChange={handleOnchangeGonsatype}
+                    checked={
+                      (watch("_gongsaType") &&
+                        watch("_gongsaType").includes("reser")) ||
+                      false
+                    }
+                    {...register("_gongsaType")}
                   />
                   <label htmlFor="reser" className="listSearchRadioLabel">
                     예약
@@ -335,9 +319,7 @@ export default function SetAdminEstimateinfo() {
                     id="reqDetail"
                     name="_reqDetail"
                     placeholder="견적 요청에 대한 상세 내용을 입력해 주세요."
-                    {...register("_reqDetail", {
-                      // required: "입력되지 않았습니다.",
-                    })}
+                    {...register("_reqDetail")}
                   />
                   <ErrorMessage
                     errors={errors}
@@ -358,18 +340,10 @@ export default function SetAdminEstimateinfo() {
                   <input
                     className="listSearchRadioInput"
                     type="radio"
-                    checked={checkData.reqBill == "0"}
-                    name="_detailReqBill"
+                    checked={watch("_reqBill") == "0"}
                     value="0"
                     id="DetailReqBill0"
-                    {...register("_detailReqBill", {
-                      onChange: (e) => {
-                        setCheckData({
-                          ...checkData,
-                          reqBill: e.target.value,
-                        });
-                      },
-                    })}
+                    {...register("_reqBill")}
                   />
                   <label
                     className="listSearchRadioLabel"
@@ -381,18 +355,10 @@ export default function SetAdminEstimateinfo() {
                   <input
                     className="listSearchRadioInput"
                     type="radio"
-                    checked={checkData.reqBill == "1"}
-                    name="_detailReqBill"
+                    checked={watch("_reqBill") == "1"}
                     value="1"
                     id="DetailReqBill1"
-                    {...register("_detailReqBill", {
-                      onChange: (e) => {
-                        setCheckData({
-                          ...checkData,
-                          reqBill: e.target.value,
-                        });
-                      },
-                    })}
+                    {...register("_reqBill")}
                   />
                   <label
                     className="listSearchRadioLabel"
@@ -412,18 +378,10 @@ export default function SetAdminEstimateinfo() {
                   <input
                     className="listSearchRadioInput"
                     type="radio"
-                    checked={checkData.reqEstimate == "0"}
-                    name="_reqEstimate"
+                    checked={watch("_reqEstimate") == "0"}
                     value="0"
                     id="reqEstimate0"
-                    {...register("_reqEstimate", {
-                      onChange: (e) => {
-                        setCheckData({
-                          ...checkData,
-                          reqEstimate: e.target.value,
-                        });
-                      },
-                    })}
+                    {...register("_reqEstimate")}
                   />
                   <label
                     className="listSearchRadioLabel"
@@ -435,18 +393,10 @@ export default function SetAdminEstimateinfo() {
                   <input
                     className="listSearchRadioInput"
                     type="radio"
-                    checked={checkData.reqEstimate == "1"}
-                    name="_reqEstimate"
+                    checked={watch("_reqEstimate") == "1"}
                     value="1"
                     id="reqEstimate1"
-                    {...register("_reqEstimate", {
-                      onChange: (e) => {
-                        setCheckData({
-                          ...checkData,
-                          reqEstimate: e.target.value,
-                        });
-                      },
-                    })}
+                    {...register("_reqEstimate")}
                   />
                   <label
                     className="listSearchRadioLabel"

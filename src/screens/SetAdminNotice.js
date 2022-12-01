@@ -25,6 +25,8 @@ export default function SetDetailAdminNotice() {
   const [imgs, setImgs] = useState([]);
   const imgsIid = [];
   const getDataFinish = useRef(false);
+
+  // 하위 컴포넌트에게 이미지 iid 넘기기 위해 사용
   const [noticeDetail, setNoticeDetail] = useState({});
 
   useEffect(() => {
@@ -35,6 +37,7 @@ export default function SetDetailAdminNotice() {
         .then((res) => {
           if (res.status === "success") {
             setNoticeDetail(res.data);
+
             setValue("_category", res.data.category || "notice");
             setValue("_contentString", res.data.contentString || "");
             setValue("_contentDetail", res.data.contentDetail || "");
@@ -106,7 +109,6 @@ export default function SetDetailAdminNotice() {
                 <input
                   type="text"
                   id="contentString"
-                  name="_contentString"
                   placeholder="제목을 입력해 주세요."
                   {...register("_contentString", {
                     required: "입력되지 않았습니다.",
@@ -142,7 +144,6 @@ export default function SetDetailAdminNotice() {
               <div>
                 <textarea
                   id="contentDetail"
-                  name="_contentDetail"
                   placeholder="내용을 입력해 주세요."
                   {...register("_contentDetail", {
                     equired: "입력되지 않았습니다.",

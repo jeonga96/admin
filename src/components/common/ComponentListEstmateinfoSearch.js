@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 import { servicesPostData } from "../../Services/importData";
@@ -12,8 +12,7 @@ export default function ComponentListUserSearch({
   page,
 }) {
   // react-hook-form 라이브러리
-  const { register, reset, handleSubmit } = useForm({});
-  const [searchData, setSearchData] = useState({});
+  const { register, reset, getValues, handleSubmit } = useForm({});
 
   useEffect(() => {
     // searchClick을 클릭한 (true) 상태에서 동작
@@ -31,33 +30,20 @@ export default function ComponentListUserSearch({
 
   // submit 이벤트
   function SearchSubmit() {
-    // input에 입력된 값을 없애도 useState에 담긴 키가 사라지지 않아, 해당 값이 빈칸이라면 키를 제거하기 위해 filter 사용
-    const searchDataObj = Object.entries(searchData);
-    const searchDataFilter = searchDataObj.filter((it) => it[1] !== "");
-    const searchDataReq = Object.fromEntries(searchDataFilter);
-
     servicesPostData(urlListEstimateInfo, {
       offset: page.getPage,
       size: 15,
-      ...searchDataReq,
+      fromUid: getValues("_fromUid"),
+      toUid: getValues("_toUid"),
     }).then((res) => {
       if (res.status === "fail") {
         alert("검색하신 데이터가 없습니다.");
       }
       if (res.status === "success") {
-        console.log(res.data);
         userList(res.data);
         listPage(res.page);
         setSearchClick(true);
       }
-    });
-  }
-
-  // 입력 이벤트
-  function onChangeHandle(e) {
-    setSearchData({
-      ...searchData,
-      [e.target.id]: e.target.value,
     });
   }
 
@@ -75,7 +61,6 @@ export default function ComponentListUserSearch({
         listPage(res.page);
         setSearchClick(false);
         reset();
-        setSearchData({});
       }
     });
   }
@@ -94,10 +79,8 @@ export default function ComponentListUserSearch({
                 <input
                   type="text"
                   id="fromUid"
-                  name="_fromUid"
                   placeholder="견적서를 요청한 관리번호를 검색할 때 입력해 주세요."
-                  {...register("_uid", {
-                    onChange: onChangeHandle,
+                  {...register("_fromUid", {
                     pattern: {
                       value: /[0-9]/,
                     },
@@ -113,10 +96,8 @@ export default function ComponentListUserSearch({
                 <input
                   type="text"
                   id="toUid"
-                  name="_toUid"
                   placeholder="견적서를 요청받은 관리번호를 검색할 때 입력해 주세요."
                   {...register("_toUid", {
-                    onChange: onChangeHandle,
                     pattern: {
                       value: /[0-9]/,
                     },

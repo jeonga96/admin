@@ -25,6 +25,7 @@ export default function SetDetailUser() {
     register,
     setValue,
     getValues,
+    watch,
     formState: { isSubmitting, errors },
   } = useForm();
 
@@ -39,12 +40,7 @@ export default function SetDetailUser() {
   const [multilAddress, setMultilAddress] = useState({});
 
   // 하위 컴포넌트에서 전달 받은 값이기 떄문에 useState로 작성
-  const [userData, setUserData] = useState({
-    // userrole: "ROLE_USER",
-    // useFlag: "1",
-  });
-
-  console.log(userData);
+  const [userData, setUserData] = useState({});
 
   // 현재 페이지가 렌더링되자마자 기존에 입력된 값의 여부를 확인한다.
   useEffect(() => {
@@ -219,6 +215,17 @@ export default function SetDetailUser() {
                   type="text"
                   id="mobile"
                   placeholder="핸드폰 번호 (예시 000-0000-0000)"
+                  value={
+                    (watch("_mobile") &&
+                      watch("_mobile")
+                        .replace(/[^0-9]/g, "")
+                        .replace(
+                          /(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)([0-9]{4}$)/,
+                          "$1-$2-$3"
+                        )
+                        .replace("--", "-")) ||
+                    ""
+                  }
                   {...register("_mobile", {
                     required: "입력되지 않았습니다.",
                     pattern: {
