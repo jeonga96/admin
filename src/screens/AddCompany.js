@@ -57,7 +57,6 @@ export default function AddCompany() {
             <div>
               <input
                 type="text"
-                name="name"
                 id="name"
                 placeholder="계약자명을 입력해 주세요."
                 onChange={onChange}

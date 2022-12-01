@@ -37,11 +37,14 @@ export default function SetDetailUser() {
   const imgsIid = [];
   // address:신주소,  oldaddress:구주소,  zipcode:우편번호,  latitude:위도,  longitude:경도
   const [multilAddress, setMultilAddress] = useState({});
-  // 비밀번호는 기본값 설정되면 안 되기 때문에 X
+
+  // 하위 컴포넌트에서 전달 받은 값이기 떄문에 useState로 작성
   const [userData, setUserData] = useState({
-    userrole: "ROLE_USER",
-    useFlag: "1",
+    // userrole: "ROLE_USER",
+    // useFlag: "1",
   });
+
+  console.log(userData);
 
   // 현재 페이지가 렌더링되자마자 기존에 입력된 값의 여부를 확인한다.
   useEffect(() => {
@@ -55,7 +58,6 @@ export default function SetDetailUser() {
           // 값이 있다면 inputValue에 저장한 후 getDataFinish 값을 변경
           setValue("_name", res.data.name || "");
           setValue("_nick", res.data.nick || "");
-          // setValue("_address", res.data.address || "");
           setValue("_mobile", res.data.mobile || "");
           setValue("_location", res.data.location || "");
           setValue("_mail", res.data.mail || "");
@@ -121,7 +123,6 @@ export default function SetDetailUser() {
                 <input
                   type="text"
                   id="name"
-                  name="_name"
                   placeholder="이름을 입력해 주세요."
                   {...register("_name", {
                     required: "입력되지 않았습니다.",
@@ -149,7 +150,6 @@ export default function SetDetailUser() {
                 <input
                   type="text"
                   id="nick"
-                  name="_nick"
                   placeholder="별명을 입력해 주세요."
                   {...register("_nick", {
                     maxLength: {
@@ -180,7 +180,6 @@ export default function SetDetailUser() {
                 <input
                   type="text"
                   id="location"
-                  name="_location"
                   placeholder="주소를 입력해 주세요. (ㅇㅇ구, ㅇㅇ동)"
                   {...register("_location", {
                     maxLength: {
@@ -219,7 +218,6 @@ export default function SetDetailUser() {
                 <input
                   type="text"
                   id="mobile"
-                  name="_mobile"
                   placeholder="핸드폰 번호 (예시 000-0000-0000)"
                   {...register("_mobile", {
                     required: "입력되지 않았습니다.",
@@ -247,7 +245,6 @@ export default function SetDetailUser() {
                 <input
                   type="text"
                   id="mail"
-                  name="_mail"
                   placeholder="이메일을 입력해 주세요."
                   {...register("_mail", {
                     pattern: {

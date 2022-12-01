@@ -108,7 +108,7 @@ export default function Postcode({
             disabled
             value={multilAddress.siteAddress || ""}
             style={{
-              width: "84%",
+              width: "86%",
             }}
           />
           <button
@@ -137,7 +137,7 @@ export default function Postcode({
             disabled
             value={multilAddress.address || ""}
             style={{
-              width: "84%",
+              width: "86%",
             }}
           />
           <button

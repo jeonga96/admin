@@ -59,7 +59,6 @@ export default function AddUser() {
             <div>
               <input
                 type="text"
-                name="_userid"
                 id="userid"
                 placeholder="아이디를 입력해 주세요."
                 {...register("_userid", {
@@ -96,7 +95,6 @@ export default function AddUser() {
             <div>
               <input
                 type="password"
-                name="_passwd"
                 id="passwd"
                 placeholder="비밀번호를 입력해 주세요."
                 {...register("_passwd", {
@@ -142,7 +140,6 @@ export default function AddUser() {
             <div>
               <input
                 type="password"
-                name="_passwdck"
                 id="passwdck"
                 placeholder="비밀번호를 한 번 더 입력해 주세요."
                 {...register("_passwdck", {

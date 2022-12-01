@@ -1,34 +1,49 @@
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { useForm, getValues, setValue } from "react-hook-form";
+import { useForm } from "react-hook-form";
 
 import { servicesPostData } from "../../Services/importData";
-import { urlGetUser } from "../../Services/string";
+import { urlGetUser, urlSetUser } from "../../Services/string";
 
 export default function ComponentSetUser({ setUserData, userData }) {
   const { uid } = useParams();
 
-  function fnSetUserData(res) {
-    setUserData({ ...userData, ...res });
-  }
+  const { register, getValues, setValue, watch } = useForm();
 
-  // react-hook-form 라이브러리
-  const { register } = useForm();
-
+  // 회원활성화, 회원권한 기존 값 있다면 표시
   useEffect(() => {
     servicesPostData(urlGetUser, {
       uid: uid,
     })
       .then((res) => {
         if (res.status === "success") {
-          fnSetUserData({
-            userrole: res.data.userrole || "ROLE_USER",
-            useFlag: String(res.data.useFlag) || "1",
-          });
+          setValue("_userrole", res.data.userrole.toString() || "ROLE_USER");
+          setValue("_useFlag", res.data.useFlag.toString() || "1");
         }
       })
       .catch((res) => console.log(res));
   }, []);
+
+  // 회원활성화, 회원권한 상위 컴포넌트 전달
+  function fnSetUserData(e) {
+    setUserData({
+      ...userData,
+      useFlag: getValues("_useFlag"),
+      userrole: getValues("_userrole"),
+    });
+  }
+
+  // 비밀번호 변경
+  const handleChangePasswdClick = () => {
+    servicesPostData(urlSetUser, {
+      uid: uid,
+      passwd: watch("_passwd"),
+    }).then((res) => {
+      if (res.status === "success") {
+        alert("비밀번호 변경이 완료되었습니다.");
+      }
+    });
+  };
 
   return (
     <>
@@ -40,14 +55,12 @@ export default function ComponentSetUser({ setUserData, userData }) {
           <input
             className="listSearchRadioInput"
             type="radio"
-            checked={userData.useFlag == "1"}
+            checked={watch("_useFlag") == "1"}
             name="_useFlag"
             value="1"
             id="useFlag1"
             {...register("_useFlag", {
-              onChange: (e) => {
-                fnSetUserData({ useFlag: e.target.value });
-              },
+              onChange: fnSetUserData,
             })}
           />
           <label className="listSearchRadioLabel" htmlFor="useFlag1">
@@ -57,14 +70,12 @@ export default function ComponentSetUser({ setUserData, userData }) {
           <input
             className="listSearchRadioInput"
             type="radio"
-            checked={userData.useFlag == "0"}
+            checked={watch("_useFlag") == "0"}
             name="_useFlag"
             value="0"
             id="useFlag0"
             {...register("_useFlag", {
-              onChange: (e) => {
-                fnSetUserData({ useFlag: e.target.value });
-              },
+              onChange: fnSetUserData,
             })}
           />
           <label className="listSearchRadioLabel" htmlFor="useFlag0">
@@ -81,14 +92,12 @@ export default function ComponentSetUser({ setUserData, userData }) {
           <input
             className="listSearchRadioInput"
             type="radio"
-            checked={userData.userrole === "ROLE_USER"}
+            checked={watch("_userrole") === "ROLE_USER"}
             name="_userrole"
             value="ROLE_USER"
             id="ROLE_USER"
             {...register("_userrole", {
-              onChange: (e) => {
-                fnSetUserData({ userrole: e.target.value });
-              },
+              onChange: fnSetUserData,
             })}
           />
           <label className="listSearchRadioLabel" htmlFor="ROLE_USER">
@@ -98,14 +107,12 @@ export default function ComponentSetUser({ setUserData, userData }) {
           <input
             className="listSearchRadioInput"
             type="radio"
-            checked={userData.userrole === "ROLE_USER,ROLE_ADMIN"}
+            checked={watch("_userrole") === "ROLE_USER,ROLE_ADMIN"}
             name="_userrole"
             value="ROLE_USER,ROLE_ADMIN"
             id="ROLE_ADMIN"
             {...register("_userrole", {
-              onChange: (e) => {
-                fnSetUserData({ userrole: e.target.value });
-              },
+              onChange: fnSetUserData,
             })}
           />
           <label className="listSearchRadioLabel" htmlFor="ROLE_ADMIN">
@@ -118,18 +125,22 @@ export default function ComponentSetUser({ setUserData, userData }) {
         <div className="blockLabel">
           <span>비밀번호 관리</span>
         </div>
-        <div>
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
           <input
-            className="formContentInput"
             type="text"
-            name="_passwd"
             id="passwd"
-            {...register("_passwd", {
-              onChange: (e) => {
-                fnSetUserData({ passwd: e.target.value });
-              },
-            })}
+            style={{
+              width: "86%",
+            }}
+            {...register("_passwd")}
           />
+          <button
+            type="button"
+            onClick={handleChangePasswdClick}
+            className="formContentBtn"
+          >
+            변경
+          </button>
         </div>
       </div>
     </>
