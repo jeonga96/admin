@@ -48,7 +48,10 @@ export default function AddUser() {
   return (
     <>
       <div className="commonBox">
-        <form className="formLayout " onSubmit={handleSubmit(AddUserSubmit)}>
+        <form
+          className="formLayout formCenterLayout"
+          onSubmit={handleSubmit(AddUserSubmit)}
+        >
           <ul className="tableTopWrap">
             <LayoutTopButton text="완료" disabled={isSubmitting} />
           </ul>

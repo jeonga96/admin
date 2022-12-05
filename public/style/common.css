@@ -322,48 +322,42 @@ input[type="radio"] {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  padding: 6rem 1.875rem 0;
-  width: 37.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 1.875rem;
+  width: 20.5rem;
   height: 25rem;
-  transition: all 300ms ease-in;
 }
 .loginBox h3 {
-  margin-bottom: 1.25rem;
+  margin-bottom: 20px;
   text-align: center;
 }
-.loginWrap .loginBox label {
-  width: 100px;
-  height: 32px;
-  line-height: 32px;
-  background-color: transparent;
-  border: none;
+.loginBox .formContentWrap {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin-bottom: 10px;
+}
+.loginBox .formContentWrap div:last-child {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  width: 100%;
+}
+.loginWrap label {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: left;
+  height: auto;
 }
 .loginBox input {
-  width: 300px;
-  height: 32px;
-  border: 1px solid var(--color-bggray);
-}
-.loginBox input:focus {
-  background-color: var(--color-bggray);
-}
-.loginBox div {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 4px;
-}
-
-@media screen and (max-width: 767px) {
-  .loginWrap .loginBox {
-    padding: 0.625rem;
-    padding-top: 4.5rem;
-    width: 20rem;
-    height: 30.25rem;
-  }
+  width: 100%;
+  height: 28px;
 }
 
 .widthWideBtn {
-  width: 180px;
-  height: 2.5rem;
+  width: 160px;
+  height: 2rem;
   border-radius: 0.3125rem;
   transition: all 300ms ease-in;
   color: var(--color-black);
@@ -406,6 +400,7 @@ input[type="radio"] {
   background-color: var(--color-bggray);
   border: 1px solid rgba(0, 0, 0, 0.1);
 }
+
 .formLayout .blockLabel span {
   font-weight: 500;
   color: var(--color-black);
@@ -645,10 +640,11 @@ input[type="radio"] {
   border-left: none;
   padding: 2px;
 }
-.formPaddingWrap {
-  padding: 3px 5px;
+.formContentWrap > div.formPaddingWrap {
+  height: 38px;
   display: flex;
   justify-content: center;
+  padding-top: 5px;
 }
 .formContentWrap div input:not(:nth-last-of-type(1)) {
   margin-bottom: 4px;
@@ -1303,7 +1299,10 @@ ul.pagination li a:hover {
   margin-right: 0.25rem;
   margin-top: 0.5rem;
 }
-
+.formCenterLayout .formContentWrap {
+  margin-left: 50%;
+  transform: translateX(-50%);
+}
 /* 검색 필터 하단 버튼 */
 .listSearchButtonWrap {
   display: flex;

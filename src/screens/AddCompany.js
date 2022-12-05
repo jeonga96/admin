@@ -46,7 +46,10 @@ export default function AddCompany() {
   return (
     <>
       <div className="commonBox">
-        <form className="formLayout" onSubmit={handleSubmit(AddCompanySubmit)}>
+        <form
+          className="formLayout formCenterLayout"
+          onSubmit={handleSubmit(AddCompanySubmit)}
+        >
           <ul className="tableTopWrap">
             <LayoutTopButton text="완료" disabled={isSubmitting} />
           </ul>
