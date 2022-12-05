@@ -90,7 +90,10 @@ export default function SetAdminEstimateinfo() {
             fromUid: getValues("_fromUid"),
             gongsaType: getValues("_gongsaType").toString(),
             reqDetail: getValues("_reqDetail"),
-            reqPrice: getValues("_reqPrice"),
+            reqPrice:
+              (getValues("_reqPrice") &&
+                getValues("_reqPrice").replace(",", "")) ||
+              "",
             siteAddress: multilAddress.siteAddress,
             reqVisit: reqDate.toISOString().slice(0, 19) || "",
             reqEstimate: getValues("_reqEstimate"),
@@ -105,7 +108,10 @@ export default function SetAdminEstimateinfo() {
             fromUid: getValues("_fromUid"),
             gongsaType: getValues("_gongsaType").toString(),
             reqDetail: getValues("_reqDetail"),
-            reqPrice: getValues("_reqPrice"),
+            reqPrice:
+              (getValues("_reqPrice") &&
+                getValues("_reqPrice").replace(",", "")) ||
+              "",
             siteAddress: multilAddress.siteAddress,
             reqVisit: reqDate.toISOString().slice(0, 19) || "",
             reqEstimate: getValues("_reqEstimate"),
@@ -113,7 +119,10 @@ export default function SetAdminEstimateinfo() {
             useFlag: getValues("_useFlag"),
             addInfo: getValues("_addInfo"),
             proDetail: getValues("_proDetail"),
-            proPrice: getValues("_proPrice"),
+            proPrice:
+              (getValues("_proPrice") &&
+                getValues("_proPrice").replace(",", "")) ||
+              "",
             proVisit: proDate.toISOString().slice(0, 19) || "",
             addImgs: imgsIid.toString() || "",
           }
@@ -246,30 +255,6 @@ export default function SetAdminEstimateinfo() {
                 <div>
                   <input
                     type="text"
-                    id="toUid"
-                    name="_toUid"
-                    placeholder="견적서를 요청한 관리번호를 입력해 주세요."
-                    {...register("_toUid", {
-                      required: "입력되지 않았습니다.",
-                    })}
-                  />
-                  <ErrorMessage
-                    errors={errors}
-                    name="_toUid"
-                    render={({ message }) => (
-                      <span className="errorMessageWrap">{message}</span>
-                    )}
-                  />
-                </div>
-              </div>
-
-              <div className="formContentWrap">
-                <label htmlFor="fromUid" className=" blockLabel">
-                  <span>견적 수령</span>
-                </label>
-                <div>
-                  <input
-                    type="text"
                     id="fromUid"
                     name="_fromUid"
                     placeholder="견적서를 요청받은 관리번호를 입력해 주세요."
@@ -288,16 +273,34 @@ export default function SetAdminEstimateinfo() {
               </div>
 
               <div className="formContentWrap">
+                <label htmlFor="fromUid" className=" blockLabel">
+                  <span>견적 수령</span>
+                </label>
+                <div>
+                  <input
+                    type="text"
+                    id="toUid"
+                    placeholder="견적서를 요청한 관리번호를 입력해 주세요."
+                    {...register("_toUid", {
+                      required: "입력되지 않았습니다.",
+                    })}
+                  />
+                  <ErrorMessage
+                    errors={errors}
+                    name="_toUid"
+                    render={({ message }) => (
+                      <span className="errorMessageWrap">{message}</span>
+                    )}
+                  />
+                </div>
+              </div>
+
+              <div className="formContentWrap">
                 <label htmlFor="reqVisit" className=" blockLabel">
                   <span>방문 요청일</span>
                 </label>
                 <div>
-                  <input
-                    type="date"
-                    id="reqVisit"
-                    name="_reqVisit"
-                    {...register("_reqVisit")}
-                  />
+                  <input type="date" id="reqVisit" {...register("_reqVisit")} />
                 </div>
               </div>
 
@@ -317,7 +320,6 @@ export default function SetAdminEstimateinfo() {
                   <textarea
                     type="textara"
                     id="reqDetail"
-                    name="_reqDetail"
                     placeholder="견적 요청에 대한 상세 내용을 입력해 주세요."
                     {...register("_reqDetail")}
                   />
@@ -413,10 +415,16 @@ export default function SetAdminEstimateinfo() {
                 </label>
                 <div>
                   <input
-                    type="number"
+                    type="text"
                     id="reqPrice"
-                    name="_reqPrice"
                     placeholder="견적 요청에 대한 상세 내용을 입력해 주세요."
+                    value={
+                      (watch("_reqPrice") &&
+                        watch("_reqPrice")
+                          .replace(/[^0-9]/g, "")
+                          .replace(/\B(?=(\d{3})+(?!\d))/g, ",")) ||
+                      ""
+                    }
                     {...register("_reqPrice", {
                       // required: "입력되지 않았습니다.",
                     })}
@@ -438,7 +446,6 @@ export default function SetAdminEstimateinfo() {
                 <div>
                   <textarea
                     id="addInfo"
-                    name="_addInfo"
                     placeholder="견적 요청에 대한 상세 내용을 입력해 주세요."
                     {...register("_addInfo")}
                   />
@@ -455,12 +462,7 @@ export default function SetAdminEstimateinfo() {
                   <span>방문 제안일</span>
                 </label>
                 <div>
-                  <input
-                    type="date"
-                    id="proVisit"
-                    name="_proVisit"
-                    {...register("_proVisit")}
-                  />
+                  <input type="date" id="proVisit" {...register("_proVisit")} />
                 </div>
               </div>
 
@@ -470,10 +472,14 @@ export default function SetAdminEstimateinfo() {
                 </label>
                 <div>
                   <input
-                    type="number"
-                    id="proPrice"
-                    name="_proPrice"
                     placeholder="견적 응답이 돌아오지 않았습니다."
+                    value={
+                      (watch("_proPrice") &&
+                        watch("_proPrice")
+                          .replace(/[^0-9]/g, "")
+                          .replace(/\B(?=(\d{3})+(?!\d))/g, ",")) ||
+                      ""
+                    }
                     {...register("_proPrice")}
                   />
                 </div>
@@ -486,7 +492,6 @@ export default function SetAdminEstimateinfo() {
                 <div>
                   <textarea
                     id="proDetail"
-                    name="_proDetail"
                     placeholder="견적 응답이 돌아오지 않았습니다."
                     {...register("_proDetail")}
                   />
