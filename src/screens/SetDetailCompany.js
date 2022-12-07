@@ -108,6 +108,11 @@ export default function SetCompanyDetail() {
           setValue("_okCount", res.data.okCount || "");
           setValue("_noCount", res.data.noCount || "");
 
+          // 근무 시간
+          const WorkTimeArr = res.data.workTime.split("~");
+          setValue("_workTimeTo", WorkTimeArr[0].trim() || "");
+          setValue("_workTimeFrom", WorkTimeArr[1].trim() || "");
+
           // 로그인 시 로컬스토리지에 저장한 전체 키워드 가져오기
           const allKeywordData = JSON.parse(servicesGetStorage(ALLKEYWORD));
           // 이미 입력된 키워드 값이 있다면 가져온 keywords 와 allKeywordData의 keyword의 value를 비교하여 keyword 객체 가져오기
@@ -208,7 +213,7 @@ export default function SetCompanyDetail() {
       address: multilAddress.address,
       oldaddress: multilAddress.oldaddress,
       zipcode: multilAddress.zipcode,
-      workTime: getValues("_workTime"),
+      workTime: `${watch("_workTimeTo")} ~ ${watch("_workTimeFrom")}`,
       offer: getValues("_offer"),
       titleImg: titleImg ? titleImg[0].iid : "",
       regImgs: regImgs ? regImgs[0].iid : "",
@@ -741,26 +746,31 @@ export default function SetCompanyDetail() {
               <label htmlFor="workTime" className="blockLabel">
                 <span>근무 시간</span>
               </label>
-              <div>
-                <input
-                  type="text"
-                  id="workTime"
-                  placeholder="근무 시간을 입력해 주세요."
-                  {...register("_workTime", {
-                    maxLength: {
-                      value: 20,
-                      message: "20자 이하의 글자만 사용가능합니다.",
-                    },
-                  })}
-                />
-                <ErrorMessage
-                  errors={errors}
-                  name="_workTime"
-                  render={({ message }) => (
-                    <span className="errorMessageWrap">{message}</span>
-                  )}
-                />
-              </div>
+
+              <ul className="detailContent">
+                <li>
+                  <div>
+                    <span>시작</span>
+                    <input
+                      type="time"
+                      id="workTime"
+                      placeholder="근무 시간을 입력해 주세요."
+                      {...register("_workTimeTo", {})}
+                    />
+                  </div>
+                </li>
+                <li>
+                  <div>
+                    <span>마감</span>
+                    <input
+                      type="time"
+                      id="workTime"
+                      placeholder="근무 시간을 입력해 주세요."
+                      {...register("_workTimeFrom", {})}
+                    />
+                  </div>
+                </li>
+              </ul>
             </div>
 
             <SetImage

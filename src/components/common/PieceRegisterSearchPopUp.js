@@ -39,10 +39,10 @@ export default function Postcode({
   };
 
   useEffect(() => {
-    // siteAddress는 주소값만 저장함
+    // siteAddress는 주소값만 저장함 (견적서, 견적요청서 등 )
     if (getedData !== [] && siteAddress) {
       fnSetAddress({
-        siteAddress: getedData.siteAddress,
+        siteAddress: getedData.siteAddress || getedData.caddr,
       });
     }
 
@@ -73,7 +73,7 @@ export default function Postcode({
     // siteAddress 주소값만 저장함
     if (!!siteAddress) {
       fnSetAddress({
-        siteAddress: data.roadAddress,
+        siteAddress: data.roadAddress || data.caddr,
       });
     }
 
@@ -99,14 +99,14 @@ export default function Postcode({
     return (
       <div className="formContentWrap">
         <label htmlFor="address" className=" blockLabel">
-          <span>방문 요청 주소</span>
+          <span>{getedData.caddr ? "사업장 주소" : "방문 요청 주소"}</span>
         </label>
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <input
             type="text"
             id="roadAddress"
             disabled
-            value={multilAddress.siteAddress || ""}
+            value={multilAddress.siteAddress || multilAddress.caddr || ""}
             style={{
               width: "86%",
             }}

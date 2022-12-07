@@ -34,10 +34,14 @@ import DetailCompanyReview from "./screens/DetailCompanyReview";
 import SetAdminAppbanner from "./screens/SetAdminAppbanner";
 /* 키워드 조회량 관리 */
 import SetAdminKeywords from "./screens/SetAdminKeywords";
-/* 키워드 조회량 관리 */
+/* 견적요청서 관리 */
 import ListEstimateinfo from "./screens/ListEstimateinfo";
 import SetAdminEstimateinfo from "./screens/SetAdminEstimateinfo";
 import DetailCompanyEstimateinfo from "./screens/DetailCompanyEstimateinfo";
+
+/* 견적서 관리 */
+import ListProposalinfo from "./screens/ListProposalinfo";
+import SetAdminProposalInfo from "./screens/SetAdminProposalInfo";
 
 import {
   servicesGetStorage,
@@ -133,21 +137,19 @@ function App() {
             />
           }
         />
-
         <Route
-          path="adduser"
+          path="user/add"
           element={
             <MainLayout nowTitle="통합회원 추가" component={<AddUser />} />
           }
         />
         {/* ------- 사업자 관리 ------- */}
         <Route
-          path="addcompany"
+          path="company/add"
           element={
             <MainLayout nowTitle="사업자 추가" component={<AddCompany />} />
           }
         />
-
         <Route
           path="company"
           element={
@@ -200,7 +202,6 @@ function App() {
             />
           }
         />
-
         {/* ------- 리뷰 ------- */}
         <Route
           path="company/:cid/review"
@@ -231,7 +232,6 @@ function App() {
             />
           }
         />
-
         <Route
           path="adminnotice/set"
           element={
@@ -312,6 +312,43 @@ function App() {
           element={
             <MainLayout
               nowTitle="[수령] 공사콕 견적 요청서"
+              component={<DetailCompanyEstimateinfo />}
+            />
+          }
+        />{" "}
+        {/* ------- 견적서 관리 ------- */}
+        <Route
+          path="proposalInfo"
+          element={
+            <MainLayout
+              nowTitle="공사콕 견적서"
+              component={<ListProposalinfo />}
+            />
+          }
+        />
+        <Route
+          path="proposalInfo/:prid"
+          element={
+            <MainLayout
+              nowTitle="공사콕 견적서 상세 관리"
+              component={<SetAdminProposalInfo />}
+            />
+          }
+        />
+        <Route
+          path="company/:prid/toproposalInfo"
+          element={
+            <MainLayout
+              nowTitle="[요청] 공사콕 견적서"
+              component={<DetailCompanyEstimateinfo />}
+            />
+          }
+        />
+        <Route
+          path="company/:prid/fromproposalInfo"
+          element={
+            <MainLayout
+              nowTitle="[수령] 공사콕 견적서"
               component={<DetailCompanyEstimateinfo />}
             />
           }

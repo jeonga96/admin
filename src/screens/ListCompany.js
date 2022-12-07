@@ -168,7 +168,7 @@ export default function ListCompany() {
         {clickedStatus.length > 0 && (
           <LayoutTopButton text="거절" fn={handleStauts} id="refuse" />
         )}
-        <LayoutTopButton url="/addcompany" text="사업자 추가" />
+        <LayoutTopButton url="add" text="사업자 추가" />
       </ul>
       <section className="tableWrap">
         <h3 className="blind">table</h3>

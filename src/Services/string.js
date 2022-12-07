@@ -48,10 +48,14 @@ export const urlAllKeyword = urlPrefix + "/admin/allKeyword";
 export const urlSetKeyword = urlPrefix + "/admin/setKeyword";
 export const urlSuggestKeyword = urlPrefix + "/pub/suggestKeyword";
 
-// 키워드
+// 견적 요청서
 export const urlGetEstimateInfo = urlPrefix + "/admin/getEstimateInfo";
 export const urlSetEstimateInfo = urlPrefix + "/admin/setEstimateInfo";
 export const urlListEstimateInfo = urlPrefix + "/admin/listEstimateInfo";
+// 견적서
+export const urlGetProposalInfo = urlPrefix + "/admin/getProposalInfo";
+export const urlSetProposalInfo = urlPrefix + "/admin/setProposalInfo";
+export const urlListProposalInfo = urlPrefix + "/admin/listProposalInfo";
 
 /* string 선언 - reducer */
 export const TOKEN = "token";

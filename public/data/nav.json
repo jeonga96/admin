@@ -11,7 +11,7 @@
     ]
   },
   {
-    "name": "사업자 관리",
+    "name": "사업자 회원 관리",
     "icon": "https://demo.dashboardpack.com/sales-html/img/menu-icon/dashboard.svg",
     "url": null,
     "subNav": [
@@ -22,6 +22,10 @@
       {
         "subName": "견적 요청서 관리",
         "url": "/estimateinfo"
+      },
+      {
+        "subName": "견적서 관리",
+        "url": "/proposalInfo"
       }
     ]
   },

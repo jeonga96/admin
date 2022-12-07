@@ -2,7 +2,10 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 import { servicesPostData } from "../../Services/importData";
-import { urlListEstimateInfo } from "../../Services/string";
+import {
+  urlListEstimateInfo,
+  urlListProposalInfo,
+} from "../../Services/string";
 
 export default function ComponentListUserSearch({
   setList,
@@ -10,6 +13,7 @@ export default function ComponentListUserSearch({
   searchClick,
   setSearchClick,
   page,
+  LISTPROPSOSLINFO,
 }) {
   // react-hook-form 라이브러리
   const { register, reset, getValues, handleSubmit } = useForm({});
@@ -30,12 +34,15 @@ export default function ComponentListUserSearch({
 
   // submit 이벤트
   function SearchSubmit() {
-    servicesPostData(urlListEstimateInfo, {
-      offset: page.getPage,
-      size: 15,
-      fromUid: getValues("_fromUid"),
-      toUid: getValues("_toUid"),
-    }).then((res) => {
+    servicesPostData(
+      !!LISTPROPSOSLINFO ? urlListProposalInfo : urlListEstimateInfo,
+      {
+        offset: page.getPage,
+        size: 15,
+        fromUid: getValues("_fromUid"),
+        toUid: getValues("_toUid"),
+      }
+    ).then((res) => {
       if (res.status === "fail") {
         alert("검색하신 데이터가 없습니다.");
       }
@@ -49,10 +56,13 @@ export default function ComponentListUserSearch({
 
   // 초기화 이벤트
   function onResetHandle(e) {
-    servicesPostData(urlListEstimateInfo, {
-      offset: page.getPage,
-      size: 15,
-    }).then((res) => {
+    servicesPostData(
+      !!LISTPROPSOSLINFO ? urlListProposalInfo : urlListEstimateInfo,
+      {
+        offset: page.getPage,
+        size: 15,
+      }
+    ).then((res) => {
       if (res.status === "fail") {
         alert("초기화가 완료되지 않았습니다.");
       }

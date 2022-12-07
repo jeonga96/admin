@@ -107,7 +107,7 @@ export default function ListUser() {
         {clickedUseFlag.length > 0 && (
           <LayoutTopButton text="해지" fn={handleUseFlag} />
         )}
-        <LayoutTopButton url="/adduser" text="회원 추가" />
+        <LayoutTopButton url="add" text="회원 추가" />
       </ul>
       <section className="tableWrap">
         <h3 className="blind">table</h3>
