@@ -17,9 +17,10 @@ import {
   urlSetCompany,
   ALLKEYWORD,
   urlCompanyNoticeList,
+  urlGetCompany,
   urlReviewList,
   urlListEstimateInfo,
-  urlGetCompany,
+  urlListProposalInfo,
 } from "../Services/string";
 
 import SetImage from "../components/common/ServicesImageSetPreview";
@@ -75,6 +76,8 @@ export default function SetCompanyDetail() {
   const [reviewList, setReviewList] = useState([]);
   const [toEstimateinfo, setToEstimateinfo] = useState([]);
   const [fromEstimateinfo, setFromEstimateinfo] = useState([]);
+  const [toproposalInfo, setToproposalInfo] = useState([]);
+  const [fromproposalInfo, setFromproposalInfo] = useState([]);
 
   // 현재 페이지가 렌더링되자마자 기존에 입력된 값의 여부를 확인한다. ==============
   useEffect(() => {
@@ -108,11 +111,6 @@ export default function SetCompanyDetail() {
           setValue("_okCount", res.data.okCount || "");
           setValue("_noCount", res.data.noCount || "");
 
-          // 근무 시간
-          const WorkTimeArr = res.data.workTime.split("~");
-          setValue("_workTimeTo", WorkTimeArr[0].trim() || "");
-          setValue("_workTimeFrom", WorkTimeArr[1].trim() || "");
-
           // 로그인 시 로컬스토리지에 저장한 전체 키워드 가져오기
           const allKeywordData = JSON.parse(servicesGetStorage(ALLKEYWORD));
           // 이미 입력된 키워드 값이 있다면 가져온 keywords 와 allKeywordData의 keyword의 value를 비교하여 keyword 객체 가져오기
@@ -145,19 +143,39 @@ export default function SetCompanyDetail() {
           serviesPostDataSettingRcid(urlReviewList, cid, setReviewList);
           // 견적요청서 - uid가 필요하기 떄문에 cid로 uid를 확인한 후 진행
           servicesPostData(urlGetCompany, { cid: cid }).then((res) => {
-            // 요청
+            // 견적 요청서 요청
+            console.log(res.data.ruid);
             servicesPostData(urlListEstimateInfo, {
               fromUid: res.data.ruid,
               offset: 0,
               size: 5,
-            }).then((res) => setFromEstimateinfo(res.page));
-            // 수령
+            }).then((res) => setFromEstimateinfo(res.data));
+            // 견적 요청서 수령
             servicesPostData(urlListEstimateInfo, {
               toUid: res.data.ruid,
               offset: 0,
               size: 5,
-            }).then((res) => setToEstimateinfo(res.page));
+            }).then((res) => setToEstimateinfo(res.data));
+
+            // 견적서 요청
+            servicesPostData(urlListProposalInfo, {
+              fromUid: res.data.ruid,
+              offset: 0,
+              size: 5,
+            }).then((res) => setFromproposalInfo(res.data));
+
+            // 견적서 수령
+            servicesPostData(urlListProposalInfo, {
+              toUid: res.data.ruid,
+              offset: 0,
+              size: 5,
+            }).then((res) => setToproposalInfo(res.data));
           });
+
+          // 근무 시간 (근무시간!!!!!! 다시 입력!!!!!)
+          const WorkTimeArr = res.data.workTime.split("~");
+          setValue("_workTimeTo", WorkTimeArr[0].trim() || "");
+          setValue("_workTimeFrom", WorkTimeArr[1].trim() || "");
 
           getDataFinish.current = true;
         } else if (res.data === "fail") {
@@ -978,6 +996,20 @@ export default function SetCompanyDetail() {
               getData={fromEstimateinfo}
               url={`fromestimateinfo`}
               title="[수령] 견적 요청서"
+            />
+          )}
+          {toproposalInfo && companyData.ruid && (
+            <PieceDetailListLink
+              getData={toproposalInfo}
+              url={`toproposalinfo`}
+              title="[요청] 견적서"
+            />
+          )}
+          {fromproposalInfo && companyData.ruid && (
+            <PieceDetailListLink
+              getData={fromproposalInfo}
+              url={`fromproposalinfo`}
+              title="[수령] 견적서"
             />
           )}
         </ul>

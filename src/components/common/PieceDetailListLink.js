@@ -14,7 +14,6 @@ export default function PieceDetailListLink({ getData, url, title }) {
             : "0"}
           개
         </span>
-        <span>{/* {getData && }개 */}</span>
         <div className="link">
           상세보기
           <BsArrowRightShort />

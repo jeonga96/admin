@@ -42,6 +42,7 @@ import DetailCompanyEstimateinfo from "./screens/DetailCompanyEstimateinfo";
 /* 견적서 관리 */
 import ListProposalinfo from "./screens/ListProposalinfo";
 import SetAdminProposalInfo from "./screens/SetAdminProposalInfo";
+import DetailCompanyProposalinfo from "./screens/DetailCompanyProposalinfo";
 
 import {
   servicesGetStorage,
@@ -336,20 +337,20 @@ function App() {
           }
         />
         <Route
-          path="company/:prid/toproposalInfo"
+          path="company/:rcid/toproposalinfo"
           element={
             <MainLayout
               nowTitle="[요청] 공사콕 견적서"
-              component={<DetailCompanyEstimateinfo />}
+              component={<DetailCompanyProposalinfo />}
             />
           }
         />
         <Route
-          path="company/:prid/fromproposalInfo"
+          path="company/:rcid/fromproposalinfo"
           element={
             <MainLayout
               nowTitle="[수령] 공사콕 견적서"
-              component={<DetailCompanyEstimateinfo />}
+              component={<DetailCompanyProposalinfo />}
             />
           }
         />
