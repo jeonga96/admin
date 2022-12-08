@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { servicesPostData } from "../Services/importData";
 import { urlListEstimateInfo } from "../Services/string";
 
+import LayoutTopButton from "../components/common/LayoutTopButton";
 import PageButton from "../components/common/PiecePaginationButton";
 import ComponentListEstmateinfoSearch from "../components/common/ComponentListEstmateinfoSearch";
 
@@ -34,6 +35,10 @@ export default function ListEstimateinfo() {
         setSearchClick={setSearchClick}
         page={page}
       />
+      <ul className="tableTopWrap">
+        <LayoutTopButton url="add" text="견적요청서 추가" />
+      </ul>
+
       <section className="tableWrap">
         <h3 className="blind">table</h3>
         <div className="paddingBox commonBox">

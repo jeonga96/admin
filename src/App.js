@@ -291,6 +291,15 @@ function App() {
           }
         />
         <Route
+          path="estimateinfo/add"
+          element={
+            <MainLayout
+              nowTitle="공사콕 견적 요청서 추가"
+              component={<SetAdminEstimateinfo />}
+            />
+          }
+        />
+        <Route
           path="estimateinfo/:esid"
           element={
             <MainLayout
@@ -316,7 +325,7 @@ function App() {
               component={<DetailCompanyEstimateinfo />}
             />
           }
-        />{" "}
+        />
         {/* ------- 견적서 관리 ------- */}
         <Route
           path="proposalInfo"
@@ -324,6 +333,15 @@ function App() {
             <MainLayout
               nowTitle="공사콕 견적서"
               component={<ListProposalinfo />}
+            />
+          }
+        />
+        <Route
+          path="proposalInfo/add"
+          element={
+            <MainLayout
+              nowTitle="공사콕 견적서 추가"
+              component={<SetAdminProposalInfo />}
             />
           }
         />

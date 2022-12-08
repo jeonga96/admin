@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { servicesPostData } from "../Services/importData";
 import { urlListProposalInfo } from "../Services/string";
 
+import LayoutTopButton from "../components/common/LayoutTopButton";
 import PageButton from "../components/common/PiecePaginationButton";
 import ComponentListEstmateinfoSearch from "../components/common/ComponentListEstmateinfoSearch";
 
@@ -35,6 +36,10 @@ export default function ListPropsosalinfo() {
         page={page}
         LISTPROPSOSLINFO
       />
+      <ul className="tableTopWrap">
+        <LayoutTopButton url="add" text="견적서 추가" />
+      </ul>
+
       <section className="tableWrap">
         <h3 className="blind">table</h3>
         <div className="paddingBox commonBox">

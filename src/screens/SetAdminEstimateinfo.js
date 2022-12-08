@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 
@@ -34,6 +34,12 @@ export default function SetAdminEstimateinfo() {
 
   // 현재 페이지가 렌더링되자마자 기존에 입력된 값의 여부를 확인한다.
   useEffect(() => {
+    // 추가 시 라디오&체크박스 기본 값
+    setValue("_reqEstimate", "1");
+    setValue("_reqBill", "1");
+    setValue("_useFlag", "1");
+    setValue("_gongsaType", "reser");
+
     servicesPostData(urlGetEstimateInfo, {
       esid: esid,
     })
@@ -78,63 +84,120 @@ export default function SetAdminEstimateinfo() {
     const reqDate = new Date(getValues("_reqVisit"));
     const proDate = new Date(getValues("_proVisit"));
 
-    // setUserDetailInfo 수정
-    servicesPostData(
-      urlSetEstimateInfo,
-      // 견적서 응답 없음을 방문 제안일 기준으로 판단
-      !getValues("_proVisit")
-        ? // 견적서 응답 내용을 입력하지 않고, 요청서만 작성했을 때
-          {
-            esid: esid,
-            toUid: getValues("_toUid"),
-            fromUid: getValues("_fromUid"),
-            gongsaType: getValues("_gongsaType").toString(),
-            reqDetail: getValues("_reqDetail"),
-            reqPrice:
-              (getValues("_reqPrice") &&
-                getValues("_reqPrice").replace(",", "")) ||
-              "",
-            siteAddress: multilAddress.siteAddress,
-            reqVisit: reqDate.toISOString().slice(0, 19) || "",
-            reqEstimate: getValues("_reqEstimate"),
-            reqBill: getValues("_reqBill"),
-            useFlag: getValues("_useFlag"),
-            addInfo: getValues("_addInfo"),
+    if (!esid) {
+      // setUserDetailInfo 추가-------------------------------------------
+      servicesPostData(
+        urlSetEstimateInfo,
+        !getValues("_proVisit")
+          ? // 견적서 응답 없음을 방문 제안일 기준으로 판단
+            // 견적서 응답 내용을 입력하지 않고, 요청서만 작성했을 때
+            {
+              toUid: getValues("_toUid"),
+              fromUid: getValues("_fromUid"),
+              gongsaType: getValues("_gongsaType").toString(),
+              reqDetail: getValues("_reqDetail"),
+              reqPrice:
+                (getValues("_reqPrice") &&
+                  getValues("_reqPrice").replace(",", "")) ||
+                "",
+              siteAddress: multilAddress.siteAddress,
+              reqVisit: reqDate.toISOString().slice(0, 19) || "",
+              reqEstimate: getValues("_reqEstimate"),
+              reqBill: getValues("_reqBill"),
+              useFlag: getValues("_useFlag"),
+              addInfo: getValues("_addInfo"),
+            }
+          : // 견적서 응답 내용을 입력했을 때
+            {
+              toUid: getValues("_toUid"),
+              fromUid: getValues("_fromUid"),
+              gongsaType: getValues("_gongsaType").toString(),
+              reqDetail: getValues("_reqDetail"),
+              reqPrice:
+                (getValues("_reqPrice") &&
+                  getValues("_reqPrice").replace(",", "")) ||
+                "",
+              siteAddress: multilAddress.siteAddress,
+              reqVisit: reqDate.toISOString().slice(0, 19) || "",
+              reqEstimate: getValues("_reqEstimate"),
+              reqBill: getValues("_reqBill"),
+              useFlag: getValues("_useFlag"),
+              addInfo: getValues("_addInfo"),
+              proDetail: getValues("_proDetail"),
+              proPrice:
+                (getValues("_proPrice") &&
+                  getValues("_proPrice").replace(",", "")) ||
+                "",
+              proVisit: proDate.toISOString().slice(0, 19) || "",
+              addImgs: imgsIid.toString() || "",
+            }
+      )
+        .then((res) => {
+          if (res.status === "success") {
+            console.log(res);
+            alert("완료되었습니다!");
+            return;
           }
-        : // 견적서 응답 내용을 입력했을 때
-          {
-            esid: esid,
-            toUid: getValues("_toUid"),
-            fromUid: getValues("_fromUid"),
-            gongsaType: getValues("_gongsaType").toString(),
-            reqDetail: getValues("_reqDetail"),
-            reqPrice:
-              (getValues("_reqPrice") &&
-                getValues("_reqPrice").replace(",", "")) ||
-              "",
-            siteAddress: multilAddress.siteAddress,
-            reqVisit: reqDate.toISOString().slice(0, 19) || "",
-            reqEstimate: getValues("_reqEstimate"),
-            reqBill: getValues("_reqBill"),
-            useFlag: getValues("_useFlag"),
-            addInfo: getValues("_addInfo"),
-            proDetail: getValues("_proDetail"),
-            proPrice:
-              (getValues("_proPrice") &&
-                getValues("_proPrice").replace(",", "")) ||
-              "",
-            proVisit: proDate.toISOString().slice(0, 19) || "",
-            addImgs: imgsIid.toString() || "",
+        })
+        .catch((error) => console.log("axios 실패", error.response));
+    } else {
+      // setUserDetailInfo 수정-------------------------------------------
+      servicesPostData(
+        urlSetEstimateInfo,
+        !getValues("_proVisit")
+          ? // 견적서 응답 없음을 방문 제안일 기준으로 판단
+            // 견적서 응답 내용을 입력하지 않고, 요청서만 작성했을 때
+            {
+              esid: esid,
+              toUid: getValues("_toUid"),
+              fromUid: getValues("_fromUid"),
+              gongsaType: getValues("_gongsaType").toString(),
+              reqDetail: getValues("_reqDetail"),
+              reqPrice:
+                (getValues("_reqPrice") &&
+                  getValues("_reqPrice").replace(",", "")) ||
+                "",
+              siteAddress: multilAddress.siteAddress,
+              reqVisit: reqDate.toISOString().slice(0, 19) || "",
+              reqEstimate: getValues("_reqEstimate"),
+              reqBill: getValues("_reqBill"),
+              useFlag: getValues("_useFlag"),
+              addInfo: getValues("_addInfo"),
+            }
+          : // 견적서 응답 내용을 입력했을 때
+            {
+              esid: esid,
+              toUid: getValues("_toUid"),
+              fromUid: getValues("_fromUid"),
+              gongsaType: getValues("_gongsaType").toString(),
+              reqDetail: getValues("_reqDetail"),
+              reqPrice:
+                (getValues("_reqPrice") &&
+                  getValues("_reqPrice").replace(",", "")) ||
+                "",
+              siteAddress: multilAddress.siteAddress,
+              reqVisit: reqDate.toISOString().slice(0, 19) || "",
+              reqEstimate: getValues("_reqEstimate"),
+              reqBill: getValues("_reqBill"),
+              useFlag: getValues("_useFlag"),
+              addInfo: getValues("_addInfo"),
+              proDetail: getValues("_proDetail"),
+              proPrice:
+                (getValues("_proPrice") &&
+                  getValues("_proPrice").replace(",", "")) ||
+                "",
+              proVisit: proDate.toISOString().slice(0, 19) || "",
+              addImgs: imgsIid.toString() || "",
+            }
+      )
+        .then((res) => {
+          if (res.status === "success") {
+            alert("완료되었습니다!");
+            return;
           }
-    )
-      .then((res) => {
-        if (res.status === "success") {
-          console.log(res);
-          alert("완료되었습니다!");
-          return;
-        }
-      })
-      .catch((error) => console.log("axios 실패", error.response));
+        })
+        .catch((error) => console.log("axios 실패", error.response));
+    }
   }
 
   return (
@@ -493,6 +556,7 @@ export default function SetAdminEstimateinfo() {
                   <textarea
                     id="proDetail"
                     placeholder="견적 응답이 돌아오지 않았습니다."
+                    disabled={!!esid ? false : true}
                     {...register("_proDetail")}
                   />
                 </div>

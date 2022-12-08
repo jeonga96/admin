@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 
@@ -13,6 +13,7 @@ import PieceRegisterSearchPopUp from "../components/common/PieceRegisterSearchPo
 
 export default function SetAdminProposalInfo() {
   const { prid } = useParams();
+  // const URLADD = useLocation().pathname.includes("add");
 
   // react-hook-form 라이브러리
   const {
@@ -34,44 +35,56 @@ export default function SetAdminProposalInfo() {
 
   // 현재 페이지가 렌더링되자마자 기존에 입력된 값의 여부를 확인한다.
   useEffect(() => {
-    servicesPostData(urlGetProposalInfo, {
-      prid: prid,
-    })
-      .then((res) => {
-        if (res.status === "success") {
-          // 이미지 iid를 가지고 오기 위해 (imgs, titleImg) 사용
-          setGetedData(res.data);
+    // 추가 시 기본 값
+    setValue("_useFlag", "1");
+    setValue("_gongsaType", "reser");
+    setValue("_canNego", "0");
+    setValue("_contMethod", "msg");
+    setValue("_canTaxBill", "0");
+    setValue("_canCard", "0");
+    setValue("_canCashBill", "0");
+    setValue("_canExtraProp", "0");
 
-          // 값이 있다면 inputValue에 저장한 후 getDataFinish 값을 변경
-          setValue("_fromUid", res.data.fromUid || "");
-          setValue("_toUid", res.data.toUid || "");
-
-          setValue("_gname", res.data.gname || "");
-          setValue("_garea", res.data.garea || "");
-          setValue("_cname", res.data.cname || "");
-          setValue("_cceo", res.data.cceo || "");
-          setValue("_registration", res.data.registration || "");
-          setValue("_corporationno", res.data.corporationno || "");
-          setValue("_telnum", res.data.telnum || "");
-          setValue("_price", res.data.price || "");
-          setValue("_extraCon", res.data.extraCon || "");
-
-          setValue("_useFlag", res.data.useFlag.toString() || "1");
-          setValue("_gongsaType", res.data.gongsaType || "reser");
-          setValue("_canNego", res.data.canNego.toString() || "0");
-          setValue("_contMethod", res.data.contMethod.toString() || "msg");
-          setValue("_canTaxBill", res.data.canTaxBill.toString() || "0");
-          setValue("_canCard", res.data.canCard.toString() || "0");
-          setValue("_canCashBill", res.data.canCashBill.toString() || "0");
-          setValue("_canExtraProp", res.data.canExtraProp.toString() || "0");
-
-          getDataFinish.current = true;
-        }
+    // 수정 시 url에 prid를 확인하여 데이터 받아옴
+    if (!!prid) {
+      servicesPostData(urlGetProposalInfo, {
+        prid: prid,
       })
-      .catch((res) => console.log(res));
+        .then((res) => {
+          if (res.status === "success") {
+            // 이미지 iid를 가지고 오기 위해 (imgs, titleImg) 사용
+            setGetedData(res.data);
+
+            // 값이 있다면 inputValue에 저장한 후 getDataFinish 값을 변경
+            setValue("_fromUid", res.data.fromUid || "");
+            setValue("_toUid", res.data.toUid || "");
+
+            setValue("_gname", res.data.gname || "");
+            setValue("_garea", res.data.garea || "");
+            setValue("_cname", res.data.cname || "");
+            setValue("_cceo", res.data.cceo || "");
+            setValue("_registration", res.data.registration || "");
+            setValue("_corporationno", res.data.corporationno || "");
+            setValue("_telnum", res.data.telnum || "");
+            setValue("_price", res.data.price || "");
+            setValue("_extraCon", res.data.extraCon || "");
+
+            setValue("_useFlag", res.data.useFlag.toString() || "1");
+            setValue("_gongsaType", res.data.gongsaType || "reser");
+            setValue("_canNego", res.data.canNego.toString() || "0");
+            setValue("_contMethod", res.data.contMethod.toString() || "msg");
+            setValue("_canTaxBill", res.data.canTaxBill.toString() || "0");
+            setValue("_canCard", res.data.canCard.toString() || "0");
+            setValue("_canCashBill", res.data.canCashBill.toString() || "0");
+            setValue("_canExtraProp", res.data.canExtraProp.toString() || "0");
+
+            getDataFinish.current = true;
+          }
+        })
+        .catch((res) => console.log(res));
+    }
   }, []);
 
-  console.log("d", getValues("_corporationno"));
   function setimateinfoSubmit(e) {
     //서버에 imgs의 iid값만을 보내기 위해 실행하는 반복문 함수
     serviesGetImgsIid(imgsIid, imgs);
@@ -80,37 +93,71 @@ export default function SetAdminProposalInfo() {
     servicesPostData(
       urlSetProposalInfo,
       // 견적서 응답 없음을 방문 제안일 기준으로 판단
-      {
-        prid: prid,
-        fromUid: getValues("_fromUid"),
-        toUid: getValues("_toUid"),
-        gongsaType: getValues("_gongsaType").toString(),
-        gname: getValues("_gname"),
-        garea: getValues("_garea"),
-        cname: getValues("_cname"),
-        cceo: getValues("_cceo"),
-        registration:
-          (getValues("_registration") &&
-            getValues("_registration").replace(",", "")) ||
-          "",
-        corporationno:
-          (getValues("_registration") &&
-            getValues("_registration").slice(4, 6)) ||
-          "",
-        caddr: multilAddress.siteAddress,
-        telnum: getValues("_telnum"),
-        price:
-          (getValues("_price") && getValues("_price").replace(",", "")) || "",
-        canNego: getValues("_canNego"),
-        contMethod: getValues("_contMethod"),
-        canTaxBill: getValues("_canTaxBill"),
-        canCard: getValues("_canCard"),
-        canCashBill: getValues("_canCashBill"),
-        canExtraProp: getValues("_canExtraProp"),
-        extraCon: getValues("_extraCon"),
-        addImgs: imgsIid.toString() || "",
-        useFlag: getValues("_useFlag"),
-      }
+      !!prid
+        ? // url에 prid를 확인하여 수정, 추가를 결정
+          {
+            prid: prid,
+            fromUid: getValues("_fromUid"),
+            toUid: getValues("_toUid"),
+            gongsaType: getValues("_gongsaType").toString(),
+            gname: getValues("_gname"),
+            garea: getValues("_garea"),
+            cname: getValues("_cname"),
+            cceo: getValues("_cceo"),
+            registration:
+              (getValues("_registration") &&
+                getValues("_registration").replace(",", "")) ||
+              "",
+            corporationno:
+              (getValues("_registration") &&
+                getValues("_registration").slice(4, 6)) ||
+              "",
+            caddr: multilAddress.siteAddress,
+            telnum: getValues("_telnum"),
+            price:
+              (getValues("_price") && getValues("_price").replace(",", "")) ||
+              "",
+            canNego: getValues("_canNego"),
+            contMethod: getValues("_contMethod"),
+            canTaxBill: getValues("_canTaxBill"),
+            canCard: getValues("_canCard"),
+            canCashBill: getValues("_canCashBill"),
+            canExtraProp: getValues("_canExtraProp"),
+            extraCon: getValues("_extraCon"),
+            addImgs: imgsIid.toString() || "",
+            useFlag: getValues("_useFlag"),
+          }
+        : {
+            fromUid: getValues("_fromUid"),
+            toUid: getValues("_toUid"),
+            gongsaType: getValues("_gongsaType").toString(),
+            gname: getValues("_gname"),
+            garea: getValues("_garea"),
+            cname: getValues("_cname"),
+            cceo: getValues("_cceo"),
+            registration:
+              (getValues("_registration") &&
+                getValues("_registration").replace(",", "")) ||
+              "",
+            corporationno:
+              (getValues("_registration") &&
+                getValues("_registration").slice(4, 6)) ||
+              "",
+            caddr: multilAddress.siteAddress,
+            telnum: getValues("_telnum"),
+            price:
+              (getValues("_price") && getValues("_price").replace(",", "")) ||
+              "",
+            canNego: getValues("_canNego"),
+            contMethod: getValues("_contMethod"),
+            canTaxBill: getValues("_canTaxBill"),
+            canCard: getValues("_canCard"),
+            canCashBill: getValues("_canCashBill"),
+            canExtraProp: getValues("_canExtraProp"),
+            extraCon: getValues("_extraCon"),
+            addImgs: imgsIid.toString() || "",
+            useFlag: getValues("_useFlag"),
+          }
     )
       .then((res) => {
         if (res.status === "success") {
