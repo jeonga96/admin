@@ -71,6 +71,7 @@ export default function SetAdminProposalInfo() {
       .catch((res) => console.log(res));
   }, []);
 
+  console.log("d", getValues("_corporationno"));
   function setimateinfoSubmit(e) {
     //서버에 imgs의 iid값만을 보내기 위해 실행하는 반복문 함수
     serviesGetImgsIid(imgsIid, imgs);
@@ -92,7 +93,10 @@ export default function SetAdminProposalInfo() {
           (getValues("_registration") &&
             getValues("_registration").replace(",", "")) ||
           "",
-        corporationno: getValues("_corporationno"),
+        corporationno:
+          (getValues("_registration") &&
+            getValues("_registration").slice(4, 6)) ||
+          "",
         caddr: multilAddress.siteAddress,
         telnum: getValues("_telnum"),
         price:
@@ -133,7 +137,7 @@ export default function SetAdminProposalInfo() {
           <div className="formWrap">
             {/* 갼적서 요청 내용  ================================================================ */}
             <fieldset>
-              <h3>견적서 요청 내용</h3>
+              <h3>견적서 분류</h3>
 
               {/* 사용 플래그  */}
               <div className="formContentWrap">
@@ -275,6 +279,10 @@ export default function SetAdminProposalInfo() {
                   />
                 </div>
               </div>
+            </fieldset>
+
+            <fieldset>
+              <h3>견적서 세부 내용</h3>
 
               <div className="formContentWrap">
                 <label htmlFor="gname" className=" blockLabel">
@@ -296,14 +304,6 @@ export default function SetAdminProposalInfo() {
                   />
                 </div>
               </div>
-
-              {/* 주소 */}
-              <PieceRegisterSearchPopUp
-                siteAddress
-                setMultilAddress={setMultilAddress}
-                multilAddress={multilAddress}
-                getedData={getedData}
-              />
 
               <div className="formContentWrap">
                 <label htmlFor="garea" className=" blockLabel">
@@ -368,6 +368,127 @@ export default function SetAdminProposalInfo() {
                 </div>
               </div>
 
+              {/* 주소 */}
+              <PieceRegisterSearchPopUp
+                siteAddress
+                setMultilAddress={setMultilAddress}
+                multilAddress={multilAddress}
+                getedData={getedData}
+              />
+
+              {/* 카드 결제 여부----------------- */}
+              <div className="formContentWrap">
+                <div className="blockLabel">
+                  <span>연락</span>
+                </div>
+                <ul className="detailContent">
+                  <li style={{ width: "40%" }}>
+                    <div className="detailContentCheck">
+                      <span style={{ width: "100px" }}>방법</span>
+                      <div className="formPaddingWrap">
+                        <input
+                          className="listSearchRadioInput"
+                          type="radio"
+                          checked={watch("_contMethod") == "msg"}
+                          value="msg"
+                          id="contMethodMsg"
+                          {...register("_contMethod")}
+                        />
+                        <label
+                          className="listSearchRadioLabel"
+                          htmlFor="contMethodMsg"
+                        >
+                          메신저
+                        </label>
+
+                        <input
+                          className="listSearchRadioInput"
+                          type="radio"
+                          checked={watch("_contMethod") == "tel"}
+                          value="tel"
+                          id="contMethodTel"
+                          {...register("_contMethod")}
+                        />
+                        <label
+                          className="listSearchRadioLabel"
+                          htmlFor="contMethodTel"
+                        >
+                          전화
+                        </label>
+                      </div>
+                    </div>
+                  </li>
+                  <li style={{ width: "60%" }}>
+                    <div>
+                      <span style={{ width: "100px" }}>연락처</span>
+                      <div className="formPaddingWrap">
+                        <input
+                          type="text"
+                          id="telnum"
+                          placeholder="전화번호를 입력해 주세요. (예시 00-0000-0000)"
+                          value={
+                            (watch("_telnum") &&
+                              watch("_telnum")
+                                .replace(/[^0-9]/g, "")
+                                .replace(
+                                  /(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)([0-9]{4}$)/,
+                                  "$1-$2-$3"
+                                )
+                                .replace("--", "-")) ||
+                            ""
+                          }
+                          {...register("_telnum", {
+                            required: "입력되지 않았습니다.",
+                            pattern: {
+                              value: /^[0-9]{2,4}-[0-9]{3,4}-[0-9]{4}/,
+                              message: "형식에 맞지 않습니다.",
+                            },
+                          })}
+                        />
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+
+              {/* <div className="formContentWrap">
+                <label htmlFor="telnum" className="blockLabel">
+                  <span>전화번호</span>
+                </label>
+                <div>
+                  <input
+                    type="text"
+                    id="telnum"
+                    placeholder="전화번호를 입력해 주세요. (예시 00-0000-0000)"
+                    value={
+                      (watch("_telnum") &&
+                        watch("_telnum")
+                          .replace(/[^0-9]/g, "")
+                          .replace(
+                            /(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)([0-9]{4}$)/,
+                            "$1-$2-$3"
+                          )
+                          .replace("--", "-")) ||
+                      ""
+                    }
+                    {...register("_telnum", {
+                      required: "입력되지 않았습니다.",
+                      pattern: {
+                        value: /^[0-9]{2,4}-[0-9]{3,4}-[0-9]{4}/,
+                        message: "형식에 맞지 않습니다.",
+                      },
+                    })}
+                  />
+                  <ErrorMessage
+                    errors={errors}
+                    name="_telnum"
+                    render={({ message }) => (
+                      <span className="errorMessageWrap">{message}</span>
+                    )}
+                  />
+                </div>
+              </div> */}
+
               <div className="formContentWrap">
                 <label htmlFor="registration" className="blockLabel">
                   <span>사업자 등록 번호</span>
@@ -411,83 +532,13 @@ export default function SetAdminProposalInfo() {
                   <input
                     type="text"
                     id="corporationno"
-                    placeholder="법인구분번호를 적어주세요."
+                    disabled
+                    value={
+                      (watch("_registration") &&
+                        getValues("_registration").slice(4, 6)) ||
+                      ""
+                    }
                     {...register("_corporationno")}
-                  />
-                  <ErrorMessage
-                    errors={errors}
-                    name="_corporationno"
-                    render={({ message }) => (
-                      <span className="errorMessageWrap">{message}</span>
-                    )}
-                  />
-                </div>
-              </div>
-
-              <div className="formContentWrap">
-                <label htmlFor="telnum" className="blockLabel">
-                  <span>전화번호</span>
-                </label>
-                <div>
-                  <input
-                    type="text"
-                    id="telnum"
-                    placeholder="전화번호를 입력해 주세요. (예시 00-0000-0000)"
-                    value={
-                      (watch("_telnum") &&
-                        watch("_telnum")
-                          .replace(/[^0-9]/g, "")
-                          .replace(
-                            /(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)([0-9]{4}$)/,
-                            "$1-$2-$3"
-                          )
-                          .replace("--", "-")) ||
-                      ""
-                    }
-                    {...register("_telnum", {
-                      required: "입력되지 않았습니다.",
-                      pattern: {
-                        value: /^[0-9]{2,4}-[0-9]{3,4}-[0-9]{4}/,
-                        message: "형식에 맞지 않습니다.",
-                      },
-                    })}
-                  />
-                  <ErrorMessage
-                    errors={errors}
-                    name="_telnum"
-                    render={({ message }) => (
-                      <span className="errorMessageWrap">{message}</span>
-                    )}
-                  />
-                </div>
-              </div>
-
-              <div className="formContentWrap">
-                <label htmlFor="price" className=" blockLabel">
-                  <span>견적 금액</span>
-                </label>
-                <div>
-                  <input
-                    type="text"
-                    id="price"
-                    placeholder="견적 요청에 대한 상세 내용을 입력해 주세요."
-                    value={
-                      (watch("_price") &&
-                        watch("_price")
-                          .replace(/[^0-9]/g, "")
-                          .replace(/\B(?=(\d{3})+(?!\d))/g, ",")) ||
-                      ""
-                    }
-                    {...register("_price", {
-                      // required: "입력되지 않았습니다.",
-                    })}
-                  />
-                  <ErrorMessage
-                    errors={errors}
-                    name="_price"
-                    render={({ message }) => (
-                      <span className="errorMessageWrap">{message}</span>
-                    )}
                   />
                 </div>
               </div>
@@ -525,7 +576,7 @@ export default function SetAdminProposalInfo() {
               </div>
 
               {/* 연락 방법 */}
-              <div className="formContentWrap">
+              {/* <div className="formContentWrap">
                 <div className="blockLabel">
                   <span>연락 방법</span>
                 </div>
@@ -560,109 +611,7 @@ export default function SetAdminProposalInfo() {
                     전화
                   </label>
                 </div>
-              </div>
-
-              {/* 세금계산서 요청 */}
-              <div className="formContentWrap">
-                <div className="blockLabel">
-                  <span>세금계산서 요청</span>
-                </div>
-                <div className="formPaddingWrap">
-                  <input
-                    className="listSearchRadioInput"
-                    type="radio"
-                    checked={watch("_canTaxBill") == "0"}
-                    value="0"
-                    id="canTaxBill0"
-                    {...register("_canTaxBill")}
-                  />
-                  <label className="listSearchRadioLabel" htmlFor="canTaxBill0">
-                    아니오
-                  </label>
-
-                  <input
-                    className="listSearchRadioInput"
-                    type="radio"
-                    checked={watch("_canTaxBill") == "1"}
-                    value="1"
-                    id="canTaxBill1"
-                    {...register("_canTaxBill")}
-                  />
-                  <label className="listSearchRadioLabel" htmlFor="canTaxBill1">
-                    예
-                  </label>
-                </div>
-              </div>
-
-              {/* 카드 결제 여부 */}
-              <div className="formContentWrap">
-                <div className="blockLabel">
-                  <span>카드결제 가능</span>
-                </div>
-                <div className="formPaddingWrap">
-                  <input
-                    className="listSearchRadioInput"
-                    type="radio"
-                    checked={watch("_canCard") == "0"}
-                    value="0"
-                    id="canCard0"
-                    {...register("_canCard")}
-                  />
-                  <label className="listSearchRadioLabel" htmlFor="canCard0">
-                    아니오
-                  </label>
-
-                  <input
-                    className="listSearchRadioInput"
-                    type="radio"
-                    checked={watch("_canCard") == "1"}
-                    value="1"
-                    id="canCard1"
-                    {...register("_canCard")}
-                  />
-                  <label className="listSearchRadioLabel" htmlFor="canCard1">
-                    예
-                  </label>
-                </div>
-              </div>
-
-              {/* 현금 매출 영수증 */}
-              <div className="formContentWrap">
-                <div className="blockLabel">
-                  <span>현금매출영수증 발급</span>
-                </div>
-                <div className="formPaddingWrap">
-                  <input
-                    className="listSearchRadioInput"
-                    type="radio"
-                    checked={watch("_canCashBill") == "0"}
-                    value="0"
-                    id="canCashBill0"
-                    {...register("_canCashBill")}
-                  />
-                  <label
-                    className="listSearchRadioLabel"
-                    htmlFor="canCashBill0"
-                  >
-                    아니오
-                  </label>
-
-                  <input
-                    className="listSearchRadioInput"
-                    type="radio"
-                    checked={watch("_canCashBill") == "1"}
-                    value="1"
-                    id="canCashBill1"
-                    {...register("_canCashBill")}
-                  />
-                  <label
-                    className="listSearchRadioLabel"
-                    htmlFor="canCashBill1"
-                  >
-                    예
-                  </label>
-                </div>
-              </div>
+              </div> */}
 
               {/* 추가 상세 견적서 */}
               <div className="formContentWrap">
@@ -700,6 +649,153 @@ export default function SetAdminProposalInfo() {
                     예
                   </label>
                 </div>
+              </div>
+
+              {/* 카드 결제 여부 & 견적금액----------------- */}
+              <div className="formContentWrap">
+                <div className="blockLabel">
+                  <span>결제</span>
+                </div>
+                <ul className="detailContent">
+                  <li style={{ width: "40%" }}>
+                    <div className="detailContentCheck">
+                      <span style={{ width: "100px" }}>카드결제</span>
+                      <div className="formPaddingWrap">
+                        <input
+                          className="listSearchRadioInput"
+                          type="radio"
+                          checked={watch("_canCard") == "0"}
+                          value="0"
+                          id="canCard0"
+                          {...register("_canCard")}
+                        />
+                        <label
+                          className="listSearchRadioLabel"
+                          htmlFor="canCard0"
+                        >
+                          불가
+                        </label>
+
+                        <input
+                          className="listSearchRadioInput"
+                          type="radio"
+                          checked={watch("_canCard") == "1"}
+                          value="1"
+                          id="canCard1"
+                          {...register("_canCard")}
+                        />
+                        <label
+                          className="listSearchRadioLabel"
+                          htmlFor="canCard1"
+                        >
+                          가능
+                        </label>
+                      </div>
+                    </div>
+                  </li>
+                  <li style={{ width: "60%" }}>
+                    <div>
+                      <span style={{ width: "100px" }}>견적금액</span>
+                      <div className="formPaddingWrap">
+                        <input
+                          type="text"
+                          id="price"
+                          placeholder="견적금액을 입력해 주세요."
+                          value={
+                            (watch("_price") &&
+                              watch("_price")
+                                .replace(/[^0-9]/g, "")
+                                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")) ||
+                            ""
+                          }
+                          {...register("_price")}
+                        />
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+
+              {/* 연말정산, 세금계산서&현금매출영수증*/}
+              <div className="formContentWrap">
+                <div className="blockLabel">
+                  <span>연말정산</span>
+                </div>
+
+                <ul className="detailContent">
+                  <li>
+                    <div className="detailContentCheck">
+                      <span>세금계산서</span>
+                      <div className="formPaddingWrap">
+                        <input
+                          className="listSearchRadioInput"
+                          type="radio"
+                          checked={watch("_canTaxBill") == "0"}
+                          value="0"
+                          id="canTaxBill0"
+                          {...register("_canTaxBill")}
+                        />
+                        <label
+                          className="listSearchRadioLabel"
+                          htmlFor="canTaxBill0"
+                        >
+                          아니오
+                        </label>
+
+                        <input
+                          className="listSearchRadioInput"
+                          type="radio"
+                          checked={watch("_canTaxBill") == "1"}
+                          value="1"
+                          id="canTaxBill1"
+                          {...register("_canTaxBill")}
+                        />
+                        <label
+                          className="listSearchRadioLabel"
+                          htmlFor="canTaxBill1"
+                        >
+                          예
+                        </label>
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <div className="detailContentCheck">
+                      <span>현금매출영수증</span>
+                      <div className="formPaddingWrap">
+                        <input
+                          className="listSearchRadioInput"
+                          type="radio"
+                          checked={watch("_canCashBill") == "0"}
+                          value="0"
+                          id="canCashBill0"
+                          {...register("_canCashBill")}
+                        />
+                        <label
+                          className="listSearchRadioLabel"
+                          htmlFor="canCashBill0"
+                        >
+                          아니오
+                        </label>
+
+                        <input
+                          className="listSearchRadioInput"
+                          type="radio"
+                          checked={watch("_canCashBill") == "1"}
+                          value="1"
+                          id="canCashBill1"
+                          {...register("_canCashBill")}
+                        />
+                        <label
+                          className="listSearchRadioLabel"
+                          htmlFor="canCashBill1"
+                        >
+                          예
+                        </label>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
               </div>
 
               <div className="formContentWrap" style={{ width: "100%" }}>

@@ -649,6 +649,9 @@ input[type="radio"] {
 .formContentWrap div input:not(:nth-last-of-type(1)) {
   margin-bottom: 4px;
 }
+.formPaddingWrap input[type="text"] {
+  width: 100%;
+}
 
 .formContentBtn {
   width: 60px;
@@ -860,6 +863,7 @@ input[type="radio"] {
 .detailContentWrap span {
   line-height: 3.75rem;
 }
+
 /* 공지사항 - 이미지 */
 .detailContentWrap .detailWidthContentImg {
   width: 100%;
@@ -978,6 +982,12 @@ input[type="radio"] {
 .detailContent input {
   width: calc(100% - 60px);
   height: 100%;
+}
+.detailContentCheck > span {
+  width: 220px;
+}
+.detailContentCheck .formPaddingWrap {
+  justify-content: center;
 }
 /* 사업자 상세정보 확인 하단 리뷰 & 공지사항 */
 .detailContentsList {
@@ -1291,6 +1301,9 @@ ul.pagination li a:hover {
   width: auto;
   padding-top: 0.3125rem;
   margin-right: 0.625rem;
+}
+.formLayout .listSearchRadioLabel:last-child {
+  margin-right: 0;
 }
 .formLayout .listSearchRadioInput {
   display: inline-block;
