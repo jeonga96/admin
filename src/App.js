@@ -285,7 +285,7 @@ function App() {
           path="estimateinfo"
           element={
             <MainLayout
-              nowTitle="공사콕 견적 요청서"
+              nowTitle="공사콕 견적의뢰서"
               component={<ListEstimateinfo />}
             />
           }
@@ -294,7 +294,7 @@ function App() {
           path="estimateinfo/add"
           element={
             <MainLayout
-              nowTitle="공사콕 견적 요청서 추가"
+              nowTitle="공사콕 견적의뢰서 추가"
               component={<SetAdminEstimateinfo />}
             />
           }
@@ -303,7 +303,7 @@ function App() {
           path="estimateinfo/:esid"
           element={
             <MainLayout
-              nowTitle="공사콕 견적 요청서 상세 관리"
+              nowTitle="공사콕 견적의뢰서 상세 관리"
               component={<SetAdminEstimateinfo />}
             />
           }
@@ -312,7 +312,7 @@ function App() {
           path="company/:rcid/toestimateinfo"
           element={
             <MainLayout
-              nowTitle="[요청] 공사콕 견적 요청서"
+              nowTitle="[요청] 공사콕 견적의뢰서"
               component={<DetailCompanyEstimateinfo />}
             />
           }
@@ -321,7 +321,7 @@ function App() {
           path="company/:rcid/fromestimateinfo"
           element={
             <MainLayout
-              nowTitle="[수령] 공사콕 견적 요청서"
+              nowTitle="[수령] 공사콕 견적의뢰서"
               component={<DetailCompanyEstimateinfo />}
             />
           }

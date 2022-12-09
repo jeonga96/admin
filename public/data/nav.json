@@ -20,7 +20,7 @@
         "url": "/company"
       },
       {
-        "subName": "견적 요청서 관리",
+        "subName": "견적의뢰서 관리",
         "url": "/estimateinfo"
       },
       {
@@ -43,7 +43,7 @@
         "url": "/appbanner"
       },
       {
-        "subName": "키워드 조회량 관리",
+        "subName": "공사콕 키워드 검색순위 관리",
         "url": "/setkeywords"
       }
     ]

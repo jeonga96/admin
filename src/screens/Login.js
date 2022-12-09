@@ -36,7 +36,6 @@ export default function Login() {
                 type="text"
                 name="_userid"
                 id="userid"
-                placeholder="아이디를 입력해 주세요."
                 {...register("_userid", {
                   required: "아이디는 필수로 입력해야 합니다.",
                   // minLength: {
@@ -72,7 +71,6 @@ export default function Login() {
                 type="password"
                 name="_passwd"
                 id="passwd"
-                placeholder="비밀번호를 입력해 주세요."
                 {...register("_passwd", {
                   required: "비밀번호는 필수로 입력해야 합니다.",
                   // minLength: {

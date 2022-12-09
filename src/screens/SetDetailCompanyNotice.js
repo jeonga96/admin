@@ -127,6 +127,7 @@ export default function SetDetailCompanyNotice() {
               <textarea
                 id="content"
                 placeholder="내용을 입력해 주세요."
+                style={{ height: "400px" }}
                 {...register("_content", {
                   equired: "입력되지 않았습니다.",
                   minLength: {

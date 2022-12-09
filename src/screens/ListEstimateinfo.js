@@ -36,7 +36,7 @@ export default function ListEstimateinfo() {
         page={page}
       />
       <ul className="tableTopWrap">
-        <LayoutTopButton url="add" text="견적요청서 추가" />
+        <LayoutTopButton url="add" text="견적의뢰서 추가" />
       </ul>
 
       <section className="tableWrap">

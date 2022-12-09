@@ -82,7 +82,7 @@ export default function ComponentListUserSearch({
         <fieldset>
           <div className="formWrap">
             <div className="listSearchWrap" style={{ width: "50%" }}>
-              <label className="blockLabel">
+              <label className="blockLabel" id="fromUid">
                 <span>견적 요청</span>
               </label>
               <div>
@@ -99,7 +99,7 @@ export default function ComponentListUserSearch({
               </div>
             </div>
             <div className="listSearchWrap" style={{ width: "50%" }}>
-              <label className="blockLabel">
+              <label className="blockLabel" id="toUid">
                 <span>견적 수령</span>
               </label>
               <div>

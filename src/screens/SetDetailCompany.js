@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
@@ -204,6 +204,8 @@ export default function SetCompanyDetail() {
         : setValue("_subCategory", arr.toString());
     }
   };
+
+  console.log(companyData);
 
   // form submit 이벤트 =========================================
   const handleSubmitEvent = () => {
@@ -922,6 +924,60 @@ export default function SetCompanyDetail() {
               </div>
             </div>
 
+            {/* 견적 관리 링크 이동 ================================================================ */}
+            <fieldset>
+              <h3>견적 관리</h3>
+              <div className="formContentWrap">
+                <label htmlFor="address" className=" blockLabel">
+                  <span>견적의뢰서</span>
+                </label>
+                <ul className="detailContent">
+                  {getedData && (
+                    <PieceDetailListLink
+                      getData={toEstimateinfo}
+                      url={`toestimateinfo`}
+                      title="요청"
+                      inCommon
+                    />
+                  )}
+
+                  {getedData && (
+                    <PieceDetailListLink
+                      getData={fromEstimateinfo}
+                      url={`fromestimateinfo`}
+                      title="수령"
+                      inCommon
+                    />
+                  )}
+                </ul>
+              </div>
+              <div className="formContentWrap">
+                <label htmlFor="address" className=" blockLabel">
+                  <span>견적서</span>
+                </label>
+                <ul className="detailContent">
+                  {getedData && (
+                    <PieceDetailListLink
+                      getData={toproposalInfo}
+                      url={`toproposalInfo`}
+                      title="요청"
+                      inCommon
+                    />
+                  )}
+
+                  {getedData && (
+                    <PieceDetailListLink
+                      getData={fromproposalInfo}
+                      url={`fromproposalInfo`}
+                      title="수령"
+                      inCommon
+                    />
+                  )}
+                </ul>
+              </div>
+            </fieldset>
+
+            {/* 고객관리 링크 이동 ================================================================ */}
             <fieldset>
               <h3>고객 관리</h3>
               <div className="formContentWrap">
@@ -962,13 +1018,37 @@ export default function SetCompanyDetail() {
                   </li>
                 </ul>
               </div>
+
+              <div className="formContentWrap">
+                <label htmlFor="address" className=" blockLabel">
+                  <span>공지사항</span>
+                </label>
+                <ul className="detailContent">
+                  {getedData && (
+                    <PieceDetailListLink
+                      getData={noticeList}
+                      url={`/company/${getedData.rcid}/notice`}
+                      title="공지사항"
+                      inCommon
+                    />
+                  )}
+
+                  {getedData && (
+                    <PieceDetailListLink
+                      getData={reviewList}
+                      url={`/company/${getedData.rcid}/review`}
+                      title="리뷰"
+                      inCommon
+                    />
+                  )}
+                </ul>
+              </div>
             </fieldset>
           </div>
         </form>
       </div>
 
-      {/* notice, review 링크 이동 ================================================================ */}
-      <div className="paddingBox commonBox">
+      {/* <div className="paddingBox commonBox">
         <ul className="detailContentsList">
           {getedData && (
             <PieceDetailListLink
@@ -977,43 +1057,8 @@ export default function SetCompanyDetail() {
               title="공지사항"
             />
           )}
-          {getedData && (
-            <PieceDetailListLink
-              getData={reviewList}
-              url={`/company/${getedData.rcid}/review`}
-              title="리뷰"
-            />
-          )}
-          {toEstimateinfo && companyData.ruid && (
-            <PieceDetailListLink
-              getData={toEstimateinfo}
-              url={`toestimateinfo`}
-              title="[요청] 견적 요청서"
-            />
-          )}
-          {fromEstimateinfo && companyData.ruid && (
-            <PieceDetailListLink
-              getData={fromEstimateinfo}
-              url={`fromestimateinfo`}
-              title="[수령] 견적 요청서"
-            />
-          )}
-          {toproposalInfo && companyData.ruid && (
-            <PieceDetailListLink
-              getData={toproposalInfo}
-              url={`toproposalinfo`}
-              title="[요청] 견적서"
-            />
-          )}
-          {fromproposalInfo && companyData.ruid && (
-            <PieceDetailListLink
-              getData={fromproposalInfo}
-              url={`fromproposalinfo`}
-              title="[수령] 견적서"
-            />
-          )}
         </ul>
-      </div>
+      </div> */}
     </>
   );
 }

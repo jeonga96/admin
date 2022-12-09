@@ -5,10 +5,14 @@
   --color-white: #fff;
   --color-gray: #bdbdbd;
   --color-bggray: #f6f5f4;
-  --color-primary: #9c27b0;
+  --color-primary: #303f9f;
+  --color-lightprimary: #3f51b5;
+  --color-darkprimary: #33447c;
+  --color-acceent: #ffc107;
+  /* --color-primary: #9c27b0;
   --color-lightprimary: #e1bee7;
   --color-darkprimary: #7b1fa2;
-  --color-acceent: #ffc107;
+  --color-acceent: #ffc107; */
   --font-point: "NanumSquare", Pretendard, -apple-system, BlinkMacSystemFont,
     system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo",
     "Noto Sans KR", "Malgun Gothic", sans-serif;
@@ -311,10 +315,13 @@ input[type="radio"] {
 /* 로그인 --------------------------------------------------------------*/
 .loginWrap {
   position: absolute;
-  background-color: var(--color-primary);
+  background: linear-gradient(
+    to bottom,
+    rgb(250, 250, 250),
+    rgb(255, 255, 255) rgb(250, 250, 250)
+  );
   width: 100%;
   height: 100%;
-  padding: 0 1rem;
 }
 
 .loginWrap .loginBox {
@@ -328,10 +335,14 @@ input[type="radio"] {
   padding: 0 1.875rem;
   width: 20.5rem;
   height: 25rem;
+  border-radius: 5px;
+  background-color: var(--color-primary);
+  box-shadow: var(--styles-boxShadow);
 }
 .loginBox h3 {
   margin-bottom: 20px;
   text-align: center;
+  color: var(--color-white);
 }
 .loginBox .formContentWrap {
   display: block;
@@ -349,10 +360,12 @@ input[type="radio"] {
   justify-content: center;
   text-align: left;
   height: auto;
+  color: var(--color-white);
 }
 .loginBox input {
   width: 100%;
   height: 28px;
+  text-indent: 5px;
 }
 
 .widthWideBtn {
@@ -461,7 +474,7 @@ input[type="radio"] {
   width: 100%;
   display: flex;
   justify-content: space-between;
-  margin-top: 20px;
+  margin-top: 10px;
 }
 .setImageWrap .fileboxLabel {
   display: block;
@@ -598,7 +611,7 @@ input[type="radio"] {
   flex-wrap: wrap;
   justify-content: left;
   padding: 26px 4px 4px;
-  margin: 5px 0;
+  margin: 10px 0;
 }
 .formWrap fieldset:last-child {
   margin-bottom: 0;
@@ -979,9 +992,31 @@ input[type="radio"] {
   line-height: 2rem;
   background-color: var(--color-bggray);
 }
-.detailContent input {
+.detailContent input,
+.detailContent .detailContentBox {
   width: calc(100% - 60px);
   height: 100%;
+}
+.detailContentBox {
+  padding: 2px 6px;
+}
+.detailContentBox > span {
+  display: inline-block;
+  width: 70%;
+  height: 100%;
+  line-height: 26px;
+  background-color: var(--color-white);
+}
+.detailContentBox a {
+  width: 30%;
+  height: 100%;
+  text-align: center;
+  line-height: 26px;
+  background-color: var(--color-gray);
+}
+.detailContent a:hover {
+  background-color: var(--color-bgblack);
+  color: var(--color-white);
 }
 .detailContentCheck > span {
   width: 220px;
@@ -998,7 +1033,7 @@ input[type="radio"] {
   height: auto;
 }
 .detailContentsList li {
-  width: calc(15% - 10px);
+  width: calc(25% - 12px);
   height: auto;
   background-color: var(--color-bggray);
   padding: 0.3125rem;

@@ -6,7 +6,6 @@ import { urlCompanyNoticeList } from "../Services/string";
 import LayoutTopButton from "../components/common/LayoutTopButton";
 import ComponentErrorNull from "../components/common/ComponentErrorNull";
 import ComponentListNotice from "../components/common/ComponentListNotice";
-// import PageButton from "../components/common/PageButton";
 
 export default function ListCompanyNotice() {
   let { cid } = useParams();
@@ -16,8 +15,7 @@ export default function ListCompanyNotice() {
     servicesPostData(urlCompanyNoticeList, {
       rcid: cid,
     }).then((res) => {
-      setNotice(res.data);
-      // setListPage(res.page);
+      setNotice(res.data && res.data.reverse());
     });
   }, []);
 
