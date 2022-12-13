@@ -1021,7 +1021,7 @@ export default function SetCompanyDetail() {
 
               <div className="formContentWrap">
                 <label htmlFor="address" className=" blockLabel">
-                  <span>공지사항</span>
+                  <span>커뮤니티 관리</span>
                 </label>
                 <ul className="detailContent">
                   {getedData && (
@@ -1032,7 +1032,6 @@ export default function SetCompanyDetail() {
                       inCommon
                     />
                   )}
-
                   {getedData && (
                     <PieceDetailListLink
                       getData={reviewList}

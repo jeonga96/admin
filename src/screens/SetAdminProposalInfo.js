@@ -184,7 +184,14 @@ export default function SetAdminProposalInfo() {
           <div className="formWrap">
             {/* 갼적서 요청 내용  ================================================================ */}
             <fieldset>
-              <h3>견적서 분류</h3>
+              <h3>
+                견적서 분류
+                {getedData.readFlag == "1" ? (
+                  <span>열람</span>
+                ) : (
+                  <span>미열람</span>
+                )}
+              </h3>
 
               {/* 사용 플래그  */}
               <div className="formContentWrap">

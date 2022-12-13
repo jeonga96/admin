@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from "react";
-import { useParams, useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 
@@ -70,6 +70,7 @@ export default function SetAdminEstimateinfo() {
           setValue("_reqBill", res.data.reqBill.toString() || "1");
           setValue("_useFlag", res.data.useFlag.toString() || "1");
           setValue("_gongsaType", res.data.gongsaType || "reser");
+          setValue("_readFlag", res.data.readFlag || "0");
 
           getDataFinish.current = true;
         }
@@ -215,7 +216,14 @@ export default function SetAdminEstimateinfo() {
           <div className="formWrap">
             {/* 갼적서 요청 내용  ================================================================ */}
             <fieldset>
-              <h3>견적서 요청 내용</h3>
+              <h3>
+                견적서 요청 내용
+                {getedData.readFlag == "1" ? (
+                  <span>열람</span>
+                ) : (
+                  <span>미열람</span>
+                )}
+              </h3>
 
               {/* 사용 플래그  */}
               <div className="formContentWrap">
@@ -312,7 +320,7 @@ export default function SetAdminEstimateinfo() {
               </div>
 
               <div className="formContentWrap">
-                <label htmlFor="toUid" className=" blockLabel">
+                <label htmlFor="fromUid" className=" blockLabel">
                   <span>견적 요청</span>
                 </label>
                 <div>
@@ -336,7 +344,7 @@ export default function SetAdminEstimateinfo() {
               </div>
 
               <div className="formContentWrap">
-                <label htmlFor="fromUid" className=" blockLabel">
+                <label htmlFor="toUid" className=" blockLabel">
                   <span>견적 수령</span>
                 </label>
                 <div>
@@ -376,7 +384,7 @@ export default function SetAdminEstimateinfo() {
               />
 
               <div className="formContentWrap" style={{ width: "100%" }}>
-                <label htmlFor="toUid" className=" blockLabel">
+                <label htmlFor="reqDetail" className=" blockLabel">
                   <span>요청 내역</span>
                 </label>
                 <div>
@@ -536,6 +544,7 @@ export default function SetAdminEstimateinfo() {
                 <div>
                   <input
                     placeholder="견적 응답이 돌아오지 않았습니다."
+                    id="proPrice"
                     value={
                       (watch("_proPrice") &&
                         watch("_proPrice")

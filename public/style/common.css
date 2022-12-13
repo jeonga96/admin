@@ -309,7 +309,7 @@ input[type="radio"] {
 }
 .navContentPart .focusNavLink {
   font-weight: 700;
-  color: var(--color-darkprimary);
+  color: var(--color-lightprimary);
 }
 
 /* 로그인 --------------------------------------------------------------*/
@@ -630,6 +630,15 @@ input[type="radio"] {
   color: var(--color-black);
   background-color: var(--color-acceent);
   padding: 0 10px;
+}
+.formWrap h3 span {
+  font-size: var(--font-size-small);
+  font-weight: 600;
+  color: var(--color-white);
+  margin-left: 5px;
+  background-color: var(--color-black);
+  padding: 1px 5px;
+  border-radius: 2px;
 }
 
 .formContentWrap {
@@ -1150,7 +1159,8 @@ input[type="radio"] {
 }
 
 /* 테이블 내 세부 콘텐츠 */
-.commonTable i {
+.commonTable i,
+.tableIcon {
   display: inline-block;
   width: 1.875rem;
   height: 0.875rem;
@@ -1158,7 +1168,7 @@ input[type="radio"] {
   font-size: 0.625rem;
   margin-left: 0.3125rem;
 }
-.commonTable .tableIcon {
+.tableIcon {
   background-color: var(--color-bgblack);
   color: var(--color-white);
   border-radius: 0.1875rem;

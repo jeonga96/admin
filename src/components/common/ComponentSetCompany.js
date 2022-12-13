@@ -3,21 +3,32 @@ import { useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
 import { servicesPostData } from "../../Services/importData";
-import { urlGetCompany } from "../../Services/string";
+import { urlGetCompany, urlGetUserCid } from "../../Services/string";
 
 export default function ComponentSetCompany({ companyData, setCompanyData }) {
   const { cid } = useParams();
-
   // react-hook-form 라이브러리
-  const {
-    register,
-    setValue,
-    // formState: { isSubmitting, errors },
-  } = useForm();
+  const { register, setValue } = useForm();
 
-  function fnSetCompanyrData(res) {
+  // 계약자, 사업자 활성화, 회원연결 입력 이벤트
+  const fnSetCompanyrData = (res) => {
     setCompanyData({ ...companyData, ...res });
-  }
+  };
+
+  // 회원연결 시 사용된 cid 중복 입력 불가능하도록 설정하는 조건
+  const userLinkedCidCk = (e) => {
+    // 입력한 uid와 연결된 cid가 있는지 확인 후 값이 없다면 입력
+    // 현재 cid와 동일한 값을 입력했을 경우 입력 아닐 시 오류 확인
+    servicesPostData(urlGetUserCid, { uid: e.target.value }).then((res) => {
+      if (res.emsg === "process failed.") {
+        fnSetCompanyrData({ [e.target.id]: e.target.value });
+      } else {
+        res.data.cid == cid
+          ? fnSetCompanyrData({ [e.target.id]: e.target.value })
+          : alert("이미 연결된 회원 관리번호입니다. 다시 입력해 주십시오,");
+      }
+    });
+  };
 
   useEffect(() => {
     // 기본 회사정보 불러오기
@@ -112,9 +123,7 @@ export default function ComponentSetCompany({ companyData, setCompanyData }) {
             name="_ruid"
             id="ruid"
             {...register("_ruid", {
-              onChange: (e) => {
-                fnSetCompanyrData({ [e.target.id]: e.target.value });
-              },
+              onBlur: userLinkedCidCk,
             })}
           />
         </div>
