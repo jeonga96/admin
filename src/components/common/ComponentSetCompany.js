@@ -1,7 +1,9 @@
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { ToastContainer, toast } from "react-toastify";
 
+import "react-toastify/dist/ReactToastify.css";
 import { servicesPostData } from "../../Services/importData";
 import { urlGetCompany, urlGetUserCid } from "../../Services/string";
 
@@ -23,10 +25,24 @@ export default function ComponentSetCompany({ companyData, setCompanyData }) {
       if (res.emsg === "process failed.") {
         fnSetCompanyrData({ [e.target.id]: e.target.value });
       } else {
-        res.data.cid == cid
-          ? fnSetCompanyrData({ [e.target.id]: e.target.value })
-          : alert("이미 연결된 회원 관리번호입니다. 다시 입력해 주십시오,");
+        if (res.data.cid == cid) {
+          fnSetCompanyrData({ [e.target.id]: e.target.value });
+        } else {
+          document.getElementById("ruid").focus();
+
+          toast.warn("이미 연결된 회원 관리번호입니다.", {
+            position: "top-center",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+        }
       }
+      return;
     });
   };
 
@@ -52,6 +68,18 @@ export default function ComponentSetCompany({ companyData, setCompanyData }) {
 
   return (
     <>
+      <ToastContainer
+        position="top-center"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
       <div className="formContentWrap">
         <div className="blockLabel">
           <span>계약자</span>
