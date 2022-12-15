@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
 import { servicesPostData } from "../../Services/importData";
+import { servicesUseToast } from "../../Services/useData";
 import { urlGetUser, urlSetUser } from "../../Services/string";
 
 export default function ComponentSetUser({ setUserData, userData }) {
@@ -40,7 +41,7 @@ export default function ComponentSetUser({ setUserData, userData }) {
       passwd: watch("_passwd"),
     }).then((res) => {
       if (res.status === "success") {
-        alert("비밀번호 변경이 완료되었습니다.");
+        servicesUseToast("비밀번호 변경이 완료되었습니다.");
       }
     });
   };

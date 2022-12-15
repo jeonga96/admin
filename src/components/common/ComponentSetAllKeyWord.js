@@ -4,6 +4,7 @@ import {
   servicesPostData,
 } from "../../Services/importData";
 import { urlAllKeyword, ALLKEYWORD } from "../../Services/string";
+import { servicesUseToast } from "../../Services/useData";
 import { useState, useEffect, useRef } from "react";
 
 export default function SetAllKeyWord({
@@ -44,7 +45,7 @@ export default function SetAllKeyWord({
   const handleKeywordOnclick = (item, e) => {
     e.preventDefault();
     if (companyDetailKeyword.length > 19) {
-      alert("최대 20개까지 입력할 수 있습니다.");
+      servicesUseToast("최대 20개까지 입력할 수 있습니다.");
     } else {
       companyDetailKeyword.forEach((el) => clickedKeyword.push(el.kid));
       if (!clickedKeyword.includes(item.kid)) {

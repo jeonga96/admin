@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 import { servicesPostData } from "../../Services/importData";
+import { servicesUseToast } from "../../Services/useData";
 import {
   urlListEstimateInfo,
   urlListProposalInfo,
@@ -44,7 +45,7 @@ export default function ComponentListUserSearch({
       }
     ).then((res) => {
       if (res.status === "fail") {
-        alert("검색하신 데이터가 없습니다.");
+        servicesUseToast("검색하신 데이터가 없습니다.", "e");
       }
       if (res.status === "success") {
         userList(res.data);

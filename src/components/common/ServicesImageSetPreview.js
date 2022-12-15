@@ -5,6 +5,7 @@ import {
 } from "../../Services/importData";
 import { useDidMountEffect } from "../../Services/customHook";
 import { urlUpImages, urlGetImages } from "../../Services/string";
+import { servicesUseToast } from "../../Services/useData";
 import ServicesImageOnClick from "./ServicesImageOnClick";
 
 export default function ImageSet({
@@ -86,7 +87,9 @@ export default function ImageSet({
         // 견적서 관리 - 견적서 응답 참고 이미지 : addImgs ==============================
         fnSetImgs([...imgs]);
         if (imgs.length + res.data.length > 25) {
-          return alert("이미지는 최대 25개까지 입력하실 수 있습니다.");
+          return servicesUseToast(
+            "이미지는 최대 25개까지 입력하실 수 있습니다."
+          );
         }
         for (let i = 0; i < res.data.length; i++) {
           setImgs((prev) => [res.data[i], ...prev]);
@@ -95,7 +98,9 @@ export default function ImageSet({
         // 회원, 사업자 관리 - 상세 이미지 : regImgs ==============================
         fnSetImgs([...imgs]);
         if (imgs.length + res.data.length > 25) {
-          return alert("상세 이미지는 최대 25개까지 입력하실 수 있습니다.");
+          return servicesUseToast(
+            "상세 이미지는 최대 25개까지 입력하실 수 있습니다."
+          );
         }
         for (let i = 0; i < res.data.length; i++) {
           fnSetImgs((prev) => [res.data[i], ...prev]);

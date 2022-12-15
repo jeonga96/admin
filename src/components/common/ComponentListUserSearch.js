@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 import { servicesPostData } from "../../Services/importData";
+import { servicesUseToast } from "../../Services/useData";
 import { urlUserlist } from "../../Services/string";
 
 export default function ComponentListUserSearch({
@@ -49,12 +50,13 @@ export default function ComponentListUserSearch({
       useFlag: getValues("_useFlag"),
     }).then((res) => {
       if (res.status === "fail") {
-        alert("검색하신 데이터가 없습니다.");
+        servicesUseToast("검색하신 데이터가 없습니다.", "e");
       }
       if (res.status === "success") {
         userList(res.data);
         listPage(res.page);
         setSearchClick(true);
+        servicesUseToast("완료되었습니다.", "s");
       }
     });
   }
