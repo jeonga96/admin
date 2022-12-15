@@ -1,4 +1,5 @@
 import { servicesPostData } from "./importData";
+import { toast } from "react-toastify";
 
 export function serviesPostDataSettingRcid(url, valueName, setData) {
   servicesPostData(url, { rcid: valueName }).then((res) => {
@@ -46,4 +47,47 @@ export function serviesGetKid(variable, data, allData) {
     }
   });
   return variable(arrPushData);
+}
+
+// 안내창 라이브러리
+export function servicesUseToast(text, type) {
+  switch (type) {
+    case "s":
+      toast.success(text, {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      break;
+
+    case "e":
+      toast.error(text, {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      break;
+
+    default:
+      toast.warn(text, {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+  }
 }

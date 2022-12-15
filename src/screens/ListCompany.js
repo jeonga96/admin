@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useState, useLayoutEffect } from "react";
 import { servicesPostData } from "../Services/importData";
+import { servicesUseToast } from "../Services/useData";
 import {
   urlCompanylist,
   urlSetCompany,
@@ -45,7 +46,7 @@ function ListInTr({
         setUseFlagCk(!useFlagCk);
         checkedItemHandler(target.name, target.id, target.checked);
       } else {
-        alert("계약관리와 회원상태를 한 번에 수정하실 수 없습니다.");
+        servicesUseToast("계약관리와 회원상태를 한 번에 수정하실 수 없습니다.");
       }
     }
 
@@ -55,7 +56,7 @@ function ListInTr({
         setStatusCk(!statusCk);
         checkedItemHandler(target.name, target.id, target.checked);
       } else {
-        alert("계약관리와 회원상태를 한 번에 수정하실 수 없습니다.");
+        servicesUseToast("계약관리와 회원상태를 한 번에 수정하실 수 없습니다.");
       }
     }
   };

@@ -1,10 +1,10 @@
 import { useEffect, useState, useRef } from "react";
-import { useParams, useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 
 import { servicesPostData } from "../Services/importData";
-import { serviesGetImgsIid } from "../Services/useData";
+import { serviesGetImgsIid, servicesUseToast } from "../Services/useData";
 import { urlGetProposalInfo, urlSetProposalInfo } from "../Services/string";
 
 import LayoutTopButton from "../components/common/LayoutTopButton";
@@ -160,9 +160,11 @@ export default function SetAdminProposalInfo() {
           }
     )
       .then((res) => {
+        if (res.status === "fail") {
+          servicesUseToast("입력에 실패했습니다.", "e");
+        }
         if (res.status === "success") {
-          console.log(res);
-          alert("완료되었습니다!");
+          servicesUseToast("완료되었습니다!", "s");
           return;
         }
       })

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { servicesPostData } from "../Services/importData";
+import { servicesUseToast } from "../Services/useData";
 import { urlGetUserDetail } from "../Services/string";
 import { useGetImage } from "../Services/customHook";
 
@@ -23,10 +24,11 @@ export default function DetailUser() {
     }).then((res) => {
       if (res.status === "success") {
         setUserDetail(res.data);
+        servicesUseToast("완료되었습니다.", "s");
         return;
       }
       if (res.status === "fail" && res.emsg === "process failed.") {
-        alert("정보가 없습니다. 사용자정보를 입력해 주세요.");
+        servicesUseToast("정보가 없습니다. 사용자정보를 입력해 주세요.");
         window.location.href = `user/${uid}/setUserDetail`;
         return;
       }

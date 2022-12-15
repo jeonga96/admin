@@ -4,6 +4,7 @@ import { ErrorMessage } from "@hookform/error-message";
 
 import { urlCompanyGetNotice, urlCompanySetNotice } from "../Services/string";
 import { servicesPostData } from "../Services/importData";
+import { servicesUseToast } from "../Services/useData";
 import { useParams } from "react-router-dom";
 
 import SetImage from "../components/common/ServicesImageSetPreview";
@@ -66,9 +67,13 @@ export default function SetDetailCompanyNotice() {
           }
     )
       .then((res) => {
+        console.log(res.data);
+        if (res.status === "fail") {
+          servicesUseToast("입력에 실패했습니다.", "e");
+        }
         if (res.status === "success") {
-          alert("완료되었습니다!");
-          window.location.href = `/company/${cid}/notice`;
+          servicesUseToast("완료되었습니다!", "s");
+          window.location.href = `/company/${cid}/notice/${res.data.comnid}`;
           return;
         }
       })

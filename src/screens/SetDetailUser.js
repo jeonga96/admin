@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 
 import { servicesPostData } from "../Services/importData";
-import { serviesGetImgsIid } from "../Services/useData";
+import { serviesGetImgsIid, servicesUseToast } from "../Services/useData";
 import {
   urlSetUserDetail,
   urlGetUserDetail,
@@ -87,12 +87,15 @@ export default function SetDetailUser() {
       imgs: setImgs ? imgsIid.toString() : "",
     })
       .then((res) => {
+        if (res.status === "fail") {
+          servicesUseToast("입력에 실패했습니다.", "e");
+        }
         if (res.status === "success") {
-          alert("완료되었습니다!");
+          servicesUseToast("완료되었습니다!", "s");
           return;
         }
       })
-      .catch((error) => console.log("axios 실패", error.response));
+      .catch((error) => console.log(error));
   }
 
   return (

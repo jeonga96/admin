@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 
 import { servicesPostData } from "../Services/importData";
+import { servicesUseToast } from "../Services/useData";
 import { urlAddcompany } from "../Services/string";
 import LayoutTopButton from "../components/common/LayoutTopButton";
 
@@ -27,13 +28,13 @@ export default function AddCompany() {
       name: CompanyData.name[0],
     })
       .then((res) => {
-        console.log("axios는 성공했는데 말이죠", res);
         if (res.status === "fail") {
-          alert("잘못된 값을 입력했습니다.");
+          servicesUseToast("잘못된 값을 입력했습니다.", "e");
           return;
         }
         if (res.status === "success") {
-          alert("가입이 완료되었습니다!");
+          servicesUseToast("가입이 완료되었습니다!", "s");
+
           navigate(`/company/${res.data.cid}`, {
             replace: true,
           });

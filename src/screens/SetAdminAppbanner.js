@@ -8,7 +8,7 @@ import {
 } from "../Services/string";
 import { servicesPostData } from "../Services/importData";
 import { useDidMountEffect } from "../Services/customHook";
-import { serviesGetImgId } from "../Services/useData";
+import { serviesGetImgId, servicesUseToast } from "../Services/useData";
 
 import SetImage from "../components/common/ServicesImageSetUrl";
 
@@ -111,17 +111,17 @@ export default function SetAdminAppbanner() {
       )
         .then((res) => {
           if (res.status === "fail") {
-            alert("입력에 실패했습니다.");
+            servicesUseToast("입력에 실패했습니다.", "e");
           }
           if (res.status === "success") {
-            alert("완료되었습니다!");
+            servicesUseToast("완료되었습니다!", "s");
             window.location.reload();
             return;
           }
         })
         .catch((error) => console.log("axios 실패", error.response));
     } else {
-      alert("입력되지 않은 값이 있습니다.");
+      servicesUseToast("입력되지 않은 값이 있습니다.");
     }
   }
 

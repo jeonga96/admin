@@ -4,7 +4,7 @@ import { ErrorMessage } from "@hookform/error-message";
 
 import { urlSetContent, urlGetContent } from "../Services/string";
 import { servicesPostData } from "../Services/importData";
-import { serviesGetImgsIid } from "../Services/useData";
+import { serviesGetImgsIid, servicesUseToast } from "../Services/useData";
 import { useParams } from "react-router-dom";
 
 import SetImage from "../components/common/ServicesImageSetPreview";
@@ -71,10 +71,10 @@ export default function SetDetailAdminNotice() {
     )
       .then((res) => {
         if (res.status === "fail") {
-          alert("입력에 실패했습니다,");
+          servicesUseToast("입력에 실패했습니다.", "e");
         }
         if (res.status === "success") {
-          alert("완료되었습니다!");
+          servicesUseToast("완료되었습니다!", "s");
           window.location.href = `/adminnotice/${res.data.contid}`;
           return;
         }

@@ -1,10 +1,13 @@
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 
 import { servicesPostData, servicesGetStorage } from "../Services/importData";
-import { serviesPostDataSettingRcid } from "../Services/useData";
+import {
+  serviesPostDataSettingRcid,
+  servicesUseToast,
+} from "../Services/useData";
 import {
   serviesGetImgsIid,
   serviesGetKeywords,
@@ -190,13 +193,13 @@ export default function SetCompanyDetail() {
     let arr = e.target.value.split(",");
     if (e.target.id === "tags") {
       if (arr.length > 20) {
-        alert("최대 20개까지 입력할 수 있습니다.");
+        servicesUseToast("최대 20개까지 입력할 수 있습니다.");
         arr = arr.filter((it, i) => i < 20);
       }
       return setValue("_tag", arr.toString());
     } else {
       if (arr.length > 10) {
-        alert("최대 10개까지 입력할 수 있습니다.");
+        servicesUseToast("최대 10개까지 입력할 수 있습니다.");
         arr = arr.filter((it, i) => i < 10);
       }
       return e.target.id === "bigCategory"
@@ -258,8 +261,11 @@ export default function SetCompanyDetail() {
         )},${getValues("_linkurl4")},${getValues("_linkurl5")},` || "",
     })
       .then((res) => {
+        if (res.status === "fail") {
+          servicesUseToast("입력에 실패했습니다.", "e");
+        }
         if (res.status === "success") {
-          alert("완료되었습니다.");
+          servicesUseToast("완료되었습니다!", "s");
           return;
         }
       })

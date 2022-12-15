@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 
 import { servicesPostData } from "../Services/importData";
-import { serviesGetImgsIid } from "../Services/useData";
+import { serviesGetImgsIid, servicesUseToast } from "../Services/useData";
 import { urlSetEstimateInfo, urlGetEstimateInfo } from "../Services/string";
 
 import LayoutTopButton from "../components/common/LayoutTopButton";
@@ -135,8 +135,7 @@ export default function SetAdminEstimateinfo() {
       )
         .then((res) => {
           if (res.status === "success") {
-            console.log(res);
-            alert("완료되었습니다!");
+            servicesUseToast("완료되었습니다!", "s");
             return;
           }
         })
@@ -193,7 +192,7 @@ export default function SetAdminEstimateinfo() {
       )
         .then((res) => {
           if (res.status === "success") {
-            alert("완료되었습니다!");
+            servicesUseToast("완료되었습니다!", "s");
             return;
           }
         })

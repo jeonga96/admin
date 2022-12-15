@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { urlSetKeyword, urlAllKeyword, ALLKEYWORD } from "../Services/string";
 import { servicesPostData, servicesSetStorage } from "../Services/importData";
+import { servicesUseToast } from "../Services/useData";
 
 import LayoutTopButton from "../components/common/LayoutTopButton";
 import ComponentListAdminKeyword from "../components/common/ComponentListAdminKeyword";
@@ -88,7 +89,7 @@ export default function SetAdminKeyeords() {
     setSearchBtn(false);
     setAllKeywords([]);
     setSubmit(!sumbit);
-    alert("완료되었습니다.");
+    servicesUseToast("완료되었습니다.", "s");
   };
 
   // 초기화 버튼

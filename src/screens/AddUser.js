@@ -3,6 +3,7 @@ import { ErrorMessage } from "@hookform/error-message";
 import { useNavigate } from "react-router-dom";
 
 import { servicesPostData } from "../Services/importData";
+import { servicesUseToast } from "../Services/useData";
 import { urlAdduser } from "../Services/string";
 
 import LayoutTopButton from "../components/common/LayoutTopButton";
@@ -28,15 +29,17 @@ export default function AddUser() {
           res.status === "fail" &&
           res.emsg === "Database update failure. check duplicate userid"
         ) {
-          alert("이미 가입된 아이디입니다. 다른 아이디를 입력해 주세요,");
+          servicesUseToast(
+            "이미 가입된 아이디입니다. 다른 아이디를 입력해 주세요,"
+          );
           return;
         }
         if (res.status === "fail") {
-          alert("잘못된 값을 입력했습니다.");
+          servicesUseToast("잘못된 값을 입력했습니다.", "e");
           return;
         }
         if (res.status === "success") {
-          alert("가입이 완료되었습니다!");
+          servicesUseToast("가입이 완료되었습니다!", "s");
           navigate(`/user`, {
             replace: true,
           });
@@ -66,18 +69,18 @@ export default function AddUser() {
                 placeholder="아이디를 입력해 주세요."
                 {...register("_userid", {
                   required: "아이디는 필수로 입력해야 합니다.",
-                  minLength: {
-                    value: 4,
-                    message: "4자 이상으로 입력해주세요.",
-                  },
-                  maxLength: {
-                    value: 16,
-                    message: "16자 이하로 입력해주세요.",
-                  },
-                  pattern: {
-                    value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{4,16}$/g,
-                    message: "영문, 숫자를 포함해 주세요.",
-                  },
+                  // minLength: {
+                  //   value: 4,
+                  //   message: "4자 이상으로 입력해주세요.",
+                  // },
+                  // maxLength: {
+                  //   value: 16,
+                  //   message: "16자 이하로 입력해주세요.",
+                  // },
+                  // pattern: {
+                  //   value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{4,16}$/g,
+                  //   message: "영문, 숫자를 포함해 주세요.",
+                  // },
                 })}
               />
 

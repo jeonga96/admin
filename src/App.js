@@ -51,6 +51,7 @@ import {
   servicesSetStorage,
 } from "./Services/importData";
 import { urlAllKeyword, TOKEN, ALLKEYWORD } from "./Services/string";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   const location = useLocation();
@@ -111,6 +112,18 @@ function App() {
 
   return (
     <div className="App">
+      <ToastContainer
+        position="top-center"
+        autoClose={2000}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
       <Routes>
         <Route
           path="/"
