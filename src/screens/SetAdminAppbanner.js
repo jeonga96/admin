@@ -11,6 +11,7 @@ import { useDidMountEffect } from "../Services/customHook";
 import { serviesGetImgId, servicesUseToast } from "../Services/useData";
 
 import SetImage from "../components/common/ServicesImageSetUrl";
+import PaginationButton from "../components/common/PiecePaginationButton";
 
 export default function SetAdminAppbanner() {
   const {
@@ -23,36 +24,46 @@ export default function SetAdminAppbanner() {
     formState: { isSubmitting },
   } = useForm();
 
-  // 저장된 배너 리스트 불러오기 & 저장
+  // bannerlist:저장된 배너 리스트 불러오기
   const [bannerlist, setBannerlist] = useState([]);
-
   // getDataFinish:기존에 입력된 값이 있어 값을 불러왔다면 true로 변경,
   const getDataFinish = useRef(false);
-  // clickedContid가 입력되면 수정 아니면 작성기능을 수행하도록 설정
+  // clickedContid : clickedContid !== null 이라면 수정 아니면 작성기능을 수행
   const [clickedContid, setClickedContid] = useState(null);
-  // img: 이미지저장 및 표시
+
+  // [이미지 관련]
+  // img:이미지 저장 / imgsIid:서버에 이미지를 보낼 때는, iid값만 필요 / changeImg: 이미지 수정 시 수정된 이미지 저장
   const [img, setImg] = useState(null);
-  // imgsIid:서버에 이미지를 보낼 때는, iid값만 필요
   const imgsIid = [];
-  const [changeImg, setChangeImg] = useState("");
+  const [changeImg, setChangeImg] = useState(null);
+
+  // [목록 페이지 버튼 관련]
+  // listPage: 컨텐츠 총 개수 / page:전체 페이지 수 & 현재 페이지
+  const [listPage, setListPage] = useState({});
+  const [page, setPage] = useState({ getPage: 0, activePage: 1 });
 
   // 화면 렌더링 시 가장 처음 발생되는 이벤트
   useEffect(() => {
+    // 카테고리 banner의 앱배너 컨텐츠를 0번째부터 15개씩 가지고 온다.
     servicesPostData(urlContentList, {
       category: "banner",
-      offset: 0,
-      size: 10,
+      offset: page.getPage,
+      size: 15,
     })
       .then((res) => {
+        // bannerlist : 컨텐츠 카테고리가 배너인 목록 가지고 오기
+        // listPage : pagination이용을 위해 가지고 옴
         if (res.status === "success") {
           setBannerlist(res.data);
+          setListPage(res.page);
         } else if (res.data === "fail") {
           console.log("기존에 입력된 데이터가 없습니다.");
         }
       })
       .catch((res) => console.log(res));
+    // 배너관리 상단 검색 창 사용여부 기본값 지정
     setValue("_useFlag", "1");
-  }, []);
+  }, [page.getPage]);
 
   // bannerlist의 데이터를 받아오면 기존 배너의 이미지 데이터를 받아온다.
   useDidMountEffect(() => {
@@ -219,8 +230,8 @@ export default function SetAdminAppbanner() {
               <button
                 type="reset"
                 onClick={() => {
-                  setClickedContid("");
-                  setChangeImg("");
+                  setClickedContid(null);
+                  setChangeImg(null);
                   reset();
                 }}
               >
@@ -231,7 +242,7 @@ export default function SetAdminAppbanner() {
                 type="reset"
                 onClick={() => {
                   reset();
-                  setChangeImg("");
+                  setChangeImg(null);
                 }}
               >
                 초기화
@@ -308,6 +319,7 @@ export default function SetAdminAppbanner() {
               ))}
           </tbody>
         </table>
+        <PaginationButton listPage={listPage} page={page} setPage={setPage} />
       </div>
     </>
   );

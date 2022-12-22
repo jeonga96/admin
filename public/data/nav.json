@@ -1,7 +1,6 @@
 [
   {
     "name": "회원 관리",
-    "icon": "https://demo.dashboardpack.com/sales-html/img/menu-icon/dashboard.svg",
     "url": null,
     "subNav": [
       {
@@ -12,7 +11,6 @@
   },
   {
     "name": "사업자 회원 관리",
-    "icon": "https://demo.dashboardpack.com/sales-html/img/menu-icon/dashboard.svg",
     "url": null,
     "subNav": [
       {
@@ -31,20 +29,19 @@
   },
   {
     "name": "공사콕 앱 관리",
-    "icon": "https://demo.dashboardpack.com/sales-html/img/menu-icon/dashboard.svg",
     "url": null,
     "subNav": [
       {
+        "subName": "공사콕 키워드 검색순위 관리",
+        "url": "/setkeywords"
+      },
+      {
         "subName": "공지사항 관리",
-        "url": "/adminnotice"
+        "url": "/notice"
       },
       {
         "subName": "앱 배너 관리",
         "url": "/appbanner"
-      },
-      {
-        "subName": "공사콕 키워드 검색순위 관리",
-        "url": "/setkeywords"
       }
     ]
   }

@@ -72,7 +72,6 @@ export default function SetDetailCompanyNotice() {
           servicesUseToast("입력에 실패했습니다.", "e");
         }
         if (res.status === "success") {
-          servicesUseToast("완료되었습니다!", "s");
           window.location.href = `/company/${cid}/notice/${res.data.comnid}`;
           return;
         }

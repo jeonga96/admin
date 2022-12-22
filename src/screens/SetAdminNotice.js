@@ -37,7 +37,6 @@ export default function SetDetailAdminNotice() {
         .then((res) => {
           if (res.status === "success") {
             setNoticeDetail(res.data);
-
             setValue("_category", res.data.category || "notice");
             setValue("_contentString", res.data.contentString || "");
             setValue("_contentDetail", res.data.contentDetail || "");
@@ -70,13 +69,12 @@ export default function SetDetailAdminNotice() {
           }
     )
       .then((res) => {
+        if (res.status === "success") {
+          window.location.href = `notice/${res.data.contid}`;
+          return;
+        }
         if (res.status === "fail") {
           servicesUseToast("입력에 실패했습니다.", "e");
-        }
-        if (res.status === "success") {
-          servicesUseToast("완료되었습니다!", "s");
-          window.location.href = `/adminnotice/${res.data.contid}`;
-          return;
         }
       })
       .catch((error) => console.log("axios 실패", error.response));

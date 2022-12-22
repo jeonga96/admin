@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import "react-toastify/dist/ReactToastify.css";
 
 /* 기본 레이아웃 & 기능 */
 import MainLayout from "./components/common/LayoutMain";
@@ -238,7 +239,7 @@ function App() {
         {/* --------------앱관리 --------------*/}
         {/* ------- 공지사항 관리 ------- */}
         <Route
-          path="adminnotice"
+          path="notice"
           element={
             <MainLayout
               nowTitle="공사콕 공지사항"
@@ -247,7 +248,7 @@ function App() {
           }
         />
         <Route
-          path="adminnotice/set"
+          path="notice/set"
           element={
             <MainLayout
               nowTitle="공사콕 공지사항 작성"
@@ -256,7 +257,7 @@ function App() {
           }
         />
         <Route
-          path="adminnotice/:contid"
+          path="notice/:contid"
           element={
             <MainLayout
               nowTitle="공사콕 공지사항"
@@ -265,7 +266,7 @@ function App() {
           }
         />
         <Route
-          path="adminnotice/:contid/set"
+          path="notice/:contid/set"
           element={
             <MainLayout
               nowTitle="공사콕 공지사항 수정"

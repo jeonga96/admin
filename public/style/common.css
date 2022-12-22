@@ -423,8 +423,8 @@ input[type="radio"] {
 .formLayout input {
   width: 100%;
   height: 2rem;
-  background-color: transparent;
-  border: 0.0625rem solid var(--color-bggray);
+  background-color: rgba(200, 200, 200, 0.1);
+  border: 0.0625rem solid rgba(200, 200, 200, 0.3);
   padding: 0 0.3125rem;
   text-align: center;
 }

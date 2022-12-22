@@ -68,6 +68,7 @@ export default function SetAdminProposalInfo() {
             setValue("_telnum", res.data.telnum || "");
             setValue("_price", res.data.price || "");
             setValue("_extraCon", res.data.extraCon || "");
+            setValue("_caddr", res.data.caddr || "");
 
             setValue("_useFlag", res.data.useFlag.toString() || "1");
             setValue("_gongsaType", res.data.gongsaType || "reser");
@@ -112,7 +113,7 @@ export default function SetAdminProposalInfo() {
               (getValues("_registration") &&
                 getValues("_registration").slice(4, 6)) ||
               "",
-            caddr: multilAddress.siteAddress,
+            caddr: getValues("_caddr"),
             telnum: getValues("_telnum"),
             price:
               (getValues("_price") && getValues("_price").replace(",", "")) ||
@@ -143,7 +144,7 @@ export default function SetAdminProposalInfo() {
               (getValues("_registration") &&
                 getValues("_registration").slice(4, 6)) ||
               "",
-            caddr: multilAddress.siteAddress,
+            caddr: getValues("_caddr"),
             telnum: getValues("_telnum"),
             price:
               (getValues("_price") && getValues("_price").replace(",", "")) ||
@@ -425,12 +426,19 @@ export default function SetAdminProposalInfo() {
               </div>
 
               {/* 주소 */}
-              <PieceRegisterSearchPopUp
-                siteAddress
-                setMultilAddress={setMultilAddress}
-                multilAddress={multilAddress}
-                getedData={getedData}
-              />
+              <div className="formContentWrap">
+                <label htmlFor="caddr" className=" blockLabel">
+                  <span>사업장 주소</span>
+                </label>
+                <div>
+                  <input
+                    type="text"
+                    id="caddr"
+                    placeholder="사업장 주소를 입력해주세요."
+                    {...register("_caddr")}
+                  />
+                </div>
+              </div>
 
               {/* 카드 결제 여부----------------- */}
               <div className="formContentWrap">

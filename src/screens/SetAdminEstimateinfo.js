@@ -13,7 +13,6 @@ import PieceRegisterSearchPopUp from "../components/common/PieceRegisterSearchPo
 
 export default function SetAdminEstimateinfo() {
   const { esid } = useParams();
-
   // react-hook-form 라이브러리
   const {
     handleSubmit,
@@ -24,12 +23,17 @@ export default function SetAdminEstimateinfo() {
     formState: { isSubmitting, errors },
   } = useForm();
 
-  // titleImg:대표 이미지저장 및 표시, imgs:상세 이미지저장 및 표시, imgsIid:서버에 이미지를 보낼 때는, iid값만 필요
-  const [getedData, setGetedData] = useState([]);
-  const [imgs, setImgs] = useState([]);
   // getDataFinish:기존에 입력된 값이 있어 값을 불러왔다면 true로 변경,
   const getDataFinish = useRef(false);
+  // 추가가 아닌, 수정 시 불러온 기존 값을 getedData에 할당
+  const [getedData, setGetedData] = useState([]);
+
+  // [이미지 관련]
+  // imgs:상세 이미지저장 및 표시, imgsIid:서버에 이미지를 보낼 때는, iid값만 필요
+  const [imgs, setImgs] = useState([]);
   const imgsIid = [];
+
+  // [문구 관련]
   const [multilAddress, setMultilAddress] = useState({});
 
   // 현재 페이지가 렌더링되자마자 기존에 입력된 값의 여부를 확인한다.
@@ -39,7 +43,7 @@ export default function SetAdminEstimateinfo() {
     setValue("_reqBill", "1");
     setValue("_useFlag", "1");
     setValue("_gongsaType", "reser");
-
+    // 해당 esid의 견적의뢰서 가지고 오기
     servicesPostData(urlGetEstimateInfo, {
       esid: esid,
     })
@@ -47,7 +51,6 @@ export default function SetAdminEstimateinfo() {
         if (res.status === "success") {
           // 이미지 iid를 가지고 오기 위해 (imgs, titleImg) 사용
           setGetedData(res.data);
-
           // 값이 있다면 inputValue에 저장한 후 getDataFinish 값을 변경
           setValue("_fromUid", res.data.fromUid || "");
           setValue("_toUid", res.data.toUid || "");
@@ -71,6 +74,7 @@ export default function SetAdminEstimateinfo() {
           setValue("_useFlag", res.data.useFlag.toString() || "1");
           setValue("_gongsaType", res.data.gongsaType || "reser");
           setValue("_readFlag", res.data.readFlag || "0");
+          setValue("_siteAddress", res.data.siteAddress);
 
           getDataFinish.current = true;
         }
@@ -157,7 +161,7 @@ export default function SetAdminEstimateinfo() {
                 (getValues("_reqPrice") &&
                   getValues("_reqPrice").replace(",", "")) ||
                 "",
-              siteAddress: multilAddress.siteAddress,
+              siteAddress: getValues("_siteAddress"),
               reqVisit: reqDate.toISOString().slice(0, 19) || "",
               reqEstimate: getValues("_reqEstimate"),
               reqBill: getValues("_reqBill"),
@@ -175,7 +179,7 @@ export default function SetAdminEstimateinfo() {
                 (getValues("_reqPrice") &&
                   getValues("_reqPrice").replace(",", "")) ||
                 "",
-              siteAddress: multilAddress.siteAddress,
+              siteAddress: getValues("_siteAddress"),
               reqVisit: reqDate.toISOString().slice(0, 19) || "",
               reqEstimate: getValues("_reqEstimate"),
               reqBill: getValues("_reqBill"),
@@ -374,13 +378,28 @@ export default function SetAdminEstimateinfo() {
                 </div>
               </div>
 
+              <div className="formContentWrap">
+                <label htmlFor="siteAddress" className=" blockLabel">
+                  <span>방문 요청 주소</span>
+                </label>
+                <div>
+                  <input
+                    type="text"
+                    id="siteAddress"
+                    name="_siteAddress"
+                    placeholder="방문을 요청할 주소를 입력해 주세요."
+                    {...register("_siteAddress")}
+                  />
+                </div>
+              </div>
+
               {/* 주소 */}
-              <PieceRegisterSearchPopUp
+              {/* <PieceRegisterSearchPopUp
                 siteAddress
                 setMultilAddress={setMultilAddress}
                 multilAddress={multilAddress}
                 getedData={getedData}
-              />
+              /> */}
 
               <div className="formContentWrap" style={{ width: "100%" }}>
                 <label htmlFor="reqDetail" className=" blockLabel">

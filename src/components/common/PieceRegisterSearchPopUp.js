@@ -71,11 +71,11 @@ export default function Postcode({
   const handleComplete = (data) => {
     console.log(data);
     // siteAddress 주소값만 저장함
-    if (!!siteAddress) {
-      fnSetAddress({
-        siteAddress: data.roadAddress || data.caddr,
-      });
-    }
+    // if (!!siteAddress) {
+    //   fnSetAddress({
+    //     siteAddress: data.roadAddress || data.caddr,
+    //   });
+    // }
 
     // setUser는 주소값만 저장함
     if (!!userComponent) {
@@ -95,33 +95,33 @@ export default function Postcode({
   };
 
   // siteAddress
-  if (!!siteAddress) {
-    return (
-      <div className="formContentWrap">
-        <label htmlFor="address" className=" blockLabel">
-          <span>{getedData.caddr ? "사업장 주소" : "방문 요청 주소"}</span>
-        </label>
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <input
-            type="text"
-            id="roadAddress"
-            disabled
-            value={multilAddress.siteAddress || multilAddress.caddr || ""}
-            style={{
-              width: "86%",
-            }}
-          />
-          <button
-            type="button"
-            onClick={handleClick}
-            className="formContentBtn"
-          >
-            주소검색
-          </button>
-        </div>
-      </div>
-    );
-  }
+  // if (!!siteAddress) {
+  //   return (
+  //     <div className="formContentWrap">
+  //       <label htmlFor="address" className=" blockLabel">
+  //         <span>{getedData.caddr ? "사업장 주소" : "방문 요청 주소"}</span>
+  //       </label>
+  //       <div style={{ display: "flex", justifyContent: "space-between" }}>
+  //         <input
+  //           type="text"
+  //           id="roadAddress"
+  //           disabled
+  //           value={multilAddress.siteAddress || multilAddress.caddr || ""}
+  //           style={{
+  //             width: "86%",
+  //           }}
+  //         />
+  //         <button
+  //           type="button"
+  //           onClick={handleClick}
+  //           className="formContentBtn"
+  //         >
+  //           주소검색
+  //         </button>
+  //       </div>
+  //     </div>
+  //   );
+  // }
 
   // setUser
   if (!!userComponent) {
@@ -130,53 +130,22 @@ export default function Postcode({
         <label htmlFor="address" className=" blockLabel">
           <span>주소</span>
         </label>
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <input
-            type="text"
-            id="roadAddress"
-            disabled
-            value={multilAddress.address || ""}
-            style={{
-              width: "86%",
-            }}
-          />
-          <button
-            type="button"
-            onClick={handleClick}
-            className="formContentBtn"
-          >
-            주소검색
-          </button>
-        </div>
-      </div>
-    );
-  }
 
-  // setCompany
-  if (!userComponent) {
-    return (
-      <>
-        <div className="formContentWrap">
-          <label htmlFor="address" className=" blockLabel">
-            <span>주소</span>
-          </label>
-          <div>
+        <div>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              marginBottom: "5px",
+            }}
+          >
             <input
               type="text"
               id="roadAddress"
               disabled
               value={multilAddress.address || ""}
-            />
-
-            <input
-              type="text"
-              id="zipcode"
-              value={multilAddress.zipcode || ""}
-              disabled
               style={{
-                width: "155px",
-                float: "left",
-                marginRight: "5px",
+                width: "86%",
               }}
             />
 
@@ -187,6 +156,95 @@ export default function Postcode({
             >
               주소검색
             </button>
+          </div>
+
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <input
+              type="text"
+              id="detailAddress"
+              placeholder="상세주소를 입력해주세요."
+              // value={multilAddress.address || ""}
+            />
+          </div>
+        </div>
+
+        {/* <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <input
+            type="text" 
+            id="roadAddress"
+            disabled
+            value={multilAddress.address || ""}
+            style={{
+              width: "54%",
+            }}
+          />
+          <input
+            type="text"
+            id="detailAddress"
+            // disabled
+            placeholder="상세주소를 입력해주세요."
+            // value={multilAddress.address || ""}
+            style={{
+              width: "32%",
+            }}
+          />
+          <button
+            type="button"
+            onClick={handleClick}
+            className="formContentBtn"
+          >
+            주소검색
+          </button>
+        </div> */}
+      </div>
+    );
+  }
+
+  // setCompany
+  if (!userComponent) {
+    return (
+      <>
+        <div className="formContentWrap" style={{ width: "100%" }}>
+          <label htmlFor="address" className=" blockLabel">
+            <span>주소</span>
+          </label>
+          <div>
+            <div style={{ display: "flex", marginBottom: "5px" }}>
+              <input
+                type="text"
+                id="zipcode"
+                value={multilAddress.zipcode || ""}
+                disabled
+                style={{
+                  width: "155px",
+                  marginRight: "5px",
+                }}
+              />
+              <button
+                type="button"
+                onClick={handleClick}
+                className="formContentBtn"
+              >
+                주소검색
+              </button>
+            </div>
+
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <input
+                type="text"
+                id="roadAddress"
+                disabled
+                value={multilAddress.address || ""}
+                style={{ width: "49.8%", marginBottom: 0 }}
+              />
+
+              <input
+                type="text"
+                id="detialAddress"
+                placeholder="상세주소를 입력해 주세요."
+                style={{ width: "49.8%" }}
+              />
+            </div>
           </div>
         </div>
 
@@ -200,7 +258,6 @@ export default function Postcode({
                 <span>위도</span>
                 <input
                   type="text"
-                  disabled
                   placeholder="위도 값이 없습니다."
                   value={multilAddress.latitude || ""}
                 />
@@ -211,7 +268,6 @@ export default function Postcode({
                 <span>경도</span>
                 <input
                   type="text"
-                  disabled
                   placeholder="경도 값이 없습니다."
                   value={multilAddress.longitude || ""}
                 />
