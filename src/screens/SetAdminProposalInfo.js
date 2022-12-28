@@ -9,7 +9,6 @@ import { urlGetProposalInfo, urlSetProposalInfo } from "../Services/string";
 
 import LayoutTopButton from "../components/common/LayoutTopButton";
 import ImageSet from "../components/common/ServicesImageSetPreview";
-import PieceRegisterSearchPopUp from "../components/common/PieceRegisterSearchPopUp";
 
 export default function SetAdminProposalInfo() {
   const { prid } = useParams();
@@ -31,7 +30,6 @@ export default function SetAdminProposalInfo() {
   // getDataFinish:기존에 입력된 값이 있어 값을 불러왔다면 true로 변경,
   const getDataFinish = useRef(false);
   const imgsIid = [];
-  const [multilAddress, setMultilAddress] = useState({});
 
   // 현재 페이지가 렌더링되자마자 기존에 입력된 값의 여부를 확인한다.
   useEffect(() => {

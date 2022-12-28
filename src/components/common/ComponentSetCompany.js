@@ -65,7 +65,6 @@ export default function ComponentSetCompany({ companyData, setCompanyData }) {
           <input
             className="formContentInput"
             type="text"
-            name="_name"
             id="name"
             {...register("_name", {
               onChange: (e) => {
@@ -85,7 +84,6 @@ export default function ComponentSetCompany({ companyData, setCompanyData }) {
             className="listSearchRadioInput"
             type="radio"
             checked={companyData.useFlag == "0"}
-            name="_useFlag"
             value="0"
             id="useFlag0"
             {...register("_useFlag", {
@@ -102,7 +100,6 @@ export default function ComponentSetCompany({ companyData, setCompanyData }) {
             className="listSearchRadioInput"
             type="radio"
             checked={companyData.useFlag == "1"}
-            name="_useFlag"
             value="1"
             id="useFlag1"
             {...register("_useFlag", {
@@ -125,7 +122,6 @@ export default function ComponentSetCompany({ companyData, setCompanyData }) {
           <input
             className="formContentInput"
             type="text"
-            name="_ruid"
             id="ruid"
             {...register("_ruid", {
               onBlur: userLinkedCidCk,

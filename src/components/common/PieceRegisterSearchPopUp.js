@@ -3,7 +3,6 @@ import { useEffect } from "react";
 import { useDaumPostcodePopup } from "react-daum-postcode";
 
 export default function Postcode({
-  siteAddress,
   userComponent,
   setMultilAddress,
   multilAddress,
@@ -39,13 +38,6 @@ export default function Postcode({
   };
 
   useEffect(() => {
-    // siteAddress는 주소값만 저장함 (견적서, 견적요청서 등 )
-    if (getedData !== [] && siteAddress) {
-      fnSetAddress({
-        siteAddress: getedData.siteAddress || getedData.caddr,
-      });
-    }
-
     // setUser는 주소값만 저장함
     if (getedData !== [] && userComponent) {
       fnSetAddress({
@@ -54,7 +46,7 @@ export default function Postcode({
     }
 
     // setCompany는 아래와 같은 정보가 필요함
-    if (getedData !== [] && !userComponent && !siteAddress) {
+    if (getedData !== [] && !userComponent) {
       //  신주소 : address, 구주소 :oldaddress, 우편번호 : zipcode
 
       fnSetAddress({
@@ -69,14 +61,6 @@ export default function Postcode({
 
   // 팝업 입력창에 값을 입력하면 작동하는 함수
   const handleComplete = (data) => {
-    console.log(data);
-    // siteAddress 주소값만 저장함
-    // if (!!siteAddress) {
-    //   fnSetAddress({
-    //     siteAddress: data.roadAddress || data.caddr,
-    //   });
-    // }
-
     // setUser는 주소값만 저장함
     if (!!userComponent) {
       fnSetAddress({
@@ -84,7 +68,7 @@ export default function Postcode({
       });
     }
     // setCompany는 아래와 같은 정보가 필요함
-    if (!userComponent && !siteAddress) {
+    if (!userComponent) {
       // 팝업 입력창에 값을 입력하면 해당 주소로 좌표를 구함
       callMapcoor(data);
     }
@@ -93,35 +77,6 @@ export default function Postcode({
   const handleClick = () => {
     open({ onComplete: handleComplete });
   };
-
-  // siteAddress
-  // if (!!siteAddress) {
-  //   return (
-  //     <div className="formContentWrap">
-  //       <label htmlFor="address" className=" blockLabel">
-  //         <span>{getedData.caddr ? "사업장 주소" : "방문 요청 주소"}</span>
-  //       </label>
-  //       <div style={{ display: "flex", justifyContent: "space-between" }}>
-  //         <input
-  //           type="text"
-  //           id="roadAddress"
-  //           disabled
-  //           value={multilAddress.siteAddress || multilAddress.caddr || ""}
-  //           style={{
-  //             width: "86%",
-  //           }}
-  //         />
-  //         <button
-  //           type="button"
-  //           onClick={handleClick}
-  //           className="formContentBtn"
-  //         >
-  //           주소검색
-  //         </button>
-  //       </div>
-  //     </div>
-  //   );
-  // }
 
   // setUser
   if (!!userComponent) {
@@ -167,35 +122,6 @@ export default function Postcode({
             />
           </div>
         </div>
-
-        {/* <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <input
-            type="text" 
-            id="roadAddress"
-            disabled
-            value={multilAddress.address || ""}
-            style={{
-              width: "54%",
-            }}
-          />
-          <input
-            type="text"
-            id="detailAddress"
-            // disabled
-            placeholder="상세주소를 입력해주세요."
-            // value={multilAddress.address || ""}
-            style={{
-              width: "32%",
-            }}
-          />
-          <button
-            type="button"
-            onClick={handleClick}
-            className="formContentBtn"
-          >
-            주소검색
-          </button>
-        </div> */}
       </div>
     );
   }

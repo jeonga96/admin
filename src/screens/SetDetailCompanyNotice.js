@@ -4,7 +4,7 @@ import { ErrorMessage } from "@hookform/error-message";
 
 import { urlCompanyGetNotice, urlCompanySetNotice } from "../Services/string";
 import { servicesPostData } from "../Services/importData";
-import { servicesUseToast } from "../Services/useData";
+import { servicesUseToast, serviesGetImgsIid } from "../Services/useData";
 import { useParams } from "react-router-dom";
 
 import SetImage from "../components/common/ServicesImageSetPreview";
@@ -22,21 +22,27 @@ export default function SetDetailCompanyNotice() {
     formState: { isSubmitting, errors },
   } = useForm();
 
-  const [imgs, setImgs] = useState([]);
-  const imgsIid = [];
+  // 데이터 ------------------------------------------------------------------------
+  // getDataFinish:기존에 입력된 값이 있어 값을 불러왔다면 true로 변경,
   const getDataFinish = useRef(false);
-
   // 하위 이미지 컴포넌트에게 데이터 넘기기 위해 사용
   const [noticeDetail, setNoticeDetail] = useState({});
+
+  // 이미지 ------------------------------------------------------------------------
+  // 서버에서 titleImg, imgs의 iid를 받아오기 위해 사용
+  // imgs:상세 이미지저장 및 표시
+  const [imgs, setImgs] = useState([]);
+  // imgsIid:서버에 이미지를 보낼 때는, iid값만 필요
+  const imgsIid = [];
 
   useEffect(() => {
     servicesPostData(urlCompanyGetNotice, {
       comnid: comnid,
     })
       .then((res) => {
+        console.log(res.data);
         if (res.status === "success") {
           setNoticeDetail(res.data);
-
           setValue("_title", res.data.title || "");
           setValue("_content", res.data.content || "");
           getDataFinish.current = true;
@@ -48,6 +54,9 @@ export default function SetDetailCompanyNotice() {
   }, []);
 
   function AddUserSubmit(e) {
+    //서버에 imgs의 iid값만을 보내기 위해 실행하는 반복문 함수
+    serviesGetImgsIid(imgsIid, imgs);
+
     servicesPostData(
       urlCompanySetNotice,
       !!comnid
@@ -57,13 +66,13 @@ export default function SetDetailCompanyNotice() {
             useFlag: 1,
             title: getValues("_title"),
             content: getValues("_content}"),
-            imgs: setImgs ? imgsIid.toString() : "",
+            imgs: imgs ? imgsIid.toString() : "",
           }
         : {
             rcid: cid,
             title: getValues("_title"),
             content: getValues("_content"),
-            imgs: setImgs ? imgsIid.toString() : "",
+            imgs: imgs ? imgsIid.toString() : "",
           }
     )
       .then((res) => {
@@ -82,6 +91,7 @@ export default function SetDetailCompanyNotice() {
   return (
     <>
       <div className="commonBox">
+        dd
         <form className="formLayout" onSubmit={handleSubmit(AddUserSubmit)}>
           <ul className="tableTopWrap">
             <LayoutTopButton text="완료" disabled={isSubmitting} />

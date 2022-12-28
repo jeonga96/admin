@@ -25,7 +25,6 @@ import {
   urlListEstimateInfo,
   urlListProposalInfo,
 } from "../Services/string";
-
 import SetImage from "../components/common/ServicesImageSetPreview";
 import LayoutTopButton from "../components/common/LayoutTopButton";
 import SetAllKeyWord from "../components/common/ComponentSetAllKeyWord";
@@ -46,13 +45,18 @@ export default function SetCompanyDetail() {
     formState: { isSubmitting, errors },
   } = useForm();
 
+  // 데이터 ------------------------------------------------------------------------
+  // 작성된 데이터를 받아옴
+  const [getedData, setGetedData] = useState([]);
+  // getDataFinish:기존에 입력된 값이 있어 값을 불러왔다면 true로 변경,
+  const getDataFinish = useRef(false);
+
   // 이미지 ------------------------------------------------------------------------
   // 서버에서 titleImg, imgs의 iid를 받아오기 위해 사용
-  const [getedData, setGetedData] = useState([]);
   // titleImg:대표 이미지저장 및 표시, imgs:상세 이미지저장 및 표시
-  // imgsIid:서버에 이미지를 보낼 때는, iid값만 필요
   const [titleImg, setTitleImg] = useState(null);
   const [imgs, setImgs] = useState([]);
+  // imgsIid:서버에 이미지를 보낼 때는, iid값만 필요
   const imgsIid = [];
   // 사업자 등록증 이미지
   const [regImgs, setRegImgs] = useState(null);
@@ -67,13 +71,10 @@ export default function SetCompanyDetail() {
   // keywordValue:서버에 키워드를 보낼 때 keyword의 value만 필요
   const keywordValue = [];
 
-  // 데이터 불러오기 알림 --------------------------------------------------------------
-  // getDataFinish:기존에 입력된 값이 있어 값을 불러왔다면 true로 변경,
-  const getDataFinish = useRef(false);
-
-  // admin/setCompanyDetailInfo 기타 API 저장  --------------------------------------
-  //  setUser 수정 (useFlag만 기본값으로 설정)
+  // 사업자 상세관리에서 사용하는 setCompanyDetailInfo 외 API  --------------------------------------
+  // setUser 수정 - 하위컴포넌트에게 전달
   const [companyData, setCompanyData] = useState({});
+
   // 하단 링크 이동 될 사업자 공지사항, 사업자 리뷰, 견적서
   const [noticeList, setNoticeList] = useState([]);
   const [reviewList, setReviewList] = useState([]);

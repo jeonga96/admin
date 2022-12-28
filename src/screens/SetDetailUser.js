@@ -29,18 +29,24 @@ export default function SetDetailUser() {
     formState: { isSubmitting, errors },
   } = useForm();
 
-  // titleImg:대표 이미지저장 및 표시, imgs:상세 이미지저장 및 표시, imgsIid:서버에 이미지를 보낼 때는, iid값만 필요
+  // 데이터 ------------------------------------------------------------------------
+  // 작성된 데이터를 받아옴
   const [getedData, setGetedData] = useState([]);
-  const [titleImg, setTitleImg] = useState(null);
-  const [imgs, setImgs] = useState([]);
-  // getDataFinish:기존에 입력된 값이 있어 값을 불러왔다면 true로 변경,
-  const getDataFinish = useRef(false);
-  const imgsIid = [];
-  // address:신주소,  oldaddress:구주소,  zipcode:우편번호,  latitude:위도,  longitude:경도
-  const [multilAddress, setMultilAddress] = useState({});
-
   // 하위 컴포넌트에서 전달 받은 값이기 떄문에 useState로 작성
   const [userData, setUserData] = useState({});
+  // getDataFinish:기존에 입력된 값이 있어 값을 불러왔다면 true로 변경,
+  const getDataFinish = useRef(false);
+
+  // 이미지 ------------------------------------------------------------------------
+  // titleImg:대표 이미지저장 및 표시, imgs:상세 이미지저장 및 표시
+  const [titleImg, setTitleImg] = useState(null);
+  const [imgs, setImgs] = useState([]);
+  // imgsIid:서버에 이미지를 보낼 때는, iid값만 필요
+  const imgsIid = [];
+
+  // 주소 ------------------------------------------------------------------------
+  // address:신주소,  oldaddress:구주소,  zipcode:우편번호,  latitude:위도,  longitude:경도
+  const [multilAddress, setMultilAddress] = useState({});
 
   // 현재 페이지가 렌더링되자마자 기존에 입력된 값의 여부를 확인한다.
   useEffect(() => {
