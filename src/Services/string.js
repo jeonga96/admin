@@ -38,6 +38,7 @@ export const urlCompanySetNotice = urlPrefix + "/admin/setCompanyNotice";
 /* 리뷰 */
 export const urlReviewList = urlPrefix + "/pub/listCompanyReview";
 export const urlGetReview = urlPrefix + "/pub/getCompanyReview";
+export const urlSetReview = urlPrefix + "/admin/setCompanyReview";
 
 /* 앱관리 */
 export const urlContentList = urlPrefix + "/pub/listContent";

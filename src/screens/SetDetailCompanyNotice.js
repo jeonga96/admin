@@ -11,7 +11,7 @@ import SetImage from "../components/common/ServicesImageSetPreview";
 import LayoutTopButton from "../components/common/LayoutTopButton";
 
 export default function SetDetailCompanyNotice() {
-  const { cid, comnid } = useParams();
+  const { cid, comrid } = useParams();
 
   // react-hook-form 라이브러리
   const {
@@ -37,7 +37,7 @@ export default function SetDetailCompanyNotice() {
 
   useEffect(() => {
     servicesPostData(urlCompanyGetNotice, {
-      comnid: comnid,
+      comrid: comrid,
     })
       .then((res) => {
         console.log(res.data);
@@ -59,9 +59,9 @@ export default function SetDetailCompanyNotice() {
 
     servicesPostData(
       urlCompanySetNotice,
-      !!comnid
+      !!comrid
         ? {
-            comnid: comnid,
+            comrid: comrid,
             rcid: cid,
             useFlag: 1,
             title: getValues("_title"),
@@ -81,7 +81,7 @@ export default function SetDetailCompanyNotice() {
           servicesUseToast("입력에 실패했습니다.", "e");
         }
         if (res.status === "success") {
-          window.location.href = `/company/${cid}/notice/${res.data.comnid}`;
+          window.location.href = `/company/${cid}/notice/${res.data.comrid}`;
           return;
         }
       })

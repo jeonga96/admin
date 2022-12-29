@@ -200,7 +200,7 @@ function App() {
           }
         />
         <Route
-          path="company/:cid/notice/:comnid"
+          path="company/:cid/notice/:comrid"
           element={
             <MainLayout
               nowTitle="사업자 공지사항"
@@ -209,7 +209,7 @@ function App() {
           }
         />
         <Route
-          path="company/:cid/notice/:comnid/set"
+          path="company/:cid/notice/:comrid/set"
           element={
             <MainLayout
               nowTitle="사업자 공지사항 수정"
