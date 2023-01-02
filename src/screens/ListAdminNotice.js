@@ -11,7 +11,13 @@ import PaginationButton from "../components/common/PiecePaginationButton";
 
 export default function ListAdminNotice() {
   const { register, watch } = useForm();
+
+  // [데이터 요청]
+  // 목록 데이터
   const [notice, setNotice] = useState([]);
+
+  // [pagination 버튼 관련]
+  // listPage: 컨텐츠 총 개수 / page:전체 페이지 수 & 현재 페이지
   const [listPage, setListPage] = useState({});
   const [page, setPage] = useState({ getPage: 0, activePage: 1 });
 

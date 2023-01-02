@@ -11,11 +11,18 @@ export default function DetailComapnyEsimateinfo() {
   const { rcid } = useParams();
   const location = useLocation();
 
+  // [데이터 요청]
+  // 목록 데이터
   const [list, setList] = useState([]);
-  const [listPage, setListPage] = useState({});
-  const [page, setPage] = useState({ getPage: 0, activePage: 1 });
+  // cid에 연결된 ruid 저장
   const RUID = useRef("");
 
+  // [pagination 버튼 관련]
+  // listPage: 컨텐츠 총 개수 / page:전체 페이지 수 & 현재 페이지
+  const [listPage, setListPage] = useState({});
+  const [page, setPage] = useState({ getPage: 0, activePage: 1 });
+
+  // 첫 렌더링
   useEffect(() => {
     // uid가져오기
     servicesPostData(urlGetCompany, { cid: rcid })
@@ -25,6 +32,7 @@ export default function DetailComapnyEsimateinfo() {
         servicesPostData(
           urlListEstimateInfo,
           // url에 맞춰 수령 기준, 요청 기준으로 견적 요청서를 가져온다
+          // (url에 from이 들어가면 formUid로 검색 )
           location.pathname.includes("from")
             ? {
                 fromUid: res,
@@ -46,7 +54,8 @@ export default function DetailComapnyEsimateinfo() {
       );
   }, []);
 
-  // pagination event
+  // 페이지 이동시마다 발생
+  // 두번째 렌더링부터 이벤트 발생
   useDidMountEffect(() => {
     servicesPostData(
       urlListEstimateInfo,

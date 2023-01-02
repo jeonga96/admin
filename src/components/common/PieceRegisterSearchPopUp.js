@@ -1,4 +1,3 @@
-import React from "react";
 import { useEffect } from "react";
 import { useDaumPostcodePopup } from "react-daum-postcode";
 
@@ -18,6 +17,10 @@ export default function Postcode({
     setMultilAddress(address);
   }
 
+  function onChange(e) {
+    setMultilAddress({ ...multilAddress, [e.target.id]: e.target.value });
+  }
+
   // 카카오 API, 주소를 위도 경도로 변환
   const callMapcoor = (res) => {
     var geocoder = new window.kakao.maps.services.Geocoder();
@@ -27,6 +30,7 @@ export default function Postcode({
         // 다음 카카오 신주소 : roadAddress, 구주소 :jibunAddress, 우편번호 : zonecode
         fnSetAddress({
           address: res.roadAddress,
+          detailaddress: res.detailaddress,
           oldaddress: res.jibunAddress,
           zipcode: res.zonecode,
           latitude: Math.floor(result[0].y * 100000),
@@ -42,15 +46,16 @@ export default function Postcode({
     if (getedData !== [] && userComponent) {
       fnSetAddress({
         address: getedData.address,
+        detailaddress: getedData.detailaddress,
       });
     }
 
     // setCompany는 아래와 같은 정보가 필요함
     if (getedData !== [] && !userComponent) {
       //  신주소 : address, 구주소 :oldaddress, 우편번호 : zipcode
-
       fnSetAddress({
         address: getedData.address,
+        detailaddress: getedData.detailaddress,
         oldaddress: getedData.oldaddress,
         zipcode: getedData.zipcode,
         longitude: getedData.longitude,
@@ -65,8 +70,10 @@ export default function Postcode({
     if (!!userComponent) {
       fnSetAddress({
         address: data.roadAddress,
+        detailaddress: getedData.detailaddress,
       });
     }
+
     // setCompany는 아래와 같은 정보가 필요함
     if (!userComponent) {
       // 팝업 입력창에 값을 입력하면 해당 주소로 좌표를 구함
@@ -96,7 +103,7 @@ export default function Postcode({
           >
             <input
               type="text"
-              id="roadAddress"
+              id="address"
               disabled
               value={multilAddress.address || ""}
               style={{
@@ -116,9 +123,10 @@ export default function Postcode({
           <div style={{ display: "flex", justifyContent: "space-between" }}>
             <input
               type="text"
-              id="detailAddress"
+              id="detailaddress"
               placeholder="상세주소를 입력해주세요."
-              // value={multilAddress.address || ""}
+              value={multilAddress.detailaddress || ""}
+              onChange={onChange}
             />
           </div>
         </div>
@@ -166,40 +174,54 @@ export default function Postcode({
 
               <input
                 type="text"
-                id="detialAddress"
+                id="detailaddress"
                 placeholder="상세주소를 입력해 주세요."
+                defaultValue={multilAddress.detailaddress || ""}
                 style={{ width: "49.8%" }}
+                onChange={onChange}
               />
             </div>
-          </div>
-        </div>
 
-        <div className="formContentWrap">
-          <label htmlFor="address" className=" blockLabel">
-            <span>좌표</span>
-          </label>
-          <ul className="detailContent">
-            <li>
-              <div>
-                <span>위도</span>
-                <input
-                  type="text"
-                  placeholder="위도 값이 없습니다."
-                  value={multilAddress.latitude || ""}
-                />
-              </div>
-            </li>
-            <li>
-              <div>
-                <span>경도</span>
-                <input
-                  type="text"
-                  placeholder="경도 값이 없습니다."
-                  value={multilAddress.longitude || ""}
-                />
-              </div>
-            </li>
-          </ul>
+            <ul
+              className="detailContent"
+              style={{ width: "100%", border: "none", padding: "4px 0 2px" }}
+            >
+              <li style={{ width: "200px", paddingLeft: "0" }}>
+                <div>
+                  <span>위도</span>
+                  <input
+                    id="latitude"
+                    type="text"
+                    placeholder="위도 값이 없습니다."
+                    defaultValue={multilAddress.latitude || ""}
+                    onChange={onChange}
+                  />
+                </div>
+              </li>
+              <li style={{ width: "200px" }}>
+                <div>
+                  <span>경도</span>
+                  <input
+                    id="longitude"
+                    type="text"
+                    placeholder="경도 값이 없습니다."
+                    defaultValue={multilAddress.longitude || ""}
+                    onChange={onChange}
+                  />
+                </div>
+              </li>
+              <li>
+                <a
+                  className="formContentBtn"
+                  target="_blank"
+                  href="https://www.google.co.kr/maps"
+                  rel="noopener noreferrer"
+                >
+                  좌표검색
+                </a>
+              </li>
+            </ul>
+          </div>
         </div>
       </>
     );

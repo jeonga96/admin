@@ -6,15 +6,17 @@ import { urlCompanyGetNotice, urlGetContent } from "../Services/string";
 import LayoutTopButton from "../components/common/LayoutTopButton";
 import ComponentDetailNotice from "../components/common/ComponentDetailNotice";
 
-export default function CompanyNoticeDetail() {
-  const [notice, setNotice] = useState([]);
-  const { comnid } = useParams();
-  const { cid, contid } = useParams();
+export default function DetailNotice() {
+  const { comnid, cid, contid } = useParams();
 
-  // 해당 공지사항 번호에 맞는 데이터를 가져온다.
+  // [데이터 요청]
+  // 목록 데이터
+  const [notice, setNotice] = useState([]);
+
+  // 첫 렌더링
   useEffect(() => {
+    // cid 여부를 확인하여 사업자 공지사항 불러오기
     if (!!cid) {
-      // cid 여부를 확인하여 사업자 공지사항 불러오기
       servicesPostData(urlCompanyGetNotice, {
         comnid: comnid,
       }).then((res) => {
@@ -24,7 +26,7 @@ export default function CompanyNoticeDetail() {
         }
       });
     } else {
-      // 없다면 관리자 공지사항 불러오기
+      //cid가  없다면 관리자 공지사항 요청
       servicesPostData(urlGetContent, {
         contid: contid,
       }).then((res) => {

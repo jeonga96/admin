@@ -13,7 +13,7 @@ import LayoutTopButton from "../components/common/LayoutTopButton";
 import ComponentListCompanySearch from "../components/common/ComponentListCompanySearch";
 
 // 하위 컴포넌트, useState를 별도로 관리하기 위해 하위 컴포넌트로 분리
-function ListInTr({
+function ChildList({
   item,
   setClickedStatus,
   clickedStatus,
@@ -94,13 +94,15 @@ function ListInTr({
 
 // 상위 컴포넌트
 export default function ListCompany() {
-  // companyList:사업자 회원 목록 불러오기
+  // [데이터 요청]
+  // 목록 데이터
   const [companyList, setCompanyList] = useState([]);
 
-  // [목록 페이지 버튼 관련]
+  // [pagination 버튼 관련]
   // listPage: 컨텐츠 총 개수 / page:전체 페이지 수 & 현재 페이지
   const [listPage, setListPage] = useState({});
   const [page, setPage] = useState({ getPage: 0, activePage: 1 });
+
   // [체크 박스 - 계약관리,회원상태 ]
   const [clickedUseFlag, setClickedUseFlag] = useState([]);
   const [clickedStatus, setClickedStatus] = useState([]);
@@ -191,7 +193,7 @@ export default function ListCompany() {
             </thead>
             <tbody>
               {companyList.map((item) => (
-                <ListInTr
+                <ChildList
                   item={item}
                   key={item.cid}
                   setClickedStatus={setClickedStatus}

@@ -19,7 +19,7 @@ export default function AddUser() {
   const navigate = useNavigate();
 
   // 회원 추가 이벤트
-  const AddUserSubmit = (e) => {
+  const handleSumbit = (e) => {
     servicesPostData(urlAdduser, {
       userid: getValues("_userid"),
       passwd: getValues("_passwd"),
@@ -38,11 +38,11 @@ export default function AddUser() {
           servicesUseToast("잘못된 값을 입력했습니다.", "e");
           return;
         }
+        // 정상 등록 완료
+        // 목록으로 이동
         if (res.status === "success") {
           servicesUseToast("가입이 완료되었습니다!", "s");
-          navigate(`/user`, {
-            replace: true,
-          });
+          navigate(`/user`);
           return;
         }
       })
@@ -53,7 +53,7 @@ export default function AddUser() {
       <div className="commonBox">
         <form
           className="formLayout formCenterLayout"
-          onSubmit={handleSubmit(AddUserSubmit)}
+          onSubmit={handleSubmit(handleSumbit)}
         >
           <ul className="tableTopWrap">
             <LayoutTopButton text="완료" disabled={isSubmitting} />
@@ -83,7 +83,6 @@ export default function AddUser() {
                   // },
                 })}
               />
-
               <ErrorMessage
                 errors={errors}
                 name="_userid"

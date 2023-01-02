@@ -233,6 +233,7 @@ export default function SetCompanyDetail() {
       location: getValues("_location"),
       registration: getValues("_registration"),
       address: multilAddress.address,
+      detailaddress: multilAddress.detailaddress,
       oldaddress: multilAddress.oldaddress,
       zipcode: multilAddress.zipcode,
       workTime: `${watch("_workTimeTo")} ~ ${watch("_workTimeFrom")}`,

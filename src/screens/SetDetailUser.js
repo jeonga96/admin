@@ -18,7 +18,6 @@ import PieceRegisterSearchPopUp from "../components/common/PieceRegisterSearchPo
 
 export default function SetDetailUser() {
   const { uid } = useParams();
-
   // react-hook-form 라이브러리
   const {
     handleSubmit,
@@ -69,7 +68,8 @@ export default function SetDetailUser() {
       .catch((res) => console.log(res));
   }, []);
 
-  function AddUserSubmit(e) {
+  // 수정 완료 이벤트
+  function handleSumbit(e) {
     //서버에 imgs의 iid값만을 보내기 위해 실행하는 반복문 함수
     serviesGetImgsIid(imgsIid, imgs);
 
@@ -86,6 +86,7 @@ export default function SetDetailUser() {
       name: getValues("_name"),
       nick: getValues("_nick"),
       address: multilAddress.address,
+      detailaddress: multilAddress.detailaddress,
       mobile: getValues("_mobile"),
       location: getValues("_location"),
       mail: getValues("_mail"),
@@ -104,10 +105,12 @@ export default function SetDetailUser() {
       .catch((error) => console.log(error));
   }
 
+  console.log("multilAddress", multilAddress);
+
   return (
     <>
       <div className="commonBox">
-        <form className="formLayout" onSubmit={handleSubmit(AddUserSubmit)}>
+        <form className="formLayout" onSubmit={handleSubmit(handleSumbit)}>
           <ul className="tableTopWrap">
             <LayoutTopButton url="/user" text="목록으로 가기" />
             <LayoutTopButton text="완료" disabled={isSubmitting} />

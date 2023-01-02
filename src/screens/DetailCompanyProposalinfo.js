@@ -11,14 +11,18 @@ export default function DetailCompanyProposalinfo() {
   const { rcid } = useParams();
   const location = useLocation();
 
+  // [데이터 요청]
+  // 목록 데이터
   const [list, setList] = useState([]);
+  // cid에 연결된 ruid 저장
+  const RUID = useRef("");
+
+  // [pagination 버튼 관련]
+  // listPage: 컨텐츠 총 개수 / page:전체 페이지 수 & 현재 페이지
   const [listPage, setListPage] = useState({});
   const [page, setPage] = useState({ getPage: 0, activePage: 1 });
-  const RUID = useRef("");
-  // RUID.current = res.data.ruid
 
-  // console.log(location.pathname.includes("from"));
-
+  // 첫 렌더링
   useEffect(() => {
     // uid가져오기
     servicesPostData(urlGetCompany, { cid: rcid })
@@ -49,7 +53,8 @@ export default function DetailCompanyProposalinfo() {
       );
   }, []);
 
-  // pagination event
+  // 페이지 이동시마다 발생
+  // 두번째 렌더링부터 이벤트 발생
   useDidMountEffect(() => {
     servicesPostData(
       urlListProposalInfo,
@@ -72,7 +77,6 @@ export default function DetailCompanyProposalinfo() {
       .catch(setList([]));
   }, [page.activePage]);
 
-  console.log(list);
   return (
     <>
       {list !== [] ? (
@@ -121,30 +125,33 @@ export default function DetailCompanyProposalinfo() {
                             .replace("--", "-")}
                       </td>
                       <td>
-                        {item.gongsaType && item.gongsaType.includes("emer") && (
-                          <i
-                            className="tableIcon"
-                            style={{ backgroundColor: "red" }}
-                          >
-                            긴급
-                          </i>
-                        )}
-                        {item.gongsaType && item.gongsaType.includes("inday") && (
-                          <i
-                            className="tableIcon"
-                            style={{ backgroundColor: "orange" }}
-                          >
-                            당일
-                          </i>
-                        )}
-                        {item.gongsaType && item.gongsaType.includes("reser") && (
-                          <i
-                            className="tableIcon"
-                            style={{ backgroundColor: "green" }}
-                          >
-                            예약
-                          </i>
-                        )}
+                        {item.gongsaType &&
+                          item.gongsaType.includes("emer") && (
+                            <i
+                              className="tableIcon"
+                              style={{ backgroundColor: "red" }}
+                            >
+                              긴급
+                            </i>
+                          )}
+                        {item.gongsaType &&
+                          item.gongsaType.includes("inday") && (
+                            <i
+                              className="tableIcon"
+                              style={{ backgroundColor: "orange" }}
+                            >
+                              당일
+                            </i>
+                          )}
+                        {item.gongsaType &&
+                          item.gongsaType.includes("reser") && (
+                            <i
+                              className="tableIcon"
+                              style={{ backgroundColor: "green" }}
+                            >
+                              예약
+                            </i>
+                          )}
                       </td>
                       <td>
                         {item.useFlag == "1" && (
