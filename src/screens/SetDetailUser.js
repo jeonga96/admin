@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useLayoutEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
@@ -37,8 +37,8 @@ export default function SetDetailUser() {
   const getDataFinish = useRef(false);
 
   // 이미지 ------------------------------------------------------------------------
-  // titleImg:대표 이미지저장 및 표시, imgs:상세 이미지저장 및 표시
-  const [titleImg, setTitleImg] = useState(null);
+  // img:대표 이미지저장 및 표시, imgs:상세 이미지저장 및 표시
+  const [img, setImg] = useState(null);
   const [imgs, setImgs] = useState([]);
   // imgsIid:서버에 이미지를 보낼 때는, iid값만 필요
   const imgsIid = [];
@@ -48,13 +48,13 @@ export default function SetDetailUser() {
   const [multilAddress, setMultilAddress] = useState({});
 
   // 현재 페이지가 렌더링되자마자 기존에 입력된 값의 여부를 확인한다.
-  useEffect(() => {
+  useLayoutEffect(() => {
     servicesPostData(urlGetUserDetail, {
       ruid: uid,
     })
       .then((res) => {
         if (res.status === "success") {
-          // 이미지 iid를 가지고 오기 위해 (imgs, titleImg) 사용
+          // 이미지 iid를 가지고 오기 위해 (imgs, img) 사용
           setGetedData(res.data);
           // 값이 있다면 inputValue에 저장한 후 getDataFinish 값을 변경
           setValue("_name", res.data.name || "");
@@ -69,7 +69,7 @@ export default function SetDetailUser() {
   }, []);
 
   // 수정 완료 이벤트
-  function handleSumbit(e) {
+  function fnSubmit(e) {
     //서버에 imgs의 iid값만을 보내기 위해 실행하는 반복문 함수
     serviesGetImgsIid(imgsIid, imgs);
 
@@ -90,7 +90,7 @@ export default function SetDetailUser() {
       mobile: getValues("_mobile"),
       location: getValues("_location"),
       mail: getValues("_mail"),
-      titleImg: titleImg ? titleImg[0].iid : "",
+      img: img ? img[0].iid : "",
       imgs: setImgs ? imgsIid.toString() : "",
     })
       .then((res) => {
@@ -110,7 +110,7 @@ export default function SetDetailUser() {
   return (
     <>
       <div className="commonBox">
-        <form className="formLayout" onSubmit={handleSubmit(handleSumbit)}>
+        <form className="formLayout" onSubmit={handleSubmit(fnSubmit)}>
           <ul className="tableTopWrap">
             <LayoutTopButton url="/user" text="목록으로 가기" />
             <LayoutTopButton text="완료" disabled={isSubmitting} />
@@ -284,10 +284,10 @@ export default function SetDetailUser() {
             </div>
 
             <ImageSet
-              img={titleImg}
-              setImg={setTitleImg}
+              img={img}
+              setImg={setImg}
               getData={getedData}
-              id="titleImg"
+              id="img"
               title="대표 이미지"
               getDataFinish={getDataFinish.current}
             />

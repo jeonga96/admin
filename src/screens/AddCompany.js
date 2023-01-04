@@ -18,7 +18,7 @@ export default function AddCompany() {
   const navigate = useNavigate();
 
   // 사업자 회원 추가 이벤트
-  const handleSumbit = (e) => {
+  const fnSubmit = (e) => {
     servicesPostData(urlAddcompany, {
       name: getValues("_name"),
     })
@@ -43,7 +43,7 @@ export default function AddCompany() {
       <div className="commonBox">
         <form
           className="formLayout formCenterLayout"
-          onSubmit={handleSubmit(handleSumbit)}
+          onSubmit={handleSubmit(fnSubmit)}
         >
           <ul className="tableTopWrap">
             <LayoutTopButton text="완료" disabled={isSubmitting} />

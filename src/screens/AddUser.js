@@ -19,7 +19,7 @@ export default function AddUser() {
   const navigate = useNavigate();
 
   // 회원 추가 이벤트
-  const handleSumbit = (e) => {
+  const fnSubmit = (e) => {
     servicesPostData(urlAdduser, {
       userid: getValues("_userid"),
       passwd: getValues("_passwd"),
@@ -53,7 +53,7 @@ export default function AddUser() {
       <div className="commonBox">
         <form
           className="formLayout formCenterLayout"
-          onSubmit={handleSubmit(handleSumbit)}
+          onSubmit={handleSubmit(fnSubmit)}
         >
           <ul className="tableTopWrap">
             <LayoutTopButton text="완료" disabled={isSubmitting} />

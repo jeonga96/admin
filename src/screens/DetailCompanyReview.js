@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { servicesPostData } from "../Services/importData";
 import { urlGetReview } from "../Services/string";
@@ -8,24 +8,30 @@ import ServicesImageOnClick from "../components/common/ServicesImageOnClick";
 import PieceBarChart from "../components/common/PieceBarChart";
 
 export default function DetailCompanyReview() {
-  const [companyDetail, setCompanyDetail] = useState([]);
-  const [images, setImages] = useState([]);
+  // url로 리뷰 번호 확인
   const comrid = useParams().comrid;
 
-  useEffect(() => {
+  // 데이터 ------------------------------------------------------------------------
+  // 작성된 리뷰
+  const [compnayReview, setCompnayReview] = useState([]);
+  // 이미지 ------------------------------------------------------------------------
+  // images : 리뷰 이미지
+  const [images, setImages] = useState([]);
+
+  // 리뷰 데이터 요청
+  useLayoutEffect(() => {
     servicesPostData(urlGetReview, {
       comrid: comrid,
     }).then((res) => {
       if (res.status === "success") {
-        setCompanyDetail(res.data);
-        console.log("res.data!!!", res.data);
+        setCompnayReview(res.data);
         return;
       }
     });
   }, []);
 
-  // 서버에서 image를 가져오는 customHook imgs를 가져온다.
-  useGetImage(setImages, companyDetail);
+  // iid로 이미지 url요청하는 커스텀 훅
+  useGetImage(setImages, compnayReview);
 
   return (
     <>
@@ -35,19 +41,19 @@ export default function DetailCompanyReview() {
             <div>
               <em>작성 시간</em>
               <span>
-                {companyDetail.createTime &&
-                  companyDetail.createTime.slice(0, 10) +
+                {compnayReview.createTime &&
+                  compnayReview.createTime.slice(0, 10) +
                     " " +
-                    companyDetail.createTime.slice(11, 19)}
+                    compnayReview.createTime.slice(11, 19)}
               </span>
             </div>
             <div>
               <em>수정 시간</em>
               <span>
-                {companyDetail.updateTime &&
-                  companyDetail.updateTime.slice(0, 10) +
+                {compnayReview.updateTime &&
+                  compnayReview.updateTime.slice(0, 10) +
                     " " +
-                    companyDetail.updateTime.slice(11, 19)}
+                    compnayReview.updateTime.slice(11, 19)}
               </span>
             </div>
           </li>
@@ -55,21 +61,21 @@ export default function DetailCompanyReview() {
           <li className="detailContentWrap title">
             <h4 className="blind">제목</h4>
             <div>
-              <span className="titleText">{companyDetail.title}</span>
-              <span className="contentText">{companyDetail.ruidNick}</span>
+              <span className="titleText">{compnayReview.title}</span>
+              <span className="contentText">{compnayReview.ruidNick}</span>
             </div>
           </li>
 
           <li className="detailContentWrap">
             <h4 className="blind">내용</h4>
             <div>
-              <p>{companyDetail.content}</p>
+              <p>{compnayReview.content}</p>
               <div style={{ display: "flex", justifyContent: "space-between" }}>
-                {companyDetail.negativeCount && (
+                {compnayReview.negativeCount && (
                   <div style={{ width: "49.5%", height: "75px" }}>
                     <PieceBarChart
-                      negativeCount={companyDetail.negativeCount}
-                      positiveCount={companyDetail.positiveCount}
+                      negativeCount={compnayReview.negativeCount}
+                      positiveCount={compnayReview.positiveCount}
                     />
                   </div>
                 )}

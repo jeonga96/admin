@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import { servicesPostData } from "../Services/importData";
 import { urlUserlist, urlSetUser } from "../Services/string";
 
@@ -8,9 +8,12 @@ import LayoutTopButton from "../components/common/LayoutTopButton";
 import ComponentListUserSearch from "../components/common/ComponentListUserSearch";
 
 function ListInTr({ item, setClickedUseFlag, clickedUseFlag }) {
+  // 체크박스 상태 ------------------------------------------------------------------------
+  // useFlagCk:계약관리
   const [useFlagCk, setUseFlagCk] = useState(false);
 
-  const checkedItemHandler = (name, isChecked) => {
+  // cid값 저장
+  const addCheck = (name, isChecked) => {
     (() => {
       if (isChecked) {
         setClickedUseFlag([...clickedUseFlag, name]);
@@ -20,10 +23,13 @@ function ListInTr({ item, setClickedUseFlag, clickedUseFlag }) {
       }
     })();
   };
+
   // 체크 이벤트 동작 & 상위 컴포넌트에게 전달하기 위한 이벤트 동작
-  const checkHandler = ({ target }) => {
+  const handleCheck = ({ target }) => {
+    // 체크박스 상태관리
     setUseFlagCk(!useFlagCk);
-    checkedItemHandler(target.name, target.checked);
+    // cid 추가, 삭제 이벤트
+    addCheck(target.name, target.checked);
   };
 
   return (
@@ -34,7 +40,7 @@ function ListInTr({ item, setClickedUseFlag, clickedUseFlag }) {
           name={item.uid}
           checked={useFlagCk}
           id="useFlag"
-          onChange={checkHandler}
+          onChange={handleCheck}
         />
       </td>
       <td className="tableButton">
@@ -62,13 +68,20 @@ function ListInTr({ item, setClickedUseFlag, clickedUseFlag }) {
 }
 
 export default function ListUser() {
+  // 데이터 ------------------------------------------------------------------------
+  // 회원 목록
   const [userList, setUserList] = useState([]);
+
+  // pagination 버튼 관련 ------------------------------------------------------------------------
+  // listPage: 컨텐츠 총 개수 / page:전체 페이지 수 & 현재 페이지
   const [listPage, setListPage] = useState({});
   const [page, setPage] = useState({ getPage: 0, activePage: 1 });
+
+  // 회원관리, 상태관리 cid 저장
   const [clickedUseFlag, setClickedUseFlag] = useState([]);
   const [searchClick, setSearchClick] = useState(false);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     // searchClick을 클릭하지 않은 (false) 상태에서 동작
     searchClick === false &&
       servicesPostData(urlUserlist, {

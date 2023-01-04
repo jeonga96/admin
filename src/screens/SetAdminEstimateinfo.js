@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useLayoutEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
@@ -9,7 +9,6 @@ import { urlSetEstimateInfo, urlGetEstimateInfo } from "../Services/string";
 
 import LayoutTopButton from "../components/common/LayoutTopButton";
 import ImageSet from "../components/common/ServicesImageSetPreview";
-import PieceRegisterSearchPopUp from "../components/common/PieceRegisterSearchPopUp";
 
 export default function SetAdminEstimateinfo() {
   const { esid } = useParams();
@@ -23,21 +22,19 @@ export default function SetAdminEstimateinfo() {
     formState: { isSubmitting, errors },
   } = useForm();
 
+  // 데이터 ------------------------------------------------------------------------
+  // 작성된 데이터를 받아옴
+  const [getedData, setGetedData] = useState([]);
   // getDataFinish:기존에 입력된 값이 있어 값을 불러왔다면 true로 변경,
   const getDataFinish = useRef(false);
-  // 추가가 아닌, 수정 시 불러온 기존 값을 getedData에 할당
-  const [getedData, setGetedData] = useState([]);
 
-  // [이미지 관련]
+  // 이미지 ------------------------------------------------------------------------
   // imgs:상세 이미지저장 및 표시, imgsIid:서버에 이미지를 보낼 때는, iid값만 필요
   const [imgs, setImgs] = useState([]);
   const imgsIid = [];
 
-  // [문구 관련]
-  const [multilAddress, setMultilAddress] = useState({});
-
   // 현재 페이지가 렌더링되자마자 기존에 입력된 값의 여부를 확인한다.
-  useEffect(() => {
+  useLayoutEffect(() => {
     // 추가 시 라디오&체크박스 기본 값
     setValue("_reqEstimate", "1");
     setValue("_reqBill", "1");
@@ -82,7 +79,7 @@ export default function SetAdminEstimateinfo() {
       .catch((res) => console.log(res));
   }, []);
 
-  function setimateinfoSubmit(e) {
+  function fnSubmit(e) {
     //서버에 imgs의 iid값만을 보내기 위해 실행하는 반복문 함수
     serviesGetImgsIid(imgsIid, imgs);
 
@@ -105,7 +102,7 @@ export default function SetAdminEstimateinfo() {
                 (getValues("_reqPrice") &&
                   getValues("_reqPrice").replace(",", "")) ||
                 "",
-              siteAddress: multilAddress.siteAddress,
+              siteAddress: getValues("_siteAddress"),
               reqVisit: reqDate.toISOString().slice(0, 19) || "",
               reqEstimate: getValues("_reqEstimate"),
               reqBill: getValues("_reqBill"),
@@ -122,7 +119,7 @@ export default function SetAdminEstimateinfo() {
                 (getValues("_reqPrice") &&
                   getValues("_reqPrice").replace(",", "")) ||
                 "",
-              siteAddress: multilAddress.siteAddress,
+              siteAddress: getValues("_siteAddress"),
               reqVisit: reqDate.toISOString().slice(0, 19) || "",
               reqEstimate: getValues("_reqEstimate"),
               reqBill: getValues("_reqBill"),
@@ -207,10 +204,7 @@ export default function SetAdminEstimateinfo() {
   return (
     <>
       <div className="commonBox">
-        <form
-          className="formLayout"
-          onSubmit={handleSubmit(setimateinfoSubmit)}
-        >
+        <form className="formLayout" onSubmit={handleSubmit(fnSubmit)}>
           <ul className="tableTopWrap">
             <LayoutTopButton url="/estimateinfo" text="목록으로 가기" />
             <LayoutTopButton text="완료" disabled={isSubmitting} />
@@ -392,14 +386,6 @@ export default function SetAdminEstimateinfo() {
                   />
                 </div>
               </div>
-
-              {/* 주소 */}
-              {/* <PieceRegisterSearchPopUp
-                siteAddress
-                setMultilAddress={setMultilAddress}
-                multilAddress={multilAddress}
-                getedData={getedData}
-              /> */}
 
               <div className="formContentWrap" style={{ width: "100%" }}>
                 <label htmlFor="reqDetail" className=" blockLabel">

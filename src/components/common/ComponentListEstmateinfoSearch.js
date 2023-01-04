@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useLayoutEffect } from "react";
 import { useForm } from "react-hook-form";
 
 import { servicesPostData } from "../../Services/importData";
@@ -19,9 +19,9 @@ export default function ComponentListUserSearch({
   // react-hook-form 라이브러리
   const { register, reset, getValues, handleSubmit } = useForm({});
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     // searchClick을 클릭한 (true) 상태에서 동작
-    searchClick === true && SearchSubmit();
+    searchClick === true && fnSubmit();
   }, [page.activePage || searchClick]);
 
   // 상위 컴포넌트에게 전달받은 useState의 set 함수
@@ -34,7 +34,7 @@ export default function ComponentListUserSearch({
   };
 
   // submit 이벤트
-  function SearchSubmit() {
+  function fnSubmit() {
     servicesPostData(
       !!LISTPROPSOSLINFO ? urlListProposalInfo : urlListEstimateInfo,
       {
@@ -56,7 +56,7 @@ export default function ComponentListUserSearch({
   }
 
   // 초기화 이벤트
-  function onResetHandle(e) {
+  function handleReset(e) {
     servicesPostData(
       !!LISTPROPSOSLINFO ? urlListProposalInfo : urlListEstimateInfo,
       {
@@ -79,7 +79,7 @@ export default function ComponentListUserSearch({
   return (
     <div className="commonBox">
       <h3 className="blind">사업자관리 검색 필터</h3>
-      <form className="formLayout" onSubmit={handleSubmit(SearchSubmit)}>
+      <form className="formLayout" onSubmit={handleSubmit(fnSubmit)}>
         <fieldset>
           <div className="formWrap">
             <div className="listSearchWrap" style={{ width: "50%" }}>
@@ -120,7 +120,7 @@ export default function ComponentListUserSearch({
         </fieldset>
 
         <div className="listSearchButtonWrap">
-          <button type="reset" value="초기화" onClick={onResetHandle}>
+          <button type="reset" value="초기화" onClick={handleReset}>
             초기화
           </button>
           <button type="submit" value="검색">

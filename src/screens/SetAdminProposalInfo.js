@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useLayoutEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
@@ -12,7 +12,6 @@ import ImageSet from "../components/common/ServicesImageSetPreview";
 
 export default function SetAdminProposalInfo() {
   const { prid } = useParams();
-  // const URLADD = useLocation().pathname.includes("add");
 
   // react-hook-form 라이브러리
   const {
@@ -23,16 +22,18 @@ export default function SetAdminProposalInfo() {
     watch,
     formState: { isSubmitting, errors },
   } = useForm();
-
-  // titleImg:대표 이미지저장 및 표시, imgs:상세 이미지저장 및 표시, imgsIid:서버에 이미지를 보낼 때는, iid값만 필요
+  // 데이터 ------------------------------------------------------------------------
+  // 작성된 데이터를 받아옴
   const [getedData, setGetedData] = useState([]);
-  const [imgs, setImgs] = useState([]);
   // getDataFinish:기존에 입력된 값이 있어 값을 불러왔다면 true로 변경,
   const getDataFinish = useRef(false);
+
+  // 이미지 ------------------------------------------------------------------------
+  // imgs:상세 이미지저장 및 표시, imgsIid:서버에 이미지를 보낼 때는, iid값만 필요
+  const [imgs, setImgs] = useState([]);
   const imgsIid = [];
 
-  // 현재 페이지가 렌더링되자마자 기존에 입력된 값의 여부를 확인한다.
-  useEffect(() => {
+  useLayoutEffect(() => {
     // 추가 시 기본 값
     setValue("_useFlag", "1");
     setValue("_gongsaType", "reser");
@@ -84,7 +85,7 @@ export default function SetAdminProposalInfo() {
     }
   }, []);
 
-  function setimateinfoSubmit(e) {
+  function fnSubmit(e) {
     //서버에 imgs의 iid값만을 보내기 위해 실행하는 반복문 함수
     serviesGetImgsIid(imgsIid, imgs);
 
@@ -173,10 +174,7 @@ export default function SetAdminProposalInfo() {
   return (
     <>
       <div className="commonBox">
-        <form
-          className="formLayout"
-          onSubmit={handleSubmit(setimateinfoSubmit)}
-        >
+        <form className="formLayout" onSubmit={handleSubmit(fnSubmit)}>
           <ul className="tableTopWrap">
             <LayoutTopButton url="/proposalInfo" text="목록으로 가기" />
             <LayoutTopButton text="완료" disabled={isSubmitting} />

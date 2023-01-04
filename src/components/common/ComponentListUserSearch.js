@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useLayoutEffect } from "react";
 import { useForm } from "react-hook-form";
 
 import { servicesPostData } from "../../Services/importData";
@@ -16,7 +16,7 @@ export default function ComponentListUserSearch({
   const { register, setValue, getValues, watch, reset, handleSubmit } =
     useForm();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     setValue("_userrole", "ROLE_USER");
     setValue("_useFlag", "1");
   }, []);

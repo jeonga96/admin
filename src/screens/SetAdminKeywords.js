@@ -38,7 +38,7 @@ export default function SetAdminKeyeords() {
 
   // 검색, 닫기 버튼 클릭 이벤트
   // 기존 검색량을 최근 것으로 수정하기 위해 검색버튼 클릭 시 서버에서 전체 키워드를 다시 받아오도록 설정
-  const handleOpenBtn = (e) => {
+  const handleBtnOnClick = (e) => {
     e.preventDefault();
     setSearchBtn(!searchBtn);
     searchBtn === false
@@ -80,7 +80,7 @@ export default function SetAdminKeyeords() {
   };
 
   // 수정 버튼
-  const HandleSubmit = () => {
+  const fnSubmit = () => {
     for (let i = 0; i < modifyData.length; i++) {
       servicesPostData(urlSetKeyword, modifyData[i]);
     }
@@ -113,7 +113,7 @@ export default function SetAdminKeyeords() {
                 onChange={(e) => setSearchValue(e.target.value)}
                 className="keywordInput"
               />
-              <button onClick={handleOpenBtn}>
+              <button onClick={handleBtnOnClick}>
                 {searchBtn ? "닫기" : "검색"}
               </button>
             </div>
@@ -152,7 +152,7 @@ export default function SetAdminKeyeords() {
         </div>
 
         {/* -------------------- 수정값 입력 폼 -------------------- */}
-        <form className="formLayout" onSubmit={handleSubmit(HandleSubmit)}>
+        <form className="formLayout" onSubmit={handleSubmit(fnSubmit)}>
           <ul className="tableTopWrap">
             <LayoutTopButton text="초기화" fn={HandleReset} />
             <LayoutTopButton text="수정" disabled={isSubmitting} />

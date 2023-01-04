@@ -4,13 +4,16 @@ import { useGetimgStringImgs, useGetImage } from "../../Services/customHook";
 import ImageOnClick from "./ServicesImageOnClick";
 
 export default function ComponentDetailNotice({ detail }) {
+  // contentString 유무를 확인해 contentString가 있으면 관리자 내용
   const ADMIN = !!detail.contentString;
-  const [images, setImages] = useState([]);
+  // 이미지 ------------------------------------------------------------------------
+  // imgs:상세 이미지저장 및 표시, imgsIid:서버에 이미지를 보낼 때는, iid값만 필요
+  const [imgs, setImgs] = useState([]);
 
   // 서버에서 image를 가져오는 customHook imgs를 가져온다.
-  useGetImage(setImages, detail);
+  useGetImage(setImgs, detail);
   //공지사항 이미지(imgString)를 가져온다.
-  useGetimgStringImgs(setImages, detail);
+  useGetimgStringImgs(setImgs, detail);
 
   return (
     <ul className="detailPageLayout">
@@ -49,15 +52,15 @@ export default function ComponentDetailNotice({ detail }) {
           <p className="contentText">
             {ADMIN ? detail.contentDetail : detail.content}
           </p>
-          {images && (
+          {imgs && (
             <div
               className="detailWidthContent detailWidthContentImg"
               style={{ justifyContent: "left" }}
             >
-              {images.map((item) => (
+              {imgs.map((item) => (
                 <ImageOnClick
                   key={item.iid}
-                  getData={images}
+                  getData={imgs}
                   url={item.storagePath}
                   text="공지사항 이미지"
                 />

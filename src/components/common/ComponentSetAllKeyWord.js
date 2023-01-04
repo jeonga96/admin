@@ -5,7 +5,7 @@ import {
 } from "../../Services/importData";
 import { urlAllKeyword, ALLKEYWORD } from "../../Services/string";
 import { servicesUseToast } from "../../Services/useData";
-import { useState, useEffect, useRef } from "react";
+import { useState, useLayoutEffect, useRef } from "react";
 
 export default function SetAllKeyWord({
   companyDetailKeyword,
@@ -21,15 +21,16 @@ export default function SetAllKeyWord({
   // handleKeywordOnclick에서 사용할, 이미 입력된 키워드(kid)를 담을 배열
   const clickedKeyword = [];
 
-  function refreshKeywordStorage() {
+  // 전체 키워드 새로고침
+  function fnReKeyword() {
     servicesPostData(urlAllKeyword, {}).then((res) => {
       servicesSetStorage(ALLKEYWORD, JSON.stringify(res.data));
     });
   }
 
   // 로그인 시 받은 전체 키워드를 가져온다
-  useEffect(() => {
-    refreshKeywordStorage();
+  useLayoutEffect(() => {
+    fnReKeyword();
     allKeywords.current = JSON.parse(servicesGetStorage(ALLKEYWORD));
   }, []);
 

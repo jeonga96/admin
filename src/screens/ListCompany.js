@@ -20,10 +20,13 @@ function ChildList({
   setClickedUseFlag,
   clickedUseFlag,
 }) {
+  // 체크박스 상태 ------------------------------------------------------------------------
+  // useFlagCk:계약관리  statusCk:상태관리
   const [useFlagCk, setUseFlagCk] = useState(false);
   const [statusCk, setStatusCk] = useState(false);
 
-  const checkedItemHandler = (name, id, isChecked) => {
+  // id를 확인하여 상태관리와 계약관리를 구분한 후 cid값 저장
+  const addCheck = (name, id, isChecked) => {
     (() => {
       if (isChecked) {
         id === "useFlag"
@@ -39,12 +42,14 @@ function ChildList({
   };
 
   // 체크 이벤트 동작 & 상위 컴포넌트에게 전달하기 위한 이벤트 동작
-  const checkHandler = ({ target }) => {
+  const handleCheck = ({ target }) => {
     // useFlag 이벤트
     if (target.id === "useFlag") {
       if (clickedStatus.length == 0) {
+        // 체크박스 상태관리
         setUseFlagCk(!useFlagCk);
-        checkedItemHandler(target.name, target.id, target.checked);
+        // cid 추가, 삭제 이벤트
+        addCheck(target.name, target.id, target.checked);
       } else {
         servicesUseToast("계약관리와 회원상태를 한 번에 수정하실 수 없습니다.");
       }
@@ -53,8 +58,10 @@ function ChildList({
     // status 이벤트
     if (target.id === "status") {
       if (clickedUseFlag.length == 0) {
+        // 체크박스 상태관리
         setStatusCk(!statusCk);
-        checkedItemHandler(target.name, target.id, target.checked);
+        // cid 추가, 삭제 이벤트
+        addCheck(target.name, target.id, target.checked);
       } else {
         servicesUseToast("계약관리와 회원상태를 한 번에 수정하실 수 없습니다.");
       }
@@ -69,7 +76,7 @@ function ChildList({
           name={item.cid}
           checked={useFlagCk}
           id="useFlag"
-          onChange={checkHandler}
+          onChange={handleCheck}
         />
       </td>
       <td>
@@ -78,7 +85,7 @@ function ChildList({
           name={item.cid}
           checked={statusCk}
           id="status"
-          onChange={checkHandler}
+          onChange={handleCheck}
         />
       </td>
       <td className="tableButton">
@@ -94,16 +101,16 @@ function ChildList({
 
 // 상위 컴포넌트
 export default function ListCompany() {
-  // [데이터 요청]
+  // 데이터 ------------------------------------------------------------------------
   // 목록 데이터
   const [companyList, setCompanyList] = useState([]);
 
-  // [pagination 버튼 관련]
+  // pagination 버튼 관련 ------------------------------------------------------------------------
   // listPage: 컨텐츠 총 개수 / page:전체 페이지 수 & 현재 페이지
   const [listPage, setListPage] = useState({});
   const [page, setPage] = useState({ getPage: 0, activePage: 1 });
 
-  // [체크 박스 - 계약관리,회원상태 ]
+  // [체크 박스 - 계약관리,회원상태]
   const [clickedUseFlag, setClickedUseFlag] = useState([]);
   const [clickedStatus, setClickedStatus] = useState([]);
 
@@ -118,7 +125,7 @@ export default function ListCompany() {
   }, [page.getPage]);
 
   // 계약관리 submit
-  const handleUseFlag = (e) => {
+  const handleUseFlagSubmit = (e) => {
     for (let i = 0; i < clickedUseFlag.length; i++) {
       servicesPostData(urlSetCompany, {
         cid: clickedUseFlag[i],
@@ -128,7 +135,7 @@ export default function ListCompany() {
   };
 
   // 회원상태 submit
-  const handleStauts = (e) => {
+  const handleStautsSubmit = (e) => {
     switch (e.target.id) {
       case "waiting":
         for (let i = 0; i < clickedStatus.length; i++) {
@@ -162,19 +169,23 @@ export default function ListCompany() {
       <ComponentListCompanySearch />
       <ul className="tableTopWrap">
         {clickedUseFlag.length > 0 && (
-          <LayoutTopButton text="정상" fn={handleUseFlag} id="useFlagY" />
+          <LayoutTopButton text="정상" fn={handleUseFlagSubmit} id="useFlagY" />
         )}
         {clickedUseFlag.length > 0 && (
-          <LayoutTopButton text="해지" fn={handleUseFlag} />
+          <LayoutTopButton text="해지" fn={handleUseFlagSubmit} />
         )}
         {clickedStatus.length > 0 && (
-          <LayoutTopButton text="대기" fn={handleStauts} id="waiting" />
+          <LayoutTopButton text="대기" fn={handleStautsSubmit} id="waiting" />
         )}
         {clickedStatus.length > 0 && (
-          <LayoutTopButton text="완료" fn={handleStauts} id="completion" />
+          <LayoutTopButton
+            text="완료"
+            fn={handleStautsSubmit}
+            id="completion"
+          />
         )}
         {clickedStatus.length > 0 && (
-          <LayoutTopButton text="거절" fn={handleStauts} id="refuse" />
+          <LayoutTopButton text="거절" fn={handleStautsSubmit} id="refuse" />
         )}
         <LayoutTopButton url="add" text="사업자 추가" />
       </ul>

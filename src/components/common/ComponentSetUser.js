@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useLayoutEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
@@ -7,12 +7,11 @@ import { servicesUseToast } from "../../Services/useData";
 import { urlGetUser, urlSetUser } from "../../Services/string";
 
 export default function ComponentSetUser({ setUserData, userData }) {
+  const { register, getValues, setValue, watch } = useForm();
   const { uid } = useParams();
 
-  const { register, getValues, setValue, watch } = useForm();
-
   // 회원활성화, 회원권한 기존 값 있다면 표시
-  useEffect(() => {
+  useLayoutEffect(() => {
     servicesPostData(urlGetUser, {
       uid: uid,
     })
@@ -35,7 +34,7 @@ export default function ComponentSetUser({ setUserData, userData }) {
   }
 
   // 비밀번호 변경
-  const handleChangePasswdClick = () => {
+  const handleChangePasswd = () => {
     servicesPostData(urlSetUser, {
       uid: uid,
       passwd: watch("_passwd"),
@@ -137,7 +136,7 @@ export default function ComponentSetUser({ setUserData, userData }) {
           />
           <button
             type="button"
-            onClick={handleChangePasswdClick}
+            onClick={handleChangePasswd}
             className="formContentBtn"
           >
             변경

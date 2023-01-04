@@ -1,5 +1,5 @@
 import { Link, useParams, useLocation } from "react-router-dom";
-import { useEffect, useRef, useState } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import { servicesPostData } from "../Services/importData";
 import { useDidMountEffect } from "../Services/customHook";
 import { urlListProposalInfo, urlGetCompany } from "../Services/string";
@@ -22,8 +22,7 @@ export default function DetailCompanyProposalinfo() {
   const [listPage, setListPage] = useState({});
   const [page, setPage] = useState({ getPage: 0, activePage: 1 });
 
-  // 첫 렌더링
-  useEffect(() => {
+  useLayoutEffect(() => {
     // uid가져오기
     servicesPostData(urlGetCompany, { cid: rcid })
       .then((res) => (RUID.current = res.data.ruid))

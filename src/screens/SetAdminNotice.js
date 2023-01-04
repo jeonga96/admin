@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useLayoutEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 
@@ -22,14 +22,19 @@ export default function SetDetailAdminNotice() {
     formState: { isSubmitting, errors },
   } = useForm();
 
-  const [imgs, setImgs] = useState([]);
-  const imgsIid = [];
+  // 데이터 ------------------------------------------------------------------------
+  // getDataFinish:기존에 입력된 값이 있어 값을 불러왔다면 true로 변경,
   const getDataFinish = useRef(false);
-
-  // 하위 컴포넌트에게 이미지 iid 넘기기 위해 사용
+  // 하위 컴포넌트에게 이미지 iid 전달
   const [noticeDetail, setNoticeDetail] = useState({});
 
-  useEffect(() => {
+  // 이미지 ------------------------------------------------------------------------
+  // imgs:상세 이미지저장 및 표시, imgsIid:서버에 이미지를 보낼 때는, iid값만 필요
+  const [imgs, setImgs] = useState([]);
+  const imgsIid = [];
+
+  useLayoutEffect(() => {
+    // contid가 있으면 기존에 입력된 값을 가져옴
     if (!!contid) {
       servicesPostData(urlGetContent, {
         contid: contid,
@@ -54,14 +59,16 @@ export default function SetDetailAdminNotice() {
     servicesPostData(
       urlSetContent,
       !!contid
-        ? {
+        ? // contid여부 확인하여 contid가 있으면 수정
+          {
             contid: contid,
             category: getValues("_category"),
             contentString: getValues("_contentString"),
             contentDetail: getValues("_contentDetail"),
             imgString: setImgs ? imgsIid.toString() : "",
           }
-        : {
+        : // contid가 없으면 새로 작성
+          {
             category: getValues("_category"),
             contentString: getValues("_contentString"),
             contentDetail: getValues("_contentDetail"),

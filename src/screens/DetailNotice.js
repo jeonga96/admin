@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { servicesPostData } from "../Services/importData";
 import { urlCompanyGetNotice, urlGetContent } from "../Services/string";
@@ -9,13 +9,12 @@ import ComponentDetailNotice from "../components/common/ComponentDetailNotice";
 export default function DetailNotice() {
   const { comnid, cid, contid } = useParams();
 
-  // [데이터 요청]
-  // 목록 데이터
+  // 데이터 ------------------------------------------------------------------------
+  // 공지사항 목록 데이터
   const [notice, setNotice] = useState([]);
 
-  // 첫 렌더링
-  useEffect(() => {
-    // cid 여부를 확인하여 사업자 공지사항 불러오기
+  useLayoutEffect(() => {
+    // cid 여부를 확인하여 사업자 공지사항 요청
     if (!!cid) {
       servicesPostData(urlCompanyGetNotice, {
         comnid: comnid,
@@ -38,6 +37,7 @@ export default function DetailNotice() {
     }
   }, []);
 
+  // cid 여부를 확인하여 사업자 공지사항과 공사콕 관리자 공지사항을 return한다.
   return (
     <>
       <div className="commonBox paddingBox">

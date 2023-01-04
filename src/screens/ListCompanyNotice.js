@@ -9,6 +9,9 @@ import ComponentListNotice from "../components/common/ComponentListNotice";
 
 export default function ListCompanyNotice() {
   let { cid } = useParams();
+
+  // 데이터 ------------------------------------------------------------------------
+  // 공지사항 목록
   const [notice, setNotice] = useState([]);
 
   useLayoutEffect(() => {

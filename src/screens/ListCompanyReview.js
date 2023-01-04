@@ -8,8 +8,12 @@ import ComponentErrorNull from "../components/common/ComponentErrorNull";
 
 export default function ListCompanyReview() {
   let { cid } = useParams();
+
+  // 데이터 ------------------------------------------------------------------------
+  // 리뷰 목록
   const [review, setReview] = useState([]);
 
+  // 리뷰 데이터 요청
   useLayoutEffect(() => {
     servicesPostData(urlReviewList, {
       rcid: cid,

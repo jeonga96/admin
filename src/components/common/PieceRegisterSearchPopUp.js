@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useLayoutEffect } from "react";
 import { useDaumPostcodePopup } from "react-daum-postcode";
 
 export default function Postcode({
@@ -41,7 +41,7 @@ export default function Postcode({
     geocoder.addressSearch(res.address, callback);
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     // setUser는 주소값만 저장함
     if (getedData !== [] && userComponent) {
       fnSetAddress({
@@ -65,7 +65,7 @@ export default function Postcode({
   }, [getedData]);
 
   // 팝업 입력창에 값을 입력하면 작동하는 함수
-  const handleComplete = (data) => {
+  const handleOnComplete = (data) => {
     // setUser는 주소값만 저장함
     if (!!userComponent) {
       fnSetAddress({
@@ -82,7 +82,7 @@ export default function Postcode({
   };
 
   const handleClick = () => {
-    open({ onComplete: handleComplete });
+    open({ onComplete: handleOnComplete });
   };
 
   // setUser

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import { servicesPostData } from "../Services/importData";
 import { urlListProposalInfo } from "../Services/string";
 
@@ -8,12 +8,19 @@ import PageButton from "../components/common/PiecePaginationButton";
 import ComponentListEstmateinfoSearch from "../components/common/ComponentListEstmateinfoSearch";
 
 export default function ListPropsosalinfo() {
+  // 데이터 ------------------------------------------------------------------------
+  // 견적서 목록
   const [list, setList] = useState([]);
+
+  // pagination 버튼 관련 ------------------------------------------------------------------------
+  // listPage: 컨텐츠 총 개수 / page:전체 페이지 수 & 현재 페이지
   const [listPage, setListPage] = useState({});
   const [page, setPage] = useState({ getPage: 0, activePage: 1 });
+
+  // 검색 버튼 클릭 유무
   const [searchClick, setSearchClick] = useState(false);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     // searchClick을 클릭하지 않은 (false) 상태에서 동작
     searchClick === false &&
       servicesPostData(urlListProposalInfo, {

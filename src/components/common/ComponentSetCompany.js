@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useLayoutEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
@@ -35,7 +35,7 @@ export default function ComponentSetCompany({ companyData, setCompanyData }) {
     });
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     // 기본 회사정보 불러오기
     servicesPostData(urlGetCompany, {
       cid: cid,

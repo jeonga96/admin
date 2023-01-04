@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useLayoutEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 
@@ -29,13 +29,11 @@ export default function SetDetailCompanyNotice() {
   const [noticeDetail, setNoticeDetail] = useState({});
 
   // 이미지 ------------------------------------------------------------------------
-  // 서버에서 titleImg, imgs의 iid를 받아오기 위해 사용
-  // imgs:상세 이미지저장 및 표시
+  // imgs:상세 이미지저장 및 표시, imgsIid:서버에 이미지를 보낼 때는, iid값만 필요
   const [imgs, setImgs] = useState([]);
-  // imgsIid:서버에 이미지를 보낼 때는, iid값만 필요
   const imgsIid = [];
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     servicesPostData(urlCompanyGetNotice, {
       comrid: comrid,
     })
@@ -53,7 +51,7 @@ export default function SetDetailCompanyNotice() {
       .catch((res) => console.log(res));
   }, []);
 
-  function AddUserSubmit(e) {
+  function fnSubmit(e) {
     //서버에 imgs의 iid값만을 보내기 위해 실행하는 반복문 함수
     serviesGetImgsIid(imgsIid, imgs);
 
@@ -92,7 +90,7 @@ export default function SetDetailCompanyNotice() {
     <>
       <div className="commonBox">
         dd
-        <form className="formLayout" onSubmit={handleSubmit(AddUserSubmit)}>
+        <form className="formLayout" onSubmit={handleSubmit(fnSubmit)}>
           <ul className="tableTopWrap">
             <LayoutTopButton text="완료" disabled={isSubmitting} />
           </ul>
