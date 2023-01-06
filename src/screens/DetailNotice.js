@@ -7,15 +7,17 @@ import LayoutTopButton from "../components/common/LayoutTopButton";
 import ComponentDetailNotice from "../components/common/ComponentDetailNotice";
 
 export default function DetailNotice() {
-  const { comnid, cid, contid } = useParams();
+  // contid : 관리자 컨텐츠 id
+  // comnid : company review id
+  const { cid, comnid, contid } = useParams();
 
   // 데이터 ------------------------------------------------------------------------
   // 공지사항 목록 데이터
   const [notice, setNotice] = useState([]);
 
   useLayoutEffect(() => {
-    // cid 여부를 확인하여 사업자 공지사항 요청
-    if (!!cid) {
+    // comnid 여부를 확인하여 사업자 공지사항 요청
+    if (!!comnid) {
       servicesPostData(urlCompanyGetNotice, {
         comnid: comnid,
       }).then((res) => {

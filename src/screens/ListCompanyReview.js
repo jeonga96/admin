@@ -5,6 +5,7 @@ import { urlReviewList } from "../Services/string";
 import { MdOutlineImage } from "react-icons/md";
 
 import ComponentErrorNull from "../components/common/ComponentErrorNull";
+import DetailCompanyReview from "./DetailCompanyReview";
 
 export default function ListCompanyReview() {
   let { cid } = useParams();
@@ -19,6 +20,7 @@ export default function ListCompanyReview() {
       rcid: cid,
     }).then((res) => {
       setReview(res.data);
+      console.log(res.data);
     });
   }, []);
 
@@ -30,35 +32,19 @@ export default function ListCompanyReview() {
         <h3 className="blind">table</h3>
         <div className="paddingBox commonBox">
           <table className="commonTable">
-            <thead>
+            {/* <thead>
               <tr>
-                <th style={{ width: "80px" }}>번호</th>
-                <th style={{ width: "120px" }}>별명</th>
                 <th style={{ width: "auto" }}>내용</th>
-                <th style={{ width: "100px" }}>날짜</th>
               </tr>
-            </thead>
-            <tbody className="commonTable">
+            </thead> */}
+            <tbody>
               {review &&
                 review.map((item) => (
-                  <tr key={item.comrid} style={{ height: "5.25rem" }}>
-                    <td>{item.comrid}</td>
-                    <td>{item.ruidNick}</td>
-                    <td className="tableContentWrap">
-                      <Link
-                        to={`/company/${item.rcid}/review/${item.comrid}`}
-                        className="Link"
-                      >
-                        <em>{item.title}</em>
-                        <i>{item.imgs ? <MdOutlineImage /> : null}</i>
-                        <p>
-                          {item.content.length > 55
-                            ? item.content.slice(0, 54) + "..."
-                            : item.content}
-                        </p>
-                      </Link>
-                    </td>
-                    <td>{item.createTime.slice(0, 10)}</td>
+                  <tr
+                    key={item.comrid}
+                    style={{ height: "auto", minHeight: "5.25rem" }}
+                  >
+                    <DetailCompanyReview compnayReview={item} />
                   </tr>
                 ))}
             </tbody>

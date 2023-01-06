@@ -8,8 +8,8 @@ export default function ImageOnClick({ onRemove, iid, getData, url, text }) {
   const [zoomPopup, setZoomPopup] = useState(false);
   const onPopup = () => {
     setZoomPopup(!zoomPopup);
+    console.log(url);
   };
-
   return (
     <div
       style={
