@@ -6,10 +6,11 @@ export default function ImageOnClick({ onRemove, iid, getData, url, text }) {
 
   // image click 이벤트 상태 관리
   const [zoomPopup, setZoomPopup] = useState(false);
+
   const onPopup = () => {
     setZoomPopup(!zoomPopup);
-    console.log(url);
   };
+
   return (
     <div
       style={

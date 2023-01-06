@@ -7,32 +7,51 @@ import { useGetImage } from "../Services/customHook";
 import ServicesImageOnClick from "../components/common/ServicesImageOnClick";
 import PieceBarChart from "../components/common/PieceBarChart";
 
-export default function DetailCompanyReview({ compnayReview }) {
-  // url로 리뷰 번호 확인
-  // const comrid = useParams().comrid;
-
+export default function DetailCompanyReview({
+  compnayReview,
+  clickedUseFlag,
+  setClickedUseFlag,
+}) {
   // 이미지 ------------------------------------------------------------------------
   // images : 리뷰 이미지
   const [images, setImages] = useState([]);
+  // 이미지 ------------------------------------------------------------------------
+  // useFlagCk:리뷰활성화
+  const [useFlagCk, setUseFlagCk] = useState(false);
 
-  // 리뷰 데이터 요청
-  // useLayoutEffect(() => {
-  //   servicesPostData(urlGetReview, {
-  //     comrid: comrid,
-  //   }).then((res) => {
-  //     if (res.status === "success") {
-  //       setCompnayReview(res.data);
-  //       return;
-  //     }
-  //   });
-  // }, []);
+  // cid값 저장
+  const addCheck = (name, isChecked) => {
+    (() => {
+      if (isChecked) {
+        setClickedUseFlag([...clickedUseFlag, name]);
+        // 동일한 선택을 할 때 중복 선택되지 않도록 설정
+      } else if (!isChecked && clickedUseFlag.includes(name)) {
+        setClickedUseFlag(clickedUseFlag.filter((it) => it !== name));
+      }
+    })();
+  };
+  // 체크 이벤트 동작 & 상위 컴포넌트에게 전달하기 위한 이벤트 동작
+  const handleCheck = ({ target }) => {
+    // 체크박스 상태관리
+    setUseFlagCk(!useFlagCk);
+    // cid 추가, 삭제 이벤트
+    addCheck(target.name, target.checked);
+  };
 
   // iid로 이미지 url요청하는 커스텀 훅
   useGetImage(setImages, compnayReview);
 
   return (
     <>
-      {/* <td>{compnayReview.ruidNick || "익명"}</td> */}
+      <td style={{ width: "70px" }}>
+        <input
+          type="checkbox"
+          name={compnayReview.comrid}
+          checked={useFlagCk}
+          id="useFlag"
+          onChange={handleCheck}
+        />
+      </td>
       <td className="tableReviewWrap">
         <div>
           <h4>{compnayReview.title}</h4>
@@ -78,20 +97,6 @@ export default function DetailCompanyReview({ compnayReview }) {
             </div>
           </div>
         </div>
-
-        {/* <div>
-          <div style={{ display: "flex", justifyContent: "space-between" }}> */}
-        {/* {compnayReview.negativeCount && (
-              <div style={{ width: "49.5%", height: "75px" }}>
-                <PieceBarChart
-                  negativeCount={compnayReview.negativeCount}
-                  positiveCount={compnayReview.positiveCount}
-                />
-              </div>
-            )} */}
-        {/* </div> */}
-        {/* </div> */}
-        {/* </li> */}
       </td>
 
       {/* 
