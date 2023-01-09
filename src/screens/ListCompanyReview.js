@@ -1,8 +1,8 @@
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useState, useLayoutEffect } from "react";
 import { servicesPostData } from "../Services/importData";
-import { urlReviewList, urlGetReview, urlSetReview } from "../Services/string";
-import { MdOutlineImage } from "react-icons/md";
+import { urlReviewList, urlSetReview } from "../Services/string";
+import { servicesUseToast } from "../Services/useData";
 
 import ComponentErrorNull from "../components/common/ComponentErrorNull";
 import LayoutTopButton from "../components/common/LayoutTopButton";
@@ -26,31 +26,22 @@ export default function ListCompanyReview() {
     });
   }, []);
 
-  console.log("clickedUseFlag", clickedUseFlag);
-  console.log(review);
-
   // 계약관리 submit
-  const handleUseFlag = (e) => {
+  const handleUseFlag = () => {
     for (let i = 0; i < clickedUseFlag.length; i++) {
-      servicesPostData(urlGetReview, {
+      servicesPostData(urlSetReview, {
         comrid: clickedUseFlag[i],
-      })
-        .then((res) => {
-          servicesPostData(urlSetReview, {
-            comrid: res.data.comrid,
-            ruidNick: res.data.ruidNick,
-            useFlag: 0,
-            rcid: res.data.rcid,
-            ruid: res.data.ruid,
-            title: res.data.title,
-            content: res.data.content,
-            imgs: res.data.imgs,
-            positiveCount: res.data.positiveCount,
-            negativeCount: res.data.negativeCount,
-          });
-        })
-        .then((res) => console.log(res.data));
-      // .then(window.location.reload());
+        useFlag: 0,
+      }).then((res) => {
+        if (res.status === "fail") {
+          servicesUseToast("오류가 발생되어 수정이 진행되지 않았습니다.", "e");
+        }
+        if (res.status === "success") {
+          servicesUseToast("완료되었습니다.", "s");
+          window.location.reload();
+          return;
+        }
+      });
     }
     //for
   };
