@@ -78,6 +78,19 @@ export function servicesUseToast(text, type) {
       });
       break;
 
+    case "undo":
+      toast.error(text, {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      break;
+
     default:
       toast.warn(text, {
         position: "top-center",

@@ -108,12 +108,15 @@ export default function SetCompanyDetail() {
           setValue("_mobilenum", res.data.mobilenum || "");
           setValue("_email", res.data.email || "");
           setValue("_extnum", res.data.extnum || "");
-          setValue("_tags", res.data.tags || "");
+
           setValue("_bigCategory", res.data.bigCategory || "");
           setValue("_subCategory", res.data.subCategory || "");
           setValue("_reCount", res.data.reCount || "");
           setValue("_okCount", res.data.okCount || "");
           setValue("_noCount", res.data.noCount || "");
+
+          // 키워드 & 태그는 현재 기능을 사용하지 않으나 추후 확장성으 위해 주석처리해두었습니다.
+          // setValue("_tags", res.data.tags || "");
 
           // 로그인 시 로컬스토리지에 저장한 전체 키워드 가져오기
           const allKeywordData = JSON.parse(servicesGetStorage(ALLKEYWORD));
@@ -248,8 +251,9 @@ export default function SetCompanyDetail() {
       email: getValues("_email"),
       ceogreet: getValues("_ceogreet"),
       extnum: getValues("_extnum"),
-      keywords: keywordValue.toString() || "",
-      tags: getValues("_tags"),
+      //  키워드 & 태그는 현재 기능을 사용하지 않으나 추후 확장성으 위해 주석처리해두었습니다.
+      // keywords: keywordValue.toString() || "",
+      // tags: getValues("_tags"),
       subCategory: getValues("_subCategory"),
       bigCategory: getValues("_bigCategory"),
       reCount: getValues("_reCount"),
@@ -434,13 +438,13 @@ export default function SetCompanyDetail() {
             {/* setDetailUserInfo radio 끝, input(상호 ~ 키워드) ================================================================ */}
 
             <div className="formContentWrap">
-              <label htmlFor="name" className="blockLabel">
+              <label htmlFor="Cname" className="blockLabel">
                 <span>상호</span>
               </label>
               <div>
                 <input
                   type="text"
-                  id="name"
+                  id="Cname"
                   placeholder="상호명을 입력해 주세요."
                   {...register("_name", {
                     required: "입력되지 않았습니다.",
@@ -743,7 +747,7 @@ export default function SetCompanyDetail() {
             </div>
 
             <div className="formContentWrap">
-              <label htmlFor="comment" className="blockLabel">
+              <label htmlFor="ceogreet" className="blockLabel">
                 <span>대표인사말</span>
               </label>
               <div>
@@ -843,6 +847,8 @@ export default function SetCompanyDetail() {
               </div>
             </div>
 
+            {/* 키워드 & 태그는 현재 기능을 사용하지 않으나 추후 확장성으 위해 주석처리해두었습니다. */}
+            {/* 
             <div className="formContentWrap">
               <label htmlFor="keywords" className="blockLabel">
                 <span>키워드</span>
@@ -870,7 +876,7 @@ export default function SetCompanyDetail() {
                   })}
                 />
               </div>
-            </div>
+            </div> */}
 
             <div className="formContentWrap">
               <label className="blockLabel">

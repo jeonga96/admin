@@ -1,3 +1,4 @@
+import { useRef, useState, useEffect } from "react";
 import { BiUpload } from "react-icons/bi";
 import {
   servicesPostDataForm,
@@ -137,6 +138,7 @@ export default function ImageSet({
           className="blind"
           onChange={handleSetImage}
           multiple={id === "imgs" || "addImgs" ? "multiple" : null}
+          // ref={inputRef}
         />
       </div>
 
@@ -167,9 +169,9 @@ export default function ImageSet({
               <ServicesImageOnClick
                 key={item.iid}
                 getData={imgs}
-                url={item.storagePath && item.storagePath}
+                url={!!item.storagePath && item.storagePath}
                 text="사업자 상세 정보 이미지"
-                iid={item.iid && item.iid}
+                iid={!!item.iid && item.iid}
                 onRemove={onRemove}
               />
             ))

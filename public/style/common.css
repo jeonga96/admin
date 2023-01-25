@@ -523,6 +523,82 @@ input[type="radio"] {
   color: var(--color-lightprimary);
   margin-top: 0.125rem;
 }
+/* 
+.imgsThumbnail {
+  display: flex;
+  display: -webkit-flex;
+  justify-content: left;
+  flex-wrap: wrap;
+  flex-direction: column;
+  -ms-flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: auto;
+  min-height: 4.5rem;
+  padding: 0.25rem;
+  margin: 0 auto;
+  background-color: rgba(243, 244, 243, 0.3);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+.DragDrop-Files > div,
+.DragDrop-Files > li {
+  width: 4rem;
+  height: 4rem;
+  background-size: contain;
+  margin-right: 0.25rem;
+  margin-bottom: 0.25rem;
+  cursor: pointer;
+  background-repeat: no-repeat;
+  background-size: cover;
+} 
+.imgsThumbnail span {
+  display: block;
+  font-weight: 400;
+  height: auto;
+  font-size: var(--font-size-small);
+  color: var(--color-lightprimary);
+  margin-top: 0.125rem;
+}
+.imgsThumbnail > div,
+.imgsThumbnail > li {
+  width: 4rem;
+  height: 4rem;
+  background-size: contain;
+  margin-right: 0.25rem;
+  margin-bottom: 0.25rem;
+  cursor: pointer;
+  background-repeat: no-repeat;
+  background-size: cover;
+} */
+
+.ImageUploadBox {
+  width: 100%;
+  border-radius: 3px;
+}
+
+/* ------------------------------------ */
+.imgsThumbnail label {
+  position: relative;
+  width: 100%;
+  height: auto;
+  min-height: 4.5rem;
+  border-radius: 10px;
+  display: flex;
+  display: -webkit-flex;
+  flex-direction: column;
+  -ms-flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: 0.12s ease-in;
+}
+/* .DragDrop-File {
+  border: 1px dotted var(--color-lightprimary);
+} */
+/* .DragDrop-File-Dragging {
+  background-color: var(--color-bggray);
+  border: 1px solid var(--color-gray);
+} */
 
 /*썸네일 클릭 시 확대*/
 .imageZoomPopupBox {
@@ -541,7 +617,6 @@ input[type="radio"] {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-
   width: 500px;
   height: 500px;
   background-size: contain;
