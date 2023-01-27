@@ -1,4 +1,4 @@
-import { useState, useLayoutEffect, useRef, useEffect } from "react";
+import { useState, useLayoutEffect } from "react";
 import { useForm } from "react-hook-form";
 import {
   urlContentList,
