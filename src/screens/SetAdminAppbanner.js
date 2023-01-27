@@ -13,34 +13,41 @@ import LayoutTopButton from "../components/common/LayoutTopButton";
 import SetImage from "../components/common/ServicesImageSetUrl";
 
 function InputBox({ inputData, setinputData, item }) {
+  // 상위 컴포넌트에게 전달하기 위한 함수, useState
   const [img, setImg] = useState(null);
-
   const fnsetinputData = (prev) => {
     setinputData(prev);
   };
 
+  // contentDetail:랜딩 url 변경 함수
   const valueChange = (e, res) => {
     fnsetinputData({
       ...inputData,
       [item.contid]: {
         ...item,
-        contid: item.contid,
-        contentString: item.contentString,
-        category: item.category,
         contentDetail: e.target.value,
+        imgid:
+          inputData[item.contid] !== undefined &&
+          inputData[item.contid].hasOwnProperty("imgid") &&
+          !!img
+            ? img[0].iid
+            : item.imgid,
       },
     });
   };
 
+  // imgid:배너 이미지 수정 함수
   const imgChange = (e, res) => {
     fnsetinputData({
       ...inputData,
       [item.contid]: {
         ...item,
-        contid: item.contid,
-        contentString: item.contentString,
-        category: item.category,
         imgid: res[0].iid,
+        contentDetail:
+          inputData[item.contid] !== undefined &&
+          inputData[item.contid].hasOwnProperty("contentDetail")
+            ? inputData[item.contid].contentDetail
+            : item.contentDetail,
       },
     });
   };
@@ -58,7 +65,7 @@ function InputBox({ inputData, setinputData, item }) {
               id={`titleImg${item.contid}`}
               setChangeImg={setImg}
               changeImg={img}
-              valueChange={imgChange}
+              onImgChange={imgChange}
             />
           </div>
         </div>
@@ -97,8 +104,6 @@ export default function SetAdminAppbanner() {
   const [img, setImg] = useState(null);
   const imgsIid = [];
 
-  console.log(bannerList);
-
   // 화면 렌더링 시 가장 처음 발생되는 이벤트
   useLayoutEffect(() => {
     servicesPostData(urlContentList, {
@@ -116,7 +121,6 @@ export default function SetAdminAppbanner() {
           });
         }
       })
-
       .catch((res) => console.log(res));
   }, []);
 

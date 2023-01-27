@@ -1,7 +1,7 @@
 import { servicesPostDataForm } from "../../Services/importData";
 import { urlUpImages } from "../../Services/string";
 
-export default function ImageSet({ id, setChangeImg, changeImg, valueChange }) {
+export default function ImageSet({ id, setChangeImg, changeImg, onImgChange }) {
   // 이미지 업로드 시 실행되는 코드
 
   function handleSetImage(e) {
@@ -13,7 +13,7 @@ export default function ImageSet({ id, setChangeImg, changeImg, valueChange }) {
     // FormData에 저장된 데이터를 서버에 보냄
     servicesPostDataForm(urlUpImages, formData).then((res) => {
       setChangeImg(res.data);
-      valueChange(e, res.data);
+      onImgChange(e, res.data);
     });
   }
 
