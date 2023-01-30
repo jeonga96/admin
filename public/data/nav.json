@@ -42,6 +42,10 @@
       {
         "subName": "앱 배너 관리",
         "url": "/appbanner"
+      },
+      {
+        "subName": "이벤트 관리",
+        "url": "/event"
       }
     ]
   }

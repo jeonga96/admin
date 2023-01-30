@@ -62,10 +62,7 @@ select {
 p,
 span,
 div,
-li,
-td,
-button,
-a {
+li {
   font-size: var(--font-size-basic);
 }
 p,
@@ -78,10 +75,10 @@ h3,
 h4,
 h5,
 h6,
-td,
-th,
-button,
 input,
+td,
+button,
+a,
 label {
   font-size: var(--font-size-small);
   font-family: var(--font-point);
@@ -108,11 +105,13 @@ a:hover {
   text-decoration: none;
 }
 
-button {
+button,
+.buttonLink {
   border: 0;
   background-color: transparent;
   cursor: pointer;
   border-radius: 0;
+  text-align: center;
 }
 
 em,
@@ -236,5 +235,12 @@ button {
   outline: none;
 }
 .blockLabel {
+  text-align: center;
+}
+
+.commonBox .centerLink {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   text-align: center;
 }

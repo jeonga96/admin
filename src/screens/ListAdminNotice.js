@@ -36,7 +36,7 @@ export default function ListAdminNotice() {
   return notice === undefined ? (
     <>
       <ul className="tableTopWrap">
-        <LayoutTopButton url={`/addnotice`} text="작성" />
+        <LayoutTopButton url={`set`} text="작성" />
       </ul>
       <ComponentErrorNull />
     </>

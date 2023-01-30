@@ -1444,14 +1444,17 @@ ul.pagination li a:hover {
 }
 
 /* 상세 */
+.tableButton {
+  width: 100%;
+  height: 100%;
+}
 .tableButton a {
   width: 100%;
   height: 100%;
-  font-size: 0.875rem;
-  font-weight: 400;
 }
 .tableButton a:hover {
-  color: var(--color-acceent);
+  color: var(--color-darkprimary);
+  background-color: var(--color-bggray);
 }
 
 .Link {
@@ -1545,4 +1548,13 @@ ul.pagination li a:hover {
   border-radius: 0.25rem;
   border: 0.0625rem solid rgba(0, 0, 0, 0.1);
   font-weight: 600;
+}
+
+.flexBox {
+  display: flex;
+  justify-content: space-between;
+}
+.formButton {
+  background-color: var(--color-bggray);
+  border: 1px solid rgba(0, 0, 0, 0.1);
 }

@@ -23,6 +23,16 @@ import ListCompanyNotice from "./screens/ListCompanyNotice";
 import DetailNotice from "./screens/DetailNotice";
 import SetCompanyNotice from "./screens/SetDetailCompanyNotice";
 
+/* 견적요청서 관리 */
+import ListEstimateinfo from "./screens/ListEstimateinfo";
+import SetAdminEstimateinfo from "./screens/SetAdminEstimateinfo";
+import DetailCompanyEstimateinfo from "./screens/DetailCompanyEstimateinfo";
+
+/* 견적서 관리 */
+import ListProposalinfo from "./screens/ListProposalinfo";
+import SetAdminProposalInfo from "./screens/SetAdminProposalInfo";
+import DetailCompanyProposalinfo from "./screens/DetailCompanyProposalinfo";
+
 /* 공지사항 - 관리자*/
 import ListAdminNotice from "./screens/ListAdminNotice";
 import SetAdminNotice from "./screens/SetAdminNotice";
@@ -33,17 +43,13 @@ import DetailCompanyReview from "./screens/DetailCompanyReview";
 
 /* 앱관리 */
 import SetAdminAppbanner from "./screens/SetAdminAppbanner";
+
 /* 키워드 조회량 관리 */
 import SetAdminKeywords from "./screens/SetAdminKeywords";
-/* 견적요청서 관리 */
-import ListEstimateinfo from "./screens/ListEstimateinfo";
-import SetAdminEstimateinfo from "./screens/SetAdminEstimateinfo";
-import DetailCompanyEstimateinfo from "./screens/DetailCompanyEstimateinfo";
 
-/* 견적서 관리 */
-import ListProposalinfo from "./screens/ListProposalinfo";
-import SetAdminProposalInfo from "./screens/SetAdminProposalInfo";
-import DetailCompanyProposalinfo from "./screens/DetailCompanyProposalinfo";
+/* 이밴트 */
+import ListEvent from "./screens/ListEvent";
+import SetEvent from "./screens/SetEvent";
 
 import {
   servicesGetStorage,
@@ -236,64 +242,6 @@ function App() {
             />
           }
         />
-        {/* --------------앱관리 --------------*/}
-        {/* ------- 공지사항 관리 ------- */}
-        <Route
-          path="notice"
-          element={
-            <MainLayout
-              nowTitle="공사콕 공지사항"
-              component={<ListAdminNotice />}
-            />
-          }
-        />
-        <Route
-          path="notice/set"
-          element={
-            <MainLayout
-              nowTitle="공사콕 공지사항 작성"
-              component={<SetAdminNotice />}
-            />
-          }
-        />
-        <Route
-          path="notice/:contid"
-          element={
-            <MainLayout
-              nowTitle="공사콕 공지사항"
-              component={<DetailNotice />}
-            />
-          }
-        />
-        <Route
-          path="notice/:contid/set"
-          element={
-            <MainLayout
-              nowTitle="공사콕 공지사항 수정"
-              component={<SetAdminNotice />}
-            />
-          }
-        />
-        {/* ------- 배너 관리 ------- */}
-        <Route
-          path="appbanner"
-          element={
-            <MainLayout
-              nowTitle="공사콕 배너관리"
-              component={<SetAdminAppbanner />}
-            />
-          }
-        />
-        {/* ------- 키워드 조회량 관리 ------- */}
-        <Route
-          path="setkeywords"
-          element={
-            <MainLayout
-              nowTitle="공사콕 키워드 검색순위 관리"
-              component={<SetAdminKeywords />}
-            />
-          }
-        />
         {/* ------- 견적 요청서 관리 ------- */}
         <Route
           path="estimateinfo"
@@ -383,6 +331,93 @@ function App() {
             <MainLayout
               nowTitle="[수령] 공사콕 견적서"
               component={<DetailCompanyProposalinfo />}
+            />
+          }
+        />
+
+        {/* --------------앱관리 --------------*/}
+        {/* ------- 공지사항 관리 ------- */}
+        <Route
+          path="notice"
+          element={
+            <MainLayout
+              nowTitle="공사콕 공지사항"
+              component={<ListAdminNotice />}
+            />
+          }
+        />
+        <Route
+          path="notice/set"
+          element={
+            <MainLayout
+              nowTitle="공사콕 공지사항 작성"
+              component={<SetAdminNotice />}
+            />
+          }
+        />
+        <Route
+          path="notice/:contid"
+          element={
+            <MainLayout
+              nowTitle="공사콕 공지사항"
+              component={<DetailNotice />}
+            />
+          }
+        />
+        <Route
+          path="notice/:contid/set"
+          element={
+            <MainLayout
+              nowTitle="공사콕 공지사항 수정"
+              component={<SetAdminNotice />}
+            />
+          }
+        />
+        {/* ------- 배너 관리 ------- */}
+        <Route
+          path="appbanner"
+          element={
+            <MainLayout
+              nowTitle="공사콕 배너관리"
+              component={<SetAdminAppbanner />}
+            />
+          }
+        />
+        {/* ------- 배너 관리 ------- */}
+        <Route
+          path="event"
+          element={
+            <MainLayout
+              nowTitle="공사콕 이벤트 관리"
+              component={<ListEvent />}
+            />
+          }
+        />
+        <Route
+          path="event/set"
+          element={
+            <MainLayout
+              nowTitle="공사콕 이벤트 작성"
+              component={<SetEvent />}
+            />
+          }
+        />
+        <Route
+          path="event/:contid/set"
+          element={
+            <MainLayout
+              nowTitle="공사콕 이벤트 작성"
+              component={<SetEvent />}
+            />
+          }
+        />
+        {/* ------- 키워드 조회량 관리 ------- */}
+        <Route
+          path="setkeywords"
+          element={
+            <MainLayout
+              nowTitle="공사콕 키워드 검색순위 관리"
+              component={<SetAdminKeywords />}
             />
           }
         />
