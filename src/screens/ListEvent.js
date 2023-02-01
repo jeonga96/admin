@@ -29,6 +29,8 @@ export default function ListEvent() {
       offset: 0,
       size: 15,
     }).then((res) => {
+      console.log(res.data);
+      // setWzEvent(res.data.reverse());
       setWzEvent(res.data);
       setListPage(res.page);
     });
@@ -78,7 +80,11 @@ export default function ListEvent() {
             <tbody className="commonTable">
               {wzEvent &&
                 wzEvent.map((item) => (
-                  <tr key={item.contid} style={{ height: "5.25rem" }}>
+                  <tr
+                    key={item.contid}
+                    style={{ height: "5.25rem" }}
+                    className={item.useFlag == 0 ? "tdFlageN" : null}
+                  >
                     <td className="tableContentWrap">
                       <Link
                         to={`${item.contid}/set`}

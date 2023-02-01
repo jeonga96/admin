@@ -1211,6 +1211,12 @@ input[type="radio"] {
   white-space: nowrap;
   text-overflow: ellipsis;
 }
+.tdFlageN {
+  background-color: var(--color-bggray);
+}
+.tdFlageN td {
+  color: var(--color-gray);
+}
 
 .flexTableWrap {
   display: flex;

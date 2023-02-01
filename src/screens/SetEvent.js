@@ -1,4 +1,4 @@
-import { useLayoutEffect } from "react";
+import { useLayoutEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 
@@ -11,6 +11,7 @@ import LayoutTopButton from "../components/common/LayoutTopButton";
 
 export default function SetEvent() {
   const { contid } = useParams();
+  const [useFlag, setUseFlag] = useState(true);
 
   // react-hook-form 라이브러리
   const {
@@ -33,6 +34,7 @@ export default function SetEvent() {
             setValue("_category", res.data.category || "wzEvent");
             setValue("_contentString", res.data.contentString || "");
             setValue("_contentDetail", res.data.contentDetail || "");
+            setUseFlag(res.data.useFlag == 1 ? true : false);
           } else if (res.data === "fail") {
             console.log("기존에 입력된 데이터가 없습니다.");
           }
@@ -40,6 +42,8 @@ export default function SetEvent() {
         .catch((res) => console.log(res));
     }
   }, []);
+
+  console.log(useFlag);
 
   const onClickLink = () => {
     if (!getValues("_contentDetail")) {
@@ -104,13 +108,40 @@ export default function SetEvent() {
       .catch((error) => console.log("axios 실패", error.response));
   };
 
+  const fnUseFlag = () => {
+    servicesPostData(urlSetContent, {
+      contid: contid,
+      category: getValues("_category"),
+      contentString: getValues("_contentString"),
+      contentDetail: getValues("_contentDetail"),
+      useFlag: useFlag == true ? "0" : "1",
+    })
+      .then((res) => {
+        if (res.status === "success") {
+          servicesUseToast("수정이 완료되었습니다.", "s");
+          setTimeout(() => {
+            window.location.href = `/event`;
+          }, 2000);
+          return;
+        }
+        if (res.status === "fail") {
+          servicesUseToast("입력에 실패했습니다.", "e");
+        }
+      })
+      .catch((error) => console.log("axios 실패", error.response));
+  };
+
   return (
     <>
       <div className="commonBox">
         <form className="formLayout" onSubmit={handleSubmit(AddUserSubmit)}>
           <ul className="tableTopWrap">
             <LayoutTopButton text="목록으로 가기" url="/event" />
-            <LayoutTopButton text="완료" disabled={isSubmitting} />
+            <LayoutTopButton
+              text={useFlag == true ? "이벤트 종료" : "이벤트 활성화"}
+              fn={fnUseFlag}
+            />
+            <LayoutTopButton text="수정" disabled={isSubmitting} />
           </ul>
 
           <div className="formWrap">
