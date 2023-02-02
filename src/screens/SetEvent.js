@@ -141,7 +141,10 @@ export default function SetEvent() {
               text={useFlag == true ? "이벤트 종료" : "이벤트 활성화"}
               fn={fnUseFlag}
             />
-            <LayoutTopButton text="수정" disabled={isSubmitting} />
+            <LayoutTopButton
+              text={contid ? "수정" : "완료"}
+              disabled={isSubmitting}
+            />
           </ul>
 
           <div className="formWrap">

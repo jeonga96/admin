@@ -1,4 +1,4 @@
-import { useState, useLayoutEffect } from "react";
+import { useState, useLayoutEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import {
   urlContentList,
@@ -96,6 +96,7 @@ export default function SetAdminAppbanner() {
   // 데이터 ------------------------------------------------------------------------
   // bannerList:배너 목록
   const [bannerList, setBannerList] = useState([]);
+  const bannerReqSuccess = useRef(false);
   // inputData:수정된 내용 저장
   const [inputData, setinputData] = useState({});
 
@@ -104,25 +105,48 @@ export default function SetAdminAppbanner() {
   const [img, setImg] = useState(null);
   const imgsIid = [];
 
-  // 화면 렌더링 시 가장 처음 발생되는 이벤트
+  // 카테고리별 배너 데이터 불러오기
   useLayoutEffect(() => {
-    servicesPostData(urlContentList, {
-      category: "bannerB2C",
-    })
-      .then((res) => {
-        if (res.status === "success") {
-          setBannerList(res.data);
-          servicesPostData(urlContentList, {
-            category: "bannerB2B",
-          }).then((deepRes) => {
-            if (deepRes.status === "success") {
-              setBannerList([...res.data, ...deepRes.data]);
-            }
-          });
-        }
+    const categoryList = [
+      "bannerB2B1",
+      "bannerB2B2",
+      "bannerB2B3",
+      "bannerB2C1",
+      "bannerB2C2",
+      "bannerB2C3",
+    ];
+
+    for (const item of categoryList) {
+      servicesPostData(urlContentList, {
+        category: item,
       })
-      .catch((res) => console.log(res));
+        .then((res) => {
+          if (res.status === "success") {
+            setBannerList((listRes) => [...listRes, ...res.data]);
+          }
+        })
+        .catch((res) => console.log(res));
+    }
+    bannerReqSuccess.current = true;
   }, []);
+
+  // 카테고리별 데이터를 모두 불러온 후 배너리스트 정렬
+  useDidMountEffect(() => {
+    if (bannerReqSuccess.current === true) {
+      let categorySort = bannerList.sort(function (a, b) {
+        let x = a.category.toLowerCase();
+        let y = b.category.toLowerCase();
+        if (x < y) {
+          return -1;
+        }
+        if (x > y) {
+          return 1;
+        }
+        return 0;
+      });
+      setBannerList(categorySort);
+    }
+  }, [bannerList]);
 
   // bannerlist의 데이터를 받아오면 기존 배너의 이미지 데이터를 받아온다.
   useDidMountEffect(() => {
@@ -153,6 +177,7 @@ export default function SetAdminAppbanner() {
             if (i === Object.keys(inputData).length - 1) {
               if (res.status === "success") {
                 servicesUseToast("완료되었습니다!", "s");
+                bannerReqSuccess.current = false;
                 setTimeout(() => {
                   window.location.reload();
                 }, 2000);
