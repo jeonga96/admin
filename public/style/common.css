@@ -1211,10 +1211,10 @@ input[type="radio"] {
   white-space: nowrap;
   text-overflow: ellipsis;
 }
-.tdFlageN {
+.flageN {
   background-color: var(--color-bggray);
 }
-.tdFlageN td {
+.flageN td {
   color: var(--color-gray);
 }
 

@@ -83,7 +83,7 @@ export default function ListEvent() {
                   <tr
                     key={item.contid}
                     style={{ height: "5.25rem" }}
-                    className={item.useFlag == 0 ? "tdFlageN" : null}
+                    className={item.useFlag == 0 ? "flageN" : null}
                   >
                     <td className="tableContentWrap">
                       <Link

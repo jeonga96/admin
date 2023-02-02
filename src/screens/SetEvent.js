@@ -43,32 +43,9 @@ export default function SetEvent() {
     }
   }, []);
 
-  console.log(useFlag);
-
-  const onClickLink = () => {
-    if (!getValues("_contentDetail")) {
-      return servicesUseToast("URL이 입력되지 않았습니다.", "e");
-    } else if (
-      !!watch("_contentDetail") &&
-      watch("_contentDetail").includes("https://")
-    ) {
-      return (window.location.href = watch("_contentDetail"));
-    } else if (
-      !!watch("_contentDetail") &&
-      watch("_contentDetail").includes("http")
-    ) {
-      return (window.location.href = watch("_contentDetail").replace(
-        "http",
-        "https"
-      ));
-    } else if (
-      !!watch("_contentDetail") &&
-      !watch("_contentDetail").includes("http://")
-    ) {
-      return (window.location.href = `https://${watch("_contentDetail")}`);
-    } else {
-      return servicesUseToast("URL이 잘못 입력되었습니다.", "e");
-    }
+  const onClickLink = (e) => {
+    e.preventDefault();
+    window.open("about:blank").location.href = watch("_contentDetail");
   };
 
   const AddUserSubmit = (e) => {
@@ -196,6 +173,10 @@ export default function SetEvent() {
                   placeholder="연결할 URL을 입력해 주세요."
                   {...register("_contentDetail", {
                     required: "입력되지 않았습니다.",
+                    pattern: {
+                      value: /^https/,
+                      message: "연결될 링크는 https://로 시작되야 합니다.",
+                    },
                     minLength: {
                       value: 2,
                       message: "2자 이상의 글자만 사용가능합니다.",

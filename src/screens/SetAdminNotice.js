@@ -27,6 +27,7 @@ export default function SetDetailAdminNotice() {
   const getDataFinish = useRef(false);
   // 하위 컴포넌트에게 이미지 iid 전달
   const [noticeDetail, setNoticeDetail] = useState({});
+  const [useFlag, setUseFlag] = useState(true);
 
   // 이미지 ------------------------------------------------------------------------
   // imgs:상세 이미지저장 및 표시, imgsIid:서버에 이미지를 보낼 때는, iid값만 필요
@@ -41,10 +42,12 @@ export default function SetDetailAdminNotice() {
       })
         .then((res) => {
           if (res.status === "success") {
+            console.log(res.data);
             setNoticeDetail(res.data);
             setValue("_category", res.data.category || "notice");
             setValue("_contentString", res.data.contentString || "");
             setValue("_contentDetail", res.data.contentDetail || "");
+            setUseFlag(res.data.useFlag == 1 ? true : false);
             getDataFinish.current = true;
           } else if (res.data === "fail") {
             console.log("기존에 입력된 데이터가 없습니다.");
@@ -87,11 +90,38 @@ export default function SetDetailAdminNotice() {
       .catch((error) => console.log("axios 실패", error.response));
   }
 
+  const fnUseFlag = () => {
+    servicesPostData(urlSetContent, {
+      contid: contid,
+      category: getValues("_category"),
+      contentString: getValues("_contentString"),
+      contentDetail: getValues("_contentDetail"),
+      useFlag: useFlag == true ? "0" : "1",
+    })
+      .then((res) => {
+        if (res.status === "success") {
+          servicesUseToast("수정이 완료되었습니다.", "s");
+          setTimeout(() => {
+            window.location.href = `/notice`;
+          }, 2000);
+          return;
+        }
+        if (res.status === "fail") {
+          servicesUseToast("입력에 실패했습니다.", "e");
+        }
+      })
+      .catch((error) => console.log("axios 실패", error.response));
+  };
+
   return (
     <>
       <div className="commonBox">
         <form className="formLayout" onSubmit={handleSubmit(AddUserSubmit)}>
           <ul className="tableTopWrap">
+            <LayoutTopButton
+              text={useFlag == true ? "비공개" : "공개"}
+              fn={fnUseFlag}
+            />
             <LayoutTopButton text="완료" disabled={isSubmitting} />
           </ul>
 

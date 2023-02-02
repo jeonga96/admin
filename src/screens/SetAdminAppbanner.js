@@ -52,6 +52,11 @@ function InputBox({ inputData, setinputData, item }) {
     });
   };
 
+  const onClickLink = (e) => {
+    e.preventDefault();
+    window.open("about:blank").location.href = item.contentDetail;
+  };
+
   return (
     <>
       <h3>{item.contentString}</h3>
@@ -71,9 +76,9 @@ function InputBox({ inputData, setinputData, item }) {
         </div>
         <div className="listSearchWrap" style={{ width: "100%" }}>
           <div className="blockLabel">
-            <span>랜딩 URL</span>
+            <span>URL 연결</span>
           </div>
-          <div style={{ height: "32px" }}>
+          <div style={{ height: "32px" }} className="flexBox">
             <input
               type="text"
               id="contentDetail"
@@ -81,6 +86,14 @@ function InputBox({ inputData, setinputData, item }) {
               onChange={valueChange}
               defaultValue={item.contentDetail}
             />
+            <button
+              type="button"
+              onClick={onClickLink}
+              className="formButton"
+              style={{ width: "200px", marginLeft: "4px" }}
+            >
+              해당 페이지로 이동
+            </button>
           </div>
         </div>
       </fieldset>
@@ -116,18 +129,20 @@ export default function SetAdminAppbanner() {
       "bannerB2C3",
     ];
 
-    for (const item of categoryList) {
-      servicesPostData(urlContentList, {
-        category: item,
-      })
-        .then((res) => {
-          if (res.status === "success") {
-            setBannerList((listRes) => [...listRes, ...res.data]);
-          }
+    if (bannerList.length <= categoryList.length) {
+      for (const item of categoryList) {
+        servicesPostData(urlContentList, {
+          category: item,
         })
-        .catch((res) => console.log(res));
+          .then((res) => {
+            if (res.status === "success") {
+              setBannerList((listRes) => [...listRes, ...res.data]);
+            }
+          })
+          .catch((res) => console.log(res));
+      }
+      bannerReqSuccess.current = true;
     }
-    bannerReqSuccess.current = true;
   }, []);
 
   // 카테고리별 데이터를 모두 불러온 후 배너리스트 정렬

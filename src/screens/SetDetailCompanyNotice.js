@@ -11,7 +11,7 @@ import SetImage from "../components/common/ServicesImageSetPreview";
 import LayoutTopButton from "../components/common/LayoutTopButton";
 
 export default function SetDetailCompanyNotice() {
-  const { cid, comrid } = useParams();
+  const { cid, comnid } = useParams();
 
   // react-hook-form 라이브러리
   const {
@@ -27,6 +27,7 @@ export default function SetDetailCompanyNotice() {
   const getDataFinish = useRef(false);
   // 하위 이미지 컴포넌트에게 데이터 넘기기 위해 사용
   const [noticeDetail, setNoticeDetail] = useState({});
+  // const [useFlag, setUseFlag] = useState(true);
 
   // 이미지 ------------------------------------------------------------------------
   // imgs:상세 이미지저장 및 표시, imgsIid:서버에 이미지를 보낼 때는, iid값만 필요
@@ -35,14 +36,15 @@ export default function SetDetailCompanyNotice() {
 
   useLayoutEffect(() => {
     servicesPostData(urlCompanyGetNotice, {
-      comrid: comrid,
+      comnid: comnid,
     })
       .then((res) => {
-        console.log(res.data);
         if (res.status === "success") {
+          console.log(res.data);
           setNoticeDetail(res.data);
           setValue("_title", res.data.title || "");
           setValue("_content", res.data.content || "");
+          // setUseFlag(res.data.useFlag == 1 ? true : false);
           getDataFinish.current = true;
         } else if (res.data === "fail") {
           console.log("기존에 입력된 데이터가 없습니다.");
@@ -57,9 +59,9 @@ export default function SetDetailCompanyNotice() {
 
     servicesPostData(
       urlCompanySetNotice,
-      !!comrid
+      !!comnid
         ? {
-            comrid: comrid,
+            comnid: comnid,
             rcid: cid,
             useFlag: 1,
             title: getValues("_title"),
@@ -79,7 +81,10 @@ export default function SetDetailCompanyNotice() {
           servicesUseToast("입력에 실패했습니다.", "e");
         }
         if (res.status === "success") {
-          window.location.href = `/company/${cid}/notice/${res.data.comnid}`;
+          servicesUseToast("수정이 완료되었습니다.", "s");
+          setTimeout(() => {
+            window.location.href = `/company/${cid}/notice/${res.data.comnid}`;
+          }, 2000);
           return;
         }
       })
@@ -89,9 +94,12 @@ export default function SetDetailCompanyNotice() {
   return (
     <>
       <div className="commonBox">
-        dd
         <form className="formLayout" onSubmit={handleSubmit(fnSubmit)}>
           <ul className="tableTopWrap">
+            {/* <LayoutTopButton
+              text={useFlag == true ? "비공개" : "공개"}
+              fn={fnUseFlag}
+            /> */}
             <LayoutTopButton text="완료" disabled={isSubmitting} />
           </ul>
           <div className="formContentWrap formContentWideWrap">

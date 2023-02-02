@@ -16,7 +16,11 @@ export default function ComponentListNotice({ notice, ISADMIN }) {
           {notice &&
             notice.map((item) =>
               ISADMIN ? (
-                <tr key={item.contid} style={{ height: "5.25rem" }}>
+                <tr
+                  key={item.contid}
+                  style={{ height: "5.25rem" }}
+                  className={item.useFlag == 0 ? "flageN" : null}
+                >
                   <td>{item.contid}</td>
                   <td className="tableContentWrap">
                     <Link to={`/notice/${item.contid}`} className="Link">
