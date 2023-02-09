@@ -80,7 +80,10 @@ export default function SetDetailAdminNotice() {
     )
       .then((res) => {
         if (res.status === "success") {
-          window.location.href = `notice/${res.data.contid}`;
+          servicesUseToast("입력이 완료되었습니다.", "s");
+          setTimeout(() => {
+            window.location.href = `notice/${res.data.contid}`;
+          }, 2000);
           return;
         }
         if (res.status === "fail") {

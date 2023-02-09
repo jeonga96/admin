@@ -24,7 +24,8 @@ export default function ImageOnClick({ getData, url, text, iid, onRemove }) {
         <button
           type="button"
           className="imgRemoveBtn"
-          onClick={() => {
+          onClick={(e) => {
+            e.preventDefault();
             onRemove(iid);
           }}
         >

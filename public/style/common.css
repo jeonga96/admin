@@ -492,7 +492,8 @@ input[type="radio"] {
   background-color: var(--color-acceent);
 }
 
-.imgsThumbnail {
+/* imgsThumbnail ------------------------------------- */
+/* .imgsThumbnail {
   display: flex;
   justify-content: left;
   flex-wrap: wrap;
@@ -522,12 +523,13 @@ input[type="radio"] {
   font-size: var(--font-size-small);
   color: var(--color-lightprimary);
   margin-top: 0.125rem;
-}
-/* 
+} */
+
+/* imgsThumbnail---------------------------------- */
+
 .imgsThumbnail {
   display: flex;
   display: -webkit-flex;
-  justify-content: left;
   flex-wrap: wrap;
   flex-direction: column;
   -ms-flex-direction: column;
@@ -540,43 +542,6 @@ input[type="radio"] {
   background-color: rgba(243, 244, 243, 0.3);
   border: 1px solid rgba(0, 0, 0, 0.1);
 }
-.DragDrop-Files > div,
-.DragDrop-Files > li {
-  width: 4rem;
-  height: 4rem;
-  background-size: contain;
-  margin-right: 0.25rem;
-  margin-bottom: 0.25rem;
-  cursor: pointer;
-  background-repeat: no-repeat;
-  background-size: cover;
-} 
-.imgsThumbnail span {
-  display: block;
-  font-weight: 400;
-  height: auto;
-  font-size: var(--font-size-small);
-  color: var(--color-lightprimary);
-  margin-top: 0.125rem;
-}
-.imgsThumbnail > div,
-.imgsThumbnail > li {
-  width: 4rem;
-  height: 4rem;
-  background-size: contain;
-  margin-right: 0.25rem;
-  margin-bottom: 0.25rem;
-  cursor: pointer;
-  background-repeat: no-repeat;
-  background-size: cover;
-} */
-
-.ImageUploadBox {
-  width: 100%;
-  border-radius: 3px;
-}
-
-/* ------------------------------------ */
 .imgsThumbnail label {
   position: relative;
   width: 100%;
@@ -592,13 +557,47 @@ input[type="radio"] {
   cursor: pointer;
   transition: 0.12s ease-in;
 }
-/* .DragDrop-File {
-  border: 1px dotted var(--color-lightprimary);
-} */
-/* .DragDrop-File-Dragging {
-  background-color: var(--color-bggray);
-  border: 1px solid var(--color-gray);
-} */
+
+.DragDrop-Files {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  display: -webkit-flex;
+  justify-content: left;
+  flex-wrap: wrap;
+  border: 2px dotted rgba(0, 0, 0, 0.1);
+  transition: all 500ms ease;
+}
+.DragDrop-Files:hover {
+  background-color: rgba(243, 244, 243, 0.6);
+}
+.DragDrop-Files > div,
+.DragDrop-Files > li {
+  position: relative;
+  width: 10%;
+  height: 4rem;
+  background-size: contain;
+  padding: 0.25rem 0.125rem;
+  cursor: pointer;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-origin: content-box;
+}
+.DragDrop-Files span {
+  display: block;
+  font-weight: 400;
+  height: auto;
+  font-size: var(--font-size-small);
+  color: var(--color-lightprimary);
+  margin-top: 0.125rem;
+}
+
+.ImageUploadBox {
+  width: 100%;
+  border-radius: 3px;
+}
+
+/* ------------------------------------ */
 
 /*썸네일 클릭 시 확대*/
 .imageZoomPopupBox {
@@ -627,14 +626,17 @@ input[type="radio"] {
 .imgRemoveBtn {
   display: none;
   position: absolute;
+  top: 6px;
+  right: 4px;
+  z-index: 10;
   width: 20px;
   height: 20px;
   border-radius: 10px;
   background-color: rgba(0, 0, 0, 0.5);
   box-shadow: var(--styles-boxShadow);
 }
-.imgsThumbnail > div:hover .imgRemoveBtn,
-.imgsThumbnail > li:hover .imgRemoveBtn {
+.DragDrop-Files > div:hover .imgRemoveBtn,
+.DragDrop-Files > li:hover .imgRemoveBtn {
   display: block;
 }
 .imgRemoveBtn svg {
