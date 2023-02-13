@@ -19,6 +19,7 @@ export default function ComponentSetUser({ setUserData, userData }) {
         if (res.status === "success") {
           setValue("_userrole", res.data.userrole.toString() || "ROLE_USER");
           setValue("_useFlag", res.data.useFlag.toString() || "1");
+          setValue("_userid", res.data.userid.toString() || "");
         }
       })
       .catch((res) => console.log(res));
@@ -40,7 +41,7 @@ export default function ComponentSetUser({ setUserData, userData }) {
       passwd: watch("_passwd"),
     }).then((res) => {
       if (res.status === "success") {
-        servicesUseToast("비밀번호 변경이 완료되었습니다.");
+        servicesUseToast("비밀번호 변경이 완료되었습니다.", "s");
       }
     });
   };
@@ -56,7 +57,6 @@ export default function ComponentSetUser({ setUserData, userData }) {
             className="listSearchRadioInput"
             type="radio"
             checked={watch("_useFlag") == "1"}
-            name="_useFlag"
             value="1"
             id="useFlag1"
             {...register("_useFlag", {
@@ -71,7 +71,6 @@ export default function ComponentSetUser({ setUserData, userData }) {
             className="listSearchRadioInput"
             type="radio"
             checked={watch("_useFlag") == "0"}
-            name="_useFlag"
             value="0"
             id="useFlag0"
             {...register("_useFlag", {
@@ -93,7 +92,6 @@ export default function ComponentSetUser({ setUserData, userData }) {
             className="listSearchRadioInput"
             type="radio"
             checked={watch("_userrole") === "ROLE_USER"}
-            name="_userrole"
             value="ROLE_USER"
             id="ROLE_USER"
             {...register("_userrole", {
@@ -108,7 +106,6 @@ export default function ComponentSetUser({ setUserData, userData }) {
             className="listSearchRadioInput"
             type="radio"
             checked={watch("_userrole") === "ROLE_USER,ROLE_ADMIN"}
-            name="_userrole"
             value="ROLE_USER,ROLE_ADMIN"
             id="ROLE_ADMIN"
             {...register("_userrole", {
@@ -118,6 +115,15 @@ export default function ComponentSetUser({ setUserData, userData }) {
           <label className="listSearchRadioLabel" htmlFor="ROLE_ADMIN">
             관리자
           </label>
+        </div>
+      </div>
+
+      <div className="formContentWrap">
+        <div className="blockLabel">
+          <span>아이디</span>
+        </div>
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <input type="text" id="userid" disabled {...register("_userid")} />
         </div>
       </div>
 

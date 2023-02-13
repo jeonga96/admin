@@ -26,7 +26,12 @@ export default function SetDetailUser() {
     getValues,
     watch,
     formState: { isSubmitting, errors },
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      _nationality: "내국인",
+      _sex: "male",
+    },
+  });
 
   // 데이터 ------------------------------------------------------------------------
   // 작성된 데이터를 받아옴
@@ -39,9 +44,10 @@ export default function SetDetailUser() {
   // 이미지 ------------------------------------------------------------------------
   // img:대표 이미지저장 및 표시, imgs:상세 이미지저장 및 표시
   const [img, setImg] = useState(null);
-  const [imgs, setImgs] = useState([]);
+
   // imgsIid:서버에 이미지를 보낼 때는, iid값만 필요
-  const imgsIid = [];
+  // const [imgs, setImgs] = useState([]);
+  // const imgsIid = [];
 
   // 주소 ------------------------------------------------------------------------
   // address:신주소,  oldaddress:구주소,  zipcode:우편번호,  latitude:위도,  longitude:경도
@@ -54,10 +60,13 @@ export default function SetDetailUser() {
     })
       .then((res) => {
         if (res.status === "success") {
-          console.log("res", res.data);
+          console.log("res!!!", res.data);
           // 이미지 iid를 가지고 오기 위해 (imgs, img) 사용
           setGetedData(res.data);
           // 값이 있다면 inputValue에 저장한 후 getDataFinish 값을 변경
+          setValue("_nationality", res.data.nationality);
+          setValue("_sex", res.data.sex);
+          setValue("_age", res.data.age);
           setValue("_name", res.data.name || "");
           setValue("_nick", res.data.nick || "");
           setValue("_mobile", res.data.mobile || "");
@@ -66,14 +75,14 @@ export default function SetDetailUser() {
           getDataFinish.current = true;
         }
       })
-      .catch((res) => console.log(res));
+      .catch((res) => console.log("wrror", res));
   }, []);
 
   // 수정 완료 이벤트
   function fnSubmit(e) {
     //서버에 imgs의 iid값만을 보내기 위해 실행하는 반복문 함수
-    serviesGetImgsIid(imgsIid, imgs);
-
+    // serviesGetImgsIid(imgsIid, imgs);
+    //
     // setUser 수정 (회원활성화, 비밀번호, userrole)
     // DetailUserComponent
     servicesPostData(urlSetUser, {
@@ -89,10 +98,13 @@ export default function SetDetailUser() {
       address: multilAddress.address,
       detailaddress: multilAddress.detailaddress,
       mobile: getValues("_mobile"),
+      nationality: getValues("_nationality"),
+      sex: getValues("_sex"),
+      age: getValues("_age"),
       location: getValues("_location"),
       mail: getValues("_mail"),
       titleImg: img ? img[0].iid : "",
-      imgs: imgs ? imgsIid.toString() : "",
+      // imgs: imgs ? imgsIid.toString() : "",
     })
       .then((res) => {
         if (res.status === "fail") {
@@ -107,8 +119,6 @@ export default function SetDetailUser() {
       .catch((error) => console.log(error));
   }
 
-  console.log("부모", img, "imgs", imgs);
-
   return (
     <>
       <div className="commonBox">
@@ -118,190 +128,341 @@ export default function SetDetailUser() {
             <LayoutTopButton text="완료" disabled={isSubmitting} />
           </ul>
           <div className="formWrap">
-            {/* setUser (회원활성화, 회원권한, 비밀번호관리) ================================================================ */}
-            <DetailUserComponent
-              setUserData={setUserData}
-              userData={userData}
-            />
+            <fieldset>
+              <h3>사용자 회원 정보 수정</h3>
+              {/* setUser (회원활성화, 회원권한, 비밀번호관리) ================================================================ */}
+              <DetailUserComponent
+                setUserData={setUserData}
+                userData={userData}
+              />
 
-            {/* setDetailUserInfo  ================================================================ */}
-            <div className="formContentWrap">
-              <label htmlFor="name" className=" blockLabel">
-                <span>이름</span>
-              </label>
-              <div>
-                <input
-                  type="text"
-                  id="name"
-                  placeholder="이름을 입력해 주세요."
-                  {...register("_name", {
-                    required: "입력되지 않았습니다.",
-                    maxLength: {
-                      value: 8,
-                      message: "8자 이하의 글자만 사용가능합니다.",
-                    },
-                  })}
-                />
-                <ErrorMessage
-                  errors={errors}
-                  name="_name"
-                  render={({ message }) => (
-                    <span className="errorMessageWrap">{message}</span>
-                  )}
-                />
+              <div className="formContentWrap">
+                <div className="blockLabel">
+                  <span>분류</span>
+                </div>
+                <div className="formPaddingWrap">
+                  <input
+                    className="listSearchRadioInput"
+                    type="radio"
+                    checked={watch("_nationality") == "내국인"}
+                    value="내국인"
+                    id="nationality0"
+                    {...register("_nationality", {})}
+                  />
+                  <label
+                    className="listSearchRadioLabel"
+                    htmlFor="nationality0"
+                  >
+                    내국인
+                  </label>
+
+                  <input
+                    className="listSearchRadioInput"
+                    type="radio"
+                    checked={watch("_nationality") == "외국인"}
+                    value="외국인"
+                    id="nationality1"
+                    {...register("_nationality", {})}
+                  />
+                  <label
+                    className="listSearchRadioLabel"
+                    htmlFor="nationality1"
+                  >
+                    외국인
+                  </label>
+                </div>
               </div>
-            </div>
 
-            <div className="formContentWrap">
-              <label htmlFor="nick" className="blockLabel">
-                <span>별명</span>
-              </label>
-              <div>
-                <input
-                  type="text"
-                  id="nick"
-                  placeholder="별명을 입력해 주세요."
-                  {...register("_nick", {
-                    maxLength: {
-                      value: 8,
-                      message: "8자 이하의 글자만 사용가능합니다.",
-                    },
-                    pattern: {
-                      value: /^[a-zA-Z0-9ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/,
-                      message: "형식에 맞지 않습니다.",
-                    },
-                  })}
-                />
-                <ErrorMessage
-                  errors={errors}
-                  name="_nick"
-                  render={({ message }) => (
-                    <span className="errorMessageWrap">{message}</span>
-                  )}
-                />
+              <div className="formContentWrap">
+                <div className="blockLabel">
+                  <span>성별</span>
+                </div>
+                <div className="formPaddingWrap">
+                  <input
+                    className="listSearchRadioInput"
+                    type="radio"
+                    checked={watch("_sex") == "male"}
+                    value="male"
+                    id="male"
+                    {...register("_sex")}
+                  />
+                  <label className="listSearchRadioLabel" htmlFor="male">
+                    남자
+                  </label>
+
+                  <input
+                    className="listSearchRadioInput"
+                    type="radio"
+                    checked={watch("_sex") == "female"}
+                    value="female"
+                    id="female"
+                    {...register("_sex")}
+                  />
+                  <label className="listSearchRadioLabel" htmlFor="female">
+                    여자
+                  </label>
+                </div>
               </div>
-            </div>
 
-            <div className="formContentWrap">
-              <label htmlFor="location" className=" blockLabel">
-                <span>키워드 주소</span>
-              </label>
-              <div>
-                <input
-                  type="text"
-                  id="location"
-                  placeholder="주소를 입력해 주세요. (ㅇㅇ구, ㅇㅇ동)"
-                  {...register("_location", {
-                    maxLength: {
-                      value: 50,
-                      message: "50자 이하의 글자만 사용가능합니다.",
-                    },
-                    pattern: {
-                      value: /^[0-9가-힣]/,
-                      message: "형식에 맞지 않습니다.",
-                    },
-                  })}
-                />
-                <ErrorMessage
-                  errors={errors}
-                  name="_location"
-                  render={({ message }) => (
-                    <span className="errorMessageWrap">{message}</span>
-                  )}
-                />
+              {/* setDetailUserInfo  ================================================================ */}
+              <div className="formContentWrap">
+                <label htmlFor="name" className=" blockLabel">
+                  <span>이름</span>
+                </label>
+                <div>
+                  <input
+                    type="text"
+                    id="name"
+                    placeholder="이름을 입력해 주세요."
+                    {...register("_name", {
+                      required: "입력되지 않았습니다.",
+                      maxLength: {
+                        value: 8,
+                        message: "8자 이하의 글자만 사용가능합니다.",
+                      },
+                    })}
+                  />
+                  <ErrorMessage
+                    errors={errors}
+                    name="_name"
+                    render={({ message }) => (
+                      <span className="errorMessageWrap">{message}</span>
+                    )}
+                  />
+                </div>
               </div>
-            </div>
 
-            {/* 주소 */}
-            <PieceRegisterSearchPopUp
-              userComponent
-              setMultilAddress={setMultilAddress}
-              multilAddress={multilAddress}
-              getedData={getedData}
-            />
+              <div className="formContentWrap">
+                <div className="blockLabel">
+                  <span>나이</span>
+                </div>
+                <div className="formPaddingWrap">
+                  <input
+                    className="listSearchRadioInput"
+                    type="radio"
+                    checked={watch("_age") == "10"}
+                    value="10"
+                    id="age10"
+                    {...register("_age")}
+                  />
+                  <label className="listSearchRadioLabel" htmlFor="age10">
+                    10대
+                  </label>
 
-            <div className="formContentWrap">
-              <label htmlFor="mobile" className="blockLabel">
-                <span>핸드폰 번호</span>
-              </label>
-              <div>
-                <input
-                  type="text"
-                  id="mobile"
-                  placeholder="핸드폰 번호 (예시 000-0000-0000)"
-                  value={
-                    (watch("_mobile") &&
-                      watch("_mobile")
-                        .replace(/[^0-9]/g, "")
-                        .replace(
-                          /(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)([0-9]{4}$)/,
-                          "$1-$2-$3"
-                        )
-                        .replace("--", "-")) ||
-                    ""
-                  }
-                  {...register("_mobile", {
-                    required: "입력되지 않았습니다.",
-                    pattern: {
-                      value: /^[0-9]{3}-[0-9]{3,4}-[0-9]{4}/,
-                      message: "형식에 맞지 않습니다.",
-                    },
-                  })}
-                />
-                <ErrorMessage
-                  errors={errors}
-                  name="_mobile"
-                  render={({ message }) => (
-                    <span className="errorMessageWrap">{message}</span>
-                  )}
-                />
+                  <input
+                    className="listSearchRadioInput"
+                    type="radio"
+                    checked={watch("_age") == "20"}
+                    value="20"
+                    id="age20"
+                    {...register("_age")}
+                  />
+                  <label className="listSearchRadioLabel" htmlFor="age20">
+                    20대
+                  </label>
+
+                  <input
+                    className="listSearchRadioInput"
+                    type="radio"
+                    checked={watch("_age") == "30"}
+                    value="30"
+                    id="age30"
+                    {...register("_age")}
+                  />
+                  <label className="listSearchRadioLabel" htmlFor="age30">
+                    30대
+                  </label>
+
+                  <input
+                    className="listSearchRadioInput"
+                    type="radio"
+                    checked={watch("_age") == "40"}
+                    value="40"
+                    id="age40"
+                    {...register("_age")}
+                  />
+                  <label className="listSearchRadioLabel" htmlFor="age40">
+                    40대
+                  </label>
+
+                  <input
+                    className="listSearchRadioInput"
+                    type="radio"
+                    checked={watch("_age") == "50"}
+                    value="50"
+                    id="age50"
+                    {...register("_age")}
+                  />
+                  <label className="listSearchRadioLabel" htmlFor="age50">
+                    50대
+                  </label>
+
+                  <input
+                    className="listSearchRadioInput"
+                    type="radio"
+                    checked={watch("_age") == "60"}
+                    value="60"
+                    id="age60"
+                    {...register("_age")}
+                  />
+                  <label className="listSearchRadioLabel" htmlFor="age60">
+                    60대 이상
+                  </label>
+                </div>
               </div>
-            </div>
 
-            <div className="formContentWrap">
-              <label htmlFor="mail" className=" blockLabel">
-                <span>이메일</span>
-              </label>
-              <div>
-                <input
-                  type="text"
-                  id="mail"
-                  placeholder="이메일을 입력해 주세요."
-                  {...register("_mail", {
-                    pattern: {
-                      value:
-                        /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i,
-                      message: "형식에 맞지 않습니다.",
-                    },
-                  })}
-                />
-                <ErrorMessage
-                  errors={errors}
-                  name="_mail"
-                  render={({ message }) => (
-                    <span className="errorMessageWrap">{message}</span>
-                  )}
-                />
+              <div className="formContentWrap">
+                <label htmlFor="nick" className="blockLabel">
+                  <span>별명</span>
+                </label>
+                <div>
+                  <input
+                    type="text"
+                    id="nick"
+                    placeholder="별명을 입력해 주세요."
+                    {...register("_nick", {
+                      maxLength: {
+                        value: 8,
+                        message: "8자 이하의 글자만 사용가능합니다.",
+                      },
+                      pattern: {
+                        value: /^[a-zA-Z0-9ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/,
+                        message: "형식에 맞지 않습니다.",
+                      },
+                    })}
+                  />
+                  <ErrorMessage
+                    errors={errors}
+                    name="_nick"
+                    render={({ message }) => (
+                      <span className="errorMessageWrap">{message}</span>
+                    )}
+                  />
+                </div>
               </div>
-            </div>
 
-            <ImageSet
-              img={img}
-              setImg={setImg}
-              getData={getedData}
-              id="titleImg"
-              title="대표 이미지"
-              getDataFinish={getDataFinish.current}
-            />
+              <div className="formContentWrap">
+                <label htmlFor="location" className=" blockLabel">
+                  <span>키워드 주소</span>
+                </label>
+                <div>
+                  <input
+                    type="text"
+                    id="location"
+                    placeholder="주소를 입력해 주세요. (ㅇㅇ구, ㅇㅇ동)"
+                    {...register("_location", {
+                      maxLength: {
+                        value: 50,
+                        message: "50자 이하의 글자만 사용가능합니다.",
+                      },
+                      pattern: {
+                        value: /^[0-9가-힣]/,
+                        message: "형식에 맞지 않습니다.",
+                      },
+                    })}
+                  />
+                  <ErrorMessage
+                    errors={errors}
+                    name="_location"
+                    render={({ message }) => (
+                      <span className="errorMessageWrap">{message}</span>
+                    )}
+                  />
+                </div>
+              </div>
 
-            <ImageSet
-              imgs={imgs}
-              setImgs={setImgs}
-              id="imgs"
-              title="상세 이미지"
-              getData={getedData}
-              getDataFinish={getDataFinish.current}
-            />
+              {/* 주소 */}
+              <PieceRegisterSearchPopUp
+                style={{ width: "100%" }}
+                userComponent
+                setMultilAddress={setMultilAddress}
+                multilAddress={multilAddress}
+                getedData={getedData}
+              />
+
+              <div className="formContentWrap">
+                <label htmlFor="mobile" className="blockLabel">
+                  <span>휴대폰</span>
+                </label>
+                <div>
+                  <input
+                    type="text"
+                    id="mobile"
+                    placeholder="핸드폰 번호 (예시 000-0000-0000)"
+                    value={
+                      (watch("_mobile") &&
+                        watch("_mobile")
+                          .replace(/[^0-9]/g, "")
+                          .replace(
+                            /(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)([0-9]{4}$)/,
+                            "$1-$2-$3"
+                          )
+                          .replace("--", "-")) ||
+                      ""
+                    }
+                    {...register("_mobile", {
+                      required: "입력되지 않았습니다.",
+                      pattern: {
+                        value: /^[0-9]{3}-[0-9]{3,4}-[0-9]{4}/,
+                        message: "형식에 맞지 않습니다.",
+                      },
+                    })}
+                  />
+                  <ErrorMessage
+                    errors={errors}
+                    name="_mobile"
+                    render={({ message }) => (
+                      <span className="errorMessageWrap">{message}</span>
+                    )}
+                  />
+                </div>
+              </div>
+
+              <div className="formContentWrap">
+                <label htmlFor="mail" className=" blockLabel">
+                  <span>이메일</span>
+                </label>
+                <div>
+                  <input
+                    type="text"
+                    id="mail"
+                    placeholder="이메일을 입력해 주세요."
+                    {...register("_mail", {
+                      pattern: {
+                        value:
+                          /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i,
+                        message: "형식에 맞지 않습니다.",
+                      },
+                    })}
+                  />
+                  <ErrorMessage
+                    errors={errors}
+                    name="_mail"
+                    render={({ message }) => (
+                      <span className="errorMessageWrap">{message}</span>
+                    )}
+                  />
+                </div>
+              </div>
+
+              <ImageSet
+                img={img}
+                setImg={setImg}
+                getData={getedData}
+                id="titleImg"
+                title="대표 이미지"
+                getDataFinish={getDataFinish.current}
+              />
+
+              {/* <ImageSet
+                imgs={imgs}
+                setImgs={setImgs}
+                id="imgs"
+                title="상세 이미지"
+                getData={getedData}
+                getDataFinish={getDataFinish.current}
+              /> */}
+            </fieldset>
           </div>
         </form>
       </div>

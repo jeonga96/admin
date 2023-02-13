@@ -116,7 +116,7 @@ export default function ComponentSetCompany({ companyData, setCompanyData }) {
 
       <div className="formContentWrap">
         <div className="blockLabel">
-          <span>회원 연결</span>
+          <span>회원연결</span>
         </div>
         <div>
           <input

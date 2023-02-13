@@ -24,10 +24,11 @@ import {
   urlReviewList,
   urlListEstimateInfo,
   urlListProposalInfo,
+  urlSetUser,
+  urlGetUser,
 } from "../Services/string";
 import SetImage from "../components/common/ServicesImageSetPreview";
 import LayoutTopButton from "../components/common/LayoutTopButton";
-import SetAllKeyWord from "../components/common/ComponentSetAllKeyWord";
 import ComponentSetCompany from "../components/common/ComponentSetCompany";
 import PieceDetailListLink from "../components/common/PieceDetailListLink";
 import PieceRegisterSearchPopUp from "../components/common/PieceRegisterSearchPopUp";
@@ -43,7 +44,14 @@ export default function SetCompanyDetail() {
     getValues,
     watch,
     formState: { isSubmitting, errors },
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      _detailUseFlag: "1",
+      _status: "2",
+      _gongsaType: "",
+      _comType: "일반사업자",
+    },
+  });
 
   // 데이터 ------------------------------------------------------------------------
   // 작성된 데이터를 받아옴
@@ -59,7 +67,7 @@ export default function SetCompanyDetail() {
   // imgsIid:서버에 이미지를 보낼 때는, iid값만 필요
   const imgsIid = [];
   // 사업자 등록증 이미지
-  const [regImgs, setRegImgs] = useState(null);
+  const [regImgs, setRegImgs] = useState([]);
 
   // 주소 ------------------------------------------------------------------------
   // address:신주소,  oldaddress:구주소,  zipcode:우편번호,  latitude:위도,  longitude:경도
@@ -83,6 +91,8 @@ export default function SetCompanyDetail() {
   const [toproposalInfo, setToproposalInfo] = useState([]);
   const [fromproposalInfo, setFromproposalInfo] = useState([]);
 
+  const ruid = useRef("");
+
   // 현재 페이지가 렌더링되자마자 기존에 입력된 값의 여부를 확인한다. ==============
   useEffect(() => {
     // 상세 회사정보 불러오기 기존 값이 없다면 새로운 회원이다. 새로 작성함
@@ -93,10 +103,14 @@ export default function SetCompanyDetail() {
         if (res.status === "success") {
           // 값이 있다면 저장한 후 getDataFinish 값을 변경
           setGetedData(res.data);
-
-          setValue("_detailUseFlag", res.data.useFlag.toString() || "1");
-          setValue("_status", res.data.status.toString() || "2");
-          setValue("_gongsaType", res.data.gongsaType || "reser");
+          setValue("_age", res.data.age);
+          setValue("_detailUseFlag", res.data.useFlag.toString());
+          setValue("_status", res.data.status.toString());
+          setValue(
+            "_gongsaType",
+            res.data.gongsaType === undefined ? "" : res.data.gongsaType
+          );
+          setValue("_comType", res.data.comType);
           setValue("_name", res.data.name || "");
           setValue("_comment", res.data.comment || "");
           setValue("_location", res.data.location || "");
@@ -108,6 +122,9 @@ export default function SetCompanyDetail() {
           setValue("_mobilenum", res.data.mobilenum || "");
           setValue("_email", res.data.email || "");
           setValue("_extnum", res.data.extnum || "");
+          setValue("_regName", res.data.regName || "");
+          setValue("_corporationno", res.data.corporationno || "");
+          setValue("_regOwner", res.data.regOwner || "");
 
           setValue("_bigCategory", res.data.bigCategory || "");
           setValue("_subCategory", res.data.subCategory || "");
@@ -150,8 +167,20 @@ export default function SetCompanyDetail() {
           serviesPostDataSettingRcid(urlReviewList, cid, setReviewList);
           // 견적요청서 - uid가 필요하기 떄문에 cid로 uid를 확인한 후 진행
           servicesPostData(urlGetCompany, { cid: cid }).then((res) => {
+            ruid.current = res.data.ruid;
+
+            // 회원정보
+            servicesPostData(urlGetUser, {
+              uid: res.data.ruid,
+            })
+              .then((res) => {
+                if (res.status === "success") {
+                  setValue("_userid", res.data.userid.toString() || "");
+                }
+              })
+              .catch((res) => console.log(res));
+
             // 견적 요청서 요청
-            console.log(res.data.ruid);
             servicesPostData(urlListEstimateInfo, {
               fromUid: res.data.ruid,
               offset: 0,
@@ -183,7 +212,6 @@ export default function SetCompanyDetail() {
           const WorkTimeArr = res.data.workTime.split("~");
           setValue("_workTimeTo", WorkTimeArr[0].trim() || "");
           setValue("_workTimeFrom", WorkTimeArr[1].trim() || "");
-
           getDataFinish.current = true;
         } else if (res.data === "fail") {
           console.log("새로운 사업자 회원입니다.");
@@ -235,6 +263,7 @@ export default function SetCompanyDetail() {
       comment: getValues("_comment"),
       location: getValues("_location"),
       registration: getValues("_registration"),
+      corporationno: getValues("_corporationno"),
       address: multilAddress.address,
       detailaddress: multilAddress.detailaddress,
       oldaddress: multilAddress.oldaddress,
@@ -242,7 +271,7 @@ export default function SetCompanyDetail() {
       workTime: `${watch("_workTimeTo")} ~ ${watch("_workTimeFrom")}`,
       offer: getValues("_offer"),
       titleImg: titleImg ? titleImg[0].iid : "",
-      regImgs: regImgs ? regImgs[0].iid : "",
+      regImgs: regImgs.length > 0 ? regImgs[0].iid : "",
       imgs: setImgs ? imgsIid.toString() : "",
       longitude: multilAddress.longitude,
       latitude: multilAddress.latitude,
@@ -250,7 +279,11 @@ export default function SetCompanyDetail() {
       mobilenum: getValues("_mobilenum"),
       email: getValues("_email"),
       ceogreet: getValues("_ceogreet"),
+      regOwner: getValues("_regOwner"),
       extnum: getValues("_extnum"),
+      regName: getValues("_regName"),
+      age: getValues("_age"),
+      comType: getValues("_comType"),
       //  키워드 & 태그는 현재 기능을 사용하지 않으나 추후 확장성으 위해 주석처리해두었습니다.
       // keywords: keywordValue.toString() || "",
       // tags: getValues("_tags"),
@@ -289,7 +322,7 @@ export default function SetCompanyDetail() {
 
           <div className="formWrap">
             <fieldset>
-              <h3>구역 설명</h3>
+              <h3>계약 기본 정보</h3>
               {/* setCompany radio (계약자, 사업자활성화, 회원연결) ================================================================ */}
               <ComponentSetCompany
                 setCompanyData={setCompanyData}
@@ -343,7 +376,6 @@ export default function SetCompanyDetail() {
                     className="listSearchRadioInput"
                     type="radio"
                     checked={watch("_status") == 2}
-                    name="_status"
                     value="2"
                     id="status2"
                     {...register("_status")}
@@ -356,7 +388,6 @@ export default function SetCompanyDetail() {
                     className="listSearchRadioInput"
                     type="radio"
                     checked={watch("_status") == 0}
-                    name="_status"
                     value="0"
                     id="status0"
                     {...register("_status")}
@@ -369,7 +400,6 @@ export default function SetCompanyDetail() {
                     className="listSearchRadioInput"
                     type="radio"
                     checked={watch("_status") == 1}
-                    name="_status"
                     value="1"
                     id="status1"
                     {...register("_status")}
@@ -379,476 +409,740 @@ export default function SetCompanyDetail() {
                   </label>
                 </div>
               </div>
+
+              <div className="formContentWrap">
+                <label htmlFor="userid" className="blockLabel">
+                  <span>아이디</span>
+                </label>
+                <div>
+                  <input
+                    type="text"
+                    id="userid"
+                    disabled
+                    {...register("_userid", {})}
+                  />
+                </div>
+              </div>
+
+              <div className="formContentWrap">
+                <div className="blockLabel">
+                  <span>비밀번호 관리</span>
+                </div>
+                <div
+                  style={{ display: "flex", justifyContent: "space-between" }}
+                >
+                  <input
+                    type="text"
+                    id="passwd"
+                    style={{
+                      width: "86%",
+                    }}
+                    disabled={!companyData.ruid && true}
+                    placeholder={
+                      !companyData.ruid
+                        ? "회원연결을 먼저 진행해 주십시오."
+                        : ""
+                    }
+                    {...register("_passwd")}
+                  />
+                  <button
+                    type="button"
+                    disabled={!companyData.ruid && true}
+                    onClick={() => {
+                      servicesPostData(urlSetUser, {
+                        uid: ruid.current,
+                        passwd: watch("_passwd"),
+                      }).then((res) => {
+                        if (res.status === "success") {
+                          servicesUseToast(
+                            "비밀번호 변경이 완료되었습니다.",
+                            "s"
+                          );
+                        }
+                      });
+                    }}
+                    className="formContentBtn"
+                  >
+                    변경
+                  </button>
+                </div>
+              </div>
             </fieldset>
+            {/* 계약기본정보 필드 끝 ==================================================================== */}
 
-            <div className="formContentWrap">
-              <div className="blockLabel">
-                <span>사업자 공사 관리</span>
+            {/* 고객 기본정보 필드 시작 ==================================================================== */}
+            <fieldset>
+              <h3>고객 기본 정보</h3>
+              <div className="formContentWrap">
+                <div className="blockLabel">
+                  <span>공사유형</span>
+                </div>
+                <div className="formPaddingWrap">
+                  <input
+                    type="checkbox"
+                    value="emer"
+                    id="emer"
+                    className="listSearchRadioInput"
+                    checked={
+                      (watch("_gongsaType") &&
+                        watch("_gongsaType").includes("emer")) ||
+                      false
+                    }
+                    {...register("_gongsaType")}
+                  />
+                  <label htmlFor="emer" className="listSearchRadioLabel">
+                    긴급
+                  </label>
+                  <input
+                    type="checkbox"
+                    value="inday"
+                    id="inday"
+                    className="listSearchRadioInput"
+                    checked={
+                      (watch("_gongsaType") &&
+                        watch("_gongsaType").includes("inday")) ||
+                      false
+                    }
+                    {...register("_gongsaType")}
+                  />
+                  <label htmlFor="inday" className="listSearchRadioLabel">
+                    당일
+                  </label>
+
+                  <input
+                    type="checkbox"
+                    value="reser"
+                    id="reser"
+                    className="listSearchRadioInput"
+                    checked={
+                      watch("_gongsaType") &&
+                      watch("_gongsaType").includes("reser")
+                        ? true
+                        : false
+                    }
+                    {...register("_gongsaType")}
+                  />
+                  <label htmlFor="reser" className="listSearchRadioLabel">
+                    예약
+                  </label>
+
+                  <input
+                    type="checkbox"
+                    value=""
+                    id="reset"
+                    className="listSearchRadioInput"
+                    checked={
+                      watch("_gongsaType") == "" || !watch("_gongsaType")
+                        ? true
+                        : false
+                    }
+                    {...register("_gongsaType", {
+                      onChange: (e) => {
+                        if (!!watch("_gongsaType") && !e.target.value) {
+                          setValue("_gongsaType", "");
+                        }
+                      },
+                    })}
+                  />
+                  <label htmlFor="reset" className="listSearchRadioLabel">
+                    해당없음
+                  </label>
+                </div>
               </div>
 
-              <div className="formPaddingWrap">
-                <input
-                  type="checkbox"
-                  value="emer"
-                  id="emer"
-                  className="listSearchRadioInput"
-                  checked={
-                    (watch("_gongsaType") &&
-                      watch("_gongsaType").includes("emer")) ||
-                    false
-                  }
-                  {...register("_gongsaType")}
-                />
-                <label htmlFor="emer" className="listSearchRadioLabel">
-                  긴급
+              <div className="formContentWrap">
+                <div className="blockLabel">
+                  <span>사업자 분류</span>
+                </div>
+                <div className="formPaddingWrap">
+                  <input
+                    className="listSearchRadioInput"
+                    type="radio"
+                    checked={watch("_comType") == "일반사업자"}
+                    value="일반사업자"
+                    id="comType0"
+                    {...register("_comType")}
+                  />
+                  <label className="listSearchRadioLabel" htmlFor="comType0">
+                    일반사업자
+                  </label>
+
+                  <input
+                    className="listSearchRadioInput"
+                    type="radio"
+                    checked={watch("_comType") == "법인사업자"}
+                    value="법인사업자"
+                    id="comType01"
+                    {...register("_comType")}
+                  />
+                  <label className="listSearchRadioLabel" htmlFor="comType01">
+                    법인사업자
+                  </label>
+                </div>
+              </div>
+
+              {/* setDetailUserInfo radio 끝, input(상호 ~ 키워드) ================================================================ */}
+
+              <div className="formContentWrap">
+                <label htmlFor="Cname" className="blockLabel">
+                  <span>사업자명</span>
                 </label>
-                <input
-                  type="checkbox"
-                  value="inday"
-                  id="inday"
-                  className="listSearchRadioInput"
-                  checked={
-                    (watch("_gongsaType") &&
-                      watch("_gongsaType").includes("inday")) ||
-                    false
-                  }
-                  {...register("_gongsaType")}
-                />
-                <label htmlFor="inday" className="listSearchRadioLabel">
-                  당일
+                <div>
+                  <input
+                    type="text"
+                    id="Cname"
+                    placeholder="상호명을 입력해 주세요."
+                    {...register("_name", {
+                      required: "입력되지 않았습니다.",
+                      maxLength: {
+                        value: 15,
+                        message: "15자 이하의 글자만 사용가능합니다.",
+                      },
+                    })}
+                  />
+                  <ErrorMessage
+                    errors={errors}
+                    name="_name"
+                    render={({ message }) => (
+                      <span className="errorMessageWrap">{message}</span>
+                    )}
+                  />
+                </div>
+              </div>
+
+              <div className="formContentWrap">
+                <label htmlFor="bigCategory" className="blockLabel">
+                  <span>대표업종</span>
                 </label>
-                <input
-                  type="checkbox"
-                  value="reser"
-                  id="reser"
-                  className="listSearchRadioInput"
-                  checked={
-                    (watch("_gongsaType") &&
-                      watch("_gongsaType").includes("reser")) ||
-                    false
-                  }
-                  {...register("_gongsaType")}
-                />
-                <label htmlFor="reser" className="listSearchRadioLabel">
-                  예약
+                <div>
+                  <input
+                    type="text"
+                    id="bigCategory"
+                    placeholder="대표업종을 입력해 주세요."
+                    value={
+                      (watch("_bigCategory") &&
+                        watch("_bigCategory").replace(" ", ",")) ||
+                      ""
+                    }
+                    {...register("_bigCategory", {
+                      onChange: onChangeValidation,
+                    })}
+                  />
+                </div>
+              </div>
+
+              <div className="formContentWrap" style={{ width: "100%" }}>
+                <label htmlFor="subCategory" className="blockLabel">
+                  <span>상세업종</span>
                 </label>
+                <div>
+                  <input
+                    type="text"
+                    id="subCategory"
+                    placeholder="상세업종을 입력해 주세요."
+                    value={
+                      (watch("_subCategory") &&
+                        watch("_subCategory").replace(" ", ",")) ||
+                      ""
+                    }
+                    {...register("_subCategory", {
+                      onChange: onChangeValidation,
+                    })}
+                  />
+                </div>
               </div>
-            </div>
 
-            {/* setDetailUserInfo radio 끝, input(상호 ~ 키워드) ================================================================ */}
+              <div className="formContentWrap" style={{ width: "100%" }}>
+                <div className="blockLabel">
+                  <span>나이</span>
+                </div>
+                <div className="formPaddingWrap">
+                  <input
+                    className="listSearchRadioInput"
+                    type="radio"
+                    checked={watch("_age") == "10"}
+                    value="10"
+                    id="age10"
+                    {...register("_age")}
+                  />
+                  <label className="listSearchRadioLabel" htmlFor="age10">
+                    10대
+                  </label>
 
-            <div className="formContentWrap">
-              <label htmlFor="Cname" className="blockLabel">
-                <span>상호</span>
-              </label>
-              <div>
-                <input
-                  type="text"
-                  id="Cname"
-                  placeholder="상호명을 입력해 주세요."
-                  {...register("_name", {
-                    required: "입력되지 않았습니다.",
-                    maxLength: {
-                      value: 15,
-                      message: "15자 이하의 글자만 사용가능합니다.",
-                    },
-                  })}
-                />
-                <ErrorMessage
-                  errors={errors}
-                  name="_name"
-                  render={({ message }) => (
-                    <span className="errorMessageWrap">{message}</span>
-                  )}
-                />
+                  <input
+                    className="listSearchRadioInput"
+                    type="radio"
+                    checked={watch("_age") == "20"}
+                    value="20"
+                    id="age20"
+                    {...register("_age")}
+                  />
+                  <label className="listSearchRadioLabel" htmlFor="age20">
+                    20대
+                  </label>
+
+                  <input
+                    className="listSearchRadioInput"
+                    type="radio"
+                    checked={watch("_age") == "30"}
+                    value="30"
+                    id="age30"
+                    {...register("_age")}
+                  />
+                  <label className="listSearchRadioLabel" htmlFor="age30">
+                    30대
+                  </label>
+
+                  <input
+                    className="listSearchRadioInput"
+                    type="radio"
+                    checked={watch("_age") == "40"}
+                    value="40"
+                    id="age40"
+                    {...register("_age")}
+                  />
+                  <label className="listSearchRadioLabel" htmlFor="age40">
+                    40대
+                  </label>
+
+                  <input
+                    className="listSearchRadioInput"
+                    type="radio"
+                    checked={watch("_age") == "50"}
+                    value="50"
+                    id="age50"
+                    {...register("_age")}
+                  />
+                  <label className="listSearchRadioLabel" htmlFor="age50">
+                    50대
+                  </label>
+
+                  <input
+                    className="listSearchRadioInput"
+                    type="radio"
+                    checked={watch("_age") == "60"}
+                    value="60"
+                    id="age60"
+                    {...register("_age")}
+                  />
+                  <label className="listSearchRadioLabel" htmlFor="age60">
+                    60대 이상
+                  </label>
+                </div>
               </div>
-            </div>
 
-            <div className="formContentWrap">
-              <label htmlFor="bigCategory" className="blockLabel">
-                <span>대표업종</span>
-              </label>
-              <div>
-                <input
-                  type="text"
-                  id="bigCategory"
-                  placeholder="대표업종을 입력해 주세요."
-                  value={
-                    (watch("_bigCategory") &&
-                      watch("_bigCategory").replace(" ", ",")) ||
-                    ""
-                  }
-                  {...register("_bigCategory", {
-                    onChange: onChangeValidation,
-                  })}
-                />
+              <div className="formContentWrap">
+                <label htmlFor="registration" className="blockLabel">
+                  <span>사업자 등록 번호</span>
+                </label>
+                <div>
+                  <input
+                    type="text"
+                    id="registration"
+                    placeholder="사업자 등록 번호를 입력해 주세요. (예시 000-00-00000)"
+                    value={
+                      (watch("_registration") &&
+                        watch("_registration")
+                          .replace(/[^0-9]/g, "")
+                          .replace(/([0-9]{3})([0-9]{2})([0-9]+)/, "$1-$2-$3")
+                          .replace("--", "-")) ||
+                      ""
+                    }
+                    {...register("_registration", {
+                      required: "입력되지 않았습니다.",
+                      pattern: {
+                        value: /^[0-9]{3}-[0-9]{2}-[0-9]{5}/,
+                        message: "형식에 맞지 않습니다.",
+                      },
+                    })}
+                  />
+                  <ErrorMessage
+                    errors={errors}
+                    name="_registration"
+                    render={({ message }) => (
+                      <span className="errorMessageWrap">{message}</span>
+                    )}
+                  />
+                </div>
               </div>
-            </div>
 
-            <div className="formContentWrap">
-              <label htmlFor="subCategory" className="blockLabel">
-                <span>상세업종</span>
-              </label>
-              <div>
-                <input
-                  type="text"
-                  id="subCategory"
-                  placeholder="상세업종을 입력해 주세요."
-                  value={
-                    (watch("_subCategory") &&
-                      watch("_subCategory").replace(" ", ",")) ||
-                    ""
-                  }
-                  {...register("_subCategory", {
-                    onChange: onChangeValidation,
-                  })}
-                />
+              <div className="formContentWrap">
+                <label htmlFor="corporationno" className="blockLabel">
+                  <span>법인 등록 번호</span>
+                </label>
+                <div>
+                  <input
+                    type="text"
+                    id="corporationno"
+                    placeholder="법인 등록 번호를 입력해 주세요."
+                    {...register("_corporationno", {})}
+                  />
+                  <ErrorMessage
+                    errors={errors}
+                    name="_corporationno"
+                    render={({ message }) => (
+                      <span className="errorMessageWrap">{message}</span>
+                    )}
+                  />
+                </div>
               </div>
-            </div>
 
-            <div className="formContentWrap">
-              <label htmlFor="registration" className="blockLabel">
-                <span>사업자 등록 번호</span>
-              </label>
-              <div>
-                <input
-                  type="text"
-                  id="registration"
-                  placeholder="사업자 등록 번호를 입력해 주세요. (예시 000-00-00000)"
-                  value={
-                    (watch("_registration") &&
-                      watch("_registration")
-                        .replace(/[^0-9]/g, "")
-                        .replace(/([0-9]{3})([0-9]{2})([0-9]+)/, "$1-$2-$3")
-                        .replace("--", "-")) ||
-                    ""
-                  }
-                  {...register("_registration", {
-                    required: "입력되지 않았습니다.",
-                    pattern: {
-                      value: /^[0-9]{3}-[0-9]{2}-[0-9]{5}/,
-                      message: "형식에 맞지 않습니다.",
-                    },
-                  })}
-                />
-                <ErrorMessage
-                  errors={errors}
-                  name="_registration"
-                  render={({ message }) => (
-                    <span className="errorMessageWrap">{message}</span>
-                  )}
-                />
+              <div className="formContentWrap">
+                <label htmlFor="regName" className="blockLabel">
+                  <span>사업자 등록 상표명</span>
+                </label>
+                <div>
+                  <input
+                    type="text"
+                    id="regName"
+                    placeholder="사업자 등록 상표명을 입력해 주세요."
+                    {...register("_regName")}
+                  />
+                  <ErrorMessage
+                    errors={errors}
+                    name="_regName"
+                    render={({ message }) => (
+                      <span className="errorMessageWrap">{message}</span>
+                    )}
+                  />
+                </div>
               </div>
-            </div>
 
-            <SetImage
-              regImgs={regImgs}
-              setRegImgs={setRegImgs}
-              getData={getedData}
-              id="regImgs"
-              title="사업자 등록증"
-              getDataFinish={getDataFinish.current}
-            />
-
-            <div className="formContentWrap">
-              <label htmlFor="mobilenum" className="blockLabel">
-                <span>핸드폰번호</span>
-              </label>
-              <div>
-                <input
-                  type="text"
-                  id="mobilenum"
-                  placeholder="핸드폰번호를 입력해 주세요. (예시 000-0000-0000)"
-                  value={
-                    (watch("_mobilenum") &&
-                      watch("_mobilenum")
-                        .replace(/[^0-9]/g, "")
-                        .replace(
-                          /(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)([0-9]{4}$)/,
-                          "$1-$2-$3"
-                        )
-                        .replace("--", "-")) ||
-                    ""
-                  }
-                  {...register("_mobilenum", {
-                    required: "입력되지 않았습니다.",
-                    pattern: {
-                      value: /^[0-9]{3,4}-[0-9]{3,4}-[0-9]{4}/,
-                      message: "형식에 맞지 않습니다.",
-                    },
-                  })}
-                />
-                <ErrorMessage
-                  errors={errors}
-                  name="_mobilenum"
-                  render={({ message }) => (
-                    <span className="errorMessageWrap">{message}</span>
-                  )}
-                />
+              <div className="formContentWrap">
+                <label htmlFor="regOwner" className="blockLabel">
+                  <span>대표자명</span>
+                </label>
+                <div>
+                  <input
+                    type="text"
+                    id="regOwner"
+                    placeholder="대표자명을 입력해 주세요."
+                    {...register("_regOwner")}
+                  />
+                  {/* <ErrorMessage
+                    errors-={errors}
+                    name="_regOwner"
+                    render={({ message }) => (
+                      <span className="errorMessageWrap">{message}</span>
+                    )}
+                  /> */}
+                </div>
               </div>
-            </div>
 
-            <div className="formContentWrap">
-              <label htmlFor="telnum" className="blockLabel">
-                <span>전화번호</span>
-              </label>
-              <div>
-                <input
-                  type="text"
-                  id="telnum"
-                  placeholder="전화번호를 입력해 주세요. (예시 00-0000-0000)"
-                  value={
-                    (watch("_telnum") &&
-                      watch("_telnum")
-                        .replace(/[^0-9]/g, "")
-                        .replace(
-                          /(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)([0-9]{4}$)/,
-                          "$1-$2-$3"
-                        )
-                        .replace("--", "-")) ||
-                    ""
-                  }
-                  {...register("_telnum", {
-                    required: "입력되지 않았습니다.",
-                    pattern: {
-                      value: /^[0-9]{2,4}-[0-9]{3,4}-[0-9]{4}/,
-                      message: "형식에 맞지 않습니다.",
-                    },
-                  })}
-                />
-                <ErrorMessage
-                  errors={errors}
-                  name="_telnum"
-                  render={({ message }) => (
-                    <span className="errorMessageWrap">{message}</span>
-                  )}
-                />
+              <SetImage
+                regImgs={regImgs}
+                setRegImgs={setRegImgs}
+                getData={getedData}
+                id="regImgs"
+                title="사업자 등록증"
+                getDataFinish={getDataFinish.current}
+              />
+
+              <div className="formContentWrap">
+                <label htmlFor="mobilenum" className="blockLabel">
+                  <span>휴대폰</span>
+                </label>
+                <div>
+                  <input
+                    type="text"
+                    id="mobilenum"
+                    placeholder="핸드폰번호를 입력해 주세요. (예시 000-0000-0000)"
+                    value={
+                      (watch("_mobilenum") &&
+                        watch("_mobilenum")
+                          .replace(/[^0-9]/g, "")
+                          .replace(
+                            /(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)([0-9]{4}$)/,
+                            "$1-$2-$3"
+                          )
+                          .replace("--", "-")) ||
+                      ""
+                    }
+                    {...register("_mobilenum", {
+                      required: "입력되지 않았습니다.",
+                      pattern: {
+                        value: /^[0-9]{3,4}-[0-9]{3,4}-[0-9]{4}/,
+                        message: "형식에 맞지 않습니다.",
+                      },
+                    })}
+                  />
+                  <ErrorMessage
+                    errors={errors}
+                    name="_mobilenum"
+                    render={({ message }) => (
+                      <span className="errorMessageWrap">{message}</span>
+                    )}
+                  />
+                </div>
               </div>
-            </div>
 
-            <div className="formContentWrap">
-              <label htmlFor="extnum" className="blockLabel">
-                <span>안심 번호</span>
-              </label>
-              <div>
-                <input
-                  type="text"
-                  id="extnum"
-                  placeholder="안심 번호를 입력해 주세요."
-                  value={
-                    (watch("_extnum") &&
-                      watch("_extnum")
-                        .replace(/[^0-9]/g, "")
-                        .replace(/(^[0-9]{3})([0-9]+)([0-9]{4}$)/, "$1-$2-$3")
-                        .replace("--", "-")) ||
-                    ""
-                  }
-                  {...register("_extnum", {
-                    pattern: {
-                      value: /^[0-9]{3}-[0-9]{3,5}-[0-9]{4}/,
-                      message: "형식에 맞지 않습니다.",
-                    },
-                  })}
-                />
-                <ErrorMessage
-                  errors={errors}
-                  name="_extnum"
-                  render={({ message }) => (
-                    <span className="errorMessageWrap">{message}</span>
-                  )}
-                />
+              <div className="formContentWrap">
+                <label htmlFor="telnum" className="blockLabel">
+                  <span>일반전화</span>
+                </label>
+                <div>
+                  <input
+                    type="text"
+                    id="telnum"
+                    placeholder="전화번호를 입력해 주세요. (예시 00-0000-0000)"
+                    value={
+                      (watch("_telnum") &&
+                        watch("_telnum")
+                          .replace(/[^0-9]/g, "")
+                          .replace(
+                            /(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)([0-9]{4}$)/,
+                            "$1-$2-$3"
+                          )
+                          .replace("--", "-")) ||
+                      ""
+                    }
+                    {...register("_telnum", {
+                      required: "입력되지 않았습니다.",
+                      pattern: {
+                        value: /^[0-9]{2,4}-[0-9]{3,4}-[0-9]{4}/,
+                        message: "형식에 맞지 않습니다.",
+                      },
+                    })}
+                  />
+                  <ErrorMessage
+                    errors={errors}
+                    name="_telnum"
+                    render={({ message }) => (
+                      <span className="errorMessageWrap">{message}</span>
+                    )}
+                  />
+                </div>
               </div>
-            </div>
 
-            <div className="formContentWrap">
-              <label htmlFor="location" className="blockLabel">
-                <span>위치</span>
-              </label>
-              <div>
-                <input
-                  type="text"
-                  id="location"
-                  placeholder="사업자의 위치를 입력해 주세요. (예시 ㅇㅇ구, ㅇㅇ동)"
-                  {...register("_location", {
-                    maxLength: {
-                      value: 50,
-                      message: "50자 이하의 글자만 사용가능합니다.",
-                    },
-                  })}
-                />
-                <ErrorMessage
-                  errors={errors}
-                  name="_location"
-                  render={({ message }) => (
-                    <span className="errorMessageWrap">{message}</span>
-                  )}
-                />
+              <div className="formContentWrap">
+                <label htmlFor="extnum" className="blockLabel">
+                  <span>안심번호</span>
+                </label>
+                <div>
+                  <input
+                    type="text"
+                    id="extnum"
+                    placeholder="안심 번호를 입력해 주세요."
+                    value={
+                      (watch("_extnum") &&
+                        watch("_extnum")
+                          .replace(/[^0-9]/g, "")
+                          .replace(/(^[0-9]{3})([0-9]+)([0-9]{4}$)/, "$1-$2-$3")
+                          .replace("--", "-")) ||
+                      ""
+                    }
+                    {...register("_extnum", {
+                      pattern: {
+                        value: /^[0-9]{3}-[0-9]{3,5}-[0-9]{4}/,
+                        message: "형식에 맞지 않습니다.",
+                      },
+                    })}
+                  />
+                  <ErrorMessage
+                    errors={errors}
+                    name="_extnum"
+                    render={({ message }) => (
+                      <span className="errorMessageWrap">{message}</span>
+                    )}
+                  />
+                </div>
               </div>
-            </div>
 
-            {/* 주소 */}
-            <PieceRegisterSearchPopUp
-              setMultilAddress={setMultilAddress}
-              multilAddress={multilAddress}
-              getedData={getedData}
-            />
-
-            <div className="formContentWrap">
-              <label htmlFor="email" className="blockLabel">
-                <span>이메일</span>
-              </label>
-              <div>
-                <input
-                  type="text"
-                  id="email"
-                  placeholder="이메일을 입력해 주세요."
-                  {...register("_email", {
-                    pattern: {
-                      value:
-                        /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i,
-                      message: "형식에 맞지 않습니다.",
-                    },
-                  })}
-                />
-                <ErrorMessage
-                  errors={errors}
-                  name="_email"
-                  render={({ message }) => (
-                    <span className="errorMessageWrap">{message}</span>
-                  )}
-                />
+              <div className="formContentWrap">
+                <label htmlFor="location" className="blockLabel">
+                  <span>위치</span>
+                </label>
+                <div>
+                  <input
+                    type="text"
+                    id="location"
+                    placeholder="사업자의 위치를 입력해 주세요. (예시 ㅇㅇ구, ㅇㅇ동)"
+                    {...register("_location", {
+                      maxLength: {
+                        value: 50,
+                        message: "50자 이하의 글자만 사용가능합니다.",
+                      },
+                    })}
+                  />
+                  <ErrorMessage
+                    errors={errors}
+                    name="_location"
+                    render={({ message }) => (
+                      <span className="errorMessageWrap">{message}</span>
+                    )}
+                  />
+                </div>
               </div>
-            </div>
 
-            <div className="formContentWrap">
-              <label htmlFor="comment" className="blockLabel">
-                <span>사업자 한줄 소개</span>
-              </label>
-              <div>
-                <input
-                  type="text"
-                  id="comment"
-                  placeholder="사업자에 대한 짧은 소개글을 입력해 주세요."
-                  {...register("_comment", {
-                    maxLength: {
-                      value: 20,
-                      message: "20자 이하의 글자만 사용가능합니다.",
-                    },
-                  })}
-                />
-                <ErrorMessage
-                  errors={errors}
-                  name="_comment"
-                  render={({ message }) => (
-                    <span className="errorMessageWrap">{message}</span>
-                  )}
-                />
+              {/* 주소 */}
+              <PieceRegisterSearchPopUp
+                style={{ width: "100%" }}
+                setMultilAddress={setMultilAddress}
+                multilAddress={multilAddress}
+                getedData={getedData}
+              />
+
+              <div className="formContentWrap">
+                <label htmlFor="email" className="blockLabel">
+                  <span>이메일</span>
+                </label>
+                <div>
+                  <input
+                    type="text"
+                    id="email"
+                    placeholder="이메일을 입력해 주세요."
+                    {...register("_email", {
+                      pattern: {
+                        value:
+                          /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i,
+                        message: "형식에 맞지 않습니다.",
+                      },
+                    })}
+                  />
+                  <ErrorMessage
+                    errors={errors}
+                    name="_email"
+                    render={({ message }) => (
+                      <span className="errorMessageWrap">{message}</span>
+                    )}
+                  />
+                </div>
               </div>
-            </div>
 
-            <div className="formContentWrap">
-              <label htmlFor="ceogreet" className="blockLabel">
-                <span>대표인사말</span>
-              </label>
-              <div>
-                <input
-                  type="text"
-                  id="ceogreet"
-                  placeholder="인사말을 입력해 주세요."
-                  {...register("_ceogreet", {
-                    maxLength: {
-                      value: 50,
-                      message: "50자 이하의 글자만 사용가능합니다.",
-                    },
-                  })}
-                />
-                <ErrorMessage
-                  errors={errors}
-                  name="_ceogreet"
-                  render={({ message }) => (
-                    <span className="errorMessageWrap">{message}</span>
-                  )}
-                />
+              <div className="formContentWrap">
+                <label htmlFor="workTime" className="blockLabel">
+                  <span>업무시간</span>
+                </label>
+
+                <ul className="detailContent">
+                  <li>
+                    <div>
+                      <span>시작</span>
+                      <input
+                        type="time"
+                        id="workTime"
+                        placeholder="근무 시간을 입력해 주세요."
+                        {...register("_workTimeTo", {})}
+                      />
+                    </div>
+                  </li>
+                  <li>
+                    <div>
+                      <span>마감</span>
+                      <input
+                        type="time"
+                        id="workTime"
+                        placeholder="근무 시간을 입력해 주세요."
+                        {...register("_workTimeFrom", {})}
+                      />
+                    </div>
+                  </li>
+                </ul>
               </div>
-            </div>
+            </fieldset>
+            {/* 고객기본정보 ============================================================================== */}
 
-            <div className="formContentWrap">
-              <label htmlFor="workTime" className="blockLabel">
-                <span>근무 시간</span>
-              </label>
+            <fieldset>
+              <h3>사업자 정보</h3>
 
-              <ul className="detailContent">
-                <li>
-                  <div>
-                    <span>시작</span>
-                    <input
-                      type="time"
-                      id="workTime"
-                      placeholder="근무 시간을 입력해 주세요."
-                      {...register("_workTimeTo", {})}
-                    />
-                  </div>
-                </li>
-                <li>
-                  <div>
-                    <span>마감</span>
-                    <input
-                      type="time"
-                      id="workTime"
-                      placeholder="근무 시간을 입력해 주세요."
-                      {...register("_workTimeFrom", {})}
-                    />
-                  </div>
-                </li>
-              </ul>
-            </div>
-
-            <SetImage
-              img={titleImg}
-              setImg={setTitleImg}
-              getData={getedData}
-              id="titleImg"
-              title="대표 이미지"
-              getDataFinish={getDataFinish.current}
-            />
-
-            <SetImage
-              imgs={imgs}
-              setImgs={setImgs}
-              id="imgs"
-              title="상세 이미지"
-              getData={getedData}
-              getDataFinish={getDataFinish.current}
-            />
-
-            <div className="formContentWrap" style={{ width: "100%" }}>
-              <label htmlFor="offer" className="blockLabel">
-                <span>사업자 소개글</span>
-              </label>
-              <div>
-                <textarea
-                  type="text"
-                  id="offer"
-                  placeholder="사업자 소개글을 입력해 주세요."
-                  {...register("_offer", {
-                    maxLength: {
-                      value: 100,
-                      message: "100자 이하의 글자만 사용가능합니다.",
-                    },
-                  })}
-                />
-                <ErrorMessage
-                  errors={errors}
-                  name="_offer"
-                  render={({ message }) => (
-                    <span className="errorMessageWrap">{message}</span>
-                  )}
-                />
+              <div className="formContentWrap" style={{ width: "100%" }}>
+                <label htmlFor="ceogreet" className="blockLabel">
+                  <span>대표인사말</span>
+                </label>
+                <div>
+                  <input
+                    type="text"
+                    id="ceogreet"
+                    placeholder="인사말을 입력해 주세요."
+                    {...register("_ceogreet", {
+                      maxLength: {
+                        value: 50,
+                        message: "50자 이하의 글자만 사용가능합니다.",
+                      },
+                    })}
+                  />
+                  <ErrorMessage
+                    errors={errors}
+                    name="_ceogreet"
+                    render={({ message }) => (
+                      <span className="errorMessageWrap">{message}</span>
+                    )}
+                  />
+                </div>
               </div>
-            </div>
 
-            {/* 키워드 & 태그는 현재 기능을 사용하지 않으나 추후 확장성으 위해 주석처리해두었습니다. */}
-            {/* 
+              {/* <div className="formContentWrap" style={{ width: "100%" }}>
+                <label htmlFor="comment" className="blockLabel">
+                  <span>사업자 한줄 소개</span>
+                </label>
+                <div>
+                  <input
+                    type="text"
+                    id="comment"
+                    placeholder="사업자에 대한 짧은 소개글을 입력해 주세요."
+                    {...register("_comment", {
+                      maxLength: {
+                        value: 20,
+                        message: "20자 이하의 글자만 사용가능합니다.",
+                      },
+                    })}
+                  />
+                  <ErrorMessage
+                    errors={errors}
+                    name="_comment"
+                    render={({ message }) => (
+                      <span className="errorMessageWrap">{message}</span>
+                    )}
+                  />
+                </div>
+              </div> */}
+
+              <div className="formContentWrap" style={{ width: "100%" }}>
+                <label htmlFor="offer" className="blockLabel">
+                  <span>사업자 소개글</span>
+                </label>
+                <div>
+                  <textarea
+                    type="text"
+                    id="offer"
+                    placeholder="사업자 소개글을 입력해 주세요."
+                    {...register("_offer", {
+                      maxLength: {
+                        value: 100,
+                        message: "100자 이하의 글자만 사용가능합니다.",
+                      },
+                    })}
+                  />
+                  <ErrorMessage
+                    errors={errors}
+                    name="_offer"
+                    render={({ message }) => (
+                      <span className="errorMessageWrap">{message}</span>
+                    )}
+                  />
+                </div>
+              </div>
+
+              <SetImage
+                img={titleImg}
+                setImg={setTitleImg}
+                getData={getedData}
+                id="titleImg"
+                title="대표 이미지"
+                getDataFinish={getDataFinish.current}
+              />
+
+              <SetImage
+                imgs={imgs}
+                setImgs={setImgs}
+                id="imgs"
+                title="상세 이미지"
+                getData={getedData}
+                getDataFinish={getDataFinish.current}
+              />
+
+              {/* 키워드 & 태그는 현재 기능을 사용하지 않으나 추후 확장성으 위해 주석처리해두었습니다. */}
+              {/* 
             <div className="formContentWrap">
               <label htmlFor="keywords" className="blockLabel">
                 <span>키워드</span>
@@ -878,63 +1172,64 @@ export default function SetCompanyDetail() {
               </div>
             </div> */}
 
-            <div className="formContentWrap">
-              <label className="blockLabel">
-                <span>동영상 링크</span>
-              </label>
-              <div>
-                <input
-                  type="text"
-                  id="vidlinkurl1"
-                  placeholder="외부 동영상 링크를 입력해 주세요."
-                  {...register("_vidlinkurl1")}
-                />
-                <input
-                  type="text"
-                  id="vidlinkurl2"
-                  placeholder="외부 동영상 링크를 입력해 주세요."
-                  {...register("_vidlinkurl2")}
-                />
+              <div className="formContentWrap">
+                <label className="blockLabel">
+                  <span>동영상 링크</span>
+                </label>
+                <div>
+                  <input
+                    type="text"
+                    id="vidlinkurl1"
+                    placeholder="외부 동영상 링크를 입력해 주세요."
+                    {...register("_vidlinkurl1")}
+                  />
+                  <input
+                    type="text"
+                    id="vidlinkurl2"
+                    placeholder="외부 동영상 링크를 입력해 주세요."
+                    {...register("_vidlinkurl2")}
+                  />
+                </div>
               </div>
-            </div>
 
-            <div className="formContentWrap">
-              <label className="blockLabel">
-                <span>외부 링크</span>
-              </label>
-              <div>
-                <input
-                  type="text"
-                  id="linkurl1"
-                  placeholder="외부 링크를 입력해 주세요."
-                  {...register("_linkurl1")}
-                />
-                <input
-                  type="text"
-                  id="linkurl2"
-                  placeholder="외부 링크를 입력해 주세요."
-                  {...register("_linkurl2")}
-                />
-                <input
-                  type="text"
-                  id="linkurl3"
-                  placeholder="외부 링크를 입력해 주세요."
-                  {...register("_linkurl3")}
-                />
-                <input
-                  type="text"
-                  id="linkurl4"
-                  placeholder="외부 링크를 입력해 주세요."
-                  {...register("_linkurl4")}
-                />
-                <input
-                  type="text"
-                  id="linkurl5"
-                  placeholder="외부 링크를 입력해 주세요."
-                  {...register("_linkurl5")}
-                />
+              <div className="formContentWrap">
+                <label className="blockLabel">
+                  <span>외부 링크</span>
+                </label>
+                <div>
+                  <input
+                    type="text"
+                    id="linkurl1"
+                    placeholder="외부 링크를 입력해 주세요."
+                    {...register("_linkurl1")}
+                  />
+                  <input
+                    type="text"
+                    id="linkurl2"
+                    placeholder="외부 링크를 입력해 주세요."
+                    {...register("_linkurl2")}
+                  />
+                  <input
+                    type="text"
+                    id="linkurl3"
+                    placeholder="외부 링크를 입력해 주세요."
+                    {...register("_linkurl3")}
+                  />
+                  <input
+                    type="text"
+                    id="linkurl4"
+                    placeholder="외부 링크를 입력해 주세요."
+                    {...register("_linkurl4")}
+                  />
+                  <input
+                    type="text"
+                    id="linkurl5"
+                    placeholder="외부 링크를 입력해 주세요."
+                    {...register("_linkurl5")}
+                  />
+                </div>
               </div>
-            </div>
+            </fieldset>
 
             {/* 견적 관리 링크 이동 ================================================================ */}
             <fieldset>
@@ -1054,6 +1349,9 @@ export default function SetCompanyDetail() {
                   )}
                 </ul>
               </div>
+            </fieldset>
+            <fieldset>
+              <h3>고객상담 </h3>
             </fieldset>
           </div>
         </form>

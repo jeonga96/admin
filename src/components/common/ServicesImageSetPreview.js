@@ -45,7 +45,6 @@ export default function ImageSet({
       fnSetImg([...files]);
       return;
     } else if (!!setImgs) {
-      console.log(files);
       fnSetImgs([...imgs, ...files]);
       return;
     } else if (!!setRegImgs) {
@@ -65,13 +64,18 @@ export default function ImageSet({
           setFiles(res.data);
         }
       });
+    } else if (!!getData.imgs && id === "imgs") {
+      servicesPostData(urlGetImages, {
+        imgs: getData.imgs,
+      }).then((res) => {
+        if (res.status === "success") {
+          fnStateSet(res.data);
+          setFiles(res.data);
+        }
+      });
     } else {
       servicesPostData(urlGetImages, {
-        imgs:
-          getData.imgs ||
-          getData.imgString ||
-          getData.regImgs ||
-          getData.addImgs,
+        imgs: getData.imgString || getData.regImgs || getData.addImgs,
       }).then((res) => {
         if (res.status === "success") {
           fnStateSet(res.data);
@@ -96,7 +100,7 @@ export default function ImageSet({
 
       const formData = new FormData();
       for (let i = 0; i < selectFiles.length; i++) {
-        console.log("imgsUpload click-->", selectFiles[i]);
+        // console.log("imgsUpload click-->", selectFiles[i]);
         formData.append("Imgs", selectFiles[i]);
       }
 
@@ -105,7 +109,6 @@ export default function ImageSet({
         if (res.data.length == 1) {
           setFiles((prev) => [res.data[0], ...prev]);
           fnStateSet(res.data);
-          console.log("ddd!");
         } else if (res.data.length > 1 && res.data.length < 25) {
           for (let i = 0; i < res.data.length; i++) {
             setFiles((prev) => [res.data[i], ...prev]);

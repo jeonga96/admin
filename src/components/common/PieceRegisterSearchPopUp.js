@@ -88,7 +88,8 @@ export default function Postcode({
   // setUser
   if (!!userComponent) {
     return (
-      <div className="formContentWrap">
+      <div className="formContentWrap" style={{ width: "100%" }}>
+        {/* <div className="formContentWrap"> */}
         <label htmlFor="address" className=" blockLabel">
           <span>주소</span>
         </label>
@@ -107,7 +108,7 @@ export default function Postcode({
               disabled
               value={multilAddress.address || ""}
               style={{
-                width: "86%",
+                width: "94%",
               }}
             />
 
