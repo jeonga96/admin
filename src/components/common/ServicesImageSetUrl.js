@@ -1,7 +1,13 @@
 import { servicesPostDataForm } from "../../Services/importData";
 import { urlUpImages } from "../../Services/string";
 
-export default function ImageSet({ id, setChangeImg, changeImg, onImgChange }) {
+export default function ImageSet({
+  add,
+  id,
+  setChangeImg,
+  changeImg,
+  onImgChange,
+}) {
   // 이미지 업로드 시 실행되는 코드
 
   function handleSetImage(e) {
@@ -24,7 +30,7 @@ export default function ImageSet({ id, setChangeImg, changeImg, onImgChange }) {
       {changeImg === null ? (
         <>
           <label htmlFor={id} className="basicModifyBtn">
-            이미지 수정
+            {add ? "이미지 등록" : "이미지 수정"}
           </label>
           <input
             type="file"

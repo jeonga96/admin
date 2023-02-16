@@ -1213,6 +1213,18 @@ input[type="radio"] {
   white-space: nowrap;
   text-overflow: ellipsis;
 }
+
+/* allItem[clickTab] */
+.commonTable .basicThead {
+  height: 4rem;
+  border-bottom: none;
+}
+.basicThead tr {
+  background-color: var(--color-white);
+}
+.basicThead td {
+  text-align: left;
+}
 .flageN {
   background-color: var(--color-bggray);
 }
@@ -1369,6 +1381,25 @@ input[type="radio"] {
   background-color: var(--color-bggray);
   border-radius: 0.25rem;
   padding: 0.0625rem;
+}
+.submenuWrap {
+  width: auto;
+  height: 18px;
+  display: flex;
+}
+.submenu {
+  width: 80px;
+  height: 100%;
+  border: 1px solid var(--color-gray);
+  border-radius: 2px;
+  margin-left: 4px;
+}
+.submenu.focused {
+  border-color: var(--color-acceent);
+  color: var(--color-acceent);
+}
+.submenu.add {
+  background-color: var(--color-bggray);
 }
 /*pagination 영역 ------------------------------------------------------*/
 .pagination {
@@ -1565,4 +1596,33 @@ ul.pagination li a:hover {
 .formButton {
   background-color: var(--color-bggray);
   border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.contentBox .tableAppbannerTd {
+  position: relative;
+  width: 630px;
+  height: 252px;
+}
+.tableAppbannerTd > div {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+}
+.commonBox .dasableTag {
+  display: block;
+  z-index: 1;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.dasableTag::before {
+  display: block;
+  content: "비활성화 배너";
+  width: 100%;
+  height: 100%;
+  font-size: var(--font-size-subtitle);
+  line-height: 252px;
+  color: var(--color-white);
 }

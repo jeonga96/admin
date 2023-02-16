@@ -1,4 +1,4 @@
-import { useState, useLayoutEffect, useRef } from "react";
+import { useState, useLayoutEffect, useRef, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import {
   urlContentList,
@@ -12,68 +12,229 @@ import { serviesGetImgId, servicesUseToast } from "../Services/useData";
 import LayoutTopButton from "../components/common/LayoutTopButton";
 import SetImage from "../components/common/ServicesImageSetUrl";
 
-function InputBox({ inputData, setinputData, item }) {
+function InputBox({ inputData, setinputData, title, allItem, image }) {
   // 상위 컴포넌트에게 전달하기 위한 함수, useState
   const [img, setImg] = useState(null);
+  const [clickTab, setClickTab] = useState(0);
+
+  const [addClicked, setAddClicked] = useState(false);
+  const [addImg, setAddImg] = useState({});
+  const [useFlagClickd, setUseFlagClicked] = useState("1");
+
+  const { register, setValue, watch } = useForm({
+    defaultValues: {
+      _contentDetail: allItem[clickTab].contentDetail,
+    },
+  });
+
+  useEffect(() => {
+    setUseFlagClicked(allItem[clickTab].useFlag);
+    setValue("_contentDetail", allItem[clickTab].contentDetail);
+  }, [clickTab]);
+
   const fnsetinputData = (prev) => {
     setinputData(prev);
   };
 
   // contentDetail:랜딩 url 변경 함수
+
   const valueChange = (e, res) => {
     fnsetinputData({
       ...inputData,
-      [item.contid]: {
-        ...item,
+      [allItem[clickTab].contid]: {
+        ...allItem[clickTab],
         contentDetail: e.target.value,
+        useFlag: useFlagClickd,
         imgid:
-          inputData[item.contid] !== undefined &&
-          inputData[item.contid].hasOwnProperty("imgid") &&
+          inputData[allItem[clickTab].contid] !== undefined &&
+          inputData[allItem[clickTab].contid].hasOwnProperty("imgid") &&
           !!img
             ? img[0].iid
-            : item.imgid,
+            : allItem[clickTab].imgid,
+      },
+    });
+  };
+
+  const RadioChange = (e, res) => {
+    setUseFlagClicked(e.target.value);
+    fnsetinputData({
+      ...inputData,
+      [allItem[clickTab].contid]: {
+        ...allItem[clickTab],
+        useFlag: e.target.value,
+        contentDetail:
+          inputData[allItem[clickTab].contid] !== undefined &&
+          inputData[allItem[clickTab].contid].hasOwnProperty("contentDetail")
+            ? inputData[allItem[clickTab].contid].contentDetail
+            : allItem[clickTab].contentDetail,
+        imgid:
+          inputData[allItem[clickTab].contid] !== undefined &&
+          inputData[allItem[clickTab].contid].hasOwnProperty("imgid") &&
+          !!img
+            ? img[0].iid
+            : allItem[clickTab].imgid,
       },
     });
   };
 
   // imgid:배너 이미지 수정 함수
   const imgChange = (e, res) => {
-    fnsetinputData({
-      ...inputData,
-      [item.contid]: {
-        ...item,
+    if (addImg.imgid !== "") {
+      fnsetinputData({
+        ...inputData,
+        [allItem[clickTab].contid]: {
+          ...allItem[clickTab],
+          imgid: res[0].iid,
+          useFlag: useFlagClickd,
+          contentDetail:
+            inputData[allItem[clickTab].contid] !== undefined &&
+            inputData[allItem[clickTab].contid].hasOwnProperty("contentDetail")
+              ? inputData[allItem[clickTab].contid].contentDetail
+              : allItem[clickTab].contentDetail,
+        },
+      });
+    } else {
+      setAddImg({
         imgid: res[0].iid,
-        contentDetail:
-          inputData[item.contid] !== undefined &&
-          inputData[item.contid].hasOwnProperty("contentDetail")
-            ? inputData[item.contid].contentDetail
-            : item.contentDetail,
-      },
-    });
+      });
+    }
   };
 
-  const onClickLink = (e) => {
-    e.preventDefault();
-    window.open("about:blank").location.href = item.contentDetail;
+  const filterImage = (img, item) => {
+    for (let i = 0; i < img.length; i++) {
+      if (img[i].iid === item.imgid) {
+        return img[i].storagePath;
+      }
+    }
+  };
+
+  const fnFormAdd = () => {
+    setAddClicked(!addClicked);
+    if (addClicked === true) {
+      servicesPostData(urlSetContent, {
+        category: allItem[0].category,
+        contentString: allItem[0].contentString,
+        contentDetail: watch("_contentDetail"),
+        imgid: addImg.imgid,
+        useFlag: useFlagClickd,
+      })
+        .then((res) => {
+          if (res.status === "fail") {
+            servicesUseToast("입력에 실패했습니다.", "e");
+          }
+
+          if (res.status === "success") {
+            servicesUseToast("완료되었습니다!", "s");
+            setAddImg(null);
+            setTimeout(() => {
+              window.location.reload();
+            }, 1000);
+            return;
+          }
+        })
+        .catch((error) => console.log("axios 실패", error.response));
+    } else {
+      setValue("_contentDetail", "");
+      setImg(null);
+      setAddImg({ imgid: "" });
+    }
   };
 
   return (
-    <>
-      <h3>{item.contentString}</h3>
-      <fieldset>
+    <tr style={{ height: "5.25rem" }}>
+      <td className="tableAppbannerTd">
+        <div
+          style={
+            image && {
+              backgroundImage: `url('${filterImage(
+                image,
+                allItem[clickTab]
+              )}')`,
+            }
+          }
+        >
+          {allItem[clickTab].useFlag == 0 && <div className="dasableTag"></div>}
+        </div>
+      </td>
+      <td>
+        <h3>{title}</h3>
+        <ul style={{ height: "32px" }} className="submenuWrap">
+          {allItem.map((el, index) => (
+            <button
+              type="button"
+              key={el.contid}
+              className={
+                index === clickTab && addClicked === false
+                  ? "submenu focused"
+                  : "submenu"
+              }
+              onClick={() => setClickTab(index)}
+            >
+              {index + 1}
+            </button>
+          ))}
+          <button
+            type="button"
+            className={
+              addClicked === true ? "submenu add focused" : "submenu add"
+            }
+            onClick={fnFormAdd}
+          >
+            {addClicked ? "저장" : "배너추가"}
+          </button>
+        </ul>
+        <div className="listSearchWrap" style={{ width: "100%" }}>
+          <div className="blockLabel">
+            <span>활성화</span>
+          </div>
+
+          <div className="formPaddingWrap" style={{ height: "32px" }}>
+            <input
+              className="listSearchRadioInput"
+              type="radio"
+              checked={useFlagClickd == "1"}
+              value="1"
+              id={allItem[clickTab].contid + "useFlag1"}
+              onChange={RadioChange}
+            />
+            <label
+              className="listSearchRadioLabel"
+              htmlFor={allItem[clickTab].contid + "useFlag1"}
+            >
+              활성화
+            </label>
+            <input
+              className="listSearchRadioInput"
+              type="radio"
+              checked={useFlagClickd == "0"}
+              value="0"
+              id={allItem[clickTab].contid + "useFlag0"}
+              onChange={RadioChange}
+            />
+            <label
+              className="listSearchRadioLabel"
+              htmlFor={allItem[clickTab].contid + "useFlag0"}
+            >
+              비활성화
+            </label>
+          </div>
+        </div>
+
         <div className="listSearchWrap" style={{ width: "100%" }}>
           <div className="blockLabel">
             <span>배너이미지</span>
           </div>
           <div style={{ height: "32px" }}>
             <SetImage
-              id={`titleImg${item.contid}`}
+              add={addClicked ? true : false}
+              id={`titleImg${allItem[clickTab].contid}`}
               setChangeImg={setImg}
               changeImg={img}
               onImgChange={imgChange}
             />
           </div>
         </div>
+
         <div className="listSearchWrap" style={{ width: "100%" }}>
           <div className="blockLabel">
             <span>URL 연결</span>
@@ -83,12 +244,17 @@ function InputBox({ inputData, setinputData, item }) {
               type="text"
               id="contentDetail"
               placeholder="연결될 URL을 입력해 주세요."
-              onChange={valueChange}
-              defaultValue={item.contentDetail}
+              {...register("_contentDetail", {
+                onChange: valueChange,
+              })}
             />
             <button
               type="button"
-              onClick={onClickLink}
+              onClick={(e) => {
+                e.preventDefault();
+                window.open("about:blank").location.href =
+                  watch("_contentDetail");
+              }}
               className="formButton"
               style={{ width: "200px", marginLeft: "4px" }}
             >
@@ -96,8 +262,8 @@ function InputBox({ inputData, setinputData, item }) {
             </button>
           </div>
         </div>
-      </fieldset>
-    </>
+      </td>
+    </tr>
   );
 }
 
@@ -108,10 +274,19 @@ export default function SetAdminAppbanner() {
   } = useForm();
   // 데이터 ------------------------------------------------------------------------
   // bannerList:배너 목록
-  const [bannerList, setBannerList] = useState([]);
+
+  const [bannerB2B1, setbannerB2B1] = useState([]);
+  const [bannerB2B2, setbannerB2B2] = useState([]);
+  const [bannerB2B3, setbannerB2B3] = useState([]);
+  const [bannerB2C1, setbannerB2C1] = useState([]);
+  const [bannerB2C2, setbannerB2C2] = useState([]);
+  const [bannerB2C3, setbannerB2C3] = useState([]);
+
   const bannerReqSuccess = useRef(false);
   // inputData:수정된 내용 저장
   const [inputData, setinputData] = useState({});
+
+  console.log(bannerB2B1);
 
   // 이미지 ------------------------------------------------------------------------
   // img:이미지 저장 / imgsIid:서버에 이미지를 보낼 때는, iid값만 필요 / changeImg: 이미지 수정 시 수정된 이미지 저장
@@ -129,50 +304,64 @@ export default function SetAdminAppbanner() {
       "bannerB2C3",
     ];
 
-    if (bannerList.length <= categoryList.length) {
-      for (const item of categoryList) {
-        servicesPostData(urlContentList, {
-          category: item,
-        })
-          .then((res) => {
-            if (res.status === "success") {
-              setBannerList((listRes) => [...listRes, ...res.data]);
-            }
-          })
-          .catch((res) => console.log(res));
-      }
-      bannerReqSuccess.current = true;
-    }
-  }, []);
+    for (const item of categoryList) {
+      servicesPostData(urlContentList, {
+        category: item,
+      })
+        .then((res) => {
+          if (res.status === "success") {
+            for (let i = 0; i < res.data.length; i++) {
+              switch (res.data[i].category) {
+                case "bannerB2B1":
+                  setbannerB2B1(res.data);
+                  break;
 
-  // 카테고리별 데이터를 모두 불러온 후 배너리스트 정렬
-  useDidMountEffect(() => {
-    if (bannerReqSuccess.current === true) {
-      let categorySort = bannerList.sort(function (a, b) {
-        let x = a.category.toLowerCase();
-        let y = b.category.toLowerCase();
-        if (x < y) {
-          return -1;
-        }
-        if (x > y) {
-          return 1;
-        }
-        return 0;
-      });
-      setBannerList(categorySort);
+                case "bannerB2B2":
+                  setbannerB2B2(res.data);
+                  break;
+
+                case "bannerB2B3":
+                  setbannerB2B3(res.data);
+                  break;
+
+                case "bannerB2C1":
+                  setbannerB2C1(res.data);
+                  break;
+
+                case "bannerB2C2":
+                  setbannerB2C2(res.data);
+                  break;
+
+                default:
+                  setbannerB2C3(res.data);
+              }
+            }
+          }
+        })
+        .catch((res) => console.log(res));
     }
-  }, [bannerList]);
+    bannerReqSuccess.current = true;
+  }, []);
 
   // bannerlist의 데이터를 받아오면 기존 배너의 이미지 데이터를 받아온다.
   useDidMountEffect(() => {
-    // serviesGetImgId(imgsIid, bannerB2B);
-    serviesGetImgId(imgsIid, bannerList);
+    const array = [
+      bannerB2B1,
+      bannerB2B2,
+      bannerB2B3,
+      bannerB2C1,
+      bannerB2C2,
+      bannerB2C3,
+    ];
+    for (const item of array) {
+      serviesGetImgId(imgsIid, item);
+    }
     servicesPostData(urlGetImages, {
       imgs: imgsIid.toString(),
     }).then((res) => {
       setImg(res.data);
     });
-  }, [bannerList]);
+  }, [bannerB2B1, bannerB2B2, bannerB2B3, bannerB2C1, bannerB2C2, bannerB2C3]);
 
   const fnSubmit = () => {
     if (inputData[Object.keys(inputData)] !== {}) {
@@ -183,7 +372,7 @@ export default function SetAdminAppbanner() {
           imgid: inputData[Object.keys(inputData)[i]].imgid,
           contentDetail: inputData[Object.keys(inputData)[i]].contentDetail,
           contentString: inputData[Object.keys(inputData)[i]].contentString,
-          useFlag: 1,
+          useFlag: inputData[Object.keys(inputData)[i]].useFlag,
         })
           .then((res) => {
             if (res.status === "fail") {
@@ -205,15 +394,6 @@ export default function SetAdminAppbanner() {
     }
   };
 
-  // bannerlist imgid에 맞는 image storagePath 값을 전달해주는 함수
-  const filterImgIid = (img, item) => {
-    for (let i = 0; i < img.length; i++) {
-      if (img[i].iid === item.imgid) {
-        return img[i].storagePath;
-      }
-    }
-  };
-
   return (
     <>
       <form className="formLayout" onSubmit={handleSubmit(fnSubmit)}>
@@ -224,39 +404,85 @@ export default function SetAdminAppbanner() {
         {/* 하단 list ---------------------------------------- */}
         <div className="commonBox">
           <table className="commonTable">
-            <tbody className="commonTable">
-              {bannerList &&
-                bannerList.map((item) => (
-                  <tr key={item.contid} style={{ height: "5.25rem" }}>
-                    <td
-                      style={{
-                        width: "500px",
-                        height: "197px",
-                      }}
-                    >
-                      <div
-                        style={
-                          img && {
-                            width: "100%",
-                            height: "100%",
-                            backgroundImage: `url('${filterImgIid(
-                              img,
-                              item
-                            )}')`,
-                            margin: "0 auto",
-                          }
-                        }
-                      ></div>
-                    </td>
-                    <td>
-                      <InputBox
-                        item={item}
-                        inputData={inputData}
-                        setinputData={setinputData}
-                      />
-                    </td>
-                  </tr>
-                ))}
+            <thead className="basicThead">
+              <tr>
+                <td>
+                  <h2>B2B 배너 관리</h2>
+                </td>
+              </tr>
+            </thead>
+            <tbody>
+              {bannerB2B1.length > 0 && (
+                <InputBox
+                  allItem={bannerB2B1}
+                  title="B2B 첫번째 배너"
+                  inputData={inputData}
+                  setinputData={setinputData}
+                  image={img}
+                />
+              )}
+
+              {bannerB2B2.length > 0 && (
+                <InputBox
+                  allItem={bannerB2B2}
+                  title="B2B 두번째 배너"
+                  inputData={inputData}
+                  setinputData={setinputData}
+                  image={img}
+                />
+              )}
+
+              {bannerB2B3.length > 0 && (
+                <InputBox
+                  allItem={bannerB2B3}
+                  title="B2B 세번째 배너"
+                  inputData={inputData}
+                  setinputData={setinputData}
+                  image={img}
+                />
+              )}
+            </tbody>
+          </table>
+        </div>
+        <div className="commonBox">
+          <table className="commonTable">
+            <thead className="basicThead">
+              <tr>
+                <td>
+                  <h2>B2B 배너 관리</h2>
+                </td>
+              </tr>
+            </thead>
+            <tbody>
+              {bannerB2C1.length > 0 && (
+                <InputBox
+                  allItem={bannerB2C1}
+                  title="B2C 첫번째 배너"
+                  inputData={inputData}
+                  setinputData={setinputData}
+                  image={img}
+                />
+              )}
+
+              {bannerB2C2.length > 0 && (
+                <InputBox
+                  allItem={bannerB2C2}
+                  title="B2C 두번째 배너"
+                  inputData={inputData}
+                  setinputData={setinputData}
+                  image={img}
+                />
+              )}
+
+              {bannerB2C3.length > 0 && (
+                <InputBox
+                  allItem={bannerB2C3}
+                  title="B2C 세번째 배너"
+                  inputData={inputData}
+                  setinputData={setinputData}
+                  image={img}
+                />
+              )}
             </tbody>
           </table>
         </div>
