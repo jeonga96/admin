@@ -776,6 +776,19 @@ export default function SetCompanyDetail() {
                     id="corporationno"
                     placeholder="법인 등록 번호를 입력해 주세요."
                     {...register("_corporationno", {})}
+                    value={
+                      (watch("_corporationno") &&
+                        watch("_corporationno")
+                          .replace(/^(\d{0,6})(\d{0,7})$/g, "$1-$2")
+                          .replace(/\-{1}$/g, "")) ||
+                      ""
+                    }
+                    {...register("_corporationno", {
+                      pattern: {
+                        value: /^[0-9]{6}-[0-9]{7}$/,
+                        message: "형식에 맞지 않습니다.",
+                      },
+                    })}
                   />
                   <ErrorMessage
                     errors={errors}
