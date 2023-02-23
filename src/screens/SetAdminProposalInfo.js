@@ -104,14 +104,8 @@ export default function SetAdminProposalInfo() {
             garea: getValues("_garea"),
             cname: getValues("_cname"),
             cceo: getValues("_cceo"),
-            registration:
-              (getValues("_registration") &&
-                getValues("_registration").replace(",", "")) ||
-              "",
-            corporationno:
-              (getValues("_registration") &&
-                getValues("_registration").slice(4, 6)) ||
-              "",
+            registration: getValues("_registration"),
+            corporationno: getValues("_corporationno"),
             caddr: getValues("_caddr"),
             telnum: getValues("_telnum"),
             price:
@@ -135,14 +129,8 @@ export default function SetAdminProposalInfo() {
             garea: getValues("_garea"),
             cname: getValues("_cname"),
             cceo: getValues("_cceo"),
-            registration:
-              (getValues("_registration") &&
-                getValues("_registration").replace(",", "")) ||
-              "",
-            corporationno:
-              (getValues("_registration") &&
-                getValues("_registration").slice(4, 6)) ||
-              "",
+            registration: getValues("_registration"),
+            corporationno: getValues("_corporationno"),
             caddr: getValues("_caddr"),
             telnum: getValues("_telnum"),
             price:
@@ -586,16 +574,17 @@ export default function SetAdminProposalInfo() {
 
               <div className="formContentWrap">
                 <label htmlFor="corporationno" className=" blockLabel">
-                  <span>법인구분번호</span>
+                  <span>법인 등록 번호</span>
                 </label>
                 <div>
                   <input
                     type="text"
                     id="corporationno"
-                    disabled
                     value={
-                      (watch("_registration") &&
-                        getValues("_registration").slice(4, 6)) ||
+                      (watch("_corporationno") &&
+                        watch("_corporationno")
+                          .replace(/^(\d{0,6})(\d{0,7})$/g, "$1-$2")
+                          .replace(/\-{1}$/g, "")) ||
                       ""
                     }
                     {...register("_corporationno")}
