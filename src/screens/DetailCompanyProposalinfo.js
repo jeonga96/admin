@@ -78,7 +78,9 @@ export default function DetailCompanyProposalinfo() {
 
   return (
     <>
-      {list !== [] ? (
+      {(list == [] && list.length == 0) || list === undefined ? (
+        <ComponentErrorNull />
+      ) : (
         <section className="tableWrap">
           <h3 className="blind">table</h3>
           <div className="paddingBox commonBox">
@@ -164,8 +166,6 @@ export default function DetailCompanyProposalinfo() {
             <PageButton listPage={listPage} page={page} setPage={setPage} />
           </div>
         </section>
-      ) : (
-        <ComponentErrorNull />
       )}
     </>
   );

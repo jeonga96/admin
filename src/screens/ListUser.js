@@ -6,6 +6,7 @@ import { urlUserlist, urlSetUser } from "../Services/string";
 import PageButton from "../components/common/PiecePaginationButton";
 import LayoutTopButton from "../components/common/LayoutTopButton";
 import ComponentListUserSearch from "../components/common/ComponentListUserSearch";
+import ComponentErrorNull from "../components/common/ComponentErrorNull";
 
 function ListInTr({ item, setClickedUseFlag, clickedUseFlag }) {
   // 체크박스 상태 ------------------------------------------------------------------------
@@ -104,7 +105,14 @@ export default function ListUser() {
     }
   };
 
-  return (
+  return (userList == [] && userList.length == 0) || userList === undefined ? (
+    <>
+      <ul className="tableTopWrap">
+        <LayoutTopButton url={`add`} text="작성" />
+      </ul>
+      <ComponentErrorNull />
+    </>
+  ) : (
     <>
       <ComponentListUserSearch
         setUserList={setUserList}
@@ -113,6 +121,7 @@ export default function ListUser() {
         setSearchClick={setSearchClick}
         page={page}
       />
+
       <ul className="tableTopWrap">
         {clickedUseFlag.length > 0 && (
           <LayoutTopButton text="정상" fn={handleUseFlag} id="useFlagUse" />

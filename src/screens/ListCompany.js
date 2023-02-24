@@ -11,6 +11,7 @@ import {
 import PaginationButton from "../components/common/PiecePaginationButton";
 import LayoutTopButton from "../components/common/LayoutTopButton";
 import ComponentListCompanySearch from "../components/common/ComponentListCompanySearch";
+import ComponentErrorNull from "../components/common/ComponentErrorNull";
 
 // 하위 컴포넌트, useState를 별도로 관리하기 위해 하위 컴포넌트로 분리
 function ChildList({
@@ -163,61 +164,88 @@ export default function ListCompany() {
         break;
     }
   };
-
   return (
     <>
       <ComponentListCompanySearch />
-      <ul className="tableTopWrap">
-        {clickedUseFlag.length > 0 && (
-          <LayoutTopButton text="정상" fn={handleUseFlagSubmit} id="useFlagY" />
-        )}
-        {clickedUseFlag.length > 0 && (
-          <LayoutTopButton text="해지" fn={handleUseFlagSubmit} />
-        )}
-        {clickedStatus.length > 0 && (
-          <LayoutTopButton text="대기" fn={handleStautsSubmit} id="waiting" />
-        )}
-        {clickedStatus.length > 0 && (
-          <LayoutTopButton
-            text="완료"
-            fn={handleStautsSubmit}
-            id="completion"
-          />
-        )}
-        {clickedStatus.length > 0 && (
-          <LayoutTopButton text="거절" fn={handleStautsSubmit} id="refuse" />
-        )}
-        <LayoutTopButton url="add" text="사업자 추가" />
-      </ul>
-      <section className="tableWrap">
-        <h3 className="blind">table</h3>
-        <div className="commonBox">
-          <table className="commonTable">
-            <thead>
-              <tr>
-                <th style={{ width: "70px" }}>계약관리</th>
-                <th style={{ width: "70px" }}>회원상태</th>
-                <th style={{ width: "140px" }}>관리번호</th>
-                <th style={{ width: "auto" }}>계약자</th>
-                <th style={{ width: "140px " }}>계약일</th>
-              </tr>
-            </thead>
-            <tbody>
-              {companyList.map((item) => (
-                <ChildList
-                  item={item}
-                  key={item.cid}
-                  setClickedStatus={setClickedStatus}
-                  clickedStatus={clickedStatus}
-                  setClickedUseFlag={setClickedUseFlag}
-                  clickedUseFlag={clickedUseFlag}
-                />
-              ))}
-            </tbody>
-          </table>
-          <PaginationButton listPage={listPage} page={page} setPage={setPage} />
-        </div>
-      </section>
+      {(companyList == [] && companyList.length == 0) ||
+      companyList === undefined ? (
+        <>
+          <ul className="tableTopWrap">
+            <LayoutTopButton url={`add`} text="작성" />
+          </ul>
+          <ComponentErrorNull />
+        </>
+      ) : (
+        <>
+          <ul className="tableTopWrap">
+            {clickedUseFlag.length > 0 && (
+              <LayoutTopButton
+                text="정상"
+                fn={handleUseFlagSubmit}
+                id="useFlagY"
+              />
+            )}
+            {clickedUseFlag.length > 0 && (
+              <LayoutTopButton text="해지" fn={handleUseFlagSubmit} />
+            )}
+            {clickedStatus.length > 0 && (
+              <LayoutTopButton
+                text="대기"
+                fn={handleStautsSubmit}
+                id="waiting"
+              />
+            )}
+            {clickedStatus.length > 0 && (
+              <LayoutTopButton
+                text="완료"
+                fn={handleStautsSubmit}
+                id="completion"
+              />
+            )}
+            {clickedStatus.length > 0 && (
+              <LayoutTopButton
+                text="거절"
+                fn={handleStautsSubmit}
+                id="refuse"
+              />
+            )}
+            <LayoutTopButton url="add" text="사업자 추가" />
+          </ul>
+          <section className="tableWrap">
+            <h3 className="blind">table</h3>
+            <div className="commonBox">
+              <table className="commonTable">
+                <thead>
+                  <tr>
+                    <th style={{ width: "70px" }}>계약관리</th>
+                    <th style={{ width: "70px" }}>회원상태</th>
+                    <th style={{ width: "140px" }}>관리번호</th>
+                    <th style={{ width: "auto" }}>계약자</th>
+                    <th style={{ width: "140px " }}>계약일</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {companyList.map((item) => (
+                    <ChildList
+                      item={item}
+                      key={item.cid}
+                      setClickedStatus={setClickedStatus}
+                      clickedStatus={clickedStatus}
+                      setClickedUseFlag={setClickedUseFlag}
+                      clickedUseFlag={clickedUseFlag}
+                    />
+                  ))}
+                </tbody>
+              </table>
+              <PaginationButton
+                listPage={listPage}
+                page={page}
+                setPage={setPage}
+              />
+            </div>
+          </section>
+        </>
+      )}
     </>
   );
 }

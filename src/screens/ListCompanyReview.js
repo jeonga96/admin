@@ -46,7 +46,7 @@ export default function ListCompanyReview() {
     //for
   };
 
-  return review === undefined ? (
+  return (review == [] && review.length == 0) || review === undefined ? (
     <ComponentErrorNull />
   ) : (
     <>

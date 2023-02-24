@@ -33,7 +33,7 @@ export default function ListAdminNotice() {
     });
   }, [watch("_category") || page.getPage]);
 
-  return notice === undefined ? (
+  return (notice == [] && notice.length == 0) || notice === undefined ? (
     <>
       <ul className="tableTopWrap">
         <LayoutTopButton url={`set`} text="작성" />

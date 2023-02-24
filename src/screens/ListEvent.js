@@ -6,7 +6,7 @@ import { urlContentList } from "../Services/string";
 
 import LayoutTopButton from "../components/common/LayoutTopButton";
 import ComponentErrorNull from "../components/common/ComponentErrorNull";
-import ComponentListNotice from "../components/common/ComponentListNotice";
+// import ComponentListNotice from "../components/common/ComponentListNotice";
 
 import PaginationButton from "../components/common/PiecePaginationButton";
 
@@ -36,26 +36,7 @@ export default function ListEvent() {
     });
   }, [watch("_category") || page.getPage]);
 
-  return wzEvent === undefined ? (
-    <>
-      <ul className="tableTopWrap">
-        <LayoutTopButton url={`set`} text="작성" />
-      </ul>
-
-      <section className="tableWrap">
-        <h3 className="blind">공사콕 이벤트 목록</h3>
-        <div className="paddingBox commonBox">
-          <div className="filterWrap">
-            <select {...register("_category")}>
-              <option value="wzEvent">와짱 이벤트</option>
-              <option value="businessEvent">고객 ( 사용자 ) 이벤트</option>
-            </select>
-          </div>
-          <ComponentErrorNull />
-        </div>
-      </section>
-    </>
-  ) : (
+  return (
     <>
       <ul className="tableTopWrap">
         <LayoutTopButton url={`set`} text="추가" />
@@ -70,37 +51,47 @@ export default function ListEvent() {
             </select>
           </div>
 
-          <table className="commonTable">
-            <thead>
-              <tr>
-                <th style={{ width: "auto" }}>내용</th>
-                <th style={{ width: "150px" }}>날짜</th>
-              </tr>
-            </thead>
-            <tbody className="commonTable">
-              {wzEvent &&
-                wzEvent.map((item) => (
-                  <tr
-                    key={item.contid}
-                    style={{ height: "5.25rem" }}
-                    className={item.useFlag == 0 ? "flageN" : null}
-                  >
-                    <td className="tableContentWrap">
-                      <Link
-                        to={`${item.contid}/set`}
-                        className="Link"
-                        style={{ paddingLeft: "30px" }}
-                      >
-                        <p>{item.contentString}</p>
-                        <em>{item.contentDetail}</em>
-                      </Link>
-                    </td>
-                    <td>{item.createTime.slice(0, 10)}</td>
+          {(wzEvent == [] && wzEvent.length == 0) || wzEvent === undefined ? (
+            <ComponentErrorNull />
+          ) : (
+            <>
+              <table className="commonTable">
+                <thead>
+                  <tr>
+                    <th style={{ width: "auto" }}>내용</th>
+                    <th style={{ width: "150px" }}>날짜</th>
                   </tr>
-                ))}
-            </tbody>
-          </table>
-          <PaginationButton listPage={listPage} page={page} setPage={setPage} />
+                </thead>
+                <tbody className="commonTable">
+                  {wzEvent &&
+                    wzEvent.map((item) => (
+                      <tr
+                        key={item.contid}
+                        style={{ height: "5.25rem" }}
+                        className={item.useFlag == 0 ? "flageN" : null}
+                      >
+                        <td className="tableContentWrap">
+                          <Link
+                            to={`${item.contid}/set`}
+                            className="Link"
+                            style={{ paddingLeft: "30px" }}
+                          >
+                            <p>{item.contentString}</p>
+                            <em>{item.contentDetail}</em>
+                          </Link>
+                        </td>
+                        <td>{item.createTime.slice(0, 10)}</td>
+                      </tr>
+                    ))}
+                </tbody>
+              </table>
+              <PaginationButton
+                listPage={listPage}
+                page={page}
+                setPage={setPage}
+              />
+            </>
+          )}
         </div>
       </section>
     </>
