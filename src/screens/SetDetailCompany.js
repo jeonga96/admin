@@ -103,7 +103,6 @@ export default function SetCompanyDetail() {
         if (res.status === "success") {
           // 값이 있다면 저장한 후 getDataFinish 값을 변경
           setGetedData(res.data);
-          setValue("_age", res.data.age);
           setValue("_detailUseFlag", res.data.useFlag.toString());
           setValue("_status", res.data.status.toString());
           setValue(
@@ -125,6 +124,7 @@ export default function SetCompanyDetail() {
           setValue("_regName", res.data.regName || "");
           setValue("_corporationno", res.data.corporationno || "");
           setValue("_regOwner", res.data.regOwner || "");
+          setValue("_age", res.data.age);
 
           setValue("_bigCategory", res.data.bigCategory || "");
           setValue("_subCategory", res.data.subCategory || "");
@@ -151,7 +151,6 @@ export default function SetCompanyDetail() {
             setValue("_vidlinkurl1", nameVar[0] || "");
             setValue("_vidlinkurl2", nameVar[1] || "");
           }
-
           // 외부 링크
           if (res.data.linkurl) {
             const nameVar = res.data.linkurl.split(",");
@@ -832,13 +831,6 @@ export default function SetCompanyDetail() {
                     placeholder="대표자명을 입력해 주세요."
                     {...register("_regOwner")}
                   />
-                  {/* <ErrorMessage
-                    errors-={errors}
-                    name="_regOwner"
-                    render={({ message }) => (
-                      <span className="errorMessageWrap">{message}</span>
-                    )}
-                  /> */}
                 </div>
               </div>
 

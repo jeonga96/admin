@@ -104,28 +104,28 @@ export default function AddUser() {
                 placeholder="비밀번호를 입력해 주세요."
                 {...register("_passwd", {
                   required: "비밀번호는 필수로 입력해야 합니다.",
-                  minLength: {
-                    value: 6,
-                    message: "6자 이상으로 입력해주세요.",
-                  },
-                  maxLength: {
-                    value: 16,
-                    message: "16자 이하로 입력해주세요.",
-                  },
-                  pattern: {
-                    value:
-                      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{6,16}$/g,
-                    message: "영문, 숫자, 특수문자를 포함해 주세요.",
-                  },
-                  validate: {
-                    matchesPassword: (value) => {
-                      const { _userid } = getValues();
-                      return (
-                        _userid !== value ||
-                        "아이디와 동일한 비밀번호는 사용할 수 없습니다."
-                      );
-                    },
-                  },
+                  // minLength: {
+                  //   value: 6,
+                  //   message: "6자 이상으로 입력해주세요.",
+                  // },
+                  // maxLength: {
+                  //   value: 16,
+                  //   message: "16자 이하로 입력해주세요.",
+                  // },
+                  // pattern: {
+                  //   value:
+                  //     /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{6,16}$/g,
+                  //   message: "영문, 숫자, 특수문자를 포함해 주세요.",
+                  // },
+                  // validate: {
+                  //   matchesPassword: (value) => {
+                  //     const { _userid } = getValues();
+                  //     return (
+                  //       _userid !== value ||
+                  //       "아이디와 동일한 비밀번호는 사용할 수 없습니다."
+                  //     );
+                  //   },
+                  // },
                 })}
               />
               <ErrorMessage

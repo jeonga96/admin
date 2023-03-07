@@ -449,7 +449,7 @@ export default function SetAdminAppbanner() {
             <thead className="basicThead">
               <tr>
                 <td>
-                  <h2>B2B 배너 관리</h2>
+                  <h2>B2C 배너 관리</h2>
                 </td>
               </tr>
             </thead>
