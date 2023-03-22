@@ -471,7 +471,7 @@ export default function SetCompanyDetail() {
 
             {/* 고객 기본정보 필드 시작 ==================================================================== */}
             <fieldset>
-              <h3>고객 기본 정보</h3>
+              <h3>사업자 기본 정보</h3>
               <div className="formContentWrap">
                 <div className="blockLabel">
                   <span>공사유형</span>
@@ -584,7 +584,7 @@ export default function SetCompanyDetail() {
 
               <div className="formContentWrap">
                 <label htmlFor="Cname" className="blockLabel">
-                  <span>사업자명</span>
+                  <span>사업자명 ( 회사명 )</span>
                 </label>
                 <div>
                   <input

@@ -12,13 +12,7 @@ export default function ImageOnClick({ getData, url, text, iid, onRemove }) {
   };
 
   return (
-    <div
-      style={
-        getData && {
-          backgroundImage: `url("${url}")`,
-        }
-      }
-    >
+    <div>
       {/* 상위 컴포넌트에서 iid값을 전달하면 썸네일 이미지 호버 시 해당 버튼 요소가 표시된다 */}
       {iid && (
         <button
@@ -32,7 +26,15 @@ export default function ImageOnClick({ getData, url, text, iid, onRemove }) {
           <IoMdRemoveCircleOutline />
         </button>
       )}
-      <div className="Link" onClick={onPopup} />
+      <div
+        className="Link"
+        style={
+          getData && {
+            backgroundImage: `url("${url}")`,
+          }
+        }
+        onClick={onPopup}
+      />
       <span className="blind">{text}</span>
       {zoomPopup ? (
         <div className="imageZoomPopupBox" onClick={onPopup}>

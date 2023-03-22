@@ -54,7 +54,7 @@ export default function DetailCompanyReview({
       </td>
       <td className="tableReviewWrap">
         <div>
-          <h4>{compnayReview.title}</h4>
+          <h4 style={{ marginBottom: "6px" }}>{compnayReview.title}</h4>
           <ul>
             <li>
               <span>{compnayReview.ruidNick || "익명"}</span>

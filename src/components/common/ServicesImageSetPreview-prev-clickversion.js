@@ -138,7 +138,6 @@ export default function ImageSet({
           className="blind"
           onChange={handleSetImage}
           multiple={id === "imgs" || "addImgs" ? "multiple" : null}
-          // ref={inputRef}
         />
       </div>
 
@@ -152,7 +151,6 @@ export default function ImageSet({
             onRemove={onRemove}
           />
         ) : null}
-
         {regImgs !== null && regImgs !== undefined && id === "regImgs" ? (
           <ServicesImageOnClick
             getData={regImgs}
@@ -162,7 +160,6 @@ export default function ImageSet({
             onRemove={onRemove}
           />
         ) : null}
-
         {imgs !== null && imgs !== undefined && id === "addImgs"
           ? !!imgs &&
             imgs.map((item) => (
@@ -176,7 +173,6 @@ export default function ImageSet({
               />
             ))
           : null}
-
         {imgs !== null && imgs !== undefined && id === "imgs"
           ? !!imgs &&
             imgs.map((item) => (
