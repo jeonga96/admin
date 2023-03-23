@@ -346,12 +346,12 @@ export default function SetAdminAppbanner() {
   // bannerlist의 데이터를 받아오면 기존 배너의 이미지 데이터를 받아온다.
   useDidMountEffect(() => {
     const array = [
-      bannerB2B1,
-      bannerB2B2,
-      bannerB2B3,
       bannerB2C1,
       bannerB2C2,
       bannerB2C3,
+      bannerB2B1,
+      bannerB2B2,
+      bannerB2B3,
     ];
     for (const item of array) {
       serviesGetImgId(imgsIid, item);
@@ -407,48 +407,6 @@ export default function SetAdminAppbanner() {
             <thead className="basicThead">
               <tr>
                 <td>
-                  <h2>B2B 배너 관리</h2>
-                </td>
-              </tr>
-            </thead>
-            <tbody>
-              {bannerB2B1.length > 0 && (
-                <InputBox
-                  allItem={bannerB2B1}
-                  title="B2B 첫번째 배너"
-                  inputData={inputData}
-                  setinputData={setinputData}
-                  image={img}
-                />
-              )}
-
-              {bannerB2B2.length > 0 && (
-                <InputBox
-                  allItem={bannerB2B2}
-                  title="B2B 두번째 배너"
-                  inputData={inputData}
-                  setinputData={setinputData}
-                  image={img}
-                />
-              )}
-
-              {bannerB2B3.length > 0 && (
-                <InputBox
-                  allItem={bannerB2B3}
-                  title="B2B 세번째 배너"
-                  inputData={inputData}
-                  setinputData={setinputData}
-                  image={img}
-                />
-              )}
-            </tbody>
-          </table>
-        </div>
-        <div className="commonBox">
-          <table className="commonTable">
-            <thead className="basicThead">
-              <tr>
-                <td>
                   <h2>B2C 배너 관리</h2>
                 </td>
               </tr>
@@ -478,6 +436,48 @@ export default function SetAdminAppbanner() {
                 <InputBox
                   allItem={bannerB2C3}
                   title="B2C 세번째 배너"
+                  inputData={inputData}
+                  setinputData={setinputData}
+                  image={img}
+                />
+              )}
+            </tbody>
+          </table>
+        </div>
+        <div className="commonBox">
+          <table className="commonTable">
+            <thead className="basicThead">
+              <tr>
+                <td>
+                  <h2>B2B 배너 관리</h2>
+                </td>
+              </tr>
+            </thead>
+            <tbody>
+              {bannerB2B1.length > 0 && (
+                <InputBox
+                  allItem={bannerB2B1}
+                  title="B2B 첫번째 배너"
+                  inputData={inputData}
+                  setinputData={setinputData}
+                  image={img}
+                />
+              )}
+
+              {bannerB2B2.length > 0 && (
+                <InputBox
+                  allItem={bannerB2B2}
+                  title="B2B 두번째 배너"
+                  inputData={inputData}
+                  setinputData={setinputData}
+                  image={img}
+                />
+              )}
+
+              {bannerB2B3.length > 0 && (
+                <InputBox
+                  allItem={bannerB2B3}
+                  title="B2B 세번째 배너"
                   inputData={inputData}
                   setinputData={setinputData}
                   image={img}
