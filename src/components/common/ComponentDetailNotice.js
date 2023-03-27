@@ -61,7 +61,7 @@ export default function ComponentDetailNotice({ detail }) {
                 <ImageOnClick
                   key={item.iid}
                   getData={imgs}
-                  url={item.storagePath}
+                  url={item}
                   text="공지사항 이미지"
                 />
               ))}

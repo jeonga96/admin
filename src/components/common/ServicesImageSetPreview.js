@@ -1,5 +1,4 @@
 import { useRef, useState, useEffect, useCallback } from "react";
-// import { BiUpload } from "react-icons/bi";
 import {
   servicesPostDataForm,
   servicesPostData,
@@ -27,7 +26,6 @@ export default function ImageSet({
   const [files, setFiles] = useState([]);
   // 드래그 중일때와 아닐때의 스타일을 구분하기 위한 state 변수
   const [isDragging, setIsDragging] = useState(false);
-  const [isclick, setIsclick] = useState(false);
   // 드래그 이벤트를 감지하는 ref 참조변수 (label 태그에 들어갈 예정)
   const dragRef = useRef(null);
 
@@ -198,16 +196,6 @@ export default function ImageSet({
     return () => resetDragEvents();
   }, [initDragEvents, resetDragEvents]);
 
-  const thumbnailHeight = () => {
-    if (files.length <= 10) {
-      return "94px";
-    } else if (files.length <= 20) {
-      return "188px";
-    } else {
-      return "292px";
-    }
-  };
-
   return (
     <div className="setImageWrap">
       <div>
@@ -251,7 +239,7 @@ export default function ImageSet({
           {files.length > 0 && setImg && (
             <ServicesImageOnClick
               getData={img}
-              url={files[0].storagePath}
+              url={files[0]}
               text="대표 이미지"
               iid={files[0].iid}
               onRemove={() => handleFilterFile(files[0].iid)}
@@ -264,8 +252,8 @@ export default function ImageSet({
               <ServicesImageOnClick
                 key={item && item.iid}
                 getData={files}
-                url={item && item.storagePath}
-                text="상세 대표 이미지"
+                url={item}
+                text="상세 이미지"
                 iid={item && item.iid}
                 onRemove={() => handleFilterFile(files[0].iid)}
               />

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { IoMdRemoveCircleOutline } from "react-icons/io";
 
 export default function ImageOnClick({ getData, url, text, iid, onRemove }) {
@@ -10,6 +10,8 @@ export default function ImageOnClick({ getData, url, text, iid, onRemove }) {
   const onPopup = () => {
     setZoomPopup(!zoomPopup);
   };
+
+  console.log("url", url);
 
   return (
     <div>
@@ -26,24 +28,24 @@ export default function ImageOnClick({ getData, url, text, iid, onRemove }) {
           <IoMdRemoveCircleOutline />
         </button>
       )}
-      <div
-        className="Link"
-        style={
-          getData && {
-            backgroundImage: `url("${url}")`,
-          }
-        }
-        onClick={onPopup}
-      />
+      {getData && (
+        <img
+          className="Link"
+          alt={text}
+          src={url.storagePath.replace("com/", "com/s/")}
+          onError={(e) => (e.target.src = url.storagePath)}
+          onClick={onPopup}
+        />
+      )}
       <span className="blind">{text}</span>
       {zoomPopup ? (
         <div className="imageZoomPopupBox" onClick={onPopup}>
-          <div
+          <img
             className="imageZoom"
-            style={{
-              backgroundImage: `url("${url}")`,
-            }}
-          ></div>
+            alt={text}
+            src={url.storagePath.replace("com/", "com/s/")}
+            onError={(e) => (e.target.src = url.storagePath)}
+          />
         </div>
       ) : null}
     </div>
