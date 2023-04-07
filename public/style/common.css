@@ -347,7 +347,6 @@ i {
   margin-bottom: 10px;
 }
 .loginBox .formContentWrap div:last-child {
-  /* border: 1px solid rgba(0, 0, 0, 0.1); */
   width: 100%;
 }
 .loginWrap label {
@@ -408,6 +407,7 @@ i {
   width: 150px;
   background-color: var(--color-bggray);
   border: 1px solid rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
 }
 
 .formLayout .blockLabel span {
@@ -470,7 +470,6 @@ i {
   width: 100%;
   display: flex;
   justify-content: space-between;
-  margin-top: 10px;
 }
 .setImageWrap .fileboxLabel {
   display: block;
@@ -659,8 +658,8 @@ i {
   display: flex;
   flex-wrap: wrap;
   justify-content: left;
-  padding: 26px 4px 4px;
-  margin: 10px 0;
+  padding: 34px 4px 4px;
+  margin: 4px 0;
 }
 .formWrap fieldset:last-child {
   margin-bottom: 0;
@@ -696,7 +695,7 @@ i {
   width: 50%;
   height: auto;
   justify-content: left;
-  margin-top: 8px;
+  /* margin-top: 8px; */
 }
 .formContentWideWrap {
   width: 100%;
@@ -704,9 +703,7 @@ i {
 .formContentWrap > div:last-child,
 .formContentWrap .detailContent {
   width: calc(100% - 150px);
-  height: auto;
   margin: 0 auto;
-  /* background-color: rgba(243, 244, 243, 0.3); */
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-left: none;
   padding: 2px;
