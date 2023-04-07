@@ -408,80 +408,86 @@ export default function SetAdminEstimateinfo() {
                 </div>
               </div>
 
-              {/* 세금 계산서 요청 */}
               <div className="formContentWrap">
-                <div className="blockLabel">
-                  <span>세금계산서 요청</span>
-                </div>
-                <div className="formPaddingWrap">
-                  <input
-                    className="listSearchRadioInput"
-                    type="radio"
-                    checked={watch("_reqBill") == "0"}
-                    value="0"
-                    id="DetailReqBill0"
-                    {...register("_reqBill")}
-                  />
-                  <label
-                    className="listSearchRadioLabel"
-                    htmlFor="DetailReqBill0"
-                  >
-                    미발급
-                  </label>
+                <label htmlFor="address" className=" blockLabel">
+                  <span>계산서 요청</span>
+                </label>
+                <ul className="detailContent">
+                  {/* 세금 계산서 요청 */}
+                  <li style={{ width: "50%" }}>
+                    <div>
+                      <span>세금계산서</span>
+                      <div className="detailContentInputWrap">
+                        <input
+                          className="listSearchRadioInput"
+                          type="radio"
+                          checked={watch("_reqBill") == "0"}
+                          value="0"
+                          id="DetailReqBill0"
+                          {...register("_reqBill")}
+                        />
+                        <label
+                          className="listSearchRadioLabel"
+                          htmlFor="DetailReqBill0"
+                        >
+                          미발급
+                        </label>
 
-                  <input
-                    className="listSearchRadioInput"
-                    type="radio"
-                    checked={watch("_reqBill") == "1"}
-                    value="1"
-                    id="DetailReqBill1"
-                    {...register("_reqBill")}
-                  />
-                  <label
-                    className="listSearchRadioLabel"
-                    htmlFor="DetailReqBill1"
-                  >
-                    발급
-                  </label>
-                </div>
-              </div>
+                        <input
+                          className="listSearchRadioInput"
+                          type="radio"
+                          checked={watch("_reqBill") == "1"}
+                          value="1"
+                          id="DetailReqBill1"
+                          {...register("_reqBill")}
+                        />
+                        <label
+                          className="listSearchRadioLabel"
+                          htmlFor="DetailReqBill1"
+                        >
+                          발급
+                        </label>
+                      </div>
+                    </div>
+                  </li>
+                  {/* 견적 요청서 요청 */}
+                  <li style={{ width: "50%" }}>
+                    <div>
+                      <span>견적서</span>
+                      <div className="detailContentInputWrap">
+                        <input
+                          className="listSearchRadioInput"
+                          type="radio"
+                          checked={watch("_reqEstimate") == "0"}
+                          value="0"
+                          id="reqEstimate0"
+                          {...register("_reqEstimate")}
+                        />
+                        <label
+                          className="listSearchRadioLabel"
+                          htmlFor="reqEstimate0"
+                        >
+                          미발급
+                        </label>
 
-              {/* 견적 요청서 요청 */}
-              <div className="formContentWrap">
-                <div className="blockLabel">
-                  <span>견적서 요청</span>
-                </div>
-                <div className="formPaddingWrap">
-                  <input
-                    className="listSearchRadioInput"
-                    type="radio"
-                    checked={watch("_reqEstimate") == "0"}
-                    value="0"
-                    id="reqEstimate0"
-                    {...register("_reqEstimate")}
-                  />
-                  <label
-                    className="listSearchRadioLabel"
-                    htmlFor="reqEstimate0"
-                  >
-                    미발급
-                  </label>
-
-                  <input
-                    className="listSearchRadioInput"
-                    type="radio"
-                    checked={watch("_reqEstimate") == "1"}
-                    value="1"
-                    id="reqEstimate1"
-                    {...register("_reqEstimate")}
-                  />
-                  <label
-                    className="listSearchRadioLabel"
-                    htmlFor="reqEstimate1"
-                  >
-                    발급
-                  </label>
-                </div>
+                        <input
+                          className="listSearchRadioInput"
+                          type="radio"
+                          checked={watch("_reqEstimate") == "1"}
+                          value="1"
+                          id="reqEstimate1"
+                          {...register("_reqEstimate")}
+                        />
+                        <label
+                          className="listSearchRadioLabel"
+                          htmlFor="reqEstimate1"
+                        >
+                          발급
+                        </label>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
               </div>
 
               <div className="formContentWrap">

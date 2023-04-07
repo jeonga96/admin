@@ -331,7 +331,7 @@ export default function SetCompanyDetail() {
               {/* setDetailCompanyInfo radio ================================================================ */}
               <div className="formContentWrap">
                 <div className="blockLabel">
-                  <span>회원관리</span>
+                  <span>상세정보 관리</span>
                 </div>
                 <div className="formPaddingWrap">
                   <input
@@ -348,7 +348,6 @@ export default function SetCompanyDetail() {
                   >
                     휴면
                   </label>
-
                   <input
                     className="listSearchRadioInput"
                     type="radio"
@@ -410,61 +409,68 @@ export default function SetCompanyDetail() {
               </div>
 
               <div className="formContentWrap">
-                <label htmlFor="userid" className="blockLabel">
-                  <span>아이디</span>
+                <label htmlFor="address" className=" blockLabel">
+                  <span>계정관리</span>
                 </label>
-                <div>
-                  <input
-                    type="text"
-                    id="userid"
-                    disabled
-                    {...register("_userid", {})}
-                  />
-                </div>
-              </div>
-
-              <div className="formContentWrap">
-                <div className="blockLabel">
-                  <span>비밀번호 관리</span>
-                </div>
-                <div
-                  style={{ display: "flex", justifyContent: "space-between" }}
-                >
-                  <input
-                    type="text"
-                    id="passwd"
-                    style={{
-                      width: "86%",
-                    }}
-                    disabled={!companyData.ruid && true}
-                    placeholder={
-                      !companyData.ruid
-                        ? "회원연결을 먼저 진행해 주십시오."
-                        : ""
-                    }
-                    {...register("_passwd")}
-                  />
-                  <button
-                    type="button"
-                    disabled={!companyData.ruid && true}
-                    onClick={() => {
-                      servicesPostData(urlSetUser, {
-                        uid: ruid.current,
-                        passwd: watch("_passwd"),
-                      }).then((res) => {
-                        if (res.status === "success") {
-                          servicesUseToast(
-                            "비밀번호 변경이 완료되었습니다.",
-                            "s"
-                          );
-                        }
-                      });
-                    }}
-                    className="formContentBtn"
-                  >
-                    변경
-                  </button>
-                </div>
+                <ul className="detailContent">
+                  <li style={{ width: "50%" }}>
+                    <div>
+                      <span>아이디</span>
+                      <input
+                        type="text"
+                        id="userid"
+                        disabled
+                        {...register("_userid", {})}
+                      />
+                    </div>
+                  </li>
+                  <li style={{ width: "50%" }}>
+                    <div>
+                      <span>비밀번호</span>
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                        }}
+                      >
+                        <input
+                          type="text"
+                          id="passwd"
+                          style={{
+                            width: "80%",
+                          }}
+                          disabled={!companyData.ruid && true}
+                          placeholder={
+                            !companyData.ruid
+                              ? "회원연결을 먼저 진행해 주십시오."
+                              : ""
+                          }
+                          {...register("_passwd")}
+                        />
+                        <button
+                          type="button"
+                          disabled={!companyData.ruid && true}
+                          onClick={() => {
+                            servicesPostData(urlSetUser, {
+                              uid: ruid.current,
+                              passwd: watch("_passwd"),
+                            }).then((res) => {
+                              if (res.status === "success") {
+                                servicesUseToast(
+                                  "비밀번호 변경이 완료되었습니다.",
+                                  "s"
+                                );
+                              }
+                            });
+                          }}
+                          className="formContentBtn"
+                        >
+                          변경
+                        </button>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
               </div>
             </fieldset>
             {/* 계약기본정보 필드 끝 ==================================================================== */}
@@ -1076,32 +1082,6 @@ export default function SetCompanyDetail() {
                 </div>
               </div>
 
-              {/* <div className="formContentWrap" style={{ width: "100%" }}>
-                <label htmlFor="comment" className="blockLabel">
-                  <span>사업자 한줄 소개</span>
-                </label>
-                <div>
-                  <input
-                    type="text"
-                    id="comment"
-                    placeholder="사업자에 대한 짧은 소개글을 입력해 주세요."
-                    {...register("_comment", {
-                      maxLength: {
-                        value: 20,
-                        message: "20자 이하의 글자만 사용가능합니다.",
-                      },
-                    })}
-                  />
-                  <ErrorMessage
-                    errors={errors}
-                    name="_comment"
-                    render={({ message }) => (
-                      <span className="errorMessageWrap">{message}</span>
-                    )}
-                  />
-                </div>
-              </div> */}
-
               <div className="formContentWrap" style={{ width: "100%" }}>
                 <label htmlFor="offer" className="blockLabel">
                   <span>사업자 소개글</span>
@@ -1355,24 +1335,9 @@ export default function SetCompanyDetail() {
                 </ul>
               </div>
             </fieldset>
-            <fieldset>
-              <h3>고객상담 </h3>
-            </fieldset>
           </div>
         </form>
       </div>
-
-      {/* <div className="paddingBox commonBox">
-        <ul className="detailContentsList">
-          {getedData && (
-            <PieceDetailListLink
-              getData={noticeList}
-              url={`/company/${getedData.rcid}/notice`}
-              title="공지사항"
-            />
-          )}
-        </ul>
-      </div> */}
     </>
   );
 }

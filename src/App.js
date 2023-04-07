@@ -135,10 +135,11 @@ function App() {
         <Route
           path="/"
           element={
-            <MainLayout
-              nowTitle="DashBord"
-              component={<Home nowTitle="DashBord" />}
-            />
+            // <MainLayout
+            //   nowTitle="DashBord"
+            //   component={<Home nowTitle="DashBord" />}
+            // />
+            <MainLayout nowTitle="통합회원 관리" component={<ListUser />} />
           }
         />
         <Route path="login" element={<Login />} />

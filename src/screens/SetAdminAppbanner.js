@@ -286,8 +286,6 @@ export default function SetAdminAppbanner() {
   // inputData:수정된 내용 저장
   const [inputData, setinputData] = useState({});
 
-  console.log(bannerB2B1);
-
   // 이미지 ------------------------------------------------------------------------
   // img:이미지 저장 / imgsIid:서버에 이미지를 보낼 때는, iid값만 필요 / changeImg: 이미지 수정 시 수정된 이미지 저장
   const [img, setImg] = useState(null);
@@ -314,26 +312,32 @@ export default function SetAdminAppbanner() {
               switch (res.data[i].category) {
                 case "bannerB2B1":
                   setbannerB2B1(res.data);
+                  console.log("setbannerB2B1");
                   break;
 
                 case "bannerB2B2":
                   setbannerB2B2(res.data);
+                  console.log("setbannerB2B2");
                   break;
 
                 case "bannerB2B3":
                   setbannerB2B3(res.data);
+                  console.log("setbannerB2B3");
                   break;
 
                 case "bannerB2C1":
                   setbannerB2C1(res.data);
+                  console.log("setbannerB2C1");
                   break;
 
                 case "bannerB2C2":
                   setbannerB2C2(res.data);
+                  console.log("setbannerB2C2");
                   break;
 
                 default:
                   setbannerB2C3(res.data);
+                  console.log("setbannerB2C3");
               }
             }
           }
@@ -360,6 +364,7 @@ export default function SetAdminAppbanner() {
       imgs: imgsIid.toString(),
     }).then((res) => {
       setImg(res.data);
+      console.log(res.data);
     });
   }, [bannerB2B1, bannerB2B2, bannerB2B3, bannerB2C1, bannerB2C2, bannerB2C3]);
 

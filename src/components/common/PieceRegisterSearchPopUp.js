@@ -187,7 +187,7 @@ export default function Postcode({
               className="detailContent"
               style={{ width: "100%", border: "none", padding: "4px 0 2px" }}
             >
-              <li style={{ width: "200px", paddingLeft: "0" }}>
+              <li style={{ width: "240px", paddingLeft: "0" }}>
                 <div>
                   <span>위도</span>
                   <input
@@ -199,7 +199,7 @@ export default function Postcode({
                   />
                 </div>
               </li>
-              <li style={{ width: "200px" }}>
+              <li style={{ width: "240px" }}>
                 <div>
                   <span>경도</span>
                   <input

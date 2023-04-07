@@ -275,7 +275,7 @@ export default function SetAdminProposalInfo() {
               </div>
 
               <div className="formContentWrap">
-                <label htmlFor="toUid" className=" blockLabel">
+                <label htmlFor="fromUid" className=" blockLabel">
                   <span>견적 요청</span>
                 </label>
                 <div>
@@ -299,7 +299,7 @@ export default function SetAdminProposalInfo() {
               </div>
 
               <div className="formContentWrap">
-                <label htmlFor="fromUid" className=" blockLabel">
+                <label htmlFor="toUid" className=" blockLabel">
                   <span>견적 수령</span>
                 </label>
                 <div>
@@ -430,10 +430,10 @@ export default function SetAdminProposalInfo() {
                   <span>연락</span>
                 </div>
                 <ul className="detailContent">
-                  <li style={{ width: "40%" }}>
+                  <li>
                     <div className="detailContentCheck">
-                      <span style={{ width: "100px" }}>방법</span>
-                      <div className="formPaddingWrap">
+                      <span style={{ width: "80px" }}>방법</span>
+                      <div className="detailContentInputWrap">
                         <input
                           className="listSearchRadioInput"
                           type="radio"
@@ -448,7 +448,6 @@ export default function SetAdminProposalInfo() {
                         >
                           메신저
                         </label>
-
                         <input
                           className="listSearchRadioInput"
                           type="radio"
@@ -466,7 +465,7 @@ export default function SetAdminProposalInfo() {
                       </div>
                     </div>
                   </li>
-                  <li style={{ width: "60%" }}>
+                  <li>
                     <div>
                       <span style={{ width: "100px" }}>연락처</span>
                       <div className="formPaddingWrap">
@@ -624,44 +623,6 @@ export default function SetAdminProposalInfo() {
                 </div>
               </div>
 
-              {/* 연락 방법 */}
-              {/* <div className="formContentWrap">
-                <div className="blockLabel">
-                  <span>연락 방법</span>
-                </div>
-                <div className="formPaddingWrap">
-                  <input
-                    className="listSearchRadioInput"
-                    type="radio"
-                    checked={watch("_contMethod") == "msg"}
-                    value="msg"
-                    id="contMethodMsg"
-                    {...register("_contMethod")}
-                  />
-                  <label
-                    className="listSearchRadioLabel"
-                    htmlFor="contMethodMsg"
-                  >
-                    메신저
-                  </label>
-
-                  <input
-                    className="listSearchRadioInput"
-                    type="radio"
-                    checked={watch("_contMethod") == "tel"}
-                    value="tel"
-                    id="contMethodTel"
-                    {...register("_contMethod")}
-                  />
-                  <label
-                    className="listSearchRadioLabel"
-                    htmlFor="contMethodTel"
-                  >
-                    전화
-                  </label>
-                </div>
-              </div> */}
-
               {/* 추가 상세 견적서 */}
               <div className="formContentWrap">
                 <div className="blockLabel">
@@ -703,13 +664,13 @@ export default function SetAdminProposalInfo() {
               {/* 카드 결제 여부 & 견적금액----------------- */}
               <div className="formContentWrap">
                 <div className="blockLabel">
-                  <span>결제</span>
+                  <span>결제 관련</span>
                 </div>
                 <ul className="detailContent">
-                  <li style={{ width: "40%" }}>
+                  <li>
                     <div className="detailContentCheck">
                       <span style={{ width: "100px" }}>카드결제</span>
-                      <div className="formPaddingWrap">
+                      <div className="detailContentInputWrap">
                         <input
                           className="listSearchRadioInput"
                           type="radio"
@@ -742,7 +703,7 @@ export default function SetAdminProposalInfo() {
                       </div>
                     </div>
                   </li>
-                  <li style={{ width: "60%" }}>
+                  <li>
                     <div>
                       <span style={{ width: "100px" }}>견적금액</span>
                       <div className="formPaddingWrap">
@@ -768,14 +729,14 @@ export default function SetAdminProposalInfo() {
               {/* 연말정산, 세금계산서&현금매출영수증*/}
               <div className="formContentWrap">
                 <div className="blockLabel">
-                  <span>연말정산</span>
+                  <span>세무 관련</span>
                 </div>
 
                 <ul className="detailContent">
                   <li>
                     <div className="detailContentCheck">
-                      <span>세금계산서</span>
-                      <div className="formPaddingWrap">
+                      <span style={{ width: "100px" }}>세금계산서</span>
+                      <div className="detailContentInputWrap">
                         <input
                           className="listSearchRadioInput"
                           type="radio"
@@ -810,8 +771,8 @@ export default function SetAdminProposalInfo() {
                   </li>
                   <li>
                     <div className="detailContentCheck">
-                      <span>현금매출영수증</span>
-                      <div className="formPaddingWrap">
+                      <span style={{ width: "150px" }}>현금매출영수증</span>
+                      <div className="detailContentInputWrap">
                         <input
                           className="listSearchRadioInput"
                           type="radio"
