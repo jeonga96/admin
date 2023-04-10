@@ -48,7 +48,7 @@ export default function AddCompany() {
           <ul className="tableTopWrap">
             <LayoutTopButton text="완료" disabled={isSubmitting} />
           </ul>
-          <div className="formContentWrap">
+          <div className="formContentWrap" style={{ marginTop: "10px" }}>
             <label htmlFor="name" className="blockLabel">
               <span>계약자</span>
             </label>

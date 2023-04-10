@@ -419,6 +419,7 @@ export default function SetCompanyDetail() {
                       <input
                         type="text"
                         id="userid"
+                        placeholder={!companyData.ruid ? "미등록 회원" : ""}
                         disabled
                         {...register("_userid", {})}
                       />
@@ -440,11 +441,7 @@ export default function SetCompanyDetail() {
                             width: "80%",
                           }}
                           disabled={!companyData.ruid && true}
-                          placeholder={
-                            !companyData.ruid
-                              ? "회원연결을 먼저 진행해 주십시오."
-                              : ""
-                          }
+                          placeholder={!companyData.ruid ? "미등록 회원" : ""}
                           {...register("_passwd")}
                         />
                         <button

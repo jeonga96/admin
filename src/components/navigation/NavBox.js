@@ -31,7 +31,7 @@ export default function NavBox() {
     <div className={navChange ? "show navigationWrap" : "hide navigationWrap"}>
       <div className="navTop">
         <h1 className="blind">wazzang admin</h1>
-        <Link to="/">
+        <Link to="/user">
           <img src="/data/gonsacokLogoEn.png" alt="와짱 관리자페이지" />
         </Link>
         <button type="button" onClick={onClickBtn} id="nav_close_btn">

@@ -70,8 +70,12 @@ function App() {
   const dispatch = useDispatch();
   const notLoginScreens = location.pathname !== "/login";
 
+  const fnHomeLink = () => {
+    navigate("/user");
+  };
+
   // 로컬에 token이 없으면서 현재 페이지가 login이 아닐 때
-  const userCheck = () => {
+  const fnUserCheck = () => {
     if (!ISUSER && notLoginScreens) {
       navigate("/login");
       return;
@@ -84,24 +88,29 @@ function App() {
       payload: matches,
     });
   };
-  const screenChange = (event) => {
+
+  const fnScreenEvent = (event) => {
     const matches = event.matches;
     fnNavEvent(matches);
   };
 
-  // 네비게이션 반응형
   useEffect(() => {
+    // url "/"을 통합회원관리로 이동하도록 설정
+    if (location.pathname === "/") {
+      fnHomeLink();
+    }
+    // 네비게이션 반응형
     let mql = window.matchMedia("screen and (min-width:992px)");
     if (!mql.matches) {
       fnNavEvent(!navChange);
     }
-    mql.addEventListener("change", screenChange);
-    return () => mql.removeEventListener("change", screenChange);
+    mql.addEventListener("change", fnScreenEvent);
+    return () => mql.removeEventListener("change", fnScreenEvent);
   }, []);
 
   useEffect(() => {
     // 로컬에 token이 없으면서 현재 페이지가 login이 아닐 때면 login 으로 이동
-    userCheck();
+    fnUserCheck();
 
     // 키워드 검색을 위해 전체 키워드 받아와 로컬스토리지에 저장
     if (!!ISUSER & !ISALLKEYWORD) {

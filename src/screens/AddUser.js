@@ -58,7 +58,7 @@ export default function AddUser() {
           <ul className="tableTopWrap">
             <LayoutTopButton text="완료" disabled={isSubmitting} />
           </ul>
-          <div className="formContentWrap">
+          <div className="formContentWrap" style={{ marginTop: "10px" }}>
             <label htmlFor="userid" className="blockLabel">
               <span>아이디</span>
             </label>
@@ -93,7 +93,7 @@ export default function AddUser() {
             </div>
           </div>
 
-          <div className="formContentWrap">
+          <div className="formContentWrap" style={{ marginTop: "5px" }}>
             <label htmlFor="passwd" className="blockLabel">
               <span>비밀번호</span>
             </label>
@@ -138,7 +138,7 @@ export default function AddUser() {
             </div>
           </div>
 
-          <div className="formContentWrap">
+          <div className="formContentWrap" style={{ marginTop: "5px" }}>
             <label htmlFor="passwdCk" className="blockLabel">
               <span>비밀번호 확인</span>
             </label>
