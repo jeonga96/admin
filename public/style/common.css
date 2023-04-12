@@ -28,7 +28,9 @@ input[type="radio"] {
 i {
   color: var(--color-lightprimary);
 }
-
+#loading span {
+  border: 2px solid #fff;
+}
 #wrap {
   width: 100%;
   height: auto;

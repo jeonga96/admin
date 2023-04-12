@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from "react";
+// import { useRef, useState, useEffect } from "react";
 import { BiUpload } from "react-icons/bi";
 import {
   servicesPostDataForm,
@@ -8,6 +8,7 @@ import { useDidMountEffect } from "../../Services/customHook";
 import { urlUpImages, urlGetImages } from "../../Services/string";
 import { servicesUseToast } from "../../Services/useData";
 import ServicesImageOnClick from "./ServicesImageOnClick";
+import Loading from "./Loading";
 
 export default function ImageSet({
   img,
@@ -142,6 +143,7 @@ export default function ImageSet({
       </div>
 
       <div className="imgsThumbnail">
+        <Loading />
         {img !== null && img !== undefined && id === "titleImg" ? (
           <ServicesImageOnClick
             getData={img}
@@ -163,14 +165,16 @@ export default function ImageSet({
         {imgs !== null && imgs !== undefined && id === "addImgs"
           ? !!imgs &&
             imgs.map((item) => (
-              <ServicesImageOnClick
-                key={item.iid}
-                getData={imgs}
-                url={!!item.storagePath && item.storagePath}
-                text="사업자 상세 정보 이미지"
-                iid={!!item.iid && item.iid}
-                onRemove={onRemove}
-              />
+              <>
+                <ServicesImageOnClick
+                  key={item.iid}
+                  getData={imgs}
+                  url={!!item.storagePath && item.storagePath}
+                  text="사업자 상세 정보 이미지"
+                  iid={!!item.iid && item.iid}
+                  onRemove={onRemove}
+                />
+              </>
             ))
           : null}
         {imgs !== null && imgs !== undefined && id === "imgs"

@@ -7,6 +7,7 @@ import { useDidMountEffect } from "../../Services/customHook";
 import { urlUpImages, urlGetImages } from "../../Services/string";
 import { servicesUseToast } from "../../Services/useData";
 import ServicesImageOnClick from "./ServicesImageOnClick";
+import Loading from "./Loading";
 
 export default function ImageSet({
   img,
@@ -22,12 +23,13 @@ export default function ImageSet({
 }) {
   // 대표이미지와 상세이미지의 이미지를 모두 사용하기 위해 아래와 같이 작성
   // 해당 이벤트는 event.target.id로 구분하고 있기 때문에 이 외에 실행 시 코드 수정 필요
-
   const [files, setFiles] = useState([]);
   // 드래그 중일때와 아닐때의 스타일을 구분하기 위한 state 변수
-  const [isDragging, setIsDragging] = useState(false);
+  let [isDragging, setIsDragging] = useState(false);
   // 드래그 이벤트를 감지하는 ref 참조변수 (label 태그에 들어갈 예정)
   const dragRef = useRef(null);
+
+  let [loading, setLoading] = useState(false);
 
   const fnSetImg = (res) => {
     setImg(res);
@@ -42,14 +44,12 @@ export default function ImageSet({
   const fnStateSet = (files) => {
     if (!!setImg) {
       fnSetImg([...files]);
-      return;
     } else if (!!setImgs) {
       fnSetImgs([...imgs, ...files]);
-      return;
     } else if (!!setRegImgs) {
       fnSetRegImgs([...regImgs, ...files]);
-      return;
     }
+    return setLoading(false);
   };
 
   // 첫 렌더링을 방지하고, 기존 입력된 이미지가 있다면 서버에서 이미지를 가져온다.
@@ -101,7 +101,7 @@ export default function ImageSet({
       for (let i = 0; i < selectFiles.length; i++) {
         formData.append("Imgs", selectFiles[i]);
       }
-
+      setLoading(true);
       // FormData에 저장된 데이터를 서버에 보냄
       servicesPostDataForm(urlUpImages, formData).then((res) => {
         console.log(res.data);
@@ -127,18 +127,19 @@ export default function ImageSet({
 
   const handleFilterFile = useCallback(
     (iid) => {
+      console.log("home------iid", iid);
       setFiles(files.filter((it) => it.iid !== iid));
       if (id === "titleImg") {
         fnSetImg(img.filter((it) => it.iid !== iid));
       } else if (id === "regImgs") {
         fnSetRegImgs(regImgs.filter((it) => it.iid !== iid));
       } else {
+        console.log("remove", imgs);
         fnSetImgs(imgs.filter((it) => it.iid !== iid));
       }
     },
     [files]
   );
-
   const handleDragIn = useCallback((e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -208,6 +209,7 @@ export default function ImageSet({
       </div>
 
       <div className="imgsThumbnail">
+        <Loading loading={loading} />
         <input
           type="file"
           id={id}
@@ -248,14 +250,15 @@ export default function ImageSet({
 
           {files.length > 0 &&
             !setImg &&
-            files.map((item) => (
+            files.map((item, index) => (
               <ServicesImageOnClick
                 key={item && item.iid}
                 getData={files}
                 url={item}
                 text="상세 이미지"
                 iid={item && item.iid}
-                onRemove={() => handleFilterFile(files[0].iid)}
+                onRemove={() => handleFilterFile(item.iid)}
+                // onRemove={() => handleFilterFile(files[index].iid)}
               />
             ))}
         </div>

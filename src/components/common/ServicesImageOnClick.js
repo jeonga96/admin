@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { IoMdRemoveCircleOutline } from "react-icons/io";
 
 export default function ImageOnClick({ getData, url, text, iid, onRemove }) {
@@ -9,10 +9,10 @@ export default function ImageOnClick({ getData, url, text, iid, onRemove }) {
 
   const onPopup = () => {
     setZoomPopup(!zoomPopup);
+    console.log(iid);
   };
 
-  console.log("url", url);
-
+  // console.log(iid);
   return (
     <div>
       {/* 상위 컴포넌트에서 iid값을 전달하면 썸네일 이미지 호버 시 해당 버튼 요소가 표시된다 */}
@@ -23,6 +23,7 @@ export default function ImageOnClick({ getData, url, text, iid, onRemove }) {
           onClick={(e) => {
             e.preventDefault();
             onRemove(iid);
+            console.log(iid);
           }}
         >
           <IoMdRemoveCircleOutline />
