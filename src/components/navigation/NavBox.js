@@ -25,8 +25,6 @@ export default function NavBox() {
     axiosData();
   }, []);
 
-  // console.log(pathname.includes("/company"));
-
   return (
     <div className={navChange ? "show navigationWrap" : "hide navigationWrap"}>
       <div className="navTop">
