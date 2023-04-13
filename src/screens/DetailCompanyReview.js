@@ -1,11 +1,10 @@
-import { useLayoutEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { servicesPostData } from "../Services/importData";
-import { urlGetReview } from "../Services/string";
+import { useState } from "react";
+// import { useParams } from "react-router-dom";
+// import { servicesPostData } from "../Services/importData";
+// import { urlGetReview } from "../Services/string";
 import { useGetImage } from "../Services/customHook";
 
 import ServicesImageOnClick from "../components/common/ServicesImageOnClick";
-import PieceBarChart from "../components/common/PieceBarChart";
 
 export default function DetailCompanyReview({
   compnayReview,
