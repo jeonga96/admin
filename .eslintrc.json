@@ -10,5 +10,5 @@
     ],
     "react-hooks/rules-of-hooks": "error"
   },
-  "extends": ["react-hooks", "prettier"]
+  "extends": ["react-hooks", "plugin:prettier/recommended"]
 }
