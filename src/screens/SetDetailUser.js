@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 
 import { servicesPostData } from "../Services/importData";
-import { serviesGetImgsIid, servicesUseToast } from "../Services/useData";
+import { servicesUseToast } from "../Services/useData";
 import {
   urlSetUserDetail,
   urlGetUserDetail,

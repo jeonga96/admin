@@ -5,7 +5,6 @@ import "react-toastify/dist/ReactToastify.css";
 
 /* 기본 레이아웃 & 기능 */
 import MainLayout from "./components/common/LayoutMain";
-import Home from "./screens/Home";
 import Login from "./screens/Login";
 
 /* 회원관리 */
@@ -144,10 +143,6 @@ function App() {
         <Route
           path="/"
           element={
-            // <MainLayout
-            //   nowTitle="DashBord"
-            //   component={<Home nowTitle="DashBord" />}
-            // />
             <MainLayout nowTitle="통합회원 관리" component={<ListUser />} />
           }
         />

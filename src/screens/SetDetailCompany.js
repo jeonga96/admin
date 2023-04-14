@@ -33,7 +33,7 @@ import LayoutTopButton from "../components/common/LayoutTopButton";
 import ComponentSetCompany from "../components/common/ComponentSetCompany";
 import PieceDetailListLink from "../components/common/PieceDetailListLink";
 import PieceRegisterSearchPopUp from "../components/common/PieceRegisterSearchPopUp";
-import Loading from "../components/common/Loading";
+import Loading from "../components/common/ComponentLoading";
 
 export default function SetCompanyDetail() {
   const { cid } = useParams();

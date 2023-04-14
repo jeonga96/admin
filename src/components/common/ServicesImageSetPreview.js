@@ -7,7 +7,7 @@ import { useDidMountEffect } from "../../Services/customHook";
 import { urlUpImages, urlGetImages } from "../../Services/string";
 import { servicesUseToast } from "../../Services/useData";
 import ServicesImageOnClick from "./ServicesImageOnClick";
-import Loading from "./Loading";
+import Loading from "./ComponentLoading";
 
 export default function ImageSet({
   img,
@@ -25,7 +25,7 @@ export default function ImageSet({
   // 해당 이벤트는 event.target.id로 구분하고 있기 때문에 이 외에 실행 시 코드 수정 필요
   const [files, setFiles] = useState([]);
   // 드래그 중일때와 아닐때의 스타일을 구분하기 위한 state 변수
-  let [isDragging, setIsDragging] = useState(false);
+  // let [isDragging, setIsDragging] = useState(false);
   // 드래그 이벤트를 감지하는 ref 참조변수 (label 태그에 들어갈 예정)
   const dragRef = useRef(null);
 
@@ -149,7 +149,7 @@ export default function ImageSet({
     e.preventDefault();
     e.stopPropagation();
 
-    setIsDragging(false);
+    // setIsDragging(false);
   }, []);
 
   const handleDragOver = useCallback((e) => {
@@ -157,7 +157,7 @@ export default function ImageSet({
     e.stopPropagation();
 
     if (e.dataTransfer.files) {
-      setIsDragging(true);
+      // setIsDragging(true);
     }
   }, []);
 
@@ -167,7 +167,7 @@ export default function ImageSet({
       e.stopPropagation();
 
       onChangeFiles(e);
-      setIsDragging(false);
+      // setIsDragging(false);
     },
     [onChangeFiles]
   );

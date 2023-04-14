@@ -1,7 +1,6 @@
-// import { CSSProperties } from "react";
 import FadeLoader from "react-spinners/FadeLoader";
 
-export default function Loading({ loading }) {
+export default function ComponentLoading({ loading }) {
   const override = {
     position: "absolute",
     zIndex: "1",
@@ -14,7 +13,6 @@ export default function Loading({ loading }) {
   return (
     <FadeLoader
       color="#303f9f"
-      // loading="true"
       loading={loading}
       cssOverride={override}
       size={150}
