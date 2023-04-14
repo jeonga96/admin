@@ -26,6 +26,8 @@ function ChildList({
   const [useFlagCk, setUseFlagCk] = useState(false);
   const [statusCk, setStatusCk] = useState(false);
 
+  console.log(item);
+
   // id를 확인하여 상태관리와 계약관리를 구분한 후 cid값 저장
   const addCheck = (name, id, isChecked) => {
     (() => {
@@ -94,7 +96,29 @@ function ChildList({
           {item.cid}
         </Link>
       </td>
+      <td>{item.cdname}</td>
       <td>{item.name}</td>
+      <td>{item.regOwner}</td>
+      <td>{item.registration}</td>
+      <td>{item.telnum}</td>
+      <td>
+        {item.status == "0" && (
+          <i className="tableIcon" style={{ backgroundColor: "red" }}>
+            거절
+          </i>
+        )}
+        {item.status == "1" && (
+          <i className="tableIcon" style={{ backgroundColor: "green" }}>
+            완료
+          </i>
+        )}
+        {item.status == "2" && (
+          <i className="tableIcon" style={{ backgroundColor: "orange" }}>
+            대기
+          </i>
+        )}
+      </td>
+      <td>{item.updateTime && item.updateTime.slice(0, 10)}</td>
       <td>{item.createTime && item.createTime.slice(0, 10)}</td>
     </tr>
   );
@@ -217,11 +241,17 @@ export default function ListCompany() {
               <table className="commonTable">
                 <thead>
                   <tr>
-                    <th style={{ width: "70px" }}>계약관리</th>
-                    <th style={{ width: "70px" }}>회원상태</th>
-                    <th style={{ width: "140px" }}>관리번호</th>
-                    <th style={{ width: "auto" }}>계약자</th>
-                    <th style={{ width: "140px " }}>계약일</th>
+                    <th style={{ width: "60px" }}>계약관리</th>
+                    <th style={{ width: "60px" }}>회원상태</th>
+                    <th style={{ width: "80px" }}>관리번호</th>
+                    <th style={{ width: "auto" }}>사업자명</th>
+                    <th style={{ width: "100px" }}>계약자</th>
+                    <th style={{ width: "100px" }}>대표자명</th>
+                    <th style={{ width: "170px" }}>사업자 등록 번호</th>
+                    <th style={{ width: "170px" }}>일반전화</th>
+                    <th style={{ width: "60px" }}>계약관리</th>
+                    <th style={{ width: "110px " }}>수정일</th>
+                    <th style={{ width: "110px " }}>계약일</th>
                   </tr>
                 </thead>
                 <tbody>
