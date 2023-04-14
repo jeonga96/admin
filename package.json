@@ -41,6 +41,7 @@
   },
   "eslintConfig": {
     "extends": [
+      "react-hooks",
       "react-app",
       "react-app/jest"
     ]
