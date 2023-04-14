@@ -33,7 +33,6 @@ import LayoutTopButton from "../components/common/LayoutTopButton";
 import ComponentSetCompany from "../components/common/ComponentSetCompany";
 import PieceDetailListLink from "../components/common/PieceDetailListLink";
 import PieceRegisterSearchPopUp from "../components/common/PieceRegisterSearchPopUp";
-import Loading from "../components/common/ComponentLoading";
 
 export default function SetCompanyDetail() {
   const { cid } = useParams();
@@ -71,7 +70,6 @@ export default function SetCompanyDetail() {
   // 사업자 등록증 이미지
   const [regImgs, setRegImgs] = useState([]);
   // 이미지 로딩중 ------------------------------------------------------------------------
-  let [loading, setLoading] = useState(true);
 
   // 주소 ------------------------------------------------------------------------
   // address:신주소,  oldaddress:구주소,  zipcode:우편번호,  latitude:위도,  longitude:경도

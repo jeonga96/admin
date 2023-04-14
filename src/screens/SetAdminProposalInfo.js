@@ -85,7 +85,6 @@ export default function SetAdminProposalInfo() {
     }
   }, []);
 
-  console.log(imgs, imgsIid);
   function fnSubmit(e) {
     //서버에 imgs의 iid값만을 보내기 위해 실행하는 반복문 함수
     serviesGetImgsIid(imgsIid, imgs);
