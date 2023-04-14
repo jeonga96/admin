@@ -8,5 +8,7 @@
         "enableDangerousAutofixThisMayCauseInfiniteLoops": true
       }
     ]
-  }
+  },
+  "extends": ["react-hooks"],
+  "plugins": ["react-hooks"]
 }
