@@ -7,7 +7,8 @@
       {
         "enableDangerousAutofixThisMayCauseInfiniteLoops": true
       }
-    ]
+    ],
+    "react-hooks/rules-of-hooks": "error"
   },
   "extends": ["react-hooks"],
   "plugins": ["react-hooks"]
