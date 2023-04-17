@@ -10,5 +10,6 @@
     ],
     "react-hooks/rules-of-hooks": "error"
   },
-  "extends": ["react-hooks", "plugin:prettier/recommended"]
+  "plugins": ["react"],
+  "extends": ["react-hooks", "eslint:recommended", "plugin:react/recommended"]
 }
