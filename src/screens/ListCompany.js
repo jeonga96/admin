@@ -2,11 +2,7 @@ import { Link } from "react-router-dom";
 import { useState, useLayoutEffect } from "react";
 import { servicesPostData } from "../Services/importData";
 import { servicesUseToast } from "../Services/useData";
-import {
-  urlCompanylist,
-  urlSetCompany,
-  urlSetCompanyDetail,
-} from "../Services/string";
+import { urlCompanylist, urlSetCompany, urlSetCompanyDetail } from "../Services/string";
 
 import PaginationButton from "../components/common/PiecePaginationButton";
 import LayoutTopButton from "../components/common/LayoutTopButton";
@@ -14,27 +10,17 @@ import ComponentListCompanySearch from "../components/common/ComponentListCompan
 import ComponentErrorNull from "../components/common/ComponentErrorNull";
 
 // 하위 컴포넌트, useState를 별도로 관리하기 위해 하위 컴포넌트로 분리
-function ChildList({
-  item,
-  setClickedStatus,
-  clickedStatus,
-  setClickedUseFlag,
-  clickedUseFlag,
-}) {
+function ChildList({ item, setClickedStatus, clickedStatus, setClickedUseFlag, clickedUseFlag }) {
   // 체크박스 상태 ------------------------------------------------------------------------
   // useFlagCk:계약관리  statusCk:상태관리
   const [useFlagCk, setUseFlagCk] = useState(false);
   const [statusCk, setStatusCk] = useState(false);
 
-  console.log(item);
-
   // id를 확인하여 상태관리와 계약관리를 구분한 후 cid값 저장
   const addCheck = (name, id, isChecked) => {
     (() => {
       if (isChecked) {
-        id === "useFlag"
-          ? setClickedUseFlag([...clickedUseFlag, name])
-          : setClickedStatus([...clickedStatus, name]);
+        id === "useFlag" ? setClickedUseFlag([...clickedUseFlag, name]) : setClickedStatus([...clickedStatus, name]);
         // 동일한 선택을 할 때 중복 선택되지 않도록 설정
       } else if (!isChecked && clickedUseFlag.includes(name)) {
         setClickedUseFlag(clickedUseFlag.filter((it) => it !== name));
@@ -74,22 +60,10 @@ function ChildList({
   return (
     <tr>
       <td>
-        <input
-          type="checkbox"
-          name={item.cid}
-          checked={useFlagCk}
-          id="useFlag"
-          onChange={handleCheck}
-        />
+        <input type="checkbox" name={item.cid} checked={useFlagCk} id="useFlag" onChange={handleCheck} />
       </td>
       <td>
-        <input
-          type="checkbox"
-          name={item.cid}
-          checked={statusCk}
-          id="status"
-          onChange={handleCheck}
-        />
+        <input type="checkbox" name={item.cid} checked={statusCk} id="status" onChange={handleCheck} />
       </td>
       <td className="tableButton">
         <Link to={`${item.cid}`} className="Link">
@@ -191,8 +165,7 @@ export default function ListCompany() {
   return (
     <>
       <ComponentListCompanySearch />
-      {(companyList == [] && companyList.length == 0) ||
-      companyList === undefined ? (
+      {(companyList == [] && companyList.length == 0) || companyList === undefined ? (
         <>
           <ul className="tableTopWrap">
             <LayoutTopButton url={`add`} text="작성" />
@@ -202,37 +175,11 @@ export default function ListCompany() {
       ) : (
         <>
           <ul className="tableTopWrap">
-            {clickedUseFlag.length > 0 && (
-              <LayoutTopButton
-                text="정상"
-                fn={handleUseFlagSubmit}
-                id="useFlagY"
-              />
-            )}
-            {clickedUseFlag.length > 0 && (
-              <LayoutTopButton text="해지" fn={handleUseFlagSubmit} />
-            )}
-            {clickedStatus.length > 0 && (
-              <LayoutTopButton
-                text="대기"
-                fn={handleStautsSubmit}
-                id="waiting"
-              />
-            )}
-            {clickedStatus.length > 0 && (
-              <LayoutTopButton
-                text="완료"
-                fn={handleStautsSubmit}
-                id="completion"
-              />
-            )}
-            {clickedStatus.length > 0 && (
-              <LayoutTopButton
-                text="거절"
-                fn={handleStautsSubmit}
-                id="refuse"
-              />
-            )}
+            {clickedUseFlag.length > 0 && <LayoutTopButton text="정상" fn={handleUseFlagSubmit} id="useFlagY" />}
+            {clickedUseFlag.length > 0 && <LayoutTopButton text="해지" fn={handleUseFlagSubmit} />}
+            {clickedStatus.length > 0 && <LayoutTopButton text="대기" fn={handleStautsSubmit} id="waiting" />}
+            {clickedStatus.length > 0 && <LayoutTopButton text="완료" fn={handleStautsSubmit} id="completion" />}
+            {clickedStatus.length > 0 && <LayoutTopButton text="거절" fn={handleStautsSubmit} id="refuse" />}
             <LayoutTopButton url="add" text="사업자 추가" />
           </ul>
           <section className="tableWrap">
@@ -267,11 +214,7 @@ export default function ListCompany() {
                   ))}
                 </tbody>
               </table>
-              <PaginationButton
-                listPage={listPage}
-                page={page}
-                setPage={setPage}
-              />
+              <PaginationButton listPage={listPage} page={page} setPage={setPage} />
             </div>
           </section>
         </>

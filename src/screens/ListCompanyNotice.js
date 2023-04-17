@@ -28,6 +28,7 @@ export default function ListCompanyNotice() {
         <LayoutTopButton url={`/company/${cid}`} text="상세정보 가기" />
         <LayoutTopButton url={`/company/${cid}/notice/set`} text="작성" />
       </ul>
+
       {notice === undefined || (notice == [] && notice.length == 0) ? (
         <ComponentErrorNull />
       ) : (
