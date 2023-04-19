@@ -3,7 +3,8 @@ export const navUrl = "/data/nav.json";
 
 /* 공사콕 url & API */
 // export const urlPrefix = "https://devback.gongsacok.com:8080";
-export const urlPrefix = "http://devawsback.gongsacok.com:8080";
+export const urlPrefix = "https://test.gongsacok.com";
+// export const urlPrefix = "https://devawsback.gongsacok.com:8080";
 
 export const urlLogin = urlPrefix + "/pub/login";
 export const urlRefreshtoken = urlPrefix + "/svc/refreshToken";
