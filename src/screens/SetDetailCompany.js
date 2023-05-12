@@ -69,7 +69,9 @@ export default function SetCompanyDetail() {
   const imgsIid = [];
   // 사업자 등록증 이미지
   const [regImgs, setRegImgs] = useState([]);
-  // 이미지 로딩중 ------------------------------------------------------------------------
+  const [ckRegBtn, setCkRegBtn] = useState(
+    watch("_status") == "1" ? true : false || false
+  );
 
   // 주소 ------------------------------------------------------------------------
   // address:신주소,  oldaddress:구주소,  zipcode:우편번호,  latitude:위도,  longitude:경도
@@ -220,6 +222,24 @@ export default function SetCompanyDetail() {
       })
       .catch((res) => console.log(res));
   }, []);
+
+  useEffect(() => {
+    if (ckRegBtn) {
+      setValue("_status", "1");
+    } else if (watch("_status") == "0") {
+      setValue("_status", "0");
+    } else {
+      setValue("_status", "2");
+    }
+  }, [ckRegBtn]);
+
+  useEffect(() => {
+    if (watch("_status") == "1") {
+      setCkRegBtn(true);
+    } else {
+      setCkRegBtn(false);
+    }
+  }, [watch("_status")]);
 
   // input ","로 구분된 문자열 최대 입력 개수제한 ========================
   const onChangeValidation = (e) => {
@@ -846,6 +866,8 @@ export default function SetCompanyDetail() {
                 id="regImgs"
                 title="사업자 등록증"
                 getDataFinish={getDataFinish.current}
+                setCkRegBtn={setCkRegBtn}
+                ckRegBtn={ckRegBtn}
               />
 
               <div className="formContentWrap">
@@ -967,19 +989,13 @@ export default function SetCompanyDetail() {
                     type="text"
                     id="location"
                     placeholder="사업자의 위치를 입력해 주세요. (예시 ㅇㅇ구, ㅇㅇ동)"
+                    maxLength="50"
                     {...register("_location", {
                       maxLength: {
                         value: 50,
                         message: "50자 이하의 글자만 사용가능합니다.",
                       },
                     })}
-                  />
-                  <ErrorMessage
-                    errors={errors}
-                    name="_location"
-                    render={({ message }) => (
-                      <span className="errorMessageWrap">{message}</span>
-                    )}
                   />
                 </div>
               </div>
@@ -1002,8 +1018,9 @@ export default function SetCompanyDetail() {
                     id="email"
                     placeholder="이메일을 입력해 주세요."
                     value={
-                      watch("_email") &&
-                      watch("_email").replace(/[^\\!-z]/gi, "")
+                      (watch("_email") &&
+                        watch("_email").replace(/[^\\!-z]/gi, "")) ||
+                      ""
                     }
                     {...register("_email", {
                       pattern: {
@@ -1094,6 +1111,7 @@ export default function SetCompanyDetail() {
                     type="text"
                     id="offer"
                     placeholder="최대 100자까지 입력하실 수 있습니다."
+                    maxLength="100"
                     {...register("_offer", {
                       maxLength: {
                         value: 100,

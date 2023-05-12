@@ -518,7 +518,7 @@ i {
   text-align: center;
   background-color: var(--color-bggray);
   margin: 0 auto;
-  margin-top: 10px;
+  margin-top: 5px;
 }
 .imgsThumbnail label {
   width: 100%;
@@ -690,9 +690,7 @@ i {
   padding: 1px 5px;
   border-radius: 2px;
 }
-/* .reqFormWrap {
 
-} */
 .reqFormWrap .formContentWrap {
   width: 100%;
 }

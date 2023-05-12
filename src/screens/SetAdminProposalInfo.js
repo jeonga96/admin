@@ -544,6 +544,7 @@ export default function SetAdminProposalInfo() {
                     type="text"
                     id="registration"
                     placeholder="사업자 등록 번호를 입력해 주세요. (예시 000-00-00000)"
+                    maxLength="12"
                     value={
                       (watch("_registration") &&
                         watch("_registration")
@@ -578,6 +579,7 @@ export default function SetAdminProposalInfo() {
                   <input
                     type="text"
                     id="corporationno"
+                    maxLength="14"
                     value={
                       (watch("_corporationno") &&
                         watch("_corporationno")

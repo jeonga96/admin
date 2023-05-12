@@ -639,6 +639,7 @@ export default function SetRequiredCompany() {
                   <textarea
                     type="text"
                     id="offer"
+                    maxLength="100"
                     placeholder="최대 100자까지 입력하실 수 있습니다."
                     {...register("_offer", {
                       required: "입력되지 않았습니다.",

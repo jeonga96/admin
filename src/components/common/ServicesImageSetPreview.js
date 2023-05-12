@@ -20,6 +20,8 @@ export default function ImageSet({
   title,
   getData,
   getDataFinish,
+  setCkRegBtn,
+  ckRegBtn,
 }) {
   // 대표이미지와 상세이미지의 이미지를 모두 사용하기 위해 아래와 같이 작성
   // 해당 이벤트는 event.target.id로 구분하고 있기 때문에 이 외에 실행 시 코드 수정 필요
@@ -206,6 +208,20 @@ export default function ImageSet({
         <label className="imgBtn" htmlFor={id} ref={dragRef}>
           이미지 추가
         </label>
+
+        {regImgs ? (
+          <label
+            className="imgBtn"
+            onClick={() => setCkRegBtn(!ckRegBtn)}
+            style={
+              ckRegBtn
+                ? { backgroundColor: "#ffc107" }
+                : { backgroundColor: "#757575", color: "#fff" }
+            }
+          >
+            {ckRegBtn ? "사업자 인증 회원" : "인증 안됨"}
+          </label>
+        ) : null}
       </div>
 
       <div className="imgsThumbnail">
@@ -221,14 +237,27 @@ export default function ImageSet({
         <label
           htmlFor={id}
           ref={dragRef}
-          style={{
-            height:
-              files.length <= 10
-                ? "94px"
-                : files.length <= 20
-                ? "186px"
-                : "288px",
-          }}
+          style={
+            ckRegBtn
+              ? {
+                  backgroundColor: "rgba(0,0,0,0.3)",
+                  zIndex: "1",
+                  height:
+                    files.length <= 10
+                      ? "94px"
+                      : files.length <= 20
+                      ? "186px"
+                      : "288px",
+                }
+              : {
+                  height:
+                    files.length <= 10
+                      ? "94px"
+                      : files.length <= 20
+                      ? "186px"
+                      : "288px",
+                }
+          }
         ></label>
 
         <div
@@ -258,7 +287,6 @@ export default function ImageSet({
                 text="상세 이미지"
                 iid={item && item.iid}
                 onRemove={() => handleFilterFile(item.iid)}
-                // onRemove={() => handleFilterFile(files[index].iid)}
               />
             ))}
         </div>
