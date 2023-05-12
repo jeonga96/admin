@@ -1,4 +1,5 @@
 import { servicesPostData } from "./importData";
+import Swal from "sweetalert2";
 import { toast } from "react-toastify";
 
 export function serviesPostDataSettingRcid(url, valueName, setData) {
@@ -49,7 +50,7 @@ export function serviesGetKid(variable, data, allData) {
 }
 
 // 안내창 라이브러리
-export function servicesUseToast(text, type) {
+export function servicesUseToast(text, type, fnOpen, fnClose) {
   switch (type) {
     case "s":
       toast.success(text, {
@@ -102,4 +103,49 @@ export function servicesUseToast(text, type) {
         theme: "light",
       });
   }
+}
+
+// 안내창 라이브러리
+export function servicesUseModal(Q, SQ, fnOK, fnClose) {
+  const swalWithBootstrapButtons = Swal.mixin({
+    customClass: {
+      confirmButton: "btn btn-success",
+      cancelButton: "btn btn-danger",
+    },
+    buttonsStyling: false,
+  });
+
+  swalWithBootstrapButtons
+    .fire({
+      title: Q,
+      text: SQ,
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonText: "상세정보 입력하기",
+      cancelButtonText: "목록으로 가기",
+      reverseButtons: true,
+      customClass: {
+        actions: "servicesUseModal",
+        cancelButton: "no",
+        confirmButton: "yes",
+        // denyButton: "order-3",
+      },
+    })
+    .then((result) => {
+      if (result.isConfirmed) {
+        fnOK();
+        // swalWithBootstrapButtons.fire(
+        //   "Deleted!",
+        //   "Your file has been deleted.",
+        //   "success"
+        // );
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        fnClose();
+        // swalWithBootstrapButtons.fire(
+        //   "Cancelled",
+        //   "Your imaginary file is safe :)",
+        //   "error"
+        // );
+      }
+    });
 }

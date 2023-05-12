@@ -16,6 +16,7 @@ import SetDetailUser from "./screens/SetDetailUser";
 import ListCompany from "./screens/ListCompany";
 import AddCompany from "./screens/AddCompany";
 import SetDetailCompany from "./screens/SetDetailCompany";
+import SetRequiredCompany from "./screens/SetRequiredCompany";
 
 /* 공지사항 - 사업자*/
 import ListCompanyNotice from "./screens/ListCompanyNotice";
@@ -188,6 +189,15 @@ function App() {
             <MainLayout
               nowTitle="사업자 상세정보"
               component={<SetDetailCompany />}
+            />
+          }
+        />
+        <Route
+          path="company/:cid/req"
+          element={
+            <MainLayout
+              nowTitle="사업자 필수정보"
+              component={<SetRequiredCompany />}
             />
           }
         />

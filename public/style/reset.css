@@ -244,3 +244,19 @@ button {
   justify-content: center;
   text-align: center;
 }
+
+/* Sweet2 라이브러리 css ======= */
+.servicesUseModal button {
+  width: auto;
+  height: auto;
+  padding: 8px 14px;
+  margin: 0 4px;
+  font-size: 14px;
+  border-radius: 4px;
+}
+.servicesUseModal .yes {
+  background-color: var(--color-acceent);
+}
+.servicesUseModal .no {
+  background-color: var(--color-gray);
+}

@@ -690,6 +690,12 @@ i {
   padding: 1px 5px;
   border-radius: 2px;
 }
+/* .reqFormWrap {
+
+} */
+.reqFormWrap .formContentWrap {
+  width: 100%;
+}
 
 .formContentWrap {
   position: relative;
@@ -1198,6 +1204,48 @@ i {
   white-space: nowrap;
   text-overflow: ellipsis;
 }
+.addCompanyUserList {
+  position: relative;
+  width: 630px;
+  margin: 0 auto;
+  margin-top: 10px;
+  padding: 2px;
+}
+.addCompanyUserList .tableWrap {
+  max-height: 226px;
+  overflow: auto;
+  overflow-x: hidden;
+  border: 0.0625rem solid rgba(200, 200, 200, 0.6);
+}
+.addCompanyUserList .commonTable {
+  table-layout: fixed;
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+.addCompanyUserList thead tr {
+  position: absolute;
+  top: 0;
+  left: 2px;
+}
+.addCompanyUserList th {
+  font-weight: normal;
+  width: 123px;
+  background: var(--color-bgblack);
+  color: var(--color-white);
+}
+.addCompanyUserList td {
+  text-align: center;
+  height: 24px;
+  border-top: 1px solid #ccc;
+}
+
+.addCompanyUserList tbody tr {
+  display: table-row;
+}
+.addCompanyUserList tbody tr:hover {
+  background-color: var(--color-bggray);
+}
 
 /* allItem[clickTab] */
 .commonTable .basicThead {
@@ -1354,7 +1402,6 @@ i {
   width: 100%;
   height: 100%;
 }
-
 .filterWrap {
   width: 100%;
   display: flex;

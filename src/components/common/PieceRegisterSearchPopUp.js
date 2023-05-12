@@ -6,12 +6,14 @@ export default function Postcode({
   setMultilAddress,
   multilAddress,
   getedData,
+  autoKey,
 }) {
   // 다음 주소 검색 API 주소
   const scriptUrl =
     "//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js";
   // eact-daum-postcode의 popup 방식 사용
   const open = useDaumPostcodePopup(scriptUrl);
+
   // 부모 컴포넌트에게 값을 전달하기 위해 함수로 사용
   function fnSetAddress(address) {
     setMultilAddress(address);
@@ -28,20 +30,37 @@ export default function Postcode({
       if (status === window.kakao.maps.services.Status.OK) {
         // 공사콕에서 사용하는 key와 다음 카카오의 키가 다름!
         // 다음 카카오 신주소 : roadAddress, 구주소 :jibunAddress, 우편번호 : zonecode
-        fnSetAddress({
-          address: res.roadAddress,
-          detailaddress: res.detailaddress,
-          oldaddress: res.jibunAddress,
-          zipcode: res.zonecode,
-          latitude: Math.floor(result[0].y * 100000),
-          longitude: Math.floor(result[0].x * 100000),
-        });
+        autoKey
+          ? fnSetAddress({
+              ...{
+                address: result[0].address_name,
+                detailaddress: getedData.detailaddress,
+                zipcode: result[0].road_address.zone_no,
+                oldaddress: result[0].address.address_name,
+                latitude: Math.floor(result[0].y * 100000),
+                longitude: Math.floor(result[0].x * 100000),
+              },
+            })
+          : fnSetAddress({
+              address: res.roadAddress,
+              detailaddress: res.detailaddress,
+              oldaddress: res.jibunAddress,
+              zipcode: res.zonecode,
+              latitude: Math.floor(result[0].y * 100000),
+              longitude: Math.floor(result[0].x * 100000),
+            });
       }
     };
-    geocoder.addressSearch(res.address, callback);
+    autoKey
+      ? geocoder.addressSearch(res, callback)
+      : geocoder.addressSearch(res.address, callback);
   };
 
   useLayoutEffect(() => {
+    if (getedData !== [] && !!autoKey) {
+      callMapcoor(getedData.address);
+    }
+
     // setUser는 주소값만 저장함
     if (getedData !== [] && userComponent) {
       fnSetAddress({
@@ -51,7 +70,7 @@ export default function Postcode({
     }
 
     // setCompany는 아래와 같은 정보가 필요함
-    if (getedData !== [] && !userComponent) {
+    if (getedData !== [] && !userComponent && !autoKey) {
       //  신주소 : address, 구주소 :oldaddress, 우편번호 : zipcode
       fnSetAddress({
         address: getedData.address,
@@ -89,7 +108,6 @@ export default function Postcode({
   if (!!userComponent) {
     return (
       <div className="formContentWrap" style={{ width: "100%" }}>
-        {/* <div className="formContentWrap"> */}
         <label htmlFor="address" className=" blockLabel">
           <span>주소</span>
         </label>
