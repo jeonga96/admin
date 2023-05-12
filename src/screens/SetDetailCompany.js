@@ -597,7 +597,6 @@ export default function SetCompanyDetail() {
                     id="Cname"
                     placeholder="상호명을 입력해 주세요."
                     {...register("_name", {
-                      required: "입력되지 않았습니다.",
                       maxLength: {
                         value: 15,
                         message: "15자 이하의 글자만 사용가능합니다.",
@@ -643,7 +642,7 @@ export default function SetCompanyDetail() {
                   <input
                     type="text"
                     id="subCategory"
-                    placeholder="상세업종을 입력해 주세요."
+                    placeholder="상세업종은 최대 10개까지 입력 가능합니다."
                     value={
                       (watch("_subCategory") &&
                         watch("_subCategory").replace(" ", ",")) ||
@@ -744,6 +743,7 @@ export default function SetCompanyDetail() {
                     type="text"
                     id="registration"
                     placeholder="사업자 등록 번호를 입력해 주세요. (예시 000-00-00000)"
+                    maxLength="12"
                     value={
                       (watch("_registration") &&
                         watch("_registration")
@@ -753,7 +753,6 @@ export default function SetCompanyDetail() {
                       ""
                     }
                     {...register("_registration", {
-                      required: "입력되지 않았습니다.",
                       pattern: {
                         value: /^[0-9]{3}-[0-9]{2}-[0-9]{5}/,
                         message: "형식에 맞지 않습니다.",
@@ -779,7 +778,8 @@ export default function SetCompanyDetail() {
                     type="text"
                     id="corporationno"
                     placeholder="법인 등록 번호를 입력해 주세요."
-                    {...register("_corporationno", {})}
+                    maxLength="14"
+                    {...register("_corporationno")}
                     value={
                       (watch("_corporationno") &&
                         watch("_corporationno")
@@ -869,7 +869,6 @@ export default function SetCompanyDetail() {
                       ""
                     }
                     {...register("_mobilenum", {
-                      required: "입력되지 않았습니다.",
                       pattern: {
                         value: /^[0-9]{3,4}-[0-9]{3,4}-[0-9]{4}/,
                         message: "형식에 맞지 않습니다.",
@@ -895,6 +894,7 @@ export default function SetCompanyDetail() {
                     type="text"
                     id="telnum"
                     placeholder="전화번호를 입력해 주세요. (예시 00-0000-0000)"
+                    maxLength="12"
                     value={
                       (watch("_telnum") &&
                         watch("_telnum")
@@ -907,7 +907,6 @@ export default function SetCompanyDetail() {
                       ""
                     }
                     {...register("_telnum", {
-                      required: "입력되지 않았습니다.",
                       pattern: {
                         value: /^[0-9]{2,4}-[0-9]{3,4}-[0-9]{4}/,
                         message: "형식에 맞지 않습니다.",
@@ -933,6 +932,7 @@ export default function SetCompanyDetail() {
                     type="text"
                     id="extnum"
                     placeholder="안심 번호를 입력해 주세요."
+                    maxLength="13"
                     value={
                       (watch("_extnum") &&
                         watch("_extnum")
@@ -998,13 +998,17 @@ export default function SetCompanyDetail() {
                 </label>
                 <div>
                   <input
-                    type="text"
+                    type="email"
                     id="email"
                     placeholder="이메일을 입력해 주세요."
+                    value={
+                      watch("_email") &&
+                      watch("_email").replace(/[^\\!-z]/gi, "")
+                    }
                     {...register("_email", {
                       pattern: {
                         value:
-                          /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i,
+                          /^[0-9a-z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i,
                         message: "형식에 맞지 않습니다.",
                       },
                     })}
@@ -1089,20 +1093,13 @@ export default function SetCompanyDetail() {
                   <textarea
                     type="text"
                     id="offer"
-                    placeholder="사업자 소개글을 입력해 주세요."
+                    placeholder="최대 100자까지 입력하실 수 있습니다."
                     {...register("_offer", {
                       maxLength: {
                         value: 100,
-                        message: "100자 이하의 글자만 사용가능합니다.",
+                        message: "최대 100자까지 입력하실 수 있습니다.",
                       },
                     })}
-                  />
-                  <ErrorMessage
-                    errors={errors}
-                    name="_offer"
-                    render={({ message }) => (
-                      <span className="errorMessageWrap">{message}</span>
-                    )}
                   />
                 </div>
               </div>
