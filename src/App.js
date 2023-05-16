@@ -1,5 +1,11 @@
-import { useEffect } from "react";
-import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
+import { useEffect, useRef } from "react";
+import {
+  Routes,
+  Route,
+  useLocation,
+  useNavigate,
+  useParams,
+} from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -69,6 +75,7 @@ function App() {
   const navChange = useSelector((state) => state.navState);
   const dispatch = useDispatch();
   const notLoginScreens = location.pathname !== "/login";
+  let currentPath = useRef("");
 
   const fnHomeLink = () => {
     navigate("/user");
@@ -126,6 +133,11 @@ function App() {
     }
   }, []);
 
+  // 현재 link path를 클릭했을 때 새로고침
+  useEffect(() => {
+    if (currentPath.current === location.pathname) window.location.reload();
+    currentPath.current = location.pathname;
+  }, [location]);
   return (
     <div className="App">
       <ToastContainer

@@ -32,10 +32,6 @@
     "url": null,
     "subNav": [
       {
-        "subName": "공사콕 키워드 검색순위 관리",
-        "url": "/setkeywords"
-      },
-      {
         "subName": "공지사항 관리",
         "url": "/notice"
       },

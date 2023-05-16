@@ -9,9 +9,9 @@
   --color-lightprimary: #3f51b5;
   --color-darkprimary: #33447c;
   --color-acceent: #ffc107;
-  --font-point: "NanumSquareNeo-Variable", Pretendard, -apple-system,
-    BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI",
-    "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", sans-serif;
+  --font-point: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto,
+    "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR",
+    "Malgun Gothic", sans-serif;
   --font-size-small: 0.75rem;
   --font-size-basic: 0.875rem;
   --font-size-em: 1rem;
@@ -84,7 +84,6 @@ i {
   height: 3.125rem;
   font-size: var(--font-size-title);
   font-family: var(--font-point);
-  font-weight: 700;
   color: var(--color-black);
 }
 
@@ -94,7 +93,7 @@ i {
   height: auto;
   background-color: var(--color-white);
   border: 0.0625rem solid var(--color-gray);
-  padding: 0.625rem;
+  padding: 4px;
   margin-bottom: 0.5rem;
 }
 .commonBox:last-child {
@@ -103,7 +102,6 @@ i {
 .commonBox h3 {
   font-size: var(--font-size-subtitle);
   color: var(--color-black);
-  font-weight: 700;
 }
 .tableWrap h3 {
   height: 3.125rem;
@@ -287,7 +285,6 @@ i {
 .navHeaderPart span {
   color: var(--color-white);
   font-size: var(--font-size-basic);
-  font-weight: 500;
 }
 .navContentPart {
   width: 100%;
@@ -303,10 +300,8 @@ i {
 .navContentPart a {
   text-decoration: none;
   font-size: var(--font-size-small);
-  font-weight: 400;
 }
 .navContentPart .focusNavLink {
-  font-weight: 700;
   color: var(--color-lightprimary);
 }
 
@@ -413,7 +408,6 @@ i {
 }
 
 .formLayout .blockLabel span {
-  font-weight: 500;
   color: var(--color-black);
   font-size: var(--font-size-basic);
 }
@@ -564,7 +558,6 @@ i {
 
 .DragDrop-Files span {
   display: block;
-  font-weight: 400;
   height: auto;
   font-size: var(--font-size-small);
   color: var(--color-lightprimary);
@@ -676,14 +669,12 @@ i {
   line-height: 30px;
   text-align: center;
   font-size: var(--font-size-small);
-  font-weight: 600;
   color: var(--color-black);
   background-color: var(--color-acceent);
   padding: 0 10px;
 }
 .formWrap h3 span {
   font-size: var(--font-size-small);
-  font-weight: 600;
   color: var(--color-white);
   margin-left: 5px;
   background-color: var(--color-black);
@@ -843,7 +834,6 @@ i {
   background-color: var(--color-bggray);
 }
 .keywordArea button:focus {
-  font-weight: 700;
   background-color: var(--color-gray);
 }
 .keywordArea button:hover::before {
@@ -886,7 +876,6 @@ i {
   font-size: 12px;
   font-family: "Font Awesome 5 Free";
   color: var(--color-bgblack);
-  font-weight: 900;
 }
 
 /*page (공지사항 & ) --------------------------------------------------------------*/
@@ -909,7 +898,6 @@ i {
 }
 .title {
   height: 100%;
-  font-weight: 700;
   line-height: 3.75rem;
 }
 .title .contentText {
@@ -920,7 +908,6 @@ i {
 }
 .title .titleText {
   font-size: var(--font-size-subtitle);
-  font-weight: 500;
   color: var(--color-black);
 }
 .detailContentWrap > div {
@@ -1027,7 +1014,6 @@ i {
   margin: 0.125rem;
   background-color: var(--color-bggray);
   border-radius: 0.3125rem;
-  font-weight: 400;
   font-size: var(--font-size-small);
   line-height: 1.875rem;
 }
@@ -1124,20 +1110,17 @@ i {
 }
 
 .detailContentsList h4 {
-  font-weight: 700;
   height: 2rem;
   line-height: 2rem;
 }
 .detailContentsList span {
   display: inline-block;
   height: auto;
-  font-weight: 400;
   padding-left: 0.25rem;
 }
 .detailContentsList .link {
   text-align: right;
   height: auto;
-  font-weight: 500;
 }
 
 .detailContentLink {
@@ -1149,7 +1132,6 @@ i {
   width: auto;
   font-size: var(--font-size-small);
   color: var(--color-lightprimary);
-  font-weight: 500;
   transition: color 300ms ease-in;
   padding: 0.25rem 0.625rem;
 }
@@ -1163,7 +1145,6 @@ i {
 }
 .detailContentImage span {
   display: block;
-  font-weight: 500;
   color: var(--color-lightprimary);
 }
 .detailContentImage img {
@@ -1184,23 +1165,27 @@ i {
   height: auto;
 }
 .commonTable thead {
-  border-bottom: 0.0625rem solid var(--color-gray);
+  border: 0.0625rem solid #ddd;
   font-size: var(--font-size-basic);
-  height: 2.8rem;
-  line-height: 2.8rem;
+  line-height: 2.4rem;
   background-color: var(--color-bggray);
 }
 .commonTable tbody tr {
-  height: 2.3rem;
+  height: auto;
   border-bottom: 0.0625rem solid var(--color-bggray);
-  color: var(--color-bgblack);
+  color: var(--color-black);
 }
 .commonTable td {
+  height: 2.3rem;
   word-break: break-all;
   overflow: hidden;
   text-align: center;
   white-space: nowrap;
   text-overflow: ellipsis;
+}
+.commonTable td a {
+  height: 100%;
+  line-height: 2.3rem;
 }
 .addCompanyUserList {
   position: relative;
@@ -1227,7 +1212,6 @@ i {
   left: 2px;
 }
 .addCompanyUserList th {
-  font-weight: normal;
   width: 123px;
   background: var(--color-bgblack);
   color: var(--color-white);
@@ -1452,7 +1436,6 @@ ul.pagination li a {
   text-align: center;
   line-height: 1.875rem;
   font-size: var(--font-size-basic);
-  font-weight: 500;
   text-decoration: none;
   transition: all 300ms ease-in;
 }
@@ -1469,7 +1452,6 @@ ul.pagination li a:hover {
   background-color: var(--color-gray);
 }
 .pagination .active {
-  font-weight: 600;
   color: var(--color-acceent);
 }
 
@@ -1522,8 +1504,8 @@ ul.pagination li a:hover {
   height: 100%;
 }
 .tableButton a:hover {
-  color: var(--color-darkprimary);
-  background-color: var(--color-bggray);
+  color: var(--color-white);
+  background-color: var(--color-darkprimary);
 }
 
 .Link {
@@ -1616,7 +1598,6 @@ ul.pagination li a:hover {
   color: var(--color-black);
   border-radius: 0.25rem;
   border: 0.0625rem solid rgba(0, 0, 0, 0.1);
-  font-weight: 600;
 }
 
 .flexBox {

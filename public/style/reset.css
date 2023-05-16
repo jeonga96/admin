@@ -2,7 +2,6 @@
   font-family: "NanumSquareNeo-Variable";
   src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/NanumSquareNeo-Variable.woff2")
     format("woff2");
-  font-weight: normal;
   font-style: normal;
 }
 
@@ -13,7 +12,6 @@ body {
   height: 100%;
   font-family: "apple GD", "NanumSquareNeo-Variable", "noto sans KR",
     "noto sans KR", sans-serif;
-  font-weight: 300;
 }
 
 html,
@@ -82,7 +80,6 @@ a,
 label {
   font-size: var(--font-size-small);
   font-family: var(--font-point);
-  font-weight: 300;
 }
 ul,
 li,
@@ -259,4 +256,10 @@ button {
 }
 .servicesUseModal .no {
   background-color: var(--color-gray);
+}
+input[type="email"] {
+  -webkit-ime-mode: disabled;
+  -moz-ime-mode: disabled;
+  -ms-ime-mode: disabled;
+  ime-mode: disabled;
 }
