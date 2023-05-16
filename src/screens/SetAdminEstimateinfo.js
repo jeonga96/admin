@@ -40,12 +40,14 @@ export default function SetAdminEstimateinfo() {
     setValue("_reqBill", "1");
     setValue("_useFlag", "1");
     setValue("_gongsaType", "reser");
+
     // 해당 esid의 견적의뢰서 가지고 오기
     servicesPostData(urlGetEstimateInfo, {
       esid: esid,
     })
       .then((res) => {
         if (res.status === "success") {
+          console.log("success", res.data);
           // 이미지 iid를 가지고 오기 위해 (imgs, titleImg) 사용
           setGetedData(res.data);
           // 값이 있다면 inputValue에 저장한 후 getDataFinish 값을 변경
@@ -66,9 +68,18 @@ export default function SetAdminEstimateinfo() {
             (res.data.proVisit && res.data.proVisit.slice(0, 10)) || ""
           );
 
-          setValue("_reqEstimate", res.data.reqEstimate.toString() || "1");
-          setValue("_reqBill", res.data.reqBill.toString() || "1");
-          setValue("_useFlag", res.data.useFlag.toString() || "1");
+          setValue(
+            "_reqEstimate",
+            (res.data.reqEstimate && res.data.reqEstimate.toString()) || "1"
+          );
+          setValue(
+            "_reqBill",
+            (res.data.reqBill && res.data.reqBill.toString()) || "1"
+          );
+          setValue(
+            "_useFlag",
+            (res.data.useFlag && res.data.useFlag.toString()) || "1"
+          );
           setValue("_gongsaType", res.data.gongsaType || "reser");
           setValue("_readFlag", res.data.readFlag || "0");
           setValue("_siteAddress", res.data.siteAddress);

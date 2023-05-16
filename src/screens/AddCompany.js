@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 
-import { servicesPostData, servicesSetStorage } from "../Services/importData";
+import { servicesPostData } from "../Services/importData";
 import { servicesUseToast } from "../Services/useData";
 import { urlAddcompany, urlUserlist, urlSetCompany } from "../Services/string";
 import LayoutTopButton from "../components/common/LayoutTopButton";
@@ -82,7 +82,6 @@ export default function AddCompany() {
                 id="name"
                 placeholder="계약자명을 입력해 주세요."
                 {...register("_name", {
-                  // required: "계약자명은 필수로 입력해야 합니다.",
                   minLength: {
                     value: 2,
                     message: "2자 이상의 이름만 사용가능합니다.",
@@ -106,6 +105,7 @@ export default function AddCompany() {
               />
             </div>
           </div>
+
           <div className="addCompanyUserList">
             <section className="tableWrap">
               <h3 className="blind">회원관리 리스트</h3>
@@ -119,7 +119,7 @@ export default function AddCompany() {
                     <th>계약일</th>
                   </tr>
                 </thead>
-                {/* checkbox를 별도로 관리하기 위해 컴포넌트로 관리 */}
+
                 <tbody>
                   {userList &&
                     userList.map((item) => (
