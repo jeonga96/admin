@@ -84,7 +84,7 @@ export default function ImageSet({
         }
       });
     }
-  }, [getDataFinish]);
+  }, [getDataFinish || getData]);
 
   // function handleSetImage(e) {
   // 이미지 업로드 시 실행되는 코드
@@ -98,7 +98,7 @@ export default function ImageSet({
       } else {
         selectFiles = e.target.files;
       }
-      console.log(selectFiles);
+
       const formData = new FormData();
       for (let i = 0; i < selectFiles.length; i++) {
         formData.append("Imgs", selectFiles[i]);
@@ -106,7 +106,6 @@ export default function ImageSet({
       setLoading(true);
       // FormData에 저장된 데이터를 서버에 보냄
       servicesPostDataForm(urlUpImages, formData).then((res) => {
-        console.log(res.data);
         if (res.data.length == 1) {
           setFiles((prev) => [res.data[0], ...prev]);
           fnStateSet(res.data);
@@ -129,19 +128,20 @@ export default function ImageSet({
 
   const handleFilterFile = useCallback(
     (iid) => {
-      console.log("home------iid", iid);
       setFiles(files.filter((it) => it.iid !== iid));
-      if (id === "titleImg") {
+      if (id == "titleImg") {
         fnSetImg(img.filter((it) => it.iid !== iid));
-      } else if (id === "regImgs") {
+      } else if (id == "regImgs") {
         fnSetRegImgs(regImgs.filter((it) => it.iid !== iid));
       } else {
-        console.log("remove", imgs);
         fnSetImgs(imgs.filter((it) => it.iid !== iid));
       }
     },
     [files]
   );
+
+  console.log(img);
+
   const handleDragIn = useCallback((e) => {
     e.preventDefault();
     e.stopPropagation();

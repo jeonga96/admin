@@ -68,12 +68,10 @@ export default function ImageSet({
     const files = event.target.files;
     const formData = new FormData();
     if (event.target.id === "titleImg" || event.target.id === "regImgs") {
-      console.log("titleUpload click-->", files[0]);
       formData.append("Imgs", files[0]);
     } else {
       for (let i = 0; i < files.length; i++) {
         formData.append("Imgs", files[i]);
-        console.log("imgsUpload click-->", files[i]);
       }
     }
 

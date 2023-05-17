@@ -28,8 +28,6 @@ export default function ListEvent() {
       offset: 0,
       size: 15,
     }).then((res) => {
-      console.log(res.data);
-      // setWzEvent(res.data.reverse());
       setWzEvent(res.data);
       setListPage(res.page);
     });

@@ -23,7 +23,6 @@ axiosApiInstance.interceptors.response.use(
     return response;
   },
   async (error) => {
-    console.log("axios nterceptors.respons", error);
     const {
       config,
       response: { status },

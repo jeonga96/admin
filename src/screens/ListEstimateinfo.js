@@ -28,7 +28,6 @@ export default function ListEstimateinfo() {
         offset: page.getPage,
         size: 15,
       }).then((res) => {
-        console.log(res);
         setList(res.data);
         setListPage(res.page);
       });

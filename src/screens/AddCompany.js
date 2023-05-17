@@ -30,7 +30,6 @@ export default function AddCompany() {
   }, []);
 
   const fnSelect = (res) => {
-    console.log(res);
     setSelect(res);
     setValue("_name", res.name);
   };

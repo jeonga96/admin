@@ -30,35 +30,36 @@ export default function Postcode({
       if (status === window.kakao.maps.services.Status.OK) {
         // 공사콕에서 사용하는 key와 다음 카카오의 키가 다름!
         // 다음 카카오 신주소 : roadAddress, 구주소 :jibunAddress, 우편번호 : zonecode
-        autoKey
-          ? fnSetAddress({
-              ...{
-                address: result[0].address_name,
-                detailaddress: getedData.detailaddress,
-                zipcode: result[0].road_address.zone_no,
-                oldaddress: result[0].address.address_name,
-                latitude: Math.floor(result[0].y * 100000),
-                longitude: Math.floor(result[0].x * 100000),
-              },
-            })
-          : fnSetAddress({
-              address: res.roadAddress,
-              detailaddress: res.detailaddress,
-              oldaddress: res.jibunAddress,
-              zipcode: res.zonecode,
+        if (!!res.postcode) {
+          fnSetAddress({
+            address: res.roadAddress,
+            detailaddress: res.detailaddress,
+            oldaddress: res.jibunAddress,
+            zipcode: res.zonecode,
+            latitude: Math.floor(result[0].y * 100000),
+            longitude: Math.floor(result[0].x * 100000),
+          });
+        } else {
+          fnSetAddress({
+            ...{
+              address: result[0].address_name,
+              detailaddress: getedData.detailaddress,
+              zipcode: result[0].road_address.zone_no,
+              oldaddress: result[0].address.address_name,
               latitude: Math.floor(result[0].y * 100000),
               longitude: Math.floor(result[0].x * 100000),
-            });
+            },
+          });
+        }
       }
     };
-    autoKey
-      ? geocoder.addressSearch(res, callback)
-      : geocoder.addressSearch(res.address, callback);
+
+    geocoder.addressSearch(res.address, callback);
   };
 
   useLayoutEffect(() => {
     if (getedData !== [] && !!autoKey) {
-      callMapcoor(getedData.address);
+      callMapcoor(getedData);
     }
 
     // setUser는 주소값만 저장함
@@ -70,7 +71,7 @@ export default function Postcode({
     }
 
     // setCompany는 아래와 같은 정보가 필요함
-    if (getedData !== [] && !userComponent && !autoKey) {
+    if (getedData !== [] && !userComponent) {
       //  신주소 : address, 구주소 :oldaddress, 우편번호 : zipcode
       fnSetAddress({
         address: getedData.address,

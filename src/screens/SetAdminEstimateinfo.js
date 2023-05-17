@@ -47,7 +47,6 @@ export default function SetAdminEstimateinfo() {
     })
       .then((res) => {
         if (res.status === "success") {
-          console.log("success", res.data);
           // 이미지 iid를 가지고 오기 위해 (imgs, titleImg) 사용
           setGetedData(res.data);
           // 값이 있다면 inputValue에 저장한 후 getDataFinish 값을 변경

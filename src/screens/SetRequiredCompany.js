@@ -50,66 +50,51 @@ export default function SetRequiredCompany() {
   const [getedData, setGetedData] = useState([]);
   // getDataFinish:기존에 입력된 값이 있어 값을 불러왔다면 true로 변경,
   const getDataFinish = useRef(false);
-
   // 이미지 ------------------------------------------------------------------------
-  // 서버에서 titleImg  iid를 받아오기 위해 사용
-  // titleImg:대표 이미지저장 및 표시
   const [titleImg, setTitleImg] = useState(null);
   // 주소 ------------------------------------------------------------------------
-  // address:신주소,  oldaddress:구주소,  zipcode:우편번호,  latitude:위도,  longitude:경도
   const [multilAddress, setMultilAddress] = useState({});
 
-  useEffect(() => {
-    servicesPostData(urlGetCompany, {
-      cid: cid,
-    }).then((res) => {
-      setValue("_useFlag", res.data.useFlag.toString() || "1");
-      setValue("_name", res.data.name);
-      return SETUID(res.data.ruid);
+  // getUser,
+  async function fnReadList(res) {
+    await setGetedData(res.data);
+
+    await servicesPostData(urlGetUser, {
+      uid: UID,
+    }).then((res2) => {
+      setGetedData({ ...res.data, ...{ userid: res2.data.userid } });
+      setValue("_userid", res2.data.userid || "");
     });
-  }, []);
 
-  useEffect(() => {
-    servicesPostData(urlGetUserDetail, {
-      ruid: UID,
-    })
-      .then((res) => {
-        if (res.status === "success") {
-          setGetedData(res.data);
-
-          servicesPostData(urlGetUser, {
-            uid: UID,
-          }).then((res2) => {
-            setGetedData({ ...res.data, ...{ userid: res2.data.userid } });
-            setValue("_userid", res2.data.userid || "");
+    await servicesPostData(urlGetCompanyDetail, {
+      rcid: cid,
+    }).then((res3) => {
+      if (res3.status === "success") {
+        if (!getedData.address) {
+          setGetedData({
+            ...res.data,
+            ...{
+              address: res3.data.address,
+              detailaddress: res3.data.detailaddress,
+              oldaddress: res3.data.oldaddress,
+              zipcode: res3.data.zipcode,
+              longitude: res3.data.longitude,
+              latitude: res3.data.latitude,
+            },
           });
-
-          servicesPostData(urlGetCompanyDetail, {
-            rcid: cid,
-          }).then((res2) => {
-            if (res2.status === "success") {
-              setValue("_Cname", res2.data.name);
-              setValue("_offer", res2.data.offer || "");
-              setValue("_regOwner", res2.data.regOwner || "");
-              setValue("_subCategory", res2.data.subCategory || "");
-              setValue("_bigCategory", res2.data.bigCategory || "");
-              setValue("_ceogreet", res2.data.ceogreet || "");
-            }
-          });
-
-          setValue("_detailUseFlag", "1");
-          setValue("_ruid", UID);
-          setValue("_address", res.data.address);
-          setValue("_location", res.data.location);
-          setValue("_mobilenum", res.data.mobile || "");
-          getDataFinish.current = true;
         }
-      })
 
-      .catch((res) => console.log(res));
-  }, [UID]);
+        setValue("_Cname", res3.data.name);
+        setValue("_offer", res3.data.offer || "");
+        setValue("_regOwner", res3.data.regOwner || "");
+        setValue("_subCategory", res3.data.subCategory || "");
+        setValue("_bigCategory", res3.data.bigCategory || "");
+        setValue("_ceogreet", res3.data.ceogreet || "");
+        setValue("_location", res3.data.location);
+      }
+    });
+  }
 
-  // console.log("getedData", getedData);
   // input ","로 구분된 문자열 최대 입력 개수제한 ========================
   const onChangeValidation = (e) => {
     let arr = e.target.value.split(",");
@@ -129,6 +114,7 @@ export default function SetRequiredCompany() {
         : setValue("_subCategory", arr.toString());
     }
   };
+  console.log(titleImg[0].iid);
 
   // form submit 이벤트 =========================================
   const handleSubmitEvent = () => {
@@ -170,7 +156,6 @@ export default function SetRequiredCompany() {
         // 정상 등록 완료
         // 디테일 정보를 입력하도록 사업자 상세정보로 이동
         if (res.status === "success") {
-          console.log(res.data);
           servicesUseModal(
             "사업자 상세정보를 입력하시겠습니까?",
             "확인은 누르시면 사업자 상세정보 입력 페이지로 이동됩니다.",
@@ -183,6 +168,33 @@ export default function SetRequiredCompany() {
       })
       .catch((error) => console.log("실패", error.response));
   };
+
+  useEffect(() => {
+    servicesPostData(urlGetCompany, {
+      cid: cid,
+    }).then((res) => {
+      setValue("_useFlag", res.data.useFlag.toString() || "1");
+      setValue("_name", res.data.name);
+      return SETUID(res.data.ruid);
+    });
+  }, []);
+
+  useEffect(() => {
+    servicesPostData(urlGetUserDetail, {
+      ruid: UID,
+    })
+      .then((res) => {
+        if (res.status === "success") {
+          fnReadList(res);
+          setValue("_detailUseFlag", "1");
+          setValue("_ruid", UID);
+          setValue("_location", res.data.location);
+          setValue("_mobilenum", res.data.mobile || "");
+          getDataFinish.current = true;
+        }
+      })
+      .catch((res) => console.log(res));
+  }, [UID]);
 
   return (
     <>
@@ -544,6 +556,7 @@ export default function SetRequiredCompany() {
                     type="text"
                     id="mobilenum"
                     placeholder="핸드폰번호를 입력해 주세요. (예시 000-0000-0000)"
+                    maxLength={13}
                     value={
                       (watch("_mobilenum") &&
                         watch("_mobilenum")

@@ -35,8 +35,6 @@ export default function SetEvent() {
             setValue("_contentString", res.data.contentString || "");
             setValue("_contentDetail", res.data.contentDetail || "");
             setUseFlag(res.data.useFlag == 1 ? true : false);
-          } else if (res.data === "fail") {
-            console.log("기존에 입력된 데이터가 없습니다.");
           }
         })
         .catch((res) => console.log(res));

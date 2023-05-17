@@ -42,15 +42,12 @@ export default function SetDetailAdminNotice() {
       })
         .then((res) => {
           if (res.status === "success") {
-            console.log(res.data);
             setNoticeDetail(res.data);
             setValue("_category", res.data.category || "notice");
             setValue("_contentString", res.data.contentString || "");
             setValue("_contentDetail", res.data.contentDetail || "");
             setUseFlag(res.data.useFlag == 1 ? true : false);
             getDataFinish.current = true;
-          } else if (res.data === "fail") {
-            console.log("기존에 입력된 데이터가 없습니다.");
           }
         })
         .catch((res) => console.log(res));

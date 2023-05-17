@@ -58,12 +58,12 @@ export default function SetCompanyDetail() {
   // 작성된 데이터를 받아옴
   const [getedData, setGetedData] = useState([]);
   // getDataFinish:기존에 입력된 값이 있어 값을 불러왔다면 true로 변경,
-  const getDataFinish = useRef(false);
+  const [getDataFinish, setGetDataFinish] = useState(false);
 
   // 이미지 ------------------------------------------------------------------------
   // 서버에서 titleImg, imgs의 iid를 받아오기 위해 사용
   // titleImg:대표 이미지저장 및 표시, imgs:상세 이미지저장 및 표시
-  const [titleImg, setTitleImg] = useState(null);
+  const [titleImg, setTitleImg] = useState([]);
   const [imgs, setImgs] = useState([]);
   // imgsIid:서버에 이미지를 보낼 때는, iid값만 필요
   const imgsIid = [];
@@ -105,8 +105,8 @@ export default function SetCompanyDetail() {
     })
       .then((res) => {
         if (res.status === "success") {
-          // 값이 있다면 저장한 후 getDataFinish 값을 변경
           setGetedData(res.data);
+
           setValue("_detailUseFlag", res.data.useFlag.toString());
           setValue("_status", res.data.status.toString());
           setValue(
@@ -215,9 +215,8 @@ export default function SetCompanyDetail() {
           const WorkTimeArr = res.data.workTime.split("~");
           setValue("_workTimeTo", WorkTimeArr[0].trim() || "");
           setValue("_workTimeFrom", WorkTimeArr[1].trim() || "");
-          getDataFinish.current = true;
-        } else if (res.data === "fail") {
-          console.log("새로운 사업자 회원입니다.");
+
+          setGetDataFinish(true);
         }
       })
       .catch((res) => console.log(res));
@@ -266,14 +265,13 @@ export default function SetCompanyDetail() {
     //서버에 imgs의 iid값만을 보내기 위해 실행하는 반복문 함수
     serviesGetImgsIid(imgsIid, imgs);
     // 서버에 keywords의 keyword value만을 보내기 위해 실행하는 함수
-    serviesGetKeywords(keywordValue, companyDetailKeyword);
+    // serviesGetKeywords(keywordValue, companyDetailKeyword);
 
     servicesPostData(urlSetCompany, {
       cid: cid,
       ...companyData,
     });
 
-    // ComponentSetCompany submit
     // setComapny (계약자명, uid, 사업자 활성화)
     servicesPostData(urlSetCompanyDetail, {
       rcid: cid,
@@ -291,9 +289,9 @@ export default function SetCompanyDetail() {
       zipcode: multilAddress.zipcode,
       workTime: `${watch("_workTimeTo")} ~ ${watch("_workTimeFrom")}`,
       offer: getValues("_offer"),
-      titleImg: titleImg ? titleImg[0].iid : "",
+      titleImg: titleImg.length > 0 ? titleImg[0].iid : "",
       regImgs: regImgs.length > 0 ? regImgs[0].iid : "",
-      imgs: setImgs ? imgsIid.toString() : "",
+      imgs: imgsIid.length > 0 ? imgsIid.toString() : "",
       longitude: multilAddress.longitude,
       latitude: multilAddress.latitude,
       telnum: getValues("_telnum"),
@@ -865,7 +863,7 @@ export default function SetCompanyDetail() {
                 getData={getedData}
                 id="regImgs"
                 title="사업자 등록증"
-                getDataFinish={getDataFinish.current}
+                getDataFinish={getDataFinish}
                 setCkRegBtn={setCkRegBtn}
                 ckRegBtn={ckRegBtn}
               />
@@ -1128,7 +1126,7 @@ export default function SetCompanyDetail() {
                 getData={getedData}
                 id="titleImg"
                 title="대표 이미지"
-                getDataFinish={getDataFinish.current}
+                getDataFinish={getDataFinish}
               />
 
               <SetImage
@@ -1137,7 +1135,7 @@ export default function SetCompanyDetail() {
                 id="imgs"
                 title="상세 이미지"
                 getData={getedData}
-                getDataFinish={getDataFinish.current}
+                getDataFinish={getDataFinish}
               />
 
               {/* 키워드 & 태그는 현재 기능을 사용하지 않으나 추후 확장성으 위해 주석처리해두었습니다. */}

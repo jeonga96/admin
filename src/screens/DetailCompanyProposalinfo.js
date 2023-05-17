@@ -44,7 +44,6 @@ export default function DetailCompanyProposalinfo() {
               }
         )
           .then((res) => {
-            console.log("dd", res);
             setList(res.data);
             setListPage(res.page);
           })

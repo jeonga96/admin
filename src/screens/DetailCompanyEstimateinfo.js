@@ -46,7 +46,6 @@ export default function DetailComapnyEsimateinfo() {
               }
         )
           .then((res) => {
-            console.log(res);
             setList(res.data);
             setListPage(res.page);
           })

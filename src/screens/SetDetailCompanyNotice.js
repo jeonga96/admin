@@ -40,14 +40,11 @@ export default function SetDetailCompanyNotice() {
     })
       .then((res) => {
         if (res.status === "success") {
-          console.log(res.data);
           setNoticeDetail(res.data);
           setValue("_title", res.data.title || "");
           setValue("_content", res.data.content || "");
           // setUseFlag(res.data.useFlag == 1 ? true : false);
           getDataFinish.current = true;
-        } else if (res.data === "fail") {
-          console.log("기존에 입력된 데이터가 없습니다.");
         }
       })
       .catch((res) => console.log(res));
@@ -76,7 +73,6 @@ export default function SetDetailCompanyNotice() {
           }
     )
       .then((res) => {
-        console.log(res.data);
         if (res.status === "fail") {
           servicesUseToast("입력에 실패했습니다.", "e");
         }
