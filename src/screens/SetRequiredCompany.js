@@ -114,7 +114,6 @@ export default function SetRequiredCompany() {
         : setValue("_subCategory", arr.toString());
     }
   };
-  console.log(titleImg[0].iid);
 
   // form submit 이벤트 =========================================
   const handleSubmitEvent = () => {
