@@ -130,6 +130,8 @@ export default function SetCompanyDetail() {
           setValue("_regOwner", res.data.regOwner || "");
           setValue("_age", res.data.age);
 
+          // console.log(titleImg, imgs);
+
           setValue("_bigCategory", res.data.bigCategory || "");
           setValue("_subCategory", res.data.subCategory || "");
           setValue("_reCount", res.data.reCount || "");
@@ -289,7 +291,7 @@ export default function SetCompanyDetail() {
       zipcode: multilAddress.zipcode,
       workTime: `${watch("_workTimeTo")} ~ ${watch("_workTimeFrom")}`,
       offer: getValues("_offer"),
-      titleImg: titleImg.length > 0 ? titleImg[0].iid : "",
+      titleImg: titleImg.length > 0 ? titleImg[0].iid : "694",
       regImgs: regImgs.length > 0 ? regImgs[0].iid : "",
       imgs: imgsIid.length > 0 ? imgsIid.toString() : "",
       longitude: multilAddress.longitude,

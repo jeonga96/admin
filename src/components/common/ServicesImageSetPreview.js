@@ -74,15 +74,17 @@ export default function ImageSet({
           setFiles(res.data);
         }
       });
-    } else {
-      servicesPostData(urlGetImages, {
-        imgs: getData.imgString || getData.regImgs || getData.addImgs,
-      }).then((res) => {
-        if (res.status === "success") {
-          fnStateSet(res.data);
-          setFiles(res.data);
-        }
-      });
+    } else if (!!getData.imgString || !!getData.regImgs || !!getData.addImgs) {
+      if (id === "imgString" || id === "regImgs" || id === "addImgs") {
+        servicesPostData(urlGetImages, {
+          imgs: getData.imgString || getData.regImgs || getData.addImgs,
+        }).then((res) => {
+          if (res.status === "success") {
+            fnStateSet(res.data);
+            setFiles(res.data);
+          }
+        });
+      }
     }
   }, [getDataFinish || getData]);
 
@@ -129,9 +131,9 @@ export default function ImageSet({
   const handleFilterFile = useCallback(
     (iid) => {
       setFiles(files.filter((it) => it.iid !== iid));
-      if (id == "titleImg") {
+      if (id === "titleImg") {
         fnSetImg(img.filter((it) => it.iid !== iid));
-      } else if (id == "regImgs") {
+      } else if (id === "regImgs") {
         fnSetRegImgs(regImgs.filter((it) => it.iid !== iid));
       } else {
         fnSetImgs(imgs.filter((it) => it.iid !== iid));
@@ -139,8 +141,6 @@ export default function ImageSet({
     },
     [files]
   );
-
-  console.log(img);
 
   const handleDragIn = useCallback((e) => {
     e.preventDefault();
@@ -279,12 +279,27 @@ export default function ImageSet({
 
           {files.length > 0 &&
             !setImg &&
+            id === "imgs" &&
             files.map((item, index) => (
               <ServicesImageOnClick
                 key={item && item.iid}
                 getData={files}
                 url={item}
                 text="상세 이미지"
+                iid={item && item.iid}
+                onRemove={() => handleFilterFile(item.iid)}
+              />
+            ))}
+
+          {files.length > 0 &&
+            !setImg &&
+            id !== "imgs" &&
+            files.map((item, index) => (
+              <ServicesImageOnClick
+                key={item && item.iid}
+                getData={files}
+                url={item}
+                text="이미지"
                 iid={item && item.iid}
                 onRemove={() => handleFilterFile(item.iid)}
               />
