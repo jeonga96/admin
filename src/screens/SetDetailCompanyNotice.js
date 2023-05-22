@@ -92,10 +92,6 @@ export default function SetDetailCompanyNotice() {
       <div className="commonBox">
         <form className="formLayout" onSubmit={handleSubmit(fnSubmit)}>
           <ul className="tableTopWrap">
-            {/* <LayoutTopButton
-              text={useFlag == true ? "비공개" : "공개"}
-              fn={fnUseFlag}
-            /> */}
             <LayoutTopButton text="완료" disabled={isSubmitting} />
           </ul>
           <div className="formContentWrap formContentWideWrap">
@@ -107,21 +103,10 @@ export default function SetDetailCompanyNotice() {
                 type="text"
                 id="title"
                 placeholder="제목을 입력해 주세요."
+                minLength={2}
                 {...register("_title", {
                   required: "입력되지 않았습니다.",
-                  minLength: {
-                    value: 2,
-                    message: "2자 이상의 글자만 사용가능합니다.",
-                  },
                 })}
-              />
-
-              <ErrorMessage
-                errors={errors}
-                name="_title"
-                render={({ message }) => (
-                  <span className="errorMessageWrap">{message}</span>
-                )}
               />
             </div>
           </div>
@@ -143,6 +128,7 @@ export default function SetDetailCompanyNotice() {
               <textarea
                 id="content"
                 placeholder="내용을 입력해 주세요."
+                minLength={10}
                 style={{ height: "400px" }}
                 {...register("_content", {
                   equired: "입력되지 않았습니다.",

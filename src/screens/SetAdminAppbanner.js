@@ -409,7 +409,7 @@ export default function SetAdminAppbanner() {
         {/* 하단 list ---------------------------------------- */}
         <div className="commonBox">
           <table className="commonTable">
-            <thead className="basicThead">
+            <thead className="basicThead" style={{ border: "none" }}>
               <tr>
                 <td>
                   <h2>B2C 배너 관리</h2>
@@ -451,7 +451,7 @@ export default function SetAdminAppbanner() {
         </div>
         <div className="commonBox">
           <table className="commonTable">
-            <thead className="basicThead">
+            <thead className="basicThead" style={{ border: "none" }}>
               <tr>
                 <td>
                   <h2>B2B 배너 관리</h2>

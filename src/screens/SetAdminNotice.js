@@ -17,10 +17,15 @@ export default function SetDetailAdminNotice() {
   const {
     handleSubmit,
     register,
+    watch,
     setValue,
     getValues,
     formState: { isSubmitting, errors },
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      _category: "notice",
+    },
+  });
 
   // 데이터 ------------------------------------------------------------------------
   // getDataFinish:기존에 입력된 값이 있어 값을 불러왔다면 true로 변경,
@@ -126,13 +131,6 @@ export default function SetDetailAdminNotice() {
           </ul>
 
           <div className="formWrap">
-            <div className="filterWrap">
-              <select {...register("_category")}>
-                <option value="notice">전체 회원 공지</option>
-                <option value="noticeTocompany">사업자 회원 공지</option>
-              </select>
-            </div>
-
             <div
               className="formContentWrap"
               style={{ marginTop: "0", width: "100%" }}
@@ -160,6 +158,39 @@ export default function SetDetailAdminNotice() {
                     <span className="errorMessageWrap">{message}</span>
                   )}
                 />
+              </div>
+            </div>
+
+            <div className="formContentWrap" style={{ width: "100%" }}>
+              <label htmlFor="title" className="blockLabel">
+                <span>카테고리</span>
+              </label>
+
+              <div className="filterWrap">
+                <label className="listSearchRadioLabel" htmlFor="notice">
+                  <input
+                    type="radio"
+                    checked={watch("_category") == "notice"}
+                    value="notice"
+                    id="notice"
+                    {...register("_category")}
+                  />
+                  <span>전체 회원 공지</span>
+                </label>
+
+                <label
+                  className="listSearchRadioLabel"
+                  htmlFor="noticeTocompany"
+                >
+                  <input
+                    type="radio"
+                    checked={watch("_category") == "noticeTocompany"}
+                    value="noticeTocompany"
+                    id="noticeTocompany"
+                    {...register("_category")}
+                  />
+                  <span>사업자 회원 공지</span>
+                </label>
               </div>
             </div>
 

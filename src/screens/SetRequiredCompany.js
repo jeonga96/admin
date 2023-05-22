@@ -434,12 +434,9 @@ export default function SetRequiredCompany() {
                         type="text"
                         id="Cname"
                         placeholder="상호명을 입력해 주세요."
+                        maxLength={15}
                         {...register("_Cname", {
                           required: "입력되지 않았습니다.",
-                          maxLength: {
-                            value: 15,
-                            message: "15자 이하의 글자만 사용가능합니다.",
-                          },
                         })}
                       />
                     </div>
@@ -492,7 +489,7 @@ export default function SetRequiredCompany() {
                   <input
                     type="text"
                     id="bigCategory"
-                    placeholder="대표업종을 입력해 주세요."
+                    placeholder="대표업종은 최대 10개까지 입력 가능합니다."
                     value={
                       (watch("_bigCategory") &&
                         watch("_bigCategory").replace(" ", ",")) ||

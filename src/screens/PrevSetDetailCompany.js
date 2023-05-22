@@ -3,18 +3,23 @@ import { useEffect, useState, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 
-import { servicesPostData } from "../Services/importData";
+import { servicesPostData, servicesGetStorage } from "../Services/importData";
 
 import {
   serviesPostDataSettingRcid,
   servicesUseToast,
 } from "../Services/useData";
-import { serviesGetImgsIid } from "../Services/useData";
+import {
+  serviesGetImgsIid,
+  serviesGetKeywords,
+  serviesGetKid,
+} from "../Services/useData";
 
 import {
   urlGetCompanyDetail,
   urlSetCompanyDetail,
   urlSetCompany,
+  ALLKEYWORD,
   urlCompanyNoticeList,
   urlGetCompany,
   urlReviewList,
@@ -72,6 +77,12 @@ export default function SetCompanyDetail() {
   // address:신주소,  oldaddress:구주소,  zipcode:우편번호,  latitude:위도,  longitude:경도
   const [multilAddress, setMultilAddress] = useState({});
 
+  // 키워드 ------------------------------------------------------------------------
+  // 선택된 키워드 저장되는 state
+  // const [companyDetailKeyword, setCompanyDetailKeyword] = useState([]);
+  // keywordValue:서버에 키워드를 보낼 때 keyword의 value만 필요
+  // const keywordValue = [];
+
   // 사업자 상세관리에서 사용하는 setCompanyDetailInfo 외 API  --------------------------------------
   // setUser 수정 - 하위컴포넌트에게 전달
   const [companyData, setCompanyData] = useState({});
@@ -119,27 +130,42 @@ export default function SetCompanyDetail() {
           setValue("_regOwner", res.data.regOwner || "");
           setValue("_age", res.data.age);
 
+          // console.log(titleImg, imgs);
+
           setValue("_bigCategory", res.data.bigCategory || "");
           setValue("_subCategory", res.data.subCategory || "");
           setValue("_reCount", res.data.reCount || "");
           setValue("_okCount", res.data.okCount || "");
           setValue("_noCount", res.data.noCount || "");
 
+          // 키워드 & 태그는 현재 기능을 사용하지 않으나 추후 확장성으 위해 주석처리해두었습니다.
+          // setValue("_tags", res.data.tags || "");
+
+          // 로그인 시 로컬스토리지에 저장한 전체 키워드 가져오기
+          // const allKeywordData = JSON.parse(servicesGetStorage(ALLKEYWORD));
+          // 이미 입력된 키워드 값이 있다면 가져온 keywords 와 allKeywordData의 keyword의 value를 비교하여 keyword 객체 가져오기
+          // 삭제 기능을 위해 kid도 불러와야 해서 해당 기능 추가
+          // serviesGetKid(
+          //   setCompanyDetailKeyword,
+          //   res.data.keywords,
+          //   allKeywordData
+          // );
+
           // 외부 동영상 링크
-          // if (res.data.vidlinkurl) {
-          //   const nameVar = res.data.vidlinkurl.split(",");
-          //   setValue("_vidlinkurl1", nameVar[0] || "");
-          //   setValue("_vidlinkurl2", nameVar[1] || "");
-          // }
+          if (res.data.vidlinkurl) {
+            const nameVar = res.data.vidlinkurl.split(",");
+            setValue("_vidlinkurl1", nameVar[0] || "");
+            setValue("_vidlinkurl2", nameVar[1] || "");
+          }
           // 외부 링크
-          // if (res.data.linkurl) {
-          //   const nameVar = res.data.linkurl.split(",");
-          //   setValue("_linkurl1", nameVar[0] || "");
-          //   setValue("_linkurl2", nameVar[1] || "");
-          //   setValue("_linkurl3", nameVar[2] || "");
-          //   setValue("_linkurl4", nameVar[3] || "");
-          //   setValue("_linkurl5", nameVar[4] || "");
-          // }
+          if (res.data.linkurl) {
+            const nameVar = res.data.linkurl.split(",");
+            setValue("_linkurl1", nameVar[0] || "");
+            setValue("_linkurl2", nameVar[1] || "");
+            setValue("_linkurl3", nameVar[2] || "");
+            setValue("_linkurl4", nameVar[3] || "");
+            setValue("_linkurl5", nameVar[4] || "");
+          }
 
           // 공지사항, 리뷰, 견적요청서 링크 이동 개수 확인하기 위해 데이터 받아오기
           serviesPostDataSettingRcid(urlCompanyNoticeList, cid, setNoticeList);
@@ -279,17 +305,20 @@ export default function SetCompanyDetail() {
       regName: getValues("_regName"),
       age: getValues("_age"),
       comType: getValues("_comType"),
+      //  키워드 & 태그는 현재 기능을 사용하지 않으나 추후 확장성으 위해 주석처리해두었습니다.
+      // keywords: keywordValue.toString() || "",
+      // tags: getValues("_tags"),
       subCategory: getValues("_subCategory"),
       bigCategory: getValues("_bigCategory"),
       reCount: getValues("_reCount"),
       okCount: getValues("_okCount"),
       noCount: getValues("_noCount"),
-      // vidlinkurl:
-      //   `${getValues("_vidlinkurl1")},${getValues("_vidlinkurl2")}` || "",
-      // linkurl:
-      //   `${getValues("_linkurl1")},${getValues("_linkurl2")},${getValues(
-      //     "_linkurl3"
-      //   )},${getValues("_linkurl4")},${getValues("_linkurl5")},` || "",
+      vidlinkurl:
+        `${getValues("_vidlinkurl1")},${getValues("_vidlinkurl2")}` || "",
+      linkurl:
+        `${getValues("_linkurl1")},${getValues("_linkurl2")},${getValues(
+          "_linkurl3"
+        )},${getValues("_linkurl4")},${getValues("_linkurl5")},` || "",
     })
       .then((res) => {
         if (res.status === "fail") {
@@ -586,9 +615,20 @@ export default function SetCompanyDetail() {
                   <input
                     type="text"
                     id="Cname"
-                    placeholder="15자 이하로 입력해 주세요."
-                    maxLength="15"
-                    {...register("_name")}
+                    placeholder="상호명을 입력해 주세요."
+                    {...register("_name", {
+                      maxLength: {
+                        value: 15,
+                        message: "15자 이하의 글자만 사용가능합니다.",
+                      },
+                    })}
+                  />
+                  <ErrorMessage
+                    errors={errors}
+                    name="_name"
+                    render={({ message }) => (
+                      <span className="errorMessageWrap">{message}</span>
+                    )}
                   />
                 </div>
               </div>
@@ -635,7 +675,6 @@ export default function SetCompanyDetail() {
                 </div>
               </div>
 
-              {/* 나이 */}
               <div className="formContentWrap" style={{ width: "100%" }}>
                 <div className="blockLabel">
                   <span>나이</span>
@@ -758,7 +797,7 @@ export default function SetCompanyDetail() {
                   <input
                     type="text"
                     id="corporationno"
-                    placeholder="법인 등록 번호를 입력해 주세요. (예시 000000-0000000)"
+                    placeholder="법인 등록 번호를 입력해 주세요."
                     maxLength="14"
                     {...register("_corporationno")}
                     value={
@@ -793,8 +832,7 @@ export default function SetCompanyDetail() {
                   <input
                     type="text"
                     id="regName"
-                    placeholder="15자 이하로 입력해 주세요."
-                    maxLength="15"
+                    placeholder="사업자 등록 상표명을 입력해 주세요."
                     {...register("_regName")}
                   />
                   <ErrorMessage
@@ -841,7 +879,6 @@ export default function SetCompanyDetail() {
                     type="text"
                     id="mobilenum"
                     placeholder="핸드폰번호를 입력해 주세요. (예시 000-0000-0000)"
-                    maxLength={12}
                     value={
                       (watch("_mobilenum") &&
                         watch("_mobilenum")
@@ -879,13 +916,13 @@ export default function SetCompanyDetail() {
                     type="text"
                     id="telnum"
                     placeholder="전화번호를 입력해 주세요. (예시 00-0000-0000)"
-                    maxLength="14"
+                    maxLength="12"
                     value={
                       (watch("_telnum") &&
                         watch("_telnum")
                           .replace(/[^0-9]/g, "")
                           .replace(
-                            /(^02|^0505|^1[0-9]{4}|^0[0-9]{2})([0-9]+)([0-9]{4}$)/,
+                            /(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)([0-9]{4}$)/,
                             "$1-$2-$3"
                           )
                           .replace("--", "-")) ||
@@ -953,7 +990,12 @@ export default function SetCompanyDetail() {
                     id="location"
                     placeholder="사업자의 위치를 입력해 주세요. (예시 ㅇㅇ구, ㅇㅇ동)"
                     maxLength="50"
-                    {...register("_location")}
+                    {...register("_location", {
+                      maxLength: {
+                        value: 50,
+                        message: "50자 이하의 글자만 사용가능합니다.",
+                      },
+                    })}
                   />
                 </div>
               </div>
@@ -1011,7 +1053,7 @@ export default function SetCompanyDetail() {
                         type="time"
                         id="workTime"
                         placeholder="근무 시간을 입력해 주세요."
-                        {...register("_workTimeTo")}
+                        {...register("_workTimeTo", {})}
                       />
                     </div>
                   </li>
@@ -1022,7 +1064,7 @@ export default function SetCompanyDetail() {
                         type="time"
                         id="workTime"
                         placeholder="근무 시간을 입력해 주세요."
-                        {...register("_workTimeFrom")}
+                        {...register("_workTimeFrom", {})}
                       />
                     </div>
                   </li>
@@ -1043,8 +1085,19 @@ export default function SetCompanyDetail() {
                     type="text"
                     id="ceogreet"
                     placeholder="인사말을 입력해 주세요."
-                    maxLength="50"
-                    {...register("_ceogreet")}
+                    {...register("_ceogreet", {
+                      maxLength: {
+                        value: 50,
+                        message: "50자 이하의 글자만 사용가능합니다.",
+                      },
+                    })}
+                  />
+                  <ErrorMessage
+                    errors={errors}
+                    name="_ceogreet"
+                    render={({ message }) => (
+                      <span className="errorMessageWrap">{message}</span>
+                    )}
                   />
                 </div>
               </div>
@@ -1059,7 +1112,12 @@ export default function SetCompanyDetail() {
                     id="offer"
                     placeholder="최대 100자까지 입력하실 수 있습니다."
                     maxLength="100"
-                    {...register("_offer")}
+                    {...register("_offer", {
+                      maxLength: {
+                        value: 100,
+                        message: "최대 100자까지 입력하실 수 있습니다.",
+                      },
+                    })}
                   />
                 </div>
               </div>
@@ -1082,7 +1140,37 @@ export default function SetCompanyDetail() {
                 getDataFinish={getDataFinish}
               />
 
+              {/* 키워드 & 태그는 현재 기능을 사용하지 않으나 추후 확장성으 위해 주석처리해두었습니다. */}
               {/* 
+            <div className="formContentWrap">
+              <label htmlFor="keywords" className="blockLabel">
+                <span>키워드</span>
+              </label>
+              <SetAllKeyWord
+                companyDetailKeyword={companyDetailKeyword}
+                setCompanyDetailKeyword={setCompanyDetailKeyword}
+              />
+            </div>
+
+            <div className="formContentWrap">
+              <label htmlFor="tags" className="blockLabel">
+                <span>태그</span>
+              </label>
+              <div>
+                <input
+                  type="text"
+                  id="tags"
+                  placeholder="태그를 입력해 주세요."
+                  value={
+                    (watch("_tags") && watch("_tags").replace(" ", ",")) || ""
+                  }
+                  {...register("_tags", {
+                    onChange: onChangeValidation,
+                  })}
+                />
+              </div>
+            </div> */}
+
               <div className="formContentWrap">
                 <label className="blockLabel">
                   <span>동영상 링크</span>
@@ -1101,10 +1189,9 @@ export default function SetCompanyDetail() {
                     {...register("_vidlinkurl2")}
                   />
                 </div>
-              </div> */}
+              </div>
 
-              {/* 외부 링크 */}
-              {/* <div className="formContentWrap">
+              <div className="formContentWrap">
                 <label className="blockLabel">
                   <span>외부 링크</span>
                 </label>
@@ -1140,7 +1227,7 @@ export default function SetCompanyDetail() {
                     {...register("_linkurl5")}
                   />
                 </div>
-              </div> */}
+              </div>
             </fieldset>
 
             {/* 견적 관리 링크 이동 ================================================================ */}

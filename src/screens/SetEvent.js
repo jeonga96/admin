@@ -21,7 +21,11 @@ export default function SetEvent() {
     getValues,
     watch,
     formState: { isSubmitting, errors },
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      _category: "wzEvent",
+    },
+  });
 
   useLayoutEffect(() => {
     // contid가 있으면 기존에 입력된 값을 가져옴
@@ -123,13 +127,6 @@ export default function SetEvent() {
           </ul>
 
           <div className="formWrap">
-            <div className="filterWrap">
-              <select {...register("_category")}>
-                <option value="wzEvent">와짱 이벤트</option>
-                <option value="businessEvent">고객 ( 사용자 ) 이벤트</option>
-              </select>
-            </div>
-
             <div
               className="formContentWrap"
               style={{ marginTop: "0", width: "100%" }}
@@ -157,6 +154,39 @@ export default function SetEvent() {
                     <span className="errorMessageWrap">{message}</span>
                   )}
                 />
+              </div>
+            </div>
+
+            <div
+              className="formContentWrap"
+              style={{ marginTop: "0", width: "100%" }}
+            >
+              <label htmlFor="title" className="blockLabel">
+                <span>카테고리</span>
+              </label>
+
+              <div className="filterWrap">
+                <label className="listSearchRadioLabel" htmlFor="wzEvent">
+                  <input
+                    type="radio"
+                    checked={watch("_category") == "wzEvent"}
+                    value="wzEvent"
+                    id="wzEvent"
+                    {...register("_category")}
+                  />
+                  <span>와짱 이벤트</span>
+                </label>
+
+                <label className="listSearchRadioLabel" htmlFor="businessEvent">
+                  <input
+                    type="radio"
+                    checked={watch("_category") == "businessEvent"}
+                    value="businessEvent"
+                    id="businessEvent"
+                    {...register("_category")}
+                  />
+                  <span>고객 ( 사용자 ) 이벤트</span>
+                </label>
               </div>
             </div>
 

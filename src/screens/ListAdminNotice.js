@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { useState, useLayoutEffect } from "react";
+import { useState, useLayoutEffect, useEffect } from "react";
 import { servicesPostData } from "../Services/importData";
 import { urlContentList } from "../Services/string";
 
@@ -10,7 +10,11 @@ import ComponentListNotice from "../components/common/ComponentListNotice";
 import PaginationButton from "../components/common/PiecePaginationButton";
 
 export default function ListAdminNotice() {
-  const { register, watch } = useForm();
+  const { register, watch } = useForm({
+    defaultValues: {
+      _category: "notice",
+    },
+  });
 
   // 데이터 ------------------------------------------------------------------------
   // 목록 데이터
@@ -38,6 +42,28 @@ export default function ListAdminNotice() {
       <ul className="tableTopWrap">
         <LayoutTopButton url={`set`} text="작성" />
       </ul>
+      <div className="filterWrap">
+        <input
+          type="radio"
+          checked={watch("_category") == "notice"}
+          value="notice"
+          id="notice"
+          {...register("_category")}
+        />
+        <label className="listSearchRadioLabel" htmlFor="notice">
+          전체 회원 공지
+        </label>
+        <input
+          type="radio"
+          checked={watch("_category") == "noticeTocompany"}
+          value="noticeTocompany"
+          id="noticeTocompany"
+          {...register("_category")}
+        />
+        <label className="listSearchRadioLabel" htmlFor="noticeTocompany">
+          사업자 회원 공지
+        </label>
+      </div>
       <ComponentErrorNull />
     </>
   ) : (
@@ -49,10 +75,26 @@ export default function ListAdminNotice() {
         <h3 className="blind">공사콕 공지사항 목록</h3>
         <div className="paddingBox commonBox">
           <div className="filterWrap">
-            <select {...register("_category")}>
-              <option value="notice">전체 회원 공지</option>
-              <option value="noticeTocompany">사업자 회원 공지</option>
-            </select>
+            <label className="listSearchRadioLabel" htmlFor="notice">
+              <input
+                type="radio"
+                checked={watch("_category") == "notice"}
+                value="notice"
+                id="notice"
+                {...register("_category")}
+              />
+              <span>전체 회원 공지</span>
+            </label>
+            <label className="listSearchRadioLabel" htmlFor="noticeTocompany">
+              <input
+                type="radio"
+                checked={watch("_category") == "noticeTocompany"}
+                value="noticeTocompany"
+                id="noticeTocompany"
+                {...register("_category")}
+              />
+              <span>사업자 회원 공지</span>
+            </label>
           </div>
 
           <ComponentListNotice notice={notice} ISADMIN />

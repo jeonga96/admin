@@ -10,7 +10,11 @@ import ComponentErrorNull from "../components/common/ComponentErrorNull";
 import PaginationButton from "../components/common/PiecePaginationButton";
 
 export default function ListEvent() {
-  const { register, watch } = useForm();
+  const { register, watch } = useForm({
+    defaultValues: {
+      _category: "wzEvent",
+    },
+  });
 
   // 데이터 ------------------------------------------------------------------------
   // 목록 데이터
@@ -42,10 +46,27 @@ export default function ListEvent() {
         <h3 className="blind">공사콕 이벤트 목록</h3>
         <div className="paddingBox commonBox">
           <div className="filterWrap">
-            <select {...register("_category")}>
-              <option value="wzEvent">와짱 이벤트</option>
-              <option value="businessEvent">고객 ( 사용자 ) 이벤트</option>
-            </select>
+            <label className="listSearchRadioLabel" htmlFor="wzEvent">
+              <input
+                type="radio"
+                checked={watch("_category") == "wzEvent"}
+                value="wzEvent"
+                id="wzEvent"
+                {...register("_category")}
+              />
+              <span>와짱 이벤트</span>
+            </label>
+
+            <label className="listSearchRadioLabel" htmlFor="businessEvent">
+              <input
+                type="radio"
+                checked={watch("_category") == "businessEvent"}
+                value="businessEvent"
+                id="businessEvent"
+                {...register("_category")}
+              />
+              <span>고객 ( 사용자 ) 이벤트</span>
+            </label>
           </div>
 
           {(wzEvent == [] && wzEvent.length == 0) || wzEvent === undefined ? (

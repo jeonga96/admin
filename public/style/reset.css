@@ -107,7 +107,6 @@ button,
   border: 0;
   background-color: transparent;
   cursor: pointer;
-  border-radius: 0;
   text-align: center;
 }
 
@@ -179,7 +178,16 @@ figcaption,
 hgroup {
   display: block;
 }
+[type="radio"] {
+  vertical-align: middle;
+}
 
+.imgBtn,
+button,
+a {
+  border-radius: 2px;
+  cursor: pointer;
+}
 /*common className --------------------------------------------------------------*/
 .blind_wrap a > span,
 .blind_wrap button > span,
@@ -249,7 +257,6 @@ button {
   padding: 8px 14px;
   margin: 0 4px;
   font-size: 14px;
-  border-radius: 4px;
 }
 .servicesUseModal .yes {
   background-color: var(--color-acceent);
