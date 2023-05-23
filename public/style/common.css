@@ -875,7 +875,7 @@ i {
   color: var(--color-bgblack);
 }
 
-/*page (공지사항 & ) --------------------------------------------------------------*/
+/*page  --------------------------------------------------------------*/
 
 .detailPageLayout {
   width: 100%;
@@ -1449,8 +1449,11 @@ i {
   margin-left: 4px;
 }
 .submenu.focused {
-  border-color: var(--color-acceent);
-  color: var(--color-acceent);
+  /* border-color: var(--color-acceent);
+  color: var(--color-acceent); */
+  background-color: var(--color-lightprimary);
+  border: 1px solid var(--color-lightprimary);
+  color: var(--color-white);
 }
 .submenu.add {
   background-color: var(--color-bggray);

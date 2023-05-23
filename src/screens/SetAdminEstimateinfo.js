@@ -542,11 +542,20 @@ export default function SetAdminEstimateinfo() {
                   />
                 </div>
               </div>
+
+              <ImageSet
+                imgs={imgs}
+                setImgs={setImgs}
+                id="addImgs"
+                title="참고 이미지"
+                getData={getedData}
+                getDataFinish={getDataFinish.current}
+              />
             </fieldset>
 
             {/* 갼적서 응답 내용  ================================================================ */}
             <fieldset>
-              <h3>견적서 응답 내용</h3>
+              <h3>견적서 제출 내용</h3>
 
               <div className="formContentWrap">
                 <label htmlFor="proVisit" className=" blockLabel">
@@ -579,7 +588,7 @@ export default function SetAdminEstimateinfo() {
 
               <div className="formContentWrap" style={{ width: "100%" }}>
                 <label htmlFor="proDetail" className=" blockLabel">
-                  <span>응답 내용</span>
+                  <span>제출 내용</span>
                 </label>
                 <div>
                   <textarea
@@ -590,15 +599,6 @@ export default function SetAdminEstimateinfo() {
                   />
                 </div>
               </div>
-
-              <ImageSet
-                imgs={imgs}
-                setImgs={setImgs}
-                id="addImgs"
-                title="참고 이미지"
-                getData={getedData}
-                getDataFinish={getDataFinish.current}
-              />
             </fieldset>
           </div>
         </form>

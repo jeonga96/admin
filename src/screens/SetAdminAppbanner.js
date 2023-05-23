@@ -282,14 +282,15 @@ export default function SetAdminAppbanner() {
   const [bannerB2C2, setbannerB2C2] = useState([]);
   const [bannerB2C3, setbannerB2C3] = useState([]);
 
-  const bannerReqSuccess = useRef(false);
+  // const [bannerReqSuccess, setBannerReqSuccess] = useState(false);
   // inputData:수정된 내용 저장
   const [inputData, setinputData] = useState({});
 
   // 이미지 ------------------------------------------------------------------------
   // img:이미지 저장 / imgsIid:서버에 이미지를 보낼 때는, iid값만 필요 / changeImg: 이미지 수정 시 수정된 이미지 저장
   const [img, setImg] = useState(null);
-  const imgsIid = [];
+  // const imgsIid = [];
+  const [imgsIid, setimgsIid] = useState([]);
 
   // 카테고리별 배너 데이터 불러오기
   useLayoutEffect(() => {
@@ -301,7 +302,6 @@ export default function SetAdminAppbanner() {
       "bannerB2C2",
       "bannerB2C3",
     ];
-
     for (const item of categoryList) {
       servicesPostData(urlContentList, {
         category: item,
@@ -344,11 +344,11 @@ export default function SetAdminAppbanner() {
         })
         .catch((res) => console.log(res));
     }
-    bannerReqSuccess.current = true;
   }, []);
 
   // bannerlist의 데이터를 받아오면 기존 배너의 이미지 데이터를 받아온다.
   useDidMountEffect(() => {
+    // const arrImgsIid = [];
     const array = [
       bannerB2C1,
       bannerB2C2,
@@ -364,9 +364,16 @@ export default function SetAdminAppbanner() {
       imgs: imgsIid.toString(),
     }).then((res) => {
       setImg(res.data);
-      console.log(res.data);
     });
-  }, [bannerB2B1, bannerB2B2, bannerB2B3, bannerB2C1, bannerB2C2, bannerB2C3]);
+  }, [
+    imgsIid,
+    bannerB2B1,
+    bannerB2B2,
+    bannerB2B3,
+    bannerB2C1,
+    bannerB2C2,
+    bannerB2C3,
+  ]);
 
   const fnSubmit = () => {
     if (inputData[Object.keys(inputData)] !== {}) {
@@ -386,7 +393,7 @@ export default function SetAdminAppbanner() {
             if (i === Object.keys(inputData).length - 1) {
               if (res.status === "success") {
                 servicesUseToast("완료되었습니다!", "s");
-                bannerReqSuccess.current = false;
+                // setBannerReqSuccess(false);
                 setTimeout(() => {
                   window.location.reload();
                 }, 2000);
