@@ -151,7 +151,7 @@ i {
 
 .headerBox {
   width: 100%;
-  max-width: 80rem;
+  max-width: 1200px;
   min-width: 75rem;
   height: 100%;
 }
