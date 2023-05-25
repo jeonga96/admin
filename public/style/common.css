@@ -1189,7 +1189,7 @@ i {
 }
 .addCompanyUserList {
   position: relative;
-  width: 630px;
+  width: 600px;
   margin: 0 auto;
   margin-top: 42px;
   padding: 2px;
@@ -1209,10 +1209,10 @@ i {
 .addCompanyUserList thead tr {
   position: absolute;
   top: -35px;
-  left: 3px;
+  left: 2px;
 }
 .addCompanyUserList th {
-  width: 123px;
+  width: 117.2px;
   background: var(--color-bgblack);
   color: var(--color-white);
 }
@@ -1511,7 +1511,7 @@ ul.pagination li a:hover {
   padding: 10px;
   background-color: var(--color-bggray);
 }
-
+/* tableTopWrap  ============================ */
 .tableTopWrap .smallButton,
 .tableTopWrap .smallSubmitButton {
   width: 6rem;
@@ -1529,6 +1529,56 @@ ul.pagination li a:hover {
 .tableTopWrap button:hover {
   background-color: var(--color-acceent);
   color: var(--color-black);
+}
+
+.tableTopNumber {
+  border: 1px solid var(--color-bgblack);
+  border-radius: 2px;
+}
+.tableTopNumber span {
+  display: inline-block;
+  height: 100%;
+  line-height: 18px;
+}
+
+.tableTopNumber span:first-child {
+  color: var(--color-white);
+  padding: 0 5px;
+  border-right: 1px solid var(--color-bgblack);
+  background-color: var(--color-bgblack);
+}
+.tableTopNumber span:last-child {
+  padding: 0 12px;
+}
+
+.tableTopScrollBtn {
+  position: absolute;
+  left: 5px;
+  padding: 2px 0px;
+}
+.tableTopScrollBtn a {
+  position: relative;
+  margin: 0 3px;
+  padding: 0 10px;
+  background-color: var(--color-bggray);
+  color: var(--color-black);
+}
+.tableTopScrollBtn a:hover {
+  background-color: var(--color-bgblack);
+  color: var(--color-white);
+}
+.tableTopScrollBtn a::after {
+  position: absolute;
+  right: -3px;
+  top: 10%;
+  display: block;
+  content: "";
+  border-right: 1px solid var(--color-bgblack);
+  width: 1px;
+  height: 80%;
+}
+.tableTopScrollBtn a:last-child::after {
+  display: none;
 }
 
 @media screen and (max-width: 990px) {
@@ -1550,6 +1600,7 @@ ul.pagination li a:hover {
   color: var(--color-black);
   background-color: var(--color-acceent);
 }
+/* /tableTopWrap  ============================ */
 
 .Link {
   display: block;

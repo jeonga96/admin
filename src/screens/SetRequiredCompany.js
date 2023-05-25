@@ -3,13 +3,9 @@ import { useEffect, useState, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 
-import { servicesPostData, servicesGetStorage } from "../Services/importData";
+import { servicesPostData } from "../Services/importData";
 
-import {
-  serviesPostDataSettingRcid,
-  servicesUseToast,
-  servicesUseModal,
-} from "../Services/useData";
+import { servicesUseToast, servicesUseModal } from "../Services/useData";
 
 import {
   urlGetCompanyDetail,
@@ -23,10 +19,16 @@ import {
 import SetImage from "../components/common/ServicesImageSetPreview";
 import LayoutTopButton from "../components/common/LayoutTopButton";
 import PieceRegisterSearchPopUp from "../components/common/PieceRegisterSearchPopUp";
+import ComponentTableTopNumber from "../components/common/ComponentTableTopNumber";
+import ComponentTableTopScrollBtn from "../components/common/ComponentTableTopScrollBtn";
 
 export default function SetRequiredCompany() {
   const { cid } = useParams();
   const [UID, SETUID] = useState("");
+  const tableTopScrollBtnData = useRef([
+    { idName: "CompanyDetail_1", text: "계약 기본 정보" },
+    { idName: "CompanyDetail_2", text: "사업자 기본 정보" },
+  ]);
 
   // react-hook-form 라이브러리
   const {
@@ -200,12 +202,14 @@ export default function SetRequiredCompany() {
       <div className="commonBox">
         <form className="formLayout" onSubmit={handleSubmit(handleSubmitEvent)}>
           <ul className="tableTopWrap">
+            <ComponentTableTopScrollBtn data={tableTopScrollBtnData.current} />
+            <ComponentTableTopNumber title="사업자 관리번호" text={cid} />
             <LayoutTopButton url="/company" text="목록으로 가기" />
             <LayoutTopButton text="완료" disabled={isSubmitting} />
           </ul>
 
           <div className="formWrap reqFormWrap">
-            <fieldset>
+            <fieldset id="CompanyDetail_1">
               <h3>계약 기본 정보</h3>
               {/* setCompany ============================= */}
               <div className="formContentWrap">
@@ -416,7 +420,7 @@ export default function SetRequiredCompany() {
             {/* 계약기본정보 필드 끝 ==================================================================== */}
 
             {/* 고객 기본정보 필드 시작 ==================================================================== */}
-            <fieldset>
+            <fieldset id="CompanyDetail_2">
               <h3>사업자 기본 정보</h3>
               <div className="formContentWrap">
                 <div className="blockLabel">

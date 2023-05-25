@@ -15,6 +15,8 @@ import LayoutTopButton from "../components/common/LayoutTopButton";
 import ImageSet from "../components/common/ServicesImageSetPreview";
 import DetailUserComponent from "../components/common/ComponentSetUser";
 import PieceRegisterSearchPopUp from "../components/common/PieceRegisterSearchPopUp";
+import ComponentTableTopNumber from "../components/common/ComponentTableTopNumber";
+import ComponentTableTopScrollBtn from "../components/common/ComponentTableTopScrollBtn";
 
 export default function SetDetailUser() {
   const { uid } = useParams();
@@ -40,6 +42,9 @@ export default function SetDetailUser() {
   const [userData, setUserData] = useState({});
   // getDataFinish:기존에 입력된 값이 있어 값을 불러왔다면 true로 변경,
   const getDataFinish = useRef(false);
+  const tableTopScrollBtnData = useRef([
+    { idName: "CompanyDetail_1", text: "사용자 회원 정보 수정" },
+  ]);
 
   // 이미지 ------------------------------------------------------------------------
   // img:대표 이미지저장 및 표시, imgs:상세 이미지저장 및 표시
@@ -122,11 +127,13 @@ export default function SetDetailUser() {
       <div className="commonBox">
         <form className="formLayout" onSubmit={handleSubmit(fnSubmit)}>
           <ul className="tableTopWrap">
+            <ComponentTableTopScrollBtn data={tableTopScrollBtnData.current} />
+            <ComponentTableTopNumber title="회원 관리번호" text={uid} />
             <LayoutTopButton url="/user" text="목록으로 가기" />
             <LayoutTopButton text="완료" disabled={isSubmitting} />
           </ul>
           <div className="formWrap">
-            <fieldset>
+            <fieldset id="CompanyDetail_1">
               <h3>사용자 회원 정보 수정</h3>
               {/* setUser (회원활성화, 회원권한, 비밀번호관리) ================================================================ */}
               <DetailUserComponent

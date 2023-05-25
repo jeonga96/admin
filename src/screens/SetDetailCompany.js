@@ -2,7 +2,6 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
-
 import { servicesPostData } from "../Services/importData";
 
 import {
@@ -28,6 +27,8 @@ import LayoutTopButton from "../components/common/LayoutTopButton";
 import ComponentSetCompany from "../components/common/ComponentSetCompany";
 import PieceDetailListLink from "../components/common/PieceDetailListLink";
 import PieceRegisterSearchPopUp from "../components/common/PieceRegisterSearchPopUp";
+import ComponentTableTopNumber from "../components/common/ComponentTableTopNumber";
+import ComponentTableTopScrollBtn from "../components/common/ComponentTableTopScrollBtn";
 
 export default function SetCompanyDetail() {
   const { cid } = useParams();
@@ -54,6 +55,13 @@ export default function SetCompanyDetail() {
   const [getedData, setGetedData] = useState([]);
   // getDataFinish:기존에 입력된 값이 있어 값을 불러왔다면 true로 변경,
   const [getDataFinish, setGetDataFinish] = useState(false);
+  const tableTopScrollBtnData = useRef([
+    { idName: "CompanyDetail_1", text: "계약 기본 정보" },
+    { idName: "CompanyDetail_2", text: "사업자 기본 정보" },
+    { idName: "CompanyDetail_3", text: "사업자 정보" },
+    { idName: "CompanyDetail_4", text: "견적 관리" },
+    { idName: "CompanyDetail_5", text: "고객 관리" },
+  ]);
 
   // 이미지 ------------------------------------------------------------------------
   // 서버에서 titleImg, imgs의 iid를 받아오기 위해 사용
@@ -308,12 +316,14 @@ export default function SetCompanyDetail() {
       <div className="commonBox">
         <form className="formLayout" onSubmit={handleSubmit(handleSubmitEvent)}>
           <ul className="tableTopWrap">
+            <ComponentTableTopScrollBtn data={tableTopScrollBtnData.current} />
+            <ComponentTableTopNumber title="사업자 관리번호" text={cid} />
             <LayoutTopButton url="/company" text="목록으로 가기" />
             <LayoutTopButton text="완료" disabled={isSubmitting} />
           </ul>
 
           <div className="formWrap">
-            <fieldset>
+            <fieldset id="CompanyDetail_1">
               <h3>계약 기본 정보</h3>
               {/* setCompany radio (계약자, 사업자활성화, 회원연결) ================================================================ */}
               <ComponentSetCompany
@@ -466,7 +476,7 @@ export default function SetCompanyDetail() {
             {/* 계약기본정보 필드 끝 ==================================================================== */}
 
             {/* 고객 기본정보 필드 시작 ==================================================================== */}
-            <fieldset>
+            <fieldset id="CompanyDetail_2">
               <h3>사업자 기본 정보</h3>
               <div className="formContentWrap">
                 <div className="blockLabel">
@@ -775,13 +785,6 @@ export default function SetCompanyDetail() {
                       },
                     })}
                   />
-                  <ErrorMessage
-                    errors={errors}
-                    name="_corporationno"
-                    render={({ message }) => (
-                      <span className="errorMessageWrap">{message}</span>
-                    )}
-                  />
                 </div>
               </div>
 
@@ -796,13 +799,6 @@ export default function SetCompanyDetail() {
                     placeholder="15자 이하로 입력해 주세요."
                     maxLength="15"
                     {...register("_regName")}
-                  />
-                  <ErrorMessage
-                    errors={errors}
-                    name="_regName"
-                    render={({ message }) => (
-                      <span className="errorMessageWrap">{message}</span>
-                    )}
                   />
                 </div>
               </div>
@@ -1031,7 +1027,7 @@ export default function SetCompanyDetail() {
             </fieldset>
             {/* 고객기본정보 ============================================================================== */}
 
-            <fieldset>
+            <fieldset id="CompanyDetail_3">
               <h3>사업자 정보</h3>
 
               <div className="formContentWrap" style={{ width: "100%" }}>
@@ -1081,70 +1077,10 @@ export default function SetCompanyDetail() {
                 getData={getedData}
                 getDataFinish={getDataFinish}
               />
-
-              {/* 
-              <div className="formContentWrap">
-                <label className="blockLabel">
-                  <span>동영상 링크</span>
-                </label>
-                <div>
-                  <input
-                    type="text"
-                    id="vidlinkurl1"
-                    placeholder="외부 동영상 링크를 입력해 주세요."
-                    {...register("_vidlinkurl1")}
-                  />
-                  <input
-                    type="text"
-                    id="vidlinkurl2"
-                    placeholder="외부 동영상 링크를 입력해 주세요."
-                    {...register("_vidlinkurl2")}
-                  />
-                </div>
-              </div> */}
-
-              {/* 외부 링크 */}
-              {/* <div className="formContentWrap">
-                <label className="blockLabel">
-                  <span>외부 링크</span>
-                </label>
-                <div>
-                  <input
-                    type="text"
-                    id="linkurl1"
-                    placeholder="외부 링크를 입력해 주세요."
-                    {...register("_linkurl1")}
-                  />
-                  <input
-                    type="text"
-                    id="linkurl2"
-                    placeholder="외부 링크를 입력해 주세요."
-                    {...register("_linkurl2")}
-                  />
-                  <input
-                    type="text"
-                    id="linkurl3"
-                    placeholder="외부 링크를 입력해 주세요."
-                    {...register("_linkurl3")}
-                  />
-                  <input
-                    type="text"
-                    id="linkurl4"
-                    placeholder="외부 링크를 입력해 주세요."
-                    {...register("_linkurl4")}
-                  />
-                  <input
-                    type="text"
-                    id="linkurl5"
-                    placeholder="외부 링크를 입력해 주세요."
-                    {...register("_linkurl5")}
-                  />
-                </div>
-              </div> */}
             </fieldset>
 
             {/* 견적 관리 링크 이동 ================================================================ */}
-            <fieldset>
+            <fieldset id="CompanyDetail_4">
               <h3>견적 관리</h3>
               <div className="formContentWrap">
                 <label htmlFor="address" className=" blockLabel">
@@ -1197,7 +1133,7 @@ export default function SetCompanyDetail() {
             </fieldset>
 
             {/* 고객관리 링크 이동 ================================================================ */}
-            <fieldset>
+            <fieldset id="CompanyDetail_5">
               <h3>고객 관리</h3>
               <div className="formContentWrap">
                 <label htmlFor="address" className=" blockLabel">

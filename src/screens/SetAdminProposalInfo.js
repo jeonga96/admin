@@ -9,6 +9,8 @@ import { urlGetProposalInfo, urlSetProposalInfo } from "../Services/string";
 
 import LayoutTopButton from "../components/common/LayoutTopButton";
 import ImageSet from "../components/common/ServicesImageSetPreview";
+import ComponentTableTopNumber from "../components/common/ComponentTableTopNumber";
+import ComponentTableTopScrollBtn from "../components/common/ComponentTableTopScrollBtn";
 
 export default function SetAdminProposalInfo() {
   const { prid } = useParams();
@@ -27,6 +29,10 @@ export default function SetAdminProposalInfo() {
   const [getedData, setGetedData] = useState([]);
   // getDataFinish:기존에 입력된 값이 있어 값을 불러왔다면 true로 변경,
   const getDataFinish = useRef(false);
+  const tableTopScrollBtnData = useRef([
+    { idName: "CompanyDetail_1", text: "견적서 분류" },
+    { idName: "CompanyDetail_2", text: "견적서 세부 내용" },
+  ]);
 
   // 이미지 ------------------------------------------------------------------------
   // imgs:상세 이미지저장 및 표시, imgsIid:서버에 이미지를 보낼 때는, iid값만 필요
@@ -163,13 +169,15 @@ export default function SetAdminProposalInfo() {
       <div className="commonBox">
         <form className="formLayout" onSubmit={handleSubmit(fnSubmit)}>
           <ul className="tableTopWrap">
+            <ComponentTableTopScrollBtn data={tableTopScrollBtnData.current} />
+            <ComponentTableTopNumber title="견적서 관리번호" text={prid} />
             <LayoutTopButton url="/proposalInfo" text="목록으로 가기" />
             <LayoutTopButton text="완료" disabled={isSubmitting} />
           </ul>
 
           <div className="formWrap">
             {/* 갼적서 요청 내용  ================================================================ */}
-            <fieldset>
+            <fieldset id="CompanyDetail_1">
               <h3>
                 견적서 분류
                 {getedData.readFlag == "1" ? (
@@ -321,7 +329,7 @@ export default function SetAdminProposalInfo() {
               </div>
             </fieldset>
 
-            <fieldset>
+            <fieldset id="CompanyDetail_2">
               <h3>견적서 세부 내용</h3>
 
               <div className="formContentWrap">
