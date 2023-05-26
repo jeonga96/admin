@@ -8,7 +8,7 @@ import { serviesGetImgsIid, servicesUseToast } from "../Services/useData";
 import { urlGetProposalInfo, urlSetProposalInfo } from "../Services/string";
 
 import LayoutTopButton from "../components/common/LayoutTopButton";
-import ImageSet from "../components/common/ServicesImageSetPreview";
+import ImageSet from "../components/piece/ServicesImageSetPreview";
 import ComponentTableTopNumber from "../components/common/ComponentTableTopNumber";
 import ComponentTableTopScrollBtn from "../components/common/ComponentTableTopScrollBtn";
 

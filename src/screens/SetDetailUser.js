@@ -12,9 +12,9 @@ import {
 } from "../Services/string";
 
 import LayoutTopButton from "../components/common/LayoutTopButton";
-import ImageSet from "../components/common/ServicesImageSetPreview";
+import ImageSet from "../components/piece/ServicesImageSetPreview";
+import PieceRegisterSearchPopUp from "../components/piece/PieceRegisterSearchPopUp";
 import DetailUserComponent from "../components/common/ComponentSetUser";
-import PieceRegisterSearchPopUp from "../components/common/PieceRegisterSearchPopUp";
 import ComponentTableTopNumber from "../components/common/ComponentTableTopNumber";
 import ComponentTableTopScrollBtn from "../components/common/ComponentTableTopScrollBtn";
 

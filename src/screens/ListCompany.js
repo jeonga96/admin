@@ -8,7 +8,7 @@ import {
   urlSetCompanyDetail,
 } from "../Services/string";
 
-import PaginationButton from "../components/common/PiecePaginationButton";
+import PaginationButton from "../components/piece/PiecePaginationButton";
 import LayoutTopButton from "../components/common/LayoutTopButton";
 import ComponentListCompanySearch from "../components/common/ComponentListCompanySearch";
 import ComponentErrorNull from "../components/common/ComponentErrorNull";

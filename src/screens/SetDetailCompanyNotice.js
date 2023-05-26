@@ -7,7 +7,7 @@ import { servicesPostData } from "../Services/importData";
 import { servicesUseToast, serviesGetImgsIid } from "../Services/useData";
 import { useParams } from "react-router-dom";
 
-import SetImage from "../components/common/ServicesImageSetPreview";
+import SetImage from "../components/piece/ServicesImageSetPreview";
 import LayoutTopButton from "../components/common/LayoutTopButton";
 
 export default function SetDetailCompanyNotice() {

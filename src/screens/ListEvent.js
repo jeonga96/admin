@@ -7,7 +7,7 @@ import { urlContentList } from "../Services/string";
 import LayoutTopButton from "../components/common/LayoutTopButton";
 import ComponentErrorNull from "../components/common/ComponentErrorNull";
 
-import PaginationButton from "../components/common/PiecePaginationButton";
+import PaginationButton from "../components/piece/PiecePaginationButton";
 
 export default function ListEvent() {
   const { register, watch } = useForm({

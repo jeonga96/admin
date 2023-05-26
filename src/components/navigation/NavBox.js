@@ -52,16 +52,29 @@ export default function NavBox() {
               <ul className="navContentPart">
                 {item.subNav.map((item, key) => (
                   <li key={key}>
-                    <Link
-                      to={item.url}
-                      className={
-                        pathname.includes(item.url)
-                          ? "link focusNavLink"
-                          : "link"
-                      }
-                    >
-                      {item.subName}
-                    </Link>
+                    {item.url.includes("https://") ? (
+                      <a
+                        href={item.url}
+                        className={
+                          pathname.includes(item.url)
+                            ? "link focusNavLink"
+                            : "link"
+                        }
+                      >
+                        {item.subName}
+                      </a>
+                    ) : (
+                      <Link
+                        to={item.url}
+                        className={
+                          pathname.includes(item.url)
+                            ? "link focusNavLink"
+                            : "link"
+                        }
+                      >
+                        {item.subName}
+                      </Link>
+                    )}
                   </li>
                 ))}
               </ul>

@@ -4,7 +4,7 @@ import { servicesPostData } from "../Services/importData";
 import { useDidMountEffect } from "../Services/customHook";
 import { urlListProposalInfo, urlGetCompany } from "../Services/string";
 
-import PageButton from "../components/common/PiecePaginationButton";
+import PageButton from "../components/piece/PiecePaginationButton";
 import ComponentErrorNull from "../components/common/ComponentErrorNull";
 
 export default function DetailCompanyProposalinfo() {

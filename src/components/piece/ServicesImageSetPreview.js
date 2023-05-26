@@ -7,7 +7,7 @@ import { useDidMountEffect } from "../../Services/customHook";
 import { urlUpImages, urlGetImages } from "../../Services/string";
 import { servicesUseToast } from "../../Services/useData";
 import ServicesImageOnClick from "./ServicesImageOnClick";
-import Loading from "./ComponentLoading";
+import Loading from "../common/ComponentLoading";
 
 export default function ImageSet({
   img,

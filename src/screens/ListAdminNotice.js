@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { useState, useLayoutEffect, useEffect } from "react";
+import { useState, useLayoutEffect } from "react";
 import { servicesPostData } from "../Services/importData";
 import { urlContentList } from "../Services/string";
 
@@ -7,7 +7,7 @@ import LayoutTopButton from "../components/common/LayoutTopButton";
 import ComponentErrorNull from "../components/common/ComponentErrorNull";
 import ComponentListNotice from "../components/common/ComponentListNotice";
 
-import PaginationButton from "../components/common/PiecePaginationButton";
+import PaginationButton from "../components/piece/PiecePaginationButton";
 
 export default function ListAdminNotice() {
   const { register, watch } = useForm({

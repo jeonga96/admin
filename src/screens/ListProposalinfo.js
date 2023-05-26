@@ -4,7 +4,7 @@ import { servicesPostData } from "../Services/importData";
 import { urlListProposalInfo } from "../Services/string";
 
 import LayoutTopButton from "../components/common/LayoutTopButton";
-import PageButton from "../components/common/PiecePaginationButton";
+import PageButton from "../components/piece/PiecePaginationButton";
 import ComponentListEstmateinfoSearch from "../components/common/ComponentListEstmateinfoSearch";
 import ComponentErrorNull from "../components/common/ComponentErrorNull";
 

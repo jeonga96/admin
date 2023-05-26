@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useGetimgStringImgs, useGetImage } from "../../Services/customHook";
 
-import ImageOnClick from "./ServicesImageOnClick";
+import ImageOnClick from "../piece/ServicesImageOnClick";
 
 export default function ComponentDetailNotice({ detail }) {
   // contentString 유무를 확인해 contentString가 있으면 관리자 내용

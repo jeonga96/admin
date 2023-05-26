@@ -16,9 +16,9 @@ import {
   urlGetCompany,
   urlGetUserDetail,
 } from "../Services/string";
-import SetImage from "../components/common/ServicesImageSetPreview";
+import SetImage from "../components/piece/ServicesImageSetPreview";
+import PieceRegisterSearchPopUp from "../components/piece/PieceRegisterSearchPopUp";
 import LayoutTopButton from "../components/common/LayoutTopButton";
-import PieceRegisterSearchPopUp from "../components/common/PieceRegisterSearchPopUp";
 import ComponentTableTopNumber from "../components/common/ComponentTableTopNumber";
 import ComponentTableTopScrollBtn from "../components/common/ComponentTableTopScrollBtn";
 

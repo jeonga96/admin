@@ -3,7 +3,7 @@ import { useLayoutEffect, useState } from "react";
 import { servicesPostData } from "../Services/importData";
 import { urlUserlist, urlSetUser } from "../Services/string";
 
-import PageButton from "../components/common/PiecePaginationButton";
+import PageButton from "../components/piece/PiecePaginationButton";
 import LayoutTopButton from "../components/common/LayoutTopButton";
 import ComponentListUserSearch from "../components/common/ComponentListUserSearch";
 import ComponentErrorNull from "../components/common/ComponentErrorNull";

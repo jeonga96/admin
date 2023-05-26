@@ -44,5 +44,19 @@
         "url": "/event"
       }
     ]
+  },
+  {
+    "name": "공사콕 콘텐츠 페이지",
+    "url": null,
+    "subNav": [
+      {
+        "subName": "개인정보처리방침",
+        "url": "https://contents.gongsacok.com/privacy"
+      },
+      {
+        "subName": "이용약관",
+        "url": "https://contents.gongsacok.com/terms"
+      }
+    ]
   }
 ]

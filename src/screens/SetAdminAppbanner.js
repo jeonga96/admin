@@ -1,4 +1,4 @@
-import { useState, useLayoutEffect, useRef, useEffect } from "react";
+import { useState, useLayoutEffect, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import {
   urlContentList,
@@ -10,7 +10,7 @@ import { useDidMountEffect } from "../Services/customHook";
 import { serviesGetImgId, servicesUseToast } from "../Services/useData";
 
 import LayoutTopButton from "../components/common/LayoutTopButton";
-import SetImage from "../components/common/ServicesImageSetUrl";
+import SetImage from "../components/piece/ServicesImageSetUrl";
 
 function InputBox({ inputData, setinputData, title, allItem, image }) {
   // 상위 컴포넌트에게 전달하기 위한 함수, useState

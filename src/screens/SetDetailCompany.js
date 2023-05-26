@@ -22,11 +22,11 @@ import {
   urlSetUser,
   urlGetUser,
 } from "../Services/string";
-import SetImage from "../components/common/ServicesImageSetPreview";
+import SetImage from "../components/piece/ServicesImageSetPreview";
 import LayoutTopButton from "../components/common/LayoutTopButton";
 import ComponentSetCompany from "../components/common/ComponentSetCompany";
-import PieceDetailListLink from "../components/common/PieceDetailListLink";
-import PieceRegisterSearchPopUp from "../components/common/PieceRegisterSearchPopUp";
+import PieceDetailListLink from "../components/piece/PieceDetailListLink";
+import PieceRegisterSearchPopUp from "../components/piece/PieceRegisterSearchPopUp";
 import ComponentTableTopNumber from "../components/common/ComponentTableTopNumber";
 import ComponentTableTopScrollBtn from "../components/common/ComponentTableTopScrollBtn";
 
@@ -59,8 +59,9 @@ export default function SetCompanyDetail() {
     { idName: "CompanyDetail_1", text: "계약 기본 정보" },
     { idName: "CompanyDetail_2", text: "사업자 기본 정보" },
     { idName: "CompanyDetail_3", text: "사업자 정보" },
-    { idName: "CompanyDetail_4", text: "견적 관리" },
-    { idName: "CompanyDetail_5", text: "고객 관리" },
+    { idName: "CompanyDetail_4", text: "청구결제사항" },
+    { idName: "CompanyDetail_5", text: "견적 관리" },
+    { idName: "CompanyDetail_6", text: "고객 관리" },
   ]);
 
   // 이미지 ------------------------------------------------------------------------
@@ -1079,8 +1080,42 @@ export default function SetCompanyDetail() {
               />
             </fieldset>
 
-            {/* 견적 관리 링크 이동 ================================================================ */}
             <fieldset id="CompanyDetail_4">
+              <h3>청구결제사항</h3>
+
+              {/* <div className="formContentWrap" style={{ width: "100%" }}>
+                <label htmlFor="ceogreet" className="blockLabel">
+                  <span>대표인사말</span>
+                </label>
+                <div>
+                  <input
+                    type="text"
+                    id="ceogreet"
+                    placeholder="인사말을 입력해 주세요."
+                    maxLength="50"
+                    {...register("_ceogreet")}
+                  />
+                </div>
+              </div> */}
+
+              <div className="formContentWrap" style={{ width: "100%" }}>
+                <label htmlFor="ex" className="blockLabel">
+                  <span>비고</span>
+                </label>
+                <div>
+                  <textarea
+                    type="text"
+                    id="ex"
+                    placeholder="기능 적용 X"
+                    maxLength="100"
+                    {...register("_ex")}
+                  />
+                </div>
+              </div>
+            </fieldset>
+
+            {/* 견적 관리 링크 이동 ================================================================ */}
+            <fieldset id="CompanyDetail_5">
               <h3>견적 관리</h3>
               <div className="formContentWrap">
                 <label htmlFor="address" className=" blockLabel">
@@ -1133,7 +1168,7 @@ export default function SetCompanyDetail() {
             </fieldset>
 
             {/* 고객관리 링크 이동 ================================================================ */}
-            <fieldset id="CompanyDetail_5">
+            <fieldset id="CompanyDetail_6">
               <h3>고객 관리</h3>
               <div className="formContentWrap">
                 <label htmlFor="address" className=" blockLabel">
