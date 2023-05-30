@@ -47,6 +47,7 @@ export default function SetDetailAdminNotice() {
       })
         .then((res) => {
           if (res.status === "success") {
+            console.log(res.data);
             setNoticeDetail(res.data);
             setValue("_category", res.data.category || "notice");
             setValue("_contentString", res.data.contentString || "");
@@ -58,6 +59,8 @@ export default function SetDetailAdminNotice() {
         .catch((res) => console.log(res));
     }
   }, []);
+
+  console.log(imgs);
 
   function AddUserSubmit(e) {
     serviesGetImgsIid(imgsIid, imgs);
@@ -197,7 +200,7 @@ export default function SetDetailAdminNotice() {
             <SetImage
               imgs={imgs}
               setImgs={setImgs}
-              id="imgs"
+              id="imgString"
               title="공지사항 이미지"
               getData={noticeDetail}
               getDataFinish={getDataFinish.current}

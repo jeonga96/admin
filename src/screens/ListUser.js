@@ -50,20 +50,27 @@ function ListInTr({ item, setClickedUseFlag, clickedUseFlag }) {
         </Link>
       </td>
       <td className="tableButton">
-        <Link to={`/company/${item.cid}`} className="Link">
-          {item.cid}
-        </Link>
+        {!!item.cid && (
+          <Link to={`/company/${item.cid}`} className="Link">
+            {item.cid}
+          </Link>
+        )}
       </td>
       <td>{item.userid}</td>
       <td>{item.name}</td>
       <td>
-        {item.userrole && item.userrole.includes("ROLE_ADMIN")
-          ? "관리자"
-          : "일반"}
+        {item.userrole && item.userrole.includes("ROLE_ADMIN") ? (
+          <i className="tableIcon" style={{ backgroundColor: "orange" }}>
+            관리자
+          </i>
+        ) : (
+          <i className="tableIcon">일반</i>
+        )}
       </td>
       <td>{item.mobile}</td>
+
       <td>{item.createTime && item.createTime.slice(0, 10)}</td>
-      <td>{item.udid ? <i className="tableIcon">입력</i> : null}</td>
+      {/* <td>{item.udid ? <i className="tableIcon">입력</i> : null}</td> */}
     </tr>
   );
 }
@@ -138,14 +145,15 @@ export default function ListUser() {
             <thead>
               <tr>
                 <th style={{ width: "70px" }}> 계약관리</th>
-                <th style={{ width: "140px" }}>관리번호</th>
-                <th style={{ width: "140px" }}>사업자관리번호</th>
-                <th style={{ width: "140px" }}>아이디</th>
-                <th style={{ width: "140px" }}>이름</th>
+                <th style={{ width: "150px" }}>관리번호</th>
+                <th style={{ width: "150px" }}>사업자관리번호</th>
+                <th style={{ width: "150px" }}>아이디</th>
+                <th style={{ width: "150px" }}>이름</th>
                 <th style={{ width: "100px" }}>회원권한</th>
                 <th style={{ width: "auto" }}>핸드폰번호</th>
-                <th style={{ width: "140px" }}>계약일</th>
-                <th style={{ width: "70px" }}>상세입력</th>
+
+                <th style={{ width: "150px" }}>계약일</th>
+                {/* <th style={{ width: "70px" }}>상세입력</th> */}
               </tr>
             </thead>
             <tbody>
