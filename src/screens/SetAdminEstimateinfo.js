@@ -221,7 +221,7 @@ export default function SetAdminEstimateinfo() {
     <>
       <div className="commonBox">
         <form className="formLayout" onSubmit={handleSubmit(fnSubmit)}>
-          <ul className="tableTopWrap">
+          <ul className="tableTopWrap tableTopBorderWrap">
             <ComponentTableTopScrollBtn data={tableTopScrollBtnData.current} />
             <ComponentTableTopNumber title="견적의뢰서 관리번호" text={esid} />
 

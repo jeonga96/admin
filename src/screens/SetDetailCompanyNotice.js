@@ -91,7 +91,7 @@ export default function SetDetailCompanyNotice() {
     <>
       <div className="commonBox">
         <form className="formLayout" onSubmit={handleSubmit(fnSubmit)}>
-          <ul className="tableTopWrap">
+          <ul className="tableTopWrap tableTopWhiteWrap">
             <LayoutTopButton text="완료" disabled={isSubmitting} />
           </ul>
           <div className="formContentWrap formContentWideWrap">

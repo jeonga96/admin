@@ -126,7 +126,7 @@ export default function SetDetailUser() {
     <>
       <div className="commonBox">
         <form className="formLayout" onSubmit={handleSubmit(fnSubmit)}>
-          <ul className="tableTopWrap">
+          <ul className="tableTopWrap tableTopBorderWrap">
             <ComponentTableTopScrollBtn data={tableTopScrollBtnData.current} />
             <ComponentTableTopNumber title="회원 관리번호" text={uid} />
             <LayoutTopButton url="/user" text="목록으로 가기" />

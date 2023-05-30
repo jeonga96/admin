@@ -168,7 +168,7 @@ export default function SetAdminProposalInfo() {
     <>
       <div className="commonBox">
         <form className="formLayout" onSubmit={handleSubmit(fnSubmit)}>
-          <ul className="tableTopWrap">
+          <ul className="tableTopWrap tableTopBorderWrap">
             <ComponentTableTopScrollBtn data={tableTopScrollBtnData.current} />
             <ComponentTableTopNumber title="견적서 관리번호" text={prid} />
             <LayoutTopButton url="/proposalInfo" text="목록으로 가기" />

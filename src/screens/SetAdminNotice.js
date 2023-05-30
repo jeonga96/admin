@@ -122,7 +122,7 @@ export default function SetDetailAdminNotice() {
     <>
       <div className="commonBox">
         <form className="formLayout" onSubmit={handleSubmit(AddUserSubmit)}>
-          <ul className="tableTopWrap">
+          <ul className="tableTopWrap tableTopWhiteWrap">
             <LayoutTopButton
               text={useFlag == true ? "비공개" : "공개"}
               fn={fnUseFlag}

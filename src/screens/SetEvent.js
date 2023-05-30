@@ -114,7 +114,7 @@ export default function SetEvent() {
     <>
       <div className="commonBox">
         <form className="formLayout" onSubmit={handleSubmit(AddUserSubmit)}>
-          <ul className="tableTopWrap">
+          <ul className="tableTopWrap tableTopWhiteWrap">
             <LayoutTopButton text="목록으로 가기" url="/event" />
             <LayoutTopButton
               text={useFlag == true ? "이벤트 종료" : "이벤트 활성화"}

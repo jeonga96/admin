@@ -1511,6 +1511,12 @@ ul.pagination li a:hover {
   padding: 10px;
   background-color: var(--color-bggray);
 }
+.tableTopBorderWrap {
+  border: 1px solid var(--color-gray);
+}
+.tableTopWhiteWrap {
+  background-color: var(--color-white);
+}
 /* tableTopWrap  ============================ */
 .tableTopWrap .smallButton,
 .tableTopWrap .smallSubmitButton {

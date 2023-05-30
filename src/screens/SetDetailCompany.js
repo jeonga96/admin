@@ -316,7 +316,7 @@ export default function SetCompanyDetail() {
     <>
       <div className="commonBox">
         <form className="formLayout" onSubmit={handleSubmit(handleSubmitEvent)}>
-          <ul className="tableTopWrap">
+          <ul className="tableTopWrap tableTopBorderWrap">
             <ComponentTableTopScrollBtn data={tableTopScrollBtnData.current} />
             <ComponentTableTopNumber title="사업자 관리번호" text={cid} />
             <LayoutTopButton url="/company" text="목록으로 가기" />

@@ -43,7 +43,7 @@ export default function DetailNotice() {
   return (
     <>
       <div className="commonBox paddingBox">
-        <ul className="tableTopWrap">
+        <ul className="tableTopWrap tableTopWhiteWrap">
           {!!cid ? (
             <>
               <LayoutTopButton
