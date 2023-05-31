@@ -40,6 +40,7 @@ export default function AddCompany() {
       name: getValues("_name"),
     })
       .then((res) => {
+        console.log("???");
         if (res.status === "fail") {
           servicesUseToast("잘못된 값을 입력했습니다.", "e");
           return;
@@ -47,6 +48,7 @@ export default function AddCompany() {
         // 정상 등록 완료
         // 디테일 정보를 입력하도록 사업자 상세정보로 이동
         if (res.status === "success") {
+          console.log(urlSetCompany, res.data.cid, select.uid);
           servicesPostData(urlSetCompany, {
             cid: res.data.cid,
             ruid: select.uid,
@@ -89,15 +91,15 @@ export default function AddCompany() {
                     value: 8,
                     message: "8자 이하의 이름만 사용가능합니다.",
                   },
-                  pattern: {
-                    value: /[ㄱ-ㅎ가-힣]/,
-                    message: "입력 형식에 맞지 않습니다.",
-                  },
+                  // pattern: {
+                  //   value: /[ㄱ-ㅎ가-힣]/,
+                  //   message: "입력 형식에 맞지 않습니다.",
+                  // },
                 })}
               />
               <ErrorMessage
                 errors={errors}
-                name="name"
+                name="_name"
                 render={({ message }) => (
                   <span className="errorMessageWrap">{message}</span>
                 )}
