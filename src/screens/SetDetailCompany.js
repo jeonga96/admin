@@ -838,7 +838,7 @@ export default function SetCompanyDetail() {
                     type="text"
                     id="mobilenum"
                     placeholder="핸드폰번호를 입력해 주세요. (예시 000-0000-0000)"
-                    maxLength={12}
+                    maxLength={13}
                     value={
                       (watch("_mobilenum") &&
                         watch("_mobilenum")

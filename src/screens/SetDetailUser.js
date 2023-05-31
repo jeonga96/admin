@@ -394,6 +394,7 @@ export default function SetDetailUser() {
                     type="text"
                     id="mobile"
                     placeholder="핸드폰 번호 (예시 000-0000-0000)"
+                    maxLength={13}
                     value={
                       (watch("_mobile") &&
                         watch("_mobile")
