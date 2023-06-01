@@ -825,8 +825,8 @@ export default function SetCompanyDetail() {
                 id="regImgs"
                 title="사업자 등록증"
                 getDataFinish={getDataFinish}
-                setCkRegBtn={setCkRegBtn}
-                ckRegBtn={ckRegBtn}
+                // setCkRegBtn={setCkRegBtn}
+                // ckRegBtn={ckRegBtn}
               />
 
               <div className="formContentWrap">

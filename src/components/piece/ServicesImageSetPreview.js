@@ -20,8 +20,6 @@ export default function ImageSet({
   title,
   getData,
   getDataFinish,
-  setCkRegBtn,
-  ckRegBtn,
 }) {
   // 대표이미지와 상세이미지의 이미지를 모두 사용하기 위해 아래와 같이 작성
   // 해당 이벤트는 event.target.id로 구분하고 있기 때문에 이 외에 실행 시 코드 수정 필요
@@ -208,20 +206,6 @@ export default function ImageSet({
         <label className="imgBtn" htmlFor={id} ref={dragRef}>
           이미지 추가
         </label>
-
-        {regImgs ? (
-          <label
-            className="imgBtn"
-            onClick={() => setCkRegBtn(!ckRegBtn)}
-            style={
-              ckRegBtn
-                ? { backgroundColor: "#ffc107" }
-                : { backgroundColor: "#757575", color: "#fff" }
-            }
-          >
-            {ckRegBtn ? "사업자 인증 회원" : "인증 안됨"}
-          </label>
-        ) : null}
       </div>
 
       <div className="imgsThumbnail">
@@ -238,10 +222,9 @@ export default function ImageSet({
           htmlFor={id}
           ref={dragRef}
           style={
-            ckRegBtn
+            fnSetRegImgs !== [] && id === "regImgs"
               ? {
-                  backgroundColor: "rgba(0,0,0,0.3)",
-                  zIndex: "1",
+                  backgroundColor: "#bdbdbd",
                   height:
                     files.length <= 10
                       ? "94px"
@@ -258,7 +241,11 @@ export default function ImageSet({
                       : "288px",
                 }
           }
-        ></label>
+        >
+          {fnSetRegImgs !== [] && id === "regImgs" && (
+            <span className="regImgsText">사업자 인증 회원</span>
+          )}
+        </label>
 
         <div
           className="DragDrop-Files"

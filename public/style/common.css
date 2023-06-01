@@ -514,6 +514,13 @@ i {
   margin: 0 auto;
   margin-top: 5px;
 }
+.regImgsText {
+  display: block;
+  text-align: center;
+  color: var(--color-white);
+  font-size: 14px;
+  margin: 0 auto;
+}
 .imgsThumbnail label {
   width: 100%;
   height: 94px;
