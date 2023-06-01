@@ -218,11 +218,12 @@ export default function ImageSet({
           onChange={onChangeFiles}
         />
 
+        {console.log("??", id, regImgs && regImgs.length > 0)}
         <label
           htmlFor={id}
           ref={dragRef}
           style={
-            fnSetRegImgs !== [] && id === "regImgs"
+            regImgs && regImgs.length > 0 && id === "regImgs"
               ? {
                   backgroundColor: "#bdbdbd",
                   height:
@@ -242,7 +243,7 @@ export default function ImageSet({
                 }
           }
         >
-          {fnSetRegImgs !== [] && id === "regImgs" && (
+          {regImgs && regImgs.length > 0 && id === "regImgs" && (
             <span className="regImgsText">사업자 인증 회원</span>
           )}
         </label>
