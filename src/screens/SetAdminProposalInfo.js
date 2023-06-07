@@ -1,4 +1,5 @@
-import { useLayoutEffect, useState, useRef } from "react";
+import { useDispatch, shallowEqual, useSelector } from "react-redux";
+import { useLayoutEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
@@ -8,13 +9,13 @@ import { serviesGetImgsIid, servicesUseToast } from "../Services/useData";
 import { urlGetProposalInfo, urlSetProposalInfo } from "../Services/string";
 
 import LayoutTopButton from "../components/common/LayoutTopButton";
-import ImageSet from "../components/piece/ServicesImageSetPreview";
+import ServicesImageSetPreview from "../components/piece/ServicesImageSetPreview";
 import ComponentTableTopNumber from "../components/common/ComponentTableTopNumber";
 import ComponentTableTopScrollBtn from "../components/common/ComponentTableTopScrollBtn";
 
 export default function SetAdminProposalInfo() {
   const { prid } = useParams();
-
+  const dispatch = useDispatch();
   // react-hook-form 라이브러리
   const {
     handleSubmit,
@@ -24,19 +25,14 @@ export default function SetAdminProposalInfo() {
     watch,
     formState: { isSubmitting, errors },
   } = useForm();
-  // 데이터 ------------------------------------------------------------------------
-  // 작성된 데이터를 받아옴
-  const [getedData, setGetedData] = useState([]);
-  // getDataFinish:기존에 입력된 값이 있어 값을 불러왔다면 true로 변경,
-  const getDataFinish = useRef(false);
+
   const tableTopScrollBtnData = useRef([
     { idName: "CompanyDetail_1", text: "견적서 분류" },
     { idName: "CompanyDetail_2", text: "견적서 세부 내용" },
   ]);
-
   // 이미지 ------------------------------------------------------------------------
   // imgs:상세 이미지저장 및 표시, imgsIid:서버에 이미지를 보낼 때는, iid값만 필요
-  const [imgs, setImgs] = useState([]);
+  const multiImgs = useSelector((state) => state.multiImgsData, shallowEqual);
   const imgsIid = [];
 
   useLayoutEffect(() => {
@@ -58,7 +54,10 @@ export default function SetAdminProposalInfo() {
         .then((res) => {
           if (res.status === "success") {
             // 이미지 iid를 가지고 오기 위해 (imgs, titleImg) 사용
-            setGetedData(res.data);
+            dispatch({
+              type: "getedData",
+              payload: { ...res.data },
+            });
 
             // 값이 있다면 inputValue에 저장한 후 getDataFinish 값을 변경
             setValue("_fromUid", res.data.fromUid || "");
@@ -83,8 +82,6 @@ export default function SetAdminProposalInfo() {
             setValue("_canCard", res.data.canCard.toString() || "0");
             setValue("_canCashBill", res.data.canCashBill.toString() || "0");
             setValue("_canExtraProp", res.data.canExtraProp.toString() || "0");
-
-            getDataFinish.current = true;
           }
         })
         .catch((res) => console.log(res));
@@ -93,7 +90,7 @@ export default function SetAdminProposalInfo() {
 
   function fnSubmit(e) {
     //서버에 imgs의 iid값만을 보내기 위해 실행하는 반복문 함수
-    serviesGetImgsIid(imgsIid, imgs);
+    serviesGetImgsIid(imgsIid, multiImgs);
     // setUserDetailInfo 수정
     servicesPostData(
       urlSetProposalInfo,
@@ -180,11 +177,11 @@ export default function SetAdminProposalInfo() {
             <fieldset id="CompanyDetail_1">
               <h3>
                 견적서 분류
-                {getedData.readFlag == "1" ? (
+                {/* {getedData.readFlag == "1" ? (
                   <span>열람</span>
                 ) : (
                   <span>미열람</span>
-                )}
+                )} */}
               </h3>
 
               {/* 사용 플래그  */}
@@ -505,44 +502,6 @@ export default function SetAdminProposalInfo() {
                 </ul>
               </div>
 
-              {/* <div className="formContentWrap">
-                <label htmlFor="telnum" className="blockLabel">
-                  <span>전화번호</span>
-                </label>
-                <div>
-                  <input
-                    type="text"
-                    id="telnum"
-                    placeholder="전화번호를 입력해 주세요. (예시 00-0000-0000)"
-                    value={
-                      (watch("_telnum") &&
-                        watch("_telnum")
-                          .replace(/[^0-9]/g, "")
-                          .replace(
-                            /(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)([0-9]{4}$)/,
-                            "$1-$2-$3"
-                          )
-                          .replace("--", "-")) ||
-                      ""
-                    }
-                    {...register("_telnum", {
-                      required: "입력되지 않았습니다.",
-                      pattern: {
-                        value: /^[0-9]{2,4}-[0-9]{3,4}-[0-9]{4}/,
-                        message: "형식에 맞지 않습니다.",
-                      },
-                    })}
-                  />
-                  <ErrorMessage
-                    errors={errors}
-                    name="_telnum"
-                    render={({ message }) => (
-                      <span className="errorMessageWrap">{message}</span>
-                    )}
-                  />
-                </div>
-              </div> */}
-
               <div className="formContentWrap">
                 <label htmlFor="registration" className="blockLabel">
                   <span>사업자 등록 번호</span>
@@ -830,14 +789,7 @@ export default function SetAdminProposalInfo() {
                 </div>
               </div>
 
-              <ImageSet
-                imgs={imgs}
-                setImgs={setImgs}
-                id="addImgs"
-                title="참고 이미지"
-                getData={getedData}
-                getDataFinish={getDataFinish.current}
-              />
+              <ServicesImageSetPreview id="addImgs" title="참고 이미지" />
             </fieldset>
           </div>
         </form>

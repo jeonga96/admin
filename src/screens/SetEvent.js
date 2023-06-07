@@ -12,8 +12,6 @@ import LayoutTopButton from "../components/common/LayoutTopButton";
 export default function SetEvent() {
   const { contid } = useParams();
   const [useFlag, setUseFlag] = useState(true);
-
-  // react-hook-form 라이브러리
   const {
     handleSubmit,
     register,

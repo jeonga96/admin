@@ -1,3 +1,4 @@
+import { useDispatch, useSelector } from "react-redux";
 import { useLayoutEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -20,7 +21,7 @@ import ComponentTableTopScrollBtn from "../components/common/ComponentTableTopSc
 
 export default function SetDetailUser() {
   const { uid } = useParams();
-  // react-hook-form 라이브러리
+  const dispatch = useDispatch();
   const {
     handleSubmit,
     register,
@@ -36,24 +37,14 @@ export default function SetDetailUser() {
   });
 
   // 데이터 ------------------------------------------------------------------------
-  // 작성된 데이터를 받아옴
-  const [getedData, setGetedData] = useState([]);
   // 하위 컴포넌트에서 전달 받은 값이기 떄문에 useState로 작성
   const [userData, setUserData] = useState({});
-  // getDataFinish:기존에 입력된 값이 있어 값을 불러왔다면 true로 변경,
-  const getDataFinish = useRef(false);
   const tableTopScrollBtnData = useRef([
     { idName: "CompanyDetail_1", text: "사용자 회원 정보 수정" },
   ]);
-
   // 이미지 ------------------------------------------------------------------------
   // img:대표 이미지저장 및 표시, imgs:상세 이미지저장 및 표시
-  const [img, setImg] = useState(null);
-
-  // imgsIid:서버에 이미지를 보낼 때는, iid값만 필요
-  // const [imgs, setImgs] = useState([]);
-  // const imgsIid = [];
-
+  const titleImg = useSelector((state) => state.imgData);
   // 주소 ------------------------------------------------------------------------
   // address:신주소,  oldaddress:구주소,  zipcode:우편번호,  latitude:위도,  longitude:경도
   const [multilAddress, setMultilAddress] = useState({});
@@ -66,7 +57,11 @@ export default function SetDetailUser() {
       .then((res) => {
         if (res.status === "success") {
           // 이미지 iid를 가지고 오기 위해 (imgs, img) 사용
-          setGetedData(res.data);
+          dispatch({
+            type: "getedData",
+            payload: { ...res.data },
+          });
+
           // 값이 있다면 inputValue에 저장한 후 getDataFinish 값을 변경
           setValue("_nationality", res.data.nationality);
           setValue("_sex", res.data.sex);
@@ -76,7 +71,6 @@ export default function SetDetailUser() {
           setValue("_mobile", res.data.mobile || "");
           setValue("_location", res.data.location || "");
           setValue("_mail", res.data.mail || "");
-          getDataFinish.current = true;
         }
       })
       .catch((res) => console.log("wrror", res));
@@ -86,14 +80,11 @@ export default function SetDetailUser() {
   function fnSubmit(e) {
     //서버에 imgs의 iid값만을 보내기 위해 실행하는 반복문 함수
     // serviesGetImgsIid(imgsIid, imgs);
-    //
-    // setUser 수정 (회원활성화, 비밀번호, userrole)
-    // DetailUserComponent
+
     servicesPostData(urlSetUser, {
       uid: uid,
       ...userData,
     });
-
     // setUserDetailInfo 수정
     servicesPostData(urlSetUserDetail, {
       ruid: uid,
@@ -107,8 +98,7 @@ export default function SetDetailUser() {
       age: getValues("_age"),
       location: getValues("_location"),
       mail: getValues("_mail"),
-      titleImg: img ? img[0].iid : "",
-      // imgs: imgs ? imgsIid.toString() : "",
+      titleImg: titleImg ? titleImg[0].iid : "",
     })
       .then((res) => {
         if (res.status === "fail") {
@@ -379,10 +369,9 @@ export default function SetDetailUser() {
               {/* 주소 */}
               <PieceRegisterSearchPopUp
                 style={{ width: "100%" }}
-                userComponent
                 setMultilAddress={setMultilAddress}
                 multilAddress={multilAddress}
-                getedData={getedData}
+                userComponent
               />
 
               <div className="formContentWrap">
@@ -454,23 +443,7 @@ export default function SetDetailUser() {
                 </div>
               </div>
 
-              <ImageSet
-                img={img}
-                setImg={setImg}
-                getData={getedData}
-                id="titleImg"
-                title="대표 이미지"
-                getDataFinish={getDataFinish.current}
-              />
-
-              {/* <ImageSet
-                imgs={imgs}
-                setImgs={setImgs}
-                id="imgs"
-                title="상세 이미지"
-                getData={getedData}
-                getDataFinish={getDataFinish.current}
-              /> */}
+              <ImageSet id="titleImg" title="대표 이미지" />
             </fieldset>
           </div>
         </form>

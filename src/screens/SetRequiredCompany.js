@@ -1,12 +1,11 @@
+import { useDispatch, useSelector, shallowEqual } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 
 import { servicesPostData } from "../Services/importData";
-
 import { servicesUseToast, servicesUseModal } from "../Services/useData";
-
 import {
   urlGetCompanyDetail,
   urlSetCompanyDetail,
@@ -24,13 +23,8 @@ import ComponentTableTopScrollBtn from "../components/common/ComponentTableTopSc
 
 export default function SetRequiredCompany() {
   const { cid } = useParams();
-  const [UID, SETUID] = useState("");
-  const tableTopScrollBtnData = useRef([
-    { idName: "CompanyDetail_1", text: "계약 기본 정보" },
-    { idName: "CompanyDetail_2", text: "사업자 기본 정보" },
-  ]);
-
-  // react-hook-form 라이브러리
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const {
     handleSubmit,
     register,
@@ -45,26 +39,32 @@ export default function SetRequiredCompany() {
       _status: "2",
     },
   });
-  const navigate = useNavigate();
 
+  const [UID, SETUID] = useState("");
+  const tableTopScrollBtnData = useRef([
+    { idName: "CompanyDetail_1", text: "계약 기본 정보" },
+    { idName: "CompanyDetail_2", text: "사업자 기본 정보" },
+  ]);
   // 데이터 ------------------------------------------------------------------------
-  // 작성된 데이터를 받아옴
-  const [getedData, setGetedData] = useState([]);
-  // getDataFinish:기존에 입력된 값이 있어 값을 불러왔다면 true로 변경,
-  const getDataFinish = useRef(false);
+  const getedData = useSelector((state) => state.getedData, shallowEqual);
   // 이미지 ------------------------------------------------------------------------
-  const [titleImg, setTitleImg] = useState(null);
+  const titleImg = useSelector((state) => state.imgData, shallowEqual);
   // 주소 ------------------------------------------------------------------------
   const [multilAddress, setMultilAddress] = useState({});
 
   // getUser,
   async function fnReadList(res) {
-    await setGetedData(res.data);
-
+    dispatch({
+      type: "getedData",
+      payload: { ...res.data },
+    });
     await servicesPostData(urlGetUser, {
       uid: UID,
     }).then((res2) => {
-      setGetedData({ ...res.data, ...{ userid: res2.data.userid } });
+      dispatch({
+        type: "getedData",
+        payload: { ...res.data, ...{ userid: res2.data.userid } },
+      });
       setValue("_userid", res2.data.userid || "");
     });
 
@@ -73,15 +73,18 @@ export default function SetRequiredCompany() {
     }).then((res3) => {
       if (res3.status === "success") {
         if (!getedData.address) {
-          setGetedData({
-            ...res.data,
-            ...{
-              address: res3.data.address,
-              detailaddress: res3.data.detailaddress,
-              oldaddress: res3.data.oldaddress,
-              zipcode: res3.data.zipcode,
-              longitude: res3.data.longitude,
-              latitude: res3.data.latitude,
+          dispatch({
+            type: "getedData",
+            payload: {
+              ...res.data,
+              ...{
+                address: res3.data.address,
+                detailaddress: res3.data.detailaddress,
+                oldaddress: res3.data.oldaddress,
+                zipcode: res3.data.zipcode,
+                longitude: res3.data.longitude,
+                latitude: res3.data.latitude,
+              },
             },
           });
         }
@@ -191,7 +194,6 @@ export default function SetRequiredCompany() {
           setValue("_ruid", UID);
           setValue("_location", res.data.location);
           setValue("_mobilenum", res.data.mobile || "");
-          getDataFinish.current = true;
         }
       })
       .catch((res) => console.log(res));
@@ -665,15 +667,7 @@ export default function SetRequiredCompany() {
                 </div>
               </div>
 
-              {/* "대표 이미지 */}
-              <SetImage
-                img={titleImg}
-                setImg={setTitleImg}
-                getData={getedData}
-                id="titleImg"
-                title="대표 이미지"
-                getDataFinish={getDataFinish.current}
-              />
+              <SetImage id="titleImg" title="대표 이미지" />
             </fieldset>
           </div>
         </form>

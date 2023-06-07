@@ -1,4 +1,5 @@
-import { useState, useLayoutEffect, useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useState, useLayoutEffect } from "react";
 import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 
@@ -12,7 +13,7 @@ import LayoutTopButton from "../components/common/LayoutTopButton";
 
 export default function SetDetailCompanyNotice() {
   const { cid, comnid } = useParams();
-
+  const dispatch = useDispatch();
   // react-hook-form 라이브러리
   const {
     handleSubmit,
@@ -22,16 +23,9 @@ export default function SetDetailCompanyNotice() {
     formState: { isSubmitting, errors },
   } = useForm();
 
-  // 데이터 ------------------------------------------------------------------------
-  // getDataFinish:기존에 입력된 값이 있어 값을 불러왔다면 true로 변경,
-  const getDataFinish = useRef(false);
-  // 하위 이미지 컴포넌트에게 데이터 넘기기 위해 사용
-  const [noticeDetail, setNoticeDetail] = useState({});
-  // const [useFlag, setUseFlag] = useState(true);
-
   // 이미지 ------------------------------------------------------------------------
   // imgs:상세 이미지저장 및 표시, imgsIid:서버에 이미지를 보낼 때는, iid값만 필요
-  const [imgs, setImgs] = useState([]);
+  const imgs = useSelector((val) => val.imgsData);
   const imgsIid = [];
 
   useLayoutEffect(() => {
@@ -40,11 +34,12 @@ export default function SetDetailCompanyNotice() {
     })
       .then((res) => {
         if (res.status === "success") {
-          setNoticeDetail(res.data);
+          dispatch({
+            type: "getedData",
+            payload: { ...res.data },
+          });
           setValue("_title", res.data.title || "");
           setValue("_content", res.data.content || "");
-          // setUseFlag(res.data.useFlag == 1 ? true : false);
-          getDataFinish.current = true;
         }
       })
       .catch((res) => console.log(res));
@@ -53,7 +48,6 @@ export default function SetDetailCompanyNotice() {
   function fnSubmit(e) {
     //서버에 imgs의 iid값만을 보내기 위해 실행하는 반복문 함수
     serviesGetImgsIid(imgsIid, imgs);
-
     servicesPostData(
       urlCompanySetNotice,
       !!comnid
@@ -111,14 +105,7 @@ export default function SetDetailCompanyNotice() {
             </div>
           </div>
 
-          <SetImage
-            imgs={imgs}
-            setImgs={setImgs}
-            id="imgs"
-            title="공지사항 이미지"
-            getData={noticeDetail}
-            getDataFinish={getDataFinish.current}
-          />
+          <SetImage id="imgs" title="공지사항 이미지" />
 
           <div className="formContentWrap formContentWideWrap">
             <label htmlFor="title" className="blockLabel">

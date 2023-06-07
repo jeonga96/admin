@@ -1,3 +1,4 @@
+import { useSelector, shallowEqual } from "react-redux";
 import { useLayoutEffect } from "react";
 import { useDaumPostcodePopup } from "react-daum-postcode";
 
@@ -5,7 +6,7 @@ export default function Postcode({
   userComponent,
   setMultilAddress,
   multilAddress,
-  getedData,
+  // getedData,
   autoKey,
 }) {
   // 다음 주소 검색 API 주소
@@ -13,6 +14,7 @@ export default function Postcode({
     "//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js";
   // eact-daum-postcode의 popup 방식 사용
   const open = useDaumPostcodePopup(scriptUrl);
+  const getedData = useSelector((state) => state.getedData, shallowEqual);
 
   // 부모 컴포넌트에게 값을 전달하기 위해 함수로 사용
   function fnSetAddress(address) {

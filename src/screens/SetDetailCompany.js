@@ -1,3 +1,4 @@
+import { useDispatch, useSelector, shallowEqual } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
 import { useForm } from "react-hook-form";
@@ -32,7 +33,7 @@ import ComponentTableTopScrollBtn from "../components/common/ComponentTableTopSc
 
 export default function SetCompanyDetail() {
   const { cid } = useParams();
-
+  const dispatch = useDispatch();
   // react-hook-form 라이브러리
   const {
     handleSubmit,
@@ -50,11 +51,6 @@ export default function SetCompanyDetail() {
     },
   });
 
-  // 데이터 ------------------------------------------------------------------------
-  // 작성된 데이터를 받아옴
-  const [getedData, setGetedData] = useState([]);
-  // getDataFinish:기존에 입력된 값이 있어 값을 불러왔다면 true로 변경,
-  const [getDataFinish, setGetDataFinish] = useState(false);
   const tableTopScrollBtnData = useRef([
     { idName: "CompanyDetail_1", text: "계약 기본 정보" },
     { idName: "CompanyDetail_2", text: "사업자 기본 정보" },
@@ -63,24 +59,17 @@ export default function SetCompanyDetail() {
     { idName: "CompanyDetail_5", text: "견적 관리" },
     { idName: "CompanyDetail_6", text: "고객 관리" },
   ]);
-
+  // 데이터 ------------------------------------------------------------------------
+  // 작성된 데이터를 받아옴
+  const getedData = useSelector((state) => state.getedData, shallowEqual);
   // 이미지 ------------------------------------------------------------------------
+  const titleImg = useSelector((state) => state.imgData, shallowEqual);
+  const imgs = useSelector((state) => state.imgsData, shallowEqual);
+  const regImgs = useSelector((state) => state.multiImgsData, shallowEqual);
   // 서버에서 titleImg, imgs의 iid를 받아오기 위해 사용
-  // titleImg:대표 이미지저장 및 표시, imgs:상세 이미지저장 및 표시
-  const [titleImg, setTitleImg] = useState([]);
-  const [imgs, setImgs] = useState([]);
-  // imgsIid:서버에 이미지를 보낼 때는, iid값만 필요
   const imgsIid = [];
-  // 사업자 등록증 이미지
-  const [regImgs, setRegImgs] = useState([]);
-  const [ckRegBtn, setCkRegBtn] = useState(
-    watch("_status") == "1" ? true : false || false
-  );
-
   // 주소 ------------------------------------------------------------------------
-  // address:신주소,  oldaddress:구주소,  zipcode:우편번호,  latitude:위도,  longitude:경도
   const [multilAddress, setMultilAddress] = useState({});
-
   // 사업자 상세관리에서 사용하는 setCompanyDetailInfo 외 API  --------------------------------------
   // setUser 수정 - 하위컴포넌트에게 전달
   const [companyData, setCompanyData] = useState({});
@@ -103,7 +92,10 @@ export default function SetCompanyDetail() {
     })
       .then((res) => {
         if (res.status === "success") {
-          setGetedData(res.data);
+          dispatch({
+            type: "getedData",
+            payload: { ...res.data },
+          });
 
           setValue("_detailUseFlag", res.data.useFlag.toString());
           setValue("_status", res.data.status.toString());
@@ -133,22 +125,6 @@ export default function SetCompanyDetail() {
           setValue("_reCount", res.data.reCount || "");
           setValue("_okCount", res.data.okCount || "");
           setValue("_noCount", res.data.noCount || "");
-
-          // 외부 동영상 링크
-          // if (res.data.vidlinkurl) {
-          //   const nameVar = res.data.vidlinkurl.split(",");
-          //   setValue("_vidlinkurl1", nameVar[0] || "");
-          //   setValue("_vidlinkurl2", nameVar[1] || "");
-          // }
-          // 외부 링크
-          // if (res.data.linkurl) {
-          //   const nameVar = res.data.linkurl.split(",");
-          //   setValue("_linkurl1", nameVar[0] || "");
-          //   setValue("_linkurl2", nameVar[1] || "");
-          //   setValue("_linkurl3", nameVar[2] || "");
-          //   setValue("_linkurl4", nameVar[3] || "");
-          //   setValue("_linkurl5", nameVar[4] || "");
-          // }
 
           // 공지사항, 리뷰, 견적요청서 링크 이동 개수 확인하기 위해 데이터 받아오기
           serviesPostDataSettingRcid(urlCompanyNoticeList, cid, setNoticeList);
@@ -200,32 +176,11 @@ export default function SetCompanyDetail() {
           const WorkTimeArr = res.data.workTime.split("~");
           setValue("_workTimeTo", WorkTimeArr[0].trim() || "");
           setValue("_workTimeFrom", WorkTimeArr[1].trim() || "");
-
-          setGetDataFinish(true);
         }
       })
       .catch((res) => console.log(res));
   }, []);
 
-  useEffect(() => {
-    if (ckRegBtn) {
-      setValue("_status", "1");
-    } else if (watch("_status") == "0") {
-      setValue("_status", "0");
-    } else {
-      setValue("_status", "2");
-    }
-  }, [ckRegBtn]);
-
-  useEffect(() => {
-    if (watch("_status") == "1") {
-      setCkRegBtn(true);
-    } else {
-      setCkRegBtn(false);
-    }
-  }, [watch("_status")]);
-
-  // input ","로 구분된 문자열 최대 입력 개수제한 ========================
   const onChangeValidation = (e) => {
     let arr = e.target.value.split(",");
     if (e.target.id === "tags") {
@@ -245,19 +200,16 @@ export default function SetCompanyDetail() {
     }
   };
 
-  // form submit 이벤트 =========================================
   const handleSubmitEvent = () => {
-    //서버에 imgs의 iid값만을 보내기 위해 실행하는 반복문 함수
+    // 서버에 imgs의 iid값만을 보내기 위해 실행하는 반복문 함수
     serviesGetImgsIid(imgsIid, imgs);
-    // 서버에 keywords의 keyword value만을 보내기 위해 실행하는 함수
-    // serviesGetKeywords(keywordValue, companyDetailKeyword);
-
     servicesPostData(urlSetCompany, {
       cid: cid,
       ...companyData,
     });
 
-    // setComapny (계약자명, uid, 사업자 활성화)
+    console.log(imgsIid, imgs);
+
     servicesPostData(urlSetCompanyDetail, {
       rcid: cid,
       useFlag: getValues("_detailUseFlag"),
@@ -818,16 +770,7 @@ export default function SetCompanyDetail() {
                 </div>
               </div>
 
-              <SetImage
-                regImgs={regImgs}
-                setRegImgs={setRegImgs}
-                getData={getedData}
-                id="regImgs"
-                title="사업자 등록증"
-                getDataFinish={getDataFinish}
-                // setCkRegBtn={setCkRegBtn}
-                // ckRegBtn={ckRegBtn}
-              />
+              <SetImage id="regImgs" title="사업자 등록증" />
 
               <div className="formContentWrap">
                 <label htmlFor="mobilenum" className="blockLabel">
@@ -960,7 +903,6 @@ export default function SetCompanyDetail() {
                 style={{ width: "100%" }}
                 setMultilAddress={setMultilAddress}
                 multilAddress={multilAddress}
-                getedData={getedData}
               />
 
               <div className="formContentWrap">
@@ -1061,23 +1003,9 @@ export default function SetCompanyDetail() {
                 </div>
               </div>
 
-              <SetImage
-                img={titleImg}
-                setImg={setTitleImg}
-                getData={getedData}
-                id="titleImg"
-                title="대표 이미지"
-                getDataFinish={getDataFinish}
-              />
+              <SetImage id="titleImg" title="대표 이미지" />
 
-              <SetImage
-                imgs={imgs}
-                setImgs={setImgs}
-                id="imgs"
-                title="상세 이미지"
-                getData={getedData}
-                getDataFinish={getDataFinish}
-              />
+              <SetImage id="imgs" title="상세 이미지" />
             </fieldset>
 
             <fieldset id="CompanyDetail_4">
@@ -1122,23 +1050,19 @@ export default function SetCompanyDetail() {
                   <span>견적의뢰서</span>
                 </label>
                 <ul className="detailContent">
-                  {getedData && (
-                    <PieceDetailListLink
-                      getData={toEstimateinfo}
-                      url={`toestimateinfo`}
-                      title="요청"
-                      inCommon
-                    />
-                  )}
+                  <PieceDetailListLink
+                    getData={toEstimateinfo}
+                    url={`toestimateinfo`}
+                    title="요청"
+                    inCommon
+                  />
 
-                  {getedData && (
-                    <PieceDetailListLink
-                      getData={fromEstimateinfo}
-                      url={`fromestimateinfo`}
-                      title="수령"
-                      inCommon
-                    />
-                  )}
+                  <PieceDetailListLink
+                    getData={fromEstimateinfo}
+                    url={`fromestimateinfo`}
+                    title="수령"
+                    inCommon
+                  />
                 </ul>
               </div>
               <div className="formContentWrap">
@@ -1146,23 +1070,19 @@ export default function SetCompanyDetail() {
                   <span>견적서</span>
                 </label>
                 <ul className="detailContent">
-                  {getedData && (
-                    <PieceDetailListLink
-                      getData={toproposalInfo}
-                      url={`toproposalInfo`}
-                      title="요청"
-                      inCommon
-                    />
-                  )}
+                  <PieceDetailListLink
+                    getData={toproposalInfo}
+                    url={`toproposalInfo`}
+                    title="요청"
+                    inCommon
+                  />
 
-                  {getedData && (
-                    <PieceDetailListLink
-                      getData={fromproposalInfo}
-                      url={`fromproposalInfo`}
-                      title="수령"
-                      inCommon
-                    />
-                  )}
+                  <PieceDetailListLink
+                    getData={fromproposalInfo}
+                    url={`fromproposalInfo`}
+                    title="수령"
+                    inCommon
+                  />
                 </ul>
               </div>
             </fieldset>
@@ -1214,22 +1134,19 @@ export default function SetCompanyDetail() {
                   <span>커뮤니티 관리</span>
                 </label>
                 <ul className="detailContent">
-                  {getedData && (
-                    <PieceDetailListLink
-                      getData={noticeList}
-                      url={`/company/${getedData.rcid}/notice`}
-                      title="공지사항"
-                      inCommon
-                    />
-                  )}
-                  {getedData && (
-                    <PieceDetailListLink
-                      getData={reviewList}
-                      url={`/company/${getedData.rcid}/review`}
-                      title="리뷰"
-                      inCommon
-                    />
-                  )}
+                  <PieceDetailListLink
+                    getData={noticeList}
+                    url={`/company/${getedData.rcid}/notice`}
+                    title="공지사항"
+                    inCommon
+                  />
+
+                  <PieceDetailListLink
+                    getData={reviewList}
+                    url={`/company/${getedData.rcid}/review`}
+                    title="리뷰"
+                    inCommon
+                  />
                 </ul>
               </div>
             </fieldset>

@@ -2,6 +2,7 @@ import { useState, useLayoutEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 
+import { useDispatch, useSelector, shallowEqual } from "react-redux";
 import { urlSetContent, urlGetContent } from "../Services/string";
 import { servicesPostData } from "../Services/importData";
 import { serviesGetImgsIid, servicesUseToast } from "../Services/useData";
@@ -12,7 +13,7 @@ import LayoutTopButton from "../components/common/LayoutTopButton";
 
 export default function SetDetailAdminNotice() {
   const { contid } = useParams();
-
+  const dispatch = useDispatch();
   // react-hook-form 라이브러리
   const {
     handleSubmit,
@@ -26,17 +27,10 @@ export default function SetDetailAdminNotice() {
       _category: "notice",
     },
   });
-
-  // 데이터 ------------------------------------------------------------------------
-  // getDataFinish:기존에 입력된 값이 있어 값을 불러왔다면 true로 변경,
-  const getDataFinish = useRef(false);
-  // 하위 컴포넌트에게 이미지 iid 전달
-  const [noticeDetail, setNoticeDetail] = useState({});
   const [useFlag, setUseFlag] = useState(true);
 
   // 이미지 ------------------------------------------------------------------------
-  // imgs:상세 이미지저장 및 표시, imgsIid:서버에 이미지를 보낼 때는, iid값만 필요
-  const [imgs, setImgs] = useState([]);
+  const multiImgs = useSelector((state) => state.multiImgsData, shallowEqual);
   const imgsIid = [];
 
   useLayoutEffect(() => {
@@ -47,23 +41,25 @@ export default function SetDetailAdminNotice() {
       })
         .then((res) => {
           if (res.status === "success") {
-            console.log(res.data);
-            setNoticeDetail(res.data);
+            dispatch({
+              type: "getedData",
+              payload: { ...res.data },
+            });
+
             setValue("_category", res.data.category || "notice");
             setValue("_contentString", res.data.contentString || "");
             setValue("_contentDetail", res.data.contentDetail || "");
             setUseFlag(res.data.useFlag == 1 ? true : false);
-            getDataFinish.current = true;
           }
         })
         .catch((res) => console.log(res));
     }
   }, []);
 
-  console.log(imgs);
+  console.log("multiImgs", multiImgs);
 
   function AddUserSubmit(e) {
-    serviesGetImgsIid(imgsIid, imgs);
+    serviesGetImgsIid(imgsIid, multiImgs);
     servicesPostData(
       urlSetContent,
       !!contid
@@ -73,14 +69,14 @@ export default function SetDetailAdminNotice() {
             category: getValues("_category"),
             contentString: getValues("_contentString"),
             contentDetail: getValues("_contentDetail"),
-            imgString: setImgs ? imgsIid.toString() : "",
+            imgString: multiImgs ? imgsIid.toString() : "",
           }
         : // contid가 없으면 새로 작성
           {
             category: getValues("_category"),
             contentString: getValues("_contentString"),
             contentDetail: getValues("_contentDetail"),
-            imgString: setImgs ? imgsIid.toString() : "",
+            imgString: multiImgs ? imgsIid.toString() : "",
           }
     )
       .then((res) => {
@@ -146,6 +142,7 @@ export default function SetDetailAdminNotice() {
                   type="text"
                   id="contentString"
                   placeholder="제목을 입력해 주세요."
+                  minLength={2}
                   {...register("_contentString", {
                     required: "입력되지 않았습니다.",
                     minLength: {
@@ -173,7 +170,7 @@ export default function SetDetailAdminNotice() {
                 <label className="listSearchRadioLabel" htmlFor="notice">
                   <input
                     type="radio"
-                    checked={watch("_category") == "notice"}
+                    checked={watch("_category") === "notice"}
                     value="notice"
                     id="notice"
                     {...register("_category")}
@@ -187,7 +184,7 @@ export default function SetDetailAdminNotice() {
                 >
                   <input
                     type="radio"
-                    checked={watch("_category") == "noticeTocompany"}
+                    checked={watch("_category") === "noticeTocompany"}
                     value="noticeTocompany"
                     id="noticeTocompany"
                     {...register("_category")}
@@ -197,14 +194,7 @@ export default function SetDetailAdminNotice() {
               </div>
             </div>
 
-            <SetImage
-              imgs={imgs}
-              setImgs={setImgs}
-              id="imgString"
-              title="공지사항 이미지"
-              getData={noticeDetail}
-              getDataFinish={getDataFinish.current}
-            />
+            <SetImage id="imgString" title="공지사항 이미지" />
 
             <div className="formContentWrap formContentWideWrap">
               <label htmlFor="title" className="blockLabel">
@@ -215,6 +205,7 @@ export default function SetDetailAdminNotice() {
                   id="contentDetail"
                   placeholder="내용을 입력해 주세요."
                   style={{ height: "400px" }}
+                  minLength={10}
                   {...register("_contentDetail", {
                     equired: "입력되지 않았습니다.",
                     minLength: {

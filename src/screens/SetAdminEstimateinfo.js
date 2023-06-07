@@ -1,4 +1,5 @@
-import { useLayoutEffect, useState, useRef } from "react";
+import { useDispatch, shallowEqual, useSelector } from "react-redux";
+import { useLayoutEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
@@ -14,6 +15,8 @@ import ComponentTableTopScrollBtn from "../components/common/ComponentTableTopSc
 
 export default function SetAdminEstimateinfo() {
   const { esid } = useParams();
+  const dispatch = useDispatch();
+
   // react-hook-form 라이브러리
   const {
     handleSubmit,
@@ -24,19 +27,15 @@ export default function SetAdminEstimateinfo() {
     formState: { isSubmitting, errors },
   } = useForm();
 
-  // 데이터 ------------------------------------------------------------------------
-  // 작성된 데이터를 받아옴
-  const [getedData, setGetedData] = useState([]);
   // getDataFinish:기존에 입력된 값이 있어 값을 불러왔다면 true로 변경,
-  const getDataFinish = useRef(false);
+  // const getDataFinish = useRef(false);
   const tableTopScrollBtnData = useRef([
     { idName: "CompanyDetail_1", text: "견적서 요청 내용" },
     { idName: "CompanyDetail_2", text: "견적서 제출 내용" },
   ]);
 
   // 이미지 ------------------------------------------------------------------------
-  // imgs:상세 이미지저장 및 표시, imgsIid:서버에 이미지를 보낼 때는, iid값만 필요
-  const [imgs, setImgs] = useState([]);
+  const multiImgs = useSelector((state) => state.multiImgsData, shallowEqual);
   const imgsIid = [];
 
   // 현재 페이지가 렌더링되자마자 기존에 입력된 값의 여부를 확인한다.
@@ -54,7 +53,11 @@ export default function SetAdminEstimateinfo() {
       .then((res) => {
         if (res.status === "success") {
           // 이미지 iid를 가지고 오기 위해 (imgs, titleImg) 사용
-          setGetedData(res.data);
+          dispatch({
+            type: "getedData",
+            payload: { ...res.data },
+          });
+
           // 값이 있다면 inputValue에 저장한 후 getDataFinish 값을 변경
           setValue("_fromUid", res.data.fromUid || "");
           setValue("_toUid", res.data.toUid || "");
@@ -65,7 +68,6 @@ export default function SetAdminEstimateinfo() {
             (res.data.reqVisit && res.data.reqVisit.slice(0, 10)) || ""
           );
           setValue("_addInfo", res.data.addInfo || "");
-
           setValue("_proDetail", res.data.proDetail || "");
           setValue("_proPrice", res.data.proPrice || "");
           setValue(
@@ -88,16 +90,13 @@ export default function SetAdminEstimateinfo() {
           setValue("_gongsaType", res.data.gongsaType || "reser");
           setValue("_readFlag", res.data.readFlag || "0");
           setValue("_siteAddress", res.data.siteAddress);
-
-          getDataFinish.current = true;
         }
       })
       .catch((res) => console.log(res));
   }, []);
 
   function fnSubmit(e) {
-    //서버에 imgs의 iid값만을 보내기 위해 실행하는 반복문 함수
-    serviesGetImgsIid(imgsIid, imgs);
+    serviesGetImgsIid(imgsIid, multiImgs);
 
     const reqDate = new Date(getValues("_reqVisit"));
     const proDate = new Date(getValues("_proVisit"));
@@ -124,6 +123,7 @@ export default function SetAdminEstimateinfo() {
               reqBill: getValues("_reqBill"),
               useFlag: getValues("_useFlag"),
               addInfo: getValues("_addInfo"),
+              addImgs: imgsIid.toString() || "",
             }
           : // 견적서 응답 내용을 입력했을 때
             {
@@ -180,6 +180,7 @@ export default function SetAdminEstimateinfo() {
               reqBill: getValues("_reqBill"),
               useFlag: getValues("_useFlag"),
               addInfo: getValues("_addInfo"),
+              addImgs: imgsIid.toString() || "",
             }
           : // 견적서 응답 내용을 입력했을 때
             {
@@ -234,11 +235,11 @@ export default function SetAdminEstimateinfo() {
             <fieldset id="CompanyDetail_1">
               <h3>
                 견적서 요청 내용
-                {getedData.readFlag == "1" ? (
+                {/* {getedData.readFlag == "1" ? (
                   <span>열람</span>
                 ) : (
                   <span>미열람</span>
-                )}
+                )} */}
               </h3>
 
               {/* 사용 플래그  */}
@@ -525,9 +526,7 @@ export default function SetAdminEstimateinfo() {
                           .replace(/\B(?=(\d{3})+(?!\d))/g, ",")) ||
                       ""
                     }
-                    {...register("_reqPrice", {
-                      // required: "입력되지 않았습니다.",
-                    })}
+                    {...register("_reqPrice")}
                   />
                   <ErrorMessage
                     errors={errors}
@@ -552,14 +551,7 @@ export default function SetAdminEstimateinfo() {
                 </div>
               </div>
 
-              <ImageSet
-                imgs={imgs}
-                setImgs={setImgs}
-                id="addImgs"
-                title="참고 이미지"
-                getData={getedData}
-                getDataFinish={getDataFinish.current}
-              />
+              <ImageSet id="addImgs" title="참고 이미지" />
             </fieldset>
 
             {/* 갼적서 응답 내용  ================================================================ */}

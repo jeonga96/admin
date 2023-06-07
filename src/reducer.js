@@ -3,7 +3,11 @@ import { urlLogin, TOKEN, UID } from "./Services/string";
 
 const initialState = {
   login: { userid: "", passwd: "" },
+  imgData: "",
+  imgsData: "",
+  multiImgsData: "",
   navState: true,
+  getedData: {},
 };
 
 const reducer = (state = initialState, action) => {
@@ -23,7 +27,7 @@ const reducer = (state = initialState, action) => {
           if (res.status === "success") {
             const accessToken = res.data.jtoken;
             const uid = res.data.uid;
-            console.log("로그인이 완료되었습니다!", res);
+
             servicesSetStorage(TOKEN, accessToken);
             servicesSetStorage(UID, uid);
             window.location.href = "/";
@@ -31,6 +35,22 @@ const reducer = (state = initialState, action) => {
           }
         })
         .catch((error) => console.log("reducer login error", error));
+      break;
+
+    case "getedData":
+      newState.getedData = action.payload;
+      break;
+
+    case "imgData":
+      newState.imgData = action.payload;
+      break;
+
+    case "imgsData":
+      newState.imgsData = action.payload;
+      break;
+
+    case "multiImgsData":
+      newState.multiImgsData = action.payload;
       break;
 
     case "userInfoInputChange":

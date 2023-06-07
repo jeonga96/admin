@@ -1,3 +1,4 @@
+import { useSelector, useDispatch, shallowEqual } from "react-redux";
 import { useRef, useState, useEffect, useCallback } from "react";
 import {
   servicesPostDataForm,
@@ -9,112 +10,110 @@ import { servicesUseToast } from "../../Services/useData";
 import ServicesImageOnClick from "./ServicesImageOnClick";
 import Loading from "../common/ComponentLoading";
 
-export default function ImageSet({
-  img,
-  setImg,
-  regImgs,
-  setRegImgs,
-  imgs,
-  setImgs,
-  id,
-  title,
-  getData,
-  getDataFinish,
-}) {
-  // 대표이미지와 상세이미지의 이미지를 모두 사용하기 위해 아래와 같이 작성
-  // 해당 이벤트는 event.target.id로 구분하고 있기 때문에 이 외에 실행 시 코드 수정 필요
-  const [files, setFiles] = useState([]);
-  // 드래그 중일때와 아닐때의 스타일을 구분하기 위한 state 변수
-  // let [isDragging, setIsDragging] = useState(false);
-  // 드래그 이벤트를 감지하는 ref 참조변수 (label 태그에 들어갈 예정)
-  const dragRef = useRef(null);
+export default function ImageSet({ id, title }) {
+  const dispatch = useDispatch();
 
+  const getedData = useSelector((state) => state.getedData, shallowEqual);
+
+  const img = useSelector((state) => state.imgData, shallowEqual);
+  const imgs = useSelector((state) => state.imgsData, shallowEqual);
+  const multiImgs = useSelector((state) => state.multiImgsData, shallowEqual);
+
+  const [files, setFiles] = useState([]);
+  const dragRef = useRef(null);
   let [loading, setLoading] = useState(false);
 
-  const fnSetImg = (res) => {
-    setImg(res);
-  };
-  const fnSetImgs = (res) => {
-    setImgs(res);
-  };
-  const fnSetRegImgs = (res) => {
-    setRegImgs(res);
-  };
-
-  const fnStateSet = (files) => {
-    if (!!setImg) {
-      fnSetImg([...files]);
-    } else if (!!setImgs) {
-      fnSetImgs([...imgs, ...files]);
-    } else if (!!setRegImgs) {
-      fnSetRegImgs([...regImgs, ...files]);
+  const fnState = (files) => {
+    if (id === "titleImg") {
+      dispatch({
+        type: "imgData",
+        payload: files,
+      });
+    } else if (id === "imgs") {
+      dispatch({
+        type: "imgsData",
+        payload: files,
+      });
+    } else if (id === "imgString" || id === "regImgs" || id === "addImgs") {
+      dispatch({
+        type: "multiImgsData",
+        payload: files,
+      });
     }
     return setLoading(false);
   };
 
-  // 첫 렌더링을 방지하고, 기존 입력된 이미지가 있다면 서버에서 이미지를 가져온다.
   useDidMountEffect(() => {
-    if (!!getData.titleImg && id === "titleImg") {
+    if (!!getedData.titleImg && id === "titleImg") {
       servicesPostData(urlGetImages, {
-        imgs: getData.titleImg,
+        imgs: getedData.titleImg,
       }).then((res) => {
         if (res.status === "success") {
-          fnStateSet(res.data);
+          fnState(res.data);
           setFiles(res.data);
         }
       });
-    } else if (!!getData.imgs && id === "imgs") {
+    } else if (!!getedData.imgs && id === "imgs") {
       servicesPostData(urlGetImages, {
-        imgs: getData.imgs,
+        imgs: getedData.imgs,
       }).then((res) => {
         if (res.status === "success") {
-          fnStateSet(res.data);
+          fnState(res.data);
           setFiles(res.data);
         }
       });
-    } else if (!!getData.imgString || !!getData.regImgs || !!getData.addImgs) {
+    } else if (
+      !!getedData.imgString ||
+      !!getedData.regImgs ||
+      !!getedData.addImgs
+    ) {
       if (id === "imgString" || id === "regImgs" || id === "addImgs") {
         servicesPostData(urlGetImages, {
-          imgs: getData.imgString || getData.regImgs || getData.addImgs,
+          imgs: getedData.imgString || getedData.regImgs || getedData.addImgs,
         }).then((res) => {
           if (res.status === "success") {
-            fnStateSet(res.data);
+            fnState(res.data);
             setFiles(res.data);
           }
         });
       }
     }
-  }, [getDataFinish || getData]);
+  }, [getedData]);
 
-  // function handleSetImage(e) {
-  // 이미지 업로드 시 실행되는 코드
   const onChangeFiles = useCallback(
     (e) => {
       e.preventDefault();
       let selectFiles = [];
-
       if (e.type === "drop") {
         selectFiles = e.dataTransfer.files;
       } else {
         selectFiles = e.target.files;
       }
-
       const formData = new FormData();
       for (let i = 0; i < selectFiles.length; i++) {
         formData.append("Imgs", selectFiles[i]);
       }
       setLoading(true);
-      // FormData에 저장된 데이터를 서버에 보냄
       servicesPostDataForm(urlUpImages, formData).then((res) => {
         if (res.data.length == 1) {
-          setFiles((prev) => [res.data[0], ...prev]);
-          fnStateSet(res.data);
+          if (id === "titleImg") {
+            setFiles(() => [res.data[0]]);
+            fnState([res.data[0]]);
+          } else {
+            setFiles((prev) => [res.data[0], ...prev]);
+            id === "imgs"
+              ? fnState([...imgs, res.data[0]])
+              : fnState([...multiImgs, res.data[0]]);
+          }
         } else if (res.data.length > 1 && res.data.length < 25) {
+          const arrData = [];
           for (let i = 0; i < res.data.length; i++) {
             setFiles((prev) => [res.data[i], ...prev]);
-            fnStateSet(res.data);
+            arrData.push(res.data[i]);
           }
+          fnState([...arrData, ...files]);
         } else {
+          setLoading(false);
           return servicesUseToast(
             "이미지는 최대 25개까지 입력하실 수 있습니다."
           );
@@ -124,17 +123,26 @@ export default function ImageSet({
     [files]
   );
 
-  // ------------------------------------------------------------------------------
+  // console.log(files);
 
   const handleFilterFile = useCallback(
     (iid) => {
       setFiles(files.filter((it) => it.iid !== iid));
       if (id === "titleImg") {
-        fnSetImg(img.filter((it) => it.iid !== iid));
-      } else if (id === "regImgs") {
-        fnSetRegImgs(regImgs.filter((it) => it.iid !== iid));
+        dispatch({
+          type: "imgData",
+          payload: img.filter((it) => it.iid !== iid),
+        });
+      } else if (id === "imgs") {
+        dispatch({
+          type: "imgsData",
+          payload: imgs.filter((it) => it.iid !== iid),
+        });
       } else {
-        fnSetImgs(imgs.filter((it) => it.iid !== iid));
+        dispatch({
+          type: "multiImgsData",
+          payload: multiImgs.filter((it) => it.iid !== iid),
+        });
       }
     },
     [files]
@@ -218,12 +226,11 @@ export default function ImageSet({
           onChange={onChangeFiles}
         />
 
-        {console.log("??", id, regImgs && regImgs.length > 0)}
         <label
           htmlFor={id}
           ref={dragRef}
           style={
-            regImgs && regImgs.length > 0 && id === "regImgs"
+            id === "regImgs" && multiImgs.length > 0
               ? {
                   backgroundColor: "#bdbdbd",
                   height:
@@ -243,7 +250,7 @@ export default function ImageSet({
                 }
           }
         >
-          {regImgs && regImgs.length > 0 && id === "regImgs" && (
+          {id === "regImgs" && (
             <span className="regImgsText">사업자 인증 회원</span>
           )}
         </label>
@@ -255,9 +262,8 @@ export default function ImageSet({
               files.length == 0 ? "none" : "2px dotted rgba(0, 0, 0, 0.1)",
           }}
         >
-          {files.length > 0 && setImg && (
+          {files.length > 0 && id === "titleImg" && !!img && (
             <ServicesImageOnClick
-              getData={img}
               url={files[0]}
               text="대표 이미지"
               iid={files[0].iid}
@@ -266,12 +272,11 @@ export default function ImageSet({
           )}
 
           {files.length > 0 &&
-            !setImg &&
             id === "imgs" &&
+            !!imgs &&
             files.map((item, index) => (
               <ServicesImageOnClick
                 key={item && item.iid}
-                getData={files}
                 url={item}
                 text="상세 이미지"
                 iid={item && item.iid}
@@ -280,12 +285,11 @@ export default function ImageSet({
             ))}
 
           {files.length > 0 &&
-            !setImg &&
-            id !== "imgs" &&
+            (id === "imgString" || id === "regImgs" || id === "addImgs") &&
+            !!multiImgs &&
             files.map((item, index) => (
               <ServicesImageOnClick
                 key={item && item.iid}
-                getData={files}
                 url={item}
                 text="이미지"
                 iid={item && item.iid}

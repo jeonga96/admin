@@ -1,8 +1,10 @@
+// import { useSelector, shallowEqual } from "react-redux";
 import { useState } from "react";
 import { IoMdRemoveCircleOutline } from "react-icons/io";
 
-export default function ImageOnClick({ getData, url, text, iid, onRemove }) {
+export default function ImageOnClick({ url, text, iid, onRemove }) {
   // { onRemove:삭제이벤트, iid:삭제하기 위해 사용하는 id값, getData:가져오는 image State value, url:image storagePath, text:이미지 설명 문구 }
+  // const getedData = useSelector((state) => state.imgData, shallowEqual);
 
   // image click 이벤트 상태 관리
   const [zoomPopup, setZoomPopup] = useState(false);
@@ -26,15 +28,13 @@ export default function ImageOnClick({ getData, url, text, iid, onRemove }) {
           <IoMdRemoveCircleOutline />
         </button>
       )}
-      {getData && (
-        <img
-          className="Link"
-          alt={text}
-          src={url.storagePath.replace("com/", "com/s/")}
-          onError={(e) => (e.target.src = url.storagePath)}
-          onClick={onPopup}
-        />
-      )}
+      <img
+        className="Link"
+        alt={text}
+        src={url.storagePath.replace("com/", "com/s/")}
+        onError={(e) => (e.target.src = url.storagePath)}
+        onClick={onPopup}
+      />
       <span className="blind">{text}</span>
       {zoomPopup ? (
         <div className="imageZoomPopupBox" onClick={onPopup}>
