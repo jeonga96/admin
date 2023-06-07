@@ -1,14 +1,12 @@
-import { useSelector, shallowEqual } from "react-redux";
-import { useLayoutEffect } from "react";
+import { useSelector, useDispatch, shallowEqual } from "react-redux";
+import { useEffect, useLayoutEffect } from "react";
 import { useDaumPostcodePopup } from "react-daum-postcode";
+import { useForm } from "react-hook-form";
 
-export default function Postcode({
-  userComponent,
-  setMultilAddress,
-  multilAddress,
-  // getedData,
-  autoKey,
-}) {
+export default function Postcode({ userComponent }) {
+  const dispatch = useDispatch();
+  const { register, setValue, watch } = useForm({});
+
   // 다음 주소 검색 API 주소
   const scriptUrl =
     "//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js";
@@ -16,14 +14,43 @@ export default function Postcode({
   const open = useDaumPostcodePopup(scriptUrl);
   const getedData = useSelector((state) => state.getedData, shallowEqual);
 
-  // 부모 컴포넌트에게 값을 전달하기 위해 함수로 사용
-  function fnSetAddress(address) {
-    setMultilAddress(address);
-  }
+  const multilAddress = useSelector(
+    (state) => state.multilAddressData,
+    shallowEqual
+  );
 
-  function onChange(e) {
-    setMultilAddress({ ...multilAddress, [e.target.id]: e.target.value });
-  }
+  const fnDetailAddr = (state) => {
+    setValue("_address", state.address);
+    setValue("_detailaddress", state.detailaddress);
+    setValue("_oldaddress", state.oldaddress);
+    setValue("_zipcode", state.zipcode);
+    setValue("_latitude", state.latitude);
+    setValue("_longitude", state.longitude);
+  };
+  const fnSimpleAddr = (state) => {
+    setValue("_address", state.address);
+    setValue("_detailaddress", state.detailaddress);
+  };
+
+  useEffect(() => {
+    !!userComponent ? fnSimpleAddr(getedData) : fnDetailAddr(getedData);
+  }, []);
+
+  useEffect(() => {
+    !!userComponent ? fnSimpleAddr(multilAddress) : fnDetailAddr(multilAddress);
+  }, [multilAddress]);
+
+  useEffect(() => {
+    dispatch({
+      type: "multilAddressData",
+      payload: {
+        ...multilAddress,
+        ...{
+          detailaddress: watch("_detailaddress"),
+        },
+      },
+    });
+  }, [watch("_detailaddress")]);
 
   // 카카오 API, 주소를 위도 경도로 변환
   const callMapcoor = (res) => {
@@ -33,23 +60,30 @@ export default function Postcode({
         // 공사콕에서 사용하는 key와 다음 카카오의 키가 다름!
         // 다음 카카오 신주소 : roadAddress, 구주소 :jibunAddress, 우편번호 : zonecode
         if (!!res.postcode) {
-          fnSetAddress({
-            address: res.roadAddress,
-            detailaddress: res.detailaddress,
-            oldaddress: res.jibunAddress,
-            zipcode: res.zonecode,
-            latitude: Math.floor(result[0].y * 100000),
-            longitude: Math.floor(result[0].x * 100000),
-          });
-        } else {
-          fnSetAddress({
-            ...{
-              address: result[0].address_name,
-              detailaddress: getedData.detailaddress,
-              zipcode: result[0].road_address.zone_no,
-              oldaddress: result[0].address.address_name,
+          dispatch({
+            type: "multilAddressData",
+            payload: {
+              address: res.roadAddress,
+              detailaddress: res.detailaddress,
+              oldaddress: res.jibunAddress,
+              zipcode: res.zonecode,
               latitude: Math.floor(result[0].y * 100000),
               longitude: Math.floor(result[0].x * 100000),
+            },
+          });
+        } else {
+          dispatch({
+            type: "multilAddressData",
+            payload: {
+              ...multilAddress,
+              ...{
+                address: result[0].address_name,
+                detailaddress: getedData.detailaddress,
+                zipcode: result[0].road_address.zone_no,
+                oldaddress: result[0].address.address_name,
+                latitude: Math.floor(result[0].y * 100000),
+                longitude: Math.floor(result[0].x * 100000),
+              },
             },
           });
         }
@@ -60,28 +94,33 @@ export default function Postcode({
   };
 
   useLayoutEffect(() => {
-    if (getedData !== [] && !!autoKey) {
+    if (getedData !== []) {
       callMapcoor(getedData);
     }
 
     // setUser는 주소값만 저장함
     if (getedData !== [] && userComponent) {
-      fnSetAddress({
-        address: getedData.address,
-        detailaddress: getedData.detailaddress,
+      dispatch({
+        type: "multilAddressData",
+        payload: {
+          address: getedData.address,
+          detailaddress: getedData.detailaddress,
+        },
       });
     }
 
     // setCompany는 아래와 같은 정보가 필요함
     if (getedData !== [] && !userComponent) {
-      //  신주소 : address, 구주소 :oldaddress, 우편번호 : zipcode
-      fnSetAddress({
-        address: getedData.address,
-        detailaddress: getedData.detailaddress,
-        oldaddress: getedData.oldaddress,
-        zipcode: getedData.zipcode,
-        longitude: getedData.longitude,
-        latitude: getedData.latitude,
+      dispatch({
+        type: "multilAddressData",
+        payload: {
+          address: getedData.address,
+          detailaddress: getedData.detailaddress,
+          oldaddress: getedData.oldaddress,
+          zipcode: getedData.zipcode,
+          longitude: getedData.longitude,
+          latitude: getedData.latitude,
+        },
       });
     }
   }, [getedData]);
@@ -90,15 +129,18 @@ export default function Postcode({
   const handleOnComplete = (data) => {
     // setUser는 주소값만 저장함
     if (!!userComponent) {
-      fnSetAddress({
-        address: data.roadAddress,
-        detailaddress: getedData.detailaddress,
+      dispatch({
+        type: "multilAddressData",
+        payload: {
+          address: data.roadAddress,
+          detailaddress: getedData.detailaddress,
+        },
       });
     }
 
     // setCompany는 아래와 같은 정보가 필요함
+    // 팝업 입력창에 값을 입력하면 해당 주소로 좌표를 구함
     if (!userComponent) {
-      // 팝업 입력창에 값을 입력하면 해당 주소로 좌표를 구함
       callMapcoor(data);
     }
   };
@@ -126,8 +168,8 @@ export default function Postcode({
             <input
               type="text"
               id="address"
+              {...register("_address")}
               disabled
-              value={multilAddress.address || ""}
               style={{
                 width: "94%",
               }}
@@ -147,8 +189,7 @@ export default function Postcode({
               type="text"
               id="detailaddress"
               placeholder="상세주소를 입력해주세요."
-              value={multilAddress.detailaddress || ""}
-              onChange={onChange}
+              {...register("_detailaddress")}
             />
           </div>
         </div>
@@ -169,8 +210,8 @@ export default function Postcode({
               <input
                 type="text"
                 id="zipcode"
-                value={multilAddress.zipcode || ""}
                 disabled
+                {...register("_zipcode")}
                 style={{
                   width: "155px",
                   marginRight: "5px",
@@ -189,8 +230,8 @@ export default function Postcode({
               <input
                 type="text"
                 id="roadAddress"
+                {...register("_address")}
                 disabled
-                value={multilAddress.address || ""}
                 style={{ width: "49.8%", marginBottom: 0 }}
               />
 
@@ -198,9 +239,8 @@ export default function Postcode({
                 type="text"
                 id="detailaddress"
                 placeholder="상세주소를 입력해 주세요."
-                defaultValue={multilAddress.detailaddress || ""}
+                {...register("_detailaddress")}
                 style={{ width: "49.8%" }}
-                onChange={onChange}
               />
             </div>
 
@@ -215,8 +255,8 @@ export default function Postcode({
                     id="latitude"
                     type="text"
                     placeholder="위도 값이 없습니다."
+                    {...register("_latitude")}
                     defaultValue={multilAddress.latitude || ""}
-                    onChange={onChange}
                   />
                 </div>
               </li>
@@ -228,7 +268,7 @@ export default function Postcode({
                     type="text"
                     placeholder="경도 값이 없습니다."
                     defaultValue={multilAddress.longitude || ""}
-                    onChange={onChange}
+                    {...register("_longitude")}
                   />
                 </div>
               </li>

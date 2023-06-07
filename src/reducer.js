@@ -6,6 +6,7 @@ const initialState = {
   imgData: "",
   imgsData: "",
   multiImgsData: "",
+  multilAddressData: "",
   navState: true,
   getedData: {},
 };
@@ -51,6 +52,10 @@ const reducer = (state = initialState, action) => {
 
     case "multiImgsData":
       newState.multiImgsData = action.payload;
+      break;
+
+    case "multilAddressData":
+      newState.multilAddressData = action.payload;
       break;
 
     case "userInfoInputChange":

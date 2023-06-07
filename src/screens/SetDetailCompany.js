@@ -69,8 +69,11 @@ export default function SetCompanyDetail() {
   // 서버에서 titleImg, imgs의 iid를 받아오기 위해 사용
   const imgsIid = [];
   // 주소 ------------------------------------------------------------------------
-  const [multilAddress, setMultilAddress] = useState({});
   // 사업자 상세관리에서 사용하는 setCompanyDetailInfo 외 API  --------------------------------------
+  const multilAddress = useSelector(
+    (state) => state.multilAddressData,
+    shallowEqual
+  );
   // setUser 수정 - 하위컴포넌트에게 전달
   const [companyData, setCompanyData] = useState({});
 
@@ -899,11 +902,7 @@ export default function SetCompanyDetail() {
               </div>
 
               {/* 주소 */}
-              <PieceRegisterSearchPopUp
-                style={{ width: "100%" }}
-                setMultilAddress={setMultilAddress}
-                multilAddress={multilAddress}
-              />
+              <PieceRegisterSearchPopUp />
 
               <div className="formContentWrap">
                 <label htmlFor="email" className="blockLabel">

@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector, shallowEqual } from "react-redux";
 import { useLayoutEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -44,10 +44,13 @@ export default function SetDetailUser() {
   ]);
   // 이미지 ------------------------------------------------------------------------
   // img:대표 이미지저장 및 표시, imgs:상세 이미지저장 및 표시
-  const titleImg = useSelector((state) => state.imgData);
+  const titleImg = useSelector((state) => state.imgData, shallowEqual);
   // 주소 ------------------------------------------------------------------------
   // address:신주소,  oldaddress:구주소,  zipcode:우편번호,  latitude:위도,  longitude:경도
-  const [multilAddress, setMultilAddress] = useState({});
+  const multilAddress = useSelector(
+    (state) => state.multilAddressData,
+    shallowEqual
+  );
 
   // 현재 페이지가 렌더링되자마자 기존에 입력된 값의 여부를 확인한다.
   useLayoutEffect(() => {
@@ -367,12 +370,7 @@ export default function SetDetailUser() {
               </div>
 
               {/* 주소 */}
-              <PieceRegisterSearchPopUp
-                style={{ width: "100%" }}
-                setMultilAddress={setMultilAddress}
-                multilAddress={multilAddress}
-                userComponent
-              />
+              <PieceRegisterSearchPopUp userComponent />
 
               <div className="formContentWrap">
                 <label htmlFor="mobile" className="blockLabel">
