@@ -768,6 +768,7 @@ export default function SetCompanyDetail() {
                     type="text"
                     id="regOwner"
                     placeholder="대표자명을 입력해 주세요."
+                    maxLength={8}
                     {...register("_regOwner")}
                   />
                 </div>
@@ -783,7 +784,7 @@ export default function SetCompanyDetail() {
                   <input
                     type="text"
                     id="mobilenum"
-                    placeholder="핸드폰번호를 입력해 주세요. (예시 000-0000-0000)"
+                    placeholder="휴대폰번호를 입력해 주세요. (예시 000-0000-0000)"
                     maxLength={13}
                     value={
                       (watch("_mobilenum") &&
@@ -796,12 +797,7 @@ export default function SetCompanyDetail() {
                           .replace("--", "-")) ||
                       ""
                     }
-                    {...register("_mobilenum", {
-                      pattern: {
-                        value: /^[0-9]{3,4}-[0-9]{3,4}-[0-9]{4}/,
-                        message: "형식에 맞지 않습니다.",
-                      },
-                    })}
+                    {...register("_mobilenum")}
                   />
                   <ErrorMessage
                     errors={errors}

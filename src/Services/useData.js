@@ -134,18 +134,8 @@ export function servicesUseModal(Q, SQ, fnOK, fnClose) {
     .then((result) => {
       if (result.isConfirmed) {
         fnOK();
-        // swalWithBootstrapButtons.fire(
-        //   "Deleted!",
-        //   "Your file has been deleted.",
-        //   "success"
-        // );
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         fnClose();
-        // swalWithBootstrapButtons.fire(
-        //   "Cancelled",
-        //   "Your imaginary file is safe :)",
-        //   "error"
-        // );
       }
     });
 }

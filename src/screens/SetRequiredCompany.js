@@ -541,6 +541,7 @@ export default function SetRequiredCompany() {
                     type="text"
                     id="regOwner"
                     placeholder="대표자명을 입력해 주세요."
+                    maxLength={8}
                     {...register("_regOwner", {
                       required: "입력되지 않았습니다.",
                     })}
@@ -597,6 +598,7 @@ export default function SetRequiredCompany() {
                   <input
                     type="text"
                     id="location"
+                    maxLength={50}
                     placeholder="사업자의 위치를 입력해 주세요. (예시 ㅇㅇ구, ㅇㅇ동)"
                     {...register("_location", {
                       required: "입력되지 않았습니다.",
@@ -626,6 +628,7 @@ export default function SetRequiredCompany() {
                   <input
                     type="text"
                     id="ceogreet"
+                    maxLength={50}
                     placeholder="인사말을 입력해 주세요."
                     {...register("_ceogreet", {
                       required: "입력되지 않았습니다.",
@@ -654,7 +657,7 @@ export default function SetRequiredCompany() {
                   <textarea
                     type="text"
                     id="offer"
-                    maxLength="100"
+                    maxLength={100}
                     placeholder="최대 100자까지 입력하실 수 있습니다."
                     {...register("_offer", {
                       required: "입력되지 않았습니다.",

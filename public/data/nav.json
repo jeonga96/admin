@@ -46,6 +46,24 @@
     ]
   },
   {
+    "name": "유통망 관리",
+    "url": null,
+    "subNav": [
+      {
+        "subName": "사원관리",
+        "url": "/agentem"
+      },
+      {
+        "subName": "지점(대리점) 관리",
+        "url": "/agentag"
+      },
+      {
+        "subName": "지사(총판)관리",
+        "url": "/agentsd"
+      }
+    ]
+  },
+  {
     "name": "공사콕 콘텐츠 페이지",
     "url": null,
     "subNav": [
