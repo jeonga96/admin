@@ -188,6 +188,10 @@ a {
   border-radius: 2px;
   cursor: pointer;
 }
+.btnClick {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+}
 /*common className --------------------------------------------------------------*/
 .blind_wrap a > span,
 .blind_wrap button > span,

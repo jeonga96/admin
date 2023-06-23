@@ -1,4 +1,4 @@
-import { useDispatch, useSelector, shallowEqual } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useEffect, useLayoutEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -13,7 +13,6 @@ import {
   urlAddcompany,
   urlSetCompanyDetail,
   urlGetCompanyDetail,
-  urlGetCompany,
   urlGetUserCid,
   urlUserlist,
   urlSetCompany,
@@ -33,14 +32,9 @@ export default function SetAgentEm() {
     watch,
     formState: { isSubmitting, errors },
   } = useForm({
-    defaultValues: {
-      // _nationality: "내국인",
-      // _sex: "male",
-    },
+    defaultValues: {},
   });
 
-  // 데이터 ------------------------------------------------------------------------
-  // 하위 컴포넌트에서 전달 받은 값이기 떄문에 useState로 작성
   const [userData, setUserData] = useState({});
   const [checkBtn, setCheckBtn] = useState(false);
 
@@ -56,7 +50,6 @@ export default function SetAgentEm() {
               type: "getedData",
               payload: { ...res.data },
             });
-
             setValue("_name", res.data.name || "");
             setValue("_mobile", res.data.mobile || "");
             setValue("_mail", res.data.mail || "");
@@ -71,13 +64,6 @@ export default function SetAgentEm() {
                   setValue("_Cname", res2.data.regName || "");
                 }
               });
-              // servicesPostData(urlGetCompany, {
-              //   cid: res.data.cid,
-              // }).then((res2) => {
-              //   if (res2.status === "success") {
-              //     setValue("_Cname", res2.data.name || "");
-              //   }
-              // });
             });
           }
         })
@@ -92,6 +78,7 @@ export default function SetAgentEm() {
     }
   }, [userData.userid]);
 
+  // urlSetCompany + urlSetCompanyDetail 수정하는 함수
   const fnsetCompany = (cid, uid) => {
     servicesPostData(urlSetCompany, {
       cid: cid,
@@ -128,7 +115,6 @@ export default function SetAgentEm() {
         servicesPostData(urlSetUserDetail, {
           ruid: res.data[0].uid,
           name: getValues("_name"),
-          nick: getValues("_nick"),
           mobile: getValues("_mobile"),
           mail: getValues("_mail"),
         });
@@ -153,7 +139,6 @@ export default function SetAgentEm() {
       servicesPostData(urlSetUserDetail, {
         ruid: uid,
         name: getValues("_name"),
-        nick: getValues("_nick"),
         mobile: getValues("_mobile"),
         mail: getValues("_mail"),
       });
@@ -269,7 +254,7 @@ export default function SetAgentEm() {
                   <input
                     type="text"
                     id="mobile"
-                    placeholder="휴대폰 번호 (예시 000-0000-0000)"
+                    placeholder="휴대폰 번호를 입력해 주세요."
                     maxLength={13}
                     value={
                       (watch("_mobile") &&
@@ -305,7 +290,7 @@ export default function SetAgentEm() {
                   <input
                     type="text"
                     id="telnum"
-                    placeholder="전화번호를 입력해 주세요."
+                    placeholder="별도번호를 입력해 주세요."
                     maxLength="13"
                     value={
                       (watch("_telnum") &&

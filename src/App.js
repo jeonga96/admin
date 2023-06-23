@@ -51,7 +51,8 @@ import SetAdminKeywords from "./screens/SetAdminKeywords";
 import ListAgentEm from "./screens/ListAgentEm";
 import SetAgentEm from "./screens/SetAgentEm";
 // import ListAgentAg from "./screens/ListAgentAg";
-// import ListAgentSd from "./screens/ListAgentSd";
+import ListAgentSd from "./screens/ListAgentSd";
+import SetAgentSd from "./screens/SetAgentSd";
 
 /* 이밴트 */
 import ListEvent from "./screens/ListEvent";
@@ -449,7 +450,8 @@ function App() {
           }
         />
 
-        {/* ------- 키워드 조회량 관리 ------- */}
+        {/* --------------유통망관리 --------------*/}
+        {/* ------- 사원 관리 ------- */}
         <Route
           path="agentem"
           element={
@@ -466,6 +468,34 @@ function App() {
           path="agentem/add"
           element={
             <MainLayout nowTitle="사원등록" component={<SetAgentEm />} />
+          }
+        />
+        {/* ------- 지사 총판 관리 ------- */}
+        <Route
+          path="agentsd"
+          element={
+            <MainLayout
+              nowTitle="지사( 총판 )관리"
+              component={<ListAgentSd />}
+            />
+          }
+        />
+        <Route
+          path="agentsd/add"
+          element={
+            <MainLayout
+              nowTitle="지사 ( 총판 ) 등록"
+              component={<SetAgentSd />}
+            />
+          }
+        />
+        <Route
+          path="agentsd/:uid"
+          element={
+            <MainLayout
+              nowTitle="지사 ( 총판 ) 수정"
+              component={<SetAgentSd />}
+            />
           }
         />
         {/* <Route

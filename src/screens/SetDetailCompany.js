@@ -211,8 +211,6 @@ export default function SetCompanyDetail() {
       ...companyData,
     });
 
-    console.log(imgsIid, imgs);
-
     servicesPostData(urlSetCompanyDetail, {
       rcid: cid,
       useFlag: getValues("_detailUseFlag"),

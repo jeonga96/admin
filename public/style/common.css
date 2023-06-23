@@ -681,12 +681,25 @@ i {
   padding: 0 10px;
 }
 .formWrap h3 span {
+  height: auto;
+
   font-size: var(--font-size-small);
   color: var(--color-white);
   margin-left: 5px;
   background-color: var(--color-black);
   padding: 1px 5px;
   border-radius: 2px;
+}
+.formWrap h3 button {
+  display: inline-block;
+  position: absolute;
+  right: 20px;
+  top: 4px;
+  width: auto;
+  padding: 0 10px;
+  height: 20px;
+  background-color: var(--color-bgblack);
+  color: var(--color-white);
 }
 
 .reqFormWrap .formContentWrap {
@@ -1673,7 +1686,7 @@ ul.pagination li a:hover {
 .formLayout .listSearchRadioLabel {
   display: inline-block;
   width: auto;
-  padding-top: 0.3125rem;
+  padding-top: 0.25rem;
   margin-right: 0.625rem;
 }
 .formLayout .listSearchRadioLabel:last-child {

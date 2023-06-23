@@ -14,13 +14,11 @@ export default function ComponentListAgentSearch({
   page,
 }) {
   // react-hook-form 라이브러리
-  const { register, setValue, getValues, watch, reset, handleSubmit } = useForm(
-    {
-      defaultValues: {
-        _useFlag: "1",
-      },
-    }
-  );
+  const { register, getValues, watch, reset, handleSubmit } = useForm({
+    defaultValues: {
+      _useFlag: "1",
+    },
+  });
   const { uid } = useParams();
 
   useEffect(() => {

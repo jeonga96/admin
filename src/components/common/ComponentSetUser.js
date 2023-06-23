@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useRef } from "react";
+import { useEffect, useLayoutEffect } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
@@ -9,13 +9,12 @@ import { urlGetUser, urlSetUser, urlAdduser } from "../../Services/string";
 export default function ComponentSetUser({ setUserData, userData, checkBtn }) {
   const { register, getValues, setValue, watch } = useForm({
     defaultValues: {
-      _userrole: "ROLE_USER,ROLE_ADMIN",
       _useFlag: "1",
     },
   });
   const { uid } = useParams();
   const location = useLocation();
-  const CHAGENT = location.pathname.includes("agent");
+  const CK_AGENT = location.pathname.includes("agent");
 
   // 회원활성화, 회원권한 상위 컴포넌트 전달
   function fnSetUserData(e) {
@@ -65,121 +64,122 @@ export default function ComponentSetUser({ setUserData, userData, checkBtn }) {
 
   return (
     <>
-      <div className="formContentWrap">
-        <div className="blockLabel">
-          <span>회원 활성화</span>
-        </div>
-        <div className="formPaddingWrap">
-          <input
-            className="listSearchRadioInput"
-            type="radio"
-            checked={watch("_useFlag") == "1"}
-            value="1"
-            id="useFlag1"
-            {...register("_useFlag", {
-              onChange: fnSetUserData,
-            })}
-          />
-          <label className="listSearchRadioLabel" htmlFor="useFlag1">
-            {CHAGENT ? "승인" : "활성화"}
-          </label>
-
-          <input
-            className="listSearchRadioInput"
-            type="radio"
-            checked={watch("_useFlag") == "0"}
-            value="0"
-            id="useFlag0"
-            {...register("_useFlag", {
-              onChange: fnSetUserData,
-            })}
-          />
-          <label className="listSearchRadioLabel" htmlFor="useFlag0">
-            {CHAGENT ? "퇴사" : "비활성화"}
-          </label>
-        </div>
-      </div>
-
-      <div className="formContentWrap">
-        <div className="blockLabel">
-          <span>{CHAGENT ? "관리자레벨" : "회원 권한"}</span>
-        </div>
-        {CHAGENT ? (
+      <>
+        <div className="formContentWrap">
+          <div className="blockLabel">
+            <span>회원 활성화</span>
+          </div>
           <div className="formPaddingWrap">
             <input
               className="listSearchRadioInput"
               type="radio"
-              checked={watch("_userrole") === "ROLE_USER,ROLE_ADMIN"}
-              value="ROLE_USER,ROLE_ADMIN"
-              id="ROLE_ADMIN"
-              {...register("_userrole", {
+              checked={watch("_useFlag") == "1"}
+              value="1"
+              id="useFlag1"
+              {...register("_useFlag", {
                 onChange: fnSetUserData,
               })}
             />
-            <label className="listSearchRadioLabel" htmlFor="ROLE_ADMIN">
-              관리자
-            </label>
-            {/* 
-            <input
-              className="listSearchRadioInput"
-              type="radio"
-              checked={watch("_userrole") === "ROLE_USER,ROLE_ADMIN_AG"}
-              value="ROLE_USER,ROLE_ADMIN_AG"
-              id="OLE_ADMIN_AG"
-              {...register("_userrole", {
-                onChange: fnSetUserData,
-              })}
-            />
-            <label className="listSearchRadioLabel" htmlFor="OLE_ADMIN_AG">
-              지점 (대리점) 관리
+            <label className="listSearchRadioLabel" htmlFor="useFlag1">
+              {CK_AGENT ? "승인" : "활성화"}
             </label>
 
             <input
               className="listSearchRadioInput"
               type="radio"
-              checked={watch("_userrole") === "ROLE_USER,ROLE_ADMIN_SD"}
-              value="ROLE_USER,ROLE_ADMIN_SD"
-              id="ROLE_ADMIN_SD"
-              {...register("_userrole", {
+              checked={watch("_useFlag") == "0"}
+              value="0"
+              id="useFlag0"
+              {...register("_useFlag", {
                 onChange: fnSetUserData,
               })}
             />
-            <label className="listSearchRadioLabel" htmlFor="ROLE_ADMIN_SD">
-              지사 (총판) 관리
-            </label> */}
-          </div>
-        ) : (
-          <div className="formPaddingWrap">
-            <input
-              className="listSearchRadioInput"
-              type="radio"
-              checked={watch("_userrole") === "ROLE_USER"}
-              value="ROLE_USER"
-              id="ROLE_USER"
-              {...register("_userrole", {
-                onChange: fnSetUserData,
-              })}
-            />
-            <label className="listSearchRadioLabel" htmlFor="ROLE_USER">
-              일반회원
+            <label className="listSearchRadioLabel" htmlFor="useFlag0">
+              {CK_AGENT ? "퇴사" : "비활성화"}
             </label>
+          </div>
+        </div>
 
-            <input
-              className="listSearchRadioInput"
-              type="radio"
-              checked={watch("_userrole") === "ROLE_USER,ROLE_ADMIN"}
-              value="ROLE_USER,ROLE_ADMIN"
-              id="ROLE_ADMIN"
-              {...register("_userrole", {
-                onChange: fnSetUserData,
-              })}
-            />
-            <label className="listSearchRadioLabel" htmlFor="ROLE_ADMIN">
-              관리자
-            </label>
+        <div className="formContentWrap">
+          <div className="blockLabel">
+            <span>{CK_AGENT ? "관리자레벨" : "회원 권한"}</span>
           </div>
-        )}
-      </div>
+          {CK_AGENT ? (
+            <div className="formPaddingWrap">
+              <input
+                className="listSearchRadioInput"
+                type="radio"
+                checked={watch("_userrole") === "ROLE_USER,ROLE_ADMIN"}
+                value="ROLE_USER,ROLE_ADMIN"
+                id="ROLE_ADMIN"
+                {...register("_userrole", {
+                  onChange: fnSetUserData,
+                })}
+              />
+              <label className="listSearchRadioLabel" htmlFor="ROLE_ADMIN">
+                관리자
+              </label>
+              <input
+                className="listSearchRadioInput"
+                type="radio"
+                checked={watch("_userrole") === "ROLE_USER,ROLE_ADMIN_AG"}
+                value="ROLE_USER,ROLE_ADMIN_AG"
+                id="OLE_ADMIN_AG"
+                {...register("_userrole", {
+                  onChange: fnSetUserData,
+                })}
+              />
+              <label className="listSearchRadioLabel" htmlFor="ROLE_ADMIN_AG">
+                지점 (대리점) 관리
+              </label>
+
+              <input
+                className="listSearchRadioInput"
+                type="radio"
+                checked={watch("_userrole") === "ROLE_USER,ROLE_ADMIN_SD"}
+                value="ROLE_USER,ROLE_ADMIN_SD"
+                id="ROLE_ADMIN_SD"
+                {...register("_userrole", {
+                  onChange: fnSetUserData,
+                })}
+              />
+              <label className="listSearchRadioLabel" htmlFor="ROLE_ADMIN_SD">
+                지사 (총판) 관리
+              </label>
+            </div>
+          ) : (
+            <div className="formPaddingWrap">
+              <input
+                className="listSearchRadioInput"
+                type="radio"
+                checked={watch("_userrole") === "ROLE_USER"}
+                value="ROLE_USER"
+                id="ROLE_USER"
+                {...register("_userrole", {
+                  onChange: fnSetUserData,
+                })}
+              />
+              <label className="listSearchRadioLabel" htmlFor="ROLE_USER">
+                일반회원
+              </label>
+
+              <input
+                className="listSearchRadioInput"
+                type="radio"
+                checked={watch("_userrole") === "ROLE_USER,ROLE_ADMIN"}
+                value="ROLE_USER,ROLE_ADMIN"
+                id="ROLE_ADMIN"
+                {...register("_userrole", {
+                  onChange: fnSetUserData,
+                })}
+              />
+              <label className="listSearchRadioLabel" htmlFor="ROLE_ADMIN">
+                관리자
+              </label>
+            </div>
+          )}
+        </div>
+      </>
 
       <div className="formContentWrap">
         <div className="blockLabel">
@@ -189,7 +189,7 @@ export default function ComponentSetUser({ setUserData, userData, checkBtn }) {
           <input
             type="text"
             id="userid"
-            disabled={CHAGENT ? false : true}
+            disabled={CK_AGENT ? false : true}
             {...register("_userid")}
           />
         </div>
