@@ -34,12 +34,12 @@ export default function ListAgentSd() {
       });
   }, [page.activePage]);
 
-  useLayoutEffect(() => {
-    // userList.uid
-    userList.filter((item) => {
-      console.log(item);
-    });
-  }, [userList]);
+  // useLayoutEffect(() => {
+  //   // userList.uid
+  //   userList.filter((item) => {
+  //     console.log(item);
+  //   });
+  // }, [userList]);
 
   return (userList == [] && userList.length == 0) || userList === undefined ? (
     <>
