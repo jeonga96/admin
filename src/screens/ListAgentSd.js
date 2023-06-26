@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
-import { useLayoutEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import { servicesPostData } from "../Services/importData";
-import { urlUserlist } from "../Services/string";
+import { urlUserlist, urlGetCompanyDetail } from "../Services/string";
 
 import PageButton from "../components/piece/PiecePaginationButton";
 import LayoutTopButton from "../components/common/LayoutTopButton";
@@ -11,6 +11,7 @@ import ComponentErrorNull from "../components/common/ComponentErrorNull";
 export default function ListAgentSd() {
   // 데이터 ------------------------------------------------------------------------
   // 회원 목록
+  const [prevUserList, setPrevUserList] = useState([]);
   const [userList, setUserList] = useState([]);
 
   // pagination 버튼 관련 -----------------------------------------------------------
@@ -20,26 +21,45 @@ export default function ListAgentSd() {
 
   // 회원관리, 상태관리 cid 저장
   const [searchClick, setSearchClick] = useState(false);
+  const [finish, setFinish] = useState(false);
 
   useLayoutEffect(() => {
-    // searchClick을 클릭하지 않은 (false) 상태에서 동작
     searchClick === false &&
       servicesPostData(urlUserlist, {
         offset: page.getPage,
         userrole: "ROLE_ADMIN_SD",
         size: 15,
       }).then((res) => {
-        setUserList(res.data);
+        setPrevUserList(res.data);
         setListPage(res.page);
       });
   }, [page.activePage]);
 
-  // useLayoutEffect(() => {
-  //   // userList.uid
-  //   userList.filter((item) => {
-  //     console.log(item);
-  //   });
-  // }, [userList]);
+  useEffect(() => {
+    const newArr = [];
+    prevUserList.forEach((item) => {
+      return servicesPostData(urlGetCompanyDetail, {
+        rcid: item.cid,
+      })
+        .then((response) => response.data)
+        .then((result) => {
+          prevUserList.map((user) => {
+            if (user.cid === item.cid) {
+              // return { ...user, additionalData: result };
+              return newArr.push({ ...user, additionalData: result });
+            }
+            return user;
+          });
+          if (newArr.length === prevUserList.length) {
+            setUserList(newArr);
+            setFinish(true);
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    });
+  }, [listPage && prevUserList]);
 
   return (userList == [] && userList.length == 0) || userList === undefined ? (
     <>
@@ -51,7 +71,7 @@ export default function ListAgentSd() {
   ) : (
     <>
       <ComponentListAgentSearch
-        setUserList={setUserList}
+        setUserList={setPrevUserList}
         setListPage={setListPage}
         searchClick={searchClick}
         setSearchClick={setSearchClick}
@@ -59,7 +79,7 @@ export default function ListAgentSd() {
       />
 
       <ul className="tableTopWrap">
-        <LayoutTopButton url={`add`} text="사원등록" />
+        <LayoutTopButton url={`add`} text="지사 ( 총판 ) 등록" />
       </ul>
 
       <section className="tableWrap">
@@ -69,18 +89,16 @@ export default function ListAgentSd() {
             <thead>
               <tr>
                 <th style={{ width: "150px" }}>관리번호</th>
-                <th style={{ width: "150px" }}>사업장명</th>
                 <th style={{ width: "150px" }}>대표자</th>
-                <th style={{ width: "auto" }}>소속</th>
+                <th style={{ width: "auto" }}>사업장명</th>
                 <th style={{ width: "150px" }}>핸드폰번호</th>
                 <th style={{ width: "150px" }}>입사일</th>
               </tr>
             </thead>
             <tbody>
               {/* checkbox를 별도로 관리하기 위해 컴포넌트로 관리 */}
-              {userList &&
+              {finish &&
                 userList.map((item) => {
-                  // console.log(item);
                   return (
                     <tr key={item.uid}>
                       <td className="tableButton">
@@ -89,10 +107,8 @@ export default function ListAgentSd() {
                         </Link>
                       </td>
                       <td>{item.name}</td>
-                      <td>{item.name}</td>
                       <td>
-                        !! 회사명이 나와야 함 !!
-                        {}
+                        {item.additionalData && item.additionalData.name}
                         {/* {item.userrole &&
                         item.userrole.includes("ROLE_ADMIN") && (
                           <i
@@ -122,7 +138,6 @@ export default function ListAgentSd() {
                         )} */}
                       </td>
                       <td>{item.mobile}</td>
-
                       <td>{item.createTime && item.createTime.slice(0, 10)}</td>
                       {/* <td>{item.udid ? <i className="tableIcon">입력</i> : null}</td> */}
                     </tr>

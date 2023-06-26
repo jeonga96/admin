@@ -1,5 +1,5 @@
-import { useEffect, useLayoutEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useEffect } from "react";
+import { useParams, useLocation } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
 import { servicesPostData } from "../../Services/importData";
@@ -19,7 +19,10 @@ export default function ComponentListAgentSearch({
       _useFlag: "1",
     },
   });
+  const location = useLocation();
   const { uid } = useParams();
+  const CK_AGENT_SD = location.pathname.includes("agentsd");
+  const CK_AGENT_AG = location.pathname.includes("agentag");
 
   useEffect(() => {
     // searchClick을 클릭한 (true) 상태에서 동작
@@ -35,6 +38,13 @@ export default function ComponentListAgentSearch({
     setListPage && setListPage(res);
   };
 
+  console.log(
+    CK_AGENT_SD
+      ? "ROLE_ADMINSD"
+      : CK_AGENT_AG
+      ? "ROLE_ADMINAG"
+      : "ROLE_ADMIN" || "ROLE_ADMINAG" || "ROLE_ADMINSD"
+  );
   // submit 이벤트
   function SearchSubmit() {
     servicesPostData(urlUserlist, {
@@ -43,7 +53,13 @@ export default function ComponentListAgentSearch({
       userid: getValues("_userid"),
       name: getValues("_name"),
       mobile: getValues("_mobile"),
-      userrole: "ROLE_ADMIN" || "ROLE_ADMINAG" || "ROLE_ADMINSD",
+      userrole: CK_AGENT_SD
+        ? "ROLE_USER,ROLE_ADMIN_SD"
+        : CK_AGENT_AG
+        ? "ROLE_USER,ROLE_ADMIN_AG"
+        : "ROLE_USER,ROLE_ADMIN" ||
+          "ROLE_USER,ROLE_ADMINAG" ||
+          "ROLE_USER,ROLE_ADMINSD",
       useFlag: getValues("_useFlag"),
     }).then((res) => {
       if (res.status === "fail") {
