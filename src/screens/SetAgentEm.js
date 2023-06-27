@@ -4,6 +4,10 @@ import { useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 
+import LayoutTopButton from "../components/common/LayoutTopButton";
+import DetailUserComponent from "../components/common/ComponentSetUser";
+import ComponentModal from "../components/common/ComponentModalAgentem";
+
 import { servicesPostData } from "../Services/importData";
 import { servicesUseToast } from "../Services/useData";
 import {
@@ -17,10 +21,6 @@ import {
   urlUserlist,
   urlSetCompany,
 } from "../Services/string";
-
-import LayoutTopButton from "../components/common/LayoutTopButton";
-import DetailUserComponent from "../components/common/ComponentSetUser";
-import ComponentModal from "../components/common/ComponentModalAgentem";
 
 export default function SetAgentEm() {
   const { uid } = useParams();

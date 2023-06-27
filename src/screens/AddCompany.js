@@ -17,7 +17,7 @@ export default function AddCompany() {
     register,
     getValues,
     setValue,
-    formState: { isSubmitting, errors },
+    formState: { isSubmitting },
   } = useForm();
   const dispatch = useDispatch();
   const navigate = useNavigate();
