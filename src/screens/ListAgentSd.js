@@ -45,13 +45,13 @@ export default function ListAgentSd() {
         .then((result) => {
           prevUserList.map((user) => {
             if (user.cid === item.cid) {
-              // return { ...user, additionalData: result };
               return newArr.push({ ...user, additionalData: result });
             }
             return user;
           });
           if (newArr.length === prevUserList.length) {
-            setUserList(newArr);
+            const uidSortArr = newArr.sort((a, b) => b.uid - a.uid);
+            setUserList(uidSortArr);
             setFinish(true);
           }
         })

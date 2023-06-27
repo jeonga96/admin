@@ -8,6 +8,7 @@ const initialState = {
   multiImgsData: "",
   multilAddressData: "",
   navState: true,
+  click: false,
   getedData: {},
 };
 
@@ -64,6 +65,10 @@ const reducer = (state = initialState, action) => {
 
     case "navEvent":
       newState.navState = action.payload;
+      break;
+
+    case "clickEvent":
+      newState.click = action.payload;
       break;
 
     default:

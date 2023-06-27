@@ -1,4 +1,4 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector, shallowEqual } from "react-redux";
 import { useEffect, useLayoutEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -20,6 +20,7 @@ import {
 
 import LayoutTopButton from "../components/common/LayoutTopButton";
 import DetailUserComponent from "../components/common/ComponentSetUser";
+import ComponentModal from "../components/common/ComponentModalAgentem";
 
 export default function SetAgentEm() {
   const { uid } = useParams();
@@ -37,6 +38,7 @@ export default function SetAgentEm() {
 
   const [userData, setUserData] = useState({});
   const [checkBtn, setCheckBtn] = useState(false);
+  const clickModal = useSelector((state) => state.click, shallowEqual);
 
   // 수정 시에만 동작
   useLayoutEffect(() => {
@@ -77,6 +79,17 @@ export default function SetAgentEm() {
       fnAddSubmit();
     }
   }, [userData.userid]);
+
+  const fnSelectAgent = (e) => {
+    e.preventDefault();
+    // dispatch({
+    //   type: "clickEvent",
+    //   payload: !clickModal,
+    // });
+
+    console.log(e);
+    // setValue("_Cname", "[ 본사 ] 와짱 ( 주 )");
+  };
 
   // urlSetCompany + urlSetCompanyDetail 수정하는 함수
   const fnsetCompany = (cid, uid) => {
@@ -197,13 +210,16 @@ export default function SetAgentEm() {
 
                   <button
                     className="formContentBtn"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setValue("_Cname", "[ 본사 ] 와짱 ( 주 )");
-                    }}
+                    onClick={() =>
+                      dispatch({
+                        type: "clickEvent",
+                        payload: !clickModal,
+                      })
+                    }
                   >
                     유통망 조회
                   </button>
+                  <ComponentModal fn={fnSelectAgent} />
 
                   <button
                     className="formContentBtn"

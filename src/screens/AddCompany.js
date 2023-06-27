@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { ErrorMessage } from "@hookform/error-message";
+import { useDispatch, useSelector, shallowEqual } from "react-redux";
 
 import { servicesPostData } from "../Services/importData";
 import { servicesUseToast } from "../Services/useData";
 import { urlAddcompany, urlUserlist, urlSetCompany } from "../Services/string";
+
 import LayoutTopButton from "../components/common/LayoutTopButton";
+import ComponentModal from "../components/common/ComponentModalCompanyAdd";
 
 export default function AddCompany() {
   // react-hook-form 라이브러리
@@ -17,8 +19,10 @@ export default function AddCompany() {
     setValue,
     formState: { isSubmitting, errors },
   } = useForm();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const clickModal = useSelector((state) => state.click, shallowEqual);
   const [select, setSelect] = useState("");
   const [userList, setUserList] = useState([]);
 
@@ -32,6 +36,10 @@ export default function AddCompany() {
   const fnSelect = (res) => {
     setSelect(res);
     setValue("_name", res.name);
+    dispatch({
+      type: "clickEvent",
+      payload: false,
+    });
   };
 
   // 사업자 회원 추가 이벤트
@@ -77,10 +85,11 @@ export default function AddCompany() {
             <label htmlFor="name" className="blockLabel">
               <span>계약자</span>
             </label>
-            <div>
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
               <input
                 type="text"
                 id="name"
+                style={{ width: "86%" }}
                 placeholder="계약자명을 입력해 주세요."
                 {...register("_name", {
                   minLength: {
@@ -91,53 +100,25 @@ export default function AddCompany() {
                     value: 8,
                     message: "8자 이하의 이름만 사용가능합니다.",
                   },
-                  // pattern: {
-                  //   value: /[ㄱ-ㅎ가-힣]/,
-                  //   message: "입력 형식에 맞지 않습니다.",
-                  // },
                 })}
               />
-              <ErrorMessage
-                errors={errors}
-                name="_name"
-                render={({ message }) => (
-                  <span className="errorMessageWrap">{message}</span>
-                )}
-              />
+
+              <button
+                type="button"
+                onClick={() =>
+                  dispatch({
+                    type: "clickEvent",
+                    payload: !clickModal,
+                  })
+                }
+                className="formContentBtn"
+              >
+                검색
+              </button>
             </div>
           </div>
 
-          <div className="addCompanyUserList">
-            <section className="tableWrap">
-              <h3 className="blind">회원관리 리스트</h3>
-              <table className="commonTable">
-                <thead>
-                  <tr>
-                    <th>관리번호</th>
-                    <th>아이디</th>
-                    <th>이름</th>
-                    <th>핸드폰번호</th>
-                    <th>계약일</th>
-                  </tr>
-                </thead>
-
-                <tbody>
-                  {userList &&
-                    userList.map((item) => (
-                      <tr key={item.uid} onClick={() => fnSelect(item)}>
-                        <td>{item.uid}</td>
-                        <td>{item.userid}</td>
-                        <td>{item.name}</td>
-                        <td>{item.mobile}</td>
-                        <td>
-                          {item.createTime && item.createTime.slice(0, 10)}
-                        </td>
-                      </tr>
-                    ))}
-                </tbody>
-              </table>
-            </section>
-          </div>
+          <ComponentModal fn={fnSelect} userList={userList} />
         </form>
       </div>
     </>

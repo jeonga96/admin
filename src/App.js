@@ -122,9 +122,9 @@ function App() {
 
     // 키워드 검색을 위해 전체 키워드 받아와 로컬스토리지에 저장
     if (!!ISUSER & !ISALLKEYWORD) {
-      servicesPostData(urlAllKeyword, {}).then((res) => {
-        servicesSetStorage(ALLKEYWORD, JSON.stringify(res.data));
-      });
+      // servicesPostData(urlAllKeyword, {}).then((res) => {
+      //   servicesSetStorage(ALLKEYWORD, JSON.stringify(res.data));
+      // });
     }
 
     //refresh token 다시 받아오기 이벤트, 현재 10시간마다 토큰을 받아오는 것으로 설정
