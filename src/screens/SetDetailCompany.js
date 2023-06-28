@@ -1049,14 +1049,20 @@ export default function SetCompanyDetail() {
                     getData={toEstimateinfo}
                     url={`toestimateinfo`}
                     title="요청"
-                    inCommon
+                    useLink={
+                      toEstimateinfo && toEstimateinfo.length > 0 ? true : false
+                    }
                   />
 
                   <PieceDetailListLink
                     getData={fromEstimateinfo}
                     url={`fromestimateinfo`}
                     title="수령"
-                    inCommon
+                    useLink={
+                      fromEstimateinfo && fromEstimateinfo.length > 0
+                        ? true
+                        : false
+                    }
                   />
                 </ul>
               </div>
@@ -1069,14 +1075,20 @@ export default function SetCompanyDetail() {
                     getData={toproposalInfo}
                     url={`toproposalInfo`}
                     title="요청"
-                    inCommon
+                    useLink={
+                      toproposalInfo && toproposalInfo.length > 0 ? true : false
+                    }
                   />
 
                   <PieceDetailListLink
                     getData={fromproposalInfo}
                     url={`fromproposalInfo`}
                     title="수령"
-                    inCommon
+                    useLink={
+                      fromproposalInfo && fromproposalInfo.length > 0
+                        ? true
+                        : false
+                    }
                   />
                 </ul>
               </div>
@@ -1133,14 +1145,14 @@ export default function SetCompanyDetail() {
                     getData={noticeList}
                     url={`/company/${getedData.rcid}/notice`}
                     title="공지사항"
-                    inCommon
+                    useLink={true}
                   />
 
                   <PieceDetailListLink
                     getData={reviewList}
                     url={`/company/${getedData.rcid}/review`}
                     title="리뷰"
-                    inCommon
+                    useLink={reviewList.length > 0 ? true : false}
                   />
                 </ul>
               </div>

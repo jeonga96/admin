@@ -1099,6 +1099,15 @@ i {
   background-color: var(--color-bgblack);
   color: var(--color-white);
 }
+.detailContentBox .disabled {
+  color: #777;
+}
+.detailContent .disabled:hover {
+  background-color: var(--color-gray);
+  color: #777;
+  cursor: default;
+}
+
 .detailContentCheck > span {
   width: 220px;
 }
