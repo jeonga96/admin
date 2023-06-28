@@ -49,9 +49,7 @@ export default function ComponentModalCompanyAdd({ fn, userList }) {
           >
             검색
           </button>
-          {/* </div> */}
         </div>
-        <div></div>
       </>
     )
   );

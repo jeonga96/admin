@@ -23,8 +23,6 @@ import {
 } from "../Services/string";
 
 export default function SetAgentEm() {
-  const { uid } = useParams();
-  const dispatch = useDispatch();
   const {
     handleSubmit,
     register,
@@ -32,13 +30,15 @@ export default function SetAgentEm() {
     getValues,
     watch,
     formState: { isSubmitting, errors },
-  } = useForm({
-    defaultValues: {},
-  });
+  } = useForm({});
+
+  const { uid } = useParams();
+
+  const dispatch = useDispatch();
+  const clickModal = useSelector((state) => state.click, shallowEqual);
 
   const [userData, setUserData] = useState({});
   const [checkBtn, setCheckBtn] = useState(false);
-  const clickModal = useSelector((state) => state.click, shallowEqual);
 
   // 수정 시에만 동작
   useLayoutEffect(() => {
@@ -48,10 +48,10 @@ export default function SetAgentEm() {
       })
         .then((res) => {
           if (res.status === "success") {
-            dispatch({
-              type: "getedData",
-              payload: { ...res.data },
-            });
+            // dispatch({
+            //   type: "getedData",
+            //   payload: { ...res.data },
+            // });
             setValue("_name", res.data.name || "");
             setValue("_mobile", res.data.mobile || "");
             setValue("_mail", res.data.mail || "");
@@ -80,15 +80,14 @@ export default function SetAgentEm() {
     }
   }, [userData.userid]);
 
-  const fnSelectAgent = (e) => {
-    e.preventDefault();
-    // dispatch({
-    //   type: "clickEvent",
-    //   payload: !clickModal,
-    // });
-
-    console.log(e);
-    // setValue("_Cname", "[ 본사 ] 와짱 ( 주 )");
+  // ComponentModalAgentem에서 동작하는 함수
+  const fnSelectAgent = (item) => {
+    const Cname = item.additionalData.name;
+    setValue("_Cname", Cname);
+    dispatch({
+      type: "clickEvent",
+      payload: false,
+    });
   };
 
   // urlSetCompany + urlSetCompanyDetail 수정하는 함수
@@ -209,6 +208,7 @@ export default function SetAgentEm() {
                   />
 
                   <button
+                    type="button"
                     className="formContentBtn"
                     onClick={() =>
                       dispatch({
@@ -219,6 +219,7 @@ export default function SetAgentEm() {
                   >
                     유통망 조회
                   </button>
+
                   <ComponentModal fn={fnSelectAgent} />
 
                   <button

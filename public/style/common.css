@@ -1774,16 +1774,7 @@ ul.pagination li a:hover {
   left: 50%;
   transform: translate(-20%, -50%);
 }
-.clickModal ~ div {
-  position: absolute;
-  z-index: 19;
-  top: 0;
-  left: 0;
-  display: block;
-  background-color: rgba(0, 0, 0, 0.2);
-  width: 100vw;
-  height: 100vh;
-}
+
 .clickModal .commonBox {
   border: none;
 }
@@ -1798,6 +1789,7 @@ ul.pagination li a:hover {
   height: 26px;
   background-color: var(--color-bgblack);
   color: var(--color-white);
+  line-height: 26px;
 }
 
 .clickModal .tableWrap {
@@ -1834,6 +1826,7 @@ ul.pagination li a:hover {
 }
 
 tbody tr {
+  width: 100%;
   height: 36px;
 }
 

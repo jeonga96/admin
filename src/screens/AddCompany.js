@@ -11,7 +11,6 @@ import LayoutTopButton from "../components/common/LayoutTopButton";
 import ComponentModal from "../components/common/ComponentModalCompanyAdd";
 
 export default function AddCompany() {
-  // react-hook-form 라이브러리
   const {
     handleSubmit,
     register,
