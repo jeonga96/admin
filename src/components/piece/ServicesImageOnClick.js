@@ -31,7 +31,7 @@ export default function ImageOnClick({ url, text, iid, onRemove }) {
       <img
         className="Link"
         alt={text}
-        src={url.storagePath.replace("com/", "com/s/")}
+        src={url.storagePath && url.storagePath.replace("com/", "com/s/")}
         onError={(e) => (e.target.src = url.storagePath)}
         onClick={onPopup}
       />
@@ -41,7 +41,7 @@ export default function ImageOnClick({ url, text, iid, onRemove }) {
           <img
             className="imageZoom"
             alt={text}
-            src={url.storagePath.replace("com/", "com/s/")}
+            src={url.storagePath && url.storagePath.replace("com/", "com/s/")}
             onError={(e) => (e.target.src = url.storagePath)}
           />
         </div>
