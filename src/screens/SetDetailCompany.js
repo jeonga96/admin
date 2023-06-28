@@ -1,3 +1,5 @@
+// 사업자 회원 관리 > 사업자 상세정보 (수정)
+
 import { useDispatch, useSelector, shallowEqual } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";

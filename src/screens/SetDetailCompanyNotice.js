@@ -1,5 +1,7 @@
+// 공사콕 앱관리 > 공지사항 관리 > 공사콕 공지사항 작성 (comnid를 기준으로 작성, 수정 구분)
+
 import { useDispatch, useSelector } from "react-redux";
-import { useState, useLayoutEffect } from "react";
+import { useLayoutEffect } from "react";
 import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 

@@ -1,3 +1,5 @@
+// 사업자 회원 관리 > 사업자 상세정보 > 사업자 리뷰
+
 import { useParams } from "react-router-dom";
 import { useState, useLayoutEffect } from "react";
 import { servicesPostData } from "../Services/importData";

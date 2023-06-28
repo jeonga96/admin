@@ -1,3 +1,5 @@
+// 회원관리 > 통합회원 상세정보
+
 import { useDispatch, useSelector, shallowEqual } from "react-redux";
 import { useLayoutEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";

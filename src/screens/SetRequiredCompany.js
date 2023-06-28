@@ -1,3 +1,5 @@
+// 사업자 회원관리 > 사업자 추가 > ✔️ 현재 페이지(사업자 필수 페이지) > 사업자 상세페이지
+
 import { useDispatch, useSelector, shallowEqual } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";

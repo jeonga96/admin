@@ -1,3 +1,6 @@
+// 사업자 회원 관리 > 사업자 상세정보 > 사업자 리뷰 > 사업자 리뷰 확인
+// 리뷰는 관리자 페이지에서 작성하지 않는다.
+
 import { useState } from "react";
 import { useGetImage } from "../Services/customHook";
 

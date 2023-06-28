@@ -1,3 +1,5 @@
+// 현재 숨긴 키워드 순위 확인 및 조정 페이지
+
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { urlSetKeyword, urlAllKeyword, ALLKEYWORD } from "../Services/string";

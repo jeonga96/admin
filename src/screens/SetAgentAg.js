@@ -1,4 +1,4 @@
-// 유통망관리 > 자사(총판)관리
+// 유통망관리 > 지점 ( 대리점 ) 관리
 
 import { useDispatch, useSelector, shallowEqual } from "react-redux";
 import { useLayoutEffect, useState } from "react";
@@ -24,7 +24,7 @@ import {
 import LayoutTopButton from "../components/common/LayoutTopButton";
 import PieceRegisterSearchPopUp from "../components/piece/PieceRegisterSearchPopUp";
 
-export default function SetAgentSd() {
+export default function SetAgentAg() {
   const { uid } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();

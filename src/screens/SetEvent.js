@@ -1,3 +1,5 @@
+// 공사콕 앱 관리 > 이벤트 관리 > 이벤트 작성 (contid를 기준으로 추가 및 수정)
+
 import { useLayoutEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";

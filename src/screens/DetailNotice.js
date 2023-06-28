@@ -1,3 +1,6 @@
+// (cid)를 확인하여 사업자, 관리자 공지사항인지 확인
+// (comnid, contid)를 확인하여 작성 및 수정
+
 import { useLayoutEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { servicesPostData } from "../Services/importData";

@@ -1,7 +1,6 @@
 [
   {
     "name": "회원 관리",
-    "url": null,
     "subNav": [
       {
         "subName": "회원 관리",
@@ -11,7 +10,6 @@
   },
   {
     "name": "사업자 회원 관리",
-    "url": null,
     "subNav": [
       {
         "subName": "사업자 관리",
@@ -29,7 +27,6 @@
   },
   {
     "name": "공사콕 앱 관리",
-    "url": null,
     "subNav": [
       {
         "subName": "공지사항 관리",
@@ -47,7 +44,6 @@
   },
   {
     "name": "유통망 관리",
-    "url": null,
     "subNav": [
       {
         "subName": "사원관리",
@@ -60,20 +56,6 @@
       {
         "subName": "지사(총판)관리",
         "url": "/agentsd"
-      }
-    ]
-  },
-  {
-    "name": "공사콕 콘텐츠 페이지",
-    "url": null,
-    "subNav": [
-      {
-        "subName": "개인정보처리방침",
-        "url": "https://contents.gongsacok.com/privacy"
-      },
-      {
-        "subName": "이용약관",
-        "url": "https://contents.gongsacok.com/terms"
       }
     ]
   }

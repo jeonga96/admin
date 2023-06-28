@@ -26,12 +26,12 @@ import SetCompanyNotice from "./screens/SetDetailCompanyNotice";
 /* 견적요청서 관리 */
 import ListEstimateinfo from "./screens/ListEstimateinfo";
 import SetAdminEstimateinfo from "./screens/SetAdminEstimateinfo";
-import DetailCompanyEstimateinfo from "./screens/DetailCompanyEstimateinfo";
+import DetailCompanyEstimateinfo from "./screens/ListCompanyEstimateinfo";
 
 /* 견적서 관리 */
 import ListProposalinfo from "./screens/ListProposalinfo";
 import SetAdminProposalInfo from "./screens/SetAdminProposalInfo";
-import DetailCompanyProposalinfo from "./screens/DetailCompanyProposalinfo";
+import DetailCompanyProposalinfo from "./screens/ListCompanyProposalinfo";
 
 /* 공지사항 - 관리자*/
 import ListAdminNotice from "./screens/ListAdminNotice";
@@ -156,32 +156,26 @@ function App() {
       <Routes>
         <Route
           path="/"
-          element={
-            <MainLayout nowTitle="통합회원 관리" component={<ListUser />} />
-          }
+          element={<MainLayout nowTitle="회원 관리" component={<ListUser />} />}
         />
         <Route path="login" element={<Login />} />
         <Route
           path="user"
-          element={
-            <MainLayout nowTitle="통합회원 관리" component={<ListUser />} />
-          }
+          element={<MainLayout nowTitle="회원 관리" component={<ListUser />} />}
         />
         {/* ------- 회원 관리 ------- */}
         <Route
           path="user/:uid"
           element={
             <MainLayout
-              nowTitle="통합회원 상세정보"
+              nowTitle="회원 상세정보"
               component={<SetDetailUser />}
             />
           }
         />
         <Route
           path="user/add"
-          element={
-            <MainLayout nowTitle="통합회원 추가" component={<AddUser />} />
-          }
+          element={<MainLayout nowTitle="회원 추가" component={<AddUser />} />}
         />
         {/* ------- 사업자 관리 ------- */}
         <Route
