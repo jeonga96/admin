@@ -1,7 +1,11 @@
-// 유통망관리 > 지점 ( 대리점 ) 관리
+// 유통망관리 > 자사(총판)관리
+// 지사 총판 수정 : setCompany(대표자명:_regOwner)
+// urlSetCompanyDetail(상태:_useFlag,휴대폰:_mobilenum, 법인번호:_corporationno, 이메일:_email, 별도번호:_telnum, 소속:_Cname, 사업장명:_regName, 대표자명:_regOwner,주민법인번호:_registration, ...주소)
+// <<운영자 관리자 번호의 별도 전화>> - urlSetCompanyDetail(별도전화:_extnum )
+// 운영자(완리자)정보 : setUser(userrole, 아이디, 비밀번호),setUserDetail(이름:_name, 휴대폰:_mobile, 이메일:_mail )
 
 import { useDispatch, useSelector, shallowEqual } from "react-redux";
-import { useLayoutEffect, useState } from "react";
+import { useLayoutEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
@@ -23,8 +27,9 @@ import {
 
 import LayoutTopButton from "../components/common/LayoutTopButton";
 import PieceRegisterSearchPopUp from "../components/piece/PieceRegisterSearchPopUp";
+import ComponentModal from "../components/common/ComponentModalAgentem";
 
-export default function SetAgentAg() {
+export default function SetAgentSd() {
   const { uid } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -41,12 +46,21 @@ export default function SetAgentAg() {
     },
   });
 
+  const clickModal = useSelector((state) => state.click, shallowEqual);
   const multilAddress = useSelector(
     (state) => state.multilAddressData,
     shallowEqual
   );
 
-  const [wz, setWz] = useState(false);
+  // ComponentModalAgentem에서 동작하는 함수
+  const fnSelectAgent = (item) => {
+    const Cname = item.additionalData.name;
+    setValue("_Cname", Cname);
+    dispatch({
+      type: "clickEvent",
+      payload: false,
+    });
+  };
 
   // 수정 시에만 동작
   useLayoutEffect(() => {
@@ -64,10 +78,6 @@ export default function SetAgentAg() {
       })
         .then((res) => {
           if (res.status === "success") {
-            dispatch({
-              type: "getedData",
-              payload: { ...res.data },
-            });
             setValue("_name", res.data.name || "");
             setValue("_mobile", res.data.mobile || "");
             setValue("_mail", res.data.mail || "");
@@ -79,13 +89,7 @@ export default function SetAgentAg() {
                 rcid: res.data.cid,
               }).then((res2) => {
                 if (res2.status === "success") {
-                  dispatch({
-                    type: "getedData",
-                    payload: { ...res2.data },
-                  });
-                  if (res2.data.name.includes("[본사직영]")) {
-                    setWz(true);
-                  }
+                  setValue("_regName", res2.data.regName || "");
                   setValue("_useFlag", res2.data.useFlag || "");
                   setValue("_regOwner", res2.data.regOwner || "");
                   setValue("_mobilenum", res2.data.mobilenum || "");
@@ -104,6 +108,7 @@ export default function SetAgentAg() {
     }
   }, []);
 
+  console.log(watch("_registration"));
   // company 관련 코드 : 수정 & 추가 중복되는 동작 함수
   const fnsetCompany = (cid, uid) => {
     servicesPostData(urlSetCompany, {
@@ -116,10 +121,10 @@ export default function SetAgentAg() {
       useFlag: getValues("_useFlag"),
       mobilenum: getValues("_mobilenum"),
       corporationno: getValues("_corporationno"),
-      email: getValues("email"),
+      email: getValues("_email"),
       telnum: getValues("_telnum"),
       name: getValues("_Cname"),
-      // regName: getValues("_Cname"),
+      regName: getValues("_regName"),
       regOwner: getValues("_regOwner"),
       registration: getValues("_registration"),
       extnum: getValues("_extnum"),
@@ -159,11 +164,10 @@ export default function SetAgentAg() {
         }).then((res) => {
           if (status.status === "success") {
             const UID = res.data[0].uid;
-            console.log(UID);
             servicesPostData(urlSetUser, {
               uid: UID,
-              userrole: "ROLE_USER,ROLE_ADMIN_SD",
-              useFlag: getValues("_useFlag"),
+              userrole: "ROLE_USER,ROLE_ADMIN_AG",
+              useFlag: "1",
               userid: getValues("_userid"),
               passwd: getValues("_passwd"),
             });
@@ -190,7 +194,6 @@ export default function SetAgentAg() {
         uid: uid,
         userid: getValues("_userid"),
         passwd: getValues("_passwd"),
-        // ...userData,
       });
       servicesPostData(urlSetUserDetail, {
         ruid: uid,
@@ -231,12 +234,12 @@ export default function SetAgentAg() {
       <div className="commonBox">
         <form className="formLayout" onSubmit={handleSubmit(fnSubmit)}>
           <ul className="tableTopWrap tableTopBorderWrap">
-            <LayoutTopButton url="/agentsd" text="목록으로 가기" />
+            <LayoutTopButton url="/agentag" text="목록으로 가기" />
             <LayoutTopButton text="완료" disabled={isSubmitting} />
           </ul>
           <div className="formWrap">
             <fieldset id="CompanyDetail_1">
-              <h3>사업장 정보</h3>
+              <h3>지사 총판 수정</h3>
               <div
                 className="formContentWrap"
                 style={{
@@ -245,7 +248,7 @@ export default function SetAgentAg() {
               >
                 {/* /setCompany */}
                 <label htmlFor="Cname" className="blockLabel">
-                  <span>사업장명</span>
+                  <span>소속</span>
                 </label>
 
                 <div
@@ -254,37 +257,51 @@ export default function SetAgentAg() {
                   <input
                     type="text"
                     id="Cname"
+                    disabled
                     {...register("_Cname")}
-                    style={{ width: "84.5%" }}
+                    style={{ width: "82%" }}
                   />
 
                   <button
-                    style={{ width: "15%" }}
-                    className={
-                      wz ? "formContentBtn btnClick" : "formContentBtn"
+                    type="button"
+                    className="formContentBtn"
+                    onClick={() =>
+                      dispatch({
+                        type: "clickEvent",
+                        payload: !clickModal,
+                      })
                     }
+                  >
+                    유통망 조회
+                  </button>
+
+                  <ComponentModal fn={fnSelectAgent} />
+
+                  <button
+                    className="formContentBtn"
                     onClick={(e) => {
                       e.preventDefault();
-                      setWz(!wz);
-                      wz
-                        ? setValue(
-                            "_Cname",
-                            getValues("_Cname").replace("[본사직영] ", "")
-                          )
-                        : setValue(
-                            "_Cname",
-                            `[본사직영] ${getValues("_Cname")}`
-                          );
+                      setValue("_Cname", "[ 본사 ] 와짱 ( 주 )");
                     }}
                   >
-                    본사 직영 총판
+                    본사소속
+                  </button>
+
+                  <button
+                    className="formContentBtn"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setValue("_Cname", "-");
+                    }}
+                  >
+                    단독 대리점
                   </button>
                 </div>
               </div>
 
               <div className="formContentWrap" style={{ width: "100%" }}>
                 <div className="blockLabel">
-                  <span>회원 활성화</span>
+                  <span>상태</span>
                 </div>
                 <div className="formPaddingWrap">
                   <input
@@ -330,6 +347,22 @@ export default function SetAgentAg() {
                         value: 8,
                         message: "8자 이하의 글자만 사용가능합니다.",
                       },
+                    })}
+                  />
+                </div>
+              </div>
+
+              <div className="formContentWrap">
+                <label htmlFor="regOwner" className=" blockLabel">
+                  <span>사업장명</span>
+                </label>
+                <div>
+                  <input
+                    type="text"
+                    id="regName"
+                    placeholder="사업장명을 입력해 주세요."
+                    {...register("_regName", {
+                      required: "입력되지 않았습니다.",
                     })}
                   />
                 </div>
@@ -656,13 +689,6 @@ export default function SetAgentAg() {
                   />
                 </div>
               </div>
-
-              {/* setUser (회원활성화, 회원권한, 비밀번호관리) ================================================================ */}
-              {/* <DetailUserComponent
-                setUserData={setUserData}
-                userData={userData}
-                checkBtn={checkBtn}
-              /> */}
 
               <div className="formContentWrap">
                 <div className="blockLabel">

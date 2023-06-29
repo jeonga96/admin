@@ -50,9 +50,10 @@ import SetAdminKeywords from "./screens/SetAdminKeywords";
 /* 유통만 관리 */
 import ListAgentEm from "./screens/ListAgentEm";
 import SetAgentEm from "./screens/SetAgentEm";
-// import ListAgentAg from "./screens/ListAgentAg";
+import ListAgentAg from "./screens/ListAgentAg";
 import ListAgentSd from "./screens/ListAgentSd";
 import SetAgentSd from "./screens/SetAgentSd";
+import SetAgentAg from "./screens/SetAgentAg";
 
 /* 이밴트 */
 import ListEvent from "./screens/ListEvent";
@@ -121,11 +122,11 @@ function App() {
     fnUserCheck();
 
     // 키워드 검색을 위해 전체 키워드 받아와 로컬스토리지에 저장
-    if (!!ISUSER & !ISALLKEYWORD) {
-      // servicesPostData(urlAllKeyword, {}).then((res) => {
-      //   servicesSetStorage(ALLKEYWORD, JSON.stringify(res.data));
-      // });
-    }
+    // if (!!ISUSER & !ISALLKEYWORD) {
+    // servicesPostData(urlAllKeyword, {}).then((res) => {
+    //   servicesSetStorage(ALLKEYWORD, JSON.stringify(res.data));
+    // });
+    // }
 
     //refresh token 다시 받아오기 이벤트, 현재 10시간마다 토큰을 받아오는 것으로 설정
     if (notLoginScreens) {
@@ -492,21 +493,34 @@ function App() {
             />
           }
         />
-        {/* <Route
+        {/* ------- 지점 ( 대리점 ) 관리 ------- */}
+        <Route
           path="agentag"
           element={
             <MainLayout
-              nowTitle="지점(대리점) 관리"
+              nowTitle="지점 ( 대리점 ) 관리"
               component={<ListAgentAg />}
             />
           }
         />
         <Route
-          path="agentsd"
+          path="agentag/add"
           element={
-            <MainLayout nowTitle="지사(총판)관리" component={<ListAgentSd />} />
+            <MainLayout
+              nowTitle="지점 ( 대리점 ) 등록"
+              component={<SetAgentAg />}
+            />
           }
-        /> */}
+        />
+        <Route
+          path="agentag/:uid"
+          element={
+            <MainLayout
+              nowTitle="지사 ( 총판 ) 수정"
+              component={<SetAgentAg />}
+            />
+          }
+        />
       </Routes>
     </div>
   );

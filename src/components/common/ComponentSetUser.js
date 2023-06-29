@@ -124,7 +124,7 @@ export default function ComponentSetUser({ setUserData, userData, checkBtn }) {
                 type="radio"
                 checked={watch("_userrole") === "ROLE_USER,ROLE_ADMIN_AG"}
                 value="ROLE_USER,ROLE_ADMIN_AG"
-                id="OLE_ADMIN_AG"
+                id="ROLE_ADMIN_AG"
                 {...register("_userrole", {
                   onChange: fnSetUserData,
                 })}

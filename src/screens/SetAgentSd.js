@@ -1,5 +1,10 @@
 // 유통망관리 > 자사(총판)관리
 
+// 지사 총판 수정 : setCompany(대표자명:_regOwner)
+// urlSetCompanyDetail(상태:_useFlag,휴대폰:_mobilenum, 법인번호:_corporationno, 이메일:_email, 별도번호:_telnum, 사업장명:_Cname, 대표자명:_regOwner,주민법인번호:_registration, ...주소)
+// <<운영자 관리자 번호의 별도 전화>> - urlSetCompanyDetail(별도전화:_extnum )
+// 운영자(완리자)정보 : setUser(userrole, 아이디, 비밀번호),setUserDetail(이름:_name, 휴대폰:_mobile, 이메일:_mail )
+
 import { useDispatch, useSelector, shallowEqual } from "react-redux";
 import { useLayoutEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
@@ -119,7 +124,6 @@ export default function SetAgentSd() {
       email: getValues("email"),
       telnum: getValues("_telnum"),
       name: getValues("_Cname"),
-      // regName: getValues("_Cname"),
       regOwner: getValues("_regOwner"),
       registration: getValues("_registration"),
       extnum: getValues("_extnum"),
@@ -159,7 +163,6 @@ export default function SetAgentSd() {
         }).then((res) => {
           if (status.status === "success") {
             const UID = res.data[0].uid;
-            console.log(UID);
             servicesPostData(urlSetUser, {
               uid: UID,
               userrole: "ROLE_USER,ROLE_ADMIN_SD",

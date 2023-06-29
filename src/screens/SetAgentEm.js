@@ -1,5 +1,8 @@
 // 유통망관리 > 사원관리
 
+// setUser(userrole, 아이디, 비밀번호),setUserDetail(이름:_name, 휴대폰:_mobile, 이메일:_mail )
+// <<별도 전화>> - urlSetCompanyDetail(휴대폰:_telnum, 소속:(regName)_Cname, 별도전화:_extnum , 이름:_name)
+
 import { useDispatch, useSelector, shallowEqual } from "react-redux";
 import { useEffect, useLayoutEffect, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -32,7 +35,7 @@ export default function SetAgentEm() {
     getValues,
     watch,
     formState: { isSubmitting, errors },
-  } = useForm({});
+  } = useForm();
 
   const { uid } = useParams();
 
@@ -50,10 +53,6 @@ export default function SetAgentEm() {
       })
         .then((res) => {
           if (res.status === "success") {
-            // dispatch({
-            //   type: "getedData",
-            //   payload: { ...res.data },
-            // });
             setValue("_name", res.data.name || "");
             setValue("_mobile", res.data.mobile || "");
             setValue("_mail", res.data.mail || "");

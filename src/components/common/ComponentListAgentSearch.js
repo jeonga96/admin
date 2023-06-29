@@ -38,13 +38,6 @@ export default function ComponentListAgentSearch({
     setListPage && setListPage(res);
   };
 
-  console.log(
-    CK_AGENT_SD
-      ? "ROLE_ADMINSD"
-      : CK_AGENT_AG
-      ? "ROLE_ADMINAG"
-      : "ROLE_ADMIN" || "ROLE_ADMINAG" || "ROLE_ADMINSD"
-  );
   // submit 이벤트
   function SearchSubmit() {
     servicesPostData(urlUserlist, {

@@ -46,7 +46,7 @@
     "name": "유통망 관리",
     "subNav": [
       {
-        "subName": "사원관리",
+        "subName": "사원 관리",
         "url": "/agentem"
       },
       {
@@ -54,7 +54,7 @@
         "url": "/agentag"
       },
       {
-        "subName": "지사(총판)관리",
+        "subName": "지사(총판) 관리",
         "url": "/agentsd"
       }
     ]
