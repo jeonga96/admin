@@ -1,6 +1,7 @@
-// import axios from "axios";
-import axiosApiInstance from "./axios";
+import axios from "axios";
+// import axiosApiInstance from "./axios";
 import { TOKEN, urlRefreshtoken } from "./string";
+const storageGetToken = servicesGetStorage(TOKEN);
 
 export function servicesSetStorage(name, data) {
   return localStorage.setItem(name, data);
@@ -13,44 +14,62 @@ export function servicesRemoveStorage(name) {
   return localStorage.removeItem(name);
 }
 
-export function servicesGetData(url, getData) {
-  return axiosApiInstance(url, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
+export function servicesGetData(url, reqData) {
+  let headers = {
+    "Content-Type": "application/json",
+  };
+  if (storageGetToken) {
+    headers.Authorization = `Bearer ${storageGetToken}`;
+  }
+
+  return axios(
+    {
+      url: url,
+      method: "get",
+      data: reqData,
     },
-    data: getData,
-  })
+    { headers }
+  )
     .then((res) => res.data)
     .catch((error) => console.log("importData.servicesGetData", error));
 }
 
-export function servicesPostData(url, postData) {
-  return axiosApiInstance(url, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    data: postData,
-  })
-    .then((res) => {
-      return res.data;
+export function servicesPostData(url, reqData) {
+  return axios
+    .post(url, reqData, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${storageGetToken}`,
+      },
     })
+    .then((res) => res.data)
     .catch((error) => console.log("importData.axiosSetData", error));
 }
 
-export function servicesPostDataForm(url, postData) {
-  return axiosApiInstance(url, {
-    method: "POST",
-    headers: {
-      "Content-Type": "multipart/form-data",
-    },
-    data: postData,
-  })
+export function servicesPostDataForm(url, reqData) {
+  axios
+    .post(url, reqData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${storageGetToken}`,
+      },
+    })
     .then((res) => {
       return res.data;
     })
     .catch((error) => console.log("importData.servicesPostDataForm ", error));
+}
+
+export function servicesPostKtbiz(url, reqData) {
+  return axios
+    .post(url, reqData, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${storageGetToken}`,
+      },
+    })
+    .then((res) => res.data)
+    .catch((error) => console.log("importData.axiosSetData", error));
 }
 
 export function servicesGetRefreshToken() {
