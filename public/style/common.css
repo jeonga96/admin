@@ -414,7 +414,7 @@ i {
 
 .formLayout input {
   width: 100%;
-  height: 2rem;
+  height: 1.8rem;
   border: 0.0625rem solid rgba(200, 200, 200, 0.6);
   padding: 0 0.3125rem;
   text-align: center;
@@ -437,7 +437,6 @@ i {
   height: 100%;
   min-height: 120px;
   padding: 0.3125rem;
-  /* background-color: rgba(243, 244, 243, 0.3); */
   border: 0.0625rem solid var(--color-bggray);
   line-height: 1.2rem;
 }
@@ -712,7 +711,6 @@ i {
   width: 50%;
   height: auto;
   justify-content: left;
-  /* margin-top: 8px; */
 }
 .formContentWideWrap {
   width: 100%;
@@ -726,13 +724,24 @@ i {
   padding: 2px;
 }
 .formContentWrap > div.formPaddingWrap {
-  height: 38px;
+  height: 2rem;
   display: flex;
   justify-content: center;
   padding-top: 7px;
 }
 .formContentWrap div input:not(:nth-last-of-type(1)) {
   margin-bottom: 4px;
+}
+.formContentWrap select {
+  width: 42.5%;
+  border: 1px solid rgba(200, 200, 200, 0.6);
+  height: 1.8rem;
+  border-radius: 2px;
+}
+.formContentWrap option {
+  width: 100%;
+  height: auto;
+  padding: 4px;
 }
 .formPaddingWrap input[type="text"] {
   width: 100%;
@@ -741,11 +750,11 @@ i {
 .formContentBtn {
   display: block;
   width: 60px;
-  height: 30px;
+  height: 28px;
   background-color: var(--color-bggray);
   font-size: var(--font-size-small);
   text-align: center;
-  line-height: 32px;
+  line-height: 30px;
 }
 
 /* keyword 클릭 이벤트 ---------------------------------- */
@@ -1047,7 +1056,7 @@ i {
 }
 .detailContent li {
   width: 50%;
-  height: 32px;
+  height: 30px;
   padding: 0 2px;
 }
 .detailContent li > div {
@@ -1525,6 +1534,7 @@ ul.pagination li a:hover {
 }
 
 .tableTopNumber {
+  height: 20px;
   border: 1px solid var(--color-bgblack);
   border-radius: 2px;
 }
@@ -1652,7 +1662,7 @@ ul.pagination li a:hover {
 .formLayout .listSearchRadioLabel {
   display: inline-block;
   width: auto;
-  padding-top: 0.25rem;
+  margin-top: 2px;
   margin-right: 0.625rem;
 }
 .formLayout .listSearchRadioLabel:last-child {
@@ -1662,8 +1672,8 @@ ul.pagination li a:hover {
   display: inline-block;
   width: 0.75rem;
   height: 0.75rem;
-  margin-right: 0.25rem;
-  margin-top: 0.3125rem;
+  margin-right: 4px;
+  margin-top: 2px;
 }
 .formCenterLayout .formContentWrap {
   margin-left: 50%;

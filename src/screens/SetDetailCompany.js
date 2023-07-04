@@ -1,7 +1,6 @@
 // 사업자 회원 관리 > 사업자 상세정보 (수정)
-
 import { useDispatch, useSelector, shallowEqual } from "react-redux";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
@@ -851,12 +850,14 @@ export default function SetCompanyDetail() {
                 <label htmlFor="extnum" className="blockLabel">
                   <span>안심번호</span>
                 </label>
-                <div>
+                <div
+                  style={{ display: "flex", justifyContent: "space-between" }}
+                >
                   <input
                     type="text"
                     id="extnum"
-                    placeholder="안심 번호를 입력해 주세요."
-                    maxLength="13"
+                    style={{ width: "85.5%" }}
+                    disabled
                     value={
                       (watch("_extnum") &&
                         watch("_extnum")
@@ -865,20 +866,18 @@ export default function SetCompanyDetail() {
                           .replace("--", "-")) ||
                       ""
                     }
-                    {...register("_extnum", {
-                      pattern: {
-                        value: /^[0-9]{3}-[0-9]{3,5}-[0-9]{4}/,
-                        message: "형식에 맞지 않습니다.",
-                      },
-                    })}
+                    {...register("_extnum")}
                   />
-                  <ErrorMessage
-                    errors={errors}
-                    name="_extnum"
-                    render={({ message }) => (
-                      <span className="errorMessageWrap">{message}</span>
-                    )}
-                  />
+                  <Link
+                    className="formContentBtn"
+                    to={
+                      !!watch("_extnum")
+                        ? `050biz/${watch("_extnum").replaceAll("-", "")}`
+                        : "050biz"
+                    }
+                  >
+                    {!!watch("_extnum") ? "관리" : "등록"}
+                  </Link>
                 </div>
               </div>
 

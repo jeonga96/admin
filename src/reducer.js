@@ -32,6 +32,7 @@ const reducer = (state = initialState, action) => {
 
             servicesSetStorage(TOKEN, accessToken);
             servicesSetStorage(UID, uid);
+            console.log(res);
             window.location.href = "/";
             return;
           }

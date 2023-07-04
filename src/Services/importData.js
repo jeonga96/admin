@@ -60,12 +60,13 @@ export function servicesPostDataForm(url, reqData) {
     .catch((error) => console.log("importData.servicesPostDataForm ", error));
 }
 
-export function servicesPostKtbiz(url, reqData) {
+export function servicesPost050biz(url, reqData) {
+  const TOKEN = "";
   return axios
     .post(url, reqData, {
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${storageGetToken}`,
+        Authorization: `Bearer ${TOKEN}`,
       },
     })
     .then((res) => res.data)

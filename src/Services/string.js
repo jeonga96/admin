@@ -3,9 +3,15 @@ export const navUrl = "/data/nav.json";
 
 /* 공사콕 url & API */
 export const urlPrefix = "https://devawsback.gongsacok.com";
+export const urlPre050Biz = "https://050api-cbt.sejongtelecom.net:8433";
 
+/* 기타 */
 export const urlLogin = urlPrefix + "/pub/login";
 export const urlRefreshtoken = urlPrefix + "/svc/refreshToken";
+
+export const urlCreate050 = urlPre050Biz + "050biz/v1/service/create";
+export const urlUpdate050 = urlPre050Biz + "050biz/v1/service/update";
+export const urlGet050 = urlPre050Biz + "050biz/v1/service";
 
 /* user관련 */
 export const urlAdduser = urlPrefix + "/pub/addUser";

@@ -37,6 +37,7 @@ export function serviesGetKeywords(variable, data) {
     variable.push(data[i].keyword);
   }
 }
+
 //서버에 keywords의 keyword 데이터를 보내기 위해 실행하는 함수
 export function serviesGetKid(variable, data, allData) {
   const arrData = data !== undefined ? data.split(",") : [];
@@ -47,6 +48,24 @@ export function serviesGetKid(variable, data, allData) {
     }
   });
   return variable(arrPushData);
+}
+
+export function serviesBoolToNumber(arr) {
+  const newArr = [];
+  arr.forEach((el) => (el ? newArr.push(1) : newArr.push(0)));
+  return newArr.toString().replaceAll(",", "");
+}
+
+export function serviesNumberToBool(arr) {
+  const binaryArray = arr.split("");
+  const booleanArray = binaryArray.map((digit) => {
+    return digit === "1";
+  });
+  return booleanArray;
+}
+
+export function serviesStringToTime(str) {
+  return `${str.slice(0, 2)}:${str.slice(2, 4)}`;
 }
 
 // 안내창 라이브러리

@@ -67,6 +67,7 @@ import {
 } from "./Services/importData";
 import { urlAllKeyword, TOKEN, ALLKEYWORD } from "./Services/string";
 import { ToastContainer } from "react-toastify";
+import Set050Biz from "./screens/Set050Biz";
 
 function App() {
   const location = useLocation();
@@ -74,7 +75,7 @@ function App() {
 
   const ISUSER = servicesGetStorage(TOKEN);
   const ISALLKEYWORD = servicesGetStorage(ALLKEYWORD);
-  const navChange = useSelector((state) => state.navState);
+  // const navChange = useSelector((state) => state.navState);
   const dispatch = useDispatch();
   const notLoginScreens = location.pathname !== "/login";
   let currentPath = useRef("");
@@ -109,12 +110,12 @@ function App() {
       fnHomeLink();
     }
     // 네비게이션 반응형
-    let mql = window.matchMedia("screen and (min-width:992px)");
-    if (!mql.matches) {
-      fnNavEvent(!navChange);
-    }
-    mql.addEventListener("change", fnScreenEvent);
-    return () => mql.removeEventListener("change", fnScreenEvent);
+    // let mql = window.matchMedia("screen and (min-width:992px)");
+    // if (!mql.matches) {
+    //   fnNavEvent(!navChange);
+    // }
+    // mql.addEventListener("change", fnScreenEvent);
+    // return () => mql.removeEventListener("change", fnScreenEvent);
   }, []);
 
   useEffect(() => {
@@ -519,6 +520,26 @@ function App() {
               nowTitle="지사 ( 총판 ) 수정"
               component={<SetAgentAg />}
             />
+          }
+        />
+
+        {/* ------- 안심번호 ------- */}
+        <Route
+          path="050biz"
+          element={
+            <MainLayout nowTitle="안심번호 관리" component={<ListAgentAg />} />
+          }
+        />
+        <Route
+          path="company/:cid/050biz"
+          element={
+            <MainLayout nowTitle="안심번호 등록" component={<Set050Biz />} />
+          }
+        />
+        <Route
+          path="company/:cid/050biz/:vno"
+          element={
+            <MainLayout nowTitle="안심번호 수정" component={<Set050Biz />} />
           }
         />
       </Routes>
