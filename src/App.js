@@ -454,19 +454,19 @@ function App() {
         <Route
           path="agentem"
           element={
-            <MainLayout nowTitle="사원관리" component={<ListAgentEm />} />
+            <MainLayout nowTitle="사원 관리" component={<ListAgentEm />} />
           }
         />
         <Route
           path="agentem/:uid"
           element={
-            <MainLayout nowTitle="사원관리 수정" component={<SetAgentEm />} />
+            <MainLayout nowTitle="사원 수정" component={<SetAgentEm />} />
           }
         />
         <Route
           path="agentem/add"
           element={
-            <MainLayout nowTitle="사원등록" component={<SetAgentEm />} />
+            <MainLayout nowTitle="사원 등록" component={<SetAgentEm />} />
           }
         />
         {/* ------- 지사 총판 관리 ------- */}
@@ -474,7 +474,7 @@ function App() {
           path="agentsd"
           element={
             <MainLayout
-              nowTitle="지사( 총판 )관리"
+              nowTitle="지사 ( 총판 ) 관리"
               component={<ListAgentSd />}
             />
           }
@@ -520,7 +520,7 @@ function App() {
           path="agentag/:uid"
           element={
             <MainLayout
-              nowTitle="지사 ( 총판 ) 수정"
+              nowTitle="지점 ( 대리점 ) 수정"
               component={<SetAgentAg />}
             />
           }

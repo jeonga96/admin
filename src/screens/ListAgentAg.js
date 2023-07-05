@@ -81,7 +81,7 @@ export default function ListAgentAg() {
       />
 
       <ul className="tableTopWrap">
-        <LayoutTopButton url={`add`} text="지사 ( 총판 ) 등록" />
+        <LayoutTopButton url={`add`} text="지점 ( 대리점 ) 등록" />
       </ul>
 
       <section className="tableWrap">
