@@ -11,9 +11,9 @@ import { serviesGetImgsIid, servicesUseToast } from "../Services/useData";
 import { urlGetProposalInfo, urlSetProposalInfo } from "../Services/string";
 
 import LayoutTopButton from "../components/common/LayoutTopButton";
-import ServicesImageSetPreview from "../components/piece/ServicesImageSetPreview";
-import ComponentTableTopNumber from "../components/common/ComponentTableTopNumber";
-import ComponentTableTopScrollBtn from "../components/common/ComponentTableTopScrollBtn";
+import ServicesImageSetPreview from "../components/services/ServicesImageSetPreview";
+import ComponentTableTopNumber from "../components/piece/PieceTableTopNumber";
+import ComponentTableTopScrollBtn from "../components/piece/PieceTableTopScrollBtn";
 
 export default function SetAdminProposalInfo() {
   const { prid } = useParams();

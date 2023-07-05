@@ -15,11 +15,11 @@ import {
 } from "../Services/string";
 
 import LayoutTopButton from "../components/common/LayoutTopButton";
-import ImageSet from "../components/piece/ServicesImageSetPreview";
-import PieceRegisterSearchPopUp from "../components/piece/PieceRegisterSearchPopUp";
+import ImageSet from "../components/services/ServicesImageSetPreview";
+import PieceRegisterSearchPopUp from "../components/services/ServiceRegisterSearchPopUp";
 import DetailUserComponent from "../components/common/ComponentSetUser";
-import ComponentTableTopNumber from "../components/common/ComponentTableTopNumber";
-import ComponentTableTopScrollBtn from "../components/common/ComponentTableTopScrollBtn";
+import ComponentTableTopNumber from "../components/piece/PieceTableTopNumber";
+import ComponentTableTopScrollBtn from "../components/piece/PieceTableTopScrollBtn";
 
 export default function SetDetailUser() {
   const { uid } = useParams();

@@ -6,7 +6,7 @@ import { servicesPostData } from "../Services/importData";
 import { urlReviewList, urlSetReview } from "../Services/string";
 import { servicesUseToast } from "../Services/useData";
 
-import ComponentErrorNull from "../components/common/ComponentErrorNull";
+import ComponentErrorNull from "../components/piece/PieceErrorNull";
 import LayoutTopButton from "../components/common/LayoutTopButton";
 import DetailCompanyReview from "./DetailCompanyReview";
 

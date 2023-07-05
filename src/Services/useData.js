@@ -111,7 +111,7 @@ export function servicesUseToast(text, type, fnOpen, fnClose) {
   }
 }
 
-// 안내창 라이브러리
+// 안내창 라이브러리 : SetRequiredCompany에서 사용
 export function servicesUseModal(Q, SQ, fnOK, fnClose) {
   const swalWithBootstrapButtons = Swal.mixin({
     customClass: {

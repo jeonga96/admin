@@ -6,9 +6,9 @@ import { servicesPostData } from "../Services/importData";
 import { urlListProposalInfo } from "../Services/string";
 
 import LayoutTopButton from "../components/common/LayoutTopButton";
-import PageButton from "../components/piece/PiecePaginationButton";
+import PageButton from "../components/services/ServicesPaginationButton";
 import ComponentListEstmateinfoSearch from "../components/common/ComponentListEstmateinfoSearch";
-import ComponentErrorNull from "../components/common/ComponentErrorNull";
+import ComponentErrorNull from "../components/piece/PieceErrorNull";
 
 export default function ListPropsosalinfo() {
   // 데이터 ------------------------------------------------------------------------

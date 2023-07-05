@@ -6,10 +6,10 @@ import { servicesPostData } from "../Services/importData";
 import { urlContentList } from "../Services/string";
 
 import LayoutTopButton from "../components/common/LayoutTopButton";
-import ComponentErrorNull from "../components/common/ComponentErrorNull";
+import ComponentErrorNull from "../components/piece/PieceErrorNull";
 import ComponentListNotice from "../components/common/ComponentListNotice";
 
-import PaginationButton from "../components/piece/PiecePaginationButton";
+import PaginationButton from "../components/services/ServicesPaginationButton";
 
 export default function ListAdminNotice() {
   const { register, watch } = useForm({

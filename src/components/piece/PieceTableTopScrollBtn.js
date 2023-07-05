@@ -1,6 +1,6 @@
 import { Link } from "react-scroll";
 
-export default function ComponentTableTopScrollBtn({ data }) {
+export default function PieceTableTopScrollBtn({ data }) {
   return (
     <div className="tableTopScrollBtn">
       {data.length > 0 &&

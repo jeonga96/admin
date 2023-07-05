@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
 import LayoutTopButton from "../components/common/LayoutTopButton";
-import ComponentTableTopNumber from "../components/common/ComponentTableTopNumber";
+import ComponentTableTopNumber from "../components/piece/PieceTableTopNumber";
 
 import { servicesPost050biz, servicesPostData } from "../Services/importData";
 import {
@@ -17,6 +17,7 @@ import {
   urlCreate050,
   urlUpdate050,
   urlGet050,
+  urlClear050,
   urlSetCompanyDetail,
 } from "../Services/string";
 
@@ -73,30 +74,29 @@ export default function Set050Biz() {
     });
   };
 
-  useEffect(() => {
-    if (!!vno) {
-      servicesPost050biz(urlGet050, { vno: vno }).then((res) => {
-        setValue("_regDate", res.data.regDate || "");
-        setValue("_vno", res.data.vno || "");
-        setValue("_vnoName", res.data.vnoName || "");
-        setValue("_rcvNo1", res.data.rcvNo1 || "");
-        setValue("_rcvNo2", res.data.rcvNo2 || "");
-        setValue("_rcvNo2", res.data.rcvNo2 || "");
-        setValue("_colorringIdx", res.data.colorringIdx || "");
-        setValue("_rcvMentIdx", res.data.rcvMentIdx || "");
-        setValue("_bizEndMentIdx", res.data.bizEndMentIdx || "");
-        setValue("_holiMentIdx", res.data.holiMentIdx || "");
-        setValue(
-          "_bizStartTime",
-          serviesStringToTime(res.data.bizStartTime) || ""
+  const fnClear = () => {
+    servicesPost050biz(`${urlClear050}/${vno}`, { vno: vno }).then((res) => {
+      if (res.code == "0000") {
+        servicesPostData(urlSetCompanyDetail, {
+          rcid: cid,
+          extnum: "",
+        }).then((res) => {
+          if (res.status === "success") {
+            servicesUseToast("삭제가 완료되었습니다.", "s");
+            setTimeout(() => {
+              navigate(`company/${cid}`);
+            }, 2000);
+            return;
+          }
+        });
+      } else {
+        servicesUseToast(
+          "삭제가 진행되지 않았습니다. 관리자에게 문의해 주십시오.",
+          "e"
         );
-        setValue("_bizEndTime", serviesStringToTime(res.data.bizEndTime) || "");
-        fnArrToSetValue(serviesNumberToBool(res.data.holiWeek));
-        fnArrToSetValue(serviesNumberToBool(res.data.holiWeek));
-        setValue("_recType", res.data.recType || "");
-      });
-    }
-  }, []);
+      }
+    });
+  };
 
   // 수정 & 추가 버튼 클릭 이벤트
   function fnSubmit(e) {
@@ -143,6 +143,31 @@ export default function Set050Biz() {
     });
   }
 
+  useEffect(() => {
+    if (!!vno) {
+      servicesPost050biz(urlGet050, { vno: vno }).then((res) => {
+        setValue("_regDate", res.data.regDate || "");
+        setValue("_vno", res.data.vno || "");
+        setValue("_vnoName", res.data.vnoName || "");
+        setValue("_rcvNo1", res.data.rcvNo1 || "");
+        setValue("_rcvNo2", res.data.rcvNo2 || "");
+        setValue("_rcvNo2", res.data.rcvNo2 || "");
+        setValue("_colorringIdx", res.data.colorringIdx || "");
+        setValue("_rcvMentIdx", res.data.rcvMentIdx || "");
+        setValue("_bizEndMentIdx", res.data.bizEndMentIdx || "");
+        setValue("_holiMentIdx", res.data.holiMentIdx || "");
+        setValue(
+          "_bizStartTime",
+          serviesStringToTime(res.data.bizStartTime) || ""
+        );
+        setValue("_bizEndTime", serviesStringToTime(res.data.bizEndTime) || "");
+        fnArrToSetValue(serviesNumberToBool(res.data.holiWeek));
+        fnArrToSetValue(serviesNumberToBool(res.data.holiWeek));
+        setValue("_recType", res.data.recType || "");
+      });
+    }
+  }, []);
+
   return (
     <>
       <div className="commonBox">
@@ -156,6 +181,7 @@ export default function Set050Biz() {
               />
             )}
             <LayoutTopButton url={`/company/${cid}`} text="상세정보 가기" />
+            <LayoutTopButton fn={fnClear} text="안심번호 삭제" />
             <LayoutTopButton text="완료" disabled={isSubmitting} />
           </ul>
           <div className="formWrap">
@@ -330,7 +356,7 @@ export default function Set050Biz() {
                 <div>
                   <select {...register("_colorringIdx")}>
                     <option value="0">사용안함</option>
-                    <option value="1">컬러링 구분은 뭘로 된거지</option>
+                    <option value="1">공사콕 기본 컬러링</option>
                   </select>
                 </div>
               </div>
@@ -342,7 +368,7 @@ export default function Set050Biz() {
                 <div>
                   <select {...register("_rcvMentIdx")}>
                     <option value="0">사용안함</option>
-                    <option value="2">착신멘트 구분은 뭘로 된거지</option>
+                    <option value="2">공사콕 기본 착신멘트</option>
                   </select>
                 </div>
               </div>
@@ -380,7 +406,7 @@ export default function Set050Biz() {
                 <div>
                   <select id="bizEndMentIdx" {...register("_bizEndMentIdx")}>
                     <option value="0">사용안함</option>
-                    <option value="1">다른문구</option>
+                    <option value="3">공사콕 기본 안내멘트</option>
                   </select>
                 </div>
               </div>
@@ -392,7 +418,7 @@ export default function Set050Biz() {
                 <div>
                   <select {...register("_holiMentIdx")}>
                     <option value="0">사용안함</option>
-                    <option value="2">다른문구</option>
+                    <option value="4">공사콕 기본 안내멘트</option>
                   </select>
                 </div>
               </div>

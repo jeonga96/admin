@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
 import LayoutTopButton from "../components/common/LayoutTopButton";
-import ComponentTableTopNumber from "../components/common/ComponentTableTopNumber";
+import ComponentTableTopNumber from "../components/piece/PieceTableTopNumber";
 
 import { servicesPost050biz, servicesPostData } from "../Services/importData";
 import {
@@ -243,7 +243,7 @@ export default function Set050Ment() {
                 <div>
                   <select {...register("_colorringIdx")}>
                     <option value="0">사용안함</option>
-                    <option value="1">컬러링 구분은 뭘로 된거지</option>
+                    <option value="1">공사콕 기본 컬러링</option>
                   </select>
                 </div>
               </div>
@@ -255,7 +255,7 @@ export default function Set050Ment() {
                 <div>
                   <select {...register("_rcvMentIdx")}>
                     <option value="0">사용안함</option>
-                    <option value="2">착신멘트 구분은 뭘로 된거지</option>
+                    <option value="2">공사콕 기본 착신멘트</option>
                   </select>
                 </div>
               </div>
@@ -293,7 +293,7 @@ export default function Set050Ment() {
                 <div>
                   <select id="bizEndMentIdx" {...register("_bizEndMentIdx")}>
                     <option value="0">사용안함</option>
-                    <option value="1">다른문구</option>
+                    <option value="1">공사콕 기본 안내멘트</option>
                   </select>
                 </div>
               </div>
@@ -305,7 +305,7 @@ export default function Set050Ment() {
                 <div>
                   <select {...register("_holiMentIdx")}>
                     <option value="0">사용안함</option>
-                    <option value="2">다른문구</option>
+                    <option value="2">공사콕 기본 안내멘트</option>
                   </select>
                 </div>
               </div>

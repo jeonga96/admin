@@ -1,3 +1,5 @@
+// -- 사용예시 : SetAdminAppbanner --
+
 import { servicesPostDataForm } from "../../Services/importData";
 import { urlUpImages } from "../../Services/string";
 

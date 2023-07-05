@@ -1,7 +1,15 @@
+/* string 선언 - reducer */
+export const TOKEN = "token";
+export const UID = "uid";
+export const ALLKEYWORD = "allKeyword";
+
+/* 외부 키 */
+export const KAKAO_KEY = "0dc0b365e2e0ca17c6c8032ea93a8337";
+
 /* GNB */
 export const navUrl = "/data/nav.json";
 
-/* 공사콕 url & API */
+/* 공사콕 url & 외부 API url */
 export const urlPrefix = "https://devawsback.gongsacok.com";
 export const urlPre050Biz = "https://050api-cbt.sejongtelecom.net:8433";
 
@@ -12,6 +20,7 @@ export const urlRefreshtoken = urlPrefix + "/svc/refreshToken";
 export const urlCreate050 = urlPre050Biz + "050biz/v1/service/create";
 export const urlUpdate050 = urlPre050Biz + "050biz/v1/service/update";
 export const urlGet050 = urlPre050Biz + "050biz/v1/service";
+export const urlClear050 = urlPre050Biz + "050biz/v1/service/clear";
 
 /* user관련 */
 export const urlAdduser = urlPrefix + "/pub/addUser";
@@ -63,12 +72,3 @@ export const urlListEstimateInfo = urlPrefix + "/admin/listEstimateInfo";
 export const urlGetProposalInfo = urlPrefix + "/admin/getProposalInfo";
 export const urlSetProposalInfo = urlPrefix + "/admin/setProposalInfo";
 export const urlListProposalInfo = urlPrefix + "/admin/listProposalInfo";
-
-/* string 선언 - reducer */
-export const TOKEN = "token";
-export const RETOKEN = "re_token";
-export const UID = "uid";
-export const ALLKEYWORD = "allKeyword";
-
-/* 외부 키 */
-export const KAKAO_KEY = "0dc0b365e2e0ca17c6c8032ea93a8337";

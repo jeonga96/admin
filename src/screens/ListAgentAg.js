@@ -5,10 +5,10 @@ import { useEffect, useLayoutEffect, useState } from "react";
 import { servicesPostData } from "../Services/importData";
 import { urlUserlist, urlGetCompanyDetail } from "../Services/string";
 
-import PageButton from "../components/piece/PiecePaginationButton";
+import PageButton from "../components/services/ServicesPaginationButton";
 import LayoutTopButton from "../components/common/LayoutTopButton";
 import ComponentListAgentSearch from "../components/common/ComponentListAgentSearch";
-import ComponentErrorNull from "../components/common/ComponentErrorNull";
+import ComponentErrorNull from "../components/piece/PieceErrorNull";
 
 export default function ListAgentAg() {
   // 데이터 ------------------------------------------------------------------------

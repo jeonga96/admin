@@ -8,7 +8,7 @@ import { useDidMountEffect } from "../../Services/customHook";
 import { urlUpImages, urlGetImages } from "../../Services/string";
 import { servicesUseToast } from "../../Services/useData";
 import ServicesImageOnClick from "./ServicesImageOnClick";
-import Loading from "../common/ComponentLoading";
+import Loading from "../piece/PieceLoading";
 
 export default function ImageSet({ id, title }) {
   const dispatch = useDispatch();

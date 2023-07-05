@@ -3,7 +3,7 @@ import { useDispatch, useSelector, shallowEqual } from "react-redux";
 import { servicesPostData } from "../../Services/importData";
 import { urlUserlist, urlGetCompanyDetail } from "../../Services/string";
 
-export default function ComponentModalAgentem({ fn }) {
+export default function PieceModalAgentem({ fn }) {
   const dispatch = useDispatch();
   const clickModal = useSelector((state) => state.click, shallowEqual);
 

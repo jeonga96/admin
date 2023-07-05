@@ -144,6 +144,7 @@ function App() {
     if (currentPath.current === location.pathname) window.location.reload();
     currentPath.current = location.pathname;
   }, [location]);
+
   return (
     <div className="App">
       <ToastContainer

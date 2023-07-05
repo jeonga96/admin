@@ -17,11 +17,11 @@ import {
   urlGetCompany,
   urlGetUserDetail,
 } from "../Services/string";
-import SetImage from "../components/piece/ServicesImageSetPreview";
-import PieceRegisterSearchPopUp from "../components/piece/PieceRegisterSearchPopUp";
+import SetImage from "../components/services/ServicesImageSetPreview";
+import PieceRegisterSearchPopUp from "../components/services/ServiceRegisterSearchPopUp";
 import LayoutTopButton from "../components/common/LayoutTopButton";
-import ComponentTableTopNumber from "../components/common/ComponentTableTopNumber";
-import ComponentTableTopScrollBtn from "../components/common/ComponentTableTopScrollBtn";
+import ComponentTableTopNumber from "../components/piece/PieceTableTopNumber";
+import ComponentTableTopScrollBtn from "../components/piece/PieceTableTopScrollBtn";
 
 export default function SetRequiredCompany() {
   const { cid } = useParams();

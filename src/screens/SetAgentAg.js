@@ -26,8 +26,8 @@ import {
 } from "../Services/string";
 
 import LayoutTopButton from "../components/common/LayoutTopButton";
-import PieceRegisterSearchPopUp from "../components/piece/PieceRegisterSearchPopUp";
-import ComponentModal from "../components/common/ComponentModalAgentem";
+import PieceRegisterSearchPopUp from "../components/services/ServiceRegisterSearchPopUp";
+import ComponentModal from "../components/piece/PieceModalAgentem";
 
 export default function SetAgentSd() {
   const { uid } = useParams();

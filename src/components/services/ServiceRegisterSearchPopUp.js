@@ -1,9 +1,14 @@
+// -- 사용예시 : SetDeatilCompany --
+
+// <PieceRegisterSearchPopUp />
+// react-redux를 사용하여 주소 관련을 useDispatch, useSelector에 할당
+
 import { useSelector, useDispatch, shallowEqual } from "react-redux";
 import { useEffect, useLayoutEffect } from "react";
 import { useDaumPostcodePopup } from "react-daum-postcode";
 import { useForm } from "react-hook-form";
 
-export default function Postcode({ userComponent }) {
+export default function ServiceRegisterSearchPopUp({ userComponent }) {
   const dispatch = useDispatch();
   const { register, setValue, watch } = useForm({});
 

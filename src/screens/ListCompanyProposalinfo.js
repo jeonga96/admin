@@ -6,8 +6,8 @@ import { servicesPostData } from "../Services/importData";
 import { useDidMountEffect } from "../Services/customHook";
 import { urlListProposalInfo, urlGetCompany } from "../Services/string";
 
-import PageButton from "../components/piece/PiecePaginationButton";
-import ComponentErrorNull from "../components/common/ComponentErrorNull";
+import PageButton from "../components/services/ServicesPaginationButton";
+import ComponentErrorNull from "../components/piece/PieceErrorNull";
 
 export default function DetailCompanyProposalinfo() {
   const { rcid } = useParams();

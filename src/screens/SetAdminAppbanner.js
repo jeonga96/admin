@@ -12,7 +12,7 @@ import { useDidMountEffect } from "../Services/customHook";
 import { serviesGetImgId, servicesUseToast } from "../Services/useData";
 
 import LayoutTopButton from "../components/common/LayoutTopButton";
-import SetImage from "../components/piece/ServicesImageSetUrl";
+import SetImage from "../components/services/ServicesImageSetUrl";
 
 function InputBox({ inputData, setinputData, title, allItem, image }) {
   // 상위 컴포넌트에게 전달하기 위한 함수, useState

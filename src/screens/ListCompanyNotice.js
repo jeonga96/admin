@@ -6,7 +6,7 @@ import { servicesPostData } from "../Services/importData";
 import { urlCompanyNoticeList } from "../Services/string";
 
 import LayoutTopButton from "../components/common/LayoutTopButton";
-import ComponentErrorNull from "../components/common/ComponentErrorNull";
+import ComponentErrorNull from "../components/piece/PieceErrorNull";
 import ComponentListNotice from "../components/common/ComponentListNotice";
 
 export default function ListCompanyNotice() {

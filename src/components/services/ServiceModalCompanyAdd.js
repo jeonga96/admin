@@ -1,6 +1,6 @@
 import { useSelector, shallowEqual, useDispatch } from "react-redux";
 
-export default function ComponentModalCompanyAdd({ fn, userList }) {
+export default function ServiceModalCompanyAdd({ fn, userList }) {
   const dispatch = useDispatch();
   const clickModal = useSelector((state) => state.click, shallowEqual);
 

@@ -1,4 +1,4 @@
-export default function ComponentErrorNull() {
+export default function PieceErrorNull() {
   return (
     <section className="tableWrap">
       <h3 className="blind">table</h3>

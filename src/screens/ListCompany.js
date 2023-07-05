@@ -10,10 +10,10 @@ import {
   urlSetCompanyDetail,
 } from "../Services/string";
 
-import PaginationButton from "../components/piece/PiecePaginationButton";
+import PaginationButton from "../components/services/ServicesPaginationButton";
 import LayoutTopButton from "../components/common/LayoutTopButton";
 import ComponentListCompanySearch from "../components/common/ComponentListCompanySearch";
-import ComponentErrorNull from "../components/common/ComponentErrorNull";
+import ComponentErrorNull from "../components/piece/PieceErrorNull";
 
 // 하위 컴포넌트, useState를 별도로 관리하기 위해 하위 컴포넌트로 분리
 function ChildList({

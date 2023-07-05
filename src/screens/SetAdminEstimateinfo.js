@@ -11,9 +11,9 @@ import { serviesGetImgsIid, servicesUseToast } from "../Services/useData";
 import { urlSetEstimateInfo, urlGetEstimateInfo } from "../Services/string";
 
 import LayoutTopButton from "../components/common/LayoutTopButton";
-import ImageSet from "../components/piece/ServicesImageSetPreview";
-import ComponentTableTopNumber from "../components/common/ComponentTableTopNumber";
-import ComponentTableTopScrollBtn from "../components/common/ComponentTableTopScrollBtn";
+import ImageSet from "../components/services/ServicesImageSetPreview";
+import ComponentTableTopNumber from "../components/piece/PieceTableTopNumber";
+import ComponentTableTopScrollBtn from "../components/piece/PieceTableTopScrollBtn";
 
 export default function SetAdminEstimateinfo() {
   const { esid } = useParams();

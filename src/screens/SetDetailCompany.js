@@ -24,13 +24,13 @@ import {
   urlSetUser,
   urlGetUser,
 } from "../Services/string";
-import SetImage from "../components/piece/ServicesImageSetPreview";
+import SetImage from "../components/services/ServicesImageSetPreview";
 import LayoutTopButton from "../components/common/LayoutTopButton";
 import ComponentSetCompany from "../components/common/ComponentSetCompany";
 import PieceDetailListLink from "../components/piece/PieceDetailListLink";
-import PieceRegisterSearchPopUp from "../components/piece/PieceRegisterSearchPopUp";
-import ComponentTableTopNumber from "../components/common/ComponentTableTopNumber";
-import ComponentTableTopScrollBtn from "../components/common/ComponentTableTopScrollBtn";
+import PieceRegisterSearchPopUp from "../components/services/ServiceRegisterSearchPopUp";
+import ComponentTableTopNumber from "../components/piece/PieceTableTopNumber";
+import ComponentTableTopScrollBtn from "../components/piece/PieceTableTopScrollBtn";
 
 export default function SetCompanyDetail() {
   const { cid } = useParams();

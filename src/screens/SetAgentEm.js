@@ -11,7 +11,7 @@ import { ErrorMessage } from "@hookform/error-message";
 
 import LayoutTopButton from "../components/common/LayoutTopButton";
 import DetailUserComponent from "../components/common/ComponentSetUser";
-import ComponentModal from "../components/common/ComponentModalAgentem";
+import ComponentModal from "../components/piece/PieceModalAgentem";
 
 import { servicesPostData } from "../Services/importData";
 import { servicesUseToast } from "../Services/useData";

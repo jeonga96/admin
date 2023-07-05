@@ -10,7 +10,7 @@ import { servicesUseToast } from "../Services/useData";
 import { urlAddcompany, urlUserlist, urlSetCompany } from "../Services/string";
 
 import LayoutTopButton from "../components/common/LayoutTopButton";
-import ComponentModal from "../components/common/ComponentModalCompanyAdd";
+import ComponentModal from "../components/services/ServiceModalCompanyAdd";
 
 export default function AddCompany() {
   const {

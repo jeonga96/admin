@@ -5,10 +5,10 @@ import { useLayoutEffect, useState } from "react";
 import { servicesPostData } from "../Services/importData";
 import { urlUserlist, urlSetUser } from "../Services/string";
 
-import PageButton from "../components/piece/PiecePaginationButton";
+import PageButton from "../components/services/ServicesPaginationButton";
 import LayoutTopButton from "../components/common/LayoutTopButton";
 import ComponentListUserSearch from "../components/common/ComponentListUserSearch";
-import ComponentErrorNull from "../components/common/ComponentErrorNull";
+import ComponentErrorNull from "../components/piece/PieceErrorNull";
 
 function ListInTr({ item, setClickedUseFlag, clickedUseFlag }) {
   // 체크박스 상태 ------------------------------------------------------------------------
