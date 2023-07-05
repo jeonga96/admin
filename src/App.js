@@ -59,6 +59,10 @@ import SetAgentAg from "./screens/SetAgentAg";
 import ListEvent from "./screens/ListEvent";
 import SetEvent from "./screens/SetEvent";
 
+// 안심번호
+import Set050Biz from "./screens/Set050Biz";
+import Set050Ment from "./screens/Set050Ment";
+
 import {
   servicesGetStorage,
   servicesGetRefreshToken,
@@ -67,7 +71,6 @@ import {
 } from "./Services/importData";
 import { urlAllKeyword, TOKEN, ALLKEYWORD } from "./Services/string";
 import { ToastContainer } from "react-toastify";
-import Set050Biz from "./screens/Set050Biz";
 
 function App() {
   const location = useLocation();
@@ -525,12 +528,6 @@ function App() {
 
         {/* ------- 안심번호 ------- */}
         <Route
-          path="050biz"
-          element={
-            <MainLayout nowTitle="안심번호 관리" component={<ListAgentAg />} />
-          }
-        />
-        <Route
           path="company/:cid/050biz"
           element={
             <MainLayout nowTitle="안심번호 등록" component={<Set050Biz />} />
@@ -540,6 +537,33 @@ function App() {
           path="company/:cid/050biz/:vno"
           element={
             <MainLayout nowTitle="안심번호 수정" component={<Set050Biz />} />
+          }
+        />
+        {/* <Route
+          path="050ment"
+          element={
+            <MainLayout
+              nowTitle="안심번호 멘트 관리"
+              component={<List050Mnet />}
+            />
+          }
+        /> */}
+        <Route
+          path="050ment/add"
+          element={
+            <MainLayout
+              nowTitle="안심번호 멘트 추가"
+              component={<Set050Ment />}
+            />
+          }
+        />
+        <Route
+          path="050ment/:mentid"
+          element={
+            <MainLayout
+              nowTitle="안심번호 멘트 수정"
+              component={<Set050Ment />}
+            />
           }
         />
       </Routes>

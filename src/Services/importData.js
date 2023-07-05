@@ -1,6 +1,8 @@
 import axios from "axios";
 // import axiosApiInstance from "./axios";
 import { TOKEN, urlRefreshtoken } from "./string";
+import { servicesUseToast } from "./useData";
+
 const storageGetToken = servicesGetStorage(TOKEN);
 
 export function servicesSetStorage(name, data) {
@@ -31,7 +33,18 @@ export function servicesGetData(url, reqData) {
     { headers }
   )
     .then((res) => res.data)
-    .catch((error) => console.log("importData.servicesGetData", error));
+    .catch((error) => {
+      console.log("importData.axiosSetData", error);
+      if (error.response.status === 403) {
+        servicesUseToast(
+          "로그인 정보가 만료되었습니다. 다시 로그인해주십시오.",
+          "e"
+        );
+        setTimeout(() => {
+          document.location.href = "/login";
+        }, 2000);
+      }
+    });
 }
 
 export function servicesPostData(url, reqData) {
@@ -43,7 +56,16 @@ export function servicesPostData(url, reqData) {
       },
     })
     .then((res) => res.data)
-    .catch((error) => console.log("importData.axiosSetData", error));
+    .catch((error) => {
+      console.log("importData.axiosSetData", error);
+      servicesUseToast(
+        "로그인 정보가 만료되었습니다. 다시 로그인해주십시오.",
+        "e"
+      );
+      setTimeout(() => {
+        document.location.href = "/login";
+      }, 2000);
+    });
 }
 
 export function servicesPostDataForm(url, reqData) {
@@ -57,7 +79,15 @@ export function servicesPostDataForm(url, reqData) {
     .then((res) => {
       return res.data;
     })
-    .catch((error) => console.log("importData.servicesPostDataForm ", error));
+    .catch((error) => {
+      servicesUseToast(
+        "로그인 정보가 만료되었습니다. 다시 로그인해주십시오.",
+        "e"
+      );
+      setTimeout(() => {
+        document.location.href = "/login";
+      }, 2000);
+    });
 }
 
 export function servicesPost050biz(url, reqData) {

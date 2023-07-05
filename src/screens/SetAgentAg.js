@@ -259,7 +259,7 @@ export default function SetAgentSd() {
                     id="Cname"
                     disabled
                     {...register("_Cname")}
-                    style={{ width: "82%" }}
+                    style={{ width: "75%" }}
                   />
 
                   <button
