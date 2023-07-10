@@ -102,6 +102,32 @@ export function servicesPost050biz(url, reqData) {
     .catch((error) => console.log("importData.axiosSetData", error));
 }
 
+export function servicesGet050biz(url, reqData) {
+  const TOKEN = "";
+  return axios
+    .get(url, reqData, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${TOKEN}`,
+      },
+    })
+    .then((res) => res.data)
+    .catch((error) => console.log("importData.axiosSetData", error));
+}
+
+export function servicesPost050bizMent(url, reqData) {
+  const TOKEN = "";
+  return axios
+    .post(url, reqData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${TOKEN}`,
+      },
+    })
+    .then((res) => res.data)
+    .catch((error) => console.log("importData.axiosSetData", error));
+}
+
 export function servicesGetRefreshToken() {
   servicesPostData(urlRefreshtoken, {})
     .then((res) => {

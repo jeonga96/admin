@@ -60,6 +60,7 @@ export default function SetCompanyDetail() {
     { idName: "CompanyDetail_5", text: "견적 관리" },
     { idName: "CompanyDetail_6", text: "고객 관리" },
   ]);
+
   // 데이터 ------------------------------------------------------------------------
   // 작성된 데이터를 받아옴
   const getedData = useSelector((state) => state.getedData, shallowEqual);
@@ -88,7 +89,7 @@ export default function SetCompanyDetail() {
 
   const ruid = useRef("");
 
-  // 현재 페이지가 렌더링되자마자 기존에 입력된 값의 여부를 확인한다. ==============
+  // 현재 페이지가 렌더링되자마자 기존에 입력된 값의 여부를 확인한다.
   useEffect(() => {
     // 상세 회사정보 불러오기 기존 값이 없다면 새로운 회원이다. 새로 작성함
     servicesPostData(urlGetCompanyDetail, {
@@ -101,8 +102,11 @@ export default function SetCompanyDetail() {
             payload: { ...res.data },
           });
 
-          setValue("_detailUseFlag", res.data.useFlag.toString());
-          setValue("_status", res.data.status.toString());
+          setValue("_detailUseFlag", res.data.useFlag.toString() || 1);
+          setValue(
+            "_status",
+            (res.data.status && res.data.status.toString()) || 2
+          );
           setValue(
             "_gongsaType",
             res.data.gongsaType === undefined ? "" : res.data.gongsaType
@@ -177,9 +181,11 @@ export default function SetCompanyDetail() {
           });
 
           // 근무 시간 (근무시간!!!!!! 다시 입력!!!!!)
-          const WorkTimeArr = res.data.workTime.split("~");
-          setValue("_workTimeTo", WorkTimeArr[0].trim() || "");
-          setValue("_workTimeFrom", WorkTimeArr[1].trim() || "");
+          if (!!res.data.workTime) {
+            const WorkTimeArr = res.data.workTime.split("~");
+            setValue("_workTimeTo", WorkTimeArr[0].trim() || "");
+            setValue("_workTimeFrom", WorkTimeArr[1].trim() || "");
+          }
         }
       })
       .catch((res) => console.log(res));
@@ -192,15 +198,15 @@ export default function SetCompanyDetail() {
         servicesUseToast("최대 20개까지 입력할 수 있습니다.");
         arr = arr.filter((it, i) => i < 20);
       }
-      return setValue("_tag", arr.toString());
+      return setValue("_tag", arr.toString() || "");
     } else {
       if (arr.length > 10) {
         servicesUseToast("최대 10개까지 입력할 수 있습니다.");
         arr = arr.filter((it, i) => i < 10);
       }
       return e.target.id === "bigCategory"
-        ? setValue("_bigCategory", arr.toString())
-        : setValue("_subCategory", arr.toString());
+        ? setValue("_bigCategory", arr.toString() || "")
+        : setValue("_subCategory", arr.toString() || "");
     }
   };
 
@@ -215,8 +221,8 @@ export default function SetCompanyDetail() {
     servicesPostData(urlSetCompanyDetail, {
       rcid: cid,
       useFlag: getValues("_detailUseFlag"),
-      gongsaType: getValues("_gongsaType").toString(),
-      status: getValues("_status").toString(),
+      gongsaType: getValues("_gongsaType").toString() || "",
+      status: getValues("_status").toString() || "",
       name: getValues("_name"),
       comment: getValues("_comment"),
       location: getValues("_location"),
@@ -1004,21 +1010,6 @@ export default function SetCompanyDetail() {
 
             <fieldset id="CompanyDetail_4">
               <h3>청구결제사항</h3>
-
-              {/* <div className="formContentWrap" style={{ width: "100%" }}>
-                <label htmlFor="ceogreet" className="blockLabel">
-                  <span>대표인사말</span>
-                </label>
-                <div>
-                  <input
-                    type="text"
-                    id="ceogreet"
-                    placeholder="인사말을 입력해 주세요."
-                    maxLength="50"
-                    {...register("_ceogreet")}
-                  />
-                </div>
-              </div> */}
 
               <div className="formContentWrap" style={{ width: "100%" }}>
                 <label htmlFor="ex" className="blockLabel">

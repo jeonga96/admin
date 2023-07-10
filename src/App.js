@@ -60,6 +60,7 @@ import ListEvent from "./screens/ListEvent";
 import SetEvent from "./screens/SetEvent";
 
 // 안심번호
+import List050Ment from "./screens/List050Ment";
 import Set050Biz from "./screens/Set050Biz";
 import Set050Ment from "./screens/Set050Ment";
 
@@ -440,7 +441,7 @@ function App() {
           }
         />
         {/* ------- 키워드 조회량 관리 ------- */}
-        <Route
+        {/* <Route
           path="setkeywords"
           element={
             <MainLayout
@@ -448,7 +449,7 @@ function App() {
               component={<SetAdminKeywords />}
             />
           }
-        />
+        /> */}
 
         {/* --------------유통망관리 --------------*/}
         {/* ------- 사원 관리 ------- */}
@@ -540,15 +541,16 @@ function App() {
             <MainLayout nowTitle="안심번호 수정" component={<Set050Biz />} />
           }
         />
-        {/* <Route
+
+        <Route
           path="050ment"
           element={
             <MainLayout
               nowTitle="안심번호 멘트 관리"
-              component={<List050Mnet />}
+              component={<List050Ment />}
             />
           }
-        /> */}
+        />
         <Route
           path="050ment/add"
           element={

@@ -23,7 +23,10 @@ export default function PieceDetailListLink({ getData, url, title, useLink }) {
                 : "0"}
               개
             </span>
-            <Link className={!useLink && "disabled"} to={useLink ? url : ""}>
+            <Link
+              className={!useLink ? "disabled" : ""}
+              to={useLink ? url : ""}
+            >
               조회
             </Link>
           </div>

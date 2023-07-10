@@ -4,7 +4,8 @@ export const UID = "uid";
 export const ALLKEYWORD = "allKeyword";
 
 /* 외부 키 */
-export const KAKAO_KEY = "0dc0b365e2e0ca17c6c8032ea93a8337";
+// export const KAKAO_KEY = "0dc0b365e2e0ca17c6c8032ea93a8337"; // 계정:lja
+export const KAKAO_KEY = "c45951e21874a8fc30289cd99e476323"; // 계정:gongsacok
 
 /* GNB */
 export const navUrl = "/data/nav.json";
@@ -21,6 +22,9 @@ export const urlCreate050 = urlPre050Biz + "050biz/v1/service/create";
 export const urlUpdate050 = urlPre050Biz + "050biz/v1/service/update";
 export const urlGet050 = urlPre050Biz + "050biz/v1/service";
 export const urlClear050 = urlPre050Biz + "050biz/v1/service/clear";
+
+export const urlCreate050MentGongsacok =
+  urlPre050Biz + "050biz/v1/gongsacok/ment/create";
 
 /* user관련 */
 export const urlAdduser = urlPrefix + "/pub/addUser";

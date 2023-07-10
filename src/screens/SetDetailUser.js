@@ -423,7 +423,9 @@ export default function SetDetailUser() {
                     id="mail"
                     placeholder="이메일을 입력해 주세요."
                     value={
-                      watch("_mail") && watch("_mail").replace(/[^\\!-z]/gi, "")
+                      (watch("_mail") &&
+                        watch("_mail").replace(/[^\\!-z]/gi, "")) ||
+                      ""
                     }
                     {...register("_mail", {
                       pattern: {
