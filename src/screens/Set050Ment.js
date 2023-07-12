@@ -8,6 +8,7 @@ import * as UD from "../Services/useData";
 import * as STR from "../Services/string";
 
 import LayoutTopButton from "../components/common/LayoutTopButton";
+import PieceLoading from "../components/piece/PieceLoading";
 
 export default function Set050Ment() {
   // const navigate = useNavigate();
@@ -26,20 +27,26 @@ export default function Set050Ment() {
   const { mentid } = useParams();
   const [bgmList, setBgmList] = useState([]);
   const [mentFile, setMentFile] = useState([]);
+  // loading:true -> loading중
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (!!mentid) {
       ID.servicesGet050biz(
         `${STR.urlPre050Biz}/050biz/v1/${watch("_channelId")}/ment/${mentid}`
       ).then((res) => {
-        console.log("목록 잘 나왔나요?", res);
-        setValue("_channelId", res.data.channelId);
-        setValue("_type", res.data.type);
-        setValue("_fileName", res.data.fileName);
-        setValue("_title", res.data.title);
-        setValue("_musicMethod", res.data.musicMethod);
-        setValue("_ttsMsg", res.data.ttsMsg);
-        setValue("bgmFile", res.data.bgmFile);
+        setLoading(true);
+        if (res.status === "success") {
+          setLoading(false);
+          console.log("목록 잘 나왔나요?", res);
+          setValue("_channelId", res.data.channelId);
+          setValue("_type", res.data.type);
+          setValue("_fileName", res.data.fileName);
+          setValue("_title", res.data.title);
+          setValue("_musicMethod", res.data.musicMethod);
+          setValue("_ttsMsg", res.data.ttsMsg);
+          setValue("bgmFile", res.data.bgmFile);
+        }
       });
     }
   }, []);
@@ -50,11 +57,14 @@ export default function Set050Ment() {
       `${STR.urlPre050Biz}/050biz/v1/${watch("_channelId")}/bgm`,
       { channelId: watch("_channelId") }
     ).then((res) => {
+      setLoading(true);
       if (res.code === "0000") {
+        setLoading(false);
         setBgmList(res.data);
         console.log(bgmList);
       } else {
         UD.servicesUseToast("bgm이 없습니다.", "e");
+        setLoading(false);
       }
     });
   }, [watch("_musicMethod") === "1"]);
@@ -109,6 +119,7 @@ export default function Set050Ment() {
 
   return (
     <>
+      <PieceLoading loading={loading} bg />
       <div className="commonBox">
         <form className="formLayout" onSubmit={handleSubmit(fnSubmit)}>
           <ul className="tableTopWrap tableTopBorderWrap">

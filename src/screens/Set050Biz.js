@@ -75,7 +75,7 @@ export default function Set050Biz() {
           extnum: "",
         }).then((res) => {
           setLoading(true);
-          if (res.status === "success") {
+          if (res.code === "0000") {
             setLoading(false);
             UD.servicesUseToast("삭제가 완료되었습니다.", "s");
             // setTimeout(() => {
@@ -194,7 +194,7 @@ export default function Set050Biz() {
 
   return (
     <>
-      {<PieceLoading loading={loading} bg />}
+      <PieceLoading loading={loading} bg />
 
       <div className="commonBox">
         <form className="formLayout" onSubmit={handleSubmit(fnSubmit)}>

@@ -9,6 +9,7 @@ import * as STR from "../Services/string";
 
 import LayoutTopButton from "../components/common/LayoutTopButton";
 import ComponentErrorNull from "../components/piece/PieceErrorNull";
+import PieceLoading from "../components/piece/PieceLoading";
 
 export default function ListAgentAg() {
   const { register, watch, reset, handleSubmit } = useForm({
@@ -18,6 +19,8 @@ export default function ListAgentAg() {
   });
   // 데이터 ------------------------------------------------------------------------
   const [mentList, setMentList] = useState([]);
+  // loading:true -> loading중
+  const [loading, setLoading] = useState(false);
 
   useLayoutEffect(() => {
     fnSearchSubmit();
@@ -37,7 +40,9 @@ export default function ListAgentAg() {
       }
     ).then((res) => {
       console.log("res.data", res.data);
+      setLoading(true);
       if (res.code === "0000") {
+        setLoading(false);
         setMentList(res.data);
       }
     });
