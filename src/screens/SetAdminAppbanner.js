@@ -279,7 +279,6 @@ export default function SetAdminAppbanner() {
   const [bannerB2C1, setbannerB2C1] = useState([]);
   const [bannerB2C2, setbannerB2C2] = useState([]);
   const [bannerB2C3, setbannerB2C3] = useState([]);
-  // const [bannerReqSuccess, setBannerReqSuccess] = useState(false);
   // inputData:수정된 내용 저장
   const [inputData, setinputData] = useState({});
 

@@ -1,10 +1,11 @@
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
 import LayoutTopButton from "../components/common/LayoutTopButton";
 import ComponentTableTopNumber from "../components/piece/PieceTableTopNumber";
+import PieceLoading from "../components/piece/PieceLoading";
 
 import * as ID from "../Services/importData";
 import * as UD from "../Services/useData";
@@ -55,6 +56,9 @@ export default function Set050Biz() {
     getValues("_holiDay7"),
   ];
 
+  // loading:true -> loading중
+  const [loading, setLoading] = useState(false);
+
   const fnArrToSetValue = (arr) => {
     arr.forEach((el, i) => {
       arr.length === 5
@@ -70,11 +74,13 @@ export default function Set050Biz() {
           rcid: cid,
           extnum: "",
         }).then((res) => {
+          setLoading(true);
           if (res.status === "success") {
+            setLoading(false);
             UD.servicesUseToast("삭제가 완료되었습니다.", "s");
-            setTimeout(() => {
-              navigate(`company/${cid}`);
-            }, 2000);
+            // setTimeout(() => {
+            //   navigate(`company/${cid}`);
+            // }, 2000);
             return;
           }
         });
@@ -141,7 +147,9 @@ export default function Set050Biz() {
           rcid: cid,
           extnum: getValues("_vno"),
         }).then((res) => {
+          setLoading(true);
           if (res.status === "success") {
+            setLoading(false);
             UD.servicesUseToast("완료되었습니다!", "s");
             // setTimeout(() => {
             //   navigate(`company/${cid}`);
@@ -155,8 +163,10 @@ export default function Set050Biz() {
 
   useEffect(() => {
     if (!!vno) {
+      setLoading(true);
       ID.servicesPost050biz(`${STR.urlGet050}/${vno}`).then((res) => {
         console.log(res);
+        setLoading(false);
         setValue("_regDate", res.data.regDate || "");
         setValue("_vno", res.data.vno || "");
         setValue("_status", res.data.status || "Y");
@@ -184,6 +194,8 @@ export default function Set050Biz() {
 
   return (
     <>
+      {<PieceLoading loading={loading} bg />}
+
       <div className="commonBox">
         <form className="formLayout" onSubmit={handleSubmit(fnSubmit)}>
           <ul className="tableTopWrap tableTopBorderWrap">
