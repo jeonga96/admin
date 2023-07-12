@@ -1,14 +1,13 @@
 // import { useRef, useState, useEffect } from "react";
-import { BiUpload } from "react-icons/bi";
-import {
-  servicesPostDataForm,
-  servicesPostData,
-} from "../../Services/importData";
-import { useDidMountEffect } from "../../Services/customHook";
-import { urlUpImages, urlGetImages } from "../../Services/string";
-import { servicesUseToast } from "../../Services/useData";
-import ServicesImageOnClick from "./ServicesImageOnClick";
+import * as ID from "../../Services/importData";
+import * as CH from "../../Services/customHook";
+import * as STR from "../../Services/string";
+import * as UD from "../../Services/useData";
+
+import ServicesImageOnClick from "../piece/ServicesImageOnClick";
 import Loading from "./Loading";
+
+import { BiUpload } from "react-icons/bi";
 
 export default function ImageSet({
   img,
@@ -36,9 +35,9 @@ export default function ImageSet({
   };
 
   // 첫 렌더링을 방지하고, 기존 입력된 이미지가 있다면 서버에서 이미지를 가져온다.
-  useDidMountEffect(() => {
+  CH.useDidMountEffect(() => {
     if (!!getData.titleImg) {
-      servicesPostData(urlGetImages, {
+      ID.servicesPostData(STR.urlGetImages, {
         imgs: getData.titleImg,
       }).then((res) => {
         fnSetImg(res.data);
@@ -46,7 +45,7 @@ export default function ImageSet({
     }
 
     if (!!getData.regImgs) {
-      servicesPostData(urlGetImages, {
+      ID.servicesPostData(STR.urlGetImages, {
         imgs: getData.regImgs || getData.addImgs,
       }).then((res) => {
         fnSetRegImgs(res.data);
@@ -54,7 +53,7 @@ export default function ImageSet({
     }
 
     if (getData.imgs || getData.imgString || getData.addImgs) {
-      servicesPostData(urlGetImages, {
+      ID.servicesPostData(STR.urlGetImages, {
         imgs: getData.imgs || getData.imgString || getData.addImgs,
       }).then((res) => {
         fnSetImgs(res.data);
@@ -76,7 +75,7 @@ export default function ImageSet({
     }
 
     // FormData에 저장된 데이터를 서버에 보냄
-    servicesPostDataForm(urlUpImages, formData).then((res) => {
+    ID.servicesPostDataForm(STR.urlUpImages, formData).then((res) => {
       if (event.target.id === "titleImg") {
         // 회원, 사업자 관리 - 대표이미지 : titleImg ==============================
         fnSetImg(res.data);
@@ -87,7 +86,7 @@ export default function ImageSet({
         // 견적서 관리 - 견적서 응답 참고 이미지 : addImgs ==============================
         fnSetImgs([...imgs]);
         if (imgs.length + res.data.length > 25) {
-          return servicesUseToast(
+          return UD.servicesUseToast(
             "이미지는 최대 25개까지 입력하실 수 있습니다."
           );
         }
@@ -98,7 +97,7 @@ export default function ImageSet({
         // 회원, 사업자 관리 - 상세 이미지 : regImgs ==============================
         fnSetImgs([...imgs]);
         if (imgs.length + res.data.length > 25) {
-          return servicesUseToast(
+          return UD.servicesUseToast(
             "상세 이미지는 최대 25개까지 입력하실 수 있습니다."
           );
         }

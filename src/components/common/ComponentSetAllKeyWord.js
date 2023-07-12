@@ -1,11 +1,8 @@
-import {
-  servicesGetStorage,
-  servicesSetStorage,
-  servicesPostData,
-} from "../../Services/importData";
-import { urlAllKeyword, ALLKEYWORD } from "../../Services/string";
-import { servicesUseToast } from "../../Services/useData";
 import { useState, useLayoutEffect, useRef } from "react";
+
+import * as ID from "../../Services/importData";
+import * as STR from "../../Services/string";
+import * as UD from "../../Services/useData";
 
 export default function SetAllKeyWord({
   companyDetailKeyword,
@@ -23,15 +20,15 @@ export default function SetAllKeyWord({
 
   // 전체 키워드 새로고침
   function fnReKeyword() {
-    servicesPostData(urlAllKeyword, {}).then((res) => {
-      servicesSetStorage(ALLKEYWORD, JSON.stringify(res.data));
+    ID.servicesPostData(STR.urlAllKeyword, {}).then((res) => {
+      ID.servicesSetStorage(STR.ALLKEYWORD, JSON.stringify(res.data));
     });
   }
 
   // 로그인 시 받은 전체 키워드를 가져온다
   useLayoutEffect(() => {
     fnReKeyword();
-    allKeywords.current = JSON.parse(servicesGetStorage(ALLKEYWORD));
+    allKeywords.current = JSON.parse(ID.servicesGetStorage(STR.ALLKEYWORD));
   }, []);
 
   // 전체 키워드에서 입력한 키워드가 포함됐을 때의 값을 반환하는 코드
@@ -46,7 +43,7 @@ export default function SetAllKeyWord({
   const handleKeywordOnclick = (item, e) => {
     e.preventDefault();
     if (companyDetailKeyword.length > 19) {
-      servicesUseToast("최대 20개까지 입력할 수 있습니다.");
+      UD.servicesUseToast("최대 20개까지 입력할 수 있습니다.");
     } else {
       companyDetailKeyword.forEach((el) => clickedKeyword.push(el.kid));
       if (!clickedKeyword.includes(item.kid)) {

@@ -6,9 +6,9 @@ import { useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 
-import { servicesPostData } from "../Services/importData";
-import { serviesGetImgsIid, servicesUseToast } from "../Services/useData";
-import { urlGetProposalInfo, urlSetProposalInfo } from "../Services/string";
+import * as ID from "../Services/importData";
+import * as UD from "../Services/useData";
+import * as STR from "../Services/string";
 
 import LayoutTopButton from "../components/common/LayoutTopButton";
 import ServicesImageSetPreview from "../components/services/ServicesImageSetPreview";
@@ -50,7 +50,7 @@ export default function SetAdminProposalInfo() {
 
     // 수정 시 url에 prid를 확인하여 데이터 받아옴
     if (!!prid) {
-      servicesPostData(urlGetProposalInfo, {
+      ID.servicesPostData(STR.urlGetProposalInfo, {
         prid: prid,
       })
         .then((res) => {
@@ -92,10 +92,10 @@ export default function SetAdminProposalInfo() {
 
   function fnSubmit(e) {
     //서버에 imgs의 iid값만을 보내기 위해 실행하는 반복문 함수
-    serviesGetImgsIid(imgsIid, multiImgs);
+    UD.serviesGetImgsIid(imgsIid, multiImgs);
     // setUserDetailInfo 수정
-    servicesPostData(
-      urlSetProposalInfo,
+    ID.servicesPostData(
+      STR.urlSetProposalInfo,
       // 견적서 응답 없음을 방문 제안일 기준으로 판단
       !!prid
         ? // url에 prid를 확인하여 수정, 추가를 결정
@@ -153,10 +153,10 @@ export default function SetAdminProposalInfo() {
     )
       .then((res) => {
         if (res.status === "fail") {
-          servicesUseToast("입력에 실패했습니다.", "e");
+          UD.servicesUseToast("입력에 실패했습니다.", "e");
         }
         if (res.status === "success") {
-          servicesUseToast("완료되었습니다!", "s");
+          UD.servicesUseToast("완료되었습니다!", "s");
           return;
         }
       })

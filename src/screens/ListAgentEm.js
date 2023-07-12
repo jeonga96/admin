@@ -2,8 +2,9 @@
 
 import { Link } from "react-router-dom";
 import { useLayoutEffect, useState } from "react";
-import { servicesPostData } from "../Services/importData";
-import { urlUserlist } from "../Services/string";
+
+import * as ID from "../Services/importData";
+import * as STR from "../Services/string";
 
 import PageButton from "../components/services/ServicesPaginationButton";
 import LayoutTopButton from "../components/common/LayoutTopButton";
@@ -26,7 +27,7 @@ export default function ListAgentEm() {
   useLayoutEffect(() => {
     // searchClick을 클릭하지 않은 (false) 상태에서 동작
     searchClick === false &&
-      servicesPostData(urlUserlist, {
+      ID.servicesPostData(STR.urlUserlist, {
         offset: page.getPage,
         userrole: "ROLE_ADMIN" || "ROLE_ADMINAG" || "ROLE_ADMINSD",
         size: 15,

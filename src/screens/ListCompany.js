@@ -2,13 +2,10 @@
 
 import { Link } from "react-router-dom";
 import { useState, useLayoutEffect } from "react";
-import { servicesPostData } from "../Services/importData";
-import { servicesUseToast } from "../Services/useData";
-import {
-  urlCompanylist,
-  urlSetCompany,
-  urlSetCompanyDetail,
-} from "../Services/string";
+
+import * as ID from "../Services/importData";
+import * as UD from "../Services/useData";
+import * as STR from "../Services/string";
 
 import PaginationButton from "../components/services/ServicesPaginationButton";
 import LayoutTopButton from "../components/common/LayoutTopButton";
@@ -54,7 +51,9 @@ function ChildList({
         // cid 추가, 삭제 이벤트
         addCheck(target.name, target.id, target.checked);
       } else {
-        servicesUseToast("계약관리와 회원상태를 한 번에 수정하실 수 없습니다.");
+        UD.servicesUseToast(
+          "계약관리와 회원상태를 한 번에 수정하실 수 없습니다."
+        );
       }
     }
 
@@ -66,7 +65,9 @@ function ChildList({
         // cid 추가, 삭제 이벤트
         addCheck(target.name, target.id, target.checked);
       } else {
-        servicesUseToast("계약관리와 회원상태를 한 번에 수정하실 수 없습니다.");
+        UD.servicesUseToast(
+          "계약관리와 회원상태를 한 번에 수정하실 수 없습니다."
+        );
       }
     }
   };
@@ -140,7 +141,7 @@ export default function ListCompany() {
   const [clickedStatus, setClickedStatus] = useState([]);
 
   useLayoutEffect(() => {
-    servicesPostData(urlCompanylist, {
+    ID.servicesPostData(STR.urlCompanylist, {
       offset: page.getPage,
       size: 15,
     }).then((res) => {
@@ -152,7 +153,7 @@ export default function ListCompany() {
   // 계약관리 submit
   const handleUseFlagSubmit = (e) => {
     for (let i = 0; i < clickedUseFlag.length; i++) {
-      servicesPostData(urlSetCompany, {
+      ID.servicesPostData(STR.urlSetCompany, {
         cid: clickedUseFlag[i],
         useFlag: e.target.id === "useFlagY" ? "1" : "0",
       }).then(window.location.reload());
@@ -164,7 +165,7 @@ export default function ListCompany() {
     switch (e.target.id) {
       case "waiting":
         for (let i = 0; i < clickedStatus.length; i++) {
-          servicesPostData(urlSetCompanyDetail, {
+          ID.servicesPostData(STR.urlSetCompanyDetail, {
             rcid: clickedStatus[i],
             status: 2,
           }).then(window.location.reload());
@@ -172,7 +173,7 @@ export default function ListCompany() {
         break;
       case "completion":
         for (let i = 0; i < clickedStatus.length; i++) {
-          servicesPostData(urlSetCompanyDetail, {
+          ID.servicesPostData(STR.urlSetCompanyDetail, {
             rcid: clickedStatus[i],
             status: 1,
           }).then(window.location.reload());
@@ -180,7 +181,7 @@ export default function ListCompany() {
         break;
       default:
         for (let i = 0; i < clickedStatus.length; i++) {
-          servicesPostData(urlSetCompanyDetail, {
+          ID.servicesPostData(STR.urlSetCompanyDetail, {
             rcid: clickedStatus[i],
             status: 0,
           }).then(window.location.reload());

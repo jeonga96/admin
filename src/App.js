@@ -45,7 +45,7 @@ import DetailCompanyReview from "./screens/DetailCompanyReview";
 import SetAdminAppbanner from "./screens/SetAdminAppbanner";
 
 /* 키워드 조회량 관리 */
-import SetAdminKeywords from "./screens/SetAdminKeywords";
+// import SetAdminKeywords from "./screens/SetAdminKeywords";
 
 /* 유통만 관리 */
 import ListAgentEm from "./screens/ListAgentEm";

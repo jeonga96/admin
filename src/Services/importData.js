@@ -1,5 +1,5 @@
 import axios from "axios";
-import { TOKEN, urlRefreshtoken } from "./string";
+import { TOKEN, urlRefreshtoken, BIZ_TOKEN } from "./string";
 import { servicesUseToast } from "./useData";
 
 const storageGetToken = servicesGetStorage(TOKEN);
@@ -90,42 +90,38 @@ export function servicesPostDataForm(url, reqData) {
 }
 
 export function servicesPost050biz(url, reqData) {
-  const TOKEN = "";
   return axios
     .post(url, reqData, {
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${TOKEN}`,
+        Authorization: `Bearer ${BIZ_TOKEN}`,
       },
     })
     .then((res) => res.data)
-    .catch((error) => console.log("importData.axiosSetData", error));
+    .catch((error) => console.log("importData.servicesPost050biz", error));
 }
 
 export function servicesGet050biz(url, reqData) {
-  const TOKEN = "";
   return axios
     .get(url, reqData, {
       headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${TOKEN}`,
+        Authorization: `Bearer ${BIZ_TOKEN}`,
       },
     })
     .then((res) => res.data)
-    .catch((error) => console.log("importData.axiosSetData", error));
+    .catch((error) => console.log("importData.servicesGet050biz", error));
 }
 
 export function servicesPost050bizMent(url, reqData) {
-  const TOKEN = "";
   return axios
     .post(url, reqData, {
       headers: {
         "Content-Type": "multipart/form-data",
-        Authorization: `Bearer ${TOKEN}`,
+        Authorization: `Bearer ${BIZ_TOKEN}`,
       },
     })
     .then((res) => res.data)
-    .catch((error) => console.log("importData.axiosSetData", error));
+    .catch((error) => console.log("importData.servicesPost050bizMent", error));
 }
 
 export function servicesGetRefreshToken() {

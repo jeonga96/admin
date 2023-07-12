@@ -4,11 +4,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLayoutEffect } from "react";
 import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
-
-import { urlCompanyGetNotice, urlCompanySetNotice } from "../Services/string";
-import { servicesPostData } from "../Services/importData";
-import { servicesUseToast, serviesGetImgsIid } from "../Services/useData";
 import { useParams } from "react-router-dom";
+
+import * as STR from "../Services/string";
+import * as ID from "../Services/importData";
+import * as UD from "../Services/useData";
 
 import SetImage from "../components/services/ServicesImageSetPreview";
 import LayoutTopButton from "../components/common/LayoutTopButton";
@@ -31,7 +31,7 @@ export default function SetDetailCompanyNotice() {
   const imgsIid = [];
 
   useLayoutEffect(() => {
-    servicesPostData(urlCompanyGetNotice, {
+    ID.servicesPostData(STR.urlCompanyGetNotice, {
       comnid: comnid,
     })
       .then((res) => {
@@ -49,9 +49,9 @@ export default function SetDetailCompanyNotice() {
 
   function fnSubmit(e) {
     //서버에 imgs의 iid값만을 보내기 위해 실행하는 반복문 함수
-    serviesGetImgsIid(imgsIid, imgs);
-    servicesPostData(
-      urlCompanySetNotice,
+    UD.serviesGetImgsIid(imgsIid, imgs);
+    ID.servicesPostData(
+      STR.urlCompanySetNotice,
       !!comnid
         ? {
             comnid: comnid,
@@ -70,10 +70,10 @@ export default function SetDetailCompanyNotice() {
     )
       .then((res) => {
         if (res.status === "fail") {
-          servicesUseToast("입력에 실패했습니다.", "e");
+          UD.servicesUseToast("입력에 실패했습니다.", "e");
         }
         if (res.status === "success") {
-          servicesUseToast("수정이 완료되었습니다.", "s");
+          UD.servicesUseToast("수정이 완료되었습니다.", "s");
           setTimeout(() => {
             window.location.href = `/company/${cid}/notice/${res.data.comnid}`;
           }, 2000);

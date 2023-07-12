@@ -3,12 +3,12 @@
 import { useForm } from "react-hook-form";
 import { useState, useLayoutEffect } from "react";
 import { Link } from "react-router-dom";
-import { servicesPostData } from "../Services/importData";
-import { urlContentList } from "../Services/string";
+
+import * as ID from "../Services/importData";
+import * as STR from "../Services/string";
 
 import LayoutTopButton from "../components/common/LayoutTopButton";
 import ComponentErrorNull from "../components/piece/PieceErrorNull";
-
 import PaginationButton from "../components/services/ServicesPaginationButton";
 
 export default function ListEvent() {
@@ -29,7 +29,7 @@ export default function ListEvent() {
 
   // 카테고리 확인하여 데이터 요청
   useLayoutEffect(() => {
-    servicesPostData(urlContentList, {
+    ID.servicesPostData(STR.urlContentList, {
       category: watch("_category") || "wzEvent",
       offset: 0,
       size: 15,

@@ -2,9 +2,10 @@
 
 import { useParams } from "react-router-dom";
 import { useState, useLayoutEffect } from "react";
-import { servicesPostData } from "../Services/importData";
-import { urlReviewList, urlSetReview } from "../Services/string";
-import { servicesUseToast } from "../Services/useData";
+
+import * as ID from "../Services/importData";
+import * as STR from "../Services/string";
+import * as UD from "../Services/useData";
 
 import ComponentErrorNull from "../components/piece/PieceErrorNull";
 import LayoutTopButton from "../components/common/LayoutTopButton";
@@ -21,7 +22,7 @@ export default function ListCompanyReview() {
 
   // 리뷰 데이터 요청
   useLayoutEffect(() => {
-    servicesPostData(urlReviewList, {
+    ID.servicesPostData(STR.urlReviewList, {
       rcid: cid,
     }).then((res) => {
       setReview(res.data);
@@ -31,15 +32,18 @@ export default function ListCompanyReview() {
   // 계약관리 submit
   const handleUseFlag = () => {
     for (let i = 0; i < clickedUseFlag.length; i++) {
-      servicesPostData(urlSetReview, {
+      ID.servicesPostData(STR.urlSetReview, {
         comrid: clickedUseFlag[i],
         useFlag: 0,
       }).then((res) => {
         if (res.status === "fail") {
-          servicesUseToast("오류가 발생되어 수정이 진행되지 않았습니다.", "e");
+          UD.servicesUseToast(
+            "오류가 발생되어 수정이 진행되지 않았습니다.",
+            "e"
+          );
         }
         if (res.status === "success") {
-          servicesUseToast("완료되었습니다.", "s");
+          UD.servicesUseToast("완료되었습니다.", "s");
           window.location.reload();
           return;
         }

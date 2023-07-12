@@ -6,9 +6,9 @@ import { useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 
-import { servicesPostData } from "../Services/importData";
-import { serviesGetImgsIid, servicesUseToast } from "../Services/useData";
-import { urlSetEstimateInfo, urlGetEstimateInfo } from "../Services/string";
+import * as ID from "../Services/importData";
+import * as UD from "../Services/useData";
+import * as STR from "../Services/string";
 
 import LayoutTopButton from "../components/common/LayoutTopButton";
 import ImageSet from "../components/services/ServicesImageSetPreview";
@@ -49,7 +49,7 @@ export default function SetAdminEstimateinfo() {
     setValue("_gongsaType", "reser");
 
     // 해당 esid의 견적의뢰서 가지고 오기
-    servicesPostData(urlGetEstimateInfo, {
+    ID.servicesPostData(STR.urlGetEstimateInfo, {
       esid: esid,
     })
       .then((res) => {
@@ -98,15 +98,15 @@ export default function SetAdminEstimateinfo() {
   }, []);
 
   function fnSubmit(e) {
-    serviesGetImgsIid(imgsIid, multiImgs);
+    UD.serviesGetImgsIid(imgsIid, multiImgs);
 
     const reqDate = new Date(getValues("_reqVisit"));
     const proDate = new Date(getValues("_proVisit"));
 
     if (!esid) {
       // setUserDetailInfo 추가-------------------------------------------
-      servicesPostData(
-        urlSetEstimateInfo,
+      ID.servicesPostData(
+        STR.urlSetEstimateInfo,
         !getValues("_proVisit")
           ? // 견적서 응답 없음을 방문 제안일 기준으로 판단
             // 견적서 응답 내용을 입력하지 않고, 요청서만 작성했을 때
@@ -154,15 +154,15 @@ export default function SetAdminEstimateinfo() {
       )
         .then((res) => {
           if (res.status === "success") {
-            servicesUseToast("완료되었습니다!", "s");
+            UD.servicesUseToast("완료되었습니다!", "s");
             return;
           }
         })
         .catch((error) => console.log("axios 실패", error.response));
     } else {
       // setUserDetailInfo 수정-------------------------------------------
-      servicesPostData(
-        urlSetEstimateInfo,
+      ID.servicesPostData(
+        STR.urlSetEstimateInfo,
         !getValues("_proVisit")
           ? // 견적서 응답 없음을 방문 제안일 기준으로 판단
             // 견적서 응답 내용을 입력하지 않고, 요청서만 작성했을 때
@@ -212,7 +212,7 @@ export default function SetAdminEstimateinfo() {
       )
         .then((res) => {
           if (res.status === "success") {
-            servicesUseToast("완료되었습니다!", "s");
+            UD.servicesUseToast("완료되었습니다!", "s");
             return;
           }
         })

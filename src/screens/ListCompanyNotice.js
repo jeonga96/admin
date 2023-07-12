@@ -2,8 +2,8 @@
 
 import { useParams } from "react-router-dom";
 import { useState, useLayoutEffect } from "react";
-import { servicesPostData } from "../Services/importData";
-import { urlCompanyNoticeList } from "../Services/string";
+import * as ID from "../Services/importData";
+import * as STR from "../Services/string";
 
 import LayoutTopButton from "../components/common/LayoutTopButton";
 import ComponentErrorNull from "../components/piece/PieceErrorNull";
@@ -17,7 +17,7 @@ export default function ListCompanyNotice() {
   const [notice, setNotice] = useState([]);
 
   useLayoutEffect(() => {
-    servicesPostData(urlCompanyNoticeList, {
+    ID.servicesPostData(STR.urlCompanyNoticeList, {
       rcid: cid,
     }).then((res) => {
       setNotice(res.data && res.data.reverse());

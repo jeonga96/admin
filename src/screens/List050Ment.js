@@ -2,15 +2,16 @@
 
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { useEffect, useLayoutEffect, useState } from "react";
-import { servicesPostData, servicesGet050biz } from "../Services/importData";
-import { urlPre050Biz } from "../Services/string";
+import { useLayoutEffect, useState } from "react";
+
+import * as ID from "../Services/importData";
+import * as STR from "../Services/string";
 
 import LayoutTopButton from "../components/common/LayoutTopButton";
 import ComponentErrorNull from "../components/piece/PieceErrorNull";
 
 export default function ListAgentAg() {
-  const { register, getValues, watch, reset, handleSubmit } = useForm({
+  const { register, watch, reset, handleSubmit } = useForm({
     defaultValues: {
       _channelId: "gongsacok",
     },
@@ -28,10 +29,14 @@ export default function ListAgentAg() {
   }
 
   function fnSearchSubmit() {
-    servicesGet050biz(`${urlPre050Biz}/050biz/v1/${watch("_channelId")}/ment`, {
-      type: watch("_type"),
-    }).then((res) => {
-      console.log(res.data);
+    console.log(`${STR.urlPre050Biz}/050biz/v1/${watch("_channelId")}/ment`);
+    ID.servicesGet050biz(
+      `${STR.urlPre050Biz}/050biz/v1/${watch("_channelId")}/ment`,
+      {
+        type: watch("_type"),
+      }
+    ).then((res) => {
+      console.log("res.data", res.data);
       if (res.code === "0000") {
         setMentList(res.data);
       }

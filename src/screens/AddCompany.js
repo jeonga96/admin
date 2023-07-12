@@ -5,9 +5,9 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector, shallowEqual } from "react-redux";
 
-import { servicesPostData } from "../Services/importData";
-import { servicesUseToast } from "../Services/useData";
-import { urlAddcompany, urlUserlist, urlSetCompany } from "../Services/string";
+import * as ID from "../Services/importData";
+import * as UD from "../Services/useData";
+import * as STR from "../Services/string";
 
 import LayoutTopButton from "../components/common/LayoutTopButton";
 import ComponentModal from "../components/services/ServiceModalCompanyAdd";
@@ -28,7 +28,7 @@ export default function AddCompany() {
   const [userList, setUserList] = useState([]);
 
   useEffect(() => {
-    servicesPostData(urlUserlist, {
+    ID.servicesPostData(STR.urlUserlist, {
       offset: 0,
       size: 40,
     }).then((res) => setUserList(res.data));
@@ -45,24 +45,24 @@ export default function AddCompany() {
 
   // 사업자 회원 추가 이벤트
   const fnSubmit = (e) => {
-    servicesPostData(urlAddcompany, {
+    ID.servicesPostData(STR.urlAddcompany, {
       name: getValues("_name"),
     })
       .then((res) => {
         console.log("???");
         if (res.status === "fail") {
-          servicesUseToast("잘못된 값을 입력했습니다.", "e");
+          UD.servicesUseToast("잘못된 값을 입력했습니다.", "e");
           return;
         }
         // 정상 등록 완료
         // 디테일 정보를 입력하도록 사업자 상세정보로 이동
         if (res.status === "success") {
-          console.log(urlSetCompany, res.data.cid, select.uid);
-          servicesPostData(urlSetCompany, {
+          console.log(STR.urlSetCompany, res.data.cid, select.uid);
+          ID.servicesPostData(STR.urlSetCompany, {
             cid: res.data.cid,
             ruid: select.uid,
           });
-          servicesUseToast("완료되었습니다.", "s");
+          UD.servicesUseToast("완료되었습니다.", "s");
           return setTimeout(
             () => navigate(`/company/${res.data.cid}/req`),
             2000

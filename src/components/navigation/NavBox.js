@@ -1,8 +1,9 @@
+import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { servicesGetData } from "../../Services/importData";
-import { navUrl } from "../../Services/string";
-import { useState, useEffect } from "react";
+
+import * as ID from "../../Services/importData";
+import * as STR from "../../Services/string";
 
 import { GrClose } from "react-icons/gr";
 
@@ -19,7 +20,7 @@ export default function NavBox() {
 
   const [data, setData] = useState([]);
   function axiosData() {
-    servicesGetData(navUrl).then((res) => setData(res));
+    ID.servicesGetData(STR.navUrl).then((res) => setData(res));
   }
   useEffect(() => {
     axiosData();

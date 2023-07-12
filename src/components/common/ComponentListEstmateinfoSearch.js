@@ -1,12 +1,9 @@
 import { useLayoutEffect } from "react";
 import { useForm } from "react-hook-form";
 
-import { servicesPostData } from "../../Services/importData";
-import { servicesUseToast } from "../../Services/useData";
-import {
-  urlListEstimateInfo,
-  urlListProposalInfo,
-} from "../../Services/string";
+import * as ID from "../../Services/importData";
+import * as UD from "../../Services/useData";
+import * as STR from "../../Services/string";
 
 export default function ComponentListUserSearch({
   setList,
@@ -35,8 +32,8 @@ export default function ComponentListUserSearch({
 
   // submit 이벤트
   function fnSubmit() {
-    servicesPostData(
-      !!LISTPROPSOSLINFO ? urlListProposalInfo : urlListEstimateInfo,
+    ID.servicesPostData(
+      !!LISTPROPSOSLINFO ? STR.urlListProposalInfo : STR.urlListEstimateInfo,
       {
         offset: page.getPage,
         size: 15,
@@ -45,7 +42,7 @@ export default function ComponentListUserSearch({
       }
     ).then((res) => {
       if (res.status === "fail") {
-        servicesUseToast("검색하신 데이터가 없습니다.", "e");
+        UD.servicesUseToast("검색하신 데이터가 없습니다.", "e");
       }
       if (res.status === "success") {
         userList(res.data);
@@ -57,8 +54,8 @@ export default function ComponentListUserSearch({
 
   // 초기화 이벤트
   function handleReset(e) {
-    servicesPostData(
-      !!LISTPROPSOSLINFO ? urlListProposalInfo : urlListEstimateInfo,
+    ID.servicesPostData(
+      !!LISTPROPSOSLINFO ? STR.urlListProposalInfo : STR.urlListEstimateInfo,
       {
         offset: page.getPage,
         size: 15,

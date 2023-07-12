@@ -2,8 +2,9 @@
 
 import { Link } from "react-router-dom";
 import { useLayoutEffect, useState } from "react";
-import { servicesPostData } from "../Services/importData";
-import { urlListProposalInfo } from "../Services/string";
+
+import * as ID from "../Services/importData";
+import * as STR from "../Services/string";
 
 import LayoutTopButton from "../components/common/LayoutTopButton";
 import PageButton from "../components/services/ServicesPaginationButton";
@@ -26,7 +27,7 @@ export default function ListPropsosalinfo() {
   useLayoutEffect(() => {
     // searchClick을 클릭하지 않은 (false) 상태에서 동작
     searchClick === false &&
-      servicesPostData(urlListProposalInfo, {
+      ID.servicesPostData(STR.urlListProposalInfo, {
         offset: page.getPage,
         size: 15,
       }).then((res) => {

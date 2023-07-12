@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { useGetimgStringImgs, useGetImage } from "../../Services/customHook";
+
+import * as CH from "../../Services/customHook";
 
 import ImageOnClick from "../services/ServicesImageOnClick";
 
@@ -11,9 +12,9 @@ export default function ComponentDetailNotice({ detail }) {
   const [imgs, setImgs] = useState([]);
 
   // 서버에서 image를 가져오는 customHook imgs를 가져온다.
-  useGetImage(setImgs, detail);
+  CH.useGetImage(setImgs, detail);
   //공지사항 이미지(imgString)를 가져온다.
-  useGetimgStringImgs(setImgs, detail);
+  CH.useGetimgStringImgs(setImgs, detail);
 
   return (
     <ul className="detailPageLayout">

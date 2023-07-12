@@ -6,17 +6,10 @@ import { useEffect, useState, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 
-import { servicesPostData } from "../Services/importData";
-import { servicesUseToast, servicesUseModal } from "../Services/useData";
-import {
-  urlGetCompanyDetail,
-  urlSetCompanyDetail,
-  urlSetCompany,
-  urlSetUser,
-  urlGetUser,
-  urlGetCompany,
-  urlGetUserDetail,
-} from "../Services/string";
+import * as ID from "../Services/importData";
+import * as UD from "../Services/useData";
+import * as STR from "../Services/string";
+
 import SetImage from "../components/services/ServicesImageSetPreview";
 import PieceRegisterSearchPopUp from "../components/services/ServiceRegisterSearchPopUp";
 import LayoutTopButton from "../components/common/LayoutTopButton";
@@ -60,7 +53,7 @@ export default function SetRequiredCompany() {
       type: "getedData",
       payload: { ...res.data },
     });
-    await servicesPostData(urlGetUser, {
+    await ID.servicesPostData(STR.urlGetUser, {
       uid: UID,
     }).then((res2) => {
       dispatch({
@@ -70,7 +63,7 @@ export default function SetRequiredCompany() {
       setValue("_userid", res2.data.userid || "");
     });
 
-    await servicesPostData(urlGetCompanyDetail, {
+    await ID.servicesPostData(STR.urlGetCompanyDetail, {
       rcid: cid,
     }).then((res3) => {
       if (res3.status === "success") {
@@ -107,13 +100,13 @@ export default function SetRequiredCompany() {
     let arr = e.target.value.split(",");
     if (e.target.id === "tags") {
       if (arr.length > 20) {
-        servicesUseToast("최대 20개-까지 입력할 수 있습니다.");
+        UD.servicesUseToast("최대 20개-까지 입력할 수 있습니다.");
         arr = arr.filter((it, i) => i < 20);
       }
       return setValue("_tag", arr.toString());
     } else {
       if (arr.length > 10) {
-        servicesUseToast("최대 10개까지 입력할 수 있습니다.");
+        UD.servicesUseToast("최대 10개까지 입력할 수 있습니다.");
         arr = arr.filter((it, i) => i < 10);
       }
       return e.target.id === "bigCategory"
@@ -124,7 +117,7 @@ export default function SetRequiredCompany() {
 
   // form submit 이벤트 =========================================
   const handleSubmitEvent = () => {
-    servicesPostData(urlSetCompany, {
+    ID.servicesPostData(STR.urlSetCompany, {
       cid: cid,
       name: getValues("_name"),
       ruid: getedData.ruid,
@@ -133,7 +126,7 @@ export default function SetRequiredCompany() {
 
     // ComponentSetCompany submit
     // setComapny (계약자명, uid, 사업자 활성화)
-    servicesPostData(urlSetCompanyDetail, {
+    ID.servicesPostData(STR.urlSetCompanyDetail, {
       rcid: cid,
       useFlag: getValues("_detailUseFlag"),
       status: getValues("_status").toString(),
@@ -156,13 +149,13 @@ export default function SetRequiredCompany() {
     })
       .then((res) => {
         if (res.status === "fail") {
-          servicesUseToast("잘못된 값을 입력했습니다.", "e");
+          UD.servicesUseToast("잘못된 값을 입력했습니다.", "e");
           return;
         }
         // 정상 등록 완료
         // 디테일 정보를 입력하도록 사업자 상세정보로 이동
         if (res.status === "success") {
-          servicesUseModal(
+          UD.servicesUseModal(
             "사업자 상세정보를 입력하시겠습니까?",
             "확인은 누르시면 사업자 상세정보 입력 페이지로 이동됩니다.",
             () => {
@@ -176,7 +169,7 @@ export default function SetRequiredCompany() {
   };
 
   useEffect(() => {
-    servicesPostData(urlGetCompany, {
+    ID.servicesPostData(STR.urlGetCompany, {
       cid: cid,
     }).then((res) => {
       setValue("_useFlag", res.data.useFlag.toString() || "1");
@@ -186,7 +179,7 @@ export default function SetRequiredCompany() {
   }, []);
 
   useEffect(() => {
-    servicesPostData(urlGetUserDetail, {
+    ID.servicesPostData(STR.urlGetUserDetail, {
       ruid: UID,
     })
       .then((res) => {
@@ -399,12 +392,12 @@ export default function SetRequiredCompany() {
                             width: "19%",
                           }}
                           onClick={() => {
-                            servicesPostData(urlSetUser, {
+                            ID.servicesPostData(STR.urlSetUser, {
                               uid: UID,
                               passwd: watch("_passwd"),
                             }).then((res) => {
                               if (res.status === "success") {
-                                servicesUseToast(
+                                UD.servicesUseToast(
                                   "비밀번호 변경이 완료되었습니다.",
                                   "s"
                                 );

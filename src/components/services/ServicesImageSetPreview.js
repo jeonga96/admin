@@ -1,12 +1,11 @@
 import { useSelector, useDispatch, shallowEqual } from "react-redux";
 import { useRef, useState, useEffect, useCallback } from "react";
-import {
-  servicesPostDataForm,
-  servicesPostData,
-} from "../../Services/importData";
-import { useDidMountEffect } from "../../Services/customHook";
-import { urlUpImages, urlGetImages } from "../../Services/string";
-import { servicesUseToast } from "../../Services/useData";
+
+import * as ID from "../../Services/importData";
+import * as CH from "../../Services/customHook";
+import * as STR from "../../Services/string";
+import * as UD from "../../Services/useData";
+
 import ServicesImageOnClick from "./ServicesImageOnClick";
 import Loading from "../piece/PieceLoading";
 
@@ -43,9 +42,9 @@ export default function ImageSet({ id, title }) {
     return setLoading(false);
   };
 
-  useDidMountEffect(() => {
+  CH.useDidMountEffect(() => {
     if (!!getedData.titleImg && id === "titleImg") {
-      servicesPostData(urlGetImages, {
+      ID.servicesPostData(STR.urlGetImages, {
         imgs: getedData.titleImg,
       }).then((res) => {
         if (res.status === "success") {
@@ -54,7 +53,7 @@ export default function ImageSet({ id, title }) {
         }
       });
     } else if (!!getedData.imgs && id === "imgs") {
-      servicesPostData(urlGetImages, {
+      ID.servicesPostData(STR.urlGetImages, {
         imgs: getedData.imgs,
       }).then((res) => {
         if (res.status === "success") {
@@ -68,7 +67,7 @@ export default function ImageSet({ id, title }) {
       !!getedData.addImgs
     ) {
       if (id === "imgString" || id === "regImgs" || id === "addImgs") {
-        servicesPostData(urlGetImages, {
+        ID.servicesPostData(STR.urlGetImages, {
           imgs: getedData.imgString || getedData.regImgs || getedData.addImgs,
         }).then((res) => {
           if (res.status === "success") {
@@ -94,7 +93,7 @@ export default function ImageSet({ id, title }) {
         formData.append("Imgs", selectFiles[i]);
       }
       setLoading(true);
-      servicesPostDataForm(urlUpImages, formData).then((res) => {
+      ID.servicesPostDataForm(STR.urlUpImages, formData).then((res) => {
         if (res.data.length == 1) {
           if (id === "titleImg") {
             setFiles(() => [res.data[0]]);
@@ -114,7 +113,7 @@ export default function ImageSet({ id, title }) {
           fnState([...arrData, ...files]);
         } else {
           setLoading(false);
-          return servicesUseToast(
+          return UD.servicesUseToast(
             "이미지는 최대 25개까지 입력하실 수 있습니다."
           );
         }

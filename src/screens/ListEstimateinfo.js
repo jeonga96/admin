@@ -2,8 +2,9 @@
 
 import { Link } from "react-router-dom";
 import { useLayoutEffect, useState } from "react";
-import { servicesPostData } from "../Services/importData";
-import { urlListEstimateInfo } from "../Services/string";
+
+import * as ID from "../Services/importData";
+import * as STR from "../Services/string";
 
 import LayoutTopButton from "../components/common/LayoutTopButton";
 import PageButton from "../components/services/ServicesPaginationButton";
@@ -26,7 +27,7 @@ export default function ListEstimateinfo() {
   useLayoutEffect(() => {
     // searchClick을 클릭하지 않은 (false) 상태에서 동작
     searchClick === false &&
-      servicesPostData(urlListEstimateInfo, {
+      ID.servicesPostData(STR.urlListEstimateInfo, {
         offset: page.getPage,
         size: 15,
       }).then((res) => {

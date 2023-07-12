@@ -2,9 +2,9 @@ import { useEffect } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
-import { servicesPostData } from "../../Services/importData";
-import { servicesUseToast } from "../../Services/useData";
-import { urlUserlist } from "../../Services/string";
+import * as ID from "../../Services/importData";
+import * as UD from "../../Services/useData";
+import * as STR from "../../Services/string";
 
 export default function ComponentListAgentSearch({
   setUserList,
@@ -40,7 +40,7 @@ export default function ComponentListAgentSearch({
 
   // submit 이벤트
   function SearchSubmit() {
-    servicesPostData(urlUserlist, {
+    ID.servicesPostData(STR.urlUserlist, {
       offset: page.getPage,
       size: 15,
       userid: getValues("_userid"),
@@ -56,13 +56,13 @@ export default function ComponentListAgentSearch({
       useFlag: getValues("_useFlag"),
     }).then((res) => {
       if (res.status === "fail") {
-        servicesUseToast("검색하신 데이터가 없습니다.", "e");
+        UD.servicesUseToast("검색하신 데이터가 없습니다.", "e");
       }
       if (res.status === "success") {
         userList(res.data);
         listPage(res.page);
         setSearchClick(true);
-        servicesUseToast("완료되었습니다.", "s");
+        UD.servicesUseToast("완료되었습니다.", "s");
       }
     });
   }

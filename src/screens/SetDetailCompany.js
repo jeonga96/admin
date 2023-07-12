@@ -6,24 +6,9 @@ import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 import { servicesPostData } from "../Services/importData";
 
-import {
-  serviesPostDataSettingRcid,
-  servicesUseToast,
-} from "../Services/useData";
-import { serviesGetImgsIid } from "../Services/useData";
+import * as UD from "../Services/useData";
+import * as STR from "../Services/string";
 
-import {
-  urlGetCompanyDetail,
-  urlSetCompanyDetail,
-  urlSetCompany,
-  urlCompanyNoticeList,
-  urlGetCompany,
-  urlReviewList,
-  urlListEstimateInfo,
-  urlListProposalInfo,
-  urlSetUser,
-  urlGetUser,
-} from "../Services/string";
 import SetImage from "../components/services/ServicesImageSetPreview";
 import LayoutTopButton from "../components/common/LayoutTopButton";
 import ComponentSetCompany from "../components/common/ComponentSetCompany";
@@ -92,7 +77,7 @@ export default function SetCompanyDetail() {
   // 현재 페이지가 렌더링되자마자 기존에 입력된 값의 여부를 확인한다.
   useEffect(() => {
     // 상세 회사정보 불러오기 기존 값이 없다면 새로운 회원이다. 새로 작성함
-    servicesPostData(urlGetCompanyDetail, {
+    servicesPostData(STR.urlGetCompanyDetail, {
       rcid: cid,
     })
       .then((res) => {
@@ -135,14 +120,18 @@ export default function SetCompanyDetail() {
           setValue("_noCount", res.data.noCount || "");
 
           // 공지사항, 리뷰, 견적요청서 링크 이동 개수 확인하기 위해 데이터 받아오기
-          serviesPostDataSettingRcid(urlCompanyNoticeList, cid, setNoticeList);
-          serviesPostDataSettingRcid(urlReviewList, cid, setReviewList);
+          UD.serviesPostDataSettingRcid(
+            STR.urlCompanyNoticeList,
+            cid,
+            setNoticeList
+          );
+          UD.serviesPostDataSettingRcid(STR.urlReviewList, cid, setReviewList);
           // 견적요청서 - uid가 필요하기 떄문에 cid로 uid를 확인한 후 진행
-          servicesPostData(urlGetCompany, { cid: cid }).then((res) => {
+          servicesPostData(STR.urlGetCompany, { cid: cid }).then((res) => {
             ruid.current = res.data.ruid;
 
             // 회원정보
-            servicesPostData(urlGetUser, {
+            servicesPostData(STR.urlGetUser, {
               uid: res.data.ruid,
             })
               .then((res) => {
@@ -153,27 +142,27 @@ export default function SetCompanyDetail() {
               .catch((res) => console.log(res));
 
             // 견적 요청서 요청
-            servicesPostData(urlListEstimateInfo, {
+            servicesPostData(STR.urlListEstimateInfo, {
               fromUid: res.data.ruid,
               offset: 0,
               size: 5,
             }).then((res) => setFromEstimateinfo(res.data));
             // 견적 요청서 수령
-            servicesPostData(urlListEstimateInfo, {
+            servicesPostData(STR.urlListEstimateInfo, {
               toUid: res.data.ruid,
               offset: 0,
               size: 5,
             }).then((res) => setToEstimateinfo(res.data));
 
             // 견적서 요청
-            servicesPostData(urlListProposalInfo, {
+            servicesPostData(STR.urlListProposalInfo, {
               fromUid: res.data.ruid,
               offset: 0,
               size: 5,
             }).then((res) => setFromproposalInfo(res.data));
 
             // 견적서 수령
-            servicesPostData(urlListProposalInfo, {
+            servicesPostData(STR.urlListProposalInfo, {
               toUid: res.data.ruid,
               offset: 0,
               size: 5,
@@ -195,13 +184,13 @@ export default function SetCompanyDetail() {
     let arr = e.target.value.split(",");
     if (e.target.id === "tags") {
       if (arr.length > 20) {
-        servicesUseToast("최대 20개까지 입력할 수 있습니다.");
+        UD.servicesUseToast("최대 20개까지 입력할 수 있습니다.");
         arr = arr.filter((it, i) => i < 20);
       }
       return setValue("_tag", arr.toString() || "");
     } else {
       if (arr.length > 10) {
-        servicesUseToast("최대 10개까지 입력할 수 있습니다.");
+        UD.servicesUseToast("최대 10개까지 입력할 수 있습니다.");
         arr = arr.filter((it, i) => i < 10);
       }
       return e.target.id === "bigCategory"
@@ -212,13 +201,13 @@ export default function SetCompanyDetail() {
 
   const handleSubmitEvent = () => {
     // 서버에 imgs의 iid값만을 보내기 위해 실행하는 반복문 함수
-    serviesGetImgsIid(imgsIid, imgs);
-    servicesPostData(urlSetCompany, {
+    UD.serviesGetImgsIid(imgsIid, imgs);
+    servicesPostData(STR.urlSetCompany, {
       cid: cid,
       ...companyData,
     });
 
-    servicesPostData(urlSetCompanyDetail, {
+    servicesPostData(STR.urlSetCompanyDetail, {
       rcid: cid,
       useFlag: getValues("_detailUseFlag"),
       gongsaType: getValues("_gongsaType").toString() || "",
@@ -262,10 +251,10 @@ export default function SetCompanyDetail() {
     })
       .then((res) => {
         if (res.status === "fail") {
-          servicesUseToast("입력에 실패했습니다.", "e");
+          UD.servicesUseToast("입력에 실패했습니다.", "e");
         }
         if (res.status === "success") {
-          servicesUseToast("완료되었습니다!", "s");
+          UD.servicesUseToast("완료되었습니다!", "s");
           return;
         }
       })
@@ -412,12 +401,12 @@ export default function SetCompanyDetail() {
                           type="button"
                           disabled={!companyData.ruid && true}
                           onClick={() => {
-                            servicesPostData(urlSetUser, {
+                            servicesPostData(STR.urlSetUser, {
                               uid: ruid.current,
                               passwd: watch("_passwd"),
                             }).then((res) => {
                               if (res.status === "success") {
-                                servicesUseToast(
+                                UD.servicesUseToast(
                                   "비밀번호 변경이 완료되었습니다.",
                                   "s"
                                 );

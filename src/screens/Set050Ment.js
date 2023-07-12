@@ -3,17 +3,14 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
+import * as ID from "../Services/importData";
+import * as UD from "../Services/useData";
+import * as STR from "../Services/string";
+
 import LayoutTopButton from "../components/common/LayoutTopButton";
 
-import {
-  servicesPost050bizMent,
-  servicesGet050biz,
-} from "../Services/importData";
-import { servicesUseToast } from "../Services/useData";
-import { urlPre050Biz } from "../Services/string";
-
 export default function Set050Ment() {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const {
     handleSubmit,
     register,
@@ -32,8 +29,8 @@ export default function Set050Ment() {
 
   useEffect(() => {
     if (!!mentid) {
-      servicesGet050biz(
-        `${urlPre050Biz}/050biz/v1/${watch("_channelId")}/ment/${mentid}`
+      ID.servicesGet050biz(
+        `${STR.urlPre050Biz}/050biz/v1/${watch("_channelId")}/ment/${mentid}`
       ).then((res) => {
         console.log("목록 잘 나왔나요?", res);
         setValue("_channelId", res.data.channelId);
@@ -49,15 +46,15 @@ export default function Set050Ment() {
 
   // musicMethot가 1번일 떄, 050biz ment에서 bgm목록 확인하여 가져오기
   useEffect(() => {
-    servicesPost050bizMent(
-      `${urlPre050Biz}/050biz/v1/${watch("_channelId")}/bgm`,
+    ID.servicesPost050bizMent(
+      `${STR.urlPre050Biz}/050biz/v1/${watch("_channelId")}/bgm`,
       { channelId: watch("_channelId") }
     ).then((res) => {
       if (res.code === "0000") {
         setBgmList(res.data);
         console.log(bgmList);
       } else {
-        servicesUseToast("bgm이 없습니다.", "e");
+        UD.servicesUseToast("bgm이 없습니다.", "e");
       }
     });
   }, [watch("_musicMethod") === "1"]);
@@ -71,15 +68,17 @@ export default function Set050Ment() {
   };
 
   const fnDelete = () => {
-    servicesPost050bizMent(
-      `${urlPre050Biz}/050biz/v1/${watch("_channelId")}/ment/delete/${mentid}`,
+    ID.servicesPost050bizMent(
+      `${STR.urlPre050Biz}/050biz/v1/${watch(
+        "_channelId"
+      )}/ment/delete/${mentid}`,
       {}
     ).then((res) => console.log("삭제됐나요?", res));
   };
 
   const fnCreateSubmit = () => {
-    servicesPost050bizMent(
-      `${urlPre050Biz}/050biz/v1/${watch("_channelId")}/ment/create`,
+    ID.servicesPost050bizMent(
+      `${STR.urlPre050Biz}/050biz/v1/${watch("_channelId")}/ment/create`,
       {
         title: getValues("_title"),
         ttsMsg: getValues("_ttsMsg"),
@@ -90,8 +89,10 @@ export default function Set050Ment() {
   };
 
   const fnUpdateSubmit = () => {
-    servicesPost050bizMent(
-      `${urlPre050Biz}/050biz/v1/${watch("_channelId")}/ment/update/${mentid}`,
+    ID.servicesPost050bizMent(
+      `${STR.urlPre050Biz}/050biz/v1/${watch(
+        "_channelId"
+      )}/ment/update/${mentid}`,
       {
         title: getValues("_title"),
         ttsMsg: getValues("_ttsMsg"),

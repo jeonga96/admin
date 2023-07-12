@@ -3,11 +3,11 @@
 import { useLayoutEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
-
-import { urlSetContent, urlGetContent } from "../Services/string";
-import { servicesPostData } from "../Services/importData";
-import { servicesUseToast } from "../Services/useData";
 import { useParams } from "react-router-dom";
+
+import * as STR from "../Services/string";
+import * as ID from "../Services/importData";
+import * as UD from "../Services/useData";
 
 import LayoutTopButton from "../components/common/LayoutTopButton";
 
@@ -30,7 +30,7 @@ export default function SetEvent() {
   useLayoutEffect(() => {
     // contid가 있으면 기존에 입력된 값을 가져옴
     if (!!contid) {
-      servicesPostData(urlGetContent, {
+      ID.servicesPostData(STR.urlGetContent, {
         contid: contid,
       })
         .then((res) => {
@@ -51,8 +51,8 @@ export default function SetEvent() {
   };
 
   const AddUserSubmit = (e) => {
-    servicesPostData(
-      urlSetContent,
+    ID.servicesPostData(
+      STR.urlSetContent,
       !!contid
         ? // contid여부 확인하여 contid가 있으면 수정
           {
@@ -74,21 +74,21 @@ export default function SetEvent() {
     )
       .then((res) => {
         if (res.status === "success") {
-          servicesUseToast("입력이 완료되었습니다.", "s");
+          UD.servicesUseToast("입력이 완료되었습니다.", "s");
           setTimeout(() => {
             window.location.href = `/event`;
           }, 2000);
           return;
         }
         if (res.status === "fail") {
-          servicesUseToast("입력에 실패했습니다.", "e");
+          UD.servicesUseToast("입력에 실패했습니다.", "e");
         }
       })
       .catch((error) => console.log("axios 실패", error.response));
   };
 
   const fnUseFlag = () => {
-    servicesPostData(urlSetContent, {
+    ID.servicesPostData(STR.urlSetContent, {
       contid: contid,
       category: getValues("_category"),
       contentString: getValues("_contentString"),
@@ -97,14 +97,14 @@ export default function SetEvent() {
     })
       .then((res) => {
         if (res.status === "success") {
-          servicesUseToast("수정이 완료되었습니다.", "s");
+          UD.servicesUseToast("수정이 완료되었습니다.", "s");
           setTimeout(() => {
             window.location.href = `/event`;
           }, 2000);
           return;
         }
         if (res.status === "fail") {
-          servicesUseToast("입력에 실패했습니다.", "e");
+          UD.servicesUseToast("입력에 실패했습니다.", "e");
         }
       })
       .catch((error) => console.log("axios 실패", error.response));

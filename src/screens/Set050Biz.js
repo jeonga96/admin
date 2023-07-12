@@ -6,20 +6,9 @@ import { useForm } from "react-hook-form";
 import LayoutTopButton from "../components/common/LayoutTopButton";
 import ComponentTableTopNumber from "../components/piece/PieceTableTopNumber";
 
-import { servicesPost050biz, servicesPostData } from "../Services/importData";
-import {
-  servicesUseToast,
-  serviesBoolToNumber,
-  serviesStringToTime,
-  serviesNumberToBool,
-} from "../Services/useData";
-import {
-  urlCreate050,
-  urlUpdate050,
-  urlGet050,
-  urlClear050,
-  urlSetCompanyDetail,
-} from "../Services/string";
+import * as ID from "../Services/importData";
+import * as UD from "../Services/useData";
+import * as STR from "../Services/string";
 
 export default function Set050Biz() {
   const navigate = useNavigate();
@@ -33,7 +22,7 @@ export default function Set050Biz() {
     formState: { isSubmitting },
   } = useForm({
     defaultValues: {
-      _status: 1,
+      _status: "Y",
       _holiWeek1: 1,
       _holiWeek2: 1,
       _holiWeek3: 1,
@@ -75,14 +64,14 @@ export default function Set050Biz() {
   };
 
   const fnClear = () => {
-    servicesPost050biz(`${urlClear050}/${vno}`, { vno: vno }).then((res) => {
+    ID.servicesPost050biz(`${STR.urlClear050}/${vno}`).then((res) => {
       if (res.code == "0000") {
-        servicesPostData(urlSetCompanyDetail, {
+        ID.servicesPostData(STR.urlSetCompanyDetail, {
           rcid: cid,
           extnum: "",
         }).then((res) => {
           if (res.status === "success") {
-            servicesUseToast("삭제가 완료되었습니다.", "s");
+            UD.servicesUseToast("삭제가 완료되었습니다.", "s");
             setTimeout(() => {
               navigate(`company/${cid}`);
             }, 2000);
@@ -90,7 +79,7 @@ export default function Set050Biz() {
           }
         });
       } else {
-        servicesUseToast(
+        UD.servicesUseToast(
           "삭제가 진행되지 않았습니다. 관리자에게 문의해 주십시오.",
           "e"
         );
@@ -99,43 +88,64 @@ export default function Set050Biz() {
   };
 
   // 수정 & 추가 버튼 클릭 이벤트
-  function fnSubmit(e) {
-    const HOLIDAY = serviesBoolToNumber(arrHoliDay);
-    const HOLIWEEK = serviesBoolToNumber(arrHoliWeek);
+  function fnSubmit() {
+    const HOLIDAY = UD.serviesBoolToNumber(arrHoliDay);
+    const HOLIWEEK = UD.serviesBoolToNumber(arrHoliWeek);
 
     const STARTTIME = getValues("_bizStartTime").replace(":", "");
     const ENDTIME = getValues("_bizEndTime").replace(":", "");
 
-    const VNO = getValues("_vno").replace("-", "");
-    const RCVNO1 = getValues("_rcvNo1").replace("-", "");
-    const RCVNO2 = getValues("_rcvNo2").replace("-", "");
+    const VNO = getValues("_vno").replaceAll("-", "");
+    const RCVNO1 = getValues("_rcvNo1").replaceAll("-", "");
+    const RCVNO2 = getValues("_rcvNo2")
+      ? getValues("_rcvNo2").replaceAll("-", "")
+      : "";
 
-    servicesPost050biz(!!vno ? `${urlUpdate050}/${vno}` : urlCreate050, {
-      channelId: "gongsacok-basic",
-      vno: VNO,
-      vnoName: getValues("_vnoName"),
-      rcvNo1: RCVNO1,
-      rcvNo2: RCVNO2,
-      colorringIdx: getValues("_colorringIdx"),
-      rcvMentIdx: getValues("_rcvMentIdx"),
-      bizEndMentIdx: getValues("_bizEndMentIdx"),
-      holiMentIdx: getValues("_holiMentIdx"),
-      bizStartTime: STARTTIME,
-      bizEndTime: ENDTIME,
-      holiWeek: HOLIWEEK,
-      holiDay: HOLIDAY,
-      recType: getValues("_recType"),
-    }).then((res) => {
-      if (res.status === "success") {
-        servicesPostData(urlSetCompanyDetail, {
+    console.log(
+      !!vno ? `${STR.urlUpdate050}/${vno}` : STR.urlCreate050,
+      HOLIDAY,
+      HOLIWEEK,
+      STARTTIME,
+      ENDTIME,
+      VNO,
+      RCVNO1,
+      RCVNO2
+    );
+
+    // ID.servicesPost050biz(!!vno ? `${STR.urlUpdate050}/${vno}` : STR.urlCreate050, {
+    ID.servicesPost050biz(
+      !!vno
+        ? "https://050api-cbt.sejongtelecom.net:8433/050biz/v1/service/create"
+        : STR.urlCreate050,
+      {
+        channelId: "gongsacok",
+        vno: VNO,
+        vnoName: getValues("_vnoName"),
+        status: getValues("_status"),
+        rcvNo1: RCVNO1,
+        rcvNo2: RCVNO2,
+        colorringIdx: getValues("_colorringIdx"),
+        rcvMentIdx: getValues("_rcvMentIdx"),
+        bizEndMentIdx: getValues("_bizEndMentIdx"),
+        holiMentIdx: getValues("_holiMentIdx"),
+        bizStartTime: STARTTIME,
+        bizEndTime: ENDTIME,
+        holiWeek: HOLIWEEK,
+        holiDay: HOLIDAY,
+        recType: getValues("_recType"),
+      }
+    ).then((res) => {
+      console.log("res", res);
+      if (res.code === "0000") {
+        ID.servicesPostData(STR.urlSetCompanyDetail, {
           rcid: cid,
           extnum: getValues("_vno"),
         }).then((res) => {
           if (res.status === "success") {
-            servicesUseToast("완료되었습니다!", "s");
-            setTimeout(() => {
-              navigate(`company/${cid}`);
-            }, 2000);
+            UD.servicesUseToast("완료되었습니다!", "s");
+            // setTimeout(() => {
+            //   navigate(`company/${cid}`);
+            // }, 2000);
             return;
           }
         });
@@ -145,12 +155,13 @@ export default function Set050Biz() {
 
   useEffect(() => {
     if (!!vno) {
-      servicesPost050biz(urlGet050, { vno: vno }).then((res) => {
+      ID.servicesPost050biz(`${STR.urlGet050}/${vno}`).then((res) => {
+        console.log(res);
         setValue("_regDate", res.data.regDate || "");
         setValue("_vno", res.data.vno || "");
+        setValue("_status", res.data.status || "Y");
         setValue("_vnoName", res.data.vnoName || "");
         setValue("_rcvNo1", res.data.rcvNo1 || "");
-        setValue("_rcvNo2", res.data.rcvNo2 || "");
         setValue("_rcvNo2", res.data.rcvNo2 || "");
         setValue("_colorringIdx", res.data.colorringIdx || "");
         setValue("_rcvMentIdx", res.data.rcvMentIdx || "");
@@ -158,11 +169,14 @@ export default function Set050Biz() {
         setValue("_holiMentIdx", res.data.holiMentIdx || "");
         setValue(
           "_bizStartTime",
-          serviesStringToTime(res.data.bizStartTime) || ""
+          UD.serviesStringToTime(res.data.bizStartTime) || ""
         );
-        setValue("_bizEndTime", serviesStringToTime(res.data.bizEndTime) || "");
-        fnArrToSetValue(serviesNumberToBool(res.data.holiWeek));
-        fnArrToSetValue(serviesNumberToBool(res.data.holiWeek));
+        setValue(
+          "_bizEndTime",
+          UD.serviesStringToTime(res.data.bizEndTime) || ""
+        );
+        fnArrToSetValue(UD.serviesNumberToBool(res.data.holiWeek));
+        fnArrToSetValue(UD.serviesNumberToBool(res.data.holiWeek));
         setValue("_recType", res.data.recType || "");
       });
     }
@@ -174,11 +188,7 @@ export default function Set050Biz() {
         <form className="formLayout" onSubmit={handleSubmit(fnSubmit)}>
           <ul className="tableTopWrap tableTopBorderWrap">
             {vno && (
-              <ComponentTableTopNumber
-                title="등록일자"
-                text={"20232312323"}
-                // text={watch("_regDate")}
-              />
+              <ComponentTableTopNumber title="등록일자" text={"20232312323"} />
             )}
             <LayoutTopButton url={`/company/${cid}`} text="상세정보 가기" />
             <LayoutTopButton fn={fnClear} text="안심번호 삭제" />
@@ -197,12 +207,12 @@ export default function Set050Biz() {
                   <input
                     type="text"
                     id="vno"
-                    maxLength="13"
+                    maxLength="14"
                     value={
                       (watch("_vno") &&
                         watch("_vno")
                           .replace(/[^0-9]/g, "")
-                          .replace(/(^[0-9]{3})([0-9]+)([0-9]{4}$)/, "$1-$2-$3")
+                          .replace(/(^[0-9]{4})([0-9]+)([0-9]{4}$)/, "$1-$2-$3")
                           .replace("--", "-")) ||
                       ""
                     }
@@ -220,7 +230,7 @@ export default function Set050Biz() {
                     type="text"
                     id="vnoName"
                     maxLength={20}
-                    {...register("_vnoName", {})}
+                    {...register("_vnoName")}
                   />
                 </div>
               </div>
@@ -233,24 +243,24 @@ export default function Set050Biz() {
                   <input
                     className="listSearchRadioInput"
                     type="radio"
-                    checked={watch("_status") == 0}
-                    value="0"
-                    id="status0"
+                    checked={watch("_status") == "Y"}
+                    value="Y"
+                    id="statusY"
                     {...register("_status")}
                   />
-                  <label className="listSearchRadioLabel" htmlFor="status0">
+                  <label className="listSearchRadioLabel" htmlFor="statusY">
                     사용
                   </label>
 
                   <input
                     className="listSearchRadioInput"
                     type="radio"
-                    checked={watch("_status") == 1}
-                    value="1"
-                    id="status1"
+                    checked={watch("_status") == "N"}
+                    value="N"
+                    id="statusN"
                     {...register("_status")}
                   />
-                  <label className="listSearchRadioLabel" htmlFor="status1">
+                  <label className="listSearchRadioLabel" htmlFor="statusN">
                     미사용
                   </label>
                 </div>
@@ -276,7 +286,7 @@ export default function Set050Biz() {
                           .replace("--", "-")) ||
                       ""
                     }
-                    {...register("_rcvNo1", {})}
+                    {...register("_rcvNo1")}
                   />
                 </div>
               </div>
@@ -291,8 +301,8 @@ export default function Set050Biz() {
                     id="rcvNo2"
                     maxLength={13}
                     value={
-                      (watch("rcvNo2") &&
-                        watch("rcvNo2")
+                      (watch("_rcvNo2") &&
+                        watch("_rcvNo2")
                           .replace(/[^0-9]/g, "")
                           .replace(
                             /(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)([0-9]{4}$)/,
@@ -301,7 +311,7 @@ export default function Set050Biz() {
                           .replace("--", "-")) ||
                       ""
                     }
-                    {...register("rcvNo2")}
+                    {...register("_rcvNo2")}
                   />
                 </div>
               </div>

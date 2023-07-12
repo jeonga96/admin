@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector, shallowEqual } from "react-redux";
-import { servicesPostData } from "../../Services/importData";
-import { urlUserlist, urlGetCompanyDetail } from "../../Services/string";
+
+import * as ID from "../../Services/importData";
+import * as STR from "../../Services/string";
 
 export default function PieceModalAgentem({ fn }) {
   const dispatch = useDispatch();
@@ -11,7 +12,7 @@ export default function PieceModalAgentem({ fn }) {
   const [userList, setUserList] = useState([]);
 
   useEffect(() => {
-    servicesPostData(urlUserlist, {
+    ID.servicesPostData(STR.urlUserlist, {
       offset: 0,
       userrole: "ROLE_ADMIN_SD",
       size: 30,
@@ -23,7 +24,7 @@ export default function PieceModalAgentem({ fn }) {
   useEffect(() => {
     const newArr = [];
     prevUserList.forEach((item) => {
-      return servicesPostData(urlGetCompanyDetail, {
+      return ID.servicesPostData(STR.urlGetCompanyDetail, {
         rcid: item.cid,
       })
         .then((response) => response.data)

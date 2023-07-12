@@ -1,8 +1,8 @@
 // 유통망관리 > 자사(총판)관리
 
 // 지사 총판 수정 : setCompany(대표자명:_regOwner)
-// urlSetCompanyDetail(상태:_useFlag,휴대폰:_mobilenum, 법인번호:_corporationno, 이메일:_email, 별도번호:_telnum, 사업장명:_Cname, 대표자명:_regOwner,주민법인번호:_registration, ...주소)
-// <<운영자 관리자 번호의 별도 전화>> - urlSetCompanyDetail(별도전화:_extnum )
+// STR.urlSetCompanyDetail(상태:_useFlag,휴대폰:_mobilenum, 법인번호:_corporationno, 이메일:_email, 별도번호:_telnum, 사업장명:_Cname, 대표자명:_regOwner,주민법인번호:_registration, ...주소)
+// <<운영자 관리자 번호의 별도 전화>> - STR.urlSetCompanyDetail(별도전화:_extnum )
 // 운영자(완리자)정보 : setUser(userrole, 아이디, 비밀번호),setUserDetail(이름:_name, 휴대폰:_mobile, 이메일:_mail )
 
 import { useDispatch, useSelector, shallowEqual } from "react-redux";
@@ -10,21 +10,10 @@ import { useLayoutEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
-import { servicesPostData } from "../Services/importData";
-import { servicesUseToast } from "../Services/useData";
-import {
-  urlSetUserDetail,
-  urlGetUserDetail,
-  urlSetUser,
-  urlAddcompany,
-  urlSetCompanyDetail,
-  urlGetCompanyDetail,
-  urlGetUserCid,
-  urlUserlist,
-  urlSetCompany,
-  urlAdduser,
-  urlGetUser,
-} from "../Services/string";
+
+import * as ID from "../Services/importData";
+import * as UD from "../Services/useData";
+import * as STR from "../Services/string";
 
 import LayoutTopButton from "../components/common/LayoutTopButton";
 import PieceRegisterSearchPopUp from "../components/services/ServiceRegisterSearchPopUp";
@@ -56,7 +45,7 @@ export default function SetAgentSd() {
   // 수정 시에만 동작
   useLayoutEffect(() => {
     if (!!uid) {
-      servicesPostData(urlGetUser, {
+      ID.servicesPostData(STR.urlGetUser, {
         uid: uid,
       }).then((res) => {
         if (res.status === "success") {
@@ -64,7 +53,7 @@ export default function SetAgentSd() {
         }
       });
 
-      servicesPostData(urlGetUserDetail, {
+      ID.servicesPostData(STR.urlGetUserDetail, {
         ruid: uid,
       })
         .then((res) => {
@@ -77,10 +66,10 @@ export default function SetAgentSd() {
             setValue("_mobile", res.data.mobile || "");
             setValue("_mail", res.data.mail || "");
 
-            servicesPostData(urlGetUserCid, {
+            ID.servicesPostData(STR.urlGetUserCid, {
               uid: uid,
             }).then((res) => {
-              servicesPostData(urlGetCompanyDetail, {
+              ID.servicesPostData(STR.urlGetCompanyDetail, {
                 rcid: res.data.cid,
               }).then((res2) => {
                 if (res2.status === "success") {
@@ -111,12 +100,12 @@ export default function SetAgentSd() {
 
   // company 관련 코드 : 수정 & 추가 중복되는 동작 함수
   const fnsetCompany = (cid, uid) => {
-    servicesPostData(urlSetCompany, {
+    ID.servicesPostData(STR.urlSetCompany, {
       cid: cid,
       ruid: uid,
       name: getValues("_regOwner"),
     });
-    servicesPostData(urlSetCompanyDetail, {
+    ID.servicesPostData(STR.urlSetCompanyDetail, {
       rcid: cid,
       useFlag: getValues("_useFlag"),
       mobilenum: getValues("_mobilenum"),
@@ -136,7 +125,7 @@ export default function SetAgentSd() {
     })
       .then((res) => {
         if (res.status === "success") {
-          servicesUseToast("완료되었습니다!", "s");
+          UD.servicesUseToast("완료되었습니다!", "s");
           if (!uid) {
             setTimeout(() => {
               navigate("/agentsd");
@@ -151,32 +140,32 @@ export default function SetAgentSd() {
 
   // 추가할 때 실행되는 함수
   async function fnAddSubmit() {
-    await servicesPostData(urlAdduser, {
+    await ID.servicesPostData(STR.urlAdduser, {
       userid: watch("_userid"),
       passwd: watch("_passwd"),
     }).then((status) => {
       if (status.status === "success")
-        servicesPostData(urlUserlist, {
+        ID.servicesPostData(STR.urlUserlist, {
           offset: 0,
           size: 2,
           userid: watch("_userid"),
         }).then((res) => {
           if (status.status === "success") {
             const UID = res.data[0].uid;
-            servicesPostData(urlSetUser, {
+            ID.servicesPostData(STR.urlSetUser, {
               uid: UID,
               userrole: "ROLE_USER,ROLE_ADMIN_SD",
               useFlag: getValues("_useFlag"),
               userid: getValues("_userid"),
               passwd: getValues("_passwd"),
             });
-            servicesPostData(urlSetUserDetail, {
+            ID.servicesPostData(STR.urlSetUserDetail, {
               ruid: UID,
               name: getValues("_name"),
               mobile: getValues("_mobile"),
               mail: getValues("_mail"),
             });
-            servicesPostData(urlAddcompany, {
+            ID.servicesPostData(STR.urlAddcompany, {
               name: getValues("_name"),
             }).then((res2) => {
               fnsetCompany(res2.data.cid, UID);
@@ -189,13 +178,13 @@ export default function SetAgentSd() {
   // 수정 & 추가 버튼 클릭 이벤트
   function fnSubmit(e) {
     if (!!uid) {
-      servicesPostData(urlSetUser, {
+      ID.servicesPostData(STR.urlSetUser, {
         uid: uid,
         userid: getValues("_userid"),
         passwd: getValues("_passwd"),
         // ...userData,
       });
-      servicesPostData(urlSetUserDetail, {
+      ID.servicesPostData(STR.urlSetUserDetail, {
         ruid: uid,
         name: getValues("_name"),
         nick: getValues("_nick"),
@@ -203,14 +192,14 @@ export default function SetAgentSd() {
         mail: getValues("_mail"),
       });
 
-      servicesPostData(urlGetUserCid, {
+      ID.servicesPostData(STR.urlGetUserCid, {
         uid: uid,
       })
         .then((res) => {
           fnsetCompany(res.data.cid, uid);
         })
         .catch(() =>
-          servicesPostData(urlAddcompany, {
+          ID.servicesPostData(STR.urlAddcompany, {
             name: getValues("_name"),
           }).then((res2) => {
             fnsetCompany(res2.data.cid, uid);
@@ -701,12 +690,12 @@ export default function SetAgentSd() {
                     <button
                       type="button"
                       onClick={() => {
-                        servicesPostData(urlSetUser, {
+                        ID.servicesPostData(STR.urlSetUser, {
                           uid: uid,
                           passwd: watch("_passwd"),
                         }).then((res) => {
                           if (res.status === "success") {
-                            servicesUseToast(
+                            UD.servicesUseToast(
                               "비밀번호 변경이 완료되었습니다.",
                               "s"
                             );

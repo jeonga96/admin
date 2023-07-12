@@ -2,9 +2,10 @@
 
 import { useForm } from "react-hook-form";
 import { useState } from "react";
-import { urlSetKeyword, urlAllKeyword, ALLKEYWORD } from "../Services/string";
-import { servicesPostData, servicesSetStorage } from "../Services/importData";
-import { servicesUseToast } from "../Services/useData";
+
+import * as STR from "../Services/string";
+import * as ID from "../Services/importData";
+import * as UD from "../Services/useData";
 
 import LayoutTopButton from "../components/common/LayoutTopButton";
 import ComponentListAdminKeyword from "../components/common/ComponentListAdminKeyword";
@@ -44,9 +45,9 @@ export default function SetAdminKeyeords() {
     e.preventDefault();
     setSearchBtn(!searchBtn);
     searchBtn === false
-      ? servicesPostData(urlAllKeyword, {})
+      ? ID.servicesPostData(STR.urlAllKeyword, {})
           .then((res) => {
-            servicesSetStorage(ALLKEYWORD, JSON.stringify(res.data));
+            ID.servicesSetStorage(STR.ALLKEYWORD, JSON.stringify(res.data));
             setAllKeywords(res.data);
           })
           .then(setSearchBtn(!searchBtn))
@@ -84,14 +85,14 @@ export default function SetAdminKeyeords() {
   // 수정 버튼
   const fnSubmit = () => {
     for (let i = 0; i < modifyData.length; i++) {
-      servicesPostData(urlSetKeyword, modifyData[i]);
+      ID.servicesPostData(STR.urlSetKeyword, modifyData[i]);
     }
     setCompanyDetailKeyword([]);
     setModifyData(null);
     setSearchBtn(false);
     setAllKeywords([]);
     setSubmit(!sumbit);
-    servicesUseToast("완료되었습니다.", "s");
+    UD.servicesUseToast("완료되었습니다.", "s");
   };
 
   // 초기화 버튼

@@ -2,9 +2,9 @@ import { useEffect, useLayoutEffect } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
-import { servicesPostData } from "../../Services/importData";
-import { servicesUseToast } from "../../Services/useData";
-import { urlGetUser, urlSetUser, urlAdduser } from "../../Services/string";
+import * as ID from "../../Services/importData";
+import * as UD from "../../Services/useData";
+import * as STR from "../../Services/string";
 
 export default function ComponentSetUser({ setUserData, userData, checkBtn }) {
   const { register, getValues, setValue, watch } = useForm({
@@ -28,7 +28,7 @@ export default function ComponentSetUser({ setUserData, userData, checkBtn }) {
 
   useEffect(() => {
     if (!uid && !!watch("_userid") && !!watch("_passwd")) {
-      servicesPostData(urlAdduser, {
+      ID.servicesPostData(STR.urlAdduser, {
         userid: watch("_userid"),
         passwd: watch("_passwd"),
       }).then(fnSetUserData());
@@ -37,7 +37,7 @@ export default function ComponentSetUser({ setUserData, userData, checkBtn }) {
 
   // 회원활성화, 회원권한 기존 값 있다면 표시
   useLayoutEffect(() => {
-    servicesPostData(urlGetUser, {
+    ID.servicesPostData(STR.urlGetUser, {
       uid: uid,
     })
       .then((res) => {
@@ -52,12 +52,12 @@ export default function ComponentSetUser({ setUserData, userData, checkBtn }) {
 
   // 비밀번호 변경
   const handleChangePasswd = () => {
-    servicesPostData(urlSetUser, {
+    ID.servicesPostData(STR.urlSetUser, {
       uid: uid,
       passwd: watch("_passwd"),
     }).then((res) => {
       if (res.status === "success") {
-        servicesUseToast("비밀번호 변경이 완료되었습니다.", "s");
+        UD.servicesUseToast("비밀번호 변경이 완료되었습니다.", "s");
       }
     });
   };

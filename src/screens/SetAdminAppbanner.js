@@ -2,14 +2,10 @@
 
 import { useState, useLayoutEffect, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import {
-  urlContentList,
-  urlSetContent,
-  urlGetImages,
-} from "../Services/string";
-import { servicesPostData } from "../Services/importData";
-import { useDidMountEffect } from "../Services/customHook";
-import { serviesGetImgId, servicesUseToast } from "../Services/useData";
+import * as STR from "../Services/string";
+import * as ID from "../Services/importData";
+import * as CH from "../Services/customHook";
+import * as UD from "../Services/useData";
 
 import LayoutTopButton from "../components/common/LayoutTopButton";
 import SetImage from "../components/services/ServicesImageSetUrl";
@@ -113,7 +109,7 @@ function InputBox({ inputData, setinputData, title, allItem, image }) {
   const fnFormAdd = () => {
     setAddClicked(!addClicked);
     if (addClicked === true) {
-      servicesPostData(urlSetContent, {
+      ID.servicesPostData(STR.urlSetContent, {
         category: allItem[0].category,
         contentString: allItem[0].contentString,
         contentDetail: watch("_contentDetail"),
@@ -122,11 +118,11 @@ function InputBox({ inputData, setinputData, title, allItem, image }) {
       })
         .then((res) => {
           if (res.status === "fail") {
-            servicesUseToast("입력에 실패했습니다.", "e");
+            UD.servicesUseToast("입력에 실패했습니다.", "e");
           }
 
           if (res.status === "success") {
-            servicesUseToast("완료되었습니다!", "s");
+            UD.servicesUseToast("완료되었습니다!", "s");
             setAddImg(null);
             setTimeout(() => {
               window.location.reload();
@@ -303,7 +299,7 @@ export default function SetAdminAppbanner() {
       "bannerB2C3",
     ];
     for (const item of categoryList) {
-      servicesPostData(urlContentList, {
+      ID.servicesPostData(STR.urlContentList, {
         category: item,
       })
         .then((res) => {
@@ -341,7 +337,7 @@ export default function SetAdminAppbanner() {
   }, []);
 
   // bannerlist의 데이터를 받아오면 기존 배너의 이미지 데이터를 받아온다.
-  useDidMountEffect(() => {
+  CH.useDidMountEffect(() => {
     // const arrImgsIid = [];
     const array = [
       bannerB2C1,
@@ -352,9 +348,9 @@ export default function SetAdminAppbanner() {
       bannerB2B3,
     ];
     for (const item of array) {
-      serviesGetImgId(imgsIid, item);
+      UD.serviesGetImgId(imgsIid, item);
     }
-    servicesPostData(urlGetImages, {
+    ID.servicesPostData(STR.urlGetImages, {
       imgs: imgsIid.toString(),
     }).then((res) => {
       setImg(res.data);
@@ -372,7 +368,7 @@ export default function SetAdminAppbanner() {
   const fnSubmit = () => {
     if (inputData[Object.keys(inputData)] !== {}) {
       for (let i = 0; i < Object.keys(inputData).length; i++) {
-        servicesPostData(urlSetContent, {
+        ID.servicesPostData(STR.urlSetContent, {
           contid: inputData[Object.keys(inputData)[i]].contid,
           category: inputData[Object.keys(inputData)[i]].category,
           imgid: inputData[Object.keys(inputData)[i]].imgid,
@@ -382,11 +378,11 @@ export default function SetAdminAppbanner() {
         })
           .then((res) => {
             if (res.status === "fail") {
-              servicesUseToast("입력에 실패했습니다.", "e");
+              UD.servicesUseToast("입력에 실패했습니다.", "e");
             }
             if (i === Object.keys(inputData).length - 1) {
               if (res.status === "success") {
-                servicesUseToast("완료되었습니다!", "s");
+                UD.servicesUseToast("완료되었습니다!", "s");
                 // setBannerReqSuccess(false);
                 setTimeout(() => {
                   window.location.reload();

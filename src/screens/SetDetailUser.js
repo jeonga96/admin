@@ -6,13 +6,9 @@ import { useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 
-import { servicesPostData } from "../Services/importData";
-import { servicesUseToast } from "../Services/useData";
-import {
-  urlSetUserDetail,
-  urlGetUserDetail,
-  urlSetUser,
-} from "../Services/string";
+import * as ID from "../Services/importData";
+import * as UD from "../Services/useData";
+import * as STR from "../Services/string";
 
 import LayoutTopButton from "../components/common/LayoutTopButton";
 import ImageSet from "../components/services/ServicesImageSetPreview";
@@ -56,7 +52,7 @@ export default function SetDetailUser() {
 
   // 현재 페이지가 렌더링되자마자 기존에 입력된 값의 여부를 확인한다.
   useLayoutEffect(() => {
-    servicesPostData(urlGetUserDetail, {
+    ID.servicesPostData(STR.urlGetUserDetail, {
       ruid: uid,
     })
       .then((res) => {
@@ -86,12 +82,12 @@ export default function SetDetailUser() {
     //서버에 imgs의 iid값만을 보내기 위해 실행하는 반복문 함수
     // serviesGetImgsIid(imgsIid, imgs);
 
-    servicesPostData(urlSetUser, {
+    ID.servicesPostData(STR.urlSetUser, {
       uid: uid,
       ...userData,
     });
     // setUserDetailInfo 수정
-    servicesPostData(urlSetUserDetail, {
+    ID.servicesPostData(STR.urlSetUserDetail, {
       ruid: uid,
       name: getValues("_name"),
       nick: getValues("_nick"),
@@ -107,10 +103,10 @@ export default function SetDetailUser() {
     })
       .then((res) => {
         if (res.status === "fail") {
-          servicesUseToast("입력에 실패했습니다.", "e");
+          UD.servicesUseToast("입력에 실패했습니다.", "e");
         }
         if (res.status === "success") {
-          servicesUseToast("완료되었습니다!", "s");
+          UD.servicesUseToast("완료되었습니다!", "s");
           return;
         }
       })

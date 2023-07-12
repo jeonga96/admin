@@ -4,9 +4,9 @@ import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 import { useNavigate } from "react-router-dom";
 
-import { servicesPostData } from "../Services/importData";
-import { servicesUseToast } from "../Services/useData";
-import { urlAdduser } from "../Services/string";
+import * as ID from "../Services/importData";
+import * as UD from "../Services/useData";
+import * as STR from "../Services/string";
 
 import LayoutTopButton from "../components/common/LayoutTopButton";
 
@@ -22,7 +22,7 @@ export default function AddUser() {
 
   // 회원 추가 이벤트
   const fnSubmit = (e) => {
-    servicesPostData(urlAdduser, {
+    ID.servicesPostData(STR.urlAdduser, {
       userid: getValues("_userid"),
       passwd: getValues("_passwd"),
     })
@@ -31,19 +31,19 @@ export default function AddUser() {
           res.status === "fail" &&
           res.emsg === "Database update failure. check duplicate userid"
         ) {
-          servicesUseToast(
+          UD.servicesUseToast(
             "이미 가입된 아이디입니다. 다른 아이디를 입력해 주세요,"
           );
           return;
         }
         if (res.status === "fail") {
-          servicesUseToast("잘못된 값을 입력했습니다.", "e");
+          UD.servicesUseToast("잘못된 값을 입력했습니다.", "e");
           return;
         }
         // 정상 등록 완료
         // 목록으로 이동
         if (res.status === "success") {
-          servicesUseToast("가입이 완료되었습니다!", "s");
+          UD.servicesUseToast("가입이 완료되었습니다!", "s");
           navigate(`/user`);
           return;
         }

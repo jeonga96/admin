@@ -1,6 +1,7 @@
 import { useState, useLayoutEffect } from "react";
-import { urlSuggestKeyword } from "../../Services/string";
-import { servicesPostData } from "../../Services/importData";
+
+import * as STR from "../../Services/string";
+import * as ID from "../../Services/importData";
 
 export default function ComponentListAdminKeyword({
   handleOnclick,
@@ -15,7 +16,7 @@ export default function ComponentListAdminKeyword({
     setGetData([]);
     // 값을 서버에 보내고, 다시 받아올 때 시간 차이를 두기 위해 0.1초 후 진행하도록 설정
     setTimeout(() => {
-      servicesPostData(urlSuggestKeyword, {}).then((res) =>
+      ID.servicesPostData(STR.urlSuggestKeyword, {}).then((res) =>
         setGetData(res.data)
       );
     }, 100);
