@@ -26,14 +26,17 @@ export default function Login() {
 
   return (
     <section className="loginWrap">
-      <div className="commonBox loginBox">
+      <div
+        className="commonBox loginBox"
+        style={{ border: "1px solid #dedede" }}
+      >
         <h3>관리자 로그인</h3>
         <form onSubmit={handleSubmit(fnSubmit)}>
           <div className="formContentWrap">
             <label htmlFor="userid" className="blockLabel">
               <span>아이디</span>
             </label>
-            <div>
+            <div style={{ border: "1px solid #dedede" }}>
               <input
                 type="text"
                 name="_userid"
@@ -68,7 +71,7 @@ export default function Login() {
             <label htmlFor="passwd" className="blockLabel">
               <span>비밀번호</span>
             </label>
-            <div>
+            <div style={{ border: "1px solid #dedede" }}>
               <input
                 type="password"
                 name="_passwd"
