@@ -22,10 +22,6 @@
       {
         "subName": "견적서 관리",
         "url": "/proposalInfo"
-      },
-      {
-        "subName": "안심번호 멘트 관리",
-        "url": "/050ment"
       }
     ]
   },
@@ -60,6 +56,15 @@
       {
         "subName": "지사(총판) 관리",
         "url": "/agentsd"
+      }
+    ]
+  },
+  {
+    "name": "와부 사이트 연결",
+    "subNav": [
+      {
+        "subName": "안심번호 상세 관리",
+        "url": "https://050web.sejongtelecom.net/"
       }
     ]
   }

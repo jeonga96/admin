@@ -537,6 +537,7 @@ function App() {
           }
         />
 
+        {/* 외부 사이트 연결로 인한 Nav 숨김 처리 */}
         <Route
           path="050ment"
           element={
