@@ -51,6 +51,9 @@ export function servicesPostData(url, reqData) {
     .post(url, reqData, {
       headers: {
         "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "http://localhost:3000",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
         Authorization: `Bearer ${storageGetToken}`,
       },
     })
@@ -72,6 +75,9 @@ export function servicesPostDataForm(url, reqData) {
     .post(url, reqData, {
       headers: {
         "Content-Type": "multipart/form-data",
+        "Access-Control-Allow-Origin": "http://localhost:3000",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
         Authorization: `Bearer ${storageGetToken}`,
       },
     })
