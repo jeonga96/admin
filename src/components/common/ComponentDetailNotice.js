@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import * as CH from "../../Services/customHook";
+import * as CH from "../../services/customHook";
 
 import ImageOnClick from "../services/ServicesImageOnClick";
 

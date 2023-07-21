@@ -3,8 +3,8 @@
 import { Link } from "react-router-dom";
 import { useLayoutEffect, useState } from "react";
 
-import * as API from "../Services/api";
-import * as STR from "../Services/string";
+import * as API from "../services/api";
+import * as STR from "../services/string";
 
 import LayoutTopButton from "../components/common/LayoutTopButton";
 import PageButton from "../components/services/ServicesPaginationButton";

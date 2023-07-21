@@ -6,9 +6,9 @@ import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 import { useParams } from "react-router-dom";
 
-import * as STR from "../Services/string";
-import * as API from "../Services/api";
-import * as UD from "../Services/useData";
+import * as STR from "../services/string";
+import * as API from "../services/api";
+import * as UD from "../services/useData";
 
 import SetImage from "../components/services/ServicesImageSetPreview";
 import LayoutTopButton from "../components/common/LayoutTopButton";

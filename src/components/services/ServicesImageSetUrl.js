@@ -1,7 +1,7 @@
 // -- 사용예시 : SetAdminAppbanner --
 
-import * as API from "../../Services/api";
-import * as STR from "../../Services/string";
+import * as API from "../../services/api";
+import * as STR from "../../services/string";
 
 export default function ImageSet({
   add,

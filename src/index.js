@@ -4,7 +4,6 @@ import { BrowserRouter as Router } from "react-router-dom";
 
 import { Provider } from "react-redux";
 import { createStore } from "redux";
-import reportWebVitals from "./reportWebVitals";
 
 import App from "./App";
 import reducer from "./reducer";
@@ -22,5 +21,3 @@ root.render(
     </Router>
   </Provider>
 );
-
-reportWebVitals();

@@ -3,8 +3,8 @@
 import { useForm } from "react-hook-form";
 import { useState, useLayoutEffect } from "react";
 
-import * as API from "../Services/api";
-import * as STR from "../Services/string";
+import * as API from "../services/api";
+import * as STR from "../services/string";
 
 import LayoutTopButton from "../components/common/LayoutTopButton";
 import ComponentErrorNull from "../components/piece/PieceErrorNull";

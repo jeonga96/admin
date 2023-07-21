@@ -2,10 +2,10 @@
 
 import { useState, useLayoutEffect, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import * as STR from "../Services/string";
-import * as API from "../Services/api";
-import * as CH from "../Services/customHook";
-import * as UD from "../Services/useData";
+import * as STR from "../services/string";
+import * as API from "../services/api";
+import * as CH from "../services/customHook";
+import * as UD from "../services/useData";
 
 import LayoutTopButton from "../components/common/LayoutTopButton";
 import SetImage from "../components/services/ServicesImageSetUrl";

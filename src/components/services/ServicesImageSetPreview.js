@@ -1,10 +1,10 @@
 import { useSelector, useDispatch, shallowEqual } from "react-redux";
 import { useRef, useState, useEffect, useCallback } from "react";
 
-import * as API from "../../Services/api";
-import * as CH from "../../Services/customHook";
-import * as STR from "../../Services/string";
-import * as UD from "../../Services/useData";
+import * as API from "../../services/api";
+import * as CH from "../../services/customHook";
+import * as STR from "../../services/string";
+import * as UD from "../../services/useData";
 
 import ServicesImageOnClick from "./ServicesImageOnClick";
 import Loading from "../piece/PieceLoading";

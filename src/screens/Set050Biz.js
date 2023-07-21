@@ -7,9 +7,9 @@ import LayoutTopButton from "../components/common/LayoutTopButton";
 import ComponentTableTopNumber from "../components/piece/PieceTableTopNumber";
 import PieceLoading from "../components/piece/PieceLoading";
 
-import * as API from "../Services/api";
-import * as UD from "../Services/useData";
-import * as STR from "../Services/string";
+import * as API from "../services/api";
+import * as UD from "../services/useData";
+import * as STR from "../services/string";
 
 export default function Set050Biz() {
   const navigate = useNavigate();

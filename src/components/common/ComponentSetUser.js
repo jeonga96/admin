@@ -2,9 +2,9 @@ import { useEffect, useLayoutEffect } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
-import * as API from "../../Services/api";
-import * as UD from "../../Services/useData";
-import * as STR from "../../Services/string";
+import * as API from "../../services/api";
+import * as UD from "../../services/useData";
+import * as STR from "../../services/string";
 
 export default function ComponentSetUser({ setUserData, userData, checkBtn }) {
   const { register, getValues, setValue, watch } = useForm({

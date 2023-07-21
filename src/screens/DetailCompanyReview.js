@@ -2,7 +2,7 @@
 // 리뷰는 관리자 페이지에서 작성하지 않는다.
 
 import { useState } from "react";
-import { useGetImage } from "../Services/customHook";
+import { useGetImage } from "../services/customHook";
 
 import ServicesImageOnClick from "../components/services/ServicesImageOnClick";
 

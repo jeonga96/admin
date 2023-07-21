@@ -13,9 +13,9 @@ import LayoutTopButton from "../components/common/LayoutTopButton";
 import DetailUserComponent from "../components/common/ComponentSetUser";
 import ComponentModal from "../components/piece/PieceModalAgentem";
 
-import * as API from "../Services/api";
-import * as UD from "../Services/useData";
-import * as STR from "../Services/string";
+import * as API from "../services/api";
+import * as UD from "../services/useData";
+import * as STR from "../services/string";
 
 export default function SetAgentEm() {
   const {

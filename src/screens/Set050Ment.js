@@ -3,9 +3,9 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
-import * as API from "../Services/api";
-import * as UD from "../Services/useData";
-import * as STR from "../Services/string";
+import * as API from "../services/api";
+import * as UD from "../services/useData";
+import * as STR from "../services/string";
 
 import LayoutTopButton from "../components/common/LayoutTopButton";
 import PieceLoading from "../components/piece/PieceLoading";

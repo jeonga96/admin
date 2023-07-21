@@ -1,6 +1,6 @@
-import { servicesPostData } from "./Services/api";
-import * as ST from "./Services/storage";
-import { urlLogin, TOKEN, UID } from "./Services/string";
+import { servicesPostData } from "./services/api";
+import * as ST from "./services/storage";
+import { urlLogin, TOKEN, UID } from "./services/string";
 
 const initialState = {
   login: { userid: "", passwd: "" },
