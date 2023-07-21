@@ -13,7 +13,7 @@ import LayoutTopButton from "../components/common/LayoutTopButton";
 import DetailUserComponent from "../components/common/ComponentSetUser";
 import ComponentModal from "../components/piece/PieceModalAgentem";
 
-import * as ID from "../Services/importData";
+import * as API from "../Services/api";
 import * as UD from "../Services/useData";
 import * as STR from "../Services/string";
 
@@ -38,7 +38,7 @@ export default function SetAgentEm() {
   // 수정 시에만 동작
   useLayoutEffect(() => {
     if (!!uid) {
-      ID.servicesPostData(STR.urlGetUserDetail, {
+      API.servicesPostData(STR.urlGetUserDetail, {
         ruid: uid,
       })
         .then((res) => {
@@ -46,10 +46,10 @@ export default function SetAgentEm() {
             setValue("_name", res.data.name || "");
             setValue("_mobile", res.data.mobile || "");
             setValue("_mail", res.data.mail || "");
-            ID.servicesPostData(STR.urlGetUserCid, {
+            API.servicesPostData(STR.urlGetUserCid, {
               uid: uid,
             }).then((res) => {
-              ID.servicesPostData(STR.urlGetCompanyDetail, {
+              API.servicesPostData(STR.urlGetCompanyDetail, {
                 rcid: res.data.cid,
               }).then((res2) => {
                 if (res2.status === "success") {
@@ -83,12 +83,12 @@ export default function SetAgentEm() {
 
   // urlSetCompany + STR.urlSetCompanyDetail 수정하는 함수
   const fnsetCompany = (cid, uid) => {
-    ID.servicesPostData(STR.urlSetCompany, {
+    API.servicesPostData(STR.urlSetCompany, {
       cid: cid,
       ruid: uid,
       name: getValues("_name"),
     });
-    ID.servicesPostData(STR.urlSetCompanyDetail, {
+    API.servicesPostData(STR.urlSetCompanyDetail, {
       rcid: cid,
       telnum: getValues("_telnum"),
       regName: getValues("_Cname"),
@@ -103,7 +103,7 @@ export default function SetAgentEm() {
 
   // 추가할 때 실행되는 함수
   async function fnAddSubmit() {
-    await ID.servicesPostData(STR.urlUserlist, {
+    await API.servicesPostData(STR.urlUserlist, {
       offset: 0,
       size: 2,
       userid: userData.userid,
@@ -111,18 +111,18 @@ export default function SetAgentEm() {
       if (res.status === "fail") {
         fnAddSubmit();
       } else {
-        ID.servicesPostData(STR.urlSetUser, {
+        API.servicesPostData(STR.urlSetUser, {
           uid: res.data[0].uid,
           ...userData,
         });
-        ID.servicesPostData(STR.urlSetUserDetail, {
+        API.servicesPostData(STR.urlSetUserDetail, {
           ruid: res.data[0].uid,
           name: getValues("_name"),
           mobile: getValues("_mobile"),
           mail: getValues("_mail"),
         });
 
-        ID.servicesPostData(STR.urlAddcompany, {
+        API.servicesPostData(STR.urlAddcompany, {
           name: getValues("_name"),
         }).then((res2) => {
           fnsetCompany(res2.data.cid, res.data[0].uid);
@@ -135,25 +135,25 @@ export default function SetAgentEm() {
   function fnSubmit(e) {
     setCheckBtn(!checkBtn);
     if (!!uid) {
-      ID.servicesPostData(STR.urlSetUser, {
+      API.servicesPostData(STR.urlSetUser, {
         uid: uid,
         ...userData,
       });
-      ID.servicesPostData(STR.urlSetUserDetail, {
+      API.servicesPostData(STR.urlSetUserDetail, {
         ruid: uid,
         name: getValues("_name"),
         mobile: getValues("_mobile"),
         mail: getValues("_mail"),
       });
 
-      ID.servicesPostData(STR.urlGetUserCid, {
+      API.servicesPostData(STR.urlGetUserCid, {
         uid: uid,
       })
         .then((res) => {
           fnsetCompany(res.data.cid, uid);
         })
         .catch(() =>
-          ID.servicesPostData(STR.urlAddcompany, {
+          API.servicesPostData(STR.urlAddcompany, {
             name: getValues("_name"),
           }).then((res2) => {
             fnsetCompany(res2.data.cid, uid);

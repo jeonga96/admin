@@ -1,4 +1,5 @@
-import { servicesPostData, servicesSetStorage } from "./Services/importData";
+import { servicesPostData } from "./Services/api";
+import * as ST from "./Services/storage";
 import { urlLogin, TOKEN, UID } from "./Services/string";
 
 const initialState = {
@@ -30,8 +31,8 @@ const reducer = (state = initialState, action) => {
             const accessToken = res.data.jtoken;
             const uid = res.data.uid;
 
-            servicesSetStorage(TOKEN, accessToken);
-            servicesSetStorage(UID, uid);
+            ST.servicesSetStorage(TOKEN, accessToken);
+            ST.servicesSetStorage(UID, uid);
             console.log(res);
             window.location.href = "/";
             return;

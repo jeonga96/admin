@@ -2,7 +2,7 @@
 
 import { useParams } from "react-router-dom";
 import { useState, useLayoutEffect } from "react";
-import * as ID from "../Services/importData";
+import * as API from "../Services/api";
 import * as STR from "../Services/string";
 
 import LayoutTopButton from "../components/common/LayoutTopButton";
@@ -17,7 +17,7 @@ export default function ListCompanyNotice() {
   const [notice, setNotice] = useState([]);
 
   useLayoutEffect(() => {
-    ID.servicesPostData(STR.urlCompanyNoticeList, {
+    API.servicesPostData(STR.urlCompanyNoticeList, {
       rcid: cid,
     }).then((res) => {
       setNotice(res.data && res.data.reverse());

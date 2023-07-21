@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 import { useNavigate } from "react-router-dom";
 
-import * as ID from "../Services/importData";
+import * as API from "../Services/api";
 import * as UD from "../Services/useData";
 import * as STR from "../Services/string";
 
@@ -22,7 +22,7 @@ export default function AddUser() {
 
   // 회원 추가 이벤트
   const fnSubmit = (e) => {
-    ID.servicesPostData(STR.urlAdduser, {
+    API.servicesPostData(STR.urlAdduser, {
       userid: getValues("_userid"),
       passwd: getValues("_passwd"),
     })

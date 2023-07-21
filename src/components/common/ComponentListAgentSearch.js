@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
-import * as ID from "../../Services/importData";
+import * as API from "../../Services/api";
 import * as UD from "../../Services/useData";
 import * as STR from "../../Services/string";
 
@@ -40,7 +40,7 @@ export default function ComponentListAgentSearch({
 
   // submit 이벤트
   function SearchSubmit() {
-    ID.servicesPostData(STR.urlUserlist, {
+    API.servicesPostData(STR.urlUserlist, {
       offset: page.getPage,
       size: 15,
       userid: getValues("_userid"),

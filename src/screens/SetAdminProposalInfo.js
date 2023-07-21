@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 
-import * as ID from "../Services/importData";
+import * as API from "../Services/api";
 import * as UD from "../Services/useData";
 import * as STR from "../Services/string";
 
@@ -50,7 +50,7 @@ export default function SetAdminProposalInfo() {
 
     // 수정 시 url에 prid를 확인하여 데이터 받아옴
     if (!!prid) {
-      ID.servicesPostData(STR.urlGetProposalInfo, {
+      API.servicesPostData(STR.urlGetProposalInfo, {
         prid: prid,
       })
         .then((res) => {
@@ -94,7 +94,7 @@ export default function SetAdminProposalInfo() {
     //서버에 imgs의 iid값만을 보내기 위해 실행하는 반복문 함수
     UD.serviesGetImgsIid(imgsIid, multiImgs);
     // setUserDetailInfo 수정
-    ID.servicesPostData(
+    API.servicesPostData(
       STR.urlSetProposalInfo,
       // 견적서 응답 없음을 방문 제안일 기준으로 판단
       !!prid

@@ -26,10 +26,7 @@ export default function Login() {
 
   return (
     <section className="loginWrap">
-      <div
-        className="commonBox loginBox"
-        style={{ border: "1px solid #dedede" }}
-      >
+      <div className="commonBox" style={{ border: "1px solid #dedede" }}>
         <h3>관리자 로그인</h3>
         <form onSubmit={handleSubmit(fnSubmit)}>
           <div className="formContentWrap">
@@ -58,13 +55,13 @@ export default function Login() {
                 })}
               />
             </div>
-            <ErrorMessage
+            {/* <ErrorMessage
               errors={errors}
               name="_userid"
               render={({ message }) => (
                 <span className="errorMessageWrap">{message}</span>
               )}
-            />
+            /> */}
           </div>
 
           <div className="formContentWrap">
@@ -94,13 +91,13 @@ export default function Login() {
                 })}
               />
             </div>
-            <ErrorMessage
+            {/* <ErrorMessage
               errors={errors}
               name="_passwd"
               render={({ message }) => (
                 <span className="errorMessageWrap">{message}</span>
               )}
-            />
+            /> */}
           </div>
 
           <button

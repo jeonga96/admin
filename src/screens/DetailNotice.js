@@ -4,7 +4,7 @@
 import { useLayoutEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-import * as ID from "../Services/importData";
+import * as API from "../Services/api";
 import * as STR from "../Services/string";
 
 import LayoutTopButton from "../components/common/LayoutTopButton";
@@ -22,7 +22,7 @@ export default function DetailNotice() {
   useLayoutEffect(() => {
     // comnid 여부를 확인하여 사업자 공지사항 요청
     if (!!comnid) {
-      ID.servicesPostData(STR.urlCompanyGetNotice, {
+      API.servicesPostData(STR.urlCompanyGetNotice, {
         comnid: comnid,
       }).then((res) => {
         if (res.status === "success") {
@@ -32,7 +32,7 @@ export default function DetailNotice() {
       });
     } else {
       //cid가  없다면 관리자 공지사항 요청
-      ID.servicesPostData(STR.urlGetContent, {
+      API.servicesPostData(STR.urlGetContent, {
         contid: contid,
       }).then((res) => {
         if (res.status === "success") {

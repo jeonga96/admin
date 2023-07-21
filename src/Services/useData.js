@@ -1,4 +1,4 @@
-import { servicesPostData } from "./importData";
+import { servicesPostData } from "./api";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
 

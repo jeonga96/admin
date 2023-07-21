@@ -1,7 +1,7 @@
 import { useSelector, useDispatch, shallowEqual } from "react-redux";
 import { useRef, useState, useEffect, useCallback } from "react";
 
-import * as ID from "../../Services/importData";
+import * as API from "../../Services/api";
 import * as CH from "../../Services/customHook";
 import * as STR from "../../Services/string";
 import * as UD from "../../Services/useData";
@@ -44,7 +44,7 @@ export default function ImageSet({ id, title }) {
 
   CH.useDidMountEffect(() => {
     if (!!getedData.titleImg && id === "titleImg") {
-      ID.servicesPostData(STR.urlGetImages, {
+      API.servicesPostData(STR.urlGetImages, {
         imgs: getedData.titleImg,
       }).then((res) => {
         if (res.status === "success") {
@@ -53,7 +53,7 @@ export default function ImageSet({ id, title }) {
         }
       });
     } else if (!!getedData.imgs && id === "imgs") {
-      ID.servicesPostData(STR.urlGetImages, {
+      API.servicesPostData(STR.urlGetImages, {
         imgs: getedData.imgs,
       }).then((res) => {
         if (res.status === "success") {
@@ -67,7 +67,7 @@ export default function ImageSet({ id, title }) {
       !!getedData.addImgs
     ) {
       if (id === "imgString" || id === "regImgs" || id === "addImgs") {
-        ID.servicesPostData(STR.urlGetImages, {
+        API.servicesPostData(STR.urlGetImages, {
           imgs: getedData.imgString || getedData.regImgs || getedData.addImgs,
         }).then((res) => {
           if (res.status === "success") {
@@ -93,7 +93,7 @@ export default function ImageSet({ id, title }) {
         formData.append("Imgs", selectFiles[i]);
       }
       setLoading(true);
-      ID.servicesPostDataForm(STR.urlUpImages, formData).then((res) => {
+      API.servicesPostDataForm(STR.urlUpImages, formData).then((res) => {
         if (res.data.length == 1) {
           if (id === "titleImg") {
             setFiles(() => [res.data[0]]);

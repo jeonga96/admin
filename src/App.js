@@ -65,15 +65,16 @@ import List050Ment from "./screens/List050Ment";
 import Set050Biz from "./screens/Set050Biz";
 import Set050Ment from "./screens/Set050Ment";
 
-import * as ID from "./Services/importData";
+import * as API from "./Services/api";
+import * as ST from "./Services/storage";
 import * as STR from "./Services/string";
 
 function App() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const ISUSER = ID.servicesGetStorage(STR.TOKEN);
-  const ISALLKEYWORD = ID.servicesGetStorage(STR.ALLKEYWORD);
+  const ISUSER = ST.servicesGetStorage(STR.TOKEN);
+  const ISALLKEYWORD = ST.servicesGetStorage(STR.ALLKEYWORD);
   // const navChange = useSelector((state) => state.navState);
   const dispatch = useDispatch();
   const notLoginScreens = location.pathname !== "/login";
@@ -123,15 +124,15 @@ function App() {
 
     // 키워드 검색을 위해 전체 키워드 받아와 로컬스토리지에 저장
     // if (!!ISUSER & !ISALLKEYWORD) {
-    // ID.servicesPostData(STR.urlAllKeyword, {}).then((res) => {
-    //   ID.servicesSetStorage(STR.ALLKEYWORD, JSON.stringify(res.data));
+    // API.servicesPostData(STR.urlAllKeyword, {}).then((res) => {
+    //   ST.servicesSetStorage(STR.ALLKEYWORD, JSON.stringify(res.data));
     // });
     // }
 
     //refresh token 다시 받아오기 이벤트, 현재 10시간마다 토큰을 받아오는 것으로 설정
     if (notLoginScreens) {
       const tokenCheckTime = 3600000 * 10;
-      setTimeout(ID.servicesGetRefreshToken, tokenCheckTime);
+      setTimeout(API.servicesGetRefreshToken, tokenCheckTime);
     }
   }, []);
 

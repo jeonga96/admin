@@ -3,7 +3,7 @@
 import { useForm } from "react-hook-form";
 import { useState, useLayoutEffect } from "react";
 
-import * as ID from "../Services/importData";
+import * as API from "../Services/api";
 import * as STR from "../Services/string";
 
 import LayoutTopButton from "../components/common/LayoutTopButton";
@@ -30,7 +30,7 @@ export default function ListAdminNotice() {
 
   // 카테고리 확인하여 데이터 요청
   useLayoutEffect(() => {
-    ID.servicesPostData(STR.urlContentList, {
+    API.servicesPostData(STR.urlContentList, {
       category: watch("_category") || "notice",
       offset: 0,
       size: 15,

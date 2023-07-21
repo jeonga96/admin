@@ -3,7 +3,7 @@
 import { useParams } from "react-router-dom";
 import { useState, useLayoutEffect } from "react";
 
-import * as ID from "../Services/importData";
+import * as API from "../Services/api";
 import * as STR from "../Services/string";
 import * as UD from "../Services/useData";
 
@@ -22,7 +22,7 @@ export default function ListCompanyReview() {
 
   // 리뷰 데이터 요청
   useLayoutEffect(() => {
-    ID.servicesPostData(STR.urlReviewList, {
+    API.servicesPostData(STR.urlReviewList, {
       rcid: cid,
     }).then((res) => {
       setReview(res.data);
@@ -32,7 +32,7 @@ export default function ListCompanyReview() {
   // 계약관리 submit
   const handleUseFlag = () => {
     for (let i = 0; i < clickedUseFlag.length; i++) {
-      ID.servicesPostData(STR.urlSetReview, {
+      API.servicesPostData(STR.urlSetReview, {
         comrid: clickedUseFlag[i],
         useFlag: 0,
       }).then((res) => {

@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 
-import * as ID from "../Services/importData";
+import * as API from "../Services/api";
 import * as UD from "../Services/useData";
 import * as STR from "../Services/string";
 
@@ -52,7 +52,7 @@ export default function SetDetailUser() {
 
   // 현재 페이지가 렌더링되자마자 기존에 입력된 값의 여부를 확인한다.
   useLayoutEffect(() => {
-    ID.servicesPostData(STR.urlGetUserDetail, {
+    API.servicesPostData(STR.urlGetUserDetail, {
       ruid: uid,
     })
       .then((res) => {
@@ -82,12 +82,12 @@ export default function SetDetailUser() {
     //서버에 imgs의 iid값만을 보내기 위해 실행하는 반복문 함수
     // serviesGetImgsIid(imgsIid, imgs);
 
-    ID.servicesPostData(STR.urlSetUser, {
+    API.servicesPostData(STR.urlSetUser, {
       uid: uid,
       ...userData,
     });
     // setUserDetailInfo 수정
-    ID.servicesPostData(STR.urlSetUserDetail, {
+    API.servicesPostData(STR.urlSetUserDetail, {
       ruid: uid,
       name: getValues("_name"),
       nick: getValues("_nick"),

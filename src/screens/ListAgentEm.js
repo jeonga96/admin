@@ -3,7 +3,7 @@
 import { Link } from "react-router-dom";
 import { useLayoutEffect, useState } from "react";
 
-import * as ID from "../Services/importData";
+import * as API from "../Services/api";
 import * as STR from "../Services/string";
 
 import PageButton from "../components/services/ServicesPaginationButton";
@@ -27,7 +27,7 @@ export default function ListAgentEm() {
   useLayoutEffect(() => {
     // searchClick을 클릭하지 않은 (false) 상태에서 동작
     searchClick === false &&
-      ID.servicesPostData(STR.urlUserlist, {
+      API.servicesPostData(STR.urlUserlist, {
         offset: page.getPage,
         userrole: "ROLE_ADMIN" || "ROLE_ADMINAG" || "ROLE_ADMINSD",
         size: 15,

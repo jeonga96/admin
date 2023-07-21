@@ -6,7 +6,7 @@ import { useEffect, useState, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 
-import * as ID from "../Services/importData";
+import * as API from "../Services/api";
 import * as UD from "../Services/useData";
 import * as STR from "../Services/string";
 
@@ -53,7 +53,7 @@ export default function SetRequiredCompany() {
       type: "getedData",
       payload: { ...res.data },
     });
-    await ID.servicesPostData(STR.urlGetUser, {
+    await API.servicesPostData(STR.urlGetUser, {
       uid: UID,
     }).then((res2) => {
       dispatch({
@@ -63,7 +63,7 @@ export default function SetRequiredCompany() {
       setValue("_userid", res2.data.userid || "");
     });
 
-    await ID.servicesPostData(STR.urlGetCompanyDetail, {
+    await API.servicesPostData(STR.urlGetCompanyDetail, {
       rcid: cid,
     }).then((res3) => {
       if (res3.status === "success") {
@@ -117,7 +117,7 @@ export default function SetRequiredCompany() {
 
   // form submit 이벤트 =========================================
   const handleSubmitEvent = () => {
-    ID.servicesPostData(STR.urlSetCompany, {
+    API.servicesPostData(STR.urlSetCompany, {
       cid: cid,
       name: getValues("_name"),
       ruid: getedData.ruid,
@@ -126,7 +126,7 @@ export default function SetRequiredCompany() {
 
     // ComponentSetCompany submit
     // setComapny (계약자명, uid, 사업자 활성화)
-    ID.servicesPostData(STR.urlSetCompanyDetail, {
+    API.servicesPostData(STR.urlSetCompanyDetail, {
       rcid: cid,
       useFlag: getValues("_detailUseFlag"),
       status: getValues("_status").toString(),
@@ -169,7 +169,7 @@ export default function SetRequiredCompany() {
   };
 
   useEffect(() => {
-    ID.servicesPostData(STR.urlGetCompany, {
+    API.servicesPostData(STR.urlGetCompany, {
       cid: cid,
     }).then((res) => {
       setValue("_useFlag", res.data.useFlag.toString() || "1");
@@ -179,7 +179,7 @@ export default function SetRequiredCompany() {
   }, []);
 
   useEffect(() => {
-    ID.servicesPostData(STR.urlGetUserDetail, {
+    API.servicesPostData(STR.urlGetUserDetail, {
       ruid: UID,
     })
       .then((res) => {
@@ -392,7 +392,7 @@ export default function SetRequiredCompany() {
                             width: "19%",
                           }}
                           onClick={() => {
-                            ID.servicesPostData(STR.urlSetUser, {
+                            API.servicesPostData(STR.urlSetUser, {
                               uid: UID,
                               passwd: watch("_passwd"),
                             }).then((res) => {

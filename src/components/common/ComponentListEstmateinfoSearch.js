@@ -1,7 +1,7 @@
 import { useLayoutEffect } from "react";
 import { useForm } from "react-hook-form";
 
-import * as ID from "../../Services/importData";
+import * as API from "../../Services/api";
 import * as UD from "../../Services/useData";
 import * as STR from "../../Services/string";
 
@@ -32,7 +32,7 @@ export default function ComponentListUserSearch({
 
   // submit 이벤트
   function fnSubmit() {
-    ID.servicesPostData(
+    API.servicesPostData(
       !!LISTPROPSOSLINFO ? STR.urlListProposalInfo : STR.urlListEstimateInfo,
       {
         offset: page.getPage,
@@ -54,7 +54,7 @@ export default function ComponentListUserSearch({
 
   // 초기화 이벤트
   function handleReset(e) {
-    ID.servicesPostData(
+    API.servicesPostData(
       !!LISTPROPSOSLINFO ? STR.urlListProposalInfo : STR.urlListEstimateInfo,
       {
         offset: page.getPage,

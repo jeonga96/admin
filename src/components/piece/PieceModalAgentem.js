@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector, shallowEqual } from "react-redux";
 
-import * as ID from "../../Services/importData";
+import * as API from "../../Services/api";
 import * as STR from "../../Services/string";
 
 export default function PieceModalAgentem({ fn }) {
@@ -12,7 +12,7 @@ export default function PieceModalAgentem({ fn }) {
   const [userList, setUserList] = useState([]);
 
   useEffect(() => {
-    ID.servicesPostData(STR.urlUserlist, {
+    API.servicesPostData(STR.urlUserlist, {
       offset: 0,
       userrole: "ROLE_ADMIN_SD",
       size: 30,
@@ -24,7 +24,7 @@ export default function PieceModalAgentem({ fn }) {
   useEffect(() => {
     const newArr = [];
     prevUserList.forEach((item) => {
-      return ID.servicesPostData(STR.urlGetCompanyDetail, {
+      return API.servicesPostData(STR.urlGetCompanyDetail, {
         rcid: item.cid,
       })
         .then((response) => response.data)

@@ -3,7 +3,7 @@
 import { Link } from "react-router-dom";
 import { useState, useLayoutEffect } from "react";
 
-import * as ID from "../Services/importData";
+import * as API from "../Services/api";
 import * as UD from "../Services/useData";
 import * as STR from "../Services/string";
 
@@ -141,7 +141,7 @@ export default function ListCompany() {
   const [clickedStatus, setClickedStatus] = useState([]);
 
   useLayoutEffect(() => {
-    ID.servicesPostData(STR.urlCompanylist, {
+    API.servicesPostData(STR.urlCompanylist, {
       offset: page.getPage,
       size: 15,
     }).then((res) => {
@@ -153,7 +153,7 @@ export default function ListCompany() {
   // 계약관리 submit
   const handleUseFlagSubmit = (e) => {
     for (let i = 0; i < clickedUseFlag.length; i++) {
-      ID.servicesPostData(STR.urlSetCompany, {
+      API.servicesPostData(STR.urlSetCompany, {
         cid: clickedUseFlag[i],
         useFlag: e.target.id === "useFlagY" ? "1" : "0",
       }).then(window.location.reload());
@@ -165,7 +165,7 @@ export default function ListCompany() {
     switch (e.target.id) {
       case "waiting":
         for (let i = 0; i < clickedStatus.length; i++) {
-          ID.servicesPostData(STR.urlSetCompanyDetail, {
+          API.servicesPostData(STR.urlSetCompanyDetail, {
             rcid: clickedStatus[i],
             status: 2,
           }).then(window.location.reload());
@@ -173,7 +173,7 @@ export default function ListCompany() {
         break;
       case "completion":
         for (let i = 0; i < clickedStatus.length; i++) {
-          ID.servicesPostData(STR.urlSetCompanyDetail, {
+          API.servicesPostData(STR.urlSetCompanyDetail, {
             rcid: clickedStatus[i],
             status: 1,
           }).then(window.location.reload());
@@ -181,7 +181,7 @@ export default function ListCompany() {
         break;
       default:
         for (let i = 0; i < clickedStatus.length; i++) {
-          ID.servicesPostData(STR.urlSetCompanyDetail, {
+          API.servicesPostData(STR.urlSetCompanyDetail, {
             rcid: clickedStatus[i],
             status: 0,
           }).then(window.location.reload());

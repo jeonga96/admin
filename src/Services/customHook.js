@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { urlGetImages } from "./string";
-import { servicesPostData } from "./importData";
+import { servicesPostData } from "./api";
 
 export function useDidMountEffect(func, deps) {
   const didMount = useRef(false);

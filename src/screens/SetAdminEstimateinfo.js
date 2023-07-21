@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 
-import * as ID from "../Services/importData";
+import * as API from "../Services/api";
 import * as UD from "../Services/useData";
 import * as STR from "../Services/string";
 
@@ -49,7 +49,7 @@ export default function SetAdminEstimateinfo() {
     setValue("_gongsaType", "reser");
 
     // 해당 esid의 견적의뢰서 가지고 오기
-    ID.servicesPostData(STR.urlGetEstimateInfo, {
+    API.servicesPostData(STR.urlGetEstimateInfo, {
       esid: esid,
     })
       .then((res) => {
@@ -105,7 +105,7 @@ export default function SetAdminEstimateinfo() {
 
     if (!esid) {
       // setUserDetailInfo 추가-------------------------------------------
-      ID.servicesPostData(
+      API.servicesPostData(
         STR.urlSetEstimateInfo,
         !getValues("_proVisit")
           ? // 견적서 응답 없음을 방문 제안일 기준으로 판단
@@ -161,7 +161,7 @@ export default function SetAdminEstimateinfo() {
         .catch((error) => console.log("axios 실패", error.response));
     } else {
       // setUserDetailInfo 수정-------------------------------------------
-      ID.servicesPostData(
+      API.servicesPostData(
         STR.urlSetEstimateInfo,
         !getValues("_proVisit")
           ? // 견적서 응답 없음을 방문 제안일 기준으로 판단

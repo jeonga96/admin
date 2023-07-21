@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
-import * as ID from "../Services/importData";
+import * as API from "../Services/api";
 import * as UD from "../Services/useData";
 import * as STR from "../Services/string";
 
@@ -32,7 +32,7 @@ export default function Set050Ment() {
 
   useEffect(() => {
     if (!!mentid) {
-      ID.servicesGet050biz(
+      API.servicesGet050biz(
         `${STR.urlPre050Biz}/050biz/v1/${watch("_channelId")}/ment/${mentid}`
       ).then((res) => {
         setLoading(true);
@@ -53,7 +53,7 @@ export default function Set050Ment() {
 
   // musicMethot가 1번일 떄, 050biz ment에서 bgm목록 확인하여 가져오기
   useEffect(() => {
-    ID.servicesPost050bizMent(
+    API.servicesPost050bizMent(
       `${STR.urlPre050Biz}/050biz/v1/${watch("_channelId")}/bgm`,
       { channelId: watch("_channelId") }
     ).then((res) => {
@@ -78,7 +78,7 @@ export default function Set050Ment() {
   };
 
   const fnDelete = () => {
-    ID.servicesPost050bizMent(
+    API.servicesPost050bizMent(
       `${STR.urlPre050Biz}/050biz/v1/${watch(
         "_channelId"
       )}/ment/delete/${mentid}`,
@@ -87,7 +87,7 @@ export default function Set050Ment() {
   };
 
   const fnCreateSubmit = () => {
-    ID.servicesPost050bizMent(
+    API.servicesPost050bizMent(
       `${STR.urlPre050Biz}/050biz/v1/${watch("_channelId")}/ment/create`,
       {
         title: getValues("_title"),
@@ -99,7 +99,7 @@ export default function Set050Ment() {
   };
 
   const fnUpdateSubmit = () => {
-    ID.servicesPost050bizMent(
+    API.servicesPost050bizMent(
       `${STR.urlPre050Biz}/050biz/v1/${watch(
         "_channelId"
       )}/ment/update/${mentid}`,

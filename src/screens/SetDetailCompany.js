@@ -4,7 +4,7 @@ import { Link, useParams } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
-import { servicesPostData } from "../Services/importData";
+import * as API from "../Services/api";
 
 import * as UD from "../Services/useData";
 import * as STR from "../Services/string";
@@ -77,7 +77,7 @@ export default function SetCompanyDetail() {
   // 현재 페이지가 렌더링되자마자 기존에 입력된 값의 여부를 확인한다.
   useEffect(() => {
     // 상세 회사정보 불러오기 기존 값이 없다면 새로운 회원이다. 새로 작성함
-    servicesPostData(STR.urlGetCompanyDetail, {
+    API.servicesPostData(STR.urlGetCompanyDetail, {
       rcid: cid,
     })
       .then((res) => {
@@ -127,11 +127,11 @@ export default function SetCompanyDetail() {
           );
           UD.serviesPostDataSettingRcid(STR.urlReviewList, cid, setReviewList);
           // 견적요청서 - uid가 필요하기 떄문에 cid로 uid를 확인한 후 진행
-          servicesPostData(STR.urlGetCompany, { cid: cid }).then((res) => {
+          API.servicesPostData(STR.urlGetCompany, { cid: cid }).then((res) => {
             ruid.current = res.data.ruid;
 
             // 회원정보
-            servicesPostData(STR.urlGetUser, {
+            API.servicesPostData(STR.urlGetUser, {
               uid: res.data.ruid,
             })
               .then((res) => {
@@ -142,27 +142,27 @@ export default function SetCompanyDetail() {
               .catch((res) => console.log(res));
 
             // 견적 요청서 요청
-            servicesPostData(STR.urlListEstimateInfo, {
+            API.servicesPostData(STR.urlListEstimateInfo, {
               fromUid: res.data.ruid,
               offset: 0,
               size: 5,
             }).then((res) => setFromEstimateinfo(res.data));
             // 견적 요청서 수령
-            servicesPostData(STR.urlListEstimateInfo, {
+            API.servicesPostData(STR.urlListEstimateInfo, {
               toUid: res.data.ruid,
               offset: 0,
               size: 5,
             }).then((res) => setToEstimateinfo(res.data));
 
             // 견적서 요청
-            servicesPostData(STR.urlListProposalInfo, {
+            API.servicesPostData(STR.urlListProposalInfo, {
               fromUid: res.data.ruid,
               offset: 0,
               size: 5,
             }).then((res) => setFromproposalInfo(res.data));
 
             // 견적서 수령
-            servicesPostData(STR.urlListProposalInfo, {
+            API.servicesPostData(STR.urlListProposalInfo, {
               toUid: res.data.ruid,
               offset: 0,
               size: 5,
@@ -202,12 +202,12 @@ export default function SetCompanyDetail() {
   const handleSubmitEvent = () => {
     // 서버에 imgs의 iid값만을 보내기 위해 실행하는 반복문 함수
     UD.serviesGetImgsIid(imgsIid, imgs);
-    servicesPostData(STR.urlSetCompany, {
+    API.servicesPostData(STR.urlSetCompany, {
       cid: cid,
       ...companyData,
     });
 
-    servicesPostData(STR.urlSetCompanyDetail, {
+    API.servicesPostData(STR.urlSetCompanyDetail, {
       rcid: cid,
       useFlag: getValues("_detailUseFlag"),
       gongsaType: getValues("_gongsaType").toString() || "",
@@ -401,7 +401,7 @@ export default function SetCompanyDetail() {
                           type="button"
                           disabled={!companyData.ruid && true}
                           onClick={() => {
-                            servicesPostData(STR.urlSetUser, {
+                            API.servicesPostData(STR.urlSetUser, {
                               uid: ruid.current,
                               passwd: watch("_passwd"),
                             }).then((res) => {

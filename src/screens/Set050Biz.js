@@ -7,7 +7,7 @@ import LayoutTopButton from "../components/common/LayoutTopButton";
 import ComponentTableTopNumber from "../components/piece/PieceTableTopNumber";
 import PieceLoading from "../components/piece/PieceLoading";
 
-import * as ID from "../Services/importData";
+import * as API from "../Services/api";
 import * as UD from "../Services/useData";
 import * as STR from "../Services/string";
 
@@ -68,9 +68,9 @@ export default function Set050Biz() {
   };
 
   const fnClear = () => {
-    ID.servicesPost050biz(`${STR.urlClear050}/${vno}`).then((res) => {
+    API.servicesPost050biz(`${STR.urlClear050}/${vno}`).then((res) => {
       if (res.code == "0000") {
-        ID.servicesPostData(STR.urlSetCompanyDetail, {
+        API.servicesPostData(STR.urlSetCompanyDetail, {
           rcid: cid,
           extnum: "",
         }).then((res) => {
@@ -119,7 +119,7 @@ export default function Set050Biz() {
     );
 
     // ID.servicesPost050biz(!!vno ? `${STR.urlUpdate050}/${vno}` : STR.urlCreate050, {
-    ID.servicesPost050biz(
+    API.servicesPost050biz(
       !!vno
         ? "https://050api-cbt.sejongtelecom.net:8433/050biz/v1/service/create"
         : STR.urlCreate050,
@@ -143,7 +143,7 @@ export default function Set050Biz() {
     ).then((res) => {
       console.log("res", res);
       if (res.code === "0000") {
-        ID.servicesPostData(STR.urlSetCompanyDetail, {
+        API.servicesPostData(STR.urlSetCompanyDetail, {
           rcid: cid,
           extnum: getValues("_vno"),
         }).then((res) => {
@@ -164,7 +164,7 @@ export default function Set050Biz() {
   useEffect(() => {
     if (!!vno) {
       setLoading(true);
-      ID.servicesPost050biz(`${STR.urlGet050}/${vno}`).then((res) => {
+      API.servicesPost050biz(`${STR.urlGet050}/${vno}`).then((res) => {
         console.log(res);
         setLoading(false);
         setValue("_regDate", res.data.regDate || "");

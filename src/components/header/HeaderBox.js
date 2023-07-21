@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import * as ID from "../../Services/importData";
+import * as ST from "../../Services/storage";
 import * as STR from "../../Services/string";
 
 import { AiOutlineMenu } from "react-icons/ai";
@@ -19,7 +19,7 @@ export default function HeaderBox() {
   };
 
   const handleLogout = () => {
-    ID.servicesRemoveStorage(STR.TOKEN);
+    ST.servicesRemoveStorage(STR.TOKEN);
     navigate("/login");
   };
 

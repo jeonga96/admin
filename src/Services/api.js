@@ -1,19 +1,8 @@
 import axios from "axios";
 import { TOKEN, urlRefreshtoken, BIZ_TOKEN } from "./string";
 import { servicesUseToast } from "./useData";
-
+import { servicesGetStorage, servicesSetStorage } from "./storage";
 const storageGetToken = servicesGetStorage(TOKEN);
-
-export function servicesSetStorage(name, data) {
-  return localStorage.setItem(name, data);
-}
-export function servicesGetStorage(name) {
-  return localStorage.getItem(name);
-}
-
-export function servicesRemoveStorage(name) {
-  return localStorage.removeItem(name);
-}
 
 export function servicesGetData(url, reqData) {
   let headers = {
@@ -51,9 +40,6 @@ export function servicesPostData(url, reqData) {
     .post(url, reqData, {
       headers: {
         "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "https://devadmin.gongsacok.com",
-        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE",
-        "Access-Control-Allow-Headers": "Content-Type, Authorization",
         Authorization: `Bearer ${storageGetToken}`,
       },
     })
@@ -75,9 +61,6 @@ export function servicesPostDataForm(url, reqData) {
     .post(url, reqData, {
       headers: {
         "Content-Type": "multipart/form-data",
-        "Access-Control-Allow-Origin": "https://devadmin.gongsacok.com",
-        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE",
-        "Access-Control-Allow-Headers": "Content-Type, Authorization",
         Authorization: `Bearer ${storageGetToken}`,
       },
     })

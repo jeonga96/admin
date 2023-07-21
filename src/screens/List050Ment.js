@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useLayoutEffect, useState } from "react";
 
-import * as ID from "../Services/importData";
+import * as API from "../Services/api";
 import * as STR from "../Services/string";
 
 import LayoutTopButton from "../components/common/LayoutTopButton";
@@ -33,7 +33,7 @@ export default function ListAgentAg() {
 
   function fnSearchSubmit() {
     console.log(`${STR.urlPre050Biz}/050biz/v1/${watch("_channelId")}/ment`);
-    ID.servicesGet050biz(
+    API.servicesGet050biz(
       `${STR.urlPre050Biz}/050biz/v1/${watch("_channelId")}/ment`,
       {
         type: watch("_type"),

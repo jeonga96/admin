@@ -1,5 +1,5 @@
 // import { useRef, useState, useEffect } from "react";
-import * as ID from "../../Services/importData";
+import * as API from "../../Services/api";
 import * as CH from "../../Services/customHook";
 import * as STR from "../../Services/string";
 import * as UD from "../../Services/useData";
@@ -37,7 +37,7 @@ export default function ImageSet({
   // 첫 렌더링을 방지하고, 기존 입력된 이미지가 있다면 서버에서 이미지를 가져온다.
   CH.useDidMountEffect(() => {
     if (!!getData.titleImg) {
-      ID.servicesPostData(STR.urlGetImages, {
+      API.servicesPostData(STR.urlGetImages, {
         imgs: getData.titleImg,
       }).then((res) => {
         fnSetImg(res.data);
@@ -45,7 +45,7 @@ export default function ImageSet({
     }
 
     if (!!getData.regImgs) {
-      ID.servicesPostData(STR.urlGetImages, {
+      API.servicesPostData(STR.urlGetImages, {
         imgs: getData.regImgs || getData.addImgs,
       }).then((res) => {
         fnSetRegImgs(res.data);
@@ -53,7 +53,7 @@ export default function ImageSet({
     }
 
     if (getData.imgs || getData.imgString || getData.addImgs) {
-      ID.servicesPostData(STR.urlGetImages, {
+      API.servicesPostData(STR.urlGetImages, {
         imgs: getData.imgs || getData.imgString || getData.addImgs,
       }).then((res) => {
         fnSetImgs(res.data);
@@ -75,7 +75,7 @@ export default function ImageSet({
     }
 
     // FormData에 저장된 데이터를 서버에 보냄
-    ID.servicesPostDataForm(STR.urlUpImages, formData).then((res) => {
+    API.servicesPostDataForm(STR.urlUpImages, formData).then((res) => {
       if (event.target.id === "titleImg") {
         // 회원, 사업자 관리 - 대표이미지 : titleImg ==============================
         fnSetImg(res.data);

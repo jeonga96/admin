@@ -3,7 +3,7 @@
 import { Link } from "react-router-dom";
 import { useLayoutEffect, useState } from "react";
 
-import * as ID from "../Services/importData";
+import * as API from "../Services/api";
 import * as STR from "../Services/string";
 
 import LayoutTopButton from "../components/common/LayoutTopButton";
@@ -27,7 +27,7 @@ export default function ListEstimateinfo() {
   useLayoutEffect(() => {
     // searchClick을 클릭하지 않은 (false) 상태에서 동작
     searchClick === false &&
-      ID.servicesPostData(STR.urlListEstimateInfo, {
+      API.servicesPostData(STR.urlListEstimateInfo, {
         offset: page.getPage,
         size: 15,
       }).then((res) => {

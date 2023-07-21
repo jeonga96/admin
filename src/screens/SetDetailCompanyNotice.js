@@ -7,7 +7,7 @@ import { ErrorMessage } from "@hookform/error-message";
 import { useParams } from "react-router-dom";
 
 import * as STR from "../Services/string";
-import * as ID from "../Services/importData";
+import * as API from "../Services/api";
 import * as UD from "../Services/useData";
 
 import SetImage from "../components/services/ServicesImageSetPreview";
@@ -31,7 +31,7 @@ export default function SetDetailCompanyNotice() {
   const imgsIid = [];
 
   useLayoutEffect(() => {
-    ID.servicesPostData(STR.urlCompanyGetNotice, {
+    API.servicesPostData(STR.urlCompanyGetNotice, {
       comnid: comnid,
     })
       .then((res) => {
@@ -50,7 +50,7 @@ export default function SetDetailCompanyNotice() {
   function fnSubmit(e) {
     //서버에 imgs의 iid값만을 보내기 위해 실행하는 반복문 함수
     UD.serviesGetImgsIid(imgsIid, imgs);
-    ID.servicesPostData(
+    API.servicesPostData(
       STR.urlCompanySetNotice,
       !!comnid
         ? {

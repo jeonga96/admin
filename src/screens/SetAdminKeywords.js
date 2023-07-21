@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 
 import * as STR from "../Services/string";
-import * as ID from "../Services/importData";
+import * as API from "../Services/api";
 import * as UD from "../Services/useData";
 
 import LayoutTopButton from "../components/common/LayoutTopButton";
@@ -45,9 +45,9 @@ export default function SetAdminKeyeords() {
     e.preventDefault();
     setSearchBtn(!searchBtn);
     searchBtn === false
-      ? ID.servicesPostData(STR.urlAllKeyword, {})
+      ? API.servicesPostData(STR.urlAllKeyword, {})
           .then((res) => {
-            ID.servicesSetStorage(STR.ALLKEYWORD, JSON.stringify(res.data));
+            API.servicesSetStorage(STR.ALLKEYWORD, JSON.stringify(res.data));
             setAllKeywords(res.data);
           })
           .then(setSearchBtn(!searchBtn))
@@ -85,7 +85,7 @@ export default function SetAdminKeyeords() {
   // 수정 버튼
   const fnSubmit = () => {
     for (let i = 0; i < modifyData.length; i++) {
-      ID.servicesPostData(STR.urlSetKeyword, modifyData[i]);
+      API.servicesPostData(STR.urlSetKeyword, modifyData[i]);
     }
     setCompanyDetailKeyword([]);
     setModifyData(null);

@@ -1,7 +1,7 @@
 import { useEffect, useLayoutEffect } from "react";
 import { useForm } from "react-hook-form";
 
-import * as ID from "../../Services/importData";
+import * as API from "../../Services/api";
 import * as UD from "../../Services/useData";
 import * as STR from "../../Services/string";
 
@@ -37,7 +37,7 @@ export default function ComponentListUserSearch({
 
   // submit 이벤트
   function SearchSubmit() {
-    ID.servicesPostData(STR.urlUserlist, {
+    API.servicesPostData(STR.urlUserlist, {
       offset: page.getPage,
       size: 15,
       uid: getValues("_uid"),

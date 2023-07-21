@@ -6,7 +6,7 @@ import { ErrorMessage } from "@hookform/error-message";
 import { useParams } from "react-router-dom";
 
 import * as STR from "../Services/string";
-import * as ID from "../Services/importData";
+import * as API from "../Services/api";
 import * as UD from "../Services/useData";
 
 import LayoutTopButton from "../components/common/LayoutTopButton";
@@ -30,7 +30,7 @@ export default function SetEvent() {
   useLayoutEffect(() => {
     // contid가 있으면 기존에 입력된 값을 가져옴
     if (!!contid) {
-      ID.servicesPostData(STR.urlGetContent, {
+      API.servicesPostData(STR.urlGetContent, {
         contid: contid,
       })
         .then((res) => {
@@ -51,7 +51,7 @@ export default function SetEvent() {
   };
 
   const AddUserSubmit = (e) => {
-    ID.servicesPostData(
+    API.servicesPostData(
       STR.urlSetContent,
       !!contid
         ? // contid여부 확인하여 contid가 있으면 수정
@@ -88,7 +88,7 @@ export default function SetEvent() {
   };
 
   const fnUseFlag = () => {
-    ID.servicesPostData(STR.urlSetContent, {
+    API.servicesPostData(STR.urlSetContent, {
       contid: contid,
       category: getValues("_category"),
       contentString: getValues("_contentString"),

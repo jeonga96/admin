@@ -2,7 +2,7 @@ import { useEffect, useLayoutEffect } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
-import * as ID from "../../Services/importData";
+import * as API from "../../Services/api";
 import * as UD from "../../Services/useData";
 import * as STR from "../../Services/string";
 
@@ -28,7 +28,7 @@ export default function ComponentSetUser({ setUserData, userData, checkBtn }) {
 
   useEffect(() => {
     if (!uid && !!watch("_userid") && !!watch("_passwd")) {
-      ID.servicesPostData(STR.urlAdduser, {
+      API.servicesPostData(STR.urlAdduser, {
         userid: watch("_userid"),
         passwd: watch("_passwd"),
       }).then(fnSetUserData());
@@ -37,7 +37,7 @@ export default function ComponentSetUser({ setUserData, userData, checkBtn }) {
 
   // 회원활성화, 회원권한 기존 값 있다면 표시
   useLayoutEffect(() => {
-    ID.servicesPostData(STR.urlGetUser, {
+    API.servicesPostData(STR.urlGetUser, {
       uid: uid,
     })
       .then((res) => {
@@ -52,7 +52,7 @@ export default function ComponentSetUser({ setUserData, userData, checkBtn }) {
 
   // 비밀번호 변경
   const handleChangePasswd = () => {
-    ID.servicesPostData(STR.urlSetUser, {
+    API.servicesPostData(STR.urlSetUser, {
       uid: uid,
       passwd: watch("_passwd"),
     }).then((res) => {

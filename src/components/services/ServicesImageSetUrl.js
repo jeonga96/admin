@@ -1,6 +1,6 @@
 // -- 사용예시 : SetAdminAppbanner --
 
-import * as ID from "../../Services/importData";
+import * as API from "../../Services/api";
 import * as STR from "../../Services/string";
 
 export default function ImageSet({
@@ -19,7 +19,7 @@ export default function ImageSet({
     formData.append("Imgs", files[0]);
 
     // FormData에 저장된 데이터를 서버에 보냄
-    ID.servicesPostDataForm(STR.urlUpImages, formData).then((res) => {
+    API.servicesPostDataForm(STR.urlUpImages, formData).then((res) => {
       setChangeImg(res.data);
       onImgChange(e, res.data);
     });

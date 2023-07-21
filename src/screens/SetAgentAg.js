@@ -10,7 +10,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 
-import * as ID from "../Services/importData";
+import * as API from "../Services/api";
 import * as UD from "../Services/useData";
 import * as STR from "../Services/string";
 
@@ -54,7 +54,7 @@ export default function SetAgentSd() {
   // 수정 시에만 동작
   useLayoutEffect(() => {
     if (!!uid) {
-      ID.servicesPostData(STR.urlGetUser, {
+      API.servicesPostData(STR.urlGetUser, {
         uid: uid,
       }).then((res) => {
         if (res.status === "success") {
@@ -62,7 +62,7 @@ export default function SetAgentSd() {
         }
       });
 
-      ID.servicesPostData(STR.urlGetUserDetail, {
+      API.servicesPostData(STR.urlGetUserDetail, {
         ruid: uid,
       })
         .then((res) => {
@@ -71,10 +71,10 @@ export default function SetAgentSd() {
             setValue("_mobile", res.data.mobile || "");
             setValue("_mail", res.data.mail || "");
 
-            ID.servicesPostData(STR.urlGetUserCid, {
+            API.servicesPostData(STR.urlGetUserCid, {
               uid: uid,
             }).then((res) => {
-              ID.servicesPostData(STR.urlGetCompanyDetail, {
+              API.servicesPostData(STR.urlGetCompanyDetail, {
                 rcid: res.data.cid,
               }).then((res2) => {
                 if (res2.status === "success") {
@@ -100,12 +100,12 @@ export default function SetAgentSd() {
   console.log(watch("_registration"));
   // company 관련 코드 : 수정 & 추가 중복되는 동작 함수
   const fnsetCompany = (cid, uid) => {
-    ID.servicesPostData(STR.urlSetCompany, {
+    API.servicesPostData(STR.urlSetCompany, {
       cid: cid,
       ruid: uid,
       name: getValues("_regOwner"),
     });
-    ID.servicesPostData(STR.urlSetCompanyDetail, {
+    API.servicesPostData(STR.urlSetCompanyDetail, {
       rcid: cid,
       useFlag: getValues("_useFlag"),
       mobilenum: getValues("_mobilenum"),
@@ -141,35 +141,35 @@ export default function SetAgentSd() {
 
   // 추가할 때 실행되는 함수
   async function fnAddSubmit() {
-    await ID.servicesPostData(STR.urlAdduser, {
+    await API.servicesPostData(STR.urlAdduser, {
       userid: watch("_userid"),
       passwd: watch("_passwd"),
     }).then((status) => {
       if (status.status === "success")
-        ID.servicesPostData(STR.urlUserlist, {
+        API.servicesPostData(STR.urlUserlist, {
           offset: 0,
           size: 2,
           userid: watch("_userid"),
         }).then((res) => {
           if (status.status === "success") {
-            const UID = res.data[0].uid;
-            ID.servicesPostData(STR.urlSetUser, {
-              uid: UID,
+            const UAPI = res.data[0].uid;
+            API.servicesPostData(STR.urlSetUser, {
+              uid: UAPI,
               userrole: "ROLE_USER,ROLE_ADMIN_AG",
               useFlag: "1",
               userid: getValues("_userid"),
               passwd: getValues("_passwd"),
             });
-            ID.servicesPostData(STR.urlSetUserDetail, {
-              ruid: UID,
+            API.servicesPostData(STR.urlSetUserDetail, {
+              ruid: UAPI,
               name: getValues("_name"),
               mobile: getValues("_mobile"),
               mail: getValues("_mail"),
             });
-            ID.servicesPostData(STR.urlAddcompany, {
+            API.servicesPostData(STR.urlAddcompany, {
               name: getValues("_name"),
             }).then((res2) => {
-              fnsetCompany(res2.data.cid, UID);
+              fnsetCompany(res2.data.cid, UAPI);
             });
           }
         });
@@ -179,12 +179,12 @@ export default function SetAgentSd() {
   // 수정 & 추가 버튼 클릭 이벤트
   function fnSubmit(e) {
     if (!!uid) {
-      ID.servicesPostData(STR.urlSetUser, {
+      API.servicesPostData(STR.urlSetUser, {
         uid: uid,
         userid: getValues("_userid"),
         passwd: getValues("_passwd"),
       });
-      ID.servicesPostData(STR.urlSetUserDetail, {
+      API.servicesPostData(STR.urlSetUserDetail, {
         ruid: uid,
         name: getValues("_name"),
         nick: getValues("_nick"),
@@ -192,14 +192,14 @@ export default function SetAgentSd() {
         mail: getValues("_mail"),
       });
 
-      ID.servicesPostData(STR.urlGetUserCid, {
+      API.servicesPostData(STR.urlGetUserCid, {
         uid: uid,
       })
         .then((res) => {
           fnsetCompany(res.data.cid, uid);
         })
         .catch(() =>
-          ID.servicesPostData(STR.urlAddcompany, {
+          API.servicesPostData(STR.urlAddcompany, {
             name: getValues("_name"),
           }).then((res2) => {
             fnsetCompany(res2.data.cid, uid);
@@ -713,7 +713,7 @@ export default function SetAgentSd() {
                     <button
                       type="button"
                       onClick={() => {
-                        ID.servicesPostData(STR.urlSetUser, {
+                        API.servicesPostData(STR.urlSetUser, {
                           uid: uid,
                           passwd: watch("_passwd"),
                         }).then((res) => {

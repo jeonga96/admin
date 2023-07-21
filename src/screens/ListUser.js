@@ -3,7 +3,7 @@
 import { Link } from "react-router-dom";
 import { useLayoutEffect, useState } from "react";
 
-import * as ID from "../Services/importData";
+import * as API from "../Services/api";
 import * as STR from "../Services/string";
 
 import PageButton from "../components/services/ServicesPaginationButton";
@@ -95,7 +95,7 @@ export default function ListUser() {
   useLayoutEffect(() => {
     // searchClick을 클릭하지 않은 (false) 상태에서 동작
     searchClick === false &&
-      ID.servicesPostData(STR.urlUserlist, {
+      API.servicesPostData(STR.urlUserlist, {
         offset: page.getPage,
         size: 15,
       }).then((res) => {
@@ -108,7 +108,7 @@ export default function ListUser() {
   const handleUseFlag = (e) => {
     // useFlag 활성화(정상) 버튼 클릭 시 useFlag:1, 해지 버튼 클릭시 useFlag:0
     for (let i = 0; i < clickedUseFlag.length; i++) {
-      ID.servicesPostData(STR.urlSetUser, {
+      API.servicesPostData(STR.urlSetUser, {
         uid: clickedUseFlag[i],
         useFlag: e.target.id === "useFlagUse" ? "1" : "0",
       }).then(window.location.reload());

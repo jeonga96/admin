@@ -3,7 +3,7 @@
 import { useState, useLayoutEffect, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import * as STR from "../Services/string";
-import * as ID from "../Services/importData";
+import * as API from "../Services/api";
 import * as CH from "../Services/customHook";
 import * as UD from "../Services/useData";
 
@@ -109,7 +109,7 @@ function InputBox({ inputData, setinputData, title, allItem, image }) {
   const fnFormAdd = () => {
     setAddClicked(!addClicked);
     if (addClicked === true) {
-      ID.servicesPostData(STR.urlSetContent, {
+      API.servicesPostData(STR.urlSetContent, {
         category: allItem[0].category,
         contentString: allItem[0].contentString,
         contentDetail: watch("_contentDetail"),
@@ -298,7 +298,7 @@ export default function SetAdminAppbanner() {
       "bannerB2C3",
     ];
     for (const item of categoryList) {
-      ID.servicesPostData(STR.urlContentList, {
+      API.servicesPostData(STR.urlContentList, {
         category: item,
       })
         .then((res) => {
@@ -349,7 +349,7 @@ export default function SetAdminAppbanner() {
     for (const item of array) {
       UD.serviesGetImgId(imgsIid, item);
     }
-    ID.servicesPostData(STR.urlGetImages, {
+    API.servicesPostData(STR.urlGetImages, {
       imgs: imgsIid.toString(),
     }).then((res) => {
       setImg(res.data);
@@ -367,7 +367,7 @@ export default function SetAdminAppbanner() {
   const fnSubmit = () => {
     if (inputData[Object.keys(inputData)] !== {}) {
       for (let i = 0; i < Object.keys(inputData).length; i++) {
-        ID.servicesPostData(STR.urlSetContent, {
+        API.servicesPostData(STR.urlSetContent, {
           contid: inputData[Object.keys(inputData)[i]].contid,
           category: inputData[Object.keys(inputData)[i]].category,
           imgid: inputData[Object.keys(inputData)[i]].imgid,

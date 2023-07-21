@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector, shallowEqual } from "react-redux";
 
-import * as ID from "../Services/importData";
+import * as API from "../Services/api";
 import * as UD from "../Services/useData";
 import * as STR from "../Services/string";
 
@@ -28,7 +28,7 @@ export default function AddCompany() {
   const [userList, setUserList] = useState([]);
 
   useEffect(() => {
-    ID.servicesPostData(STR.urlUserlist, {
+    API.servicesPostData(STR.urlUserlist, {
       offset: 0,
       size: 40,
     }).then((res) => setUserList(res.data));
@@ -45,7 +45,7 @@ export default function AddCompany() {
 
   // 사업자 회원 추가 이벤트
   const fnSubmit = (e) => {
-    ID.servicesPostData(STR.urlAddcompany, {
+    API.servicesPostData(STR.urlAddcompany, {
       name: getValues("_name"),
     })
       .then((res) => {
@@ -58,7 +58,7 @@ export default function AddCompany() {
         // 디테일 정보를 입력하도록 사업자 상세정보로 이동
         if (res.status === "success") {
           console.log(STR.urlSetCompany, res.data.cid, select.uid);
-          ID.servicesPostData(STR.urlSetCompany, {
+          API.servicesPostData(STR.urlSetCompany, {
             cid: res.data.cid,
             ruid: select.uid,
           });

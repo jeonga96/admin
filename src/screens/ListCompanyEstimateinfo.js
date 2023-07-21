@@ -1,7 +1,7 @@
 import { Link, useParams, useLocation } from "react-router-dom";
 import { useLayoutEffect, useRef, useState } from "react";
 
-import * as ID from "../Services/importData";
+import * as API from "../Services/api";
 import * as CH from "../Services/customHook";
 import * as STR from "../Services/string";
 
@@ -26,11 +26,11 @@ export default function DetailComapnyEsimateinfo() {
   // 첫 렌더링
   useLayoutEffect(() => {
     // uid가져오기
-    ID.servicesPostData(STR.urlGetCompany, { cid: rcid })
+    API.servicesPostData(STR.urlGetCompany, { cid: rcid })
       .then((res) => (RUID.current = res.data.ruid))
       // 가져온 uid로 견적 요청서 가져오기
       .then((res) =>
-        ID.servicesPostData(
+        API.servicesPostData(
           STR.urlListEstimateInfo,
           // url에 맞춰 수령 기준, 요청 기준으로 견적 요청서를 가져온다
           // (url에 from이 들어가면 formUid로 검색 )
@@ -57,7 +57,7 @@ export default function DetailComapnyEsimateinfo() {
   // 페이지 이동시마다 발생
   // 두번째 렌더링부터 이벤트 발생
   CH.useDidMountEffect(() => {
-    ID.servicesPostData(
+    API.servicesPostData(
       STR.urlListEstimateInfo,
       location.pathname.includes("from")
         ? {

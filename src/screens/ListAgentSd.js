@@ -3,7 +3,7 @@
 import { Link } from "react-router-dom";
 import { useEffect, useLayoutEffect, useState } from "react";
 
-import * as ID from "../Services/importData";
+import * as API from "../Services/api";
 import * as STR from "../Services/string";
 
 import PageButton from "../components/services/ServicesPaginationButton";
@@ -28,7 +28,7 @@ export default function ListAgentSd() {
 
   useLayoutEffect(() => {
     searchClick === false &&
-      ID.servicesPostData(STR.urlUserlist, {
+      API.servicesPostData(STR.urlUserlist, {
         offset: page.getPage,
         userrole: "ROLE_ADMIN_SD",
         size: 15,
@@ -41,7 +41,7 @@ export default function ListAgentSd() {
   useEffect(() => {
     const newArr = [];
     prevUserList.forEach((item) => {
-      return ID.servicesPostData(STR.urlGetCompanyDetail, {
+      return API.servicesPostData(STR.urlGetCompanyDetail, {
         rcid: item.cid,
       })
         .then((response) => response.data)

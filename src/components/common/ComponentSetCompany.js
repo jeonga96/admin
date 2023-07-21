@@ -2,7 +2,7 @@ import { useLayoutEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
-import * as ID from "../../Services/importData";
+import * as API from "../../Services/api";
 import * as UD from "../../Services/useData";
 import * as STR from "../../Services/string";
 
@@ -20,7 +20,7 @@ export default function ComponentSetCompany({ companyData, setCompanyData }) {
   const userLinkedCidCk = (e) => {
     // 입력한 uid와 연결된 cid가 있는지 확인 후 값이 없다면 입력
     // 현재 cid와 동일한 값을 입력했을 경우 입력 아닐 시 오류 확인
-    ID.servicesPostData(STR.urlGetUserCid, { uid: e.target.value }).then(
+    API.servicesPostData(STR.urlGetUserCid, { uid: e.target.value }).then(
       (res) => {
         if (res.emsg === "process failed.") {
           fnSetCompanyrData({ [e.target.id]: e.target.value });
@@ -39,7 +39,7 @@ export default function ComponentSetCompany({ companyData, setCompanyData }) {
 
   useLayoutEffect(() => {
     // 기본 회사정보 불러오기
-    ID.servicesPostData(STR.urlGetCompany, {
+    API.servicesPostData(STR.urlGetCompany, {
       cid: cid,
     })
       .then((res) => {

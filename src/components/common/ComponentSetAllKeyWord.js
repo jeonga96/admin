@@ -1,6 +1,6 @@
 import { useState, useLayoutEffect, useRef } from "react";
 
-import * as ID from "../../Services/importData";
+import * as API from "../../Services/api";
 import * as STR from "../../Services/string";
 import * as UD from "../../Services/useData";
 
@@ -20,15 +20,15 @@ export default function SetAllKeyWord({
 
   // 전체 키워드 새로고침
   function fnReKeyword() {
-    ID.servicesPostData(STR.urlAllKeyword, {}).then((res) => {
-      ID.servicesSetStorage(STR.ALLKEYWORD, JSON.stringify(res.data));
+    API.servicesPostData(STR.urlAllKeyword, {}).then((res) => {
+      API.servicesSetStorage(STR.ALLKEYWORD, JSON.stringify(res.data));
     });
   }
 
   // 로그인 시 받은 전체 키워드를 가져온다
   useLayoutEffect(() => {
     fnReKeyword();
-    allKeywords.current = JSON.parse(ID.servicesGetStorage(STR.ALLKEYWORD));
+    allKeywords.current = JSON.parse(API.servicesGetStorage(STR.ALLKEYWORD));
   }, []);
 
   // 전체 키워드에서 입력한 키워드가 포함됐을 때의 값을 반환하는 코드
