@@ -60,7 +60,7 @@ export default function SetDetailUser() {
         if (res.status === "success") {
           // 이미지 iid를 가지고 오기 위해 (imgs, img) 사용
           dispatch({
-            type: "getedData",
+            type: "serviceGetedData",
             payload: { ...res.data },
           });
 
@@ -317,6 +317,7 @@ export default function SetDetailUser() {
                     type="text"
                     id="nick"
                     placeholder="별명을 입력해 주세요."
+                    maxLength={8}
                     {...register("_nick", {
                       maxLength: {
                         value: 8,
@@ -347,6 +348,7 @@ export default function SetDetailUser() {
                     type="text"
                     id="location"
                     placeholder="주소를 입력해 주세요. (ㅇㅇ구, ㅇㅇ동)"
+                    maxLength={50}
                     {...register("_location", {
                       maxLength: {
                         value: 50,

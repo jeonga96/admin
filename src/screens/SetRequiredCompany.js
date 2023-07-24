@@ -51,14 +51,14 @@ export default function SetRequiredCompany() {
   // getUser,
   async function fnReadList(res) {
     dispatch({
-      type: "getedData",
+      type: "serviceGetedData",
       payload: { ...res.data },
     });
     await API.servicesPostData(STR.urlGetUser, {
       uid: UID,
     }).then((res2) => {
       dispatch({
-        type: "getedData",
+        type: "serviceGetedData",
         payload: { ...res.data, ...{ userid: res2.data.userid } },
       });
       setValue("_userid", res2.data.userid || "");
@@ -70,7 +70,7 @@ export default function SetRequiredCompany() {
       if (res3.status === "success") {
         if (!getedData.address) {
           dispatch({
-            type: "getedData",
+            type: "serviceGetedData",
             payload: {
               ...res.data,
               ...{
@@ -439,6 +439,9 @@ export default function SetRequiredCompany() {
                         maxLength={15}
                         {...register("_Cname", {
                           required: "입력되지 않았습니다.",
+                          maxLength: {
+                            value: 15,
+                          },
                         })}
                       />
                     </div>
@@ -540,6 +543,7 @@ export default function SetRequiredCompany() {
                     maxLength={8}
                     {...register("_regOwner", {
                       required: "입력되지 않았습니다.",
+                      maxLength: 8,
                     })}
                   />
                 </div>

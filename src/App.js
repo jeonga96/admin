@@ -94,7 +94,7 @@ function App() {
 
   // const fnNavEvent = (matches) => {
   //   dispatch({
-  //     type: "navEvent",
+  //     type: "serviceNav",
   //     payload: matches,
   //   });
   // };

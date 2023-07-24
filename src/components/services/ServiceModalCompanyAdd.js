@@ -41,7 +41,7 @@ export default function ServiceModalCompanyAdd({ fn, userList }) {
             type="button"
             onClick={() =>
               dispatch({
-                type: "clickEvent",
+                type: "serviceClick",
                 payload: !clickModal,
               })
             }

@@ -44,7 +44,7 @@ export default function SetDetailAdminNotice() {
         .then((res) => {
           if (res.status === "success") {
             dispatch({
-              type: "getedData",
+              type: "serviceGetedData",
               payload: { ...res.data },
             });
 
@@ -145,6 +145,7 @@ export default function SetDetailAdminNotice() {
                   id="contentString"
                   placeholder="제목을 입력해 주세요."
                   minLength={2}
+                  maxLength={50}
                   {...register("_contentString", {
                     required: "입력되지 않았습니다.",
                     minLength: {

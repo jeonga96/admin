@@ -56,7 +56,7 @@ export default function SetAdminEstimateinfo() {
         if (res.status === "success") {
           // 이미지 iid를 가지고 오기 위해 (imgs, titleImg) 사용
           dispatch({
-            type: "getedData",
+            type: "serviceGetedData",
             payload: { ...res.data },
           });
 

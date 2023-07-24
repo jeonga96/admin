@@ -13,7 +13,7 @@ export default function HeaderBox() {
 
   const handleNav = () => {
     dispatch({
-      type: "navEvent",
+      type: "serviceNav",
       payload: !navChange,
     });
   };

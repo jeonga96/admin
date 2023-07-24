@@ -37,7 +37,7 @@ export default function SetDetailCompanyNotice() {
       .then((res) => {
         if (res.status === "success") {
           dispatch({
-            type: "getedData",
+            type: "serviceGetedData",
             payload: { ...res.data },
           });
           setValue("_title", res.data.title || "");

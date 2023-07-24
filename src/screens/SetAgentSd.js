@@ -59,7 +59,7 @@ export default function SetAgentSd() {
         .then((res) => {
           if (res.status === "success") {
             dispatch({
-              type: "getedData",
+              type: "serviceClick",
               payload: { ...res.data },
             });
             setValue("_name", res.data.name || "");
@@ -74,7 +74,7 @@ export default function SetAgentSd() {
               }).then((res2) => {
                 if (res2.status === "success") {
                   dispatch({
-                    type: "getedData",
+                    type: "serviceGetedData",
                     payload: { ...res2.data },
                   });
                   if (res2.data.name.includes("[본사직영]")) {

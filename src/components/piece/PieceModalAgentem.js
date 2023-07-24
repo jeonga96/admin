@@ -85,7 +85,7 @@ export default function PieceModalAgentem({ fn }) {
             className="formContentBtn"
             onClick={() =>
               dispatch({
-                type: "clickEvent",
+                type: "serviceClick",
                 payload: false,
               })
             }

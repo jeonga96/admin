@@ -38,7 +38,7 @@ export default function AddCompany() {
     setSelect(res);
     setValue("_name", res.name);
     dispatch({
-      type: "clickEvent",
+      type: "serviceClick",
       payload: false,
     });
   };
@@ -108,7 +108,7 @@ export default function AddCompany() {
                 type="button"
                 onClick={() =>
                   dispatch({
-                    type: "clickEvent",
+                    type: "serviceClick",
                     payload: !clickModal,
                   })
                 }

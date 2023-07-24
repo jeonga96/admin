@@ -53,6 +53,8 @@ export default function Login() {
                 type="text"
                 name="_userid"
                 id="userid"
+                // minLength={4}
+                // maxLength={16}
                 {...register("_userid", {
                   required: "아이디는 필수로 입력해야 합니다.",
                   // minLength: {
@@ -88,6 +90,8 @@ export default function Login() {
                 type="password"
                 name="_passwd"
                 id="passwd"
+                // minLength={6}
+                // maxLength={16}
                 {...register("_passwd", {
                   required: "비밀번호는 필수로 입력해야 합니다.",
                   // minLength: {

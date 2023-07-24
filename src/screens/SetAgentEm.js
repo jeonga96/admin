@@ -76,7 +76,7 @@ export default function SetAgentEm() {
     const Cname = item.additionalData.name;
     setValue("_Cname", Cname);
     dispatch({
-      type: "clickEvent",
+      type: "serviceClick",
       payload: false,
     });
   };
@@ -203,7 +203,7 @@ export default function SetAgentEm() {
                     className="formContentBtn"
                     onClick={() =>
                       dispatch({
-                        type: "clickEvent",
+                        type: "serviceClick",
                         payload: !clickModal,
                       })
                     }

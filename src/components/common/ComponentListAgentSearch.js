@@ -20,7 +20,7 @@ export default function ComponentListAgentSearch({
     },
   });
   const location = useLocation();
-  const { uid } = useParams();
+  // const { uid } = useParams();
   const CK_AGENT_SD = location.pathname.includes("agentsd");
   const CK_AGENT_AG = location.pathname.includes("agentag");
 

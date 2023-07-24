@@ -84,7 +84,7 @@ export default function SetCompanyDetail() {
       .then((res) => {
         if (res.status === "success") {
           dispatch({
-            type: "getedData",
+            type: "serviceGetedData",
             payload: { ...res.data },
           });
 

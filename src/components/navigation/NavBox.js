@@ -13,7 +13,7 @@ export default function NavBox() {
   const dispatch = useDispatch();
   const onClickBtn = () => {
     dispatch({
-      type: "navEvent",
+      type: "serviceNav",
       payload: !navChange,
     });
   };

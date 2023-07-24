@@ -25,17 +25,17 @@ export default function ImageSet({ id, title }) {
   const fnState = (files) => {
     if (id === "titleImg") {
       dispatch({
-        type: "imgData",
+        type: "serviceImgData",
         payload: files,
       });
     } else if (id === "imgs") {
       dispatch({
-        type: "imgsData",
+        type: "serviceimgsData",
         payload: files,
       });
     } else if (id === "imgString" || id === "regImgs" || id === "addImgs") {
       dispatch({
-        type: "multiImgsData",
+        type: "servicemulTiImgsDataEvent",
         payload: files,
       });
     }
@@ -129,17 +129,17 @@ export default function ImageSet({ id, title }) {
       setFiles(files.filter((it) => it.iid !== iid));
       if (id === "titleImg") {
         dispatch({
-          type: "imgData",
+          type: "serviceImgData",
           payload: img.filter((it) => it.iid !== iid),
         });
       } else if (id === "imgs") {
         dispatch({
-          type: "imgsData",
+          type: "serviceimgsData",
           payload: imgs.filter((it) => it.iid !== iid),
         });
       } else {
         dispatch({
-          type: "multiImgsData",
+          type: "servicemulTiImgsDataEvent",
           payload: multiImgs.filter((it) => it.iid !== iid),
         });
       }
