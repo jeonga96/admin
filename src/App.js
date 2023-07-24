@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+// import { useSelector, useDispatch } from "react-redux";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -74,9 +74,9 @@ function App() {
   const navigate = useNavigate();
 
   const ISUSER = ST.servicesGetStorage(STR.TOKEN);
-  const ISALLKEYWORD = ST.servicesGetStorage(STR.ALLKEYWORD);
+  // const ISALLKEYWORD = ST.servicesGetStorage(STR.ALLKEYWORD);
   // const navChange = useSelector((state) => state.navState);
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const notLoginScreens = location.pathname !== "/login";
   let currentPath = useRef("");
 
@@ -92,17 +92,17 @@ function App() {
     }
   };
 
-  const fnNavEvent = (matches) => {
-    dispatch({
-      type: "navEvent",
-      payload: matches,
-    });
-  };
+  // const fnNavEvent = (matches) => {
+  //   dispatch({
+  //     type: "navEvent",
+  //     payload: matches,
+  //   });
+  // };
 
-  const fnScreenEvent = (event) => {
-    const matches = event.matches;
-    fnNavEvent(matches);
-  };
+  // const fnScreenEvent = (event) => {
+  //   const matches = event.matches;
+  //   fnNavEvent(matches);
+  // };
 
   useEffect(() => {
     // url "/"을 통합회원관리로 이동하도록 설정

@@ -1,27 +1,42 @@
 // 로그인
 
-import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
+
+import * as API from "../service/api";
+import * as STR from "../service/string";
+import * as ST from "../service/storage";
 
 export default function Login() {
   const {
     handleSubmit,
     register,
     getValues,
-    formState: { isSubmitting, errors },
+    formState: { isSubmitting },
   } = useForm();
-  const dispatch = useDispatch();
 
   const fnSubmit = (e) => {
-    // reducer - initialState로 값 전달
-    dispatch({
-      type: "userInfoInputChange",
-      payload: { userid: getValues("_userid"), passwd: getValues("_passwd") },
-    });
-    dispatch({
-      type: "loginEvent",
-    });
+    API.servicesPostData(STR.urlLogin, {
+      userid: getValues("_userid"),
+      passwd: getValues("_passwd"),
+    })
+      .then((res) => {
+        if (res.status === "fail") {
+          alert("회원이 아닙니다. 회원가입을 먼저 진행해 주세요.");
+          return;
+        }
+        if (res.status === "success") {
+          const accessToken = res.data.jtoken;
+          const uid = res.data.uid;
+
+          ST.servicesSetStorage(STR.TOKEN, accessToken);
+          ST.servicesSetStorage(STR.UID, uid);
+
+          window.location.href = "/";
+          return;
+        }
+      })
+      .catch((error) => console.log("reducer login error", error));
   };
 
   return (
