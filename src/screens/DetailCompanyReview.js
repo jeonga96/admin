@@ -4,7 +4,7 @@
 import { useState } from "react";
 import { useGetImage } from "../services/customHook";
 
-import ServicesImageOnClick from "../components/services/ServicesImageOnClick";
+import ServicesImageOnClick from "../components/event/ServicesImageOnClick";
 
 export default function DetailCompanyReview({
   compnayReview,

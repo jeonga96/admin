@@ -6,7 +6,7 @@ import { useLayoutEffect, useState } from "react";
 import * as API from "../services/api";
 import * as STR from "../services/string";
 
-import PageButton from "../components/services/ServicesPaginationButton";
+import PageButton from "../components/event/ServicesPaginationButton";
 import LayoutTopButton from "../components/common/LayoutTopButton";
 import ComponentListAgentSearch from "../components/common/ComponentListAgentSearch";
 import ComponentErrorNull from "../components/piece/PieceErrorNull";

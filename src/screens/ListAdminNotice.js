@@ -10,7 +10,7 @@ import LayoutTopButton from "../components/common/LayoutTopButton";
 import ComponentErrorNull from "../components/piece/PieceErrorNull";
 import ComponentListNotice from "../components/common/ComponentListNotice";
 
-import PaginationButton from "../components/services/ServicesPaginationButton";
+import PaginationButton from "../components/event/ServicesPaginationButton";
 
 export default function ListAdminNotice() {
   const { register, watch } = useForm({

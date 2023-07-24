@@ -15,7 +15,7 @@ import * as UD from "../services/useData";
 import * as STR from "../services/string";
 
 import LayoutTopButton from "../components/common/LayoutTopButton";
-import PieceRegisterSearchPopUp from "../components/services/ServiceRegisterSearchPopUp";
+import PieceRegisterSearchPopUp from "../components/event/ServiceRegisterSearchPopUp";
 import ComponentModal from "../components/piece/PieceModalAgentem";
 
 export default function SetAgentSd() {

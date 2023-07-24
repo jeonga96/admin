@@ -9,11 +9,11 @@ import * as API from "../services/api";
 import * as UD from "../services/useData";
 import * as STR from "../services/string";
 
-import SetImage from "../components/services/ServicesImageSetPreview";
+import SetImage from "../components/event/ServicesImageSetPreview";
+import PieceRegisterSearchPopUp from "../components/event/ServiceRegisterSearchPopUp";
 import LayoutTopButton from "../components/common/LayoutTopButton";
 import ComponentSetCompany from "../components/common/ComponentSetCompany";
 import PieceDetailListLink from "../components/piece/PieceDetailListLink";
-import PieceRegisterSearchPopUp from "../components/services/ServiceRegisterSearchPopUp";
 import ComponentTableTopNumber from "../components/piece/PieceTableTopNumber";
 import ComponentTableTopScrollBtn from "../components/piece/PieceTableTopScrollBtn";
 

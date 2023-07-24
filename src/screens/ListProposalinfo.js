@@ -7,7 +7,7 @@ import * as API from "../services/api";
 import * as STR from "../services/string";
 
 import LayoutTopButton from "../components/common/LayoutTopButton";
-import PageButton from "../components/services/ServicesPaginationButton";
+import PageButton from "../components/event/ServicesPaginationButton";
 import ComponentListEstmateinfoSearch from "../components/common/ComponentListEstmateinfoSearch";
 import ComponentErrorNull from "../components/piece/PieceErrorNull";
 

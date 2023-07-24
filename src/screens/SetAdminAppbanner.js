@@ -8,7 +8,7 @@ import * as CH from "../services/customHook";
 import * as UD from "../services/useData";
 
 import LayoutTopButton from "../components/common/LayoutTopButton";
-import SetImage from "../components/services/ServicesImageSetUrl";
+import SetImage from "../components/event/ServicesImageSetUrl";
 
 function InputBox({ inputData, setinputData, title, allItem, image }) {
   // 상위 컴포넌트에게 전달하기 위한 함수, useState

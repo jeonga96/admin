@@ -11,7 +11,7 @@ import * as UD from "../services/useData";
 import * as STR from "../services/string";
 
 import LayoutTopButton from "../components/common/LayoutTopButton";
-import ServicesImageSetPreview from "../components/services/ServicesImageSetPreview";
+import ServicesImageSetPreview from "../components/event/ServicesImageSetPreview";
 import ComponentTableTopNumber from "../components/piece/PieceTableTopNumber";
 import ComponentTableTopScrollBtn from "../components/piece/PieceTableTopScrollBtn";
 

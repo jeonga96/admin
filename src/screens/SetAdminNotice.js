@@ -10,7 +10,7 @@ import * as STR from "../services/string";
 import * as API from "../services/api";
 import * as UD from "../services/useData";
 
-import SetImage from "../components/services/ServicesImageSetPreview";
+import SetImage from "../components/event/ServicesImageSetPreview";
 import LayoutTopButton from "../components/common/LayoutTopButton";
 
 export default function SetDetailAdminNotice() {

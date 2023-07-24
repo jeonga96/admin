@@ -10,7 +10,7 @@ import * as UD from "../services/useData";
 import * as STR from "../services/string";
 
 import LayoutTopButton from "../components/common/LayoutTopButton";
-import ComponentModal from "../components/services/ServiceModalCompanyAdd";
+import ComponentModal from "../components/event/ServiceModalCompanyAdd";
 
 export default function AddCompany() {
   const {

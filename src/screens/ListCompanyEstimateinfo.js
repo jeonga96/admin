@@ -5,7 +5,7 @@ import * as API from "../services/api";
 import * as CH from "../services/customHook";
 import * as STR from "../services/string";
 
-import PageButton from "../components/services/ServicesPaginationButton";
+import PageButton from "../components/event/ServicesPaginationButton";
 import ComponentErrorNull from "../components/piece/PieceErrorNull";
 
 export default function DetailComapnyEsimateinfo() {
