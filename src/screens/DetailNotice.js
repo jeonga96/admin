@@ -4,8 +4,8 @@
 import { useLayoutEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-import * as API from "../services/api";
-import * as STR from "../services/string";
+import * as API from "../service/api";
+import * as STR from "../service/string";
 
 import LayoutTopButton from "../components/common/LayoutTopButton";
 import ComponentDetailNotice from "../components/common/ComponentDetailNotice";

@@ -2,9 +2,9 @@
 // 리뷰는 관리자 페이지에서 작성하지 않는다.
 
 import { useState } from "react";
-import { useGetImage } from "../services/customHook";
+import { useGetImage } from "../service/customHook";
 
-import ServicesImageOnClick from "../components/event/ServicesImageOnClick";
+import ServicesImageOnClick from "../components/services/ServicesImageOnClick";
 
 export default function DetailCompanyReview({
   compnayReview,

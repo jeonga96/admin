@@ -1,9 +1,9 @@
 import { useLayoutEffect } from "react";
 import { useForm } from "react-hook-form";
 
-import * as API from "../../services/api";
-import * as UD from "../../services/useData";
-import * as STR from "../../services/string";
+import * as API from "../../service/api";
+import * as UD from "../../service/useData";
+import * as STR from "../../service/string";
 
 export default function ComponentListUserSearch({
   setList,

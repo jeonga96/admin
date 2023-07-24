@@ -3,14 +3,14 @@
 import { useForm } from "react-hook-form";
 import { useState, useLayoutEffect } from "react";
 
-import * as API from "../services/api";
-import * as STR from "../services/string";
+import * as API from "../service/api";
+import * as STR from "../service/string";
 
 import LayoutTopButton from "../components/common/LayoutTopButton";
 import ComponentErrorNull from "../components/piece/PieceErrorNull";
 import ComponentListNotice from "../components/common/ComponentListNotice";
 
-import PaginationButton from "../components/event/ServicesPaginationButton";
+import PaginationButton from "../components/services/ServicesPaginationButton";
 
 export default function ListAdminNotice() {
   const { register, watch } = useForm({

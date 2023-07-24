@@ -3,11 +3,11 @@
 import { Link } from "react-router-dom";
 import { useLayoutEffect, useState } from "react";
 
-import * as API from "../services/api";
-import * as STR from "../services/string";
+import * as API from "../service/api";
+import * as STR from "../service/string";
 
 import LayoutTopButton from "../components/common/LayoutTopButton";
-import PageButton from "../components/event/ServicesPaginationButton";
+import PageButton from "../components/services/ServicesPaginationButton";
 import ComponentListEstmateinfoSearch from "../components/common/ComponentListEstmateinfoSearch";
 import ComponentErrorNull from "../components/piece/PieceErrorNull";
 

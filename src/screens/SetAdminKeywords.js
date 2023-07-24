@@ -3,9 +3,9 @@
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 
-import * as STR from "../Services/string";
-import * as API from "../Services/api";
-import * as UD from "../Services/useData";
+import * as STR from "../service/string";
+import * as API from "../service/api";
+import * as UD from "../service/useData";
 
 import LayoutTopButton from "../components/common/LayoutTopButton";
 import ComponentListAdminKeyword from "../components/common/ComponentListAdminKeyword";

@@ -1,8 +1,8 @@
 import { useState } from "react";
 
-import * as CH from "../../services/customHook";
+import * as CH from "../../service/customHook";
 
-import ImageOnClick from "../event/ServicesImageOnClick";
+import ImageOnClick from "../services/ServicesImageOnClick";
 
 export default function ComponentDetailNotice({ detail }) {
   // contentString 유무를 확인해 contentString가 있으면 관리자 내용

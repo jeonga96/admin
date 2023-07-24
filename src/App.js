@@ -65,9 +65,9 @@ import List050Ment from "./screens/List050Ment";
 import Set050Biz from "./screens/Set050Biz";
 import Set050Ment from "./screens/Set050Ment";
 
-import * as API from "./services/api";
-import * as ST from "./services/storage";
-import * as STR from "./services/string";
+import * as API from "./service/api";
+import * as ST from "./service/storage";
+import * as STR from "./service/string";
 
 function App() {
   const location = useLocation();

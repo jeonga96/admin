@@ -1,7 +1,7 @@
 import { useState, useLayoutEffect } from "react";
 
-import * as STR from "../../services/string";
-import * as API from "../../services/api";
+import * as STR from "../../service/string";
+import * as API from "../../service/api";
 
 export default function ComponentListAdminKeyword({
   handleOnclick,

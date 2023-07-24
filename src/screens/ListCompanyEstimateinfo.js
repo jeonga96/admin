@@ -1,11 +1,11 @@
 import { Link, useParams, useLocation } from "react-router-dom";
 import { useLayoutEffect, useRef, useState } from "react";
 
-import * as API from "../services/api";
-import * as CH from "../services/customHook";
-import * as STR from "../services/string";
+import * as API from "../service/api";
+import * as CH from "../service/customHook";
+import * as STR from "../service/string";
 
-import PageButton from "../components/event/ServicesPaginationButton";
+import PageButton from "../components/services/ServicesPaginationButton";
 import ComponentErrorNull from "../components/piece/PieceErrorNull";
 
 export default function DetailComapnyEsimateinfo() {

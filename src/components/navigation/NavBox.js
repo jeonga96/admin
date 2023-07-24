@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
-import * as API from "../../services/api";
-import * as STR from "../../services/string";
+import * as API from "../../service/api";
+import * as STR from "../../service/string";
 
 import { GrClose } from "react-icons/gr";
 

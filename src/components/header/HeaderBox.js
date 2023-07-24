@@ -1,8 +1,8 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import * as ST from "../../services/storage";
-import * as STR from "../../services/string";
+import * as ST from "../../service/storage";
+import * as STR from "../../service/string";
 
 import { AiOutlineMenu } from "react-icons/ai";
 

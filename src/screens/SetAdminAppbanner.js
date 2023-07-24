@@ -2,13 +2,13 @@
 
 import { useState, useLayoutEffect, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import * as STR from "../services/string";
-import * as API from "../services/api";
-import * as CH from "../services/customHook";
-import * as UD from "../services/useData";
+import * as STR from "../service/string";
+import * as API from "../service/api";
+import * as CH from "../service/customHook";
+import * as UD from "../service/useData";
 
 import LayoutTopButton from "../components/common/LayoutTopButton";
-import SetImage from "../components/event/ServicesImageSetUrl";
+import SetImage from "../components/services/ServicesImageSetUrl";
 
 function InputBox({ inputData, setinputData, title, allItem, image }) {
   // 상위 컴포넌트에게 전달하기 위한 함수, useState

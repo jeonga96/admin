@@ -1,8 +1,8 @@
 // import { useRef, useState, useEffect } from "react";
-import * as API from "../../Services/api";
-import * as CH from "../../Services/customHook";
-import * as STR from "../../Services/string";
-import * as UD from "../../Services/useData";
+import * as API from "../../service/api";
+import * as CH from "../../service/customHook";
+import * as STR from "../../service/string";
+import * as UD from "../../service/useData";
 
 import ServicesImageOnClick from "../piece/ServicesImageOnClick";
 import Loading from "./Loading";

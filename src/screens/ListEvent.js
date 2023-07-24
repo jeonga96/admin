@@ -4,12 +4,12 @@ import { useForm } from "react-hook-form";
 import { useState, useLayoutEffect } from "react";
 import { Link } from "react-router-dom";
 
-import * as API from "../services/api";
-import * as STR from "../services/string";
+import * as API from "../service/api";
+import * as STR from "../service/string";
 
 import LayoutTopButton from "../components/common/LayoutTopButton";
 import ComponentErrorNull from "../components/piece/PieceErrorNull";
-import PaginationButton from "../components/event/ServicesPaginationButton";
+import PaginationButton from "../components/services/ServicesPaginationButton";
 
 export default function ListEvent() {
   const { register, watch } = useForm({

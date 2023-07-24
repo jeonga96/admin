@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useLayoutEffect, useState } from "react";
 
-import * as API from "../services/api";
-import * as STR from "../services/string";
+import * as API from "../service/api";
+import * as STR from "../service/string";
 
 import LayoutTopButton from "../components/common/LayoutTopButton";
 import ComponentErrorNull from "../components/piece/PieceErrorNull";

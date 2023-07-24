@@ -5,12 +5,12 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector, shallowEqual } from "react-redux";
 
-import * as API from "../services/api";
-import * as UD from "../services/useData";
-import * as STR from "../services/string";
+import * as API from "../service/api";
+import * as UD from "../service/useData";
+import * as STR from "../service/string";
 
 import LayoutTopButton from "../components/common/LayoutTopButton";
-import ComponentModal from "../components/event/ServiceModalCompanyAdd";
+import ComponentModal from "../components/services/ServiceModalCompanyAdd";
 
 export default function AddCompany() {
   const {

@@ -1,8 +1,8 @@
 import { useState, useLayoutEffect, useRef } from "react";
 
-import * as API from "../../Services/api";
-import * as STR from "../../Services/string";
-import * as UD from "../../Services/useData";
+import * as API from "../../service/api";
+import * as STR from "../../service/string";
+import * as UD from "../../service/useData";
 
 export default function SetAllKeyWord({
   companyDetailKeyword,

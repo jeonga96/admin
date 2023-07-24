@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector, shallowEqual } from "react-redux";
 
-import * as API from "../../services/api";
-import * as STR from "../../services/string";
+import * as API from "../../service/api";
+import * as STR from "../../service/string";
 
 export default function PieceModalAgentem({ fn }) {
   const dispatch = useDispatch();

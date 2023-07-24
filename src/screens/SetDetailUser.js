@@ -6,12 +6,13 @@ import { useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 
-import * as API from "../services/api";
-import * as UD from "../services/useData";
-import * as STR from "../services/string";
+import * as API from "../service/api";
+import * as UD from "../service/useData";
+import * as STR from "../service/string";
 
-import PieceRegisterSearchPopUp from "../components/event/ServiceRegisterSearchPopUp";
-import ImageSet from "../components/event/ServicesImageSetPreview";
+import PieceRegisterSearchPopUp from "../components/services/ServiceRegisterSearchPopUp";
+import ImageSet from "../components/services/ServicesImageSetPreview";
+
 import DetailUserComponent from "../components/common/ComponentSetUser";
 import LayoutTopButton from "../components/common/LayoutTopButton";
 import ComponentTableTopNumber from "../components/piece/PieceTableTopNumber";
