@@ -66,7 +66,7 @@ export default function ServiceRegisterSearchPopUp({ userComponent }) {
         // 다음 카카오 신주소 : roadAddress, 구주소 :jibunAddress, 우편번호 : zonecode
         if (!!res.postcode) {
           dispatch({
-            type: "multilAddressData",
+            type: "serviceMultilAddressData",
             payload: {
               address: res.roadAddress,
               detailaddress: res.detailaddress,
@@ -78,7 +78,7 @@ export default function ServiceRegisterSearchPopUp({ userComponent }) {
           });
         } else {
           dispatch({
-            type: "multilAddressData",
+            type: "serviceMultilAddressData",
             payload: {
               ...multilAddress,
               ...{
@@ -106,7 +106,7 @@ export default function ServiceRegisterSearchPopUp({ userComponent }) {
     // setUser는 주소값만 저장함
     if (getedData !== [] && userComponent) {
       dispatch({
-        type: "multilAddressData",
+        type: "serviceMultilAddressData",
         payload: {
           address: getedData.address,
           detailaddress: getedData.detailaddress,
@@ -117,7 +117,7 @@ export default function ServiceRegisterSearchPopUp({ userComponent }) {
     // setCompany는 아래와 같은 정보가 필요함
     if (getedData !== [] && !userComponent) {
       dispatch({
-        type: "multilAddressData",
+        type: "serviceMultilAddressData",
         payload: {
           address: getedData.address,
           detailaddress: getedData.detailaddress,
@@ -135,7 +135,7 @@ export default function ServiceRegisterSearchPopUp({ userComponent }) {
     // setUser는 주소값만 저장함
     if (!!userComponent) {
       dispatch({
-        type: "multilAddressData",
+        type: "serviceMultilAddressData",
         payload: {
           address: data.roadAddress,
           detailaddress: getedData.detailaddress,
