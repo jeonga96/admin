@@ -1,14 +1,14 @@
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
-import * as API from "../..//service/api";
-import * as UD from "../..//service/useData";
+import * as API from "../../service/api";
+import * as UD from "../../service/useData";
 import * as STR from "../..//service/string";
 
 import LayoutTopButton from "../../components/layout/LayoutTopButton";
-import PieceLoading from "../..//components/piece/PieceLoading";
+import PieceLoading from "../../components/piece/PieceLoading";
 
 export default function Set050Ment() {
   // const navigate = useNavigate();

@@ -7,7 +7,7 @@ import { useLayoutEffect, useState } from "react";
 import * as API from "../../service/api";
 import * as STR from "../../service/string";
 
-import LayoutTopButton from "../../components/common/LayoutTopButton";
+import LayoutTopButton from "../../components/layout/LayoutTopButton";
 import ComponentErrorNull from "../../components/piece/PieceErrorNull";
 import PieceLoading from "../../components/piece/PieceLoading";
 
@@ -33,13 +33,14 @@ export default function ListAgentAg() {
 
   function fnSearchSubmit() {
     console.log(`${STR.urlPre050Biz}/050biz/v1/${watch("_channelId")}/ment`);
+
+    // type: watch("_type"),
     API.servicesGet050biz(
       `${STR.urlPre050Biz}/050biz/v1/${watch("_channelId")}/ment`,
       {
-        type: watch("_type"),
+        type: 1,
       }
     ).then((res) => {
-      console.log("res.data", res.data);
       setLoading(true);
       if (res.code === "0000") {
         setLoading(false);

@@ -120,43 +120,55 @@ export default function Set050Biz() {
 
     // ID.servicesPost050biz(!!vno ? `${STR.urlUpdate050}/${vno}` : STR.urlCreate050, {
     API.servicesPost050biz(
-      !!vno
-        ? "https://050api-cbt.sejongtelecom.net:8433/050biz/v1/service/create"
-        : STR.urlCreate050,
+      !!vno ? `${STR.urlUpdate050}/${vno}` : STR.urlCreate050,
       {
+        // channelId: "gongsacok",
+        // vno: VNO,
+        // vnoName: getValues("_vnoName"),
+        // status: getValues("_status"),
+        // rcvNo1: RCVNO1,
+        // rcvNo2: RCVNO2,
+        // colorringIdx: getValues("_colorringIdx"),
+        // rcvMentIdx: getValues("_rcvMentIdx"),
+        // bizEndMentIdx: getValues("_bizEndMentIdx"),
+        // holiMentIdx: getValues("_holiMentIdx"),
+        // bizStartTime: STARTTIME,
+        // bizEndTime: ENDTIME,
+        // holiWeek: HOLIWEEK,
+        // holiDay: HOLIDAY,
+        // recType: getValues("_recType"),
         channelId: "gongsacok",
-        vno: VNO,
-        vnoName: getValues("_vnoName"),
-        status: getValues("_status"),
-        rcvNo1: RCVNO1,
-        rcvNo2: RCVNO2,
-        colorringIdx: getValues("_colorringIdx"),
-        rcvMentIdx: getValues("_rcvMentIdx"),
-        bizEndMentIdx: getValues("_bizEndMentIdx"),
-        holiMentIdx: getValues("_holiMentIdx"),
-        bizStartTime: STARTTIME,
-        bizEndTime: ENDTIME,
-        holiWeek: HOLIWEEK,
-        holiDay: HOLIDAY,
-        recType: getValues("_recType"),
+        vno: "050718290611",
+        rcvNo1: "01024555612",
+        colorringIdx: 1,
+        rcvMentIdx: 0,
+        bizEndMentIdx: 0,
+        holiMentIdx: 0,
+        bizStartTime: "0900",
+        bizEndTime: "0930",
+        holiWeek: "10101",
+        holiDay: "0111110",
+        recType: "0",
+        status: "Y",
       }
     ).then((res) => {
       console.log("res", res);
       if (res.code === "0000") {
-        API.servicesPostData(STR.urlSetCompanyDetail, {
-          rcid: cid,
-          extnum: getValues("_vno"),
-        }).then((res) => {
-          setLoading(true);
-          if (res.status === "success") {
-            setLoading(false);
-            UD.servicesUseToast("완료되었습니다!", "s");
-            // setTimeout(() => {
-            //   navigate(`company/${cid}`);
-            // }, 2000);
-            return;
-          }
-        });
+        console.log("??");
+        // API.servicesPostData(STR.urlSetCompanyDetail, {
+        //   rcid: cid,
+        //   extnum: getValues("_vno"),
+        // }).then((res) => {
+        //   setLoading(true);
+        //   if (res.status === "success") {
+        //     setLoading(false);
+        //     UD.servicesUseToast("완료되었습니다!", "s");
+        //     // setTimeout(() => {
+        //     //   navigate(`company/${cid}`);
+        //     // }, 2000);
+        //     return;
+        //   }
+        // });
       }
     });
   }

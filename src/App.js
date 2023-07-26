@@ -61,7 +61,7 @@ import ListEvent from "./screens/event/ListEvent";
 import SetEvent from "./screens/event/SetEvent";
 
 // 안심번호
-// import List050Ment from "./screens/develop/List050Ment";
+import List050Ment from "./screens/develop/List050Ment";
 import Set050Biz from "./screens/company/Set050Biz";
 import Set050Ment from "./screens/company/Set050Ment";
 
@@ -539,7 +539,7 @@ function App() {
         />
 
         {/* 외부 사이트 연결로 인한 Nav 숨김 처리 */}
-        {/* <Route
+        <Route
           path="050ment"
           element={
             <MainLayout
@@ -547,7 +547,7 @@ function App() {
               component={<List050Ment />}
             />
           }
-        /> */}
+        />
         <Route
           path="050ment/add"
           element={
