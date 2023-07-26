@@ -5,65 +5,65 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 /* 기본 레이아웃 & 기능 */
-import MainLayout from "./components/common/LayoutMain";
-import Login from "./screens/Login";
+import MainLayout from "./components/layout/LayoutMain";
+import Login from "./screens/login/Login";
 
 /* 회원관리 */
-import ListUser from "./screens/ListUser";
-import AddUser from "./screens/AddUser";
-import SetDetailUser from "./screens/SetDetailUser";
+import ListUser from "./screens/user/ListUser";
+import AddUser from "./screens/user/AddUser";
+import SetDetailUser from "./screens/user/SetDetailUser";
 
 /* 사업자 관리 */
-import ListCompany from "./screens/ListCompany";
-import AddCompany from "./screens/AddCompany";
-import SetDetailCompany from "./screens/SetDetailCompany";
-import SetRequiredCompany from "./screens/SetRequiredCompany";
+import ListCompany from "./screens/company/ListCompany";
+import AddCompany from "./screens/company/AddCompany";
+import SetDetailCompany from "./screens/company/SetDetailCompany";
+import SetRequiredCompany from "./screens/company/SetRequiredCompany";
+import DetailCompanyReview from "./screens/company/DetailCompanyReview";
 
 /* 공지사항 - 사업자*/
-import ListCompanyNotice from "./screens/ListCompanyNotice";
-import DetailNotice from "./screens/DetailNotice";
-import SetCompanyNotice from "./screens/SetDetailCompanyNotice";
+import ListCompanyNotice from "./screens/company/ListCompanyNotice";
+import DetailNotice from "./screens/notice/DetailNotice";
+import SetCompanyNotice from "./screens/company/SetDetailCompanyNotice";
 
 /* 견적요청서 관리 */
-import ListEstimateinfo from "./screens/ListEstimateinfo";
-import SetAdminEstimateinfo from "./screens/SetAdminEstimateinfo";
-import DetailCompanyEstimateinfo from "./screens/ListCompanyEstimateinfo";
+import ListEstimateinfo from "./screens/estimateinfo/ListEstimateinfo";
+import SetAdminEstimateinfo from "./screens/estimateinfo/SetAdminEstimateinfo";
+import DetailCompanyEstimateinfo from "./screens/company/ListCompanyEstimateinfo";
 
 /* 견적서 관리 */
-import ListProposalinfo from "./screens/ListProposalinfo";
-import SetAdminProposalInfo from "./screens/SetAdminProposalInfo";
-import DetailCompanyProposalinfo from "./screens/ListCompanyProposalinfo";
+import ListProposalinfo from "./screens/proposalInfo/ListProposalinfo";
+import SetAdminProposalInfo from "./screens/proposalInfo/SetAdminProposalInfo";
+import DetailCompanyProposalinfo from "./screens/company/ListCompanyProposalinfo";
 
 /* 공지사항 - 관리자*/
-import ListAdminNotice from "./screens/ListAdminNotice";
-import SetAdminNotice from "./screens/SetAdminNotice";
+import ListAdminNotice from "./screens/notice/ListAdminNotice";
+import SetAdminNotice from "./screens/notice/SetAdminNotice";
 
 /* 리뷰 */
-import ListCompanyReview from "./screens/ListCompanyReview";
-import DetailCompanyReview from "./screens/DetailCompanyReview";
+import ListCompanyReview from "./screens/company/ListCompanyReview";
 
 /* 앱관리 */
-import SetAdminAppbanner from "./screens/SetAdminAppbanner";
+import SetAdminAppbanner from "./screens/appbanner/SetAdminAppbanner";
 
 /* 키워드 조회량 관리 */
-// import SetAdminKeywords from "./screens/SetAdminKeywords";
+// import SetAdminKeywords from "./screens/develop/SetAdminKeywords";
 
 /* 유통만 관리 */
-import ListAgentEm from "./screens/ListAgentEm";
-import SetAgentEm from "./screens/SetAgentEm";
-import ListAgentAg from "./screens/ListAgentAg";
-import ListAgentSd from "./screens/ListAgentSd";
-import SetAgentSd from "./screens/SetAgentSd";
-import SetAgentAg from "./screens/SetAgentAg";
+import ListAgentEm from "./screens/agent/ListAgentEm";
+import SetAgentEm from "./screens/agent/SetAgentEm";
+import ListAgentAg from "./screens/agent/ListAgentAg";
+import ListAgentSd from "./screens/agent/ListAgentSd";
+import SetAgentSd from "./screens/agent/SetAgentSd";
+import SetAgentAg from "./screens/agent/SetAgentAg";
 
 /* 이밴트 */
-import ListEvent from "./screens/ListEvent";
-import SetEvent from "./screens/SetEvent";
+import ListEvent from "./screens/event/ListEvent";
+import SetEvent from "./screens/event/SetEvent";
 
 // 안심번호
-import List050Ment from "./screens/List050Ment";
-import Set050Biz from "./screens/Set050Biz";
-import Set050Ment from "./screens/Set050Ment";
+// import List050Ment from "./screens/develop/List050Ment";
+import Set050Biz from "./screens/company/Set050Biz";
+import Set050Ment from "./screens/company/Set050Ment";
 
 import * as API from "./service/api";
 import * as ST from "./service/storage";
@@ -539,7 +539,7 @@ function App() {
         />
 
         {/* 외부 사이트 연결로 인한 Nav 숨김 처리 */}
-        <Route
+        {/* <Route
           path="050ment"
           element={
             <MainLayout
@@ -547,7 +547,7 @@ function App() {
               component={<List050Ment />}
             />
           }
-        />
+        /> */}
         <Route
           path="050ment/add"
           element={
