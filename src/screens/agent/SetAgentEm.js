@@ -11,7 +11,7 @@ import { ErrorMessage } from "@hookform/error-message";
 
 import LayoutTopButton from "../../components/layout/LayoutTopButton";
 import DetailUserComponent from "../../components/common/ComponentSetUser";
-import ComponentModal from "../../components/piece/PieceModalAgentem";
+import ComponentModal from "../../components/services/ServiceModalAgentem";
 
 import * as API from "../../service/api";
 import * as UD from "../../service/useData";
@@ -55,6 +55,7 @@ export default function SetAgentEm() {
                 if (res2.status === "success") {
                   setValue("_telnum", res2.data.telnum || "");
                   setValue("_Cname", res2.data.regName || "");
+                  setValue("_remarks", res2.data.remarks || "");
                 }
               });
             });
@@ -92,6 +93,7 @@ export default function SetAgentEm() {
       rcid: cid,
       telnum: getValues("_telnum"),
       regName: getValues("_Cname"),
+      remarks: getValues("_remarks"),
     })
       .then((res) => {
         if (res.status === "success") {
@@ -368,16 +370,14 @@ export default function SetAgentEm() {
               />
 
               <div className="formContentWrap" style={{ width: "100%" }}>
-                <label htmlFor="ex" className="blockLabel">
+                <label htmlFor="remarks" className="blockLabel">
                   <span>비고</span>
                 </label>
                 <div>
                   <textarea
                     type="text"
-                    id="ex"
-                    placeholder="기능 적용 X"
-                    maxLength="100"
-                    {...register("_ex")}
+                    id="remarks"
+                    {...register("_remarks")}
                   />
                 </div>
               </div>

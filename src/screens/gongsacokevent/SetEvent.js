@@ -23,7 +23,7 @@ export default function SetEvent() {
     formState: { isSubmitting, errors },
   } = useForm({
     defaultValues: {
-      _category: "wzEvent",
+      // _category: "wzEvent",
     },
   });
 
@@ -35,7 +35,7 @@ export default function SetEvent() {
       })
         .then((res) => {
           if (res.status === "success") {
-            setValue("_category", res.data.category || "wzEvent");
+            // setValue("_category", res.data.category || "wzEvent");
             setValue("_contentString", res.data.contentString || "");
             setValue("_contentDetail", res.data.contentDetail || "");
             setUseFlag(res.data.useFlag == 1 ? true : false);
@@ -57,7 +57,8 @@ export default function SetEvent() {
         ? // contid여부 확인하여 contid가 있으면 수정
           {
             contid: contid,
-            category: getValues("_category"),
+            category: "wzEvent",
+            // category: getValues("_category"),
             contentString: getValues("_contentString"),
             contentDetail: getValues("_contentDetail").includes("https")
               ? getValues("_contentDetail")
@@ -65,7 +66,7 @@ export default function SetEvent() {
           }
         : // contid가 없으면 새로 작성
           {
-            category: getValues("_category"),
+            category: "wzEvent",
             contentString: getValues("_contentString"),
             contentDetail: getValues("_contentDetail").includes("https")
               ? getValues("_contentDetail")
@@ -90,7 +91,7 @@ export default function SetEvent() {
   const fnUseFlag = () => {
     API.servicesPostData(STR.urlSetContent, {
       contid: contid,
-      category: getValues("_category"),
+      category: "wzEvent",
       contentString: getValues("_contentString"),
       contentDetail: getValues("_contentDetail"),
       useFlag: useFlag == true ? "0" : "1",
@@ -132,9 +133,38 @@ export default function SetEvent() {
               style={{ marginTop: "0", width: "100%" }}
             >
               <label htmlFor="title" className="blockLabel">
+                <span>미리보기</span>
+              </label>
+              <div>
+                <div
+                  className="contentInnerTag"
+                  dangerouslySetInnerHTML={{
+                    __html: watch("_contentString"),
+                  }}
+                />
+              </div>
+            </div>
+
+            <div
+              className="formContentWrap"
+              style={{ marginTop: "0", width: "100%" }}
+            >
+              <label htmlFor="title" className="blockLabel">
                 <span>제목</span>
               </label>
               <div>
+                <div className="contentInnerManual contentInnerManualEg">
+                  <span>전체 문구는 p 태그로 감싼다.</span>
+                  <span>
+                    색, 글자 크기 변경은 span 태그로 감싼 후 속성을 추가한다.
+                  </span>
+                  <span>
+                    색 변경 속성: [ span style="color:blue" ] [ span
+                    style="color:#000" ] 크기 변경 속성: [ span
+                    style="font-size:22px" ]
+                  </span>
+                </div>
+
                 <input
                   type="text"
                   id="contentString"
@@ -157,7 +187,7 @@ export default function SetEvent() {
               </div>
             </div>
 
-            <div
+            {/* <div
               className="formContentWrap"
               style={{ marginTop: "0", width: "100%" }}
             >
@@ -175,9 +205,8 @@ export default function SetEvent() {
                     {...register("_category")}
                   />
                   <span>와짱 이벤트</span>
-                </label>
-
-                <label className="listSearchRadioLabel" htmlFor="businessEvent">
+                </label> 
+                 <label className="listSearchRadioLabel" htmlFor="businessEvent">
                   <input
                     type="radio"
                     checked={watch("_category") == "businessEvent"}
@@ -188,11 +217,11 @@ export default function SetEvent() {
                   <span>고객 ( 사용자 ) 이벤트</span>
                 </label>
               </div>
-            </div>
+            </div> */}
 
             <div className="formContentWrap formContentWideWrap">
               <label htmlFor="title" className="blockLabel">
-                <span>URL 연결</span>
+                <span>연결 URL</span>
               </label>
               <div className="flexBox">
                 <input

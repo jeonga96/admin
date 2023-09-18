@@ -12,11 +12,190 @@ import * as STR from "../../service/string";
 
 import SetImage from "../../components/services/ServicesImageSetPreview";
 import PieceRegisterSearchPopUp from "../../components/services/ServiceRegisterSearchPopUp";
-
+import PieceLoading from "../../components/piece/PieceLoading";
 import LayoutTopButton from "../../components/layout/LayoutTopButton";
 import ComponentTableTopNumber from "../../components/piece/PieceTableTopNumber";
 import ComponentTableTopScrollBtn from "../../components/piece/PieceTableTopScrollBtn";
+import ServiceModalUseSafeNumber from "../../components/services/ServiceModalUseSafeNumber";
 
+function ChildSafeNum() {
+  const { cid } = useParams();
+  const navigate = useNavigate();
+  const { handleSubmit, register, setValue, getValues, watch } = useForm({});
+
+  const getedData = useSelector((state) => state.getedData, shallowEqual);
+  const [click, setClick] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  // 안심번호 검색 & 사용할 수 있는 안심번호 리스트 중 가장 앞 작은 안심번호 사지고 오기
+  const fnSelectSafeNum = (selectNum, e) => {
+    if (e !== undefined) {
+      setClick(false);
+    }
+    setValue("_vno", selectNum);
+  };
+
+  const fnSafeNumSubmit = () => {
+    const VNO = getValues("_vno").replaceAll("-", "").toString();
+    const RCVNO1 = getValues("_rcvNo1").replaceAll("-", "").toString();
+
+    setLoading(true);
+    return API.servicesPostData(STR.urlCreate050, {
+      channelId: "wazzang",
+      vno: VNO,
+      vnoName: getValues("_vnoName"),
+      status: "Y",
+      rcvNo1: RCVNO1,
+      rcvNo2: "",
+      bizStartTime: "0000",
+      bizEndTime: "2359",
+      colorringIdx: 119158,
+      rcvMentIdx: 119159,
+      bizEndMentIdx: 119160,
+      holiMentIdx: 119161,
+      holiWeek: "11111",
+      holiDay: "1111111",
+      holidaySet: "N",
+      recType: "0",
+    })
+      .then((res) => {
+        if (res.status === "success") {
+          API.servicesPostData(STR.urlSetCompanyDetail, {
+            rcid: cid,
+            extnum: getValues("_vno"),
+          }).then((res) => {
+            if (res.status === "success") {
+              setLoading(false);
+              UD.servicesUseModalSafeNum(
+                "사업자 상세정보를 입력하시겠습니까?",
+                "상세정보 입력을 끝내시려면 목록으로 가기를 클릭하십시오.",
+                () => {
+                  navigate(`/company/${cid}`);
+                },
+                () => {
+                  navigate(`/company`);
+                }
+              );
+            }
+          });
+        } else {
+          console.log("urlCreate050 API 오류");
+          UD.servicesUseToast(res.emsg, "e");
+        }
+      })
+      .catch((error) => {
+        // urlCreate050 작업중 네트워크 오류
+        console.log("urlCreate050 작업중 네트워크 오류", error);
+        UD.servicesUseToast("작업이 완료되지 않았습니다.", "e");
+      });
+  };
+
+  useEffect(() => {
+    if (!!getedData) {
+      setValue("_rcvNo1", getedData.mobile);
+      setValue("_vnoName", getedData.cname);
+    }
+    if (!!getedData.extnum) {
+      const VNO = getedData.extnum.replaceAll("-", "").toString();
+      API.servicesPostData(STR.urlGet050, { vno: VNO }).then((res) => {
+        setValue("_vno", res.data.vno);
+        setValue("_vnoName", res.data.vnoName);
+        setValue("_rcvNo1", res.data.rcvNo1);
+      });
+    }
+  }, [getedData]);
+
+  return (
+    <form className="formLayout" onSubmit={handleSubmit(fnSafeNumSubmit)}>
+      <PieceLoading loading={loading} bg />
+      <div className="formWrap">
+        <fieldset id="CompanyDetail_3">
+          <h3>
+            기본 안심번호 정보
+            <button type="submit">번호 등록</button>
+          </h3>
+
+          <ServiceModalUseSafeNumber
+            click={click}
+            setClick={setClick}
+            fn={fnSelectSafeNum}
+          />
+
+          {/* setDetailUserInfo  ================================================================ */}
+          <div className="formContentWrap" style={{ width: "100%" }}>
+            <label htmlFor="vno" className=" blockLabel">
+              <span>안심번호</span>
+            </label>
+            <div style={{ display: "flex" }}>
+              <input
+                type="text"
+                id="vno"
+                maxLength="14"
+                value={
+                  (watch("_vno") &&
+                    watch("_vno")
+                      .replace(/[^0-9]/g, "")
+                      .replace(/(^[0-9]{4})([0-9]+)([0-9]{4}$)/, "$1-$2-$3")
+                      .replace("--", "-")) ||
+                  ""
+                }
+                {...register("_vno")}
+              />
+              <button
+                type="button"
+                className="formContentBtn"
+                onClick={() => setClick(!click)}
+              >
+                안심번호 검색
+              </button>
+            </div>
+          </div>
+
+          <div className="formContentWrap" style={{ width: "50%" }}>
+            <label htmlFor="vnoName" className="blockLabel">
+              <span>별칭</span>
+            </label>
+            <div>
+              <input
+                type="text"
+                id="vnoName"
+                maxLength={20}
+                {...register("_vnoName")}
+              />
+            </div>
+          </div>
+
+          <div className="formContentWrap" style={{ width: "50%" }}>
+            <label htmlFor="rcvNo1" className="blockLabel">
+              <span>착신번호</span>
+            </label>
+            <div>
+              <input
+                type="text"
+                id="rcvNo1"
+                maxLength={13}
+                value={
+                  (watch("_rcvNo1") &&
+                    watch("_rcvNo1")
+                      .replace(/[^0-9]/g, "")
+                      .replace(
+                        /(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)([0-9]{4}$)/,
+                        "$1-$2-$3"
+                      )
+                      .replace("--", "-")) ||
+                  ""
+                }
+                {...register("_rcvNo1")}
+              />
+            </div>
+          </div>
+        </fieldset>
+      </div>
+    </form>
+  );
+}
+
+// 부모 ==============================================================================
 export default function SetRequiredCompany() {
   const { cid } = useParams();
   const dispatch = useDispatch();
@@ -35,66 +214,22 @@ export default function SetRequiredCompany() {
       _status: "2",
     },
   });
-
   const [UID, SETUID] = useState("");
   const tableTopScrollBtnData = useRef([
     { idName: "CompanyDetail_1", text: "계약 기본 정보" },
     { idName: "CompanyDetail_2", text: "사업자 기본 정보" },
+    { idName: "CompanyDetail_3", text: "기본 안심번호 정보" },
   ]);
   // 데이터 ------------------------------------------------------------------------
   const getedData = useSelector((state) => state.getedData, shallowEqual);
   // 이미지 ------------------------------------------------------------------------
   const titleImg = useSelector((state) => state.imgData, shallowEqual);
   // 주소 ------------------------------------------------------------------------
-  const [multilAddress, setMultilAddress] = useState({});
-
-  // getUser,
-  async function fnReadList(res) {
-    dispatch({
-      type: "serviceGetedData",
-      payload: { ...res.data },
-    });
-    await API.servicesPostData(STR.urlGetUser, {
-      uid: UID,
-    }).then((res2) => {
-      dispatch({
-        type: "serviceGetedData",
-        payload: { ...res.data, ...{ userid: res2.data.userid } },
-      });
-      setValue("_userid", res2.data.userid || "");
-    });
-
-    await API.servicesPostData(STR.urlGetCompanyDetail, {
-      rcid: cid,
-    }).then((res3) => {
-      if (res3.status === "success") {
-        if (!getedData.address) {
-          dispatch({
-            type: "serviceGetedData",
-            payload: {
-              ...res.data,
-              ...{
-                address: res3.data.address,
-                detailaddress: res3.data.detailaddress,
-                oldaddress: res3.data.oldaddress,
-                zipcode: res3.data.zipcode,
-                longitude: res3.data.longitude,
-                latitude: res3.data.latitude,
-              },
-            },
-          });
-        }
-
-        setValue("_Cname", res3.data.name);
-        setValue("_offer", res3.data.offer || "");
-        setValue("_regOwner", res3.data.regOwner || "");
-        setValue("_subCategory", res3.data.subCategory || "");
-        setValue("_bigCategory", res3.data.bigCategory || "");
-        setValue("_ceogreet", res3.data.ceogreet || "");
-        setValue("_location", res3.data.location);
-      }
-    });
-  }
+  // const [multilAddress, setMultilAddress] = useState({});
+  const multilAddress = useSelector(
+    (state) => state.multilAddressData,
+    shallowEqual
+  );
 
   // input ","로 구분된 문자열 최대 입력 개수제한 ========================
   const onChangeValidation = (e) => {
@@ -118,6 +253,7 @@ export default function SetRequiredCompany() {
 
   // form submit 이벤트 =========================================
   const handleSubmitEvent = () => {
+    console.log("저장!", titleImg ? titleImg[0].iid : "");
     API.servicesPostData(STR.urlSetCompany, {
       cid: cid,
       name: getValues("_name"),
@@ -158,11 +294,13 @@ export default function SetRequiredCompany() {
         if (res.status === "success") {
           UD.servicesUseModal(
             "사업자 상세정보를 입력하시겠습니까?",
-            "확인은 누르시면 사업자 상세정보 입력 페이지로 이동됩니다.",
+            "안심번호를 추가하시려면 안심번호 입력하기를 클릭하십시오.",
             () => {
               navigate(`/company/${cid}`);
             },
-            () => navigate(`/company`)
+            () => {
+              document.location.reload();
+            }
           );
         }
       })
@@ -179,6 +317,7 @@ export default function SetRequiredCompany() {
     });
   }, []);
 
+  // urlGetCompany에서 UID값을 받아온 후에 동작
   useEffect(() => {
     API.servicesPostData(STR.urlGetUserDetail, {
       ruid: UID,
@@ -194,6 +333,65 @@ export default function SetRequiredCompany() {
       })
       .catch((res) => console.log(res));
   }, [UID]);
+
+  // urlGetCompany에서 UID값을 받아온 후에 동작
+  // urlGetUser, urlGetCompanyDetail 사용 이미지, 주소 컴포넌트 데이터 해당 함수에서 전달
+  async function fnReadList(res) {
+    dispatch({
+      type: "serviceGetedData",
+      payload: { ...res.data },
+    });
+
+    await API.servicesPostData(STR.urlGetUser, {
+      uid: UID,
+    }).then((res2) => {
+      dispatch({
+        type: "serviceGetedData",
+        payload: { ...res.data, ...{ userid: res2.data.userid } },
+      });
+      setValue("_userid", res2.data.userid || "");
+    });
+
+    await API.servicesPostData(STR.urlGetCompanyDetail, {
+      rcid: cid,
+    }).then((res3) => {
+      if (res3.status === "success") {
+        if (!getedData.address) {
+          dispatch({
+            type: "serviceGetedData",
+            payload: {
+              ...res.data,
+              ...{
+                address: res3.data.address,
+                detailaddress: res3.data.detailaddress,
+                oldaddress: res3.data.oldaddress,
+                zipcode: res3.data.zipcode,
+                longitude: res3.data.longitude,
+                latitude: res3.data.latitude,
+              },
+            },
+          });
+        }
+        dispatch({
+          type: "serviceGetedData",
+          payload: {
+            ...res.data,
+            titleImg: res3.data.titleImg,
+            extnum: res3.data.extnum,
+            cname: res3.data.name,
+          },
+        });
+        setValue("_Cname", res3.data.name);
+        setValue("_offer", res3.data.offer || "");
+        setValue("_regOwner", res3.data.regOwner || "");
+        setValue("_subCategory", res3.data.subCategory || "");
+        setValue("_bigCategory", res3.data.bigCategory || "");
+        setValue("_ceogreet", res3.data.ceogreet || "");
+        setValue("_location", res3.data.location);
+        setValue("_extnum", res3.data.extnum);
+      }
+    });
+  }
 
   return (
     <>
@@ -531,7 +729,7 @@ export default function SetRequiredCompany() {
               </div>
 
               {/* 대표자명 */}
-              <div className="formContentWrap">
+              <div className="formContentWrap" style={{ width: "50%" }}>
                 <label htmlFor="regOwner" className="blockLabel">
                   <span>대표자명</span>
                 </label>
@@ -550,7 +748,7 @@ export default function SetRequiredCompany() {
               </div>
 
               {/* 휴대폰 */}
-              <div className="formContentWrap">
+              <div className="formContentWrap" style={{ width: "50%" }}>
                 <label htmlFor="mobilenum" className="blockLabel">
                   <span>휴대폰</span>
                 </label>
@@ -588,6 +786,41 @@ export default function SetRequiredCompany() {
                   />
                 </div>
               </div>
+              {/* 
+              <div className="formContentWrap" style={{ width: "50%" }}>
+                <label htmlFor="extnum" className="blockLabel">
+                  <span>안심번호</span>
+                </label>
+                <div
+                  style={{ display: "flex", justifyContent: "space-between" }}
+                >
+                  <input
+                    type="text"
+                    id="extnum"
+                    style={{ width: "85.5%" }}
+                    disabled
+                    value={
+                      (watch("_extnum") &&
+                        watch("_extnum")
+                          .replace(/[^0-9]/g, "")
+                          .replace(/(^[0-9]{4})([0-9]+)([0-9]{4}$)/, "$1-$2-$3")
+                          .replace("--", "-")) ||
+                      ""
+                    }
+                    {...register("_extnum")}
+                  />
+                  <Link
+                    className="formContentBtn"
+                    to={
+                      !!watch("_extnum")
+                        ? `safenumber/${watch("_extnum").replaceAll("-", "")}`
+                        : "safenumber"
+                    }
+                  >
+                    {!!watch("_extnum") ? "관리" : "등록"}
+                  </Link>
+                </div>
+              </div> */}
 
               {/* 위치 */}
               <div className="formContentWrap">
@@ -612,12 +845,7 @@ export default function SetRequiredCompany() {
               </div>
 
               {/* 주소 */}
-              <PieceRegisterSearchPopUp
-                setMultilAddress={setMultilAddress}
-                multilAddress={multilAddress}
-                getedData={getedData}
-                autoKey
-              />
+              <PieceRegisterSearchPopUp />
 
               {/* 대표인사말 */}
               <div className="formContentWrap">
@@ -674,6 +902,8 @@ export default function SetRequiredCompany() {
             </fieldset>
           </div>
         </form>
+
+        <ChildSafeNum />
       </div>
     </>
   );

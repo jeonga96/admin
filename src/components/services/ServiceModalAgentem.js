@@ -4,7 +4,7 @@ import { useDispatch, useSelector, shallowEqual } from "react-redux";
 import * as API from "../../service/api";
 import * as STR from "../../service/string";
 
-export default function PieceModalAgentem({ fn }) {
+export default function ServiceModalAgentem({ fn }) {
   const dispatch = useDispatch();
   const clickModal = useSelector((state) => state.click, shallowEqual);
 
@@ -17,34 +17,38 @@ export default function PieceModalAgentem({ fn }) {
       userrole: "ROLE_ADMIN_SD",
       size: 30,
     }).then((res) => {
-      setPrevUserList(res.data);
+      if (res.status === "succees") {
+        setPrevUserList(res.data);
+      }
     });
   }, []);
 
   useEffect(() => {
     const newArr = [];
-    prevUserList.forEach((item) => {
-      return API.servicesPostData(STR.urlGetCompanyDetail, {
-        rcid: item.cid,
-      })
-        .then((response) => response.data)
-        .then((result) => {
-          prevUserList.map((user) => {
-            if (user.cid === item.cid) {
-              return newArr.push({ ...user, additionalData: result });
-            }
-            return user;
-          });
-          if (newArr.length === prevUserList.length) {
-            const uidSortArr = newArr.sort((a, b) => b.uid - a.uid);
-            setUserList(uidSortArr);
-            // setFinish(true);
-          }
+    console.log("prevUserList", prevUserList);
+    !!prevUserList &&
+      prevUserList.forEach((item) => {
+        return API.servicesPostData(STR.urlGetCompanyDetail, {
+          rcid: item.cid,
         })
-        .catch((error) => {
-          console.error(error);
-        });
-    });
+          .then((response) => response.data)
+          .then((result) => {
+            prevUserList.map((user) => {
+              if (user.cid === item.cid) {
+                return newArr.push({ ...user, additionalData: result });
+              }
+              return user;
+            });
+            if (newArr.length === prevUserList.length) {
+              const uidSortArr = newArr.sort((a, b) => b.uid - a.uid);
+              setUserList(uidSortArr);
+              // setFinish(true);
+            }
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      });
   }, [prevUserList]);
 
   return (

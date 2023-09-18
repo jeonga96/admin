@@ -12,6 +12,7 @@ import Login from "./screens/login/Login";
 import ListUser from "./screens/user/ListUser";
 import AddUser from "./screens/user/AddUser";
 import SetDetailUser from "./screens/user/SetDetailUser";
+import SetCsvUpload from "./screens/csvUpload/SetCsvUpload";
 
 /* 사업자 관리 */
 import ListCompany from "./screens/company/ListCompany";
@@ -56,14 +57,18 @@ import ListAgentSd from "./screens/agent/ListAgentSd";
 import SetAgentSd from "./screens/agent/SetAgentSd";
 import SetAgentAg from "./screens/agent/SetAgentAg";
 
-/* 이밴트 */
-import ListEvent from "./screens/event/ListEvent";
-import SetEvent from "./screens/event/SetEvent";
+/* 공사콕 이밴트 */
+import ListEvent from "./screens/gongsacokevent/ListEvent";
+import SetEvent from "./screens/gongsacokevent/SetEvent";
+
+/* 와짱 이밴트 */
+import ListWzEvent from "./screens/wzevent/ListWzEvent";
+import SetWzEvent from "./screens/wzevent/SetWzEvent";
 
 // 안심번호
-import List050Ment from "./screens/develop/List050Ment";
-import Set050Biz from "./screens/company/Set050Biz";
-import Set050Ment from "./screens/company/Set050Ment";
+import SetSafeNumber from "./screens/company/SetSafeNumber";
+// import List050Ment from "./screens/develop/List050Ment";
+// import Set050Ment from "./screens/develop/Set050Ment";
 
 import * as API from "./service/api";
 import * as ST from "./service/storage";
@@ -74,9 +79,6 @@ function App() {
   const navigate = useNavigate();
 
   const ISUSER = ST.servicesGetStorage(STR.TOKEN);
-  // const ISALLKEYWORD = ST.servicesGetStorage(STR.ALLKEYWORD);
-  // const navChange = useSelector((state) => state.navState);
-  // const dispatch = useDispatch();
   const notLoginScreens = location.pathname !== "/login";
   let currentPath = useRef("");
 
@@ -92,42 +94,14 @@ function App() {
     }
   };
 
-  // const fnNavEvent = (matches) => {
-  //   dispatch({
-  //     type: "serviceNav",
-  //     payload: matches,
-  //   });
-  // };
-
-  // const fnScreenEvent = (event) => {
-  //   const matches = event.matches;
-  //   fnNavEvent(matches);
-  // };
-
   useEffect(() => {
     // url "/"을 통합회원관리로 이동하도록 설정
     if (location.pathname === "/") {
       fnHomeLink();
     }
-    // 네비게이션 반응형
-    // let mql = window.matchMedia("screen and (min-width:992px)");
-    // if (!mql.matches) {
-    //   fnNavEvent(!navChange);
-    // }
-    // mql.addEventListener("change", fnScreenEvent);
-    // return () => mql.removeEventListener("change", fnScreenEvent);
-  }, []);
 
-  useEffect(() => {
     // 로컬에 token이 없으면서 현재 페이지가 login이 아닐 때면 login 으로 이동
     fnUserCheck();
-
-    // 키워드 검색을 위해 전체 키워드 받아와 로컬스토리지에 저장
-    // if (!!ISUSER & !ISALLKEYWORD) {
-    // API.servicesPostData(STR.urlAllKeyword, {}).then((res) => {
-    //   ST.servicesSetStorage(STR.ALLKEYWORD, JSON.stringify(res.data));
-    // });
-    // }
 
     //refresh token 다시 받아오기 이벤트, 현재 10시간마다 토큰을 받아오는 것으로 설정
     if (notLoginScreens) {
@@ -154,6 +128,7 @@ function App() {
         pauseOnFocusLoss
         draggable
         pauseOnHover
+        limit={1}
         theme="light"
       />
       <Routes>
@@ -180,7 +155,7 @@ function App() {
           path="user/add"
           element={<MainLayout nowTitle="회원 추가" component={<AddUser />} />}
         />
-        {/* ------- 사업자 관리 ------- */}
+
         <Route
           path="company/add"
           element={
@@ -208,6 +183,15 @@ function App() {
             <MainLayout
               nowTitle="사업자 필수정보"
               component={<SetRequiredCompany />}
+            />
+          }
+        />
+        <Route
+          path="csvupload"
+          element={
+            <MainLayout
+              nowTitle="대용량 회원데이터 추가"
+              component={<SetCsvUpload />}
             />
           }
         />
@@ -272,7 +256,7 @@ function App() {
           path="estimateinfo"
           element={
             <MainLayout
-              nowTitle="공사콕 견적의뢰서"
+              nowTitle="모든 견적의뢰서 관리"
               component={<ListEstimateinfo />}
             />
           }
@@ -281,7 +265,7 @@ function App() {
           path="estimateinfo/add"
           element={
             <MainLayout
-              nowTitle="공사콕 견적의뢰서 추가"
+              nowTitle="견적의뢰서 추가"
               component={<SetAdminEstimateinfo />}
             />
           }
@@ -290,7 +274,7 @@ function App() {
           path="estimateinfo/:esid"
           element={
             <MainLayout
-              nowTitle="공사콕 견적의뢰서 상세 관리"
+              nowTitle="견적의뢰서 상세 관리"
               component={<SetAdminEstimateinfo />}
             />
           }
@@ -318,7 +302,7 @@ function App() {
           path="proposalInfo"
           element={
             <MainLayout
-              nowTitle="공사콕 견적서"
+              nowTitle="견적의뢰서 / 견적서 관리"
               component={<ListProposalinfo />}
             />
           }
@@ -327,7 +311,7 @@ function App() {
           path="proposalInfo/add"
           element={
             <MainLayout
-              nowTitle="공사콕 견적서 추가"
+              nowTitle="견적서 추가"
               component={<SetAdminProposalInfo />}
             />
           }
@@ -336,7 +320,7 @@ function App() {
           path="proposalInfo/:prid"
           element={
             <MainLayout
-              nowTitle="공사콕 견적서 상세 관리"
+              nowTitle="견적서 상세 관리"
               component={<SetAdminProposalInfo />}
             />
           }
@@ -436,6 +420,25 @@ function App() {
             />
           }
         />
+        {/* ------- 와짱 이벤트 관리 ------- */}
+        <Route
+          path="wzevent"
+          element={
+            <MainLayout
+              nowTitle="와짱 이벤트 관리"
+              component={<ListWzEvent />}
+            />
+          }
+        />
+        <Route
+          path="wzevent/:gweid"
+          element={
+            <MainLayout
+              nowTitle="와짱 이벤트 관리"
+              component={<SetWzEvent />}
+            />
+          }
+        />
         {/* ------- 키워드 조회량 관리 ------- */}
         {/* <Route
           path="setkeywords"
@@ -526,21 +529,27 @@ function App() {
 
         {/* ------- 안심번호 ------- */}
         <Route
-          path="company/:cid/050biz"
+          path="company/:cid/safenumber"
           element={
-            <MainLayout nowTitle="안심번호 등록" component={<Set050Biz />} />
+            <MainLayout
+              nowTitle="안심번호 등록"
+              component={<SetSafeNumber />}
+            />
           }
         />
         <Route
-          path="company/:cid/050biz/:vno"
+          path="company/:cid/safenumber/:vno"
           element={
-            <MainLayout nowTitle="안심번호 수정" component={<Set050Biz />} />
+            <MainLayout
+              nowTitle="안심번호 수정"
+              component={<SetSafeNumber />}
+            />
           }
         />
 
         {/* 외부 사이트 연결로 인한 Nav 숨김 처리 */}
-        <Route
-          path="050ment"
+        {/* <Route
+          path="safement"
           element={
             <MainLayout
               nowTitle="안심번호 멘트 관리"
@@ -549,7 +558,7 @@ function App() {
           }
         />
         <Route
-          path="050ment/add"
+          path="safement/add"
           element={
             <MainLayout
               nowTitle="안심번호 멘트 추가"
@@ -558,14 +567,14 @@ function App() {
           }
         />
         <Route
-          path="050ment/:mentid"
+          path="safement/:mentid"
           element={
             <MainLayout
               nowTitle="안심번호 멘트 수정"
               component={<Set050Ment />}
             />
           }
-        />
+        /> */}
       </Routes>
     </div>
   );

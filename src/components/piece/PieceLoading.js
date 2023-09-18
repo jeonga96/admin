@@ -24,7 +24,7 @@ export default function ComponentLoading({ loading, bg }) {
         <div
           style={{
             position: "absolute",
-            zIndex: "100",
+            zIndex: "1000",
             width: "100%",
             left: "0",
             top: "0",

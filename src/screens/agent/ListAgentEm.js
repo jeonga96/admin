@@ -85,15 +85,6 @@ export default function ListAgentEm() {
                     <td>{item.userid}</td>
                     <td>{item.name}</td>
                     <td>
-                      {/* {item.userrole &&
-                        item.userrole.includes("ROLE_ADMIN") && (
-                          <i
-                            className="tableIcon"
-                            style={{ backgroundColor: "orange" }}
-                          >
-                            [본사] 와짱( 주 )
-                          </i>
-                        )} */}
                       {item.userrole &&
                       item.userrole.includes("ROLE_ADMIN_AG") ? (
                         <i
@@ -110,21 +101,11 @@ export default function ListAgentEm() {
                           지사 ( 총판 ) 관리
                         </i>
                       ) : (
-                        <i
-                          className="tableIcon"
-                          style={{ backgroundColor: "orange" }}
-                        >
-                          [본사] 와짱( 주 )
-                        </i>
+                        <i className="tableIcon">[본사] 와짱( 주 )</i>
                       )}
-                      {/* {item.userrole &&
-                      
-                        )} */}
                     </td>
                     <td>{item.mobile}</td>
-
                     <td>{item.createTime && item.createTime.slice(0, 10)}</td>
-                    {/* <td>{item.udid ? <i className="tableIcon">입력</i> : null}</td> */}
                   </tr>
                 ))}
             </tbody>

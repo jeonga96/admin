@@ -82,18 +82,25 @@ export default function ImageSet({ id, title }) {
   const onChangeFiles = useCallback(
     (e) => {
       e.preventDefault();
+      setLoading(true);
+
       let selectFiles = [];
       if (e.type === "drop") {
         selectFiles = e.dataTransfer.files;
       } else {
         selectFiles = e.target.files;
       }
+
+      console.log("electFiles.length", selectFiles.length);
+
       const formData = new FormData();
       for (let i = 0; i < selectFiles.length; i++) {
+        console.log("selectFiles", i, selectFiles[i]);
         formData.append("Imgs", selectFiles[i]);
       }
-      setLoading(true);
+
       API.servicesPostDataForm(STR.urlUpImages, formData).then((res) => {
+        console.log("post", res);
         if (res.data.length == 1) {
           if (id === "titleImg") {
             setFiles(() => [res.data[0]]);
@@ -113,9 +120,8 @@ export default function ImageSet({ id, title }) {
           fnState([...arrData, ...files]);
         } else {
           setLoading(false);
-          return UD.servicesUseToast(
-            "이미지는 최대 25개까지 입력하실 수 있습니다."
-          );
+          UD.servicesUseToast("이미지는 최대 25개까지 입력하실 수 있습니다.");
+          return;
         }
       });
     },

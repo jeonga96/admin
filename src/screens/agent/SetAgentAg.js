@@ -15,8 +15,8 @@ import * as UD from "../../service/useData";
 import * as STR from "../../service/string";
 
 import LayoutTopButton from "../../components/layout/LayoutTopButton";
-import PieceRegisterSearchPopUp from "../../components/services/ServiceRegisterSearchPopUp";
-import ComponentModal from "../../components/piece/PieceModalAgentem";
+import ServiceRegisterSearchPopUp from "../../components/services/ServiceRegisterSearchPopUp";
+import ComponentModal from "../../components/services/ServiceModalAgentem";
 
 export default function SetAgentSd() {
   const { uid } = useParams();
@@ -88,6 +88,7 @@ export default function SetAgentSd() {
                   setValue("_telnum", res2.data.telnum || "");
                   setValue("_Cname", res2.data.name || "");
                   setValue("_extnum", res2.data.extnum || "");
+                  setValue("_remarks", res2.data.remarks || "");
                 }
               });
             });
@@ -117,6 +118,7 @@ export default function SetAgentSd() {
       regOwner: getValues("_regOwner"),
       registration: getValues("_registration"),
       extnum: getValues("_extnum"),
+      remarks: getValues("_remarks"),
       address: multilAddress.address,
       detailaddress: multilAddress.detailaddress,
       oldaddress: multilAddress.oldaddress,
@@ -183,6 +185,7 @@ export default function SetAgentSd() {
         uid: uid,
         userid: getValues("_userid"),
         passwd: getValues("_passwd"),
+        useFlag: getValues("_useFlag"),
       });
       API.servicesPostData(STR.urlSetUserDetail, {
         ruid: uid,
@@ -520,19 +523,17 @@ export default function SetAgentSd() {
               </div>
 
               {/* 주소 */}
-              <PieceRegisterSearchPopUp />
+              <ServiceRegisterSearchPopUp />
 
               <div className="formContentWrap" style={{ width: "100%" }}>
-                <label htmlFor="ex" className="blockLabel">
+                <label htmlFor="remarks" className="blockLabel">
                   <span>비고</span>
                 </label>
                 <div>
                   <textarea
                     type="text"
-                    id="ex"
-                    placeholder="기능 적용 X"
-                    maxLength="100"
-                    {...register("_ex")}
+                    id="remarks"
+                    {...register("_remarks")}
                   />
                 </div>
               </div>

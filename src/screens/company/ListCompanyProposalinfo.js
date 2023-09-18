@@ -47,6 +47,7 @@ export default function DetailCompanyProposalinfo() {
               }
         )
           .then((res) => {
+            console.log(res);
             setList(res.data);
             setListPage(res.page);
           })
@@ -78,6 +79,20 @@ export default function DetailCompanyProposalinfo() {
       .catch(setList([]));
   }, [page.activePage]);
 
+  // useLayoutEffect(() => {
+  //   if (!!prid && !!getValues("_fromUid")) {
+  //     API.servicesPostData(STR.urlGetUserCid, {
+  //       uid: getValues("_toUid"),
+  //     }).then((res) => {
+  //       if (res.status === "success") {
+  //         API.servicesPostData(STR.urlGetCompanyDetail, {
+  //           rcid: res.data.cid,
+  //         }).then((res2) => SetToName(res2.data.name));
+  //       }
+  //     });
+  //   }
+  // }, [getValues("_toUid")]);
+
   return (
     <>
       {(list == [] && list.length == 0) || list === undefined ? (
@@ -89,7 +104,8 @@ export default function DetailCompanyProposalinfo() {
             <table className="commonTable">
               <thead>
                 <tr>
-                  <th style={{ width: "100px" }}>관리번호</th>
+                  <th style={{ width: "80px" }}>견적서</th>
+                  <th style={{ width: "80px" }}>견적의뢰서</th>
                   <th style={{ width: "100px" }}>견적 요청</th>
                   <th style={{ width: "100px" }}>견적 수령</th>
                   <th style={{ width: "auto" }}>공사명</th>
@@ -111,6 +127,18 @@ export default function DetailCompanyProposalinfo() {
                         >
                           {item.prid}
                         </Link>
+                      </td>
+                      <td className="tableButton">
+                        {!!item.resid ? (
+                          <Link
+                            to={`/estimateinfo/${item.resid}`}
+                            className="Link"
+                          >
+                            {item.resid}
+                          </Link>
+                        ) : (
+                          item.resid
+                        )}
                       </td>
                       <td>{item.fromUid}</td>
                       <td>{item.toUid}</td>

@@ -46,13 +46,20 @@ function ChildList({
     // useFlag 이벤트
     if (target.id === "useFlag") {
       if (clickedStatus.length == 0) {
+        const CID = target.name;
+        // 해당 cid에 안심번호가 입력되어 있다면 안심번호 useFlag에 적용되지 않도록 조건 설정
+        if (!item.extnum) {
+          // cid 추가, 삭제 이벤트
+          setUseFlagCk(!useFlagCk);
+          addCheck(CID, target.id, target.checked);
+        } else {
+          UD.servicesUseToast("안심번호 삭제를 먼저 진행해 주세요.", "e");
+        }
         // 체크박스 상태관리
-        setUseFlagCk(!useFlagCk);
-        // cid 추가, 삭제 이벤트
-        addCheck(target.name, target.id, target.checked);
       } else {
         UD.servicesUseToast(
-          "계약관리와 회원상태를 한 번에 수정하실 수 없습니다."
+          "계약관리와 회원상태를 한 번에 수정하실 수 없습니다.",
+          "e"
         );
       }
     }
@@ -99,9 +106,21 @@ function ChildList({
       </td>
       <td>{item.cdname}</td>
       <td>{item.name}</td>
-      <td>{item.regOwner}</td>
       <td>{item.registration}</td>
       <td>{item.telnum}</td>
+      <td>{item.mobilenum}</td>
+      <td className="tableButton">
+        {!!item.extnum ? (
+          <Link
+            to={`${item.cid}/safenumber/${item.extnum.replaceAll("-", "")}`}
+            className="Link"
+          >
+            {item.extnum}
+          </Link>
+        ) : (
+          item.extnum
+        )}
+      </td>
       <td>
         {item.status == "0" && (
           <i className="tableIcon" style={{ backgroundColor: "red" }}>
@@ -119,15 +138,15 @@ function ChildList({
           </i>
         )}
       </td>
-      <td>{item.updateTime && item.updateTime.slice(0, 10)}</td>
       <td>{item.createTime && item.createTime.slice(0, 10)}</td>
     </tr>
   );
 }
 
-// 상위 컴포넌트
+// ====================================================================================
+// 부모
+// ====================================================================================
 export default function ListCompany() {
-  // 데이터 ------------------------------------------------------------------------
   // 목록 데이터
   const [companyList, setCompanyList] = useState([]);
 
@@ -139,16 +158,18 @@ export default function ListCompany() {
   // [체크 박스 - 계약관리,회원상태]
   const [clickedUseFlag, setClickedUseFlag] = useState([]);
   const [clickedStatus, setClickedStatus] = useState([]);
+  const [searchClick, setSearchClick] = useState(false);
 
   useLayoutEffect(() => {
-    API.servicesPostData(STR.urlCompanylist, {
-      offset: page.getPage,
-      size: 15,
-    }).then((res) => {
-      setCompanyList(res.data);
-      setListPage(res.page);
-    });
-  }, [page.getPage]);
+    searchClick === false &&
+      API.servicesPostData(STR.urlCompanylist, {
+        offset: page.getPage,
+        size: 15,
+      }).then((res) => {
+        setCompanyList(res.data);
+        setListPage(res.page);
+      });
+  }, [page.activePage]);
 
   // 계약관리 submit
   const handleUseFlagSubmit = (e) => {
@@ -156,19 +177,30 @@ export default function ListCompany() {
       API.servicesPostData(STR.urlSetCompany, {
         cid: clickedUseFlag[i],
         useFlag: e.target.id === "useFlagY" ? "1" : "0",
-      }).then(window.location.reload());
+      }).then(() => {
+        UD.servicesUseToast("작업이 완료되었습니다.", "s");
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
+      });
     }
   };
 
   // 회원상태 submit
   const handleStautsSubmit = (e) => {
+    console.log(e, clickedStatus);
     switch (e.target.id) {
       case "waiting":
         for (let i = 0; i < clickedStatus.length; i++) {
           API.servicesPostData(STR.urlSetCompanyDetail, {
             rcid: clickedStatus[i],
             status: 2,
-          }).then(window.location.reload());
+          }).then(() => {
+            UD.servicesUseToast("작업이 완료되었습니다.", "s");
+            setTimeout(() => {
+              window.location.reload();
+            }, 2000);
+          });
         }
         break;
       case "completion":
@@ -176,7 +208,12 @@ export default function ListCompany() {
           API.servicesPostData(STR.urlSetCompanyDetail, {
             rcid: clickedStatus[i],
             status: 1,
-          }).then(window.location.reload());
+          }).then(() => {
+            UD.servicesUseToast("작업이 완료되었습니다.", "s");
+            setTimeout(() => {
+              window.location.reload();
+            }, 2000);
+          });
         }
         break;
       default:
@@ -184,14 +221,27 @@ export default function ListCompany() {
           API.servicesPostData(STR.urlSetCompanyDetail, {
             rcid: clickedStatus[i],
             status: 0,
-          }).then(window.location.reload());
+          }).then(() => {
+            UD.servicesUseToast("작업이 완료되었습니다.", "s");
+            setTimeout(() => {
+              window.location.reload();
+            }, 2000);
+          });
         }
         break;
     }
   };
+
   return (
     <>
-      <ComponentListCompanySearch />
+      <ComponentListCompanySearch
+        setCompanyList={setCompanyList}
+        setListPage={setListPage}
+        searchClick={searchClick}
+        setSearchClick={setSearchClick}
+        page={page}
+      />
+
       {(companyList == [] && companyList.length == 0) ||
       companyList === undefined ? (
         <>
@@ -234,7 +284,9 @@ export default function ListCompany() {
                 id="refuse"
               />
             )}
-            <LayoutTopButton url="add" text="사업자 추가" />
+            {clickedStatus.length === 0 && clickedUseFlag.length === 0 && (
+              <LayoutTopButton url="add" text="사업자 추가" />
+            )}
           </ul>
           <section className="tableWrap">
             <h3 className="blind">table</h3>
@@ -242,16 +294,16 @@ export default function ListCompany() {
               <table className="commonTable">
                 <thead>
                   <tr>
-                    <th style={{ width: "60px" }}>계약관리</th>
-                    <th style={{ width: "60px" }}>회원상태</th>
+                    <th style={{ width: "50px" }}>계약관리</th>
+                    <th style={{ width: "50px" }}>회원상태</th>
                     <th style={{ width: "80px" }}>관리번호</th>
                     <th style={{ width: "auto" }}>사업자명</th>
                     <th style={{ width: "100px" }}>계약자</th>
-                    <th style={{ width: "100px" }}>대표자명</th>
-                    <th style={{ width: "170px" }}>사업자 등록 번호</th>
-                    <th style={{ width: "170px" }}>일반전화</th>
+                    <th style={{ width: "120px" }}>사업자 등록 번호</th>
+                    <th style={{ width: "120px" }}>일반전화</th>
+                    <th style={{ width: "120px" }}>휴대폰</th>
+                    <th style={{ width: "120px" }}>안심번호</th>
                     <th style={{ width: "60px" }}>계약관리</th>
-                    <th style={{ width: "110px " }}>수정일</th>
                     <th style={{ width: "110px " }}>계약일</th>
                   </tr>
                 </thead>

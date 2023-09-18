@@ -1,4 +1,4 @@
-import { useLayoutEffect } from "react";
+import { useLayoutEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
@@ -6,35 +6,49 @@ import * as API from "../../service/api";
 import * as UD from "../../service/useData";
 import * as STR from "../../service/string";
 
+import ServiceModalCompanySetRuidAdd from "../services/ServiceModalCompanySetRuidAdd";
+
 export default function ComponentSetCompany({ companyData, setCompanyData }) {
   const { cid } = useParams();
   // react-hook-form 라이브러리
-  const { register, setValue } = useForm();
+  const { register, setValue, getValues } = useForm();
+  const [click, setClick] = useState(false);
 
   // 계약자, 사업자 활성화, 회원연결 입력 이벤트
   const fnSetCompanyrData = (res) => {
     setCompanyData({ ...companyData, ...res });
   };
 
-  // 회원연결 시 사용된 cid 중복 입력 불가능하도록 설정하는 조건
-  const userLinkedCidCk = (e) => {
-    // 입력한 uid와 연결된 cid가 있는지 확인 후 값이 없다면 입력
-    // 현재 cid와 동일한 값을 입력했을 경우 입력 아닐 시 오류 확인
-    API.servicesPostData(STR.urlGetUserCid, { uid: e.target.value }).then(
-      (res) => {
-        if (res.emsg === "process failed.") {
-          fnSetCompanyrData({ [e.target.id]: e.target.value });
+  const fnSelect = (res) => {
+    API.servicesPostData(STR.urlGetUserCid, { uid: res.uid }).then((res2) => {
+      console.log(res);
+      if (res2.emsg === "process failed.") {
+        // fnSetCompanyrData({ ruid: res.uid });
+        setValue("_ruid", res.uid);
+        setClick(false);
+      } else {
+        if (res2.data.cid === cid) {
+          UD.servicesUseToast("기존에 연결된 회원 관리번호 입니다.", "s");
+          setClick(false);
         } else {
-          if (res.data.cid == cid) {
-            fnSetCompanyrData({ [e.target.id]: e.target.value });
-          } else {
-            document.getElementById("ruid").focus();
-            UD.servicesUseToast("이미 연결된 회원 관리번호입니다.");
-          }
+          UD.servicesUseToast("이미 사용된 회원 관리번호입니다.");
         }
-        return;
       }
-    );
+      return;
+    });
+  };
+
+  const fnSubmit = (e) => {
+    e.preventDefault();
+
+    API.servicesPostData(STR.urlSetCompany, {
+      cid: cid,
+      ruid: getValues("_ruid"),
+    }).then((res) => {
+      if (res.status === "success") {
+        UD.servicesUseToast("관리번호가 저장되었습니다.", "s");
+      }
+    });
   };
 
   useLayoutEffect(() => {
@@ -44,7 +58,6 @@ export default function ComponentSetCompany({ companyData, setCompanyData }) {
     })
       .then((res) => {
         if (res.status === "success") {
-          // setCompanyInfo(res.data);
           fnSetCompanyrData({
             name: res.data.name,
             ruid: res.data.ruid,
@@ -120,14 +133,55 @@ export default function ComponentSetCompany({ companyData, setCompanyData }) {
         <div className="blockLabel">
           <span>회원 관리번호</span>
         </div>
-        <div>
+
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+          }}
+        >
           <input
-            className="formContentInput"
             type="text"
             id="ruid"
-            {...register("_ruid", {
-              onBlur: userLinkedCidCk,
-            })}
+            style={{
+              width: "68%",
+            }}
+            disabled
+            {...register("_ruid")}
+          />
+
+          <button
+            type="button"
+            onClick={() => {
+              setClick(true);
+            }}
+            className="formContentBtn"
+            style={{
+              width: "65px",
+              backgroundColor: "#757575",
+              color: "rgb(255, 255, 255)",
+            }}
+          >
+            검색
+          </button>
+
+          <button
+            type="button"
+            onClick={fnSubmit}
+            className="formContentBtn"
+            style={{
+              width: "65px",
+              backgroundColor: "rgb(155, 17, 30)",
+              color: "rgb(255, 255, 255)",
+            }}
+          >
+            저장
+          </button>
+
+          <ServiceModalCompanySetRuidAdd
+            click={click}
+            setClick={setClick}
+            fn={fnSelect}
           />
         </div>
       </div>

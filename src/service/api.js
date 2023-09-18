@@ -1,8 +1,18 @@
 import axios from "axios";
-import { TOKEN, urlRefreshtoken, BIZ_TOKEN } from "./string";
+import { TOKEN, urlRefreshtoken } from "./string";
 import { servicesUseToast } from "./useData";
 import { servicesGetStorage, servicesSetStorage } from "./storage";
+
+export {servicesGetStorage} from "./storage"
 const storageGetToken = servicesGetStorage(TOKEN);
+
+export function servicesGetRefreshToken() {
+  servicesPostData(urlRefreshtoken, {})
+    .then((res) => {
+      servicesSetStorage(TOKEN, res.data.jtoken);
+    })
+    .catch((err) => console.log("리프래시 토큰 오류", err));
+}
 
 export function servicesGetData(url, reqData) {
   let headers = {
@@ -22,8 +32,8 @@ export function servicesGetData(url, reqData) {
   )
     .then((res) => res.data)
     .catch((error) => {
-      console.log("importData.axiosSetData", error);
-      if (error.response.status === 403) {
+      console.log("error", error);
+      if (error.message === "Request failed with status code 403") {
         servicesUseToast(
           "로그인 정보가 만료되었습니다. 다시 로그인해주십시오.",
           "e"
@@ -45,19 +55,21 @@ export function servicesPostData(url, reqData) {
     })
     .then((res) => res.data)
     .catch((error) => {
-      console.log("importData.axiosSetData", error);
-      servicesUseToast(
-        "로그인 정보가 만료되었습니다. 다시 로그인해주십시오.",
-        "e"
-      );
-      setTimeout(() => {
-        document.location.href = "/login";
-      }, 2000);
+      console.log("error", error);
+      if (error.message === "Request failed with status code 403") {
+        servicesUseToast(
+          "로그인 정보가 만료되었습니다. 다시 로그인해주십시오.",
+          "e"
+        );
+        setTimeout(() => {
+          document.location.href = "/login";
+        }, 2000);
+      }
     });
 }
 
 export function servicesPostDataForm(url, reqData) {
-  axios
+  return axios
     .post(url, reqData, {
       headers: {
         "Content-Type": "multipart/form-data",
@@ -68,56 +80,47 @@ export function servicesPostDataForm(url, reqData) {
       return res.data;
     })
     .catch((error) => {
-      servicesUseToast(
-        "로그인 정보가 만료되었습니다. 다시 로그인해주십시오.",
-        "e"
-      );
-      setTimeout(() => {
-        document.location.href = "/login";
-      }, 2000);
+      console.log("error", error);
+      if (error.message === "Request failed with status code 403") {
+        servicesUseToast(
+          "로그인 정보가 만료되었습니다. 다시 로그인해주십시오.",
+          "e"
+        );
+        setTimeout(() => {
+          document.location.href = "/login";
+        }, 2000);
+      }
     });
 }
 
-export function servicesPost050biz(url, reqData) {
-  // Authorization: `Bearer ${BIZ_TOKEN}`,
-  return axios
-    .post(url, reqData, {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${BIZ_TOKEN}`,
-      },
-    })
-    .then((res) => res.data)
-    .catch((error) => console.log("importData.servicesPost050biz", error));
-}
+export function servicesGetFile(url, reqData) {
+  let headers = {
+    "Content-Type": "application/json",
+  };
+  if (storageGetToken) {
+    headers.Authorization = `Bearer ${storageGetToken}`;
+  }
 
-export function servicesGet050biz(url, reqData) {
-  return axios
-    .get(url, reqData, {
-      headers: {
-        Authorization: `Bearer ${BIZ_TOKEN}`,
-      },
-    })
+  return axios(
+    {
+      url: url,
+      method: "get",
+      data: reqData,
+      responseType: "stream",
+    }
+    // { headers }
+  )
     .then((res) => res.data)
-    .catch((error) => console.log("importData.servicesGet050biz", error));
-}
-
-export function servicesPost050bizMent(url, reqData) {
-  return axios
-    .post(url, reqData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-        Authorization: `Bearer ${BIZ_TOKEN}`,
-      },
-    })
-    .then((res) => res.data)
-    .catch((error) => console.log("importData.servicesPost050bizMent", error));
-}
-
-export function servicesGetRefreshToken() {
-  servicesPostData(urlRefreshtoken, {})
-    .then((res) => {
-      servicesSetStorage(TOKEN, res.data.jtoken);
-    })
-    .catch((err) => console.log("리프래시 토큰 오류", err));
+    .catch((error) => {
+      console.log("error", error);
+      if (error.message === "Request failed with status code 403") {
+        servicesUseToast(
+          "로그인 정보가 만료되었습니다. 다시 로그인해주십시오.",
+          "e"
+        );
+        setTimeout(() => {
+          document.location.href = "/login";
+        }, 2000);
+      }
+    });
 }

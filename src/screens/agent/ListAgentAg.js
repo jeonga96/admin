@@ -11,10 +11,42 @@ import LayoutTopButton from "../../components/layout/LayoutTopButton";
 import ComponentListAgentSearch from "../../components/common/ComponentListAgentSearch";
 import ComponentErrorNull from "../../components/piece/PieceErrorNull";
 
+function ChildTd({ item }) {
+  const [companyData, setCompanyData] = useState({});
+
+  useEffect(() => {
+    API.servicesPostData(STR.urlGetCompanyDetail, {
+      rcid: item.cid,
+    })
+      .then((response) => response.data)
+      .then((result) => {
+        setCompanyData(result);
+        console.log(companyData !== {} && companyData.regName, result);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
+
+  return (
+    <tr>
+      <td className="tableButton">
+        <Link to={`${item.uid}`} className="Link">
+          {item.uid}
+        </Link>
+      </td>
+      <td>{item.name}</td>
+      <td>{companyData !== {} && companyData.name}</td>
+      <td>{companyData !== {} && companyData.regName}</td>
+      <td>{item.mobile}</td>
+      <td>{item.createTime && item.createTime.slice(0, 10)}</td>
+    </tr>
+  );
+}
+
 export default function ListAgentAg() {
   // 데이터 ------------------------------------------------------------------------
   // 회원 목록
-  const [prevUserList, setPrevUserList] = useState([]);
   const [userList, setUserList] = useState([]);
 
   // pagination 버튼 관련 -----------------------------------------------------------
@@ -24,7 +56,6 @@ export default function ListAgentAg() {
 
   // 회원관리, 상태관리 cid 저장
   const [searchClick, setSearchClick] = useState(false);
-  const [finish, setFinish] = useState(false);
 
   useLayoutEffect(() => {
     searchClick === false &&
@@ -33,36 +64,10 @@ export default function ListAgentAg() {
         userrole: "ROLE_ADMIN_AG",
         size: 15,
       }).then((res) => {
-        setPrevUserList(res.data);
+        setUserList(res.data);
         setListPage(res.page);
       });
   }, [page.activePage]);
-
-  useEffect(() => {
-    const newArr = [];
-    prevUserList.forEach((item) => {
-      return API.servicesPostData(STR.urlGetCompanyDetail, {
-        rcid: item.cid,
-      })
-        .then((response) => response.data)
-        .then((result) => {
-          prevUserList.map((user) => {
-            if (user.cid === item.cid) {
-              return newArr.push({ ...user, additionalData: result });
-            }
-            return user;
-          });
-          if (newArr.length === prevUserList.length) {
-            const uidSortArr = newArr.sort((a, b) => b.uid - a.uid);
-            setUserList(uidSortArr);
-            setFinish(true);
-          }
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    });
-  }, [listPage && prevUserList]);
 
   return (userList == [] && userList.length == 0) || userList === undefined ? (
     <>
@@ -74,7 +79,7 @@ export default function ListAgentAg() {
   ) : (
     <>
       <ComponentListAgentSearch
-        setUserList={setPrevUserList}
+        setUserList={setUserList}
         setListPage={setListPage}
         searchClick={searchClick}
         setSearchClick={setSearchClick}
@@ -101,26 +106,9 @@ export default function ListAgentAg() {
             </thead>
             <tbody>
               {/* checkbox를 별도로 관리하기 위해 컴포넌트로 관리 */}
-              {finish &&
-                userList.map((item) => {
-                  console.log(item);
-                  return (
-                    <tr key={item.uid}>
-                      <td className="tableButton">
-                        <Link to={`${item.uid}`} className="Link">
-                          {item.uid}
-                        </Link>
-                      </td>
-                      <td>{item.name}</td>
-                      <td>
-                        {item.additionalData && item.additionalData.regName}
-                      </td>
-                      <td>{item.additionalData && item.additionalData.name}</td>
-                      <td>{item.mobile}</td>
-                      <td>{item.createTime && item.createTime.slice(0, 10)}</td>
-                    </tr>
-                  );
-                })}
+              {userList.map((item) => {
+                return <ChildTd item={item} key={item.uid} />;
+              })}
             </tbody>
           </table>
           <PageButton listPage={listPage} page={page} setPage={setPage} />

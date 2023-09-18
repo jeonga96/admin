@@ -3,6 +3,9 @@
 // <PieceRegisterSearchPopUp />
 // react-redux를 사용하여 주소 관련을 useDispatch, useSelector에 할당
 
+// 주소 검색, 우편번호 검색은 다음 우편번호 검색 & react-daum-postcode기능 사용
+// 카카오 API는 주소를 위도, 경도로 변환할 때 사용
+
 import { useSelector, useDispatch, shallowEqual } from "react-redux";
 import { useEffect, useLayoutEffect } from "react";
 import { useDaumPostcodePopup } from "react-daum-postcode";
@@ -15,6 +18,7 @@ export default function ServiceRegisterSearchPopUp({ userComponent }) {
   // 다음 주소 검색 API 주소
   const scriptUrl =
     "//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js";
+
   // eact-daum-postcode의 popup 방식 사용
   const open = useDaumPostcodePopup(scriptUrl);
   const getedData = useSelector((state) => state.getedData, shallowEqual);
@@ -77,6 +81,7 @@ export default function ServiceRegisterSearchPopUp({ userComponent }) {
             },
           });
         } else {
+          console.log(result[0]);
           dispatch({
             type: "serviceMultilAddressData",
             payload: {
@@ -84,8 +89,14 @@ export default function ServiceRegisterSearchPopUp({ userComponent }) {
               ...{
                 address: result[0].address_name,
                 detailaddress: getedData.detailaddress,
-                zipcode: result[0].road_address.zone_no,
-                oldaddress: result[0].address.address_name,
+                zipcode:
+                  (result[0].road_address && result[0].road_address.zone_no) ||
+                  "",
+                oldaddress:
+                  (result[0].road_address &&
+                    result[0].road_address.address_name) ||
+                  (result[0].address && result[0].address.address_name) ||
+                  "",
                 latitude: Math.floor(result[0].y * 100000),
                 longitude: Math.floor(result[0].x * 100000),
               },
@@ -94,7 +105,6 @@ export default function ServiceRegisterSearchPopUp({ userComponent }) {
         }
       }
     };
-
     geocoder.addressSearch(res.address, callback);
   };
 

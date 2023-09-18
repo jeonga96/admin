@@ -27,31 +27,34 @@ export default function DetailComapnyEsimateinfo() {
   useLayoutEffect(() => {
     // uid가져오기
     API.servicesPostData(STR.urlGetCompany, { cid: rcid })
-      .then((res) => (RUID.current = res.data.ruid))
+      .then((res) => {
+        RUID.current = res.data.ruid;
+      })
       // 가져온 uid로 견적 요청서 가져오기
-      .then((res) =>
+      .then(() => {
+        // url에 맞춰 수령 기준, 요청 기준으로 견적 요청서를 가져온다
+        // (url에 from이 들어가면 formUid로 검색 )
         API.servicesPostData(
           STR.urlListEstimateInfo,
-          // url에 맞춰 수령 기준, 요청 기준으로 견적 요청서를 가져온다
-          // (url에 from이 들어가면 formUid로 검색 )
           location.pathname.includes("from")
             ? {
-                fromUid: res,
+                fromUid: RUID.current,
                 offset: page.getPage,
                 size: 15,
               }
             : {
-                toUid: res,
+                toUid: RUID.current,
                 offset: page.getPage,
                 size: 15,
               }
         )
           .then((res) => {
+            // console.log("// 가져온 uid로 견적 요청서 가져오기", res);
             setList(res.data);
             setListPage(res.page);
           })
-          .catch(setList([]))
-      );
+          .catch(setList([]));
+      });
   }, []);
 
   // 페이지 이동시마다 발생

@@ -1,7 +1,7 @@
 // 사업자 회원 관리 > 견적의뢰서 관리 > 공사콕 견적의뢰서 상세 관리 (!!esid)
 
 import { useDispatch, shallowEqual, useSelector } from "react-redux";
-import { useLayoutEffect, useRef } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
@@ -36,6 +36,8 @@ export default function SetAdminEstimateinfo() {
     { idName: "CompanyDetail_2", text: "견적서 제출 내용" },
   ]);
 
+  const [toName, SetToName] = useState("");
+  const [fromName, SetFromName] = useState("");
   // 이미지 ------------------------------------------------------------------------
   const multiImgs = useSelector((state) => state.multiImgsData, shallowEqual);
   const imgsIid = [];
@@ -55,6 +57,7 @@ export default function SetAdminEstimateinfo() {
       .then((res) => {
         if (res.status === "success") {
           // 이미지 iid를 가지고 오기 위해 (imgs, titleImg) 사용
+          console.log(res.data);
           dispatch({
             type: "serviceGetedData",
             payload: { ...res.data },
@@ -220,6 +223,34 @@ export default function SetAdminEstimateinfo() {
     }
   }
 
+  useLayoutEffect(() => {
+    if (!!esid && !!getValues("_fromUid")) {
+      API.servicesPostData(STR.urlGetUserCid, {
+        uid: getValues("_fromUid"),
+      }).then((res) => {
+        if (res.status === "success") {
+          API.servicesPostData(STR.urlGetCompanyDetail, {
+            rcid: res.data.cid,
+          }).then((res2) => SetFromName(res2.data.name));
+        }
+      });
+    }
+  }, [getValues("_fromUid")]);
+
+  useLayoutEffect(() => {
+    if (!!esid && !!getValues("_fromUid")) {
+      API.servicesPostData(STR.urlGetUserCid, {
+        uid: getValues("_toUid"),
+      }).then((res) => {
+        if (res.status === "success") {
+          API.servicesPostData(STR.urlGetCompanyDetail, {
+            rcid: res.data.cid,
+          }).then((res2) => SetToName(res2.data.name));
+        }
+      });
+    }
+  }, [getValues("_toUid")]);
+
   return (
     <>
       <div className="commonBox">
@@ -236,7 +267,7 @@ export default function SetAdminEstimateinfo() {
             {/* 갼적서 요청 내용  ================================================================ */}
             <fieldset id="CompanyDetail_1">
               <h3>
-                견적서 요청 내용
+                견적의뢰서 작성
                 {/* {getedData.readFlag == "1" ? (
                   <span>열람</span>
                 ) : (
@@ -344,6 +375,7 @@ export default function SetAdminEstimateinfo() {
                 </label>
                 <div>
                   <input
+                    style={{ width: "50%", marginBottom: "0px" }}
                     type="text"
                     id="fromUid"
                     name="_fromUid"
@@ -352,12 +384,13 @@ export default function SetAdminEstimateinfo() {
                       required: "입력되지 않았습니다.",
                     })}
                   />
-                  <ErrorMessage
-                    errors={errors}
-                    name="_fromUid"
-                    render={({ message }) => (
-                      <span className="errorMessageWrap">{message}</span>
-                    )}
+
+                  <input
+                    style={{ width: "50%" }}
+                    type="text"
+                    disabled
+                    value={fromName}
+                    placeholder="사업자 회원이 아닙니다."
                   />
                 </div>
               </div>
@@ -368,6 +401,7 @@ export default function SetAdminEstimateinfo() {
                 </label>
                 <div>
                   <input
+                    style={{ width: "50%", marginBottom: "0px" }}
                     type="text"
                     id="toUid"
                     placeholder="견적서를 요청한 관리번호를 입력해 주세요."
@@ -375,12 +409,12 @@ export default function SetAdminEstimateinfo() {
                       required: "입력되지 않았습니다.",
                     })}
                   />
-                  <ErrorMessage
-                    errors={errors}
-                    name="_toUid"
-                    render={({ message }) => (
-                      <span className="errorMessageWrap">{message}</span>
-                    )}
+                  <input
+                    style={{ width: "50%" }}
+                    type="text"
+                    disabled
+                    value={toName}
+                    placeholder="사업자 회원이 아닙니다."
                   />
                 </div>
               </div>
@@ -557,7 +591,7 @@ export default function SetAdminEstimateinfo() {
             </fieldset>
 
             {/* 갼적서 응답 내용  ================================================================ */}
-            <fieldset id="CompanyDetail_2">
+            {/* <fieldset id="CompanyDetail_2">
               <h3>견적서 제출 내용</h3>
 
               <div className="formContentWrap">
@@ -602,7 +636,7 @@ export default function SetAdminEstimateinfo() {
                   />
                 </div>
               </div>
-            </fieldset>
+            </fieldset> */}
           </div>
         </form>
       </div>

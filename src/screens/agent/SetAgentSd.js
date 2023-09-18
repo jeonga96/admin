@@ -77,7 +77,10 @@ export default function SetAgentSd() {
                     type: "serviceGetedData",
                     payload: { ...res2.data },
                   });
-                  if (res2.data.name.includes("[본사직영]")) {
+                  if (
+                    !!res2.data.name &&
+                    res2.data.name.includes("[본사직영]")
+                  ) {
                     setWz(true);
                   }
                   setValue("_useFlag", res2.data.useFlag || "");
@@ -89,6 +92,7 @@ export default function SetAgentSd() {
                   setValue("_telnum", res2.data.telnum || "");
                   setValue("_Cname", res2.data.name || "");
                   setValue("_extnum", res2.data.extnum || "");
+                  setValue("_remarks", res2.data.remarks || "");
                 }
               });
             });
@@ -116,6 +120,7 @@ export default function SetAgentSd() {
       regOwner: getValues("_regOwner"),
       registration: getValues("_registration"),
       extnum: getValues("_extnum"),
+      remarks: getValues("_remarks"),
       address: multilAddress.address,
       detailaddress: multilAddress.detailaddress,
       oldaddress: multilAddress.oldaddress,
@@ -182,7 +187,7 @@ export default function SetAgentSd() {
         uid: uid,
         userid: getValues("_userid"),
         passwd: getValues("_passwd"),
-        // ...userData,
+        useFlag: getValues("_useFlag"),
       });
       API.servicesPostData(STR.urlSetUserDetail, {
         ruid: uid,
@@ -493,16 +498,14 @@ export default function SetAgentSd() {
               <PieceRegisterSearchPopUp />
 
               <div className="formContentWrap" style={{ width: "100%" }}>
-                <label htmlFor="ex" className="blockLabel">
+                <label htmlFor="remarks" className="blockLabel">
                   <span>비고</span>
                 </label>
                 <div>
                   <textarea
                     type="text"
-                    id="ex"
-                    placeholder="기능 적용 X"
-                    maxLength="100"
-                    {...register("_ex")}
+                    id="remarks"
+                    {...register("_remarks")}
                   />
                 </div>
               </div>

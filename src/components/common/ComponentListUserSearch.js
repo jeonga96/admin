@@ -13,13 +13,14 @@ export default function ComponentListUserSearch({
   page,
 }) {
   // react-hook-form 라이브러리
-  const { register, setValue, getValues, watch, reset, handleSubmit } =
-    useForm();
-
-  useLayoutEffect(() => {
-    setValue("_userrole", "ROLE_USER");
-    setValue("_useFlag", "1");
-  }, []);
+  const { register, setValue, getValues, watch, reset, handleSubmit } = useForm(
+    {
+      defaultValues: {
+        _userrole: "ROLE_USER",
+        _useFlag: "1",
+      },
+    }
+  );
 
   useEffect(() => {
     // searchClick을 클릭한 (true) 상태에서 동작
@@ -28,7 +29,7 @@ export default function ComponentListUserSearch({
 
   // 상위 컴포넌트에게 전달받은 useState의 set 함수
   // setUserList가 set으로 전달받은 후 사용하기 위해 && 사용
-  const userList = (res) => {
+  const fnuserList = (res) => {
     setUserList && setUserList(res);
   };
   const listPage = (res) => {
@@ -53,7 +54,7 @@ export default function ComponentListUserSearch({
         UD.servicesUseToast("검색하신 데이터가 없습니다.", "e");
       }
       if (res.status === "success") {
-        userList(res.data);
+        fnuserList(res.data);
         listPage(res.page);
         setSearchClick(true);
         UD.servicesUseToast("완료되었습니다.", "s");
@@ -136,7 +137,7 @@ export default function ComponentListUserSearch({
               {...register("_userrole")}
             />
             <label className="listSearchRadioLabel" htmlFor="userroleUser">
-              일반
+              전체
             </label>
 
             <input

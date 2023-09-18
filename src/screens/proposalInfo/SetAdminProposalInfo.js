@@ -1,7 +1,7 @@
 // 사업자 회원 관리 > 공사콕 견적서 > 공사콕 견적서 상세 관리 (prid 여부 확인)
 
 import { useDispatch, shallowEqual, useSelector } from "react-redux";
-import { useLayoutEffect, useRef } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
@@ -11,8 +11,8 @@ import * as UD from "../../service/useData";
 import * as STR from "../../service/string";
 
 import LayoutTopButton from "../../components/layout/LayoutTopButton";
+import ComponentEstimateinfo from "../../components/common/ComponentEstimateinfo";
 import ServicesImageSetPreview from "../../components/services/ServicesImageSetPreview";
-import ComponentTableTopNumber from "../../components/piece/PieceTableTopNumber";
 import ComponentTableTopScrollBtn from "../../components/piece/PieceTableTopScrollBtn";
 
 export default function SetAdminProposalInfo() {
@@ -28,14 +28,23 @@ export default function SetAdminProposalInfo() {
     formState: { isSubmitting, errors },
   } = useForm();
 
-  const tableTopScrollBtnData = useRef([
+  const tableTopScrollBtnDataSet = useRef([
     { idName: "CompanyDetail_1", text: "견적서 분류" },
-    { idName: "CompanyDetail_2", text: "견적서 세부 내용" },
+    { idName: "CompanyDetail_2", text: "견적의뢰서 작성" },
+    { idName: "CompanyDetail_3", text: "견적서 세부 내용" },
   ]);
+
+  const tableTopScrollBtnDataAdd = useRef([
+    { idName: "CompanyDetail_1", text: "견적서 분류" },
+    { idName: "CompanyDetail_3", text: "견적서 세부 내용" },
+  ]);
+
+  const getedData = useSelector((state) => state.getedData, shallowEqual);
   // 이미지 ------------------------------------------------------------------------
   // imgs:상세 이미지저장 및 표시, imgsIid:서버에 이미지를 보낼 때는, iid값만 필요
   const multiImgs = useSelector((state) => state.multiImgsData, shallowEqual);
   const imgsIid = [];
+  const [toName, SetToName] = useState("");
 
   useLayoutEffect(() => {
     // 추가 시 기본 값
@@ -89,6 +98,20 @@ export default function SetAdminProposalInfo() {
         .catch((res) => console.log(res));
     }
   }, []);
+
+  useLayoutEffect(() => {
+    if (!!prid && !!getValues("_toUid")) {
+      API.servicesPostData(STR.urlGetUserCid, {
+        uid: getValues("_toUid"),
+      }).then((res) => {
+        if (res.status === "success") {
+          API.servicesPostData(STR.urlGetCompanyDetail, {
+            rcid: res.data.cid,
+          }).then((res2) => SetToName(res2.data.name));
+        }
+      });
+    }
+  }, [getValues("_toUid")]);
 
   function fnSubmit(e) {
     //서버에 imgs의 iid값만을 보내기 위해 실행하는 반복문 함수
@@ -168,23 +191,22 @@ export default function SetAdminProposalInfo() {
       <div className="commonBox">
         <form className="formLayout" onSubmit={handleSubmit(fnSubmit)}>
           <ul className="tableTopWrap tableTopBorderWrap">
-            <ComponentTableTopScrollBtn data={tableTopScrollBtnData.current} />
-            <ComponentTableTopNumber title="견적서 관리번호" text={prid} />
+            <ComponentTableTopScrollBtn
+              data={
+                !!prid
+                  ? tableTopScrollBtnDataSet.current
+                  : tableTopScrollBtnDataAdd.current
+              }
+            />
             <LayoutTopButton url="/proposalInfo" text="목록으로 가기" />
             <LayoutTopButton text="완료" disabled={isSubmitting} />
           </ul>
 
           <div className="formWrap">
             {/* 갼적서 요청 내용  ================================================================ */}
+            {/* CompanyDetail_2 ============================================================ */}
             <fieldset id="CompanyDetail_1">
-              <h3>
-                견적서 분류
-                {/* {getedData.readFlag == "1" ? (
-                  <span>열람</span>
-                ) : (
-                  <span>미열람</span>
-                )} */}
-              </h3>
+              <h3>견적서 분류</h3>
 
               {/* 사용 플래그  */}
               <div className="formContentWrap">
@@ -286,6 +308,7 @@ export default function SetAdminProposalInfo() {
                 </label>
                 <div>
                   <input
+                    style={{ width: "50%", marginBottom: "0px" }}
                     type="text"
                     id="fromUid"
                     name="_fromUid"
@@ -294,12 +317,12 @@ export default function SetAdminProposalInfo() {
                       required: "입력되지 않았습니다.",
                     })}
                   />
-                  <ErrorMessage
-                    errors={errors}
-                    name="_fromUid"
-                    render={({ message }) => (
-                      <span className="errorMessageWrap">{message}</span>
-                    )}
+                  <input
+                    style={{ width: "50%" }}
+                    type="text"
+                    disabled
+                    value={getValues("_cname")}
+                    placeholder="사업자 회원이 아닙니다."
                   />
                 </div>
               </div>
@@ -310,6 +333,7 @@ export default function SetAdminProposalInfo() {
                 </label>
                 <div>
                   <input
+                    style={{ width: "50%", marginBottom: "0px" }}
                     type="text"
                     id="toUid"
                     placeholder="견적서를 요청한 관리번호를 입력해 주세요."
@@ -317,19 +341,32 @@ export default function SetAdminProposalInfo() {
                       required: "입력되지 않았습니다.",
                     })}
                   />
-                  <ErrorMessage
-                    errors={errors}
-                    name="_toUid"
-                    render={({ message }) => (
-                      <span className="errorMessageWrap">{message}</span>
-                    )}
+                  <input
+                    style={{ width: "50%" }}
+                    type="text"
+                    disabled
+                    value={toName}
+                    placeholder="사업자 회원이 아닙니다."
                   />
                 </div>
               </div>
             </fieldset>
 
-            <fieldset id="CompanyDetail_2">
-              <h3>견적서 세부 내용</h3>
+            {/* CompanyDetail_2 ============================================================ */}
+            {getedData.resid !== undefined && !!prid && (
+              <ComponentEstimateinfo />
+            )}
+
+            {/* CompanyDetail_3 ============================================================ */}
+            <fieldset id="CompanyDetail_3">
+              <h3>
+                견적서 세부 내용
+                {getedData.readFlag == "1" ? (
+                  <span>열람</span>
+                ) : (
+                  <span>미열람</span>
+                )}
+              </h3>
 
               <div className="formContentWrap">
                 <label htmlFor="gname" className=" blockLabel">

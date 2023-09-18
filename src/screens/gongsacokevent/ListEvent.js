@@ -30,7 +30,8 @@ export default function ListEvent() {
   // 카테고리 확인하여 데이터 요청
   useLayoutEffect(() => {
     API.servicesPostData(STR.urlContentList, {
-      category: watch("_category") || "wzEvent",
+      // category: watch("_category") || "wzEvent",
+      category: "wzEvent",
       offset: 0,
       size: 15,
     }).then((res) => {
@@ -47,7 +48,7 @@ export default function ListEvent() {
       <section className="tableWrap">
         <h3 className="blind">공사콕 이벤트 목록</h3>
         <div className="paddingBox commonBox">
-          <div className="filterWrap">
+          {/* <div className="filterWrap">
             <label className="listSearchRadioLabel" htmlFor="wzEvent">
               <input
                 type="radio"
@@ -58,7 +59,7 @@ export default function ListEvent() {
               />
               <span>와짱 이벤트</span>
             </label>
-
+            
             <label className="listSearchRadioLabel" htmlFor="businessEvent">
               <input
                 type="radio"
@@ -69,7 +70,7 @@ export default function ListEvent() {
               />
               <span>고객 ( 사용자 ) 이벤트</span>
             </label>
-          </div>
+          </div> */}
 
           {(wzEvent == [] && wzEvent.length == 0) || wzEvent === undefined ? (
             <ComponentErrorNull />
@@ -96,7 +97,12 @@ export default function ListEvent() {
                             className="Link"
                             style={{ paddingLeft: "30px" }}
                           >
-                            <p>{item.contentString}</p>
+                            <div
+                              className="contentInnerTag"
+                              dangerouslySetInnerHTML={{
+                                __html: item.contentString,
+                              }}
+                            />
                             <em>{item.contentDetail}</em>
                           </Link>
                         </td>

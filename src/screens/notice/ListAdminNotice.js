@@ -40,36 +40,7 @@ export default function ListAdminNotice() {
     });
   }, [watch("_category") || page.getPage]);
 
-  return (notice == [] && notice.length == 0) || notice === undefined ? (
-    <>
-      <ul className="tableTopWrap">
-        <LayoutTopButton url={`set`} text="작성" />
-      </ul>
-      <div className="filterWrap">
-        <input
-          type="radio"
-          checked={watch("_category") == "notice"}
-          value="notice"
-          id="notice"
-          {...register("_category")}
-        />
-        <label className="listSearchRadioLabel" htmlFor="notice">
-          전체 회원 공지
-        </label>
-        <input
-          type="radio"
-          checked={watch("_category") == "noticeTocompany"}
-          value="noticeTocompany"
-          id="noticeTocompany"
-          {...register("_category")}
-        />
-        <label className="listSearchRadioLabel" htmlFor="noticeTocompany">
-          사업자 회원 공지
-        </label>
-      </div>
-      <ComponentErrorNull />
-    </>
-  ) : (
+  return (
     <>
       <ul className="tableTopWrap">
         <LayoutTopButton url={`set`} text="작성" />
@@ -99,9 +70,19 @@ export default function ListAdminNotice() {
               <span>사업자 회원 공지</span>
             </label>
           </div>
-
-          <ComponentListNotice notice={notice} ISADMIN />
-          <PaginationButton listPage={listPage} page={page} setPage={setPage} />
+          {(notice == [] && notice.length == 0) || notice === undefined ? (
+            <ComponentErrorNull />
+          ) : (
+            <>
+              {" "}
+              <ComponentListNotice notice={notice} ISADMIN />
+              <PaginationButton
+                listPage={listPage}
+                page={page}
+                setPage={setPage}
+              />
+            </>
+          )}
         </div>
       </section>
     </>

@@ -5,28 +5,27 @@
       {
         "subName": "회원 관리",
         "url": "/user"
-      }
-    ]
-  },
-  {
-    "name": "사업자 회원 관리",
-    "subNav": [
+      },
       {
         "subName": "사업자 관리",
         "url": "/company"
       },
       {
-        "subName": "견적의뢰서 관리",
+        "subName": "모든 견적의뢰서 관리",
         "url": "/estimateinfo"
       },
       {
-        "subName": "견적서 관리",
+        "subName": "견적의뢰서 / 견적서 관리",
         "url": "/proposalInfo"
+      },
+      {
+        "subName": "대용량 회원데이터 추가",
+        "url": "/csvupload"
       }
     ]
   },
   {
-    "name": "공사콕 앱 관리",
+    "name": "공사콕 앱/웹 관리",
     "subNav": [
       {
         "subName": "공지사항 관리",
@@ -37,8 +36,12 @@
         "url": "/appbanner"
       },
       {
-        "subName": "이벤트 관리",
+        "subName": "공사콕 이벤트 관리",
         "url": "/event"
+      },
+      {
+        "subName": "와짱 이벤트 관리",
+        "url": "/wzevent"
       }
     ]
   },

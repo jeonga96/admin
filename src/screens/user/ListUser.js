@@ -5,6 +5,7 @@ import { useLayoutEffect, useState } from "react";
 
 import * as API from "../../service/api";
 import * as STR from "../../service/string";
+import * as UD from "../../service/useData";
 
 import PageButton from "../../components/services/ServicesPaginationButton";
 import LayoutTopButton from "../../components/layout/LayoutTopButton";
@@ -78,9 +79,11 @@ function ListInTr({ item, setClickedUseFlag, clickedUseFlag }) {
   );
 }
 
+// ====================================================================================
+// 부모
+// ====================================================================================
 export default function ListUser() {
-  // 데이터 ------------------------------------------------------------------------
-  // 회원 목록
+  // 목록 데이터
   const [userList, setUserList] = useState([]);
 
   // pagination 버튼 관련 ------------------------------------------------------------------------
@@ -111,7 +114,12 @@ export default function ListUser() {
       API.servicesPostData(STR.urlSetUser, {
         uid: clickedUseFlag[i],
         useFlag: e.target.id === "useFlagUse" ? "1" : "0",
-      }).then(window.location.reload());
+      }).then(() => {
+        UD.servicesUseToast("작업이 완료되었습니다.", "s");
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
+      });
     }
   };
 
@@ -139,7 +147,9 @@ export default function ListUser() {
         {clickedUseFlag.length > 0 && (
           <LayoutTopButton text="해지" fn={handleUseFlag} />
         )}
-        <LayoutTopButton url="add" text="회원 추가" />
+        {clickedUseFlag.length === 0 && (
+          <LayoutTopButton url="add" text="회원 추가" />
+        )}
       </ul>
       <section className="tableWrap">
         <h3 className="blind">table</h3>

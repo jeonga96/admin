@@ -426,6 +426,15 @@ i {
   color: #999;
   border: none;
 }
+.formLayoutDisabled input:disabled {
+  background-color: var(--color-white);
+  color: var(--color-black);
+}
+.formLayoutDisabled textarea:disabled {
+  background-color: var(--color-white);
+  color: var(--color-black);
+}
+
 .formLayout textarea {
   resize: none;
   width: 100%;
@@ -676,11 +685,11 @@ i {
 }
 .formWrap h3 span {
   height: auto;
-
   font-size: var(--font-size-small);
   color: var(--color-white);
   margin-left: 5px;
-  background-color: var(--color-black);
+  background-color: var(--color-darkprimary);
+  font-weight: 500;
   padding: 1px 5px;
   border-radius: 2px;
 }
@@ -719,7 +728,7 @@ i {
   padding: 2px;
 }
 .formContentWrap > div.formPaddingWrap {
-  height: 2rem;
+  height: 36px;
   display: flex;
   justify-content: center;
   padding-top: 7px;
@@ -1264,10 +1273,11 @@ i {
   display: inline-block;
   width: auto;
   min-width: 1.875rem;
-  height: 0.875rem;
-  line-height: 0.875rem;
+  height: 16px;
+  line-height: 15px;
   font-size: 0.625rem;
   margin-left: 0.3125rem;
+  padding: 0 4px;
 }
 .tableIcon {
   background-color: var(--color-bgblack);
@@ -1293,12 +1303,78 @@ i {
 .tableReviewWrap > div:first-child {
   width: 78%;
 }
+.contentInnerTag {
+  padding: 8px 0;
+}
+.contentInnerTag,
+.contentInnerTag p,
+.contentInnerTag span {
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 20px;
+}
 .tableContentWrap em {
   display: inline-block;
   font-size: var(--font-size-basic);
+  line-height: 16px;
 }
 .tableReviewWrap h4 {
   font-size: var(--font-size-em);
+}
+.contentInnerManual {
+  background-color: var(--color-bggray);
+  margin-bottom: 6px;
+}
+.contentInnerManual > span {
+  display: block;
+  line-height: 16px;
+  text-indent: 8px;
+}
+.contentInnerManual table {
+  width: 100%;
+  height: auto;
+  margin-top: 10px;
+}
+.contentInnerManual thead td {
+  text-align: center;
+  font-weight: 500;
+  background-color: var(--color-primary);
+  color: var(--color-white);
+}
+
+.contentInnerManual tbody td {
+  margin: 4px 0;
+  line-height: 1.6;
+}
+.contentInnerManual tbody td:nth-child(2n) {
+  background-color: #efefeff0;
+}
+
+.contentInnerManual tbody span:nth-child(1) {
+  display: block;
+  color: var(--color-primary);
+  font-weight: 700;
+}
+.contentInnerManual tbody span:nth-child(2) {
+  display: block;
+}
+.contentInnerManual::before {
+  display: block;
+  content: "사용 규칙";
+  margin-top: 4px;
+  line-height: 22px;
+  font-weight: 700;
+  text-indent: 8px;
+}
+.contentInnerManualEg::after {
+  display: block;
+  content: '예시코드 : <p><span style="color:blue">파란색 글자</span>검은색 글자</p>';
+  margin-top: 4px;
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  padding-left: 2px;
+  line-height: 22px;
+  text-indent: 8px;
 }
 
 .tableReviewWrap ul {
@@ -1657,7 +1733,7 @@ ul.pagination li a:hover {
 .formLayout .listSearchRadioLabel {
   display: inline-block;
   width: auto;
-  margin-top: 2px;
+  margin-top: 4px;
   margin-right: 0.625rem;
 }
 .formLayout .listSearchRadioLabel:last-child {
@@ -1668,11 +1744,17 @@ ul.pagination li a:hover {
   width: 0.75rem;
   height: 0.75rem;
   margin-right: 4px;
-  margin-top: 2px;
+  margin-top: 6px;
 }
 .formCenterLayout .formContentWrap {
   margin-left: 50%;
   transform: translateX(-50%);
+}
+.contentBox fieldset .listSearchRadioLabel {
+  margin-top: 2px;
+}
+.contentBox .formLayout fieldset .listSearchRadioInput {
+  margin-top: 3px;
 }
 /* 검색 필터 하단 버튼 */
 .listSearchButtonWrap {
@@ -1681,7 +1763,9 @@ ul.pagination li a:hover {
   width: 100%;
   margin-top: 0.5rem;
 }
-.listSearchButtonWrap button {
+.listSearchButtonWrap button,
+.listSearchButtonWrap label {
+  cursor: pointer;
   width: 5rem;
   height: 1.5rem;
   background-color: var(--color-bggray);
@@ -1690,6 +1774,8 @@ ul.pagination li a:hover {
   color: var(--color-black);
   border-radius: 0.25rem;
   border: 0.0625rem solid rgba(0, 0, 0, 0.1);
+  text-align: center;
+  line-height: 1.5rem;
 }
 
 .flexBox {
@@ -1703,13 +1789,14 @@ ul.pagination li a:hover {
 
 .contentBox .tableAppbannerTd {
   position: relative;
-  width: 630px;
-  height: 252px;
+  width: 750px;
+  height: 236px;
 }
 .tableAppbannerTd > div {
   width: 100%;
   height: 100%;
-  background-size: cover;
+  /* background-size: cover; */
+  background-size: contain;
 }
 .commonBox .dasableTag {
   display: block;
@@ -1732,82 +1819,70 @@ ul.pagination li a:hover {
 
 /* ================================================ */
 
-/* .clickModal thead {
-  position: absolute;
-  top: 2px;
-  left: 2px;
-} */
-/* 
-.clickModal thead tr {
-  position: absolute;
-  top: 2px;
-  left: 2px;
+@keyframes popup {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
-.clickModal th {
-  width: 117.2px;
-  background: var(--color-bgblack);
-  color: var(--color-white);
-}
-
-.clickModal tbody {
-  position: absolute;
-  top: 44px;
-}
-
-.clickModal .commonTable td {
-  text-align: center;
-  height: 32px;
-  border-top: 1px solid #ccc;
-}
-
-.clickModal tbody tr {
-  display: table-row;
-  height: 36px;
-}
-
-.clickModal tbody tr:hover {
-  background-color: var(--color-bggray);
-}
-
-
-.table-container {
-  width: 100%;
-  height: 300px;
-  overflow: auto;
-}
-*/
 
 .clickModal {
   position: fixed;
   z-index: 20;
-  width: 500px;
-  height: 280px;
+  width: 535px;
+  height: 300px;
   border: 1px solid var(--color-bgblack);
   background-color: #fff;
-  top: 50%;
-  left: 50%;
-  transform: translate(-20%, -50%);
+  top: 30%;
+  left: 35%;
+  transform: translate(-50%, -50%);
+  box-shadow: 2px 2px 10px -2px rgba(0, 0, 0, 0.5);
+  padding: 20px;
+  box-sizing: border-box;
+  border-radius: 10px;
+  animation: popup 0.3s ease-out forwards;
+}
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* 반투명한 검정색 배경 */
+  z-index: 10; /* 모달창 뒤에 위치하도록 z-index 설정 */
+}
+.clickModal .tableWrap::-webkit-scrollbar {
+  display: none;
+}
+
+.clickModal .tableWrap {
+  scrollbar-width: none;
 }
 
 .clickModal .commonBox {
   border: none;
 }
 
-.clickModal button {
+.clickModal .tableWrap ~ button {
   position: absolute;
-  bottom: 4px;
+  bottom: 8px;
   left: 0;
   right: 0;
   margin: 0 auto;
-  width: 80px;
-  height: 26px;
+  width: 130px;
+  height: 35px;
   background-color: var(--color-bgblack);
   color: var(--color-white);
   line-height: 26px;
+  border-radius: 20px;
 }
 
 .clickModal .tableWrap {
-  height: calc(100% - 34px);
+  height: calc(100% - 30px);
   overflow: auto;
   overflow-x: hidden;
 }
@@ -1834,7 +1909,13 @@ ul.pagination li a:hover {
   height: 100%;
   overflow-y: scroll;
 }
+.clickModal tbody tr {
+  transition: background 0.3s;
+}
 
+.clickModal tbody tr:hover {
+  background: #f5f5f5;
+}
 .clickModal tbody::-webkit-scrollbar {
   width: 0;
 }
@@ -1852,4 +1933,243 @@ tbody td {
 
 .clickModal tbody tr:hover {
   background-color: var(--color-bggray);
+}
+
+.companyWrap-keyword-buttonWrap {
+  width: 100%;
+  height: 30px;
+  line-height: 30px;
+  border-bottom: 1px solid var(--color-bggray);
+  margin-bottom: 4px;
+  padding: 2px;
+}
+.companyWrap-keyword-buttonWrap button {
+  width: auto;
+  height: 24px;
+  padding: 2px 17px;
+  background-color: var(--color-acceent);
+  margin-left: 4px;
+}
+
+.companyWrap-keyword-buttonWrap span,
+.companyWrap-keyword-buttonWrap button {
+  float: right;
+}
+.companyWrap-keyword-buttonWrap span {
+  height: 24px;
+  line-height: 24px;
+  padding: 0 4px;
+  color: var(--color-gray);
+}
+.companyWrap-keyword-inputWrap {
+  display: block;
+  width: 100%;
+}
+.companyWrap-keyword-inputWrap ul {
+  width: 100%;
+  display: flex;
+  padding-bottom: 8px;
+}
+.companyWrap-keyword-inputWrap li {
+  display: flex;
+  justify-content: space-between;
+}
+.companyWrap-keyword-inputWrap:not(:first-child) span {
+  width: 80px;
+}
+.companyWrap-keyword-inputWrap input {
+  width: calc(100% - 186px);
+}
+.companyWrap-keyword-inputWrap li > button {
+  width: 100px;
+  height: 100%;
+  background-color: var(--color-gray);
+}
+
+/* 고객상담 모달창 디자인 */
+.modal {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 2em;
+  z-index: 10;
+}
+
+.modal-content {
+  border: 1px solid #cbcaca;
+  width: 750px;
+  max-height: 500px; /* Increased the max height to 90% */
+  overflow: hidden;
+  background: #fff;
+  padding: 2.25em; /* Reduced the padding further */
+  margin: 0 auto;
+  margin-top: 150px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+  box-sizing: border-box;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-header > h2 {
+  font-size: 24px;
+}
+
+#modal-body {
+  padding: 0.25em 0; /* Reduced the padding */
+  overflow: auto;
+  max-height: calc(90vh - 200px); /* Increased the max height */
+  overflow: hidden;
+}
+
+.additional-services {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+}
+
+.additional-service-item {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin-top: 5px;
+}
+.additional-service-item label {
+  display: flex;
+}
+.additional-service-item label input {
+  margin-bottom: 5px;
+  width: 0.75rem;
+  height: 0.75rem;
+  margin-right: 4px;
+}
+
+.safety-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.safety-info h4 {
+  margin-bottom: 5px;
+}
+.safety-info div {
+  margin-right: 10px;
+}
+
+.small-input {
+  width: 60%;
+  margin-left: 10px;
+  border: 0.0625rem solid var(--color-bggray);
+}
+
+.submit-button {
+  padding: 10px 20px;
+  font-size: 14px;
+  background-color: var(--color-bgblack);
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: all 0.7s;
+}
+
+.submit-button:hover {
+  background-color: var(--color-lightprimary);
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: space-evenly;
+  padding: 0.25em 0;
+  align-items: center;
+}
+
+.counseling-list {
+  overflow-x: scroll;
+  width: 100%;
+  height: auto;
+  max-height: 250px;
+}
+
+.counseling-list > ul {
+  width: 100%;
+  height: auto;
+}
+
+.counseling-item {
+  border: 1px solid #ccc;
+  margin-bottom: 4px;
+  width: 100%;
+}
+.counseling-item:last-child {
+  margin-bottom: 0;
+}
+
+.item-header {
+  padding: 4px;
+  display: flex;
+  justify-content: left;
+  background-color: var(--color-gray);
+}
+.item-header span {
+  position: relative;
+  font-size: 12px;
+  font-weight: 600;
+  margin-right: 16px;
+}
+.item-header span::after {
+  position: absolute;
+  right: -8px;
+  top: 2px;
+  content: "";
+  display: block;
+  width: 1px;
+  height: 10px;
+  background-color: rgba(255, 255, 255, 0.6);
+}
+.item-header span:last-child::after {
+  content: "";
+  display: none;
+}
+
+.item-header > div {
+  display: flex;
+}
+.item-header button {
+  display: block;
+  width: auto;
+  height: auto;
+  padding: 0 6px;
+  font-weight: 600;
+}
+.item-header button:hover {
+  color: var(--color-white);
+}
+
+.item-body {
+  background-color: var(--color-bggray);
+  display: flex;
+  height: auto;
+  align-items: center;
+  padding: 4px;
+}
+.item-body span {
+  margin-right: 8px;
+}
+
+.counseling-content {
+  padding: 8px 4px;
+}
+.scrollable-list {
+  max-height: 500px; /* Adjust the value to your desired maximum height */
+  overflow-y: auto; /* Adds vertical scrolling */
 }

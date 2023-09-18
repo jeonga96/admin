@@ -58,12 +58,13 @@ export default function ListPropsosalinfo() {
             <table className="commonTable">
               <thead>
                 <tr>
-                  <th style={{ width: "100px" }}>관리번호</th>
-                  <th style={{ width: "100px" }}>견적 요청</th>
-                  <th style={{ width: "100px" }}>견적 수령</th>
+                  <th style={{ width: "80px" }}>견적서</th>
+                  <th style={{ width: "80px" }}>견적의뢰서</th>
+                  <th style={{ width: "80px" }}>견적 요청</th>
+                  <th style={{ width: "80px" }}>견적 수령</th>
                   <th style={{ width: "auto" }}>공사명</th>
-                  <th style={{ width: "150px" }}>업체명</th>
-                  <th style={{ width: "100px" }}>대표자명</th>
+                  <th style={{ width: "150px" }}>견적요청 업체명</th>
+                  <th style={{ width: "80px" }}>대표자명</th>
                   <th style={{ width: "150px" }}>연락처</th>
                   <th style={{ width: "120px" }}>공사타입</th>
                   <th style={{ width: "80px" }}>활성화</th>
@@ -77,6 +78,18 @@ export default function ListPropsosalinfo() {
                         <Link to={`${item.prid}`} className="Link">
                           {item.prid}
                         </Link>
+                      </td>
+                      <td className="tableButton">
+                        {!!item.resid ? (
+                          <Link
+                            to={`/estimateinfo/${item.resid}`}
+                            className="Link"
+                          >
+                            {item.resid}
+                          </Link>
+                        ) : (
+                          item.resid
+                        )}
                       </td>
                       <td>{item.fromUid}</td>
                       <td>{item.toUid}</td>

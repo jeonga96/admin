@@ -5,6 +5,7 @@ import { servicesPostData } from "./api";
 export function useDidMountEffect(func, deps) {
   const didMount = useRef(false);
 
+  // eslint-disable-next-line
   return useEffect(() => {
     if (didMount.current) func();
     else didMount.current = true;
@@ -14,6 +15,7 @@ export function useDidMountEffect(func, deps) {
 export function useGetImage(setImage, companyDetail) {
   const reqImgs = useRef({ imgImg: "", totalImg: "", regimgs: "" });
 
+  // eslint-disable-next-line
   useEffect(() => {
     if (companyDetail.titleImg && companyDetail.imgs) {
       reqImgs.current.totalImg =
@@ -42,6 +44,7 @@ export function useGetImage(setImage, companyDetail) {
 export function useGetContentImgs(setImage, companyDetail) {
   const reqImgs = useRef({ imgImg: "", totalImg: "" });
 
+  // eslint-disable-next-line
   useEffect(() => {
     reqImgs.current.totalImg =
       companyDetail.titleImg + "," + companyDetail.imgs;
@@ -56,6 +59,7 @@ export function useGetContentImgs(setImage, companyDetail) {
 }
 
 export function useGetimgStringImgs(setImage, companyDetail) {
+  // eslint-disable-next-line
   useEffect(() => {
     servicesPostData(urlGetImages, {
       imgs: companyDetail.imgString,

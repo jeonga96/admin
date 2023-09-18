@@ -1,11 +1,13 @@
 const initialState = {
   getedData: {}, // api 등 가져온 데이터 저장
+  writeData: {}, // api 등 가져온 데이터 저장
   imgData: "", // 타이틀 이미지
   imgsData: "", // 상세 이미지
   multiImgsData: "", // 사업자 등록증과 같은 기타 다용도 이미지
   multilAddressData: "", // 주소저장
   navState: true, // 반응형 nav
   click: false, // click이벤트 저장
+  modalClick: false, // click이벤트 저장
 };
 
 const reducer = (state = initialState, action) => {
@@ -14,6 +16,10 @@ const reducer = (state = initialState, action) => {
   switch (action.type) {
     case "serviceGetedData":
       newState.getedData = action.payload;
+      break;
+
+    case "serviceWriteData":
+      newState.writeData = action.payload;
       break;
 
     case "serviceImgData":
@@ -38,6 +44,10 @@ const reducer = (state = initialState, action) => {
 
     case "serviceClick":
       newState.click = action.payload;
+      break;
+
+    case "serviceModalClick":
+      newState.modalClick = action.payload;
       break;
 
     default:

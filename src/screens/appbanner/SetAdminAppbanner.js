@@ -139,7 +139,7 @@ function InputBox({ inputData, setinputData, title, allItem, image }) {
   };
 
   return (
-    <tr style={{ height: "5.25rem" }}>
+    <tr>
       <td className="tableAppbannerTd">
         <div
           style={

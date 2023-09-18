@@ -1,6 +1,6 @@
 // 사업자 회원 관리 > 사업자 상세정보 (수정)
 import { useDispatch, useSelector, shallowEqual } from "react-redux";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
@@ -14,13 +14,16 @@ import PieceRegisterSearchPopUp from "../../components/services/ServiceRegisterS
 
 import LayoutTopButton from "../../components/layout/LayoutTopButton";
 import ComponentSetCompany from "../../components/common/ComponentSetCompany";
-import PieceDetailListLink from "../../components/piece/PieceDetailListLink";
 import ComponentTableTopNumber from "../../components/piece/PieceTableTopNumber";
 import ComponentTableTopScrollBtn from "../../components/piece/PieceTableTopScrollBtn";
+import SetDetailComapnyPieceLink from "../../components/common/ComponentCompanyPieceLink";
+import ComponentCompanySealsKeyword from "../../components/common/ComponentCompanySealsKeyword";
+import CustomerCounseling from "../../components/common/CustomerCounseling";
 
 export default function SetCompanyDetail() {
   const { cid } = useParams();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   // react-hook-form 라이브러리
   const {
     handleSubmit,
@@ -42,14 +45,15 @@ export default function SetCompanyDetail() {
     { idName: "CompanyDetail_1", text: "계약 기본 정보" },
     { idName: "CompanyDetail_2", text: "사업자 기본 정보" },
     { idName: "CompanyDetail_3", text: "사업자 정보" },
+    { idName: "CompanyDetail_8", text: "고객상담" },
     { idName: "CompanyDetail_4", text: "청구결제사항" },
     { idName: "CompanyDetail_5", text: "견적 관리" },
     { idName: "CompanyDetail_6", text: "고객 관리" },
+    { idName: "CompanyDetail_7", text: "판매 키워드" },
   ]);
 
-  // 데이터 ------------------------------------------------------------------------
-  // 작성된 데이터를 받아옴
-  const getedData = useSelector((state) => state.getedData, shallowEqual);
+  // PiceLink - 고객관리:평점
+  const writeData = useSelector((state) => state.writeData, shallowEqual);
   // 이미지 ------------------------------------------------------------------------
   const titleImg = useSelector((state) => state.imgData, shallowEqual);
   const imgs = useSelector((state) => state.imgsData, shallowEqual);
@@ -62,17 +66,8 @@ export default function SetCompanyDetail() {
     (state) => state.multilAddressData,
     shallowEqual
   );
-  // setUser 수정 - 하위컴포넌트에게 전달
+  // 하위컴포넌트에게 전달
   const [companyData, setCompanyData] = useState({});
-
-  // 하단 링크 이동 될 사업자 공지사항, 사업자 리뷰, 견적서
-  const [noticeList, setNoticeList] = useState([]);
-  const [reviewList, setReviewList] = useState([]);
-  const [toEstimateinfo, setToEstimateinfo] = useState([]);
-  const [fromEstimateinfo, setFromEstimateinfo] = useState([]);
-  const [toproposalInfo, setToproposalInfo] = useState([]);
-  const [fromproposalInfo, setFromproposalInfo] = useState([]);
-
   const ruid = useRef("");
 
   // 현재 페이지가 렌더링되자마자 기존에 입력된 값의 여부를 확인한다.
@@ -113,61 +108,20 @@ export default function SetCompanyDetail() {
           setValue("_corporationno", res.data.corporationno || "");
           setValue("_regOwner", res.data.regOwner || "");
           setValue("_age", res.data.age);
-
+          setValue("_remarks", res.data.remarks);
           setValue("_bigCategory", res.data.bigCategory || "");
           setValue("_subCategory", res.data.subCategory || "");
-          setValue("_reCount", res.data.reCount || "");
-          setValue("_okCount", res.data.okCount || "");
-          setValue("_noCount", res.data.noCount || "");
 
-          // 공지사항, 리뷰, 견적요청서 링크 이동 개수 확인하기 위해 데이터 받아오기
-          UD.serviesPostDataSettingRcid(
-            STR.urlCompanyNoticeList,
-            cid,
-            setNoticeList
-          );
-          UD.serviesPostDataSettingRcid(STR.urlReviewList, cid, setReviewList);
-          // 견적요청서 - uid가 필요하기 떄문에 cid로 uid를 확인한 후 진행
+          // uid가 필요하기 떄문에 cid로 uid를 확인한 후 진행 -> 아이디, 비밀번호 설정
           API.servicesPostData(STR.urlGetCompany, { cid: cid }).then((res) => {
             ruid.current = res.data.ruid;
-
-            // 회원정보
             API.servicesPostData(STR.urlGetUser, {
               uid: res.data.ruid,
-            })
-              .then((res) => {
-                if (res.status === "success") {
-                  setValue("_userid", res.data.userid.toString() || "");
-                }
-              })
-              .catch((res) => console.log(res));
-
-            // 견적 요청서 요청
-            API.servicesPostData(STR.urlListEstimateInfo, {
-              fromUid: res.data.ruid,
-              offset: 0,
-              size: 5,
-            }).then((res) => setFromEstimateinfo(res.data));
-            // 견적 요청서 수령
-            API.servicesPostData(STR.urlListEstimateInfo, {
-              toUid: res.data.ruid,
-              offset: 0,
-              size: 5,
-            }).then((res) => setToEstimateinfo(res.data));
-
-            // 견적서 요청
-            API.servicesPostData(STR.urlListProposalInfo, {
-              fromUid: res.data.ruid,
-              offset: 0,
-              size: 5,
-            }).then((res) => setFromproposalInfo(res.data));
-
-            // 견적서 수령
-            API.servicesPostData(STR.urlListProposalInfo, {
-              toUid: res.data.ruid,
-              offset: 0,
-              size: 5,
-            }).then((res) => setToproposalInfo(res.data));
+            }).then((res) => {
+              if (res.status === "success") {
+                setValue("_userid", res.data.userid.toString() || "");
+              }
+            });
           });
 
           // 근무 시간 (근무시간!!!!!! 다시 입력!!!!!)
@@ -201,65 +155,81 @@ export default function SetCompanyDetail() {
   };
 
   const handleSubmitEvent = () => {
-    // 서버에 imgs의 iid값만을 보내기 위해 실행하는 반복문 함수
-    UD.serviesGetImgsIid(imgsIid, imgs);
-    API.servicesPostData(STR.urlSetCompany, {
-      cid: cid,
-      ...companyData,
+    dispatch({
+      type: "serviceClick",
+      payload: true,
     });
 
-    API.servicesPostData(STR.urlSetCompanyDetail, {
-      rcid: cid,
-      useFlag: getValues("_detailUseFlag"),
-      gongsaType: getValues("_gongsaType").toString() || "",
-      status: getValues("_status").toString() || "",
-      name: getValues("_name"),
-      comment: getValues("_comment"),
-      location: getValues("_location"),
-      registration: getValues("_registration"),
-      corporationno: getValues("_corporationno"),
-      address: multilAddress.address,
-      detailaddress: multilAddress.detailaddress,
-      oldaddress: multilAddress.oldaddress,
-      zipcode: multilAddress.zipcode,
-      workTime: `${watch("_workTimeTo")} ~ ${watch("_workTimeFrom")}`,
-      offer: getValues("_offer"),
-      titleImg: titleImg.length > 0 ? titleImg[0].iid : "694",
-      regImgs: regImgs.length > 0 ? regImgs[0].iid : "",
-      imgs: imgsIid.length > 0 ? imgsIid.toString() : "",
-      longitude: multilAddress.longitude,
-      latitude: multilAddress.latitude,
-      telnum: getValues("_telnum"),
-      mobilenum: getValues("_mobilenum"),
-      email: getValues("_email"),
-      ceogreet: getValues("_ceogreet"),
-      regOwner: getValues("_regOwner"),
-      extnum: getValues("_extnum"),
-      regName: getValues("_regName"),
-      age: getValues("_age"),
-      comType: getValues("_comType"),
-      subCategory: getValues("_subCategory"),
-      bigCategory: getValues("_bigCategory"),
-      reCount: getValues("_reCount"),
-      okCount: getValues("_okCount"),
-      noCount: getValues("_noCount"),
-      // vidlinkurl:
-      //   `${getValues("_vidlinkurl1")},${getValues("_vidlinkurl2")}` || "",
-      // linkurl:
-      //   `${getValues("_linkurl1")},${getValues("_linkurl2")},${getValues(
-      //     "_linkurl3"
-      //   )},${getValues("_linkurl4")},${getValues("_linkurl5")},` || "",
-    })
-      .then((res) => {
-        if (res.status === "fail") {
-          UD.servicesUseToast("입력에 실패했습니다.", "e");
-        }
-        if (res.status === "success") {
-          UD.servicesUseToast("완료되었습니다!", "s");
-          return;
-        }
+    // 서버에 imgs의 iid값만을 보내기 위해 실행하는 반복문 함수
+    UD.serviesGetImgsIid(imgsIid, imgs);
+    if (
+      companyData.useFlag == 1 &&
+      getValues("_detailUseFlag") == 1 &&
+      !getValues("_extnum")
+    ) {
+      API.servicesPostData(STR.urlSetCompany, {
+        cid: cid,
+        ...companyData,
+      });
+      API.servicesPostData(STR.urlSetCompanyDetail, {
+        rcid: cid,
+        useFlag: getValues("_detailUseFlag"),
+        gongsaType: getValues("_gongsaType").toString() || "",
+        status: getValues("_status").toString() || "",
+        name: getValues("_name"),
+        comment: getValues("_comment"),
+        location: getValues("_location"),
+        registration: getValues("_registration"),
+        corporationno: getValues("_corporationno"),
+        address: multilAddress.address,
+        detailaddress: multilAddress.detailaddress,
+        oldaddress: multilAddress.oldaddress,
+        zipcode: multilAddress.zipcode,
+        workTime: `${watch("_workTimeTo")} ~ ${watch("_workTimeFrom")}`,
+        offer: getValues("_offer"),
+        titleImg: titleImg.length > 0 ? titleImg[0].iid : "694",
+        regImgs: regImgs.length > 0 ? regImgs[0].iid : "",
+        imgs: imgsIid.length > 0 ? imgsIid.toString() : "",
+        longitude: multilAddress.longitude,
+        latitude: multilAddress.latitude,
+        telnum: getValues("_telnum"),
+        mobilenum: getValues("_mobilenum"),
+        email: getValues("_email"),
+        ceogreet: getValues("_ceogreet"),
+        regOwner: getValues("_regOwner"),
+        extnum: getValues("_extnum"),
+        regName: getValues("_regName"),
+        age: getValues("_age"),
+        remarks: getValues("_remarks"),
+        comType: getValues("_comType"),
+        subCategory: getValues("_subCategory"),
+        bigCategory: getValues("_bigCategory"),
+        reCount: writeData.reCount,
+        okCount: writeData.okCount,
+        noCount: writeData.noCount,
+        // vidlinkurl:
+        //   `${getValues("_vidlinkurl1")},${getValues("_vidlinkurl2")}` || "",
+        // linkurl:
+        //   `${getValues("_linkurl1")},${getValues("_linkurl2")},${getValues(
+        //     "_linkurl3"
+        //   )},${getValues("_linkurl4")},${getValues("_linkurl5")},` || "",
       })
-      .catch((error) => console.log("실패", error.response));
+        .then((res) => {
+          if (res.status === "fail") {
+            UD.servicesUseToast("입력에 실패했습니다.", "e");
+          }
+          if (res.status === "success") {
+            UD.servicesUseToast("완료되었습니다!", "s");
+            return;
+          }
+        })
+        .catch((error) => console.log("실패", error.response));
+    } else if (!!getValues("_extnum")) {
+      UD.servicesUseToast("안심번호 삭제를 먼저 진행해 주세요.", "e");
+      setTimeout(() => {
+        navigate(`safenumber/${getValues("_extnum").replaceAll("-", "")}`);
+      }, 1000);
+    }
   };
 
   return (
@@ -294,7 +264,7 @@ export default function SetCompanyDetail() {
                     checked={watch("_detailUseFlag") == "0"}
                     value="0"
                     id="DetailUseFlag0"
-                    {...register("_detailUseFlag", {})}
+                    {...register("_detailUseFlag")}
                   />
                   <label
                     className="listSearchRadioLabel"
@@ -721,7 +691,6 @@ export default function SetCompanyDetail() {
                     id="corporationno"
                     placeholder="법인 등록 번호를 입력해 주세요. (예시 000000-0000000)"
                     maxLength="14"
-                    {...register("_corporationno")}
                     value={
                       (watch("_corporationno") &&
                         watch("_corporationno")
@@ -858,7 +827,7 @@ export default function SetCompanyDetail() {
                       (watch("_extnum") &&
                         watch("_extnum")
                           .replace(/[^0-9]/g, "")
-                          .replace(/(^[0-9]{3})([0-9]+)([0-9]{4}$)/, "$1-$2-$3")
+                          .replace(/(^[0-9]{4})([0-9]+)([0-9]{4}$)/, "$1-$2-$3")
                           .replace("--", "-")) ||
                       ""
                     }
@@ -868,8 +837,8 @@ export default function SetCompanyDetail() {
                     className="formContentBtn"
                     to={
                       !!watch("_extnum")
-                        ? `050biz/${watch("_extnum").replaceAll("-", "")}`
-                        : "050biz"
+                        ? `safenumber/${watch("_extnum").replaceAll("-", "")}`
+                        : "safenumber"
                     }
                   >
                     {!!watch("_extnum") ? "관리" : "등록"}
@@ -996,149 +965,29 @@ export default function SetCompanyDetail() {
               <SetImage id="titleImg" title="대표 이미지" />
 
               <SetImage id="imgs" title="상세 이미지" />
-            </fieldset>
-
-            <fieldset id="CompanyDetail_4">
-              <h3>청구결제사항</h3>
 
               <div className="formContentWrap" style={{ width: "100%" }}>
-                <label htmlFor="ex" className="blockLabel">
+                <label htmlFor="remarks" className="blockLabel">
                   <span>비고</span>
                 </label>
                 <div>
                   <textarea
                     type="text"
-                    id="ex"
-                    placeholder="기능 적용 X"
-                    maxLength="100"
-                    {...register("_ex")}
+                    id="remarks"
+                    {...register("_remarks")}
                   />
                 </div>
               </div>
             </fieldset>
 
-            {/* 견적 관리 링크 이동 ================================================================ */}
-            <fieldset id="CompanyDetail_5">
-              <h3>견적 관리</h3>
-              <div className="formContentWrap">
-                <label htmlFor="address" className=" blockLabel">
-                  <span>견적의뢰서</span>
-                </label>
-                <ul className="detailContent">
-                  <PieceDetailListLink
-                    getData={toEstimateinfo}
-                    url={`toestimateinfo`}
-                    title="요청"
-                    useLink={
-                      toEstimateinfo && toEstimateinfo.length > 0 ? true : false
-                    }
-                  />
+            <CustomerCounseling />
 
-                  <PieceDetailListLink
-                    getData={fromEstimateinfo}
-                    url={`fromestimateinfo`}
-                    title="수령"
-                    useLink={
-                      fromEstimateinfo && fromEstimateinfo.length > 0
-                        ? true
-                        : false
-                    }
-                  />
-                </ul>
-              </div>
-              <div className="formContentWrap">
-                <label htmlFor="address" className=" blockLabel">
-                  <span>견적서</span>
-                </label>
-                <ul className="detailContent">
-                  <PieceDetailListLink
-                    getData={toproposalInfo}
-                    url={`toproposalInfo`}
-                    title="요청"
-                    useLink={
-                      toproposalInfo && toproposalInfo.length > 0 ? true : false
-                    }
-                  />
+            <SetDetailComapnyPieceLink />
 
-                  <PieceDetailListLink
-                    getData={fromproposalInfo}
-                    url={`fromproposalInfo`}
-                    title="수령"
-                    useLink={
-                      fromproposalInfo && fromproposalInfo.length > 0
-                        ? true
-                        : false
-                    }
-                  />
-                </ul>
-              </div>
-            </fieldset>
-
-            {/* 고객관리 링크 이동 ================================================================ */}
-            <fieldset id="CompanyDetail_6">
-              <h3>고객 관리</h3>
-              <div className="formContentWrap">
-                <label htmlFor="address" className=" blockLabel">
-                  <span>평점</span>
-                </label>
-                <ul className="detailContent">
-                  <li style={{ width: "33.3333%" }}>
-                    <div>
-                      <span>추천</span>
-                      <input
-                        type="number"
-                        id="reCount"
-                        {...register("_reCount")}
-                      />
-                    </div>
-                  </li>
-
-                  <li style={{ width: "33.3333%" }}>
-                    <div>
-                      <span>만족</span>
-                      <input
-                        type="number"
-                        id="okCount"
-                        {...register("_okCount")}
-                      />
-                    </div>
-                  </li>
-                  <li style={{ width: "33.3333%" }}>
-                    <div>
-                      <span>불만족</span>
-                      <input
-                        type="number"
-                        id="noCount"
-                        {...register("_noCount")}
-                      />
-                    </div>
-                  </li>
-                </ul>
-              </div>
-
-              <div className="formContentWrap">
-                <label htmlFor="address" className=" blockLabel">
-                  <span>커뮤니티 관리</span>
-                </label>
-                <ul className="detailContent">
-                  <PieceDetailListLink
-                    getData={noticeList}
-                    url={`/company/${getedData.rcid}/notice`}
-                    title="공지사항"
-                    useLink={true}
-                  />
-
-                  <PieceDetailListLink
-                    getData={reviewList}
-                    url={`/company/${getedData.rcid}/review`}
-                    title="리뷰"
-                    useLink={reviewList.length > 0 ? true : false}
-                  />
-                </ul>
-              </div>
-            </fieldset>
+            <ComponentCompanySealsKeyword />
           </div>
         </form>
+        <div className="formWrap"></div>
       </div>
     </>
   );
