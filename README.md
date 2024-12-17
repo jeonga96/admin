@@ -260,13 +260,13 @@ import "react-toastify/dist/ReactToastify.css";
 
 - 보안상 노션 링크 막아두었습니다.
 
-[DetailCompany의 Status 개념 정리]()
+[DetailCompany의 Status 개념 정리]
 
 # 5, 앱 배너 관리
 
 - 보안상 노션 링크 막아두었습니다.
 
-[공사콕 관리자 앱 배너 관리]()
+[공사콕 관리자 앱 배너 관리]
 
 # 3, 외부 api 서비스
 
@@ -280,16 +280,16 @@ import "react-toastify/dist/ReactToastify.css";
 
 ## 1, 카카오 계정정보
 
-카카오 개발자툴 - 카카오 developers [(링크이동 →)]()
+카카오 개발자툴 - 카카오 developers [(링크이동 →)]
 
 ## 2, 안심번호 관리
 
-[공사콕 관리자 안심번호 관리]()
+[공사콕 관리자 안심번호 관리]
 
 ## 3, npm 설치한 라이브러리
 
-[공사콕 관리자 기술자료]()
+[공사콕 관리자 기술자료]
 
 # 5, Git 자동배포 서버 관리 및 사용방법
 
-[Git 자동배포 서버 관리 및 사용방법]()
+[Git 자동배포 서버 관리 및 사용방법]
