@@ -1,9 +1,10 @@
 // 사업자 회원 관리 > 사업자 상세정보 > 사업자 리뷰
 
 import { useParams } from "react-router-dom";
-import { useState, useLayoutEffect } from "react";
+import { useState } from "react";
 import * as API from "../../service/api";
-import * as STR from "../../service/string";
+import * as APIURL from "../../service/string/apiUrl";
+import * as CUS from "../../service/customHook";
 
 import LayoutTopButton from "../../components/layout/LayoutTopButton";
 import ComponentErrorNull from "../../components/piece/PieceErrorNull";
@@ -16,8 +17,8 @@ export default function ListCompanyNotice() {
   // 공지사항 목록
   const [notice, setNotice] = useState([]);
 
-  useLayoutEffect(() => {
-    API.servicesPostData(STR.urlCompanyNoticeList, {
+  CUS.useCleanupEffect(() => {
+    API.servicesPostData(APIURL.urlCompanyNoticeList, {
       rcid: cid,
     }).then((res) => {
       setNotice(res.data && res.data.reverse());

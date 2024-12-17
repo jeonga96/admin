@@ -39,10 +39,10 @@ export default function DetailCompanyReview({
 
   // iid로 이미지 url요청하는 커스텀 훅
   useGetImage(setImages, compnayReview);
-
+console.log(images);
   return (
     <>
-      <td style={{ width: "70px" }}>
+      <td style={{ width: "70px", borderTop: "none" }}>
         <input
           type="checkbox"
           name={compnayReview.comrid}
@@ -51,7 +51,7 @@ export default function DetailCompanyReview({
           onChange={handleCheck}
         />
       </td>
-      <td className="tableReviewWrap">
+      <td className="tableReviewWrap" style={{ height: "auto", borderTop: "none", width: "auto" }}>
         <div>
           <h4 style={{ marginBottom: "6px" }}>{compnayReview.title}</h4>
           <ul>
@@ -88,7 +88,7 @@ export default function DetailCompanyReview({
                     <ServicesImageOnClick
                       key={item.iid}
                       getData={images}
-                      url={item.storagePath}
+                      url={item}
                       text="리뷰 이미지"
                     />
                   ))}

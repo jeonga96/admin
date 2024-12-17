@@ -1,8 +1,8 @@
-import { useState, useLayoutEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 
 import * as API from "../../service/api";
-import * as STR from "../../service/string";
-import * as UD from "../../service/useData";
+import * as APIURL from "../../service/string/apiUrl";
+import * as TOA from "../../service/library/toast";
 
 export default function SetAllKeyWord({
   companyDetailKeyword,
@@ -20,15 +20,15 @@ export default function SetAllKeyWord({
 
   // 전체 키워드 새로고침
   function fnReKeyword() {
-    API.servicesPostData(STR.urlAllKeyword, {}).then((res) => {
-      API.servicesSetStorage(STR.ALLKEYWORD, JSON.stringify(res.data));
+    API.servicesPostData(APIURL.urlAllKeyword, {}).then((res) => {
+      API.servicesSetStorage(APIURL.ALLKEYWORD, JSON.stringify(res.data));
     });
   }
 
   // 로그인 시 받은 전체 키워드를 가져온다
-  useLayoutEffect(() => {
+  useEffect(() => {
     fnReKeyword();
-    allKeywords.current = JSON.parse(API.servicesGetStorage(STR.ALLKEYWORD));
+    allKeywords.current = JSON.parse(API.servicesGetStorage(APIURL.ALLKEYWORD));
   }, []);
 
   // 전체 키워드에서 입력한 키워드가 포함됐을 때의 값을 반환하는 코드
@@ -43,7 +43,7 @@ export default function SetAllKeyWord({
   const handleKeywordOnclick = (item, e) => {
     e.preventDefault();
     if (companyDetailKeyword.length > 19) {
-      UD.servicesUseToast("최대 20개까지 입력할 수 있습니다.");
+      TOA.servicesUseToast("최대 20개까지 입력할 수 있습니다.");
     } else {
       companyDetailKeyword.forEach((el) => clickedKeyword.push(el.kid));
       if (!clickedKeyword.includes(item.kid)) {

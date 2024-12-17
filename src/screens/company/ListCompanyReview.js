@@ -1,11 +1,12 @@
 // 사업자 회원 관리 > 사업자 상세정보 > 사업자 리뷰
 
 import { useParams } from "react-router-dom";
-import { useState, useLayoutEffect } from "react";
+import { useState } from "react";
 
 import * as API from "../../service/api";
-import * as STR from "../../service/string";
-import * as UD from "../../service/useData";
+import * as APIURL from "../../service/string/apiUrl";
+import * as TOA from "../../service/library/toast";
+import * as CUS from "../../service/customHook";
 
 import ComponentErrorNull from "../../components/piece/PieceErrorNull";
 import LayoutTopButton from "../../components/layout/LayoutTopButton";
@@ -21,8 +22,8 @@ export default function ListCompanyReview() {
   const [clickedUseFlag, setClickedUseFlag] = useState([]);
 
   // 리뷰 데이터 요청
-  useLayoutEffect(() => {
-    API.servicesPostData(STR.urlReviewList, {
+  CUS.useCleanupEffect(() => {
+    API.servicesPostData(APIURL.urlReviewList, {
       rcid: cid,
     }).then((res) => {
       setReview(res.data);
@@ -32,18 +33,18 @@ export default function ListCompanyReview() {
   // 계약관리 submit
   const handleUseFlag = () => {
     for (let i = 0; i < clickedUseFlag.length; i++) {
-      API.servicesPostData(STR.urlSetReview, {
+      API.servicesPostData(APIURL.urlSetReview, {
         comrid: clickedUseFlag[i],
         useFlag: 0,
       }).then((res) => {
         if (res.status === "fail") {
-          UD.servicesUseToast(
+          TOA.servicesUseToast(
             "오류가 발생되어 수정이 진행되지 않았습니다.",
             "e"
           );
         }
         if (res.status === "success") {
-          UD.servicesUseToast("완료되었습니다.", "s");
+          TOA.servicesUseToast("완료되었습니다.", "s");
           window.location.reload();
           return;
         }
@@ -68,7 +69,7 @@ export default function ListCompanyReview() {
             <thead>
               <tr>
                 <th style={{ width: "70px" }}>비활성화</th>
-                <th>리뷰내용</th>
+                <th style={{ width: "auto" }}>리뷰내용</th>
               </tr>
             </thead>
             <tbody>
@@ -77,6 +78,7 @@ export default function ListCompanyReview() {
                   <tr
                     key={item.comrid}
                     style={{ height: "auto", minHeight: "5.25rem" }}
+                    className="tableReviewList"
                   >
                     <DetailCompanyReview
                       compnayReview={item}

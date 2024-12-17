@@ -3,12 +3,57 @@
     "name": "회원 관리",
     "subNav": [
       {
-        "subName": "회원 관리",
+        "subName": "전체 회원 관리",
         "url": "/user"
       },
       {
-        "subName": "사업자 관리",
+        "subName": "사업자 회원 관리",
         "url": "/company"
+      },
+      {
+        "subName": "대기 / 거절 상태 사업자 회원 관리",
+        "url": "/waitinglist"
+      },
+      {
+        "subName": "대용량 사업자데이터 추가",
+        "url": "/csvupload"
+      },
+      {
+        "subName": "대용량 안심번호 관리",
+        "url": "/safenumberupload"
+      },
+      {
+        "subName": "녹취록 전체 관리",
+        "url": "/record"
+      }
+    ]
+  },
+  {
+    "name": "공사콕 앱 / 웹 관리",
+    "subNav": [
+      {
+        "subName": "이미지 관리",
+        "url": "/setimgs"
+      },
+      {
+        "subName": "앱 홈화면 배너 관리",
+        "url": "/appbanner"
+      },
+      {
+        "subName": "관할지역 건축과 배너 관리",
+        "url": "/constuctdepartmentbanner"
+      },
+      {
+        "subName": "판매가능 키워드 확인",
+        "url": "/allkeyword"
+      },
+      {
+        "subName": "공지사항 관리",
+        "url": "/notice"
+      },
+      {
+        "subName": "최신글 관리",
+        "url": "/localcontent"
       },
       {
         "subName": "모든 견적의뢰서 관리",
@@ -19,29 +64,24 @@
         "url": "/proposalInfo"
       },
       {
-        "subName": "대용량 회원데이터 추가",
-        "url": "/csvupload"
-      }
-    ]
-  },
-  {
-    "name": "공사콕 앱/웹 관리",
-    "subNav": [
-      {
-        "subName": "공지사항 관리",
-        "url": "/notice"
-      },
-      {
-        "subName": "앱 배너 관리",
-        "url": "/appbanner"
-      },
-      {
-        "subName": "공사콕 이벤트 관리",
+        "subName": "와짱 이벤트 관리",
         "url": "/event"
       },
       {
-        "subName": "와짱 이벤트 관리",
+        "subName": "와짱 이벤트 신청자 목록",
         "url": "/wzevent"
+      },
+      {
+        "subName": "건의사항",
+        "url": "/suggest"
+      },
+      {
+        "subName": "탈퇴 요청 관리",
+        "url": "/resignuser"
+      },
+      {
+        "subName": "공사콕 점검 예고 관리",
+        "url": "/inspectionTime"
       }
     ]
   },
@@ -53,21 +93,21 @@
         "url": "/agentem"
       },
       {
-        "subName": "지점(대리점) 관리",
+        "subName": "지점 ( 대리점 ) 관리",
         "url": "/agentag"
       },
       {
-        "subName": "지사(총판) 관리",
+        "subName": "지사 ( 총판 ) 관리",
         "url": "/agentsd"
       }
     ]
   },
   {
-    "name": "와부 사이트 연결",
+    "name": "외부 사이트 이동",
     "subNav": [
       {
         "subName": "안심번호 상세 관리",
-        "url": "https://050web.sejongtelecom.net/"
+        "url": "https://050biz.sejongtelecom.net/"
       }
     ]
   }

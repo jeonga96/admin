@@ -1,14 +1,18 @@
 // 공사콕 앱 관리 > 공지사항 관리 > 공사콕 공지사항 수정
 
-import { useState, useLayoutEffect } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 import { useDispatch, useSelector, shallowEqual } from "react-redux";
 import { useParams } from "react-router-dom";
 
-import * as STR from "../../service/string";
+import * as APIURL from "../../service/string/apiUrl";
+import * as CUS from "../../service/customHook";
 import * as API from "../../service/api";
-import * as UD from "../../service/useData";
+import * as UDIMAGE from "../../service/useData/image";
+import * as TOA from "../../service/library/toast";
+
+import * as DATA from "../../action/data";
 
 import SetImage from "../../components/services/ServicesImageSetPreview";
 import LayoutTopButton from "../../components/layout/LayoutTopButton";
@@ -16,6 +20,7 @@ import LayoutTopButton from "../../components/layout/LayoutTopButton";
 export default function SetDetailAdminNotice() {
   const { contid } = useParams();
   const dispatch = useDispatch();
+  const [submitCk, setSubmitCk] = useState(false);
   // react-hook-form 라이브러리
   const {
     handleSubmit,
@@ -32,21 +37,21 @@ export default function SetDetailAdminNotice() {
   const [useFlag, setUseFlag] = useState(true);
 
   // 이미지 ------------------------------------------------------------------------
-  const multiImgs = useSelector((state) => state.multiImgsData, shallowEqual);
+  const multiImgs = useSelector(
+    (state) => state.image.multiImgsData,
+    shallowEqual
+  );
   const imgsIid = [];
 
-  useLayoutEffect(() => {
+  CUS.useCleanupEffect(() => {
     // contid가 있으면 기존에 입력된 값을 가져옴
     if (!!contid) {
-      API.servicesPostData(STR.urlGetContent, {
+      API.servicesPostData(APIURL.urlGetContent, {
         contid: contid,
       })
         .then((res) => {
           if (res.status === "success") {
-            dispatch({
-              type: "serviceGetedData",
-              payload: { ...res.data },
-            });
+            dispatch(DATA.serviceGetedData(res.data));
 
             setValue("_category", res.data.category || "notice");
             setValue("_contentString", res.data.contentString || "");
@@ -58,12 +63,12 @@ export default function SetDetailAdminNotice() {
     }
   }, []);
 
-  console.log("multiImgs", multiImgs);
-
   function AddUserSubmit(e) {
-    UD.serviesGetImgsIid(imgsIid, multiImgs);
+    if (submitCk) return;
+    setSubmitCk(true);
+    UDIMAGE.serviesGetImgsIid(imgsIid, multiImgs);
     API.servicesPostData(
-      STR.urlSetContent,
+      APIURL.urlSetContent,
       !!contid
         ? // contid여부 확인하여 contid가 있으면 수정
           {
@@ -83,21 +88,25 @@ export default function SetDetailAdminNotice() {
     )
       .then((res) => {
         if (res.status === "success") {
-          UD.servicesUseToast("입력이 완료되었습니다.", "s");
+          TOA.servicesUseToast("입력이 완료되었습니다.", "s");
           setTimeout(() => {
             window.location.href = `notice/${res.data.contid}`;
           }, 2000);
           return;
         }
         if (res.status === "fail") {
-          UD.servicesUseToast("입력에 실패했습니다.", "e");
+          setSubmitCk(false);
+          TOA.servicesUseToast("입력에 실패했습니다.", "e");
         }
       })
-      .catch((error) => console.log("axios 실패", error.response));
+      .catch((error) => {
+        setSubmitCk(false);
+        console.log("axios 실패", error.response);
+      });
   }
 
   const fnUseFlag = () => {
-    API.servicesPostData(STR.urlSetContent, {
+    API.servicesPostData(APIURL.urlSetContent, {
       contid: contid,
       category: getValues("_category"),
       contentString: getValues("_contentString"),
@@ -106,14 +115,14 @@ export default function SetDetailAdminNotice() {
     })
       .then((res) => {
         if (res.status === "success") {
-          UD.servicesUseToast("수정이 완료되었습니다.", "s");
+          TOA.servicesUseToast("수정이 완료되었습니다.", "s");
           setTimeout(() => {
             window.location.href = `/notice`;
           }, 2000);
           return;
         }
         if (res.status === "fail") {
-          UD.servicesUseToast("입력에 실패했습니다.", "e");
+          TOA.servicesUseToast("입력에 실패했습니다.", "e");
         }
       })
       .catch((error) => console.log("axios 실패", error.response));
@@ -128,7 +137,7 @@ export default function SetDetailAdminNotice() {
               text={useFlag == true ? "비공개" : "공개"}
               fn={fnUseFlag}
             />
-            <LayoutTopButton text="완료" disabled={isSubmitting} />
+            <LayoutTopButton text="완료" isSubmitting={isSubmitting} />
           </ul>
 
           <div className="formWrap">
@@ -137,7 +146,7 @@ export default function SetDetailAdminNotice() {
               style={{ marginTop: "0", width: "100%" }}
             >
               <label htmlFor="title" className="blockLabel">
-                <span>제목</span>
+                <span>제목 *</span>
               </label>
               <div>
                 <input
@@ -150,7 +159,7 @@ export default function SetDetailAdminNotice() {
                     required: "입력되지 않았습니다.",
                     minLength: {
                       value: 2,
-                      message: "2자 이상의 글자만 사용가능합니다.",
+                      message: "2자 이상 입력해주세요.",
                     },
                   })}
                 />
@@ -170,7 +179,7 @@ export default function SetDetailAdminNotice() {
               </label>
 
               <div className="filterWrap">
-                <label className="listSearchRadioLabel" htmlFor="notice">
+                <label htmlFor="notice">
                   <input
                     type="radio"
                     checked={watch("_category") === "notice"}
@@ -178,13 +187,10 @@ export default function SetDetailAdminNotice() {
                     id="notice"
                     {...register("_category")}
                   />
-                  <span>전체 회원 공지</span>
+                  <span>B2C 공지</span>
                 </label>
 
-                <label
-                  className="listSearchRadioLabel"
-                  htmlFor="noticeTocompany"
-                >
+                <label htmlFor="noticeTocompany">
                   <input
                     type="radio"
                     checked={watch("_category") === "noticeTocompany"}
@@ -192,7 +198,7 @@ export default function SetDetailAdminNotice() {
                     id="noticeTocompany"
                     {...register("_category")}
                   />
-                  <span>사업자 회원 공지</span>
+                  <span>B2B 공지</span>
                 </label>
               </div>
             </div>
@@ -213,7 +219,7 @@ export default function SetDetailAdminNotice() {
                     equired: "입력되지 않았습니다.",
                     minLength: {
                       value: 10,
-                      message: "10자 이상의 글자만 사용가능합니다.",
+                      message: "10자 이상으로 입력해주세요.",
                     },
                   })}
                 />

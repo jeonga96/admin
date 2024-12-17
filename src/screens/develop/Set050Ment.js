@@ -5,8 +5,7 @@
 // import { useForm } from "react-hook-form";
 
 // // import * as API from "../../service/api";
-// import * as UD from "../../service/useData";
-// import * as STR from "../../service/string";
+// import * as APIURL from "../../service/string/apiUrl";
 
 // import LayoutTopButton from "../../components/layout/LayoutTopButton";
 // import PieceLoading from "../../components/piece/PieceLoading";
@@ -35,7 +34,7 @@
 //   //   if (!!mentid) {
 //   //     API
 //   //       .servicesGet050biz
-//   //       // STR.urlGet050,{}
+//   //       // APIURL.urlGet050,{}
 //   //       ()
 //   //       .then((res) => {
 //   //         setLoading(true);
@@ -57,7 +56,7 @@
 //   // musicMethot가 1번일 떄, 050biz ment에서 bgm목록 확인하여 가져오기
 //   // useEffect(() => {
 //   //   API.servicesPost050bizMent(
-//   //     `${STR.urlPre050Biz}/050biz/v1/${watch("_channelId")}/bgm`,
+//   //     `${APIURL.urlPre050Biz}/050biz/v1/${watch("_channelId")}/bgm`,
 //   //     { channelId: watch("_channelId") }
 //   //   ).then((res) => {
 //   //     setLoading(true);
@@ -66,7 +65,7 @@
 //   //       setBgmList(res.data);
 //   //       console.log(bgmList);
 //   //     } else {
-//   //       UD.servicesUseToast("bgm이 없습니다.", "e");
+//   //       TOA.servicesUseToast("bgm이 없습니다.", "e");
 //   //       setLoading(false);
 //   //     }
 //   //   });
@@ -82,7 +81,7 @@
 
 //   // const fnDelete = () => {
 //   //   API.servicesPost050bizMent(
-//   //     `${STR.urlPre050Biz}/050biz/v1/${watch(
+//   //     `${APIURL.urlPre050Biz}/050biz/v1/${watch(
 //   //       "_channelId"
 //   //     )}/ment/delete/${mentid}`,
 //   //     {}
@@ -114,7 +113,7 @@
 //       );
 
 //     //   API.servicesPost050bizMent(
-//     //     `${STR.urlPre050Biz}/050biz/v1/${watch("_channelId")}/ment/create`,
+//     //     `${APIURL.urlPre050Biz}/050biz/v1/${watch("_channelId")}/ment/create`,
 //     //     {
 //     //       title: getValues("_title"),
 //     //       ttsMsg: getValues("_ttsMsg"),
@@ -126,7 +125,7 @@
 
 //     // const fnUpdateSubmit = () => {
 //     //   API.servicesPost050bizMent(
-//     //     `${STR.urlPre050Biz}/050biz/v1/${watch(
+//     //     `${APIURL.urlPre050Biz}/050biz/v1/${watch(
 //     //       "_channelId"
 //     //     )}/ment/update/${mentid}`,
 //     //     {
@@ -152,7 +151,7 @@
 //           <ul className="tableTopWrap tableTopBorderWrap">
 //             {/* <LayoutTopButton url={`/company/${cid}`} text="상세정보 가기" /> */}
 //             {/* {!!mentid && <LayoutTopButton text="삭제" fn={fnDelete} />} */}
-//             <LayoutTopButton text="완료" disabled={isSubmitting} />
+//             <LayoutTopButton text="완료" isSubmitting={isSubmitting} />
 //           </ul>
 //           <div className="formWrap">
 //             <fieldset id="CompanyDetail_1">

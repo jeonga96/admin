@@ -1,11 +1,10 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useParams } from "react-router-dom";
-import { servicesPostData } from "../../service/api";
-// import { useForm } from "react-hook-form";
+import { useSelector, shallowEqual } from "react-redux";
 
 import * as API from "../../service/api";
-import * as STR from "../../service/string";
-import * as UD from "../../service/useData";
+import * as APIURL from "../../service/string/apiUrl";
+import * as TOA from "../../service/library/toast";
 
 import ServiceModalCustomer from "../services/ServiceModalCustomer";
 
@@ -13,8 +12,12 @@ import ServiceModalCustomer from "../services/ServiceModalCustomer";
 function ChlidList({ item }) {
   const [showModal, setShowModal] = useState(false);
 
-  const changeDate = new Date(item.changeDate).toISOString().split("T")[0];
-  const createDate = new Date(item.createTime).toISOString().split("T")[0];
+  const changeDate = item.changeDate
+    ? new Date(item.changeDate).toISOString().split("T")[0]
+    : "";
+  const createDate = item.createTime
+    ? new Date(item.createTime).toISOString().split("T")[0]
+    : "";
 
   // 수정 처리 함수
   const handleEdit = (e, ccid) => {
@@ -25,27 +28,27 @@ function ChlidList({ item }) {
   // 삭제 처리 함수
   const handleDelete = (e) => {
     e.preventDefault();
-    API.servicesPostData(STR.urlSetCustomerConsult, {
+    API.servicesPostData(APIURL.urlSetCustomerConsult, {
       ...item,
       useFlag: 0,
     }).then((res) => {
       console.log(res);
-      UD.servicesUseToast("삭제되었습니다.", "s");
+      TOA.servicesUseToast("삭제되었습니다.", "s");
       setTimeout(() => {
         document.location.reload();
       }, 1500);
     });
   };
 
-  // 변경 일자를 ISO 형식으로 변환
-
   return (
     <>
-      <ServiceModalCustomer
-        setClick={setShowModal}
-        click={showModal}
-        CCID={item.ccid}
-      />
+      {showModal && (
+        <ServiceModalCustomer
+          setClick={setShowModal}
+          click={showModal}
+          CCID={item.ccid}
+        />
+      )}
 
       <li className="counseling-item">
         <div
@@ -77,6 +80,10 @@ function ChlidList({ item }) {
 }
 
 export default function CustomerCounseling() {
+  const getedSummaryData = useSelector(
+    (state) => state.data.getedSummaryData,
+    shallowEqual
+  );
   const { cid, uid } = useParams(); // URL 파라미터에서 cid, uid를 가져옴
   const [showModal, setShowModal] = useState(false); // 모달을 표시할지 결정하는 상태
   const [listItems, setListItems] = useState([]); // 리스트 아이템을 저장하는 상태
@@ -84,47 +91,36 @@ export default function CustomerCounseling() {
   // 컴포넌트가 마운트되거나 업데이트될 때 실행되는 useEffect
   const fetchListItems = useCallback(() => {
     // 연결된 uid, cid를 할당하는 변수로 사용
-    let IDNUM;
-
     // 사업자 상세정보 페이지
-    if (!!cid) {
-      API.servicesPostData(STR.urlGetCompany, { cid: cid }).then((res) => {
-        // urlGetCompany cid에 연결된 ruid가 있으면 할당 없을 시 ""
-        IDNUM = res.status === "success" ? res.data.ruid : "";
-
-        // list 조회 통신
-        API.servicesPostData(STR.urlListCustomerConsult, {
-          uid: IDNUM,
-          cid: cid,
-        }).then((res) => {
-          console.log("urlListCustomerConsult", res.data);
-          if (res.status === "success") {
-            setListItems(res.data);
-          } else {
-            setListItems([]);
-          }
-        });
-      });
-    }
+    API.servicesPostData(APIURL.urlListCustomerConsult, {
+      uid: getedSummaryData.ruid,
+      cid: cid,
+    }).then((res) => {
+      if (res.status === "success") {
+        setListItems(res.data);
+      } else {
+        setListItems([]);
+      }
+    });
 
     // 회원 상세정보 페이지
     if (!!uid) {
-      API.servicesPostData(STR.urlGetUserCid, { uid: uid }).then((res) => {
+      API.servicesPostData(APIURL.urlGetUserCid, { uid: uid }).then((res) => {
         // urlGetCompany cid에 연결된 ruid가 있으면 할당 없을 시 ""
-        IDNUM = res.status === "success" ? res.data.cid : "";
-
-        // list 조회 통신 I
-        API.servicesPostData(STR.urlListCustomerConsult, {
-          uid: uid,
-          cid: IDNUM,
-        }).then((res) => {
-          console.log("urlListCustomerConsult", res.data);
-          if (res.status === "success") {
-            setListItems(res.data);
-          } else {
-            setListItems([]);
-          }
-        });
+        if (res !== undefined) {
+          let IDNUM = res.status === "success" ? res.data.cid : "";
+          // list 조회 통신 I
+          API.servicesPostData(APIURL.urlListCustomerConsult, {
+            uid: uid,
+            cid: IDNUM,
+          }).then((res) => {
+            if (res.status === "success") {
+              setListItems(res.data);
+            } else {
+              setListItems([]);
+            }
+          });
+        }
       });
     }
   }, [showModal]);
@@ -134,7 +130,12 @@ export default function CustomerCounseling() {
   }, [fetchListItems]);
 
   return (
-    <fieldset id="CompanyDetail_8">
+    <fieldset
+      id="CompanyDetail_8"
+      style={{
+        paddingBottom: listItems.length > 0 ? "0" : "5%",
+      }}
+    >
       <h3>
         고객상담
         <button
@@ -147,7 +148,9 @@ export default function CustomerCounseling() {
         </button>
       </h3>
 
-      <ServiceModalCustomer setClick={setShowModal} click={showModal} />
+      {showModal && (
+        <ServiceModalCustomer setClick={setShowModal} click={showModal} />
+      )}
 
       {listItems.length > 0 && (
         <div className="counseling-list">

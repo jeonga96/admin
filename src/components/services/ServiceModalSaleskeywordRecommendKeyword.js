@@ -1,8 +1,8 @@
 import { useState, useEffect, useCallback } from "react";
 
 import * as API from "../../service/api";
-import * as STR from "../../service/string";
-import * as UD from "../../service/useData";
+import * as APIURL from "../../service/string/apiUrl";
+import * as TOA from "../../service/library/toast";
 
 export default function ServiceModalSaleskeywordRecommendKeyword({
   click,
@@ -14,7 +14,7 @@ export default function ServiceModalSaleskeywordRecommendKeyword({
 
   const fetchData = useCallback(() => {
     if (!!inputData) {
-      API.servicesPostData(STR.urlLikeKeyword, {
+      API.servicesPostData(APIURL.urlLikeKeyword, {
         keyword: inputData,
       })
         .then((res) => {
@@ -23,7 +23,7 @@ export default function ServiceModalSaleskeywordRecommendKeyword({
           } else {
             setClick(false);
             setList([]);
-            UD.servicesUseToast("검색 데이터가 없습니다.", "e");
+            TOA.servicesUseToast("검색 데이터가 없습니다.", "e");
           }
         })
         .catch((error) => {
@@ -33,7 +33,7 @@ export default function ServiceModalSaleskeywordRecommendKeyword({
           setList([]);
         });
     } else {
-      UD.servicesUseToast("입력 데이터가 없습니다.", "e");
+      TOA.servicesUseToast("입력 데이터가 없습니다.", "e");
     }
   }, [inputData, setClick]);
 
@@ -54,19 +54,19 @@ export default function ServiceModalSaleskeywordRecommendKeyword({
             <table className="commonTable">
               <thead>
                 <tr>
-                  <th style={{ width: "92px" }}>사용회원</th>
-                  <th style={{ width: "300px" }}>키워드</th>
-                  <th style={{ width: "100px" }}>순위</th>
+                  <th style={{ width: "20%" }}>사용회원</th>
+                  <th style={{ width: "60%" }}>키워드</th>
+                  <th style={{ width: "20%" }}>순위</th>
                 </tr>
               </thead>
 
-              <tbody>
+              <tbody style={{ display: "contents" }}>
                 {list.map((item, i) => {
                   return (
                     <tr key={i} onClick={() => fn(item)}>
-                      <td style={{ width: "92px" }}>{item.rcid}</td>
-                      <td style={{ width: "300px" }}>{item.keyword}</td>
-                      <td style={{ width: "100px" }}>{item.prior}</td>
+                      <td style={{ width: "20%" }}>{item.rcid}</td>
+                      <td style={{ width: "60%" }}>{item.keyword}</td>
+                      <td style={{ width: "20%" }}>{item.prior}</td>
                     </tr>
                   );
                 })}

@@ -41,7 +41,7 @@ export default function ComponentDetailNotice({ detail }) {
       <li className="detailContentWrap title">
         <h4 className="blind">제목</h4>
         <div>
-          <span className="titleText">
+          <span className="titleText" style={{ color: "var(--color-primary)", fontWeight: "600" }}>
             {ADMIN ? detail.contentString : detail.title}
           </span>
         </div>
@@ -50,14 +50,21 @@ export default function ComponentDetailNotice({ detail }) {
       <li className="detailContentWrap">
         <h4 className="blind">내용</h4>
         <div>
-          <p className="contentText">
+          <p className="contentText"
+          style={{ textIndent: "0", paddingLeft: "0.6rem",wordWrap: 'break-word' }}>
             {ADMIN ? detail.contentDetail : detail.content}
           </p>
           {imgs && (
             <div
               className="detailWidthContent detailWidthContentImg"
-              style={{ justifyContent: "left" }}
+              style={{  justifyContent: "left", 
+                        backgroundColor: "#eeeeee", 
+                        paddingLeft: "0.6rem",
+                        marginBottom: "0.4rem",
+                        placeItems: "center"
+                    }}
             >
+              <span style={{ paddingRight: "1rem", fontWeight: "600" }}>첨부사진</span>
               {imgs.map((item) => (
                 <ImageOnClick
                   key={item.iid}

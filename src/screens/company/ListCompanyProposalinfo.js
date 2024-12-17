@@ -1,55 +1,54 @@
 // 사업자 회원 관리 > 사업자 상세정보 > 사업자 상세정보 관리 > [요청] 공사콕 견적서 리스트
 
+import { useDispatch, useSelector, shallowEqual } from "react-redux";
 import { Link, useParams, useLocation } from "react-router-dom";
-import { useLayoutEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 
 import * as API from "../../service/api";
 import * as CH from "../../service/customHook";
-import * as STR from "../../service/string";
+import * as APIURL from "../../service/string/apiUrl";
+import * as CUS from "../../service/customHook";
 
-import PageButton from "../../components/services/ServicesPaginationButton";
+import * as PAGE from "../../action/page";
+
+import PageButton from "../../components/services/ServicesPaginationButton_Redux";
 import ComponentErrorNull from "../../components/piece/PieceErrorNull";
 
 export default function DetailCompanyProposalinfo() {
   const { rcid } = useParams();
   const location = useLocation();
+  const dispatch = useDispatch();
 
-  // [데이터 요청]
-  // 목록 데이터
   const [list, setList] = useState([]);
   // cid에 연결된 ruid 저장
   const RUID = useRef("");
+  const pageData = useSelector((state) => state.page.pageData, shallowEqual);
 
-  // [pagination 버튼 관련]
-  // listPage: 컨텐츠 총 개수 / page:전체 페이지 수 & 현재 페이지
-  const [listPage, setListPage] = useState({});
-  const [page, setPage] = useState({ getPage: 0, activePage: 1 });
-
-  useLayoutEffect(() => {
+  CUS.useCleanupEffect(() => {
     // uid가져오기
-    API.servicesPostData(STR.urlGetCompany, { cid: rcid })
+    API.servicesPostData(APIURL.urlGetCompany, { cid: rcid })
       .then((res) => (RUID.current = res.data.ruid))
       // 가져온 uid로 견적 요청서 가져오기
       .then((res) =>
         API.servicesPostData(
-          STR.urlListProposalInfo,
+          APIURL.urlListProposalInfo,
           // url에 맞춰 수령 기준, 요청 기준으로 견적 요청서를 가져온다
           location.pathname.includes("from")
             ? {
                 fromUid: res,
-                offset: page.getPage,
+                offset: pageData.getPage,
                 size: 15,
               }
             : {
                 toUid: res,
-                offset: page.getPage,
+                offset: pageData.getPage,
                 size: 15,
               }
         )
           .then((res) => {
             console.log(res);
             setList(res.data);
-            setListPage(res.page);
+            dispatch(PAGE.setListPage(res.page));
           })
           .catch(setList([]))
       );
@@ -59,39 +58,25 @@ export default function DetailCompanyProposalinfo() {
   // 두번째 렌더링부터 이벤트 발생
   CH.useDidMountEffect(() => {
     API.servicesPostData(
-      STR.urlListProposalInfo,
+      APIURL.urlListProposalInfo,
       location.pathname.includes("from")
         ? {
             fromUid: RUID.current,
-            offset: page.getPage,
+            offset: pageData.getPage,
             size: 15,
           }
         : {
             toUid: RUID.current,
-            offset: page.getPage,
+            offset: pageData.getPage,
             size: 15,
           }
     )
       .then((res) => {
         setList(res.data);
-        setListPage(res.page);
+        dispatch(PAGE.setListPage(res.page));
       })
       .catch(setList([]));
-  }, [page.activePage]);
-
-  // useLayoutEffect(() => {
-  //   if (!!prid && !!getValues("_fromUid")) {
-  //     API.servicesPostData(STR.urlGetUserCid, {
-  //       uid: getValues("_toUid"),
-  //     }).then((res) => {
-  //       if (res.status === "success") {
-  //         API.servicesPostData(STR.urlGetCompanyDetail, {
-  //           rcid: res.data.cid,
-  //         }).then((res2) => SetToName(res2.data.name));
-  //       }
-  //     });
-  //   }
-  // }, [getValues("_toUid")]);
+  }, [pageData.getPage]);
 
   return (
     <>
@@ -112,14 +97,16 @@ export default function DetailCompanyProposalinfo() {
                   <th style={{ width: "150px" }}>업체명</th>
                   <th style={{ width: "100px" }}>대표자명</th>
                   <th style={{ width: "150px" }}>연락처</th>
-                  <th style={{ width: "120px" }}>공사타입</th>
-                  <th style={{ width: "80px" }}>활성화</th>
+                  <th style={{ width: "150px" }}>공사타입</th>
                 </tr>
               </thead>
               <tbody>
                 {list !== [] &&
                   list.map((item, key) => (
-                    <tr key={key}>
+                    <tr
+                      key={key}
+                      className={item.useFlag == 0 ? "propsosalFlageN" : null}
+                    >
                       <td className="tableButton">
                         <Link
                           to={`/proposalInfo/${item.prid}`}
@@ -184,16 +171,11 @@ export default function DetailCompanyProposalinfo() {
                             </i>
                           )}
                       </td>
-                      <td>
-                        {item.useFlag == "1" && (
-                          <i className="tableIcon">정상</i>
-                        )}
-                      </td>
                     </tr>
                   ))}
               </tbody>
             </table>
-            <PageButton listPage={listPage} page={page} setPage={setPage} />
+            <PageButton />
           </div>
         </section>
       )}

@@ -1,9 +1,9 @@
 import axios from "axios";
-import { TOKEN, urlRefreshtoken } from "./string";
-import { servicesUseToast } from "./useData";
-import { servicesGetStorage, servicesSetStorage } from "./storage";
+import { urlRefreshtoken } from "./string/apiUrl";
+import { TOKEN } from "./string/stringtoconst";
+import { servicesUseToast } from "./library/toast";
+import { servicesGetStorage, servicesSetStorage } from "./useData/storage";
 
-export {servicesGetStorage} from "./storage"
 const storageGetToken = servicesGetStorage(TOKEN);
 
 export function servicesGetRefreshToken() {
@@ -123,4 +123,35 @@ export function servicesGetFile(url, reqData) {
         }, 2000);
       }
     });
+}
+
+export function servicesNotokenPostData(url, reqData) {
+  return axios({
+    url: url,
+    method: "post",
+    data: reqData,
+  })
+    .then((res) => res.data)
+    .catch((error) => {
+      console.log("error", error);
+    });
+}
+
+/**
+ * postApi를 이용한다. api를 불러오는데 실패하면 빈 배열을 반환한다.
+ * @param {*} url
+ * @param {*} valueName : {key:value}
+ * @param {*} setData : setState
+ */
+export function serviesPostDataState(url, valueName, setData) {
+  servicesPostData(url, valueName).then((res) => {
+    if (res.status === "success") {
+      setData(res.data);
+      return;
+    }
+    if (res.status === "fail" && res.emsg === "process failed.") {
+      setData([]);
+      return;
+    }
+  });
 }

@@ -274,3 +274,20 @@ input[type="email"] {
   -ms-ime-mode: disabled;
   ime-mode: disabled;
 }
+.commonBox .textAlineRight {
+  text-align: right;
+}
+
+audio {
+  width: 280px; /* 오디오 플레이어의 너비 */
+  height: 29px; /* 오디오 플레이어의 높이 */
+  margin-left: 8px;
+  margin-right: 8px;
+}
+
+table audio {
+  width: 280px;
+  right: 0;
+  /* height: 32px; */
+  height: 22px;
+}

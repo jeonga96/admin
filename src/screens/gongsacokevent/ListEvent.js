@@ -1,18 +1,19 @@
 // 공사콕 앱 관리 > 공사콕 이벤트 관리 리스트
 
 import { useForm } from "react-hook-form";
-import { useState, useLayoutEffect } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
 import * as API from "../../service/api";
-import * as STR from "../../service/string";
+import * as CUS from "../../service/customHook";
+import * as APIURL from "../../service/string/apiUrl";
 
 import LayoutTopButton from "../../components/layout/LayoutTopButton";
 import ComponentErrorNull from "../../components/piece/PieceErrorNull";
 import PaginationButton from "../../components/services/ServicesPaginationButton";
 
 export default function ListEvent() {
-  const { register, watch } = useForm({
+  const { watch } = useForm({
     defaultValues: {
       _category: "wzEvent",
     },
@@ -26,10 +27,22 @@ export default function ListEvent() {
   // listPage: 컨텐츠 총 개수 / page:전체 페이지 수 & 현재 페이지
   const [listPage, setListPage] = useState({});
   const [page, setPage] = useState({ getPage: 0, activePage: 1 });
+  const [showUseFlagZero, setShowUseFlagZero] = useState(false);
+  const [buttonClicked, setButtonClicked] = useState(false);
+
+  const [buttonText, setButtonText] = useState("게시글 전체보기");
+
+  const toggleVisibility = () => {
+    setShowUseFlagZero((prev) => !prev);
+    setButtonText((prev) =>
+      prev === "게시글 전체보기" ? "비공개 숨김" : "게시글 전체보기"
+    );
+    setButtonClicked((prev) => !prev);
+  };
 
   // 카테고리 확인하여 데이터 요청
-  useLayoutEffect(() => {
-    API.servicesPostData(STR.urlContentList, {
+  CUS.useCleanupEffect(() => {
+    API.servicesPostData(APIURL.urlContentList, {
       // category: watch("_category") || "wzEvent",
       category: "wzEvent",
       offset: 0,
@@ -72,10 +85,18 @@ export default function ListEvent() {
             </label>
           </div> */}
 
-          {(wzEvent == [] && wzEvent.length == 0) || wzEvent === undefined ? (
+          {(wzEvent == [] && wzEvent.length == 0) || wzEvent === null ? (
             <ComponentErrorNull />
           ) : (
             <>
+              <div className="hideButtonContainer">
+                <button
+                  className={`hideButton ${buttonClicked ? "clicked" : ""}`}
+                  onClick={toggleVisibility}
+                >
+                  {buttonText}
+                </button>
+              </div>
               <table className="commonTable">
                 <thead>
                   <tr>
@@ -85,33 +106,42 @@ export default function ListEvent() {
                 </thead>
                 <tbody className="commonTable">
                   {wzEvent &&
-                    wzEvent.map((item) => (
-                      <tr
-                        key={item.contid}
-                        style={{ height: "5.25rem" }}
-                        className={item.useFlag == 0 ? "flageN" : null}
-                      >
-                        <td className="tableContentWrap">
-                          <Link
-                            to={`${item.contid}/set`}
-                            className="Link"
-                            style={{ paddingLeft: "30px" }}
-                          >
-                            <div
-                              className="contentInnerTag"
-                              dangerouslySetInnerHTML={{
-                                __html: item.contentString,
-                              }}
-                            />
-                            <em>{item.contentDetail}</em>
-                          </Link>
-                        </td>
-                        <td>{item.createTime.slice(0, 10)}</td>
-                      </tr>
-                    ))}
+                    wzEvent
+                      .filter((item) =>
+                        showUseFlagZero ? true : item.useFlag !== 0
+                      )
+                      .map((item) => (
+                        <tr
+                          key={item.contid}
+                          style={{
+                            height: "5.25rem",
+                            backgroundColor:
+                              item.useFlag === 0 ? "#e0e0e0" : "white",
+                            color: item.useFlag === 0 ? "#aeaeae" : "black",
+                          }}
+                        >
+                          <td className="tableContentWrap">
+                            <Link
+                              to={`${item.contid}/set`}
+                              className="Link"
+                              style={{ paddingLeft: "30px" }}
+                            >
+                              <div
+                                className="contentInnerTag"
+                                dangerouslySetInnerHTML={{
+                                  __html: item.contentString,
+                                }}
+                              />
+                              <em>{item.contentDetail}</em>
+                            </Link>
+                          </td>
+                          <td>{item.createTime.slice(0, 10)}</td>
+                        </tr>
+                      ))}
                 </tbody>
               </table>
               <PaginationButton
+                itemCount={15}
                 listPage={listPage}
                 page={page}
                 setPage={setPage}

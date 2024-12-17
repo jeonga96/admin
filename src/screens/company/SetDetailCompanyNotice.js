@@ -1,14 +1,18 @@
 // 공사콕 앱관리 > 공지사항 관리 > 공사콕 공지사항 작성 (comnid를 기준으로 작성, 수정 구분)
 
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useLayoutEffect } from "react";
 import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 import { useParams } from "react-router-dom";
 
-import * as STR from "../../service/string";
+import * as APIURL from "../../service/string/apiUrl";
 import * as API from "../../service/api";
-import * as UD from "../../service/useData";
+import * as UDIMAGE from "../../service/useData/image";
+import * as CUS from "../../service/customHook";
+import * as TOA from "../../service/library/toast";
+
+import * as DATA from "../../action/data";
 
 import SetImage from "../../components/services/ServicesImageSetPreview";
 import LayoutTopButton from "../../components/layout/LayoutTopButton";
@@ -27,19 +31,17 @@ export default function SetDetailCompanyNotice() {
 
   // 이미지 ------------------------------------------------------------------------
   // imgs:상세 이미지저장 및 표시, imgsIid:서버에 이미지를 보낼 때는, iid값만 필요
-  const imgs = useSelector((val) => val.imgsData);
+  const imgs = useSelector((val) => val.image.imgsData);
+  const [submitCk, setSubmitCk] = useState(false);
   const imgsIid = [];
 
-  useLayoutEffect(() => {
-    API.servicesPostData(STR.urlCompanyGetNotice, {
+  CUS.useCleanupEffect(() => {
+    API.servicesPostData(APIURL.urlCompanyGetNotice, {
       comnid: comnid,
     })
       .then((res) => {
         if (res.status === "success") {
-          dispatch({
-            type: "serviceGetedData",
-            payload: { ...res.data },
-          });
+          dispatch(DATA.serviceGetedData(res.data));
           setValue("_title", res.data.title || "");
           setValue("_content", res.data.content || "");
         }
@@ -48,17 +50,20 @@ export default function SetDetailCompanyNotice() {
   }, []);
 
   function fnSubmit(e) {
+    if (submitCk) return;
+
+    setSubmitCk(true);
     //서버에 imgs의 iid값만을 보내기 위해 실행하는 반복문 함수
-    UD.serviesGetImgsIid(imgsIid, imgs);
+    UDIMAGE.serviesGetImgsIid(imgsIid, imgs);
     API.servicesPostData(
-      STR.urlCompanySetNotice,
+      APIURL.urlCompanySetNotice,
       !!comnid
         ? {
             comnid: comnid,
             rcid: cid,
             useFlag: 1,
             title: getValues("_title"),
-            content: getValues("_content}"),
+            content: getValues("_content"),
             imgs: imgs ? imgsIid.toString() : "",
           }
         : {
@@ -70,10 +75,11 @@ export default function SetDetailCompanyNotice() {
     )
       .then((res) => {
         if (res.status === "fail") {
-          UD.servicesUseToast("입력에 실패했습니다.", "e");
+          TOA.servicesUseToast("입력에 실패했습니다.", "e");
+          setSubmitCk(false);
         }
         if (res.status === "success") {
-          UD.servicesUseToast("수정이 완료되었습니다.", "s");
+          TOA.servicesUseToast("수정이 완료되었습니다.", "s");
           setTimeout(() => {
             window.location.href = `/company/${cid}/notice/${res.data.comnid}`;
           }, 2000);
@@ -88,7 +94,7 @@ export default function SetDetailCompanyNotice() {
       <div className="commonBox">
         <form className="formLayout" onSubmit={handleSubmit(fnSubmit)}>
           <ul className="tableTopWrap tableTopWhiteWrap">
-            <LayoutTopButton text="완료" disabled={isSubmitting} />
+            <LayoutTopButton text="완료" isSubmitting={isSubmitting} />
           </ul>
           <div className="formContentWrap formContentWideWrap">
             <label htmlFor="title" className="blockLabel">
@@ -98,8 +104,9 @@ export default function SetDetailCompanyNotice() {
               <input
                 type="text"
                 id="title"
-                placeholder="제목을 입력해 주세요."
+                placeholder="제목을 입력해 주세요.(20자이내)"
                 minLength={2}
+                maxLength={20}
                 {...register("_title", {
                   required: "입력되지 않았습니다.",
                 })}
@@ -116,14 +123,15 @@ export default function SetDetailCompanyNotice() {
             <div>
               <textarea
                 id="content"
-                placeholder="내용을 입력해 주세요."
+                placeholder="내용을 입력해 주세요.(900자 이내)"
                 minLength={10}
+                maxLength={900}
                 style={{ height: "400px" }}
                 {...register("_content", {
                   equired: "입력되지 않았습니다.",
                   minLength: {
                     value: 10,
-                    message: "10자 이상의 글자만 사용가능합니다.",
+                    message: "10자 이상으로 입력해주세요.",
                   },
                 })}
               />

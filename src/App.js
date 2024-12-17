@@ -1,6 +1,5 @@
 import { useEffect, useRef } from "react";
 import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
-// import { useSelector, useDispatch } from "react-redux";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -14,12 +13,19 @@ import AddUser from "./screens/user/AddUser";
 import SetDetailUser from "./screens/user/SetDetailUser";
 import SetCsvUpload from "./screens/csvUpload/SetCsvUpload";
 
+/* 회원관리 - 탈퇴요청  */
+import ListResignuser from "./screens/resignuser/ListResignuser";
+
 /* 사업자 관리 */
 import ListCompany from "./screens/company/ListCompany";
-import AddCompany from "./screens/company/AddCompany";
 import SetDetailCompany from "./screens/company/SetDetailCompany";
-import SetRequiredCompany from "./screens/company/SetRequiredCompany";
+import SetAddCompany from "./screens/company/SetAddCompany";
 import DetailCompanyReview from "./screens/company/DetailCompanyReview";
+
+/* 대기 상태 사업자 회원 관리 */
+// setCompanyDetailInfo.status 사용 방법 변경 및 선택적 사업자 회원의 안심번호 등록으로 해당 기능 주석처리
+import ListWaiting from "./screens/waitinglist/ListWaiting";
+import SetWaiting from "./screens/waitinglist/SetWaiting";
 
 /* 공지사항 - 사업자*/
 import ListCompanyNotice from "./screens/company/ListCompanyNotice";
@@ -43,8 +49,12 @@ import SetAdminNotice from "./screens/notice/SetAdminNotice";
 /* 리뷰 */
 import ListCompanyReview from "./screens/company/ListCompanyReview";
 
-/* 앱관리 */
+/* 앱 홈화면 배너 관리 */
 import SetAdminAppbanner from "./screens/appbanner/SetAdminAppbanner";
+
+/* 관할지역 건축과 배너관리 */
+import SetConstuctdepartmentbanner from "./screens/constuctdepartmentbanner/SetConstuctdepartmentbanner";
+import AddConstuctdepartmentbanner from "./screens/constuctdepartmentbanner/AddConstuctdepartmentbanner";
 
 /* 키워드 조회량 관리 */
 // import SetAdminKeywords from "./screens/develop/SetAdminKeywords";
@@ -65,14 +75,38 @@ import SetEvent from "./screens/gongsacokevent/SetEvent";
 import ListWzEvent from "./screens/wzevent/ListWzEvent";
 import SetWzEvent from "./screens/wzevent/SetWzEvent";
 
+/* 건의사항 */
+import ListSuggest from "./screens/suggest/ListSuggest";
+
+/* 이미지 관리 */
+import ListImgs from "./screens/imagesetting/ListImgs";
+import SetImgs from "./screens/imagesetting/SetImgs";
+// import WzSetImgs from "./screens/imagesetting/WzSetImgs";
+
+// 판매가능 키워드 확인
+import ListKeywords from "./screens/keywords/ListKeywords";
+
 // 안심번호
 import SetSafeNumber from "./screens/company/SetSafeNumber";
-// import List050Ment from "./screens/develop/List050Ment";
-// import Set050Ment from "./screens/develop/Set050Ment";
+
+// 녹취록
+import SetRecord from "./screens/record/SetRecord";
+import ListRecord from "./screens/record/ListRecord";
+
+// 대용량 안심번호
+import SafeNumberUpload from "./screens/safeNumberUpload/SafeNumberUpload";
+
+// B2C, B2B 새로운 게시글
+import ListLocalcontent from "./screens/localcontent/ListLocalcontent";
+// import GetLocalcontent from "./screens/localcontent/GetLocalcontent";
+import SetLocalcontent from "./screens/localcontent/SetLocalcontent";
+
+// 공사콕 어플 점검 예고
+import InspectionTime from "./screens/inspectionTime/InspectionTime";
 
 import * as API from "./service/api";
-import * as ST from "./service/storage";
-import * as STR from "./service/string";
+import * as ST from "./service/useData/storage";
+import * as STR from "./service/string/stringtoconst";
 
 function App() {
   const location = useLocation();
@@ -83,7 +117,7 @@ function App() {
   let currentPath = useRef("");
 
   const fnHomeLink = () => {
-    navigate("/user");
+    navigate("/company");
   };
 
   // 로컬에 token이 없으면서 현재 페이지가 login이 아닐 때
@@ -93,6 +127,11 @@ function App() {
       return;
     }
   };
+
+  // const setSafeNumberList = async () => {
+  //   const list = await SAFE.serviesSafeNumSearch([]);
+  //   STO.servicesSetStorage("SAFENUMBERLIST", list);
+  // };
 
   useEffect(() => {
     // url "/"을 통합회원관리로 이동하도록 설정
@@ -108,6 +147,9 @@ function App() {
       const tokenCheckTime = 3600000 * 10;
       setTimeout(API.servicesGetRefreshToken, tokenCheckTime);
     }
+
+    // 추후에 로그인 시 사용가능한 안심번호 리스트를 가지고 오도록 수정
+    // setSafeNumberList();
   }, []);
 
   // 현재 link path를 클릭했을 때 새로고침
@@ -134,12 +176,16 @@ function App() {
       <Routes>
         <Route
           path="/"
-          element={<MainLayout nowTitle="회원 관리" component={<ListUser />} />}
+          element={
+            <MainLayout nowTitle="전체 회원 관리" component={<ListUser />} />
+          }
         />
         <Route path="login" element={<Login />} />
         <Route
           path="user"
-          element={<MainLayout nowTitle="회원 관리" component={<ListUser />} />}
+          element={
+            <MainLayout nowTitle="전체 회원 관리" component={<ListUser />} />
+          }
         />
         {/* ------- 회원 관리 ------- */}
         <Route
@@ -155,17 +201,22 @@ function App() {
           path="user/add"
           element={<MainLayout nowTitle="회원 추가" component={<AddUser />} />}
         />
-
         <Route
-          path="company/add"
+          path="resignuser"
           element={
-            <MainLayout nowTitle="사업자 추가" component={<AddCompany />} />
+            <MainLayout
+              nowTitle="탈퇴요청 관리"
+              component={<ListResignuser />}
+            />
           }
         />
         <Route
           path="company"
           element={
-            <MainLayout nowTitle="사업자 관리" component={<ListCompany />} />
+            <MainLayout
+              nowTitle="사업자 회원 관리"
+              component={<ListCompany />}
+            />
           }
         ></Route>
         <Route
@@ -178,11 +229,26 @@ function App() {
           }
         />
         <Route
-          path="company/:cid/req"
+          path="company/add"
+          element={
+            <MainLayout nowTitle="사업자 추가" component={<SetAddCompany />} />
+          }
+        />
+        <Route
+          path="waitinglist"
           element={
             <MainLayout
-              nowTitle="사업자 필수정보"
-              component={<SetRequiredCompany />}
+              nowTitle="대기 / 거절 상태 사업자 회원 관리"
+              component={<ListWaiting />}
+            />
+          }
+        />
+        <Route
+          path="waitinglist/:cid"
+          element={
+            <MainLayout
+              nowTitle="대기 / 거절 상태 사업자 상세 정보"
+              component={<SetWaiting />}
             />
           }
         />
@@ -190,8 +256,17 @@ function App() {
           path="csvupload"
           element={
             <MainLayout
-              nowTitle="대용량 회원데이터 추가"
+              nowTitle="대용량 사업자 데이터 추가"
               component={<SetCsvUpload />}
+            />
+          }
+        />
+        <Route
+          path="safenumberupload"
+          element={
+            <MainLayout
+              nowTitle="대용량 안심번호 관리"
+              component={<SafeNumberUpload />}
             />
           }
         />
@@ -200,7 +275,7 @@ function App() {
           path="company/:cid/notice"
           element={
             <MainLayout
-              nowTitle="사업자 공지사항"
+              nowTitle="사업자 이벤트 & 공지사항"
               component={<ListCompanyNotice />}
             />
           }
@@ -209,7 +284,7 @@ function App() {
           path="company/:cid/notice/set"
           element={
             <MainLayout
-              nowTitle="사업자 공지사항 작성"
+              nowTitle="사업자 이벤트 & 공지사항 작성"
               component={<SetCompanyNotice />}
             />
           }
@@ -326,6 +401,15 @@ function App() {
           }
         />
         <Route
+          path="estimateinfo/:esid/proposalInfo/:fromUid/:toUid"
+          element={
+            <MainLayout
+              nowTitle="견적서 작성"
+              component={<SetAdminProposalInfo />}
+            />
+          }
+        />
+        <Route
           path="company/:rcid/toproposalinfo"
           element={
             <MainLayout
@@ -343,8 +427,35 @@ function App() {
             />
           }
         />
-
         {/* --------------앱관리 --------------*/}
+        {/* ------- 공지사항 관리 ------- */}
+        <Route
+          path="localcontent"
+          element={
+            <MainLayout
+              nowTitle="최신글 관리"
+              component={<ListLocalcontent />}
+            />
+          }
+        />
+        <Route
+          path="localcontent/:id"
+          element={
+            <MainLayout
+              nowTitle="최신글 상세 관리"
+              component={<SetLocalcontent />}
+            />
+          }
+        />
+        <Route
+          path="localcontent/add"
+          element={
+            <MainLayout
+              nowTitle="최신글 상세 관리"
+              component={<SetLocalcontent />}
+            />
+          }
+        />
         {/* ------- 공지사항 관리 ------- */}
         <Route
           path="notice"
@@ -387,8 +498,26 @@ function App() {
           path="appbanner"
           element={
             <MainLayout
-              nowTitle="공사콕 배너관리"
+              nowTitle="앱 홈화면 배너 관리"
               component={<SetAdminAppbanner />}
+            />
+          }
+        />
+        <Route
+          path="constuctdepartmentbanner"
+          element={
+            <MainLayout
+              nowTitle="관할지역 건축과 배너 관리"
+              component={<SetConstuctdepartmentbanner />}
+            />
+          }
+        />
+        <Route
+          path="constuctdepartmentbanner/add"
+          element={
+            <MainLayout
+              nowTitle="관할지역 건축과 배너 관리"
+              component={<AddConstuctdepartmentbanner />}
             />
           }
         />
@@ -396,28 +525,19 @@ function App() {
         <Route
           path="event"
           element={
-            <MainLayout
-              nowTitle="공사콕 이벤트 관리"
-              component={<ListEvent />}
-            />
+            <MainLayout nowTitle="와짱 이벤트 관리" component={<ListEvent />} />
           }
         />
         <Route
           path="event/set"
           element={
-            <MainLayout
-              nowTitle="공사콕 이벤트 작성"
-              component={<SetEvent />}
-            />
+            <MainLayout nowTitle="와짱 이벤트 추가" component={<SetEvent />} />
           }
         />
         <Route
           path="event/:contid/set"
           element={
-            <MainLayout
-              nowTitle="공사콕 이벤트 작성"
-              component={<SetEvent />}
-            />
+            <MainLayout nowTitle="와짱 이벤트 수정" component={<SetEvent />} />
           }
         />
         {/* ------- 와짱 이벤트 관리 ------- */}
@@ -425,7 +545,7 @@ function App() {
           path="wzevent"
           element={
             <MainLayout
-              nowTitle="와짱 이벤트 관리"
+              nowTitle="와짱 이벤트 신청자 목록"
               component={<ListWzEvent />}
             />
           }
@@ -434,9 +554,16 @@ function App() {
           path="wzevent/:gweid"
           element={
             <MainLayout
-              nowTitle="와짱 이벤트 관리"
+              nowTitle="와짱 이벤트 신청자 수정"
               component={<SetWzEvent />}
             />
+          }
+        />
+        {/* ------- 건의사항 ------- */}
+        <Route
+          path="suggest"
+          element={
+            <MainLayout nowTitle="건의사항" component={<ListSuggest />} />
           }
         />
         {/* ------- 키워드 조회량 관리 ------- */}
@@ -449,7 +576,6 @@ function App() {
             />
           }
         /> */}
-
         {/* --------------유통망관리 --------------*/}
         {/* ------- 사원 관리 ------- */}
         <Route
@@ -459,7 +585,7 @@ function App() {
           }
         />
         <Route
-          path="agentem/:uid"
+          path="agentem/:daid"
           element={
             <MainLayout nowTitle="사원 수정" component={<SetAgentEm />} />
           }
@@ -490,7 +616,7 @@ function App() {
           }
         />
         <Route
-          path="agentsd/:uid"
+          path="agentsd/:daid"
           element={
             <MainLayout
               nowTitle="지사 ( 총판 ) 수정"
@@ -518,7 +644,7 @@ function App() {
           }
         />
         <Route
-          path="agentag/:uid"
+          path="agentag/:daid"
           element={
             <MainLayout
               nowTitle="지점 ( 대리점 ) 수정"
@@ -526,7 +652,6 @@ function App() {
             />
           }
         />
-
         {/* ------- 안심번호 ------- */}
         <Route
           path="company/:cid/safenumber"
@@ -546,7 +671,86 @@ function App() {
             />
           }
         />
+        <Route
+          path="waitinglist/:cid/safenumber"
+          element={
+            <MainLayout
+              nowTitle="안심번호 등록"
+              component={<SetSafeNumber />}
+            />
+          }
+        />
+        {/* ------- 녹취록 ------- */}
+        <Route
+          path="record"
+          element={
+            <MainLayout
+              nowTitle="녹취록 전체 관리"
+              component={<ListRecord />}
+            />
+          }
+        />
+        <Route
+          path="company/:cid/record"
+          element={
+            <MainLayout nowTitle="녹취록 관리" component={<ListRecord />} />
+          }
+        />
+        <Route
+          path="company/:cid/record/:fid"
+          element={
+            <MainLayout nowTitle="녹취록 관리" component={<SetRecord />} />
+          }
+        />
 
+        <Route
+          path="record/:fid"
+          element={
+            <MainLayout nowTitle="녹취록 관리" component={<SetRecord />} />
+          }
+        />
+        {/* ------- 이미지 관리 ------- */}
+        <Route
+          path="setimgs"
+          element={
+            <MainLayout nowTitle="이미지 관리" component={<ListImgs />} />
+          }
+        />
+        <Route
+          path="setimgs/add"
+          element={
+            <MainLayout nowTitle="이미지 추가" component={<SetImgs />} />
+          }
+        />
+        {/* <Route
+          path="setimgs/wzadd"
+          element={
+            <MainLayout
+              nowTitle="와짱에서 이미지 가져오기"
+              component={<WzSetImgs />}
+            />
+          }
+        /> */}
+        {/* 판매가능 키워드 확인 */}
+        <Route
+          path="allkeyword"
+          element={
+            <MainLayout
+              nowTitle="판매가능 키워드 확인"
+              component={<ListKeywords />}
+            />
+          }
+        />
+        {/* 공사콕 점검 예고  */}
+        <Route
+          path="inspectiontime"
+          element={
+            <MainLayout
+              nowTitle="공사콕 점검 예고 관리"
+              component={<InspectionTime />}
+            />
+          }
+        />
         {/* 외부 사이트 연결로 인한 Nav 숨김 처리 */}
         {/* <Route
           path="safement"

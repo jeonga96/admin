@@ -1,32 +1,32 @@
+import { useDispatch, useSelector, shallowEqual } from "react-redux";
 import { Link, useParams, useLocation } from "react-router-dom";
-import { useLayoutEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 
+import * as CUS from "../../service/customHook";
 import * as API from "../../service/api";
 import * as CH from "../../service/customHook";
-import * as STR from "../../service/string";
+import * as APIURL from "../../service/string/apiUrl";
 
-import PageButton from "../../components/services/ServicesPaginationButton";
+import * as PAGE from "../../action/page";
+
+import PageButton from "../../components/services/ServicesPaginationButton_Redux";
 import ComponentErrorNull from "../../components/piece/PieceErrorNull";
 
 export default function DetailComapnyEsimateinfo() {
   const { rcid } = useParams();
   const location = useLocation();
+  const dispatch = useDispatch();
 
   // [데이터 요청]
-  // 목록 데이터
+  const pageData = useSelector((state) => state.page.pageData, shallowEqual);
   const [list, setList] = useState([]);
   // cid에 연결된 ruid 저장
   const RUID = useRef("");
 
-  // [pagination 버튼 관련]
-  // listPage: 컨텐츠 총 개수 / page:전체 페이지 수 & 현재 페이지
-  const [listPage, setListPage] = useState({});
-  const [page, setPage] = useState({ getPage: 0, activePage: 1 });
-
   // 첫 렌더링
-  useLayoutEffect(() => {
+  CUS.useCleanupEffect(() => {
     // uid가져오기
-    API.servicesPostData(STR.urlGetCompany, { cid: rcid })
+    API.servicesPostData(APIURL.urlGetCompany, { cid: rcid })
       .then((res) => {
         RUID.current = res.data.ruid;
       })
@@ -35,23 +35,23 @@ export default function DetailComapnyEsimateinfo() {
         // url에 맞춰 수령 기준, 요청 기준으로 견적 요청서를 가져온다
         // (url에 from이 들어가면 formUid로 검색 )
         API.servicesPostData(
-          STR.urlListEstimateInfo,
+          APIURL.urlListEstimateInfo,
           location.pathname.includes("from")
             ? {
                 fromUid: RUID.current,
-                offset: page.getPage,
+                offset: pageData.getPage,
                 size: 15,
               }
             : {
                 toUid: RUID.current,
-                offset: page.getPage,
+                offset: pageData.getPage,
                 size: 15,
               }
         )
           .then((res) => {
             // console.log("// 가져온 uid로 견적 요청서 가져오기", res);
             setList(res.data);
-            setListPage(res.page);
+            dispatch(PAGE.setListPage(res.page));
           })
           .catch(setList([]));
       });
@@ -61,25 +61,25 @@ export default function DetailComapnyEsimateinfo() {
   // 두번째 렌더링부터 이벤트 발생
   CH.useDidMountEffect(() => {
     API.servicesPostData(
-      STR.urlListEstimateInfo,
+      APIURL.urlListEstimateInfo,
       location.pathname.includes("from")
         ? {
             fromUid: RUID.current,
-            offset: page.getPage,
+            offset: pageData.getPage,
             size: 15,
           }
         : {
             toUid: RUID.current,
-            offset: page.getPage,
+            offset: pageData.getPage,
             size: 15,
           }
     )
       .then((res) => {
         setList(res.data);
-        setListPage(res.page);
+        dispatch(PAGE.setListPage(res.page));
       })
       .catch(setList([]));
-  }, [page.activePage]);
+  }, [pageData.getPage]);
 
   return (
     <>
@@ -99,12 +99,14 @@ export default function DetailComapnyEsimateinfo() {
                   <th style={{ width: "120px" }}>공사타입</th>
                   <th style={{ width: "100px" }}>견적서</th>
                   <th style={{ width: "100px" }}>세금계산서</th>
-                  <th style={{ width: "100px" }}>활성화</th>
                 </tr>
               </thead>
               <tbody>
                 {list.map((item, key) => (
-                  <tr key={key}>
+                  <tr
+                    key={key}
+                    className={item.useFlag == 0 ? "propsosalFlageN" : null}
+                  >
                     <td className="tableButton">
                       <Link to={`/estimateinfo/${item.esid}`} className="Link">
                         {item.esid}
@@ -147,14 +149,11 @@ export default function DetailComapnyEsimateinfo() {
                     <td>
                       {item.reqBill == "1" && <i className="tableIcon">요청</i>}
                     </td>
-                    <td>
-                      {item.useFlag == "1" && <i className="tableIcon">정상</i>}
-                    </td>
                   </tr>
                 ))}
               </tbody>
             </table>
-            <PageButton listPage={listPage} page={page} setPage={setPage} />
+            <PageButton />
           </div>
         </section>
       )}

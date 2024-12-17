@@ -3,8 +3,9 @@ import { useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
 import * as API from "../../service/api";
-import * as STR from "../../service/string";
-import * as UD from "../../service/useData";
+import * as APIURL from "../../service/string/apiUrl";
+import * as STR from "../../service/string/stringtoconst";
+import * as TOA from "../../service/library/toast";
 
 export default function ServiceModalCustomer({ click, setClick, CCID }) {
   const { cid, uid } = useParams();
@@ -14,13 +15,15 @@ export default function ServiceModalCustomer({ click, setClick, CCID }) {
   const fnCheckModify = useCallback(() => {
     // CCID 값은 부모에게 전달 받았다.
     if (!!CCID) {
-      API.servicesPostData(STR.urlGetCustomerConsult, {
+      API.servicesPostData(APIURL.urlGetCustomerConsult, {
         ccid: CCID,
       }).then((res) => {
         console.log(res.data.changeDate);
 
         setValue("_type", res.data.type);
-        setValue("_addServices", res.data.addServices);
+        if (res.data.addServies) {
+          setValue("_addServies", res.data.addServies);
+        }
         setValue("_content", res.data.content);
         setValue("_realNumber", res.data.realNumber);
         setValue("_safeNumber", res.data.safeNumber);
@@ -29,6 +32,7 @@ export default function ServiceModalCustomer({ click, setClick, CCID }) {
           "_changeDate",
           res.data.changeDate && res.data.changeDate.slice(0, 10)
         );
+        console.log(res);
       });
     }
   }, []);
@@ -48,8 +52,24 @@ export default function ServiceModalCustomer({ click, setClick, CCID }) {
     let CHANGEDATE;
     let addData = {};
     let setData = {};
+    let TODAYDATE = new Date().toISOString();
 
-    const TODAYDATE = new Date().toISOString();
+    // 길이 검사
+    if (!watch("_content")) {
+      TOA.servicesUseToast("상담 내용을 입력해 주세요.", "e");
+      return;
+    }
+    if (
+      (!!watch("_safeNumber") && watch("_addServies") !== "safe") ||
+      (!!watch("_realNumber") && watch("_addServies") !== "safe")
+    ) {
+      TOA.servicesUseToast(
+        "안심번호 처리정보가 입력되었습니다. 추가서비스에 안심번호를 선택해 주세요.",
+        "e"
+      );
+      return;
+    }
+
     if (!!getValues("_changeDate")) {
       CHANGEDATE = new Date(getValues("_changeDate")).toISOString();
     }
@@ -58,7 +78,7 @@ export default function ServiceModalCustomer({ click, setClick, CCID }) {
       setData = {
         ccid: CCID,
         type: getValues("_type"),
-        addServices: getValues("_addServices") || "",
+        addServies: getValues("_addServies") || "",
         content: getValues("_content"),
         realNumber: getValues("_realNumber"),
         safeNumber: getValues("_safeNumber"),
@@ -73,7 +93,7 @@ export default function ServiceModalCustomer({ click, setClick, CCID }) {
         addData = {
           uid: uid,
           type: getValues("_type"),
-          addServices: getValues("_addServices") || "",
+          addServies: getValues("_addServies") || "",
           content: getValues("_content"),
           realNumber: getValues("_realNumber"),
           safeNumber: getValues("_safeNumber"),
@@ -85,7 +105,7 @@ export default function ServiceModalCustomer({ click, setClick, CCID }) {
         addData = {
           cid: cid,
           type: getValues("_type"),
-          addServices: getValues("_addServices") || "",
+          addServies: getValues("_addServies") || "",
           content: getValues("_content"),
           realNumber: getValues("_realNumber"),
           safeNumber: getValues("_safeNumber"),
@@ -96,12 +116,11 @@ export default function ServiceModalCustomer({ click, setClick, CCID }) {
     }
 
     API.servicesPostData(
-      STR.urlSetCustomerConsult,
+      APIURL.urlSetCustomerConsult,
       !!CCID ? setData : addData
     ).then(() => {
       // 값 전송 후 모달 내부의 input 빈값으로 변경
       setClick(false);
-
       setValue("_content", "");
       setValue("_type", "일반");
       setValue("_realNumber", "");
@@ -210,12 +229,12 @@ export default function ServiceModalCustomer({ click, setClick, CCID }) {
               <div className="formPaddingWrap">
                 <input
                   type="radio"
-                  value="safetyNumber"
-                  id="safetyNumber"
+                  value="safe"
+                  id="safe"
                   className="listSearchRadioInput"
-                  {...register("_addServices")}
+                  {...register("_addServies")}
                 />
-                <label htmlFor="safetyNumber" className="listSearchRadioLabel">
+                <label htmlFor="safe" className="listSearchRadioLabel">
                   안심번호
                 </label>
                 <input
@@ -223,7 +242,7 @@ export default function ServiceModalCustomer({ click, setClick, CCID }) {
                   value="event"
                   id="event"
                   className="listSearchRadioInput"
-                  {...register("_addServices")}
+                  {...register("_addServies")}
                 />
                 <label htmlFor="event" className="listSearchRadioLabel">
                   이벤트
@@ -243,6 +262,7 @@ export default function ServiceModalCustomer({ click, setClick, CCID }) {
                       style={{ margin: "0" }}
                       type="text"
                       id="realNumber"
+                      maxLength={13}
                       value={
                         (watch("_realNumber") &&
                           watch("_realNumber")
@@ -251,6 +271,7 @@ export default function ServiceModalCustomer({ click, setClick, CCID }) {
                               /(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)([0-9]{4}$)/,
                               "$1-$2-$3"
                             )
+                            .replace(/^([0-9]{4})([0-9]{4})$/, "$1-$2")
                             .replace("--", "-")) ||
                         ""
                       }
@@ -299,7 +320,9 @@ export default function ServiceModalCustomer({ click, setClick, CCID }) {
               </label>
               <div>
                 <textarea
+                  maxLength={500}
                   className="section-content counseling-content"
+                  placeholder="500자 이하로 입력해 주세요"
                   id="content"
                   {...register("_content")}
                 />

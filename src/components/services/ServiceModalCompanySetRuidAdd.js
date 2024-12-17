@@ -1,26 +1,67 @@
-import { useState } from "react";
+// 사업자 상세정보 > 회원 관라정보 검색 모달
+
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 
-import * as STR from "../../service/string";
+import * as APIURL from "../../service/string/apiUrl";
 import * as API from "../../service/api";
-import * as UD from "../../service/useData";
+import * as TOA from "../../service/library/toast";
 
-export default function ServiceModalCompanySetRuidAdd({ click, setClick, fn }) {
-  const { register, getValues } = useForm();
+export default function ServiceModalUserSetRcidAdd({ click, setClick, fn }) {
+  const { register, getValues, watch } = useForm();
   const [list, setList] = useState([]);
 
+  useEffect(() => {
+    if (click) {
+      API.servicesPostData(APIURL.urlUserlist, {
+        offset: 0,
+        size: 15,
+        uid: "",
+        userid: "",
+        telnum: "",
+        name: "",
+      }).then((res) => {
+        console.log(res);
+        if (res.status === "fail") {
+          TOA.servicesUseToast("검색하신 데이터가 없습니다.", "e");
+        }
+        if (res.status === "success") {
+          setList(res.data);
+        }
+      });
+    }
+  }, [click]);
+
+  function fnSearchEnter(f) {
+    if (f.keyCode == 13) {
+      fnSearch(f);
+    }
+  }
+
+  // 검색
   const fnSearch = (e) => {
-    e.preventDefault();
-    API.servicesPostData(STR.urlUserlist, {
+    const requestData = {
       offset: 0,
       size: 15,
-      uid: getValues("_uid"),
-      userid: getValues("_userid"),
-      name: getValues("_name"),
-      mobile: getValues("_mobile"),
-    }).then((res) => {
+    };
+    if (getValues("_uid")) {
+      requestData.uid = getValues("_uid");
+    }
+    if (getValues("_userid")) {
+      requestData.userid = getValues("_userid");
+    }
+    if (getValues("_mobile")) {
+      requestData.mobile = getValues("_mobile");
+    }
+    if (getValues("_name")) {
+      requestData.name = getValues("_name");
+    }
+
+    e.preventDefault();
+    API.servicesPostData(APIURL.urlUserlist, requestData).then((res) => {
+      console.log(res);
       if (res.status === "fail") {
-        UD.servicesUseToast("검색하신 데이터가 없습니다.", "e");
+        TOA.servicesUseToast("검색하신 데이터가 없습니다.", "e");
       }
       if (res.status === "success") {
         setList(res.data);
@@ -38,7 +79,12 @@ export default function ServiceModalCompanySetRuidAdd({ click, setClick, fn }) {
                 <span>회원 관리번호</span>
               </label>
               <div>
-                <input type="text" id="uid" {...register("_uid")} />
+                <input
+                  onKeyDown={(e) => fnSearchEnter(e)}
+                  type="text"
+                  id="uid"
+                  {...register("_uid")}
+                />
               </div>
             </div>
             <div className="listSearchWrap" style={{ width: "50%" }}>
@@ -46,7 +92,12 @@ export default function ServiceModalCompanySetRuidAdd({ click, setClick, fn }) {
                 <span>아이디</span>
               </label>
               <div>
-                <input type="text" id="userid" {...register("_userid")} />
+                <input
+                  onKeyDown={(e) => fnSearchEnter(e)}
+                  type="text"
+                  id="userid"
+                  {...register("_userid")}
+                />
               </div>
             </div>
             <div className="listSearchWrap" style={{ width: "50%" }}>
@@ -54,7 +105,12 @@ export default function ServiceModalCompanySetRuidAdd({ click, setClick, fn }) {
                 <span>이름</span>
               </label>
               <div>
-                <input type="text" id="name" {...register("_name")} />
+                <input
+                  onKeyDown={(e) => fnSearchEnter(e)}
+                  type="text"
+                  id="name"
+                  {...register("_name")}
+                />
               </div>
             </div>
             <div className="listSearchWrap" style={{ width: "50%" }}>
@@ -62,7 +118,24 @@ export default function ServiceModalCompanySetRuidAdd({ click, setClick, fn }) {
                 <span>번호</span>
               </label>
               <div>
-                <input type="text" id="mobile" {...register("_mobile")} />
+                <input
+                  onKeyDown={(e) => fnSearchEnter(e)}
+                  type="text"
+                  id="mobile"
+                  {...register("_mobile")}
+                  value={
+                    (watch("_mobile") &&
+                      watch("_mobile")
+                        .replace(/[^0-9]/g, "")
+                        .replace(
+                          /(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)([0-9]{4}$)/,
+                          "$1-$2-$3"
+                        )
+                        .replace(/^([0-9]{4})([0-9]{4})$/, "$1-$2")
+                        .replace("--", "-")) ||
+                    ""
+                  }
+                />
               </div>
             </div>
           </div>
@@ -84,20 +157,34 @@ export default function ServiceModalCompanySetRuidAdd({ click, setClick, fn }) {
             <table className="commonTable">
               <thead>
                 <tr>
-                  <th style={{ width: "121px" }}>회원 관리번호</th>
-                  <th style={{ width: "121px" }}>아이디</th>
-                  <th style={{ width: "121px" }}>이름</th>
-                  <th style={{ width: "121px" }}>핸드폰번호</th>
+                  <th style={{ width: "120px" }}>회원 관리번호</th>
+                  <th style={{ width: "120px" }}>아이디</th>
+                  <th style={{ width: "110px" }}>이름</th>
+                  <th style={{ width: "135px" }}>번호</th>
                 </tr>
               </thead>
 
-              <tbody style={{ height: "100px" }}>
+              <tbody style={{ height: "216px" }}>
                 {list.map((item) => (
                   <tr key={item.uid} onClick={() => fn(item)}>
-                    <td style={{ width: "121px" }}>{item.uid}</td>
-                    <td style={{ width: "121px" }}>{item.userid}</td>
-                    <td style={{ width: "121px" }}>{item.name}</td>
-                    <td style={{ width: "121px" }}>{item.mobile}</td>
+                    <td style={{ width: "120px" }}>{item.uid}</td>
+                    <td
+                      style={{
+                        width: "120px",
+                        lineHeight: "2rem",
+                        display: "inline-block",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        whiteSpace: "nowrap",
+                        marginTop: "-1px",
+                      }}
+                    >
+                      {item.userid}
+                    </td>
+                    <td style={{ width: "110px" }}>{item.name}</td>
+                    <td style={{ width: "135px" }}>
+                      {!!item.mobile ? item.mobile : item.telnum}
+                    </td>
                   </tr>
                 ))}
               </tbody>

@@ -1,32 +1,33 @@
 // 회원관리 > 통합회원 관리 리스트
-
+import { useSelector, useDispatch, shallowEqual } from "react-redux";
 import { Link } from "react-router-dom";
-import { useLayoutEffect, useState } from "react";
+import { useState, useEffect } from "react";
 
 import * as API from "../../service/api";
-import * as STR from "../../service/string";
+import * as CUS from "../../service/customHook";
+import * as APIURL from "../../service/string/apiUrl";
 
-import PageButton from "../../components/services/ServicesPaginationButton";
+import * as PAGE from "../../action/page";
+
+import PageButton from "../../components/services/ServicesPaginationButton_Redux";
 import ComponentErrorNull from "../../components/piece/PieceErrorNull";
 
 export default function ListUser() {
   // 목록 데이터
   const [contentsList, setContentsList] = useState([]);
+  const dispatch = useDispatch();
+  const pageData = useSelector((state) => state.page.pageData, shallowEqual);
 
-  // pagination 버튼 관련 ------------------------------------------------------------------------
-  // listPage: 컨텐츠 총 개수 / page:전체 페이지 수 & 현재 페이지
-  const [listPage, setListPage] = useState({});
-  const [page, setPage] = useState({ getPage: 0, activePage: 1 });
-
-  useLayoutEffect(() => {
-    API.servicesPostData(STR.urlListWzEvent, {
-      offset: page.getPage,
+  CUS.useCleanupEffect(() => {
+    setContentsList([]);
+    API.servicesPostData(APIURL.urlListWzEvent, {
+      offset: pageData.getPage,
       size: 15,
     }).then((res) => {
       setContentsList(res.data);
-      setListPage(res.page);
+      dispatch(PAGE.setListPage(res.page));
     });
-  }, [page.activePage]);
+  }, [pageData.getPage]);
 
   const fnProductValue = (item) => {
     if (item === "1") {
@@ -53,13 +54,14 @@ export default function ListUser() {
           <table className="commonTable">
             <thead>
               <tr>
-                <th style={{ width: "75px" }}>관리번호</th>
-                <th style={{ width: "75px" }}>공사콕회원</th>
-                <th style={{ width: "75px" }}>사업자분류</th>
+                <th style={{ width: "7%" }}>관리번호</th>
+                <th style={{ width: "9%" }}>공사콕회원</th>
+                <th style={{ width: "9%" }}>사업자분류</th>
                 <th style={{ width: "auto" }}>상품</th>
-                <th style={{ width: "150px" }}>업체명</th>
-                <th style={{ width: "300px" }}>대표업종</th>
-                <th style={{ width: "150px" }}>핸드폰번호</th>
+                <th style={{ width: "12%" }}>상호명</th>
+                <th style={{ width: "12%" }}>대표 ( 주력 ) 업종</th>
+                <th style={{ width: "12%" }}>휴대폰</th>
+                <th style={{ width: "7%" }}>상태</th>
               </tr>
             </thead>
             <tbody>
@@ -78,11 +80,39 @@ export default function ListUser() {
                     <td>{item.cname}</td>
                     <td>{item.job}</td>
                     <td>{item.telnum}</td>
+                    <td>
+                      {(!item.status || item.status === "AP") && (
+                        <i
+                          className="tableIcon"
+                          style={{
+                            backgroundColor: "orange",
+                            fontSize: "0.725rem",
+                            lineHeight: "1.65",
+                            height: "min-content",
+                          }}
+                        >
+                          신청완료
+                        </i>
+                      )}
+                      {item.status == "CO" && (
+                        <i
+                          className="tableIcon"
+                          style={{
+                            backgroundColor: "green",
+                            fontSize: "0.725rem",
+                            lineHeight: "1.65",
+                            height: "min-content",
+                          }}
+                        >
+                          처리완료
+                        </i>
+                      )}
+                    </td>
                   </tr>
                 ))}
             </tbody>
           </table>
-          <PageButton listPage={listPage} page={page} setPage={setPage} />
+          <PageButton />
         </div>
       </section>
     </>

@@ -1,13 +1,13 @@
 // 회원관리 > 통합회원 관리 리스트
 
 import { Link } from "react-router-dom";
-import { useLayoutEffect, useState } from "react";
+import { useState } from "react";
 
 import * as API from "../../service/api";
-import * as STR from "../../service/string";
-import * as UD from "../../service/useData";
+import * as APIURL from "../../service/string/apiUrl";
+import * as TOA from "../../service/library/toast";
 
-import PageButton from "../../components/services/ServicesPaginationButton";
+import PageButton from "../../components/services/ServicesPaginationButton_Redux";
 import LayoutTopButton from "../../components/layout/LayoutTopButton";
 import ComponentListUserSearch from "../../components/common/ComponentListUserSearch";
 import ComponentErrorNull from "../../components/piece/PieceErrorNull";
@@ -86,36 +86,18 @@ export default function ListUser() {
   // 목록 데이터
   const [userList, setUserList] = useState([]);
 
-  // pagination 버튼 관련 ------------------------------------------------------------------------
-  // listPage: 컨텐츠 총 개수 / page:전체 페이지 수 & 현재 페이지
-  const [listPage, setListPage] = useState({});
-  const [page, setPage] = useState({ getPage: 0, activePage: 1 });
-
   // 회원관리, 상태관리 cid 저장
   const [clickedUseFlag, setClickedUseFlag] = useState([]);
-  const [searchClick, setSearchClick] = useState(false);
-
-  useLayoutEffect(() => {
-    // searchClick을 클릭하지 않은 (false) 상태에서 동작
-    searchClick === false &&
-      API.servicesPostData(STR.urlUserlist, {
-        offset: page.getPage,
-        size: 15,
-      }).then((res) => {
-        setUserList(res.data);
-        setListPage(res.page);
-      });
-  }, [page.activePage]);
 
   // 계약관리 submit
   const handleUseFlag = (e) => {
     // useFlag 활성화(정상) 버튼 클릭 시 useFlag:1, 해지 버튼 클릭시 useFlag:0
     for (let i = 0; i < clickedUseFlag.length; i++) {
-      API.servicesPostData(STR.urlSetUser, {
+      API.servicesPostData(APIURL.urlSetUser, {
         uid: clickedUseFlag[i],
         useFlag: e.target.id === "useFlagUse" ? "1" : "0",
       }).then(() => {
-        UD.servicesUseToast("작업이 완료되었습니다.", "s");
+        TOA.servicesUseToast("작업이 완료되었습니다.", "s");
         setTimeout(() => {
           window.location.reload();
         }, 2000);
@@ -132,13 +114,7 @@ export default function ListUser() {
     </>
   ) : (
     <>
-      <ComponentListUserSearch
-        setUserList={setUserList}
-        setListPage={setListPage}
-        searchClick={searchClick}
-        setSearchClick={setSearchClick}
-        page={page}
-      />
+      <ComponentListUserSearch setUserList={setUserList} />
 
       <ul className="tableTopWrap">
         {clickedUseFlag.length > 0 && (
@@ -157,32 +133,30 @@ export default function ListUser() {
           <table className="commonTable">
             <thead>
               <tr>
-                <th style={{ width: "70px" }}> 계약관리</th>
-                <th style={{ width: "150px" }}>관리번호</th>
-                <th style={{ width: "150px" }}>사업자관리번호</th>
-                <th style={{ width: "150px" }}>아이디</th>
+                <th style={{ width: "100px" }}> 활성화 계정</th>
+                <th style={{ width: "80px" }}>관리번호</th>
+                <th style={{ width: "120px" }}>사업자 관리번호</th>
+                <th style={{ width: "auto" }}>아이디</th>
                 <th style={{ width: "150px" }}>이름</th>
-                <th style={{ width: "100px" }}>회원권한</th>
-                <th style={{ width: "auto" }}>핸드폰번호</th>
-
+                <th style={{ width: "100px" }}>회원 권한</th>
+                <th style={{ width: "auto" }}>휴대폰</th>
                 <th style={{ width: "150px" }}>계약일</th>
                 {/* <th style={{ width: "70px" }}>상세입력</th> */}
               </tr>
             </thead>
             <tbody>
               {/* checkbox를 별도로 관리하기 위해 컴포넌트로 관리 */}
-              {userList &&
-                userList.map((item) => (
-                  <ListInTr
-                    item={item}
-                    key={item.uid}
-                    clickedUseFlag={clickedUseFlag}
-                    setClickedUseFlag={setClickedUseFlag}
-                  />
-                ))}
+              {userList.map((item, index) => (
+                <ListInTr
+                  item={item}
+                  key={item.uid}
+                  clickedUseFlag={clickedUseFlag}
+                  setClickedUseFlag={setClickedUseFlag}
+                />
+              ))}
             </tbody>
           </table>
-          <PageButton listPage={listPage} page={page} setPage={setPage} />
+          <PageButton />
         </div>
       </section>
     </>

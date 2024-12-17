@@ -1,5 +1,7 @@
-import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+
+import { useNavigate, useLocation } from "react-router-dom";
+import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
@@ -8,12 +10,19 @@ import PieceLoading from "../../components/piece/PieceLoading";
 import ServiceModalUseSafeNumber from "../../components/services/ServiceModalUseSafeNumber";
 
 import * as API from "../../service/api";
-import * as UD from "../../service/useData";
-import * as STR from "../../service/string";
+import * as FM from "../../service/useData/format";
+import * as SAFE from "../../service/useData/safenumber";
+import * as TOA from "../../service/library/toast";
+import * as APIURL from "../../service/string/apiUrl";
+import * as CUS from "../../service/customHook";
+
+import * as DATA from "../../action/data";
 
 export default function Set050Biz() {
   const navigate = useNavigate();
+  const location = useLocation();
   const { cid, vno } = useParams();
+  const [submitCk, setSubmitCk] = useState(false);
   const {
     handleSubmit,
     register,
@@ -64,6 +73,7 @@ export default function Set050Biz() {
     getValues("_holiDay7"),
   ];
 
+  const dispatch = useDispatch();
   // 외부 API 사용 및 인터넷 환경에 따른 로딩시간 지연에 따른 로딩중 상태변경
   const [loading, setLoading] = useState(false);
   // 안심번호 검색 모달창
@@ -80,24 +90,27 @@ export default function Set050Biz() {
 
   // 안심번호 삭제
   const fnClear = () => {
-    API.servicesPostData(STR.urlClear050, { vno: vno }).then((res) => {
+    API.servicesPostData(APIURL.urlClear050, { vno: vno }).then((res) => {
       if (res.status === "success") {
-        API.servicesPostData(STR.urlSetCompanyDetail, {
+        API.servicesPostData(APIURL.urlSetCompanyDetail, {
           rcid: cid,
           extnum: "",
         }).then((res) => {
           setLoading(true);
           if (res.status === "success") {
             setLoading(false);
-            UD.servicesUseToast("삭제가 완료되었습니다.", "s");
+            TOA.servicesUseToast("삭제가 완료되었습니다.", "s");
+
+            // dispatch(updateCustomerType("콕해"));
+
             setTimeout(() => {
               navigate(`/company/${cid}`);
-            }, 2000);
+            }, 1000);
             return;
           }
         });
       } else {
-        UD.servicesUseToast(
+        TOA.servicesUseToast(
           "삭제가 진행되지 않았습니다. 관리자에게 문의해 주십시오.",
           "e"
         );
@@ -113,17 +126,45 @@ export default function Set050Biz() {
     setValue("_vno", selectNum);
   };
 
-  // 수정 & 추가 버튼 클릭 이벤트
-  const fnSubmit = () => {
-    const HOLIDAY = UD.serviesBoolToNumber(arrHoliDay);
-    const HOLIWEEK = UD.serviesBoolToNumber(arrHoliWeek);
+  const fnSubmit = async () => {
+    if (submitCk) return;
 
+    let STATUS;
+    setSubmitCk(true);
+
+    const DataGetCompanyDetail = await API.servicesPostData(
+      APIURL.urlGetCompanyDetail,
+      {
+        rcid: cid,
+      }
+    );
+    const DataGetCompany = await API.servicesPostData(APIURL.urlGetCompany, {
+      cid: cid,
+    });
+    console.log(DataGetCompanyDetail);
+    console.log(DataGetCompany);
+
+    if (!!DataGetCompanyDetail.data.titleImg && !!DataGetCompany.data.ruid) {
+      STATUS = 1;
+    } else if (
+      !!DataGetCompanyDetail.data.titleImg &&
+      !DataGetCompany.data.ruid
+    ) {
+      STATUS = 6;
+    } else if (!DataGetCompanyDetail.data.titleImg) {
+      STATUS = DataGetCompanyDetail.data.status;
+    }
+    // 휴일 및 주말 설정 값을 숫자로 변환
+    const HOLIDAY = FM.serviesBoolToNumberInArr(arrHoliDay);
+    const HOLIWEEK = FM.serviesBoolToNumberInArr(arrHoliWeek);
+
+    // 입력 값 포맷팅
     const VNO = getValues("_vno").replaceAll("-", "").toString();
-    const RCVNO1 = getValues("_rcvNo1").replaceAll("-", "").toString();
-    const RCVNO2 = !!getValues("_rcvNo2")
-      ? getValues("_rcvNo2").replaceAll("-", "").toString()
-      : "";
-    return API.servicesPostData(!!vno ? STR.urlUpdate050 : STR.urlCreate050, {
+    const RCVNO1 = getValues("_rcvNo1")?.replaceAll("-", "").toString();
+    const RCVNO2 = getValues("_rcvNo2")?.replaceAll("-", "").toString();
+
+    // API 요청 데이터 생성
+    const requestData = {
       channelId: "wazzang",
       vno: VNO,
       vnoName: getValues("_vnoName"),
@@ -140,75 +181,112 @@ export default function Set050Biz() {
       holiDay: HOLIDAY,
       holidaySet: "N",
       recType: getValues("_recType"),
-    })
+    };
+
+    // API 호출
+    API.servicesPostData(
+      !!vno ? APIURL.urlUpdate050 : APIURL.urlCreate050,
+      requestData
+    )
       .then((res) => {
         if (res.status === "success") {
-          API.servicesPostData(STR.urlSetCompanyDetail, {
+          // 추가 API 호출
+          API.servicesPostData(APIURL.urlSetCompanyDetail, {
             rcid: cid,
             extnum: getValues("_vno"),
+            status: STATUS,
           }).then((res) => {
             setLoading(true);
             if (res.status === "success") {
+              console.log("success:", res);
               setLoading(false);
-              UD.servicesUseToast("완료되었습니다!", "s");
+              TOA.servicesUseToast("완료되었습니다!", "s");
               setTimeout(() => {
                 navigate(`/company/${cid}`);
               }, 2000);
-              return;
             }
           });
         } else {
-          UD.servicesUseToast(res.emsg, "e");
+          setSubmitCk(false);
+          // 오류 메시지 처리
+          if (res.emsg === "사용 중인 가상번호입니다.") {
+            console.log(res.emsg);
+            SAFE.serviesUsedSafeNumSetAdmin(VNO);
+          } else {
+            TOA.servicesUseToast(res.emsg, "e");
+          }
         }
       })
       .catch((error) => {
+        setSubmitCk(false);
         console.log(error);
-        UD.servicesUseToast("작업이 완료되지 않았습니다.", "e");
+        TOA.servicesUseToast("작업이 완료되지 않았습니다.", "e");
       });
+  };
+
+  const formatSafeNumber = (number) => {
+    // 숫자가 아니거나 문자열이 아니면 빈 문자열을 반환합니다.
+    if (typeof number !== "string") {
+      return "";
+    }
+    // 4자리 숫자마다 하이픈을 추가하여 반환합니다.
+    return number.replace(/(\d{4})(?=\d)/g, "$1-");
   };
 
   // 첫 랜더링 시
   // 안심번호 추가 : 서버에 저장된 cid에 저장된 값을 가지고 오거나
   // 안심번호 수정 : 서버에 저장된 vno값 가지고 온다
-  useEffect(() => {
-    if (!!cid && !vno) {
-      API.servicesPostData(STR.urlGetCompanyDetail, { rcid: cid }).then(
+  CUS.useCleanupEffect(() => {
+    if (!!cid) {
+      API.servicesPostData(APIURL.urlGetCompanyDetail, { rcid: cid }).then(
         (res) => {
-          setValue("_vnoName", res.data.name || "");
-          setValue("_rcvNo1", res.data.mobilenum || "");
-          setValue("_rcvNo2", res.data.telnum || "");
+          if (res !== undefined && res.status === "success") {
+            dispatch(DATA.serviceGetedData(res.data));
+
+            if (!vno) {
+              setValue("_vnoName", res.data.name || "");
+              setValue(
+                "_rcvNo1",
+                res.data.mobilenum ? res.data.mobilenum : res.data.telnum || ""
+              );
+              setValue("_rcvNo2", res.data.mobilenum ? res.data.telnum : "");
+            }
+          }
         }
       );
     }
 
-    if (!!vno) {
+    if (!!cid && !!vno) {
       setLoading(true);
-      API.servicesPostData(STR.urlGet050, { vno: vno }).then((res) => {
-        setLoading(false);
-        setValue("_regDate", res.data.regDate || "");
-        setValue("_vno", res.data.vno || "");
-        setValue("_status", res.data.status || "Y");
-        setValue("_vnoName", res.data.vnoName || "");
-        setValue("_rcvNo1", res.data.rcvNo1 || "");
-        setValue("_rcvNo2", res.data.rcvNo2 || "");
+      API.servicesPostData(APIURL.urlGet050, { vno: vno }).then((res) => {
+        if (res.status !== "fail") {
+          setValue("_regDate", res.data.regDate || "");
+          setValue("_vno", formatSafeNumber(res.data.vno));
+          setValue("_status", res.data.status || "Y");
+          setValue("_vnoName", res.data.vnoName || "");
 
-        setValue("_colorringIdx", res.data.colorringIdx);
-        setValue("_rcvMentIdx", res.data.rcvMentIdx);
-        setValue("_bizEndMentIdx", res.data.bizEndMentIdx);
-        setValue("_holiMentIdx", res.data.holiMentIdx);
+          setValue("_rcvNo1", res.data.rcvNo1 || "");
+          setValue("_rcvNo2", res.data.rcvNo2 || "");
 
-        setValue(
-          "_bizStartTime",
-          UD.serviesStringToTime(res.data.bizStartTime) || "00:00"
-        );
-        setValue(
-          "_bizEndTime",
-          UD.serviesStringToTime(res.data.bizEndTime) || "23:59"
-        );
-        fnArrToSetValue(UD.serviesNumberToBool(res.data.holiWeek));
-        fnArrToSetValue(UD.serviesNumberToBool(res.data.holiWeek));
-        setValue("_recType", res.data.recType || "");
+          setValue("_colorringIdx", res.data.colorringIdx);
+          setValue("_rcvMentIdx", res.data.rcvMentIdx);
+          setValue("_bizEndMentIdx", res.data.bizEndMentIdx);
+          setValue("_holiMentIdx", res.data.holiMentIdx);
+
+          setValue(
+            "_bizStartTime",
+            FM.serviesStringToTime(res.data.bizStartTime) || "00:00"
+          );
+          setValue(
+            "_bizEndTime",
+            FM.serviesStringToTime(res.data.bizEndTime) || "23:59"
+          );
+          fnArrToSetValue(FM.serviesNumberToBool(res.data.holiWeek));
+          fnArrToSetValue(FM.serviesNumberToBool(res.data.holiWeek));
+          setValue("_recType", res.data.recType || "");
+        }
       });
+      setLoading(false);
     }
   }, []);
 
@@ -220,418 +298,447 @@ export default function Set050Biz() {
         <form className="formLayout" onSubmit={handleSubmit(fnSubmit)}>
           <ul className="tableTopWrap tableTopBorderWrap">
             <LayoutTopButton url={`/company/${cid}`} text="상세정보 가기" />
-            <LayoutTopButton fn={fnClear} text="안심번호 삭제" />
-            <LayoutTopButton text="완료" disabled={isSubmitting} />
+            {!location.pathname.includes("waitinglist") && !!vno && (
+              <LayoutTopButton fn={fnClear} text="안심번호 삭제" />
+            )}
+            {APIURL.urlPrefix === "https://releaseawsback.gongsacok.com" && (
+              <LayoutTopButton
+                text={
+                  location.pathname.includes("waitinglist")
+                    ? "안심번호 등록"
+                    : "완료"
+                }
+                isSubmitting={isSubmitting}
+              />
+            )}
           </ul>
 
           <div className="formWrap">
-            <fieldset id="CompanyDetail_1">
-              <h3>기본 안심번호 정보</h3>
+            <div className="formContainer">
+              <h3>필수입력 정보</h3>
+              <fieldset id="CompanyDetail_1">
+                <h3>기본 안심번호 정보</h3>
 
-              <ServiceModalUseSafeNumber
-                click={click}
-                setClick={setClick}
-                fn={fnSelectSafeNum}
-              />
+                {/* 렌더링 시 자동으로 사용가능한 안심번호의 첫번째가 입력되도록 조건을 걸지 않았음 */}
+                <ServiceModalUseSafeNumber
+                  click={click}
+                  setClick={setClick}
+                  fn={fnSelectSafeNum}
+                />
 
-              {/* setDetailUserInfo  ================================================================ */}
-              <div className="formContentWrap" style={{ width: "100%" }}>
-                <label htmlFor="vno" className=" blockLabel">
-                  <span>안심번호</span>
-                </label>
-                <div style={{ display: "flex" }}>
-                  <input
-                    type="text"
-                    id="vno"
-                    maxLength="14"
-                    value={
-                      (watch("_vno") &&
-                        watch("_vno")
-                          .replace(/[^0-9]/g, "")
-                          .replace(/(^[0-9]{4})([0-9]+)([0-9]{4}$)/, "$1-$2-$3")
-                          .replace("--", "-")) ||
-                      ""
-                    }
-                    {...register("_vno")}
-                    disabled={!!vno ? true : false}
-                  />
-                  <button
-                    type="button"
-                    className="formContentBtn"
-                    onClick={() => setClick(!click)}
-                    disabled={!!vno ? true : false}
-                  >
-                    안심번호 검색
-                  </button>
+                {/* setDetailUserInfo  ================================================================ */}
+                <div className="formContentWrap" style={{ width: "100%" }}>
+                  <label htmlFor="vno" className=" blockLabel">
+                    <span>안심번호</span>
+                  </label>
+                  <div style={{ display: "flex" }}>
+                    <input
+                      type="text"
+                      id="vno"
+                      maxLength="14"
+                      value={
+                        (watch("_vno") &&
+                          watch("_vno")
+                            .replace(/[^0-9]/g, "")
+                            .replace(
+                              /(^[0-9]{4})([0-9]+)([0-9]{4}$)/,
+                              "$1-$2-$3"
+                            )
+                            .replace("--", "-")) ||
+                        ""
+                      }
+                      {...register("_vno")}
+                      disabled={!!vno ? true : false}
+                    />
+                    {APIURL.urlPrefix ===
+                      "https://releaseawsback.gongsacok.com" && (
+                      <button
+                        type="button"
+                        className="formContentBtn"
+                        onClick={() => setClick(!click)}
+                        disabled={!!vno ? true : false}
+                      >
+                        안심번호 검색
+                      </button>
+                    )}
+                  </div>
                 </div>
-              </div>
 
-              <div className="formContentWrap">
-                <label htmlFor="vnoName" className="blockLabel">
-                  <span>별칭</span>
-                </label>
-                <div>
-                  <input
-                    type="text"
-                    id="vnoName"
-                    maxLength={20}
-                    {...register("_vnoName")}
-                  />
+                <div className="formContentWrap">
+                  <label htmlFor="vnoName" className="blockLabel">
+                    <span>별칭</span>
+                  </label>
+                  <div>
+                    <input
+                      disabled
+                      type="text"
+                      id="vnoName"
+                      maxLength={20}
+                      {...register("_vnoName")}
+                    />
+                  </div>
                 </div>
-              </div>
 
-              <div className="formContentWrap">
-                <div className="blockLabel">
-                  <span>사용여부</span>
+                <div className="formContentWrap">
+                  <div className="blockLabel">
+                    <span>사용여부</span>
+                  </div>
+                  <div className="formPaddingWrap">
+                    <input
+                      className="listSearchRadioInput"
+                      type="radio"
+                      checked={watch("_status") == "Y"}
+                      value="Y"
+                      id="statusY"
+                      {...register("_status")}
+                    />
+                    <label className="listSearchRadioLabel" htmlFor="statusY">
+                      사용
+                    </label>
+
+                    <input
+                      className="listSearchRadioInput"
+                      type="radio"
+                      checked={watch("_status") == "N"}
+                      value="N"
+                      id="statusN"
+                      {...register("_status")}
+                    />
+                    <label className="listSearchRadioLabel" htmlFor="statusN">
+                      미사용
+                    </label>
+                  </div>
                 </div>
-                <div className="formPaddingWrap">
-                  <input
-                    className="listSearchRadioInput"
-                    type="radio"
-                    checked={watch("_status") == "Y"}
-                    value="Y"
-                    id="statusY"
-                    {...register("_status")}
-                  />
-                  <label className="listSearchRadioLabel" htmlFor="statusY">
-                    사용
-                  </label>
 
-                  <input
-                    className="listSearchRadioInput"
-                    type="radio"
-                    checked={watch("_status") == "N"}
-                    value="N"
-                    id="statusN"
-                    {...register("_status")}
-                  />
-                  <label className="listSearchRadioLabel" htmlFor="statusN">
-                    미사용
+                <div className="formContentWrap">
+                  <label htmlFor="rcvNo1" className="blockLabel">
+                    <span>[ 필수 ] 착신번호 1</span>
                   </label>
+                  <div>
+                    <input
+                      type="text"
+                      id="rcvNo1"
+                      maxLength={13}
+                      value={
+                        (watch("_rcvNo1") &&
+                          watch("_rcvNo1")
+                            .replace(/[^0-9]/g, "")
+                            .replace(
+                              /(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)([0-9]{4}$)/,
+                              "$1-$2-$3"
+                            )
+                            .replace(/^([0-9]{4})([0-9]{4})$/, "$1-$2")
+                            .replace("--", "-")) ||
+                        ""
+                      }
+                      {...register("_rcvNo1")}
+                    />
+                  </div>
                 </div>
-              </div>
 
-              <div className="formContentWrap">
-                <label htmlFor="rcvNo1" className="blockLabel">
-                  <span>[ 필수 ] 착신번호 1</span>
-                </label>
-                <div>
-                  <input
-                    type="text"
-                    id="rcvNo1"
-                    maxLength={13}
-                    value={
-                      (watch("_rcvNo1") &&
-                        watch("_rcvNo1")
-                          .replace(/[^0-9]/g, "")
-                          .replace(
-                            /(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)([0-9]{4}$)/,
-                            "$1-$2-$3"
-                          )
-                          .replace("--", "-")) ||
-                      ""
-                    }
-                    {...register("_rcvNo1")}
-                  />
+                <div className="formContentWrap">
+                  <label htmlFor="rcvNo2" className="blockLabel">
+                    <span>착신번호 2</span>
+                  </label>
+                  <div>
+                    <input
+                      type="text"
+                      id="rcvNo2"
+                      maxLength={13}
+                      value={
+                        (watch("_rcvNo2") &&
+                          watch("_rcvNo2")
+                            .replace(/[^0-9]/g, "")
+                            .replace(
+                              /(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)([0-9]{4}$)/,
+                              "$1-$2-$3"
+                            )
+                            .replace(/^([0-9]{4})([0-9]{4})$/, "$1-$2")
+                            .replace("--", "-")) ||
+                        ""
+                      }
+                      {...register("_rcvNo2")}
+                    />
+                  </div>
                 </div>
-              </div>
 
-              <div className="formContentWrap">
-                <label htmlFor="rcvNo2" className="blockLabel">
-                  <span>착신번호 2</span>
-                </label>
-                <div>
-                  <input
-                    type="text"
-                    id="rcvNo2"
-                    maxLength={13}
-                    value={
-                      (watch("_rcvNo2") &&
-                        watch("_rcvNo2")
-                          .replace(/[^0-9]/g, "")
-                          .replace(
-                            /(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)([0-9]{4}$)/,
-                            "$1-$2-$3"
-                          )
-                          .replace("--", "-")) ||
-                      ""
-                    }
-                    {...register("_rcvNo2")}
-                  />
+                <div className="formContentWrap" style={{ width: "100%" }}>
+                  <div className="blockLabel">
+                    <span>녹음선택</span>
+                  </div>
+                  <div className="formPaddingWrap">
+                    <input
+                      className="listSearchRadioInput"
+                      type="radio"
+                      checked={watch("_recType") == 0}
+                      value="0"
+                      id="recType0"
+                      {...register("_recType")}
+                    />
+                    <label className="listSearchRadioLabel" htmlFor="recType0">
+                      미사용
+                    </label>
+
+                    <input
+                      className="listSearchRadioInput"
+                      type="radio"
+                      checked={watch("_recType") == 1}
+                      value="1"
+                      id="recType1"
+                      {...register("_recType")}
+                    />
+                    <label className="listSearchRadioLabel" htmlFor="recType1">
+                      일반녹취
+                    </label>
+
+                    <input
+                      className="listSearchRadioInput"
+                      type="radio"
+                      checked={watch("_recType") == 2}
+                      value="2"
+                      id="recType2"
+                      {...register("_recType")}
+                    />
+                    <label className="listSearchRadioLabel" htmlFor="recType2">
+                      수발신 분리녹취
+                    </label>
+                  </div>
                 </div>
-              </div>
+              </fieldset>
+            </div>
 
-              <div className="formContentWrap" style={{ width: "100%" }}>
-                <div className="blockLabel">
-                  <span>녹음선택</span>
+            <div className="formContainer">
+              <h3>선택입력 정보</h3>
+              <fieldset>
+                <h3>전화연결 문구</h3>
+                <div className="formContentWrap" style={{ width: "50%" }}>
+                  <label htmlFor="_colorringIdx" className="blockLabel">
+                    <span>컬러링</span>
+                  </label>
+                  <div>
+                    <select
+                      {...register("_colorringIdx")}
+                      style={{ width: "100%" }}
+                    >
+                      <option value="119158">
+                        안심번호로 공사콕 가맹점을 연결합니다.
+                      </option>
+                      <option value="0">사용안함</option>
+                    </select>
+                  </div>
                 </div>
-                <div className="formPaddingWrap">
-                  <input
-                    className="listSearchRadioInput"
-                    type="radio"
-                    checked={watch("_recType") == 0}
-                    value="0"
-                    id="recType0"
-                    {...register("_recType")}
-                  />
-                  <label className="listSearchRadioLabel" htmlFor="recType0">
-                    미사용
-                  </label>
 
-                  <input
-                    className="listSearchRadioInput"
-                    type="radio"
-                    checked={watch("_recType") == 1}
-                    value="1"
-                    id="recType1"
-                    {...register("_recType")}
-                  />
-                  <label className="listSearchRadioLabel" htmlFor="recType1">
-                    일반녹취
+                <div className="formContentWrap" style={{ width: "50%" }}>
+                  <label htmlFor="_rcvMentIdx" className="blockLabel">
+                    <span>착신멘트</span>
                   </label>
-
-                  <input
-                    className="listSearchRadioInput"
-                    type="radio"
-                    checked={watch("_recType") == 2}
-                    value="2"
-                    id="recType2"
-                    {...register("_recType")}
-                  />
-                  <label className="listSearchRadioLabel" htmlFor="recType2">
-                    수발신 분리녹취
-                  </label>
+                  <div>
+                    <select
+                      {...register("_rcvMentIdx")}
+                      style={{ width: "100%" }}
+                    >
+                      <option value="119159">와짱 공사콕 문의전화입니다</option>
+                      <option value="0">사용안함</option>
+                    </select>
+                  </div>
                 </div>
-              </div>
-            </fieldset>
+              </fieldset>
 
-            <fieldset>
-              <h3>전화연결 문구 관리</h3>
-              <div className="formContentWrap" style={{ width: "50%" }}>
-                <label htmlFor="_colorringIdx" className="blockLabel">
-                  <span>컬러링</span>
-                </label>
-                <div>
-                  <select
-                    {...register("_colorringIdx")}
-                    style={{ width: "100%" }}
-                  >
-                    <option value="119158">기본 컬러링 - 공사콕 문의</option>
-                    <option value="0">사용안함</option>
-                  </select>
+              <fieldset>
+                <h3>업무시간</h3>
+                <div className="formContentWrap">
+                  <label htmlFor="bizStartTime" className="blockLabel">
+                    <span>업무시작시간</span>
+                  </label>
+                  <div>
+                    <input
+                      type="time"
+                      id="bizStartTime"
+                      {...register("_bizStartTime")}
+                    />
+                  </div>
                 </div>
-              </div>
 
-              <div className="formContentWrap" style={{ width: "50%" }}>
-                <label htmlFor="_rcvMentIdx" className="blockLabel">
-                  <span>착신멘트</span>
-                </label>
-                <div>
-                  <select
-                    {...register("_rcvMentIdx")}
-                    style={{ width: "100%" }}
-                  >
-                    <option value="119159">기본 착신멘트 - 공사콕 문의</option>
-                    <option value="0">사용안함</option>
-                  </select>
+                <div className="formContentWrap">
+                  <label htmlFor="bizEndTime" className="blockLabel">
+                    <span>업무종료시간</span>
+                  </label>
+                  <div>
+                    <input
+                      type="time"
+                      id="bizEndTime"
+                      {...register("_bizEndTime")}
+                    />
+                  </div>
                 </div>
-              </div>
-            </fieldset>
-
-            <fieldset>
-              <h3>휴일 관리</h3>
-              <div className="formContentWrap">
-                <label htmlFor="bizStartTime" className="blockLabel">
-                  <span>업무시작시간</span>
-                </label>
-                <div>
-                  <input
-                    type="time"
-                    id="bizStartTime"
-                    {...register("_bizStartTime")}
-                  />
+                <div className="formContentWrap" style={{ width: "100%" }}>
+                  <label htmlFor="bizEndMentIdx" className="blockLabel">
+                    <span>업무외시간 안내멘트</span>
+                  </label>
+                  <div>
+                    <select id="bizEndMentIdx" {...register("_bizEndMentIdx")}>
+                      <option value="119160">
+                        기본 안내멘트 - 오늘 영업시간이 종료되었습니다
+                      </option>
+                      <option value="0">사용안함</option>
+                    </select>
+                  </div>
                 </div>
-              </div>
+              </fieldset>
 
-              <div className="formContentWrap">
-                <label htmlFor="bizEndTime" className="blockLabel">
-                  <span>업무종료시간</span>
-                </label>
-                <div>
-                  <input
-                    type="time"
-                    id="bizEndTime"
-                    {...register("_bizEndTime")}
-                  />
+              <fieldset>
+                <h3>휴일</h3>
+                <div className="formContentWrap" style={{ width: "100%" }}>
+                  <label htmlFor="holiWeek" className="blockLabel">
+                    <span>영업 주 선택</span>
+                  </label>
+                  <div className="formPaddingWrap">
+                    <input
+                      className="listSearchRadioInput"
+                      type="checkbox"
+                      id="holiWeek1"
+                      {...register("_holiWeek1")}
+                    />
+                    <label htmlFor="holiWeek1" className="listSearchRadioLabel">
+                      첫주
+                    </label>
+
+                    <input
+                      className="listSearchRadioInput"
+                      type="checkbox"
+                      id="holiWeek2"
+                      {...register("_holiWeek2")}
+                    />
+                    <label htmlFor="holiWeek2" className="listSearchRadioLabel">
+                      두번째주
+                    </label>
+
+                    <input
+                      className="listSearchRadioInput"
+                      type="checkbox"
+                      id="holiWeek3"
+                      {...register("_holiWeek3")}
+                    />
+                    <label htmlFor="holiWeek3" className="listSearchRadioLabel">
+                      세번째주
+                    </label>
+
+                    <input
+                      className="listSearchRadioInput"
+                      type="checkbox"
+                      id="holiWeek4"
+                      {...register("_holiWeek4")}
+                    />
+                    <label htmlFor="holiWeek4" className="listSearchRadioLabel">
+                      네번째주
+                    </label>
+
+                    <input
+                      className="listSearchRadioInput"
+                      type="checkbox"
+                      id="holiWeek5"
+                      {...register("_holiWeek5")}
+                    />
+                    <label htmlFor="holiWeek5" className="listSearchRadioLabel">
+                      다섯번째주
+                    </label>
+                  </div>
                 </div>
-              </div>
-              <div className="formContentWrap" style={{ width: "100%" }}>
-                <label htmlFor="bizEndMentIdx" className="blockLabel">
-                  <span>업무외시간 안내멘트</span>
-                </label>
-                <div>
-                  <select id="bizEndMentIdx" {...register("_bizEndMentIdx")}>
-                    <option value="119160">
-                      기본 안내멘트 - 오늘 영업시간이 종료되었습니다
-                    </option>
-                    <option value="0">사용안함</option>
-                  </select>
+
+                {/* 휴무 - 요일 선택 */}
+                <div className="formContentWrap" style={{ width: "100%" }}>
+                  <label htmlFor="rcvNo1" className="blockLabel">
+                    <span>엽업 요일 선택</span>
+                  </label>
+
+                  <div className="formPaddingWrap">
+                    <input
+                      className="listSearchRadioInput"
+                      type="checkbox"
+                      id="holiDay1"
+                      {...register("_holiDay1")}
+                    />
+                    <label htmlFor="holiDay1" className="listSearchRadioLabel">
+                      일
+                    </label>
+
+                    <input
+                      className="listSearchRadioInput"
+                      type="checkbox"
+                      id="holiDay2"
+                      {...register("_holiDay2")}
+                    />
+                    <label htmlFor="holiDay2" className="listSearchRadioLabel">
+                      월
+                    </label>
+
+                    <input
+                      className="listSearchRadioInput"
+                      type="checkbox"
+                      id="holiDay3"
+                      {...register("_holiDay3")}
+                    />
+                    <label htmlFor="holiDay3" className="listSearchRadioLabel">
+                      화
+                    </label>
+
+                    <input
+                      className="listSearchRadioInput"
+                      type="checkbox"
+                      id="holiDay4"
+                      {...register("_holiDay4")}
+                    />
+                    <label htmlFor="holiDay4" className="listSearchRadioLabel">
+                      수
+                    </label>
+
+                    <input
+                      className="listSearchRadioInput"
+                      type="checkbox"
+                      id="holiDay5"
+                      {...register("_holiDay5")}
+                    />
+                    <label htmlFor="holiDay5" className="listSearchRadioLabel">
+                      목
+                    </label>
+
+                    <input
+                      className="listSearchRadioInput"
+                      type="checkbox"
+                      id="holiDay6"
+                      {...register("_holiDay6")}
+                    />
+                    <label htmlFor="holiDay6" className="listSearchRadioLabel">
+                      금
+                    </label>
+
+                    <input
+                      className="listSearchRadioInput"
+                      type="checkbox"
+                      id="holiDay7"
+                      {...register("_holiDay7")}
+                    />
+                    <label htmlFor="holiDay7" className="listSearchRadioLabel">
+                      토
+                    </label>
+                  </div>
                 </div>
-              </div>
-            </fieldset>
 
-            <fieldset>
-              <h3>휴일 관리</h3>
-              <div className="formContentWrap" style={{ width: "100%" }}>
-                <label htmlFor="holiWeek" className="blockLabel">
-                  <span>영업 주 선택</span>
-                </label>
-                <div className="formPaddingWrap">
-                  <input
-                    className="listSearchRadioInput"
-                    type="checkbox"
-                    id="holiWeek1"
-                    {...register("_holiWeek1")}
-                  />
-                  <label htmlFor="holiWeek1" className="listSearchRadioLabel">
-                    첫주
+                <div className="formContentWrap" style={{ width: "100%" }}>
+                  <label htmlFor="holiMentIdx" className="blockLabel">
+                    <span>휴일 안내멘트</span>
                   </label>
-
-                  <input
-                    className="listSearchRadioInput"
-                    type="checkbox"
-                    id="holiWeek2"
-                    {...register("_holiWeek2")}
-                  />
-                  <label htmlFor="holiWeek2" className="listSearchRadioLabel">
-                    두번째주
-                  </label>
-
-                  <input
-                    className="listSearchRadioInput"
-                    type="checkbox"
-                    id="holiWeek3"
-                    {...register("_holiWeek3")}
-                  />
-                  <label htmlFor="holiWeek3" className="listSearchRadioLabel">
-                    세번째주
-                  </label>
-
-                  <input
-                    className="listSearchRadioInput"
-                    type="checkbox"
-                    id="holiWeek4"
-                    {...register("_holiWeek4")}
-                  />
-                  <label htmlFor="holiWeek4" className="listSearchRadioLabel">
-                    네번째주
-                  </label>
-
-                  <input
-                    className="listSearchRadioInput"
-                    type="checkbox"
-                    id="holiWeek5"
-                    {...register("_holiWeek5")}
-                  />
-                  <label htmlFor="holiWeek5" className="listSearchRadioLabel">
-                    다섯번째주
-                  </label>
+                  <div>
+                    <select id="holiMentIdx" {...register("_holiMentIdx")}>
+                      <option value="119161">
+                        공사콕 기본 안내멘트 - 죄송합니다. 오늘은 휴일입니다.
+                      </option>
+                      <option value="0">사용안함</option>
+                    </select>
+                  </div>
                 </div>
-              </div>
-
-              {/* 휴무 - 요일 선택 */}
-              <div className="formContentWrap" style={{ width: "100%" }}>
-                <label htmlFor="rcvNo1" className="blockLabel">
-                  <span>엽업 요일 선택</span>
-                </label>
-
-                <div className="formPaddingWrap">
-                  <input
-                    className="listSearchRadioInput"
-                    type="checkbox"
-                    id="holiDay1"
-                    {...register("_holiDay1")}
-                  />
-                  <label htmlFor="holiDay1" className="listSearchRadioLabel">
-                    일
-                  </label>
-
-                  <input
-                    className="listSearchRadioInput"
-                    type="checkbox"
-                    id="holiDay2"
-                    {...register("_holiDay2")}
-                  />
-                  <label htmlFor="holiDay2" className="listSearchRadioLabel">
-                    월
-                  </label>
-
-                  <input
-                    className="listSearchRadioInput"
-                    type="checkbox"
-                    id="holiDay3"
-                    {...register("_holiDay3")}
-                  />
-                  <label htmlFor="holiDay3" className="listSearchRadioLabel">
-                    화
-                  </label>
-
-                  <input
-                    className="listSearchRadioInput"
-                    type="checkbox"
-                    id="holiDay4"
-                    {...register("_holiDay4")}
-                  />
-                  <label htmlFor="holiDay4" className="listSearchRadioLabel">
-                    수
-                  </label>
-
-                  <input
-                    className="listSearchRadioInput"
-                    type="checkbox"
-                    id="holiDay5"
-                    {...register("_holiDay5")}
-                  />
-                  <label htmlFor="holiDay5" className="listSearchRadioLabel">
-                    목
-                  </label>
-
-                  <input
-                    className="listSearchRadioInput"
-                    type="checkbox"
-                    id="holiDay6"
-                    {...register("_holiDay6")}
-                  />
-                  <label htmlFor="holiDay6" className="listSearchRadioLabel">
-                    금
-                  </label>
-
-                  <input
-                    className="listSearchRadioInput"
-                    type="checkbox"
-                    id="holiDay7"
-                    {...register("_holiDay7")}
-                  />
-                  <label htmlFor="holiDay7" className="listSearchRadioLabel">
-                    토
-                  </label>
-                </div>
-              </div>
-
-              <div className="formContentWrap" style={{ width: "100%" }}>
-                <label htmlFor="holiMentIdx" className="blockLabel">
-                  <span>휴일 안내멘트</span>
-                </label>
-                <div>
-                  <select id="holiMentIdx" {...register("_holiMentIdx")}>
-                    <option value="119161">
-                      공사콕 기본 안내멘트 - 죄송합니다. 오늘은 휴일입니다.
-                    </option>
-                    <option value="0">사용안함</option>
-                  </select>
-                </div>
-              </div>
-            </fieldset>
+              </fieldset>
+            </div>
           </div>
         </form>
       </div>

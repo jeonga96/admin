@@ -5,8 +5,8 @@ import { ErrorMessage } from "@hookform/error-message";
 import { useNavigate } from "react-router-dom";
 
 import * as API from "../../service/api";
-import * as UD from "../../service/useData";
-import * as STR from "../../service/string";
+import * as TOA from "../../service/library/toast";
+import * as APIURL from "../../service/string/apiUrl";
 
 import LayoutTopButton from "../../components/layout/LayoutTopButton";
 
@@ -22,7 +22,7 @@ export default function AddUser() {
 
   // 회원 추가 이벤트
   const fnSubmit = (e) => {
-    API.servicesPostData(STR.urlAdduser, {
+    API.servicesPostData(APIURL.urlAdduser, {
       userid: getValues("_userid"),
       passwd: getValues("_passwd"),
     })
@@ -31,19 +31,19 @@ export default function AddUser() {
           res.status === "fail" &&
           res.emsg === "Database update failure. check duplicate userid"
         ) {
-          UD.servicesUseToast(
+          TOA.servicesUseToast(
             "이미 가입된 아이디입니다. 다른 아이디를 입력해 주세요,"
           );
           return;
         }
         if (res.status === "fail") {
-          UD.servicesUseToast("잘못된 값을 입력했습니다.", "e");
+          TOA.servicesUseToast("잘못된 값을 입력했습니다.", "e");
           return;
         }
         // 정상 등록 완료
         // 목록으로 이동
         if (res.status === "success") {
-          UD.servicesUseToast("가입이 완료되었습니다!", "s");
+          TOA.servicesUseToast("가입이 완료되었습니다!", "s");
           navigate(`/user`);
           return;
         }
@@ -58,7 +58,7 @@ export default function AddUser() {
           onSubmit={handleSubmit(fnSubmit)}
         >
           <ul className="tableTopWrap">
-            <LayoutTopButton text="완료" disabled={isSubmitting} />
+            <LayoutTopButton text="완료" isSubmitting={isSubmitting} />
           </ul>
           <div className="formContentWrap" style={{ marginTop: "10px" }}>
             <label htmlFor="userid" className="blockLabel">
@@ -68,21 +68,23 @@ export default function AddUser() {
               <input
                 type="text"
                 id="userid"
+                style={{ textAlign: "left" }}
                 placeholder="아이디를 입력해 주세요."
                 {...register("_userid", {
                   required: "아이디는 필수로 입력해야 합니다.",
-                  // minLength: {
-                  //   value: 4,
-                  //   message: "4자 이상으로 입력해주세요.",
-                  // },
-                  // maxLength: {
-                  //   value: 16,
-                  //   message: "16자 이하로 입력해주세요.",
-                  // },
-                  // pattern: {
-                  //   value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{4,16}$/g,
-                  //   message: "영문, 숫자를 포함해 주세요.",
-                  // },
+                  minLength: {
+                    value: 4,
+                    message: "4자 이상으로 입력해주세요.",
+                  },
+                  maxLength: {
+                    value: 16,
+                    message: "16자 이하로 입력해주세요.",
+                  },
+                  pattern: {
+                    value: /^([a-zA-Z0-9]){4,16}$/g,
+                    // value: /^(?=.*[a-zA-Z])(?=.*\d).{6,16}$/g,
+                    message: "영문, 숫자민 입력 가능합니다.",
+                  },
                 })}
               />
               <ErrorMessage
@@ -103,31 +105,31 @@ export default function AddUser() {
               <input
                 type="password"
                 id="passwd"
+                style={{ textAlign: "left" }}
                 placeholder="비밀번호를 입력해 주세요."
                 {...register("_passwd", {
                   required: "비밀번호는 필수로 입력해야 합니다.",
-                  // minLength: {
-                  //   value: 6,
-                  //   message: "6자 이상으로 입력해주세요.",
-                  // },
-                  // maxLength: {
-                  //   value: 16,
-                  //   message: "16자 이하로 입력해주세요.",
-                  // },
-                  // pattern: {
-                  //   value:
-                  //     /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{6,16}$/g,
-                  //   message: "영문, 숫자, 특수문자를 포함해 주세요.",
-                  // },
-                  // validate: {
-                  //   matchesPassword: (value) => {
-                  //     const { _userid } = getValues();
-                  //     return (
-                  //       _userid !== value ||
-                  //       "아이디와 동일한 비밀번호는 사용할 수 없습니다."
-                  //     );
-                  //   },xw
-                  // },
+                  minLength: {
+                    value: 6,
+                    message: "6자 이상으로 입력해주세요.",
+                  },
+                  maxLength: {
+                    value: 16,
+                    message: "16자 이하로 입력해주세요.",
+                  },
+                  pattern: {
+                    value: /^(?=.*[a-zA-Z])(?=.*\d).{6,16}$/g,
+                    message: "영문, 숫자를 한 개 이상 입력해 주세요",
+                  },
+                  validate: {
+                    matchesPassword: (value) => {
+                      const { _userid } = getValues();
+                      return (
+                        _userid !== value ||
+                        "아이디와 동일한 비밀번호는 사용할 수 없습니다."
+                      );
+                    },
+                  },
                 })}
               />
               <ErrorMessage
@@ -148,6 +150,7 @@ export default function AddUser() {
               <input
                 type="password"
                 id="passwdck"
+                style={{ textAlign: "left" }}
                 placeholder="비밀번호를 한 번 더 입력해 주세요."
                 {...register("_passwdck", {
                   required: "비밀번호 확인을 진행해 주세요.",

@@ -7,7 +7,7 @@ import { useSelector, shallowEqual } from "react-redux";
 import { Link } from "react-router-dom";
 
 export default function PieceDetailListLink({ getData, url, title, useLink }) {
-  const getedData = useSelector((state) => state.getedData, shallowEqual);
+  const getedData = useSelector((state) => state.data.getedData, shallowEqual);
 
   if (!!getedData) {
     return (

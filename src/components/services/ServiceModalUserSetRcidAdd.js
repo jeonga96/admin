@@ -1,28 +1,46 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
-import * as STR from "../../service/string";
+import * as APIURL from "../../service/string/apiUrl";
 import * as API from "../../service/api";
-import * as UD from "../../service/useData";
+import * as TOA from "../../service/library/toast";
 
 export default function ServiceModalUserSetRcidAdd({ click, setClick, fn }) {
   const { register, getValues, watch } = useForm();
   const [list, setList] = useState([]);
 
+  function fnSearchEnter(f) {
+    if (f.keyCode == 13) {
+      fnSearch(f);
+    }
+  }
+
   // 검색
   const fnSearch = (e) => {
     e.preventDefault();
-    API.servicesPostData(STR.urlCompanylist, {
+
+    const requestData = {
       offset: 0,
       size: 15,
-      cid: getValues("_cid"),
-      cdnamd: getValues("_cdnamd"),
-      telnum: getValues("_telnum"),
-      name: getValues("_name"),
-    }).then((res) => {
+    };
+    if (getValues("_cid")) {
+      requestData.cid = getValues("_cid");
+    }
+    if (getValues("_cdname")) {
+      requestData.cdname = getValues("_cdname");
+    }
+    if (getValues("_telnum")) {
+      requestData.telnum = getValues("_telnum");
+    }
+    if (getValues("_name")) {
+      requestData.name = getValues("_name");
+    }
+
+    API.servicesPostData(APIURL.urlCompanylist, requestData).then((res) => {
       console.log(res);
+      console.log(watch("_cdname"));
       if (res.status === "fail") {
-        UD.servicesUseToast("검색하신 데이터가 없습니다.", "e");
+        TOA.servicesUseToast("검색하신 데이터가 없습니다.", "e");
       }
       if (res.status === "success") {
         setList(res.data);
@@ -40,15 +58,25 @@ export default function ServiceModalUserSetRcidAdd({ click, setClick, fn }) {
                 <span>사업자 관리번호</span>
               </label>
               <div>
-                <input type="text" id="cid" {...register("_cid")} />
+                <input
+                  onKeyDown={(e) => fnSearchEnter(e)}
+                  type="text"
+                  id="cid"
+                  {...register("_cid")}
+                />
               </div>
             </div>
             <div className="listSearchWrap" style={{ width: "50%" }}>
               <label className="blockLabel">
-                <span>사업자명</span>
+                <span>상호명</span>
               </label>
               <div>
-                <input type="text" id="cdname" {...register("_cdname")} />
+                <input
+                  onKeyDown={(e) => fnSearchEnter(e)}
+                  type="text"
+                  id="cdname"
+                  {...register("_cdname")}
+                />
               </div>
             </div>
             <div className="listSearchWrap" style={{ width: "50%" }}>
@@ -56,7 +84,12 @@ export default function ServiceModalUserSetRcidAdd({ click, setClick, fn }) {
                 <span>이름</span>
               </label>
               <div>
-                <input type="text" id="name" {...register("_name")} />
+                <input
+                  onKeyDown={(e) => fnSearchEnter(e)}
+                  type="text"
+                  id="name"
+                  {...register("_name")}
+                />
               </div>
             </div>
             <div className="listSearchWrap" style={{ width: "50%" }}>
@@ -65,6 +98,7 @@ export default function ServiceModalUserSetRcidAdd({ click, setClick, fn }) {
               </label>
               <div>
                 <input
+                  onKeyDown={(e) => fnSearchEnter(e)}
                   type="text"
                   id="telnum"
                   {...register("_telnum")}
@@ -102,13 +136,13 @@ export default function ServiceModalUserSetRcidAdd({ click, setClick, fn }) {
               <thead>
                 <tr>
                   <th style={{ width: "121px" }}>사업자 관리번호</th>
-                  <th style={{ width: "121px" }}>사업자명</th>
+                  <th style={{ width: "121px" }}>상호명</th>
                   <th style={{ width: "121px" }}>이름</th>
                   <th style={{ width: "121px" }}>번호</th>
                 </tr>
               </thead>
 
-              <tbody style={{ height: "100px" }}>
+              <tbody style={{ height: "300px" }}>
                 {list.map((item) => (
                   <tr key={item.uid} onClick={() => fn(item)}>
                     <td style={{ width: "121px" }}>{item.cid}</td>

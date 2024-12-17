@@ -4,9 +4,11 @@
 // react-redux를 사용하여 주소 관련을 useDispatch, useSelector에 할당
 
 import { useSelector, useDispatch, shallowEqual } from "react-redux";
-import { useEffect, useLayoutEffect } from "react";
+import { useEffect } from "react";
 import { useDaumPostcodePopup } from "react-daum-postcode";
 import { useForm } from "react-hook-form";
+
+import * as DATA from "../../action/data";
 
 export default function ServiceRegisterSearchPopUp({ userComponent }) {
   const dispatch = useDispatch();
@@ -17,10 +19,10 @@ export default function ServiceRegisterSearchPopUp({ userComponent }) {
     "//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js";
   // eact-daum-postcode의 popup 방식 사용
   const open = useDaumPostcodePopup(scriptUrl);
-  const getedData = useSelector((state) => state.getedData, shallowEqual);
+  const getedData = useSelector((state) => state.data.getedData, shallowEqual);
 
   const multilAddress = useSelector(
-    (state) => state.multilAddressData,
+    (state) => state.data.multilAddressData,
     shallowEqual
   );
 
@@ -46,87 +48,79 @@ export default function ServiceRegisterSearchPopUp({ userComponent }) {
   }, [multilAddress]);
 
   useEffect(() => {
-    dispatch({
-      type: "multilAddressData",
-      payload: {
-        ...multilAddress,
-        ...{
-          detailaddress: watch("_detailaddress"),
-        },
+    const payload = {
+      ...multilAddress,
+      ...{
+        detailaddress: watch("_detailaddress"),
       },
-    });
+    };
+
+    dispatch(DATA.serviceMultilAddressData(payload));
   }, [watch("_detailaddress")]);
 
   // 카카오 API, 주소를 위도 경도로 변환
   const callMapcoor = (res) => {
     var geocoder = new window.kakao.maps.services.Geocoder();
     var callback = function (result, status) {
+      // console.log("result", result, status);
       if (status === window.kakao.maps.services.Status.OK) {
         // 공사콕에서 사용하는 key와 다음 카카오의 키가 다름!
         // 다음 카카오 신주소 : roadAddress, 구주소 :jibunAddress, 우편번호 : zonecode
         if (!!res.postcode) {
-          dispatch({
-            type: "serviceMultilAddressData",
-            payload: {
-              address: res.roadAddress,
-              detailaddress: res.detailaddress,
-              oldaddress: res.jibunAddress,
-              zipcode: res.zonecode,
+          const payload = {
+            address: res.roadAddress,
+            detailaddress: res.detailaddress,
+            oldaddress: res.jibunAddress,
+            zipcode: res.zonecode,
+            latitude: Math.floor(result[0].y * 100000),
+            longitude: Math.floor(result[0].x * 100000),
+          };
+          dispatch(DATA.serviceMultilAddressData(payload));
+        } else {
+          const payload = {
+            ...multilAddress,
+            ...{
+              address: result[0].address_name,
+              detailaddress: getedData.detailaddress,
+              zipcode: result[0].road_address.zone_no,
+              oldaddress: result[0].address.address_name,
               latitude: Math.floor(result[0].y * 100000),
               longitude: Math.floor(result[0].x * 100000),
             },
-          });
-        } else {
-          dispatch({
-            type: "serviceMultilAddressData",
-            payload: {
-              ...multilAddress,
-              ...{
-                address: result[0].address_name,
-                detailaddress: getedData.detailaddress,
-                zipcode: result[0].road_address.zone_no,
-                oldaddress: result[0].address.address_name,
-                latitude: Math.floor(result[0].y * 100000),
-                longitude: Math.floor(result[0].x * 100000),
-              },
-            },
-          });
+          };
+          dispatch(DATA.serviceMultilAddressData(payload));
         }
       }
     };
-
+    //위도경도 검색
     geocoder.addressSearch(res.address, callback);
   };
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (getedData !== []) {
       callMapcoor(getedData);
     }
 
     // setUser는 주소값만 저장함
     if (getedData !== [] && userComponent) {
-      dispatch({
-        type: "serviceMultilAddressData",
-        payload: {
-          address: getedData.address,
-          detailaddress: getedData.detailaddress,
-        },
-      });
+      const payload = {
+        address: getedData.address,
+        detailaddress: getedData.detailaddress,
+      };
+      dispatch(DATA.serviceMultilAddressData(payload));
     }
 
     // setCompany는 아래와 같은 정보가 필요함
     if (getedData !== [] && !userComponent) {
-      dispatch({
-        type: "serviceMultilAddressData",
-        payload: {
-          address: getedData.address,
-          detailaddress: getedData.detailaddress,
-          oldaddress: getedData.oldaddress,
-          zipcode: getedData.zipcode,
-          longitude: getedData.longitude,
-          latitude: getedData.latitude,
-        },
-      });
+      const payload = {
+        address: getedData.address,
+        detailaddress: getedData.detailaddress,
+        oldaddress: getedData.oldaddress,
+        zipcode: getedData.zipcode,
+        longitude: getedData.longitude,
+        latitude: getedData.latitude,
+      };
+      dispatch(DATA.serviceMultilAddressData(payload));
     }
   }, [getedData]);
 
@@ -134,13 +128,11 @@ export default function ServiceRegisterSearchPopUp({ userComponent }) {
   const handleOnComplete = (data) => {
     // setUser는 주소값만 저장함
     if (!!userComponent) {
-      dispatch({
-        type: "serviceMultilAddressData",
-        payload: {
-          address: data.roadAddress,
-          detailaddress: getedData.detailaddress,
-        },
-      });
+      const payload = {
+        address: data.roadAddress,
+        detailaddress: getedData.detailaddress,
+      };
+      dispatch(DATA.serviceMultilAddressData(payload));
     }
 
     // setCompany는 아래와 같은 정보가 필요함
@@ -231,24 +223,6 @@ export default function ServiceRegisterSearchPopUp({ userComponent }) {
               </button>
             </div>
 
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <input
-                type="text"
-                id="roadAddress"
-                {...register("_address")}
-                disabled
-                style={{ width: "49.8%", marginBottom: 0 }}
-              />
-
-              <input
-                type="text"
-                id="detailaddress"
-                placeholder="상세주소를 입력해 주세요."
-                {...register("_detailaddress")}
-                style={{ width: "49.8%" }}
-              />
-            </div>
-
             <ul
               className="detailContent"
               style={{ width: "100%", border: "none", padding: "4px 0 2px" }}
@@ -288,6 +262,24 @@ export default function ServiceRegisterSearchPopUp({ userComponent }) {
                 </a>
               </li>
             </ul>
+
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <input
+                type="text"
+                id="roadAddress"
+                {...register("_address")}
+                disabled
+                style={{ width: "49.8%", marginBottom: 0 }}
+              />
+
+              <input
+                type="text"
+                id="detailaddress"
+                placeholder="상세주소를 입력해 주세요."
+                {...register("_detailaddress")}
+                style={{ width: "49.8%" }}
+              />
+            </div>
           </div>
         </div>
       </>

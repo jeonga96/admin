@@ -3,9 +3,9 @@
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 
-import * as STR from "../../service/string";
+import * as APIURL from "../../service/string/apiUrl";
 import * as API from "../../service/api";
-import * as UD from "../../service/useData";
+import * as TOA from "../../service/library/toast";
 
 import LayoutTopButton from "../../components/layout/LayoutTopButton";
 import ComponentListAdminKeyword from "../../components/common/ComponentListAdminKeyword";
@@ -45,9 +45,9 @@ export default function SetAdminKeyeords() {
     e.preventDefault();
     setSearchBtn(!searchBtn);
     searchBtn === false
-      ? API.servicesPostData(STR.urlAllKeyword, {})
+      ? API.servicesPostData(APIURL.urlAllKeyword, {})
           .then((res) => {
-            API.servicesSetStorage(STR.ALLKEYWORD, JSON.stringify(res.data));
+            API.servicesSetStorage(APIURL.ALLKEYWORD, JSON.stringify(res.data));
             setAllKeywords(res.data);
           })
           .then(setSearchBtn(!searchBtn))
@@ -85,14 +85,14 @@ export default function SetAdminKeyeords() {
   // 수정 버튼
   const fnSubmit = () => {
     for (let i = 0; i < modifyData.length; i++) {
-      API.servicesPostData(STR.urlSetKeyword, modifyData[i]);
+      API.servicesPostData(APIURL.urlSetKeyword, modifyData[i]);
     }
     setCompanyDetailKeyword([]);
     setModifyData(null);
     setSearchBtn(false);
     setAllKeywords([]);
     setSubmit(!sumbit);
-    UD.servicesUseToast("완료되었습니다.", "s");
+    TOA.servicesUseToast("완료되었습니다.", "s");
   };
 
   // 초기화 버튼
@@ -158,7 +158,7 @@ export default function SetAdminKeyeords() {
         <form className="formLayout" onSubmit={handleSubmit(fnSubmit)}>
           <ul className="tableTopWrap">
             <LayoutTopButton text="초기화" fn={HandleReset} />
-            <LayoutTopButton text="수정" disabled={isSubmitting} />
+            <LayoutTopButton text="수정" isSubmitting={isSubmitting} />
           </ul>
 
           {/* 검색 결과 & 표 클릭 결과 표시되는 수정 값 입력하는 인풋 */}

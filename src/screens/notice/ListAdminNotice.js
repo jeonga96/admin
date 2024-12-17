@@ -1,16 +1,20 @@
 // 공사콕 앱 관리 > 공사콕 공지사항 리스트
 
 import { useForm } from "react-hook-form";
-import { useState, useLayoutEffect } from "react";
+import { useState } from "react";
 
 import * as API from "../../service/api";
-import * as STR from "../../service/string";
+import * as CUS from "../../service/customHook";
+import * as APIURL from "../../service/string/apiUrl";
+
+import * as PAGE from "../../action/page";
 
 import LayoutTopButton from "../../components/layout/LayoutTopButton";
 import ComponentErrorNull from "../../components/piece/PieceErrorNull";
 import ComponentListNotice from "../../components/common/ComponentListNotice";
+import { useSelector, useDispatch, shallowEqual } from "react-redux";
 
-import PaginationButton from "../../components/services/ServicesPaginationButton";
+import PaginationButton from "../../components/services/ServicesPaginationButton_Redux";
 
 export default function ListAdminNotice() {
   const { register, watch } = useForm({
@@ -22,23 +26,39 @@ export default function ListAdminNotice() {
   // 데이터 ------------------------------------------------------------------------
   // 목록 데이터
   const [notice, setNotice] = useState([]);
+  const dispatch = useDispatch();
+  const pageData = useSelector((state) => state.page.pageData, shallowEqual);
 
-  // pagination 버튼 관련 ------------------------------------------------------------------------
-  // listPage: 컨텐츠 총 개수 / page:전체 페이지 수 & 현재 페이지
-  const [listPage, setListPage] = useState({});
-  const [page, setPage] = useState({ getPage: 0, activePage: 1 });
+  const [showUseFlagZero, setShowUseFlagZero] = useState(false);
+  const [buttonClicked, setButtonClicked] = useState(false);
+  const [buttonText, setButtonText] = useState("게시글 전체보기");
+
+  const toggleVisibility = () => {
+    setShowUseFlagZero((prev) => !prev);
+    setButtonText((prev) =>
+      prev === "게시글 전체보기" ? "비공개 숨김" : "게시글 전체보기"
+    );
+    setButtonClicked((prev) => !prev);
+  };
 
   // 카테고리 확인하여 데이터 요청
-  useLayoutEffect(() => {
-    API.servicesPostData(STR.urlContentList, {
+  CUS.useCleanupEffect(() => {
+    API.servicesPostData(APIURL.urlContentList, {
       category: watch("_category") || "notice",
-      offset: 0,
+      offset: pageData.getPage,
       size: 15,
     }).then((res) => {
-      setNotice(res.data);
-      setListPage(res.page);
+      if (res.status === "success" && res !== undefined) {
+        let filteredNotice = res.data;
+        if (!showUseFlagZero) {
+          // showUseFlagZero가 false일 때만 필터링
+          filteredNotice = res.data.filter((item) => item.useFlag === 1);
+        }
+        setNotice(filteredNotice);
+        dispatch(PAGE.setListPage(res.page));
+      }
     });
-  }, [watch("_category") || page.getPage]);
+  }, [watch("_category"), pageData.getPage, showUseFlagZero]);
 
   return (
     <>
@@ -49,6 +69,12 @@ export default function ListAdminNotice() {
         <h3 className="blind">공사콕 공지사항 목록</h3>
         <div className="paddingBox commonBox">
           <div className="filterWrap">
+            <button
+              className={`hideButton ${buttonClicked ? "clicked" : ""}`}
+              onClick={toggleVisibility}
+            >
+              {buttonText}
+            </button>
             <label className="listSearchRadioLabel" htmlFor="notice">
               <input
                 type="radio"
@@ -57,7 +83,7 @@ export default function ListAdminNotice() {
                 id="notice"
                 {...register("_category")}
               />
-              <span>전체 회원 공지</span>
+              <span>B2C 공지</span>
             </label>
             <label className="listSearchRadioLabel" htmlFor="noticeTocompany">
               <input
@@ -67,20 +93,15 @@ export default function ListAdminNotice() {
                 id="noticeTocompany"
                 {...register("_category")}
               />
-              <span>사업자 회원 공지</span>
+              <span>B2B 공지</span>
             </label>
           </div>
           {(notice == [] && notice.length == 0) || notice === undefined ? (
             <ComponentErrorNull />
           ) : (
             <>
-              {" "}
               <ComponentListNotice notice={notice} ISADMIN />
-              <PaginationButton
-                listPage={listPage}
-                page={page}
-                setPage={setPage}
-              />
+              <PaginationButton />
             </>
           )}
         </div>

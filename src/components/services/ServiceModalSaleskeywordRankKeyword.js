@@ -1,8 +1,8 @@
 import { useState, useEffect, useCallback } from "react";
 
 import * as API from "../../service/api";
-import * as STR from "../../service/string";
-import * as UD from "../../service/useData";
+import * as APIURL from "../../service/string/apiUrl";
+import * as TOA from "../../service/library/toast";
 
 export default function ServiceModalSaleskeywordRecommendKeyword({
   click,
@@ -14,7 +14,7 @@ export default function ServiceModalSaleskeywordRecommendKeyword({
 
   const fetchData = useCallback(() => {
     if (!!inputData) {
-      API.servicesPostData(STR.urlListIsSalesKeyword, {
+      API.servicesPostData(APIURL.urlListIsSalesKeyword, {
         keyword: inputData,
       })
         .then((res) => {
@@ -37,7 +37,7 @@ export default function ServiceModalSaleskeywordRecommendKeyword({
           setList([]);
         });
     } else {
-      UD.servicesUseToast("입력 데이터가 없습니다.", "e");
+      TOA.servicesUseToast("입력 데이터가 없습니다.", "e");
     }
   }, [inputData, setClick]);
 
@@ -62,7 +62,7 @@ export default function ServiceModalSaleskeywordRecommendKeyword({
                 </tr>
               </thead>
 
-              <tbody>
+              <tbody style={{ display: "contents" }}>
                 {list.map((item, i) => {
                   console.log(item);
                   return (

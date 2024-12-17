@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 import * as API from "../../service/api";
-import * as STR from "../../service/string";
+import * as APIURL from "../../service/string/apiUrl";
 
 export default function ServiceModalSaleskeywordAllKeyword({
   fn,
@@ -11,8 +11,10 @@ export default function ServiceModalSaleskeywordAllKeyword({
   const [list, setList] = useState([]);
 
   useEffect(() => {
-    API.servicesPostData(STR.urlAllKeyword, {}).then((res) => {
-      setList(res.data);
+    API.servicesPostData(APIURL.urlAllKeyword, {}).then((res) => {
+      if (res !== undefined && res.status === "success") {
+        setList(res.data);
+      }
     });
   }, []);
 
@@ -29,7 +31,7 @@ export default function ServiceModalSaleskeywordAllKeyword({
                 </tr>
               </thead>
 
-              <tbody>
+              <tbody style={{ display: "contents" }}>
                 {list.map((item) => {
                   return (
                     <tr key={item.uid} onClick={(e) => fn(item)}>

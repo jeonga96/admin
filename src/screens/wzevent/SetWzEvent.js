@@ -1,28 +1,21 @@
 // (cid)를 확인하여 사업자, 관리자 공지사항인지 확인
 // (comnid, contid)를 확인하여 작성 및 수정
-
-import { useEffect, useLayoutEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
-
-import * as API from "../../service/api";
-import * as STR from "../../service/string";
+import { useState } from "react";
 
 import LayoutTopButton from "../../components/layout/LayoutTopButton";
-import ComponentDetailNotice from "../../components/common/ComponentDetailNotice";
+
+import * as API from "../../service/api";
+import * as CUS from "../../service/customHook";
+import * as APIURL from "../../service/string/apiUrl";
+import * as TOA from "../../service/library/toast";
 
 export default function DetailNotice() {
-  const {
-    handleSubmit,
-    register,
-    setValue,
-    getValues,
-    watch,
-    formState: { isSubmitting, errors },
-  } = useForm({
+  const { register, setValue, watch } = useForm({
     defaultValues: {},
   });
-
+  const [eventStatus, setEventStatus] = useState("");
   // contid : 관리자 컨텐츠 id
   // comnid : company review id
   const { gweid } = useParams();
@@ -31,15 +24,15 @@ export default function DetailNotice() {
   // 공지사항 목록 데이터
   // const [contents, setPro] = useState([]);
 
-  useEffect(() => {
+  CUS.useCleanupEffect(() => {
     // comnid 여부를 확인하여 사업자 공지사항 요청
-    console.log(gweid);
     // API.servicesPostData("https://devawsback.gongsacok.com/admin/getWzevent", {
-    API.servicesPostData(STR.urlGetWzEvent, {
+    API.servicesPostData(APIURL.urlGetWzEvent, {
       gweid: gweid,
     }).then((res) => {
       console.log(res);
       if (res.status === "success") {
+        console.log(res);
         // setPro(res.data);
         const PRODUCT = res.data.product;
         setValue("_guserFlag", res.data.guserFlag);
@@ -52,7 +45,7 @@ export default function DetailNotice() {
         setValue("_eventPath", res.data.eventPath);
         setValue("_remark", res.data.remark);
         setValue("_name", res.data.name);
-
+        console.log(res.data.status);
         if (PRODUCT === "1") {
           return setValue("_product", "( 선택1 ) 홈페이지 제작, 관리 ( PC형 )");
         } else if (PRODUCT === "2") {
@@ -68,16 +61,54 @@ export default function DetailNotice() {
             "( 선택4 ) 홈페이지 + 블로그 포스팅 1회 + 동영상 제작, 관리 업로드"
           );
         }
-
-        return;
+      }
+    });
+    API.servicesPostData(APIURL.urlSetEventStatus, {
+      gweid: gweid,
+    }).then((res) => {
+      if (res.status === "success") {
+        const eventStatus = res.data.status;
+        console.log(eventStatus);
+        setEventStatus(eventStatus);
       }
     });
   }, []);
+
+  const fnStatus = (event) => {
+    event.preventDefault();
+    const newStatus = eventStatus === "AP" ? "CO" : "AP"; // Toggle between "AP" and "CO"
+    API.servicesPostData(APIURL.urlSetEventStatus, {
+      gweid: gweid,
+      status: newStatus,
+    }).then((res) => {
+      if (res.status === "success") {
+        console.log("success");
+        setEventStatus(newStatus);
+        if (newStatus === "AP") {
+          TOA.servicesUseToast("대기 상태로 변경되었습니다.", "s");
+        } else {
+          TOA.servicesUseToast("처리 완료되었습니다.", "s");
+        }
+      }
+    });
+  };
 
   return (
     <>
       <div className="commonBox">
         <form className="formLayout formLayoutDisabled">
+          <ul className="tableTopWrap tableTopBorderWrap">
+            <LayoutTopButton
+              text={
+                eventStatus === undefined || eventStatus === "AP"
+                  ? "대기 상태"
+                  : "처리 완료"
+              }
+              fn={fnStatus}
+            />
+            <LayoutTopButton url="/wzevent" text="목록으로 가기" />
+          </ul>
+
           <div className="formWrap">
             <fieldset id="CompanyDetail_1">
               <h3>사용자 회원 정보 수정</h3>
@@ -145,10 +176,10 @@ export default function DetailNotice() {
                 </div>
               </div>
 
-              {/* 대표업종 */}
+              {/* 대표 ( 주력 ) 업종 */}
               <div className="formContentWrap">
                 <label htmlFor="job" className="blockLabel">
-                  <span>대표업종</span>
+                  <span>대표 ( 주력 ) 업종</span>
                 </label>
                 <div>
                   <input type="text" id="job" disabled {...register("_job")} />

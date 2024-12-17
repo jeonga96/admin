@@ -1,6 +1,6 @@
-import { useState, useLayoutEffect } from "react";
+import { useState, useEffect } from "react";
 
-import * as STR from "../../service/string";
+import * as APIURL from "../../service/string/apiUrl";
 import * as API from "../../service/api";
 
 export default function ComponentListAdminKeyword({
@@ -11,12 +11,12 @@ export default function ComponentListAdminKeyword({
   // 작성된 데이터를 받아옴
   const [getData, setGetData] = useState([]);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     // 서버에서 새로 값을 받아와도 map이 렌더링 되지 않으므로 getData를 빈배열로 반든 후, 새로 할당
     setGetData([]);
     // 값을 서버에 보내고, 다시 받아올 때 시간 차이를 두기 위해 0.1초 후 진행하도록 설정
     setTimeout(() => {
-      API.servicesPostData(STR.urlSuggestKeyword, {}).then((res) =>
+      API.servicesPostData(APIURL.urlSuggestKeyword, {}).then((res) =>
         setGetData(res.data)
       );
     }, 100);

@@ -2,17 +2,23 @@ import { useParams } from "react-router-dom";
 import { useDispatch, useSelector, shallowEqual } from "react-redux";
 import { useEffect, useState, useCallback } from "react";
 
+import * as DATA from "../../action/data";
+
 import * as API from "../../service/api";
-import * as UD from "../../service/useData";
-import * as STR from "../../service/string";
+
+import * as APIURL from "../../service/string/apiUrl";
 
 import PieceDetailListLink from "../piece/PieceDetailListLink";
 
 export default function ComponentCompanyPieceLink() {
   const { cid } = useParams();
   const dispatch = useDispatch();
-  const getedData = useSelector((state) => state.getedData, shallowEqual);
-  const writeData = useSelector((state) => state.writeData, shallowEqual);
+  const getedData = useSelector((state) => state.data.getedData, shallowEqual);
+  const getedSummaryData = useSelector(
+    (state) => state.data.getedSummaryData,
+    shallowEqual
+  );
+  const writeData = useSelector((state) => state.data.writeData, shallowEqual);
 
   const [toEstimateinfo, setToEstimateinfo] = useState([]);
   const [fromEstimateinfo, setFromEstimateinfo] = useState([]);
@@ -24,70 +30,72 @@ export default function ComponentCompanyPieceLink() {
 
   const onChangeWrite = useCallback(
     (e) => {
-      dispatch({
-        type: "serviceWriteData",
-        payload: {
+      dispatch(
+        DATA.serviceWriteData({
           ...writeData,
           [e.target.id]: e.target.value,
-        },
-      });
+        })
+      );
     },
     [writeData]
   );
 
   useEffect(() => {
-    dispatch({
-      type: "serviceWriteData",
-      payload: {
-        okCount: getedData.okCount,
-        reCount: getedData.reCount,
-        noCount: getedData.noCount,
-      },
-    });
+    const payload = {
+      okCount: getedData.okCount,
+      reCount: getedData.reCount,
+      noCount: getedData.noCount,
+    };
+
+    dispatch(DATA.serviceWriteData(payload));
 
     // 상세 회사정보 불러오기 기존 값이 없다면 새로운 회원이다. 새로 작성함
-    UD.serviesPostDataSettingRcid(STR.urlCompanyNoticeList, cid, setNoticeList);
-    UD.serviesPostDataSettingRcid(STR.urlReviewList, cid, setReviewList);
+    API.serviesPostDataState(
+      APIURL.urlCompanyNoticeList,
+      { rcid: cid },
+      setNoticeList
+    );
+    API.serviesPostDataState(
+      APIURL.urlReviewList,
+      { rcid: cid },
+      setReviewList
+    );
 
     // 견적요청서 - uid가 필요하기 떄문에 cid로 uid를 확인한 후 진행
-    API.servicesPostData(STR.urlGetCompany, { cid: cid })
-      .then((res) => {
-        if (res.data.ruid !== undefined) {
-          // 회원정보
-          API.servicesPostData(STR.urlListEstimateInfo, {
-            fromUid: res.data.ruid,
-            offset: 0,
-            size: 150,
-          }).then((res) => setFromEstimateinfo(res.data));
-          // 견적 요청서 수령
-          API.servicesPostData(STR.urlListEstimateInfo, {
-            toUid: res.data.ruid,
-            offset: 0,
-            size: 150,
-          }).then((res) => setToEstimateinfo(res.data));
+    if (getedSummaryData.ruid !== undefined) {
+      // 회원정보
+      API.servicesPostData(APIURL.urlListEstimateInfo, {
+        fromUid: getedSummaryData.ruid,
+        offset: 0,
+        size: 150,
+      }).then((res) => setFromEstimateinfo(res.data));
+      // 견적 요청서 수령
+      API.servicesPostData(APIURL.urlListEstimateInfo, {
+        toUid: getedSummaryData.ruid,
+        offset: 0,
+        size: 150,
+      }).then((res) => setToEstimateinfo(res.data));
 
-          // 견적서 요청
-          API.servicesPostData(STR.urlListProposalInfo, {
-            fromUid: res.data.ruid,
-            offset: 0,
-            size: 150,
-          }).then((res) => setFromproposalInfo(res.data));
+      // 견적서 요청
+      API.servicesPostData(APIURL.urlListProposalInfo, {
+        fromUid: getedSummaryData.ruid,
+        offset: 0,
+        size: 150,
+      }).then((res) => setFromproposalInfo(res.data));
 
-          // 견적서 수령
-          API.servicesPostData(STR.urlListProposalInfo, {
-            toUid: res.data.ruid,
-            offset: 0,
-            size: 150,
-          }).then((res) => setToproposalInfo(res.data));
-        }
-      })
-      .catch((res) => console.log(res));
-  }, [getedData]);
+      // 견적서 수령
+      API.servicesPostData(APIURL.urlListProposalInfo, {
+        toUid: getedSummaryData.ruid,
+        offset: 0,
+        size: 150,
+      }).then((res) => setToproposalInfo(res.data));
+    }
+  }, [getedSummaryData]);
 
   return (
     <>
       {/* 견적 관리 링크 이동 ================================================================ */}
-      <fieldset id="CompanyDetail_5">
+      <fieldset>
         <h3>견적 관리</h3>
         <div className="formContentWrap">
           <label htmlFor="address" className=" blockLabel">
@@ -192,8 +200,8 @@ export default function ComponentCompanyPieceLink() {
           <ul className="detailContent">
             <PieceDetailListLink
               getData={noticeList}
-              url={`/company/${getedData.rcid}/notice`}
-              title="공지사항"
+              url={`/company/${getedData.rcid || cid}/notice`}
+              title="이벤트 & 공지"
               useLink={true}
             />
 

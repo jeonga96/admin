@@ -2,10 +2,10 @@
 
 // import { Link } from "react-router-dom";
 // import { useForm } from "react-hook-form";
-// import { useLayoutEffect, useState } from "react";
+// import { useEffect, useState } from "react";
 
 // import * as API from "../../service/api";
-// import * as STR from "../../service/string";
+// import * as APIURL from "../../service/string/apiUrl";
 
 // import LayoutTopButton from "../../components/layout/LayoutTopButton";
 // import ComponentErrorNull from "../../components/piece/PieceErrorNull";
@@ -22,7 +22,7 @@
 //   // loading:true -> loading중
 //   const [loading, setLoading] = useState(false);
 
-//   useLayoutEffect(() => {
+//   useEffect(() => {
 //     fnSearchSubmit();
 //   }, []);
 
@@ -32,10 +32,10 @@
 //   }
 
 //   function fnSearchSubmit() {
-//     // console.log(`${STR.urlPre050Biz}/050biz/v1/${watch("_channelId")}/ment`);
+//     // console.log(`${APIURL.urlPre050Biz}/050biz/v1/${watch("_channelId")}/ment`);
 //     // // type: watch("_type"),
 //     // API.servicesGet050biz(
-//     //   `${STR.urlPre050Biz}/050biz/v1/${watch("_channelId")}/ment`,
+//     //   `${APIURL.urlPre050Biz}/050biz/v1/${watch("_channelId")}/ment`,
 //     //   {
 //     //     type: 1,
 //     //   }

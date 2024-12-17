@@ -1,50 +1,60 @@
+import { IoMdCloudUpload } from "react-icons/io";
+
 import { useSelector, useDispatch, shallowEqual } from "react-redux";
 import { useRef, useState, useEffect, useCallback } from "react";
 
 import * as API from "../../service/api";
 import * as CH from "../../service/customHook";
-import * as STR from "../../service/string";
-import * as UD from "../../service/useData";
+import * as APIURL from "../../service/string/apiUrl";
+import * as TOA from "../../service/library/toast";
+
+import * as IMAGE from "../../action/image";
 
 import ServicesImageOnClick from "./ServicesImageOnClick";
 import Loading from "../piece/PieceLoading";
 
-export default function ImageSet({ id, title }) {
+export default function ImageSet({
+  req,
+  id,
+  title,
+  disabled,
+  maxLangImage = 25,
+}) {
   const dispatch = useDispatch();
 
-  const getedData = useSelector((state) => state.getedData, shallowEqual);
-
-  const img = useSelector((state) => state.imgData, shallowEqual);
-  const imgs = useSelector((state) => state.imgsData, shallowEqual);
-  const multiImgs = useSelector((state) => state.multiImgsData, shallowEqual);
+  const getedData = useSelector((state) => state.data.getedData, shallowEqual);
+  const img = useSelector((state) => state.image.imgData, shallowEqual);
+  const imgs = useSelector((state) => state.image.imgsData, shallowEqual);
+  const multiImgs = useSelector(
+    (state) => state.image.multiImgsData,
+    shallowEqual
+  );
 
   const [files, setFiles] = useState([]);
+  const [hover, setHover] = useState(false);
+
   const dragRef = useRef(null);
   let [loading, setLoading] = useState(false);
 
   const fnState = (files) => {
     if (id === "titleImg") {
-      dispatch({
-        type: "serviceImgData",
-        payload: files,
-      });
+      dispatch(IMAGE.serviceImgData(files));
     } else if (id === "imgs") {
-      dispatch({
-        type: "serviceimgsData",
-        payload: files,
-      });
-    } else if (id === "imgString" || id === "regImgs" || id === "addImgs") {
-      dispatch({
-        type: "servicemulTiImgsDataEvent",
-        payload: files,
-      });
+      dispatch(IMAGE.serviceimgsData(files));
+    } else if (
+      id === "imgString" ||
+      id === "regImgs" ||
+      id === "addImgs" ||
+      id === "regimgs"
+    ) {
+      dispatch(IMAGE.servicemulTiImgsData(files));
     }
     return setLoading(false);
   };
 
   CH.useDidMountEffect(() => {
     if (!!getedData.titleImg && id === "titleImg") {
-      API.servicesPostData(STR.urlGetImages, {
+      API.servicesPostData(APIURL.urlGetImages, {
         imgs: getedData.titleImg,
       }).then((res) => {
         if (res.status === "success") {
@@ -53,7 +63,7 @@ export default function ImageSet({ id, title }) {
         }
       });
     } else if (!!getedData.imgs && id === "imgs") {
-      API.servicesPostData(STR.urlGetImages, {
+      API.servicesPostData(APIURL.urlGetImages, {
         imgs: getedData.imgs,
       }).then((res) => {
         if (res.status === "success") {
@@ -64,11 +74,21 @@ export default function ImageSet({ id, title }) {
     } else if (
       !!getedData.imgString ||
       !!getedData.regImgs ||
+      !!getedData.regimgs ||
       !!getedData.addImgs
     ) {
-      if (id === "imgString" || id === "regImgs" || id === "addImgs") {
-        API.servicesPostData(STR.urlGetImages, {
-          imgs: getedData.imgString || getedData.regImgs || getedData.addImgs,
+      if (
+        id === "imgString" ||
+        id === "regImgs" ||
+        id === "addImgs" ||
+        id === "regimgs"
+      ) {
+        API.servicesPostData(APIURL.urlGetImages, {
+          imgs:
+            getedData.imgString ||
+            getedData.regImgs ||
+            getedData.addImgs ||
+            getedData.regimgs,
         }).then((res) => {
           if (res.status === "success") {
             fnState(res.data);
@@ -77,7 +97,7 @@ export default function ImageSet({ id, title }) {
         });
       }
     }
-  }, [getedData]);
+  }, [getedData, getedData.titleImg, getedData.imgs]);
 
   const onChangeFiles = useCallback(
     (e) => {
@@ -91,63 +111,79 @@ export default function ImageSet({ id, title }) {
         selectFiles = e.target.files;
       }
 
-      console.log("electFiles.length", selectFiles.length);
-
       const formData = new FormData();
       for (let i = 0; i < selectFiles.length; i++) {
-        console.log("selectFiles", i, selectFiles[i]);
+        if (selectFiles[i].size > 20000000) {
+          setLoading(false);
+          return alert("20MB 용량 미만의 이미지만 등록 가능합니다.");
+        }
         formData.append("Imgs", selectFiles[i]);
       }
 
-      API.servicesPostDataForm(STR.urlUpImages, formData).then((res) => {
-        console.log("post", res);
-        if (res.data.length == 1) {
-          if (id === "titleImg") {
-            setFiles(() => [res.data[0]]);
-            fnState([res.data[0]]);
+      API.servicesPostDataForm(APIURL.urlUpImages, formData).then((res) => {
+        // try {
+        if (res.status === "success") {
+          console.log("id", id);
+          console.log("post", res);
+          console.log("multiImgs", e.type);
+          if (res.data.length == 1) {
+            if (id === "titleImg") {
+              setFiles(() => [res.data[0]]);
+              fnState([res.data[0]]);
+            } else if (id === "regImgs") {
+              fnState([res.data[0]]);
+              setFiles([res.data[0]]);
+            } else {
+              if (id === "imgs") {
+                fnState([...imgs, res.data[0]]);
+                setFiles((prev) => [res.data[0], ...prev]);
+              } else {
+                fnState([...multiImgs, res.data[0]]);
+                setFiles((prev) => [res.data[0], ...prev]);
+              }
+            }
+          } else if (res.data.length > 1 && res.data.length < maxLangImage) {
+            if (id === "regImgs") {
+              console.log("????????");
+              fnState([res.data[0]]);
+              setFiles([res.data[0]]);
+            } else {
+              const arrData = [];
+              for (let i = 0; i < res.data.length; i++) {
+                setFiles((prev) => [res.data[i], ...prev]);
+                arrData.push(res.data[i]);
+              }
+              fnState([...arrData, ...files]);
+            }
           } else {
-            setFiles((prev) => [res.data[0], ...prev]);
-            id === "imgs"
-              ? fnState([...imgs, res.data[0]])
-              : fnState([...multiImgs, res.data[0]]);
+            setLoading(false);
+            TOA.servicesUseToast(
+              `이미지는 최대 ${maxLangImage}개까지 입력하실 수 있습니다.`
+            );
+            return;
           }
-        } else if (res.data.length > 1 && res.data.length < 25) {
-          const arrData = [];
-          for (let i = 0; i < res.data.length; i++) {
-            setFiles((prev) => [res.data[i], ...prev]);
-            arrData.push(res.data[i]);
-          }
-          fnState([...arrData, ...files]);
         } else {
+          console.log("else");
+          console.log(res);
           setLoading(false);
-          UD.servicesUseToast("이미지는 최대 25개까지 입력하실 수 있습니다.");
-          return;
+          TOA.servicesUseToast("이미지가 업로드되지 않았습니다.", "e");
         }
       });
     },
     [files]
   );
 
-  // console.log(files);
-
   const handleFilterFile = useCallback(
     (iid) => {
       setFiles(files.filter((it) => it.iid !== iid));
       if (id === "titleImg") {
-        dispatch({
-          type: "serviceImgData",
-          payload: img.filter((it) => it.iid !== iid),
-        });
+        dispatch(IMAGE.serviceImgData(img.filter((it) => it.iid !== iid)));
       } else if (id === "imgs") {
-        dispatch({
-          type: "serviceimgsData",
-          payload: imgs.filter((it) => it.iid !== iid),
-        });
+        dispatch(IMAGE.serviceimgsData(imgs.filter((it) => it.iid !== iid)));
       } else {
-        dispatch({
-          type: "servicemulTiImgsDataEvent",
-          payload: multiImgs.filter((it) => it.iid !== iid),
-        });
+        dispatch(
+          IMAGE.servicemulTiImgsData(multiImgs.filter((it) => it.iid !== iid))
+        );
       }
     },
     [files]
@@ -213,51 +249,66 @@ export default function ImageSet({ id, title }) {
   return (
     <div className="setImageWrap">
       <div>
-        <div className="blockLabel">
-          <span>{title}</span>
-        </div>
+        <label className="blockLabel">
+          <span>
+            {title}
+            {req ? " *" : ""}
+          </span>
+        </label>
         <label className="imgBtn" htmlFor={id} ref={dragRef}>
           이미지 추가
         </label>
       </div>
 
-      <div className="imgsThumbnail">
-        <Loading loading={loading} />
+      <div
+        onMouseEnter={() => setHover(true)}
+        onMouseLeave={() => setHover(false)}
+        className="imgsThumbnail"
+        style={
+          disabled
+            ? {
+                backgroundColor: "rgba(239, 239, 239, 0.3)",
+                height:
+                  files.length <= 10
+                    ? "104px"
+                    : files.length <= 20
+                    ? "196px"
+                    : "286px",
+              }
+            : {
+                height:
+                  files.length <= 10
+                    ? "104px"
+                    : files.length <= 20
+                    ? "196px"
+                    : "286px",
+              }
+        }
+      >
         <input
           type="file"
           id={id}
           style={{ display: "none" }}
-          multiple={id === "titleImg" ? false : true}
+          multiple={id === "titleImg" || id === "regImgs" ? false : true}
           onChange={onChangeFiles}
+          disabled={disabled ? true : false}
         />
-
         <label
           htmlFor={id}
           ref={dragRef}
-          style={
-            id === "regImgs" && multiImgs.length > 0
-              ? {
-                  backgroundColor: "#bdbdbd",
-                  height:
-                    files.length <= 10
-                      ? "94px"
-                      : files.length <= 20
-                      ? "186px"
-                      : "288px",
-                }
-              : {
-                  height:
-                    files.length <= 10
-                      ? "94px"
-                      : files.length <= 20
-                      ? "186px"
-                      : "288px",
-                }
-          }
+          className={hover ? "imgsUploadhover" : ""}
+          style={{
+            height:
+              files.length <= 10
+                ? "94px"
+                : files.length <= 20
+                ? "186px"
+                : "288px",
+          }}
         >
-          {id === "regImgs" && (
-            <span className="regImgsText">사업자 인증 회원</span>
-          )}
+          <IoMdCloudUpload />
+          <span>여기에 파일을</span>
+          <span>끌어다 놓습니다.</span>
         </label>
 
         <div
@@ -267,12 +318,15 @@ export default function ImageSet({ id, title }) {
               files.length == 0 ? "none" : "2px dotted rgba(0, 0, 0, 0.1)",
           }}
         >
+          <Loading loading={loading} />
+
           {files.length > 0 && id === "titleImg" && !!img && (
             <ServicesImageOnClick
               url={files[0]}
               text="대표 이미지"
               iid={files[0].iid}
               onRemove={() => handleFilterFile(files[0].iid)}
+              disabled={disabled ? true : false}
             />
           )}
 
@@ -286,6 +340,7 @@ export default function ImageSet({ id, title }) {
                 text="상세 이미지"
                 iid={item && item.iid}
                 onRemove={() => handleFilterFile(item.iid)}
+                disabled={disabled ? true : false}
               />
             ))}
 
@@ -299,6 +354,8 @@ export default function ImageSet({ id, title }) {
                 text="이미지"
                 iid={item && item.iid}
                 onRemove={() => handleFilterFile(item.iid)}
+                id={id}
+                disabled={disabled ? true : false}
               />
             ))}
         </div>
